@@ -163,3 +163,22 @@ infix fun Short.shr(other: Int) = (i shr other).s
 
 val String.f: Float
     get() = toFloat()
+val String.b: Byte
+    get() = toByte()
+val String.d: Double
+    get() = toDouble()
+val String.i: Int
+    get() = toInt()
+val String.L: Long
+    get() = toLong()
+val String.s: Short
+    get() = toShort()
+// TODO unsigned String extensions
+val String.ub: Ubyte
+    get() = Ubyte(this)
+val String.ui: Uint
+    get() = Uint(this)
+val String.ul: Ulong
+    get() = Ulong(this)
+val String.us: Ushort
+    get() = Ushort(this)
