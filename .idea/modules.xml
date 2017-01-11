@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/glm.iml" filepath="$PROJECT_DIR$/.idea/modules/glm.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/glm_main.iml" filepath="$PROJECT_DIR$/.idea/modules/glm_main.iml" group="glm" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/glm_test.iml" filepath="$PROJECT_DIR$/.idea/modules/glm_test.iml" group="glm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle-script-kotlin.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle-script-kotlin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle-script-kotlin_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle-script-kotlin_main.iml" group="gradle-script-kotlin" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle-script-kotlin_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle-script-kotlin_test.iml" group="gradle-script-kotlin" />
     </modules>
   </component>
 </project>
