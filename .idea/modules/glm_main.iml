@@ -12,7 +12,15 @@
               <K2JSCompilerArguments />
             </option>
             <option name="_commonCompilerArguments">
-              <DummyImpl />
+              <DummyImpl>
+                <option name="pluginClasspaths">
+                  <array />
+                </option>
+                <option name="coroutinesWarn" value="true" />
+                <option name="pluginOptions">
+                  <array />
+                </option>
+              </DummyImpl>
             </option>
           </KotlinCompilerInfo>
         </option>
@@ -27,7 +35,7 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/../../build/classes/main" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../src/main">
@@ -37,9 +45,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.1-M04" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.1-M03" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-runtime:1.1-M03" level="project" />
     <orderEntry type="library" name="Gradle: com.github.elect86:kotlin-unsigned:master-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-runtime:1.1-M04" level="project" />
-    <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
   </component>
 </module>
