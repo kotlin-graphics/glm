@@ -16,6 +16,7 @@ buildscript {
 
 apply {
     plugin("kotlin")
+    plugin("maven")
 }
 
 //configure<ApplicationPluginConvention> {
@@ -30,7 +31,7 @@ repositories {
 dependencies {
     compile(kotlinModule("stdlib"))
     testCompile("io.kotlintest:kotlintest:1.3.5")
-    compile("com.github.elect86:kotlin-unsigned:master-SNAPSHOT")
+    compile("com.github.elect86:kotlin-unsigned:-SNAPSHOT")
 }
 
 allprojects {
