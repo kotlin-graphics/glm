@@ -1,6 +1,3 @@
-group = "groupId"
-version = "1.0-SNAPSHOT"
-
 buildscript {
 
     repositories {
@@ -18,10 +15,6 @@ apply {
     plugin("kotlin")
     plugin("maven")
 }
-
-//configure<ApplicationPluginConvention> {
-//    mainClassName = "samples.HelloWorldKt"
-//}
 
 repositories {
     gradleScriptKotlin()
