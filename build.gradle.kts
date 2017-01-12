@@ -5,7 +5,7 @@ buildscript {
     }
 
     dependencies {
-        classpath(kotlinModule("gradle-plugin"))
+        classpath(kotlinModule("gradle-plugin", "1.1-M04"))
     }
 }
 
@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    compile(kotlinModule("stdlib"))
+    compile(kotlinModule("stdlib", "1.1-M04"))
     testCompile("io.kotlintest:kotlintest:1.3.5")
     compile("com.github.elect86:kotlin-unsigned:-SNAPSHOT")
 }
