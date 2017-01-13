@@ -33,7 +33,8 @@ data class Vec4(override var x: Float, override var y: Float, override var z: Fl
     constructor(v: Vec3bool) : this(v.x.f, v.y.f, v.z.f, 1)
     constructor(v: Vec4bool) : this(v.x.f, v.y.f, v.z.f, v.w.f)
 
-    constructor(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = true, bigEndianess: Boolean = true) : this(
+    // TODO oneByteOne* = false
+    constructor(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndianess: Boolean = true) : this(
             if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndianess),
             if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES, bigEndianess),
             if (oneByteOneFloat) bytes[index + 2].f else bytes.getFloat(index + Float.BYTES * 2, bigEndianess),
@@ -55,7 +56,7 @@ data class Vec4(override var x: Float, override var y: Float, override var z: Fl
         Set(list, index)
     }
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = true) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = false) : this(
             if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index),
             if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES),
             if (oneByteOneFloat) bytes[index + 2].f else bytes.getFloat(index + Float.BYTES * 2),
@@ -72,14 +73,14 @@ data class Vec4(override var x: Float, override var y: Float, override var z: Fl
     constructor(x: Number, y: Number, z: Number, w: Number) : this(x.f, y.f, z.f, w.f)
 
 
-    fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = true, bigEndianess: Boolean = true) {
+    fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndianess: Boolean = true) {
         x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndianess)
         y = if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES, bigEndianess)
         z = if (oneByteOneFloat) bytes[index + 2].f else bytes.getFloat(index + Float.BYTES * 2, bigEndianess)
         w = if (oneByteOneFloat) bytes[index + 3].f else bytes.getFloat(index + Float.BYTES * 3, bigEndianess)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = true) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = false) {
         x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index)
         y = if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES)
         z = if (oneByteOneFloat) bytes[index + 2].f else bytes.getFloat(index + Float.BYTES * 2)
