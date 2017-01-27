@@ -1,3 +1,5 @@
+import java.nio.*
+
 /**
  * Created by GBarbieri on 07.12.2016.
  */
@@ -182,3 +184,19 @@ val String.ul: Ulong
     get() = Ulong(this)
 val String.us: Ushort
     get() = Ushort(this)
+
+
+val ByteBuffer.SIZE
+    get() = capacity() * Byte.BYTES
+val ShortBuffer.SIZE
+    get() = capacity() * Short.BYTES
+val IntBuffer.SIZE
+    get() = capacity() * Int.BYTES
+val LongBuffer.SIZE
+    get() = capacity() * Long.BYTES
+val FloatBuffer.SIZE
+    get() = capacity() * Float.BYTES
+val DoubleBuffer.SIZE
+    get() = capacity() * Double.BYTES
+val CharBuffer.SIZE
+    get() = capacity() * Byte.BYTES // Note: it's byte and not char
