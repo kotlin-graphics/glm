@@ -97,7 +97,9 @@ data class Vec2(override var x: Float, override var y: Float) : Vec2t<Float>() {
     }
 
 
-    companion object : vec2_operators
+    companion object : vec2_operators {
+        @JvmStatic val SIZE = 2 * Float.BYTES
+    }
 
 
     // -- Unary arithmetic operators --

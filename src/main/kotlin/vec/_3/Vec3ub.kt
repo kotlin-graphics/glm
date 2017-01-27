@@ -1,5 +1,6 @@
 package vec._3
 
+import BYTES
 import Ubyte
 import i
 import ub
@@ -84,7 +85,9 @@ data class Vec3ub(override var x: Ubyte, override var y: Ubyte, override var z: 
     }
 
 
-    companion object : vec3ub_operators
+    companion object : vec3ub_operators {
+        @JvmField val SIZE = 3 * Ubyte.BYTES
+    }
 
 
     // -- Unary arithmetic operators --

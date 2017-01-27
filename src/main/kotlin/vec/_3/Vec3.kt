@@ -109,7 +109,7 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
 
 
     companion object : vec3_operators {
-        @JvmField val SIZE = length() * Float.BYTES //TODO others
+        @JvmField val SIZE = 3 * Float.BYTES
     }
 
 

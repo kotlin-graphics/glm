@@ -108,7 +108,9 @@ data class Vec3ui(override var x: Uint, override var y: Uint, override var z: Ui
     }
 
 
-    companion object : vec3ui_operators
+    companion object : vec3ui_operators {
+        @JvmField val SIZE = 3 * Uint.BYTES
+    }
 
 
     // -- Unary arithmetic operators --

@@ -1,5 +1,6 @@
 package  mat
 
+import BYTES
 import mat.operators.mat3x3_operators
 import vec.Vec3t
 import vec._3.Vec3
@@ -175,7 +176,9 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
     fun toMat4() = to(Mat4x4())
 
 
-    companion object : mat3x3_operators
+    companion object : mat3x3_operators {
+        @JvmStatic val SIZE = 3 * 3 * Float.BYTES
+    }
 
 
     // -- Unary arithmetic operators --

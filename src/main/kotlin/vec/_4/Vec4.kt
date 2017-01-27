@@ -115,7 +115,9 @@ data class Vec4(override var x: Float, override var y: Float, override var z: Fl
     }
 
 
-    companion object : vec4_operators
+    companion object : vec4_operators {
+        @JvmField val SIZE = 4 * Float.BYTES
+    }
 
 
     // -- Unary arithmetic operators --

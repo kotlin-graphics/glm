@@ -98,7 +98,9 @@ data class Vec2l(override var x: Long, override var y: Long) : Vec2t<Long>() {
     }
 
 
-    companion object : vec2l_operators
+    companion object : vec2l_operators {
+        @JvmStatic val SIZE = 2 * Long.BYTES
+    }
 
 
     // -- Unary arithmetic operators --

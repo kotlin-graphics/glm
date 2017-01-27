@@ -112,7 +112,9 @@ data class Vec4s(override var x: Short, override var y: Short, override var z: S
     }
 
 
-    companion object : vec4s_operators
+    companion object : vec4s_operators {
+        @JvmField val SIZE = 4 * Short.BYTES
+    }
 
 
     // -- Unary arithmetic operators --

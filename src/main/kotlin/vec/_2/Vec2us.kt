@@ -102,7 +102,9 @@ data class Vec2us(override var x: Ushort, override var y: Ushort) : Vec2t<Ushort
     }
 
 
-    companion object : vec2us_operators
+    companion object : vec2us_operators {
+        @JvmStatic val SIZE = 2 * Ushort.BYTES
+    }
 
 
     // -- Unary arithmetic operators --

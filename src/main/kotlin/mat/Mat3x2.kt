@@ -1,5 +1,6 @@
 package  mat
 
+import BYTES
 import vec._2.Vec2
 
 /**
@@ -14,5 +15,9 @@ class Mat3x2(override var value: MutableList<Vec2>) : Mat3x2t<Vec2> {
 
     operator fun set(i: Int, v: Vec2) {
         value[i] = v
+    }
+
+    companion object {
+        @JvmStatic val SIZE = 3 * 2 * Float.BYTES
     }
 }

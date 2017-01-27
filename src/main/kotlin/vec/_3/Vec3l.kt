@@ -105,7 +105,9 @@ data class Vec3l(override var x: Long, override var y: Long, override var z: Lon
     }
 
 
-    companion object : vec3l_operators
+    companion object : vec3l_operators {
+        @JvmField val SIZE = 3 * Long.BYTES
+    }
 
 
     // -- Unary arithmetic operators --

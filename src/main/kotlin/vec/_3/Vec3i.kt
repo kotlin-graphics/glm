@@ -106,7 +106,9 @@ data class Vec3i(override var x: Int, override var y: Int, override var z: Int) 
     }
 
 
-    companion object : vec3i_operators
+    companion object : vec3i_operators {
+        @JvmField val SIZE = 3 * Int.BYTES
+    }
 
 
     // TODO

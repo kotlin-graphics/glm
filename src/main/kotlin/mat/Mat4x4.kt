@@ -1,5 +1,6 @@
 package  mat
 
+import BYTES
 import mat.operators.mat4x4_operators
 import vec.Vec4t
 import vec._4.Vec4
@@ -182,7 +183,9 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     }
 
 
-    companion object : mat4x4_operators
+    companion object : mat4x4_operators {
+        @JvmStatic val SIZE = 4 * 4 * Float.BYTES
+    }
 
 
     // -- Unary arithmetic operators --

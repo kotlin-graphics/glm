@@ -105,7 +105,9 @@ data class Vec3d(override var x: Double, override var y: Double, override var z:
     }
 
 
-    companion object : vec3d_operators
+    companion object : vec3d_operators {
+        @JvmField val SIZE = 3 * Double.BYTES
+    }
 
 
     // -- Unary arithmetic operators --

@@ -101,7 +101,9 @@ data class Vec2ul(override var x: Ulong, override var y: Ulong) : Vec2t<Ulong>()
     }
 
 
-    companion object : vec2ul_operators
+    companion object : vec2ul_operators {
+        @JvmStatic val SIZE = 2 * Ulong.BYTES
+    }
 
 
     // -- Unary arithmetic operators --

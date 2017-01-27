@@ -1,5 +1,6 @@
 package vec._2
 
+import BYTES
 import b
 import i
 import vec.Vec2t
@@ -80,7 +81,9 @@ data class Vec2b(override var x: Byte, override var y: Byte) : Vec2t<Byte>() {
     }
 
 
-    companion object : vec2b_operators
+    companion object : vec2b_operators {
+        @JvmStatic val SIZE = 2 * Byte.BYTES
+    }
 
 
     // -- Unary arithmetic operators --

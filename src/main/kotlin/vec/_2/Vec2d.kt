@@ -98,7 +98,9 @@ data class Vec2d(override var x: Double, override var y: Double) : Vec2t<Double>
     }
 
 
-    companion object : vec2d_operators
+    companion object : vec2d_operators {
+        @JvmStatic val SIZE = 2 * Double.BYTES
+    }
 
 
     // -- Unary arithmetic operators --

@@ -1,5 +1,6 @@
 package  mat
 
+import BYTES
 import  vec._4.Vec4
 
 /**
@@ -8,4 +9,7 @@ import  vec._4.Vec4
 
 data class Mat2x4(override var value: MutableList<Vec4>) : Mat2x4t<Vec4> {
 
+    companion object {
+        @JvmStatic val SIZE = 2 * 4 * Float.BYTES
+    }
 }

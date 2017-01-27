@@ -116,7 +116,9 @@ data class Vec4us(override var x: Ushort, override var y: Ushort, override var z
     }
 
 
-    companion object : vec4us_operators
+    companion object : vec4us_operators {
+        @JvmField val SIZE = 4 * Ushort.BYTES
+    }
 
 
     // -- Unary arithmetic operators --

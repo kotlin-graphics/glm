@@ -112,7 +112,9 @@ data class Vec4d(override var x: Double, override var y: Double, override var z:
     }
 
 
-    companion object : vec4d_operators
+    companion object : vec4d_operators {
+        @JvmField val SIZE = 4 * Double.BYTES
+    }
 
 
     // -- Unary arithmetic operators --

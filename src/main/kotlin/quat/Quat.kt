@@ -1,5 +1,6 @@
 package quat
 
+import BYTES
 import f
 import glm.Companion.cos
 import glm.Companion.dot
@@ -82,5 +83,7 @@ data class Quat(var w: Float, var x: Float, var y: Float, var z: Float) : QuatT<
     }
 
 
-    companion object : quat_operators, quat_func
+    companion object : quat_operators, quat_func {
+        @JvmStatic val SIZE = 4 * Float.BYTES
+    }
 }
