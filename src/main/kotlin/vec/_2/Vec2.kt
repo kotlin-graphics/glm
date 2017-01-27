@@ -30,7 +30,7 @@ data class Vec2(override var x: Float, override var y: Float) : Vec2t<Float>() {
     constructor(v: Vec3bool) : this(v.x.f, v.y.f)
     constructor(v: Vec4bool) : this(v.x.f, v.y.f)
 
-    constructor(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = true, bigEndianess: Boolean = true) : this(
+    constructor(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndianess: Boolean = true) : this(
             if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndianess),
             if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES, bigEndianess))
 
@@ -50,7 +50,7 @@ data class Vec2(override var x: Float, override var y: Float) : Vec2t<Float>() {
         Set(list, index)
     }
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = true) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = false) : this(
             if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index),
             if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES))
 
@@ -65,12 +65,12 @@ data class Vec2(override var x: Float, override var y: Float) : Vec2t<Float>() {
     constructor(x: Number, y: Number) : this(x.f, y.f)
 
 
-    fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = true, bigEndianess: Boolean = true) {
+    fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndianess: Boolean = true) {
         x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndianess)
         y = if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES, bigEndianess)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = true) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = false) {
         x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index)
         y = if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES)
     }
