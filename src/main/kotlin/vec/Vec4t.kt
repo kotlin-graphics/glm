@@ -66,7 +66,6 @@ abstract class Vec4t<T : Number> {
             w = field
         }
 
-
     // -- infix Generic Constructors --
 
     infix fun Set(v: Vec2t<out Number>) = Set(v.x, v.y, 0, 1)

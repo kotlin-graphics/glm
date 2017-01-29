@@ -266,5 +266,41 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
     fun transpose(res: Mat4x4 = Mat4x4()) = transpose(res, this)
     fun transpose_() = transpose(this, this)
+
+    val a0: Float
+        get() = value[0][0]
+    val a1: Float
+        get() = value[0][1]
+    val a2: Float
+        get() = value[0][2]
+    val a3: Float
+        get() = value[0][3]
+
+    val b0: Float
+        get() = value[1][0]
+    val b1: Float
+        get() = value[1][1]
+    val b2: Float
+        get() = value[1][2]
+    val b3: Float
+        get() = value[1][3]
+
+    val c0: Float
+        get() = value[2][0]
+    val c1: Float
+        get() = value[2][1]
+    val c2: Float
+        get() = value[2][2]
+    val c3: Float
+        get() = value[2][3]
+
+    val d0: Float
+        get() = value[3][0]
+    val d1: Float
+        get() = value[3][1]
+    val d2: Float
+        get() = value[3][2]
+    val d3: Float
+        get() = value[3][3]
 }
 
