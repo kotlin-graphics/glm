@@ -11,6 +11,8 @@ import vec.bool.Vec2bool
 import vec.bool.Vec3bool
 import vec.bool.Vec4bool
 import java.nio.*
+import main.glm.Companion.normalize
+import main.glm.Companion.cross
 
 /**
  * Created bY GBarbieri on 05.10.2016.
@@ -251,6 +253,10 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
     fun rem_(bX: Number, bY: Number, bZ: Number) = rem(this, this, bX.f, bY.f, bZ.f)
     infix fun rem_(b: Number) = rem(this, this, b.f, b.f, b.f)
     infix fun rem_(b: Vec3t<Number>) = rem(this, this, b.x.f, b.y.f, b.z.f)
+
+
+    fun normalize() = normalize(this, this) // TODO others
+    infix fun cross(b: Vec3) = cross(this, b)
 }
 
 

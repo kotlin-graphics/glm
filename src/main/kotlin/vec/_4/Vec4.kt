@@ -3,6 +3,7 @@ package vec._4
 import main.BYTES
 import main.f
 import main.getFloat
+import main.glm
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t
@@ -259,4 +260,7 @@ data class Vec4(override var x: Float, override var y: Float, override var z: Fl
     fun rem_(bX: Number, bY: Number, bZ: Number, bW: Number) = rem(this, this, bX.f, bY.f, bZ.f, bW.f)
     infix fun rem_(b: Number) = rem(this, this, b.f, b.f, b.f, b.f)
     infix fun rem_(b: Vec4t<Number>) = rem(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+
+
+    fun normalize() = glm.normalize(this, this) // TODO others
 }
