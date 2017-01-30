@@ -98,6 +98,13 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
             Vec4(mat4x3[2], 0),
             Vec4(mat4x3[3], 1)))
 
+    // TODO others
+    constructor(floats: FloatArray) : this(mutableListOf(
+            Vec4(floats, 0),
+            Vec4(floats, 4),
+            Vec4(floats, 8),
+            Vec4(floats, 12)))
+
     // set
 
     fun put(v0: Vec4, v1: Vec4, v2: Vec4, v3: Vec4) {
