@@ -1,10 +1,7 @@
 package vec._3.operators
 
-import Ulong
-import main.i
-import main.L
-import udiv
-import urem
+import main.*
+import unsigned.*
 import vec._3.Vec3ul
 import vec._3.Vec3ul.Companion.add
 import vec._3.Vec3ul.Companion.div

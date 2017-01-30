@@ -1,5 +1,10 @@
 package main
 
+import unsigned.Ubyte
+import unsigned.Uint
+import unsigned.Ulong
+import unsigned.Ushort
+
 /**
  * Created by GBarbieri on 13.12.2016.
  */

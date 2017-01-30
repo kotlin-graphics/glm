@@ -1,11 +1,7 @@
 package vec._4
 
-import main.BYTES
-import main.L
-import Ulong
-import main.getLong
-import main.getUlong
-import main.ul
+import main.*
+import unsigned.Ulong
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t

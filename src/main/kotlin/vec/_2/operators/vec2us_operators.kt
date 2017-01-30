@@ -1,21 +1,13 @@
 package vec._2.operators
 
-import Ushort
-import main.and
-import main.i
-import main.or
-import main.s
-import main.shl
-import udiv
-import urem
-import ushr
+import main.*
+import unsigned.*
 import vec._2.Vec2us
 import vec._2.Vec2us.Companion.add
 import vec._2.Vec2us.Companion.div
 import vec._2.Vec2us.Companion.mul
 import vec._2.Vec2us.Companion.rem
 import vec._2.Vec2us.Companion.sub
-import main.xor
 
 /**
  * Created by elect on 09/11/16.

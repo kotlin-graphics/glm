@@ -1,12 +1,7 @@
 package vec._4
 
-import main.BYTES
-import Ushort
-import main.getShort
-import main.getUshort
-import main.i
-import main.s
-import main.us
+import main.*
+import unsigned.Ushort
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t

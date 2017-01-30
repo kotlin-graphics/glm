@@ -1,7 +1,7 @@
 package vec._2
 
 import main.BYTES
-import Ubyte
+import unsigned.Ubyte
 import main.i
 import main.ub
 import vec.Vec2t

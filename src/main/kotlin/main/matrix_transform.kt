@@ -1,9 +1,9 @@
 package main
 
-import detail.GLM_COORDINATE_SYSTEM
-import detail.GLM_DEPTH_CLIP_SPACE
-import detail.GLM_DEPTH_ZERO_TO_ONE
-import detail.GLM_LEFT_HANDED
+import main.detail.GLM_COORDINATE_SYSTEM
+import main.detail.GLM_DEPTH_CLIP_SPACE
+import main.detail.GLM_DEPTH_ZERO_TO_ONE
+import main.detail.GLM_LEFT_HANDED
 import main.glm.Companion.abs
 import main.glm.Companion.cos
 import main.glm.Companion.dot

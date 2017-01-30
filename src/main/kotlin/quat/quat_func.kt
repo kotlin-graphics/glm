@@ -1,6 +1,5 @@
 package quat
 
-import main.epsilon
 import main.f
 import main.glm
 import main.glm.Companion.sqrt

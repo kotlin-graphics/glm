@@ -1,22 +1,13 @@
 package vec._3.operators
 
-import Ubyte
-import main.and
-import main.b
-import main.i
-import main.or
-import main.shl
-import main.shr
-import udiv
-import urem
-import ushr
+import main.*
+import unsigned.*
 import vec._3.Vec3ub
 import vec._3.Vec3ub.Companion.add
 import vec._3.Vec3ub.Companion.div
 import vec._3.Vec3ub.Companion.mul
 import vec._3.Vec3ub.Companion.rem
 import vec._3.Vec3ub.Companion.sub
-import main.xor
 
 /**
  * Created by GBarbieri on 08.11.2016.

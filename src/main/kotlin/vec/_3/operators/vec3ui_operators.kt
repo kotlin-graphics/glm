@@ -1,9 +1,7 @@
 package vec._3.operators
 
-import Uint
-import main.i
-import udiv
-import urem
+import main.*
+import unsigned.*
 import vec._3.Vec3ui
 import vec._3.Vec3ui.Companion.add
 import vec._3.Vec3ui.Companion.div

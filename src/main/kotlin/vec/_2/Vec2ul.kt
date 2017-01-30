@@ -2,7 +2,7 @@ package vec._2
 
 import main.BYTES
 import main.L
-import Ulong
+import unsigned.Ulong
 import main.getLong
 import main.getUlong
 import main.ul

@@ -19,18 +19,13 @@ import main.glm.Companion.floatBitsToUint
 import main.glm.Companion.intBitsToFloat
 import main.glm.Companion.uintBitsToFloat
 import main.glm.Companion.fma
-import quat.Quat
-import main.glm.Companion.dot
-import main.glm.Companion.acos
-import main.glm.Companion.cos
-import main.glm.Companion.sin
 import main.i
 import main.f
 import main.b
 import main.d
 import main.s
 import main.L
-import Uint
+import unsigned.Uint
 
 
 /**

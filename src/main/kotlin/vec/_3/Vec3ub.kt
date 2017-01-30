@@ -1,9 +1,9 @@
 package vec._3
 
 import main.BYTES
-import Ubyte
 import main.i
 import main.ub
+import unsigned.Ubyte
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t

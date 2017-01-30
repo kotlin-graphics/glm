@@ -1,7 +1,7 @@
 package vec._2
 
 import main.BYTES
-import Ushort
+import unsigned.Ushort
 import main.getShort
 import main.getUshort
 import main.i

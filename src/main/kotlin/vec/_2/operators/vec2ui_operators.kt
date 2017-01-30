@@ -1,9 +1,9 @@
 package vec._2.operators
 
-import Uint
 import main.i
-import udiv
-import urem
+import unsigned.Uint
+import unsigned.udiv
+import unsigned.urem
 import vec._2.Vec2ui
 import vec._2.Vec2ui.Companion.add
 import vec._2.Vec2ui.Companion.div

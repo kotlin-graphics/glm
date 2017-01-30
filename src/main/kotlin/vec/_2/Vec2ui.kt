@@ -1,11 +1,11 @@
 package vec._2
 
 import main.BYTES
-import Uint
 import main.getInt
 import main.getUint
 import main.i
 import main.ui
+import unsigned.Uint
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t

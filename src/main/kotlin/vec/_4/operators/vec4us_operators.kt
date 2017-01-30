@@ -1,15 +1,7 @@
 package vec._4.operators
 
-import Ushort
-import main.s
-import main.i
-import main.and
-import main.or
-import main.xor
-import main.shl
-import ushr
-import udiv
-import urem
+import main.*
+import unsigned.*
 import vec._4.Vec4us
 import vec._4.Vec4us.Companion.add
 import vec._4.Vec4us.Companion.div

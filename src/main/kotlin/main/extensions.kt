@@ -1,12 +1,7 @@
 package main
 
-import toUbyte
-import toUint
-import toUlong
-import toUshort
+import unsigned.*
 import java.nio.*
-import Ubyte
-import Uint
 
 /**
  * Created by GBarbieri on 07.12.2016.
