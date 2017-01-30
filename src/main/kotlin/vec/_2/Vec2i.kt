@@ -47,7 +47,7 @@ data class Vec2i(override var x: Int, override var y: Int) : Vec2t<Int>() {
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].i, booleans[index + 1].i)
 
     constructor(list: List<Any>, index: Int = 0) : this() {
-        Set(list, index)
+        put(list, index)
     }
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneInt: Boolean = true) : this(
@@ -76,7 +76,7 @@ data class Vec2i(override var x: Int, override var y: Int) : Vec2t<Int>() {
     }
 
 
-    override fun Set(x: Number, y: Number): Vec2i {
+    override fun put(x: Number, y: Number): Vec2i {
         this.x = x.i
         this.y = y.i
         return this

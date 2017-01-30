@@ -748,7 +748,7 @@ interface matrix_transform {
         val objZ = i02 * tmpX + i12 * tmpY + i22 * tmpZ + i32 * tmpW
         val objW = i03 * tmpX + i13 * tmpY + i23 * tmpZ + i33 * tmpW
         
-        res.Set(objX, objY, objZ)
+        res.put(objX, objY, objZ)
 
         return res div_ objW
     }

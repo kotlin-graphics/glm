@@ -50,7 +50,7 @@ data class Vec2ul(override var x: Ulong, override var y: Ulong) : Vec2t<Ulong>()
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].ul, booleans[index + 1].ul)
 
     constructor(list: List<Any>, index: Int = 0) : this() {
-        Set(list, index)
+        put(list, index)
     }
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUlong: Boolean = true) : this(
@@ -79,7 +79,7 @@ data class Vec2ul(override var x: Ulong, override var y: Ulong) : Vec2t<Ulong>()
     }
 
 
-    override fun Set(x: Number, y: Number): Vec2ul {
+    override fun put(x: Number, y: Number): Vec2ul {
         this.x = x.ul
         this.y = y.ul
         return this

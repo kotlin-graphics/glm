@@ -100,8 +100,15 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
     // set
 
-    fun set(v0: Vec4, v1: Vec4, v2: Vec4, v3: Vec4) {
+    fun put(v0: Vec4, v1: Vec4, v2: Vec4, v3: Vec4) {
         value[0] to v0
+    }
+
+    // TODO others
+    infix fun to(mat4x4: Mat4x4) {
+        value = mutableListOf(
+                Vec4(mat4x4[0]), Vec4(mat4x4[1]),
+                Vec4(mat4x4[2]), Vec4(mat4x4[3]))
     }
 
 //    fun to(mat2x2: Mat2x2t<*>) {
@@ -128,7 +135,7 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 //                Vec4(v1))
 //    }
 
-    infix fun set(s: Float): Mat4x4 {
+    infix fun put(s: Float): Mat4x4 {
 
         value[0][0] = s
         value[0][1] = 0f
@@ -267,6 +274,8 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     fun transpose(res: Mat4x4 = Mat4x4()) = transpose(res, this)
     fun transpose_() = transpose(this, this)
 
+
+    // TODO others
     var a0: Float
         get() = value[0][0]
         set(v) {

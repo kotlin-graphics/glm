@@ -49,7 +49,7 @@ data class Vec4l(override var x: Long, override var y: Long, override var z: Lon
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].L, booleans[index + 1].L, booleans[index + 2].L, booleans[index + 3].L)
 
     constructor(list: List<Any>, index: Int = 0) : this() {
-        Set(list, index)
+        put(list, index)
     }
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneLong: Boolean = true) : this(
@@ -84,7 +84,7 @@ data class Vec4l(override var x: Long, override var y: Long, override var z: Lon
     }
 
 
-    override fun Set(x: Number, y: Number, z: Number, w: Number): Vec4l {
+    override fun put(x: Number, y: Number, z: Number, w: Number): Vec4l {
         this.x = x.L
         this.y = y.L
         this.z = z.L

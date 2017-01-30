@@ -48,7 +48,7 @@ data class Vec3s(override var x: Short, override var y: Short, override var z: S
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].s, booleans[index + 1].s, booleans[index + 2].s)
 
     constructor(list: List<Any>, index: Int = 0) : this() {
-        Set(list, index)
+        put(list, index)
     }
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneShort: Boolean = true) : this(
@@ -80,7 +80,7 @@ data class Vec3s(override var x: Short, override var y: Short, override var z: S
     }
 
 
-    override fun Set(x: Number, y: Number, z: Number): Vec3s {
+    override fun put(x: Number, y: Number, z: Number): Vec3s {
         this.x = x.s
         this.y = y.s
         this.z = z.s

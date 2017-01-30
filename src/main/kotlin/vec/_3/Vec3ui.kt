@@ -47,7 +47,7 @@ data class Vec3ui(override var x: Uint, override var y: Uint, override var z: Ui
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].ui, booleans[index + 1].ui, booleans[index + 2].ui)
 
     constructor(list: List<Any>, index: Int = 0) : this() {
-        Set(list, index)
+        put(list, index)
     }
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUint: Boolean = true) : this(
@@ -79,7 +79,7 @@ data class Vec3ui(override var x: Uint, override var y: Uint, override var z: Ui
     }
 
 
-    override fun Set(x: Number, y: Number, z: Number): Vec3ui {
+    override fun put(x: Number, y: Number, z: Number): Vec3ui {
         this.x = x.ui
         this.y = y.ui
         this.z = z.ui

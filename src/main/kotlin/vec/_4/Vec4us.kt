@@ -48,7 +48,7 @@ data class Vec4us(override var x: Ushort, override var y: Ushort, override var z
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].us, booleans[index + 1].us, booleans[index + 2].us, booleans[index + 3].us)
 
     constructor(list: List<Any>, index: Int = 0) : this() {
-        Set(list, index)
+        put(list, index)
     }
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUshort: Boolean = true) : this(
@@ -83,7 +83,7 @@ data class Vec4us(override var x: Ushort, override var y: Ushort, override var z
     }
 
 
-    override fun Set(x: Number, y: Number, z: Number, w: Number): Vec4us {
+    override fun put(x: Number, y: Number, z: Number, w: Number): Vec4us {
         this.x = x.us
         this.y = y.us
         this.z = z.us
