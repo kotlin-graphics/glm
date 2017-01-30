@@ -39,6 +39,8 @@ interface glm {
             func_geometric,
             func_trigonometric,
 
+            matrix_transform,
+
             epsilon,
 
             gli
