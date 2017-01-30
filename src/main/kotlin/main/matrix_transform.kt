@@ -157,7 +157,7 @@ interface matrix_transform {
      */
     fun orthoLH(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float, res: Mat4x4 = Mat4x4()): Mat4x4 {
 
-        res set 1f
+        res put 1f
 
         res[0][0] = 2f / (right - left)
         res[1][1] = 2f / (top - bottom)
@@ -189,7 +189,7 @@ interface matrix_transform {
      */
     fun orthoRH(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float, res: Mat4x4 = Mat4x4()): Mat4x4 {
 
-        res set 1f
+        res put 1f
 
         res[0][0] = 2f / (right - left)
         res[1][1] = 2f / (top - bottom)
@@ -219,7 +219,7 @@ interface matrix_transform {
      */
     fun ortho(left: Float, right: Float, bottom: Float, top: Float, res: Mat4x4 = Mat4x4()): Mat4x4 {
 
-        res set 1f
+        res put 1f
 
         res[0][0] = 2f / (right - left)
         res[1][1] = 2f / (top - bottom)
@@ -262,7 +262,7 @@ interface matrix_transform {
      */
     fun frustumLH(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float, res: Mat4x4 = Mat4x4()): Mat4x4 {
 
-        res set 0f
+        res put 0f
 
         res[0][0] = (2f * near) / (right - left)
         res[1][1] = (2f * near) / (top - bottom)
@@ -295,7 +295,7 @@ interface matrix_transform {
      */
     fun frustumRH(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float, res: Mat4x4 = Mat4x4()): Mat4x4 {
 
-        res set 0f
+        res put 0f
 
         res[0][0] = (2f * near) / (right - left)
         res[1][1] = (2f * near) / (top - bottom)
@@ -349,7 +349,7 @@ interface matrix_transform {
 
         val tanHalfFovy = tan(fovy / 2f)
 
-        res set 0f
+        res put 0f
 
         res[0][0] = 1f / (aspect * tanHalfFovy)
         res[1][1] = 1f / tanHalfFovy
@@ -383,7 +383,7 @@ interface matrix_transform {
 
         val tanHalfFovy = tan(fovy / 2f)
 
-        res set 0f
+        res put 0f
 
         res[0][0] = 1f / (aspect * tanHalfFovy)
         res[1][1] = 1f / tanHalfFovy
@@ -435,7 +435,7 @@ interface matrix_transform {
         val h = cos(0.5f * fov) / sin(0.5f * fov)
         val w = h * height / width  //TODO max(width , Height) / min(width , Height)?
 
-        res set 0f
+        res put 0f
 
         res[0][0] = w
         res[1][1] = h
@@ -470,7 +470,7 @@ interface matrix_transform {
         val h = cos(0.5f * fov) / sin(0.5f * fov)
         val w = h * height / width  //TODO max(width , Height) / min(width , Height)?
 
-        res set 0f
+        res put 0f
 
         res[0][0] = w
         res[1][1] = h
@@ -519,7 +519,7 @@ interface matrix_transform {
         val bottom = -range
         val top = range
 
-        res set 0f
+        res put 0f
         res[0][0] = (2f * zNear) / (right - left)
         res[1][1] = (2f * zNear) / (top - bottom)
         res[2][2] = -1f
@@ -546,7 +546,7 @@ interface matrix_transform {
         val bottom = -range
         val top = range
 
-        res set 0f
+        res put 0f
         res[0][0] = (2f * zNear) / (right - left)
         res[1][1] = (2f * zNear) / (top - bottom)
         res[2][2] = 1f
@@ -585,7 +585,7 @@ interface matrix_transform {
         val bottom = -range
         val top = range
 
-        res set 0f
+        res put 0f
         res[0][0] = (2f * zNear) / (right - left)
         res[1][1] = (2f * zNear) / (top - bottom)
         res[2][2] = ep - 1f
