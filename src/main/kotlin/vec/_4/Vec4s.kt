@@ -1,8 +1,8 @@
 package vec._4
 
-import BYTES
-import getShort
-import s
+import main.BYTES
+import main.getShort
+import main.s
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t
@@ -18,7 +18,7 @@ import java.nio.*
 
 data class Vec4s(override var x: Short, override var y: Short, override var z: Short, override var w: Short) : Vec4t<Short>() {
 
-    // -- Explicit basic, conversion other and conversion vector constructors --
+    // -- Explicit basic, conversion other main.and conversion vector constructors --
 
     constructor() : this(0)
 
@@ -121,10 +121,10 @@ data class Vec4s(override var x: Short, override var y: Short, override var z: S
 
     operator fun unaryPlus() = this
 
-    operator fun unaryMinus() = Vec4s(-x.s, -y.s, -z.s, -w.s) // TODO other .s
+    operator fun unaryMinus() = Vec4s(-x.s, -y.s, -z.s, -w.s) // TODO other .main.getS
 
 
-    // -- Increment and decrement operators --
+    // -- Increment main.and decrement operators --
 
     operator fun inc(res: Vec4s = Vec4s()) = add(res, this, 1, 1, 1, 1)
     fun inc_() = add(this, this, 1, 1, 1, 1)

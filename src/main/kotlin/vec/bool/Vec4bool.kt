@@ -6,7 +6,7 @@ package vec.bool
 
 data class Vec4bool(var x: Boolean = false, var y: Boolean = false, var z: Boolean = false, var w: Boolean = false) {
 
-    // -- Explicit basic, conversion other and conversion vector constructors --
+    // -- Explicit basic, conversion other main.and conversion vector constructors --
 
     constructor(b: Boolean) : this(b, b, b, b)
 

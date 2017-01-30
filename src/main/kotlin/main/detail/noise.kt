@@ -1,6 +1,6 @@
-package detail
+package main.detail
 
-import glm.Companion.floor
+import main.glm.Companion.floor
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t

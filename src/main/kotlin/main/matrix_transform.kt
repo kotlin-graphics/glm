@@ -1,13 +1,15 @@
+package main
+
 import detail.GLM_COORDINATE_SYSTEM
 import detail.GLM_DEPTH_CLIP_SPACE
 import detail.GLM_DEPTH_ZERO_TO_ONE
 import detail.GLM_LEFT_HANDED
-import glm.Companion.abs
-import glm.Companion.cos
-import glm.Companion.dot
-import glm.Companion.inverseSqrt
-import glm.Companion.sin
-import glm.Companion.tan
+import main.glm.Companion.abs
+import main.glm.Companion.cos
+import main.glm.Companion.dot
+import main.glm.Companion.inverseSqrt
+import main.glm.Companion.sin
+import main.glm.Companion.tan
 import main.epsilon
 import mat.Mat4x4
 import vec._3.Vec3
@@ -35,7 +37,7 @@ interface matrix_transform {
     }
 
     /**
-     * Builds a rotation 4 * 4 matrix created from an axis vector and an angle.
+     * Builds a rotation 4 * 4 matrix created from an axis vector main.and an angle.
      * @param m Input matrix multiplied by this rotation matrix.
      * @param angle Rotation angle expressed in radians.
      * @param v Rotation axis, recommended to be normalized.
@@ -399,7 +401,7 @@ interface matrix_transform {
     }
 
     /**
-     * Builds a perspective projection matrix based on a field of view and the default handedness.
+     * Builds a perspective projection matrix based on a field of view main.and the default handedness.
      *
      *  @param fov Expressed in radians.
      *  @param width
@@ -772,7 +774,7 @@ interface matrix_transform {
 //        val tmpY = (viewport[3] - 2f * (center.y - viewport[1])) / delta.y
 //        //val tmpZ = 0f
 //
-//        // Translate and scale the picked region to the entire window
+//        // Translate main.and scale the picked region to the entire window
 //        res[3].x = res[0].x * tmpX + res[1].x * tmpY + res[2].x * v.z + res[3].x
 //        res[3].y = res[0].y * tmpX + res[1].y * tmpY + res[2].y * v.z + res[3].y
 //        res[3].z = res[0].z * tmpX + res[1].z * tmpY + res[2].z * v.z + res[3].z

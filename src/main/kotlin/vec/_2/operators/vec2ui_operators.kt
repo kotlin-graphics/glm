@@ -1,7 +1,7 @@
 package vec._2.operators
 
 import Uint
-import i
+import main.i
 import udiv
 import urem
 import vec._2.Vec2ui

@@ -1,12 +1,12 @@
 package vec._4.operators
 
 import Ubyte
-import and
-import b
-import i
-import or
-import shl
-import shr
+import main.and
+import main.b
+import main.i
+import main.or
+import main.shl
+import main.shr
 import udiv
 import urem
 import ushr
@@ -16,7 +16,7 @@ import vec._4.Vec4ub.Companion.div
 import vec._4.Vec4ub.Companion.mul
 import vec._4.Vec4ub.Companion.rem
 import vec._4.Vec4ub.Companion.sub
-import xor
+import main.xor
 
 /**
  * Created by GBarbieri on 08.11.2016.

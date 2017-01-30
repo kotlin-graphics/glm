@@ -1,5 +1,6 @@
 import io.kotlintest.KTestJUnitRunner
 import io.kotlintest.specs.StringSpec
+import main.glm
 import mat.Mat4
 import mat.operators.div
 import mat.operators.times

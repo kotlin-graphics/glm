@@ -1,6 +1,6 @@
 package vec._3.operators
 
-import i
+import main.i
 import vec._3.Vec3i
 import vec._3.Vec3i.Companion.add
 import vec._3.Vec3i.Companion.div

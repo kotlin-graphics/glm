@@ -1,18 +1,18 @@
 package quat
 
-import epsilon
-import f
-import glm
-import glm.Companion.sqrt
-import glm.Companion.mix
-import glm.Companion.length
-import glm.Companion.acos
-import glm.Companion.atan
-import glm.Companion.cos
-import glm.Companion.clamp
-import glm.Companion.sin
-import glm.Companion.asin
-import glm.Companion.abs
+import main.epsilon
+import main.f
+import main.glm
+import main.glm.Companion.sqrt
+import main.glm.Companion.mix
+import main.glm.Companion.length
+import main.glm.Companion.acos
+import main.glm.Companion.atan
+import main.glm.Companion.cos
+import main.glm.Companion.clamp
+import main.glm.Companion.sin
+import main.glm.Companion.asin
+import main.glm.Companion.abs
 import main.epsilon
 import mat.Mat3x3
 import mat.Mat4x4
@@ -43,12 +43,12 @@ interface quat_func {
         return res
     }
 
-    /** Returns dot product of q1 and q2, i.e., q1[0] * q2[0] + q1[1] * q2[1] + ... */
+    /** Returns dot product of q1 main.and q2, main.getI.e., q1[0] * q2[0] + q1[1] * q2[1] + ... */
     fun dot(a: Quat, b: Quat) = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
 
 
     /** Spherical linear interpolation of two quaternions.
-     * The interpolation is oriented and the rotation is performed at constant speed.
+     * The interpolation is oriented main.and the rotation is performed at constant speed.
      * For short path spherical linear interpolation, use the slerp function.     */
     fun mix(a: Quat, b: Quat, interp: Float, res: Quat = Quat()): Quat {
 
@@ -93,7 +93,7 @@ interface quat_func {
 
 
     /** Spherical linear interpolation of two quaternions.
-     * The interpolation always take the short path and the rotation is performed at constant speed.     */
+     * The interpolation always take the short path main.and the rotation is performed at constant speed.     */
     fun slerp(a: Quat, b: Quat, interp: Float, res: Quat = Quat()): Quat {
 
         var zW = b.w
@@ -156,7 +156,7 @@ interface quat_func {
     }
 
 
-    /** Rotates a quaternion from a vector of 3 components axis and an angle.   */
+    /** Rotates a quaternion from a vector of 3 components axis main.and an angle.   */
     fun rotate(q: Quat, angle: Float, v: Vec3, res: Quat = Quat()): Quat {
 
         var tmpX = v.x
@@ -397,7 +397,7 @@ interface quat_func {
         return res
     }
 
-    /** Build a quaternion from an angle and a normalized axis. */
+    /** Build a quaternion from an angle main.and a normalized axis. */
     fun angleAxis(angle: Float, axis: Vec3, res: Quat = Quat()): Quat {
 
         val a = angle * 0.5f
@@ -475,7 +475,7 @@ interface quat_func {
         return res
     }
 
-    /** Returns true if x holds a positive infinity or negative infinity.   */
+    /** Returns true if x holds a positive infinity main.or negative infinity.   */
     fun isInf(q: Quat, res: Vec4bool = Vec4bool()): Vec4bool {
         res.x = q.x.isInfinite()
         res.y = q.y.isInfinite()

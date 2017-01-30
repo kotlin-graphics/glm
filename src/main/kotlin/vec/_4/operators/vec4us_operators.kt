@@ -1,12 +1,12 @@
 package vec._4.operators
 
 import Ushort
-import s
-import i
-import and
-import or
-import xor
-import shl
+import main.s
+import main.i
+import main.and
+import main.or
+import main.xor
+import main.shl
 import ushr
 import udiv
 import urem

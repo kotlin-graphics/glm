@@ -1,12 +1,12 @@
 package vec._2
 
-import BYTES
+import main.BYTES
 import Ushort
-import getShort
-import getUshort
-import i
-import s
-import us
+import main.getShort
+import main.getUshort
+import main.i
+import main.s
+import main.us
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t
@@ -22,7 +22,7 @@ import java.nio.*
 
 data class Vec2us(override var x: Ushort, override var y: Ushort) : Vec2t<Ushort>() {
 
-    // -- Explicit basic, conversion other and conversion vector constructors --
+    // -- Explicit basic, conversion other main.and conversion vector constructors --
 
     constructor() : this(0)
 
@@ -113,7 +113,7 @@ data class Vec2us(override var x: Ushort, override var y: Ushort) : Vec2t<Ushort
 
     // no unaryMinus operator, only signed
 
-    // -- Increment and decrement operators --
+    // -- Increment main.and decrement operators --
 
     operator fun inc(res: Vec2us = Vec2us()) = add(res, this, 1, 1)
     fun inc_() = add(this, this, 1, 1)

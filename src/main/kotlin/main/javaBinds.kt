@@ -1,3 +1,5 @@
+package main
+
 /**
  * Created by GBarbieri on 13.12.2016.
  */
@@ -13,7 +15,7 @@ val Float.Companion.BYTES: Int
 val Double.Companion.BYTES: Int
     get() = java.lang.Double.BYTES
 val Int.Companion.BYTES: Int
-    get() = java.lang.Integer.BYTES
+    get() = Integer.BYTES
 val Long.Companion.BYTES: Int
     get() = java.lang.Long.BYTES
 val Short.Companion.BYTES: Int
@@ -21,11 +23,11 @@ val Short.Companion.BYTES: Int
 val Ubyte.Companion.BYTES: Int
     get() = java.lang.Byte.BYTES
 val Uint.Companion.BYTES: Int
-    get() = java.lang.Integer.BYTES
+    get() = Integer.BYTES
 val Ulong.Companion.BYTES: Int
     get() = java.lang.Long.BYTES
 val Ushort.Companion.BYTES: Int
     get() = java.lang.Short.BYTES
 val Char.Companion.BYTES: Int
-    get() = java.lang.Character.BYTES
+    get() = Character.BYTES
 

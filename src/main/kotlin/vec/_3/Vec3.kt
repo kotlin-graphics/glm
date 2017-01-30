@@ -1,8 +1,8 @@
 package vec._3
 
-import BYTES
-import f
-import getFloat
+import main.BYTES
+import main.f
+import main.getFloat
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t
@@ -19,7 +19,7 @@ import java.nio.*
 data class Vec3(override var x: Float, override var y: Float, override var z: Float) : Vec3t<Float>() {
 
 
-    // -- Explicit basic, conversion other and conversion vector constructors --
+    // -- Explicit basic, conversion other main.and conversion vector constructors --
 
     constructor() : this(0)
 
@@ -119,7 +119,7 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
 
     operator fun unaryMinus() = Vec3(-x, -y, -z)
 
-    // -- Increment and decrement operators --
+    // -- Increment main.and decrement operators --
 
     operator fun inc(res: Vec3 = Vec3()) = add(res, this, 1f, 1f, 1f)
     fun inc_() = add(this, this, 1f, 1f, 1f)

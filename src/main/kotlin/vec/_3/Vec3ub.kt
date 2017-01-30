@@ -1,9 +1,9 @@
 package vec._3
 
-import BYTES
+import main.BYTES
 import Ubyte
-import i
-import ub
+import main.i
+import main.ub
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t
@@ -19,7 +19,7 @@ import java.nio.*
 
 data class Vec3ub(override var x: Ubyte, override var y: Ubyte, override var z: Ubyte) : Vec3t<Ubyte>() {
 
-    // -- Explicit basic, conversion b and conversion vector constructors --
+    // -- Explicit basic, conversion main.getB main.and conversion vector constructors --
 
     constructor() : this(0)
 
@@ -96,7 +96,7 @@ data class Vec3ub(override var x: Ubyte, override var y: Ubyte, override var z: 
 
     // no unaryMinus operator, only signed
 
-    // -- Increment and decrement operators --
+    // -- Increment main.and decrement operators --
 
     operator fun inc(res: Vec3ub = Vec3ub()) = add(res, this, 1, 1, 1)
     fun inc_() = add(this, this, 1, 1, 1)

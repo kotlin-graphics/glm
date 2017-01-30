@@ -1,12 +1,12 @@
 package  mat
 
-import BYTES
+import main.BYTES
 import mat.operators.mat4x4_operators
 import vec.Vec4t
 import vec._4.Vec4
-import glm.Companion.inverse
-import glm.Companion.transpose
-import glm.Companion.determinant
+import main.glm.Companion.inverse
+import main.glm.Companion.transpose
+import main.glm.Companion.determinant
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -112,14 +112,14 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
 //    fun to(scalar: Number) {
 //        value = mutableListOf(
-//                Vec4(scalar.f, 0),
-//                Vec4(0, scalar.f))
+//                Vec4(scalar.main.getF, 0),
+//                Vec4(0, scalar.main.getF))
 //    }
 //
 //    fun to(x0: Number, x1: Number, y0: Number, y1: Number) {
 //        value = mutableListOf(
-//                Vec4(x0.f, y0.f),
-//                Vec4(x1.f, y1.f))
+//                Vec4(x0.main.getF, y0.main.getF),
+//                Vec4(x1.main.getF, y1.main.getF))
 //    }
 //
 //    fun to(v0: Vec4t<*>, v1: Vec4t<*>) {
@@ -195,7 +195,7 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     operator fun unaryMinus() = Mat4x4(-value[0], -value[1], -value[2], -value[3])
 
 
-    // -- Increment and decrement operators --
+    // -- Increment main.and decrement operators --
 
     operator fun inc(res: Mat4x4 = Mat4x4()): Mat4x4 = add(res, this, 1f)
     fun inc_() = add(this, this, 1f)

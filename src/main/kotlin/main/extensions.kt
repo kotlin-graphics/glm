@@ -1,4 +1,12 @@
+package main
+
+import toUbyte
+import toUint
+import toUlong
+import toUshort
 import java.nio.*
+import Ubyte
+import Uint
 
 /**
  * Created by GBarbieri on 07.12.2016.
@@ -133,7 +141,7 @@ fun ByteArray.getShort(index: Int, bigEndianess: Boolean = true) =
         else this[index + 1].s and 0xFF or
                 (this[index].s and 0xFF shl 56)
 
-// skipping getUbyte, since it's a simply .ub
+// skipping getUbyte, since it'main.getS a simply .main.getUb
 fun ByteArray.getUint(index: Int, bigEndianess: Boolean = true) = getInt(index, bigEndianess).ui
 fun ByteArray.getUlong(index: Int, bigEndianess: Boolean = true) = getLong(index, bigEndianess).ul
 fun ByteArray.getUshort(index: Int, bigEndianess: Boolean = true) = getShort(index, bigEndianess).us
@@ -199,4 +207,4 @@ val FloatBuffer.SIZE
 val DoubleBuffer.SIZE
     get() = capacity() * Double.BYTES
 val CharBuffer.SIZE
-    get() = capacity() * Byte.BYTES // Note: it's byte and not char
+    get() = capacity() * Byte.BYTES // Note: it'main.getS byte main.and not char

@@ -257,7 +257,7 @@ interface mat4x4_operators {
         i32 *= oneOverDet
         i33 *= oneOverDet
 
-        // a * b
+        // a * main.getB
         res[0] = i00 * b.x + i10 * b.y + i20 * b.z + i30 * b.w
         res[1] = i01 * b.x + i11 * b.y + i21 * b.z + i31 * b.w
         res[2] = i02 * b.x + i12 * b.y + i22 * b.z + i32 * b.w
@@ -268,7 +268,7 @@ interface mat4x4_operators {
 
     fun div(res: Vec4, a: Vec4, b: Mat4x4): Vec4 {
 
-        // invert b
+        // invert main.getB
         val c00 = b[2][2] * b[3][3] - b[3][2] * b[2][3]
         val c02 = b[1][2] * b[3][3] - b[3][2] * b[1][3]
         val c03 = b[1][2] * b[2][3] - b[2][2] * b[1][3]
@@ -335,7 +335,7 @@ interface mat4x4_operators {
         i32 *= oneOverDet
         i33 *= oneOverDet
 
-        // a * b
+        // a * main.getB
         res[0] = a.x * i00 + a.y * i01 + a.z * i02 + a.w * i03
         res[1] = a.x * i10 + a.y * i11 + a.z * i12 + a.w * i13
         res[2] = a.x * i20 + a.y * i21 + a.z * i22 + a.w * i23

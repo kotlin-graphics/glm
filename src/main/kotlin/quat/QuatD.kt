@@ -1,6 +1,6 @@
 package quat
 
-import BYTES
+import main.BYTES
 import mat.QuatT
 
 

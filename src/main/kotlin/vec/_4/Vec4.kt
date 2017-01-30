@@ -1,8 +1,8 @@
 package vec._4
 
-import BYTES
-import f
-import getFloat
+import main.BYTES
+import main.f
+import main.getFloat
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t
@@ -18,7 +18,7 @@ import java.nio.*
 
 data class Vec4(override var x: Float, override var y: Float, override var z: Float, override var w: Float) : Vec4t<Float>() {
 
-    // -- Explicit basic, conversion other and conversion vector constructors --
+    // -- Explicit basic, conversion other main.and conversion vector constructors --
 
     constructor() : this(0)
 
@@ -29,7 +29,7 @@ data class Vec4(override var x: Float, override var y: Float, override var z: Fl
     constructor(x: Number, v: Vec3t<out Number>) : this(x, v.x, v.y, v.z)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z, v.w)
 
-    constructor(v: Vec2bool) : this(v.x.f, v.y.f, 0, 1) // TODO scalar to f
+    constructor(v: Vec2bool) : this(v.x.f, v.y.f, 0, 1) // TODO scalar to main.getF
     constructor(v: Vec3bool) : this(v.x.f, v.y.f, v.z.f, 1)
     constructor(v: Vec4bool) : this(v.x.f, v.y.f, v.z.f, v.w.f)
 
@@ -127,7 +127,7 @@ data class Vec4(override var x: Float, override var y: Float, override var z: Fl
 
     operator fun unaryMinus() = Vec4(-x, -y, -z, -w)
 
-    // -- Increment and decrement operators --
+    // -- Increment main.and decrement operators --
 
     operator fun inc(res: Vec4 = Vec4()) = add(res, this, 1f, 1f, 1f, 1f)
     fun inc_() = add(this, this, 1f, 1f, 1f, 1f)

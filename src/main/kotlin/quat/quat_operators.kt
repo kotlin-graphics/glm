@@ -6,7 +6,7 @@ import quat.Quat.Companion.add
 import quat.Quat.Companion.sub
 import quat.Quat.Companion.mul
 import quat.Quat.Companion.div
-import glm.Companion.dot
+import main.glm.Companion.dot
 
 /**
  * Created by GBarbieri on 13.12.2016.

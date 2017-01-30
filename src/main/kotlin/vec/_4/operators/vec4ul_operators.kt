@@ -3,8 +3,8 @@ package vec._4.operators
 import Ulong
 import udiv
 import urem
-import i
-import L
+import main.i
+import main.L
 import vec._4.Vec4ul
 import vec._4.Vec4ul.Companion.add
 import vec._4.Vec4ul.Companion.div

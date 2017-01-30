@@ -1,7 +1,7 @@
 package vec._3.operators
 
-import L
-import i
+import main.L
+import main.i
 import vec._3.Vec3l
 import vec._3.Vec3l.Companion.add
 import vec._3.Vec3l.Companion.div

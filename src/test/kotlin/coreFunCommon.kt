@@ -1,5 +1,7 @@
 import io.kotlintest.KTestJUnitRunner
 import io.kotlintest.specs.StringSpec
+import main.d
+import main.glm
 import org.junit.Test
 import org.junit.runner.RunWith
 import vec._2.Vec2

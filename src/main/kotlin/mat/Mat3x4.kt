@@ -1,6 +1,6 @@
 package  mat
 
-import BYTES
+import main.BYTES
 import  vec._4.Vec4
 
 /**

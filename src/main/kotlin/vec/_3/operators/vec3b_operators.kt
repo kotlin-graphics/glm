@@ -1,17 +1,17 @@
 package vec._3.operators
 
-import and
-import b
-import or
-import shl
-import shr
+import main.and
+import main.b
+import main.or
+import main.shl
+import main.shr
 import vec._3.Vec3b
 import vec._3.Vec3b.Companion.add
 import vec._3.Vec3b.Companion.div
 import vec._3.Vec3b.Companion.mul
 import vec._3.Vec3b.Companion.rem
 import vec._3.Vec3b.Companion.sub
-import xor
+import main.xor
 
 /**
  * Created by GBarbieri on 08.11.2016.

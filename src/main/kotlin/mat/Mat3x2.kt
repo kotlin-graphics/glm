@@ -1,6 +1,6 @@
 package  mat
 
-import BYTES
+import main.BYTES
 import vec._2.Vec2
 
 /**
@@ -11,7 +11,7 @@ class Mat3x2(override var value: MutableList<Vec2>) : Mat3x2t<Vec2> {
 
     // -- Accesses --
 
-    //operator fun get(i: Int) = value[i]
+    //operator fun get(main.getI: Int) = value[main.getI]
 
     operator fun set(i: Int, v: Vec2) {
         value[i] = v

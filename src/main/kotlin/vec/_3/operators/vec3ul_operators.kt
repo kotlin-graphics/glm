@@ -1,8 +1,8 @@
 package vec._3.operators
 
 import Ulong
-import i
-import L
+import main.i
+import main.L
 import udiv
 import urem
 import vec._3.Vec3ul

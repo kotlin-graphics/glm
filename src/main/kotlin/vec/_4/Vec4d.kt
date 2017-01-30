@@ -1,8 +1,8 @@
 package vec._4
 
-import BYTES
-import d
-import getDouble
+import main.BYTES
+import main.d
+import main.getDouble
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t
@@ -18,7 +18,7 @@ import java.nio.*
 
 data class Vec4d(override var x: Double, override var y: Double, override var z: Double, override var w: Double) : Vec4t<Double>() {
 
-    // -- Explicit basic, conversion other and conversion vector constructors --
+    // -- Explicit basic, conversion other main.and conversion vector constructors --
 
     constructor() : this(0)
 
@@ -123,7 +123,7 @@ data class Vec4d(override var x: Double, override var y: Double, override var z:
 
     operator fun unaryMinus() = Vec4d(-x, -y, -z, -w)
 
-    // -- Increment and decrement operators --
+    // -- Increment main.and decrement operators --
 
     operator fun inc(res: Vec4d = Vec4d()) = add(res, this, 1.0, 1.0, 1.0, 1.0)
     fun inc_() = add(this, this, 1.0, 1.0, 1.0, 1.0)

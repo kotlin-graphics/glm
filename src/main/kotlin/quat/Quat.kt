@@ -1,10 +1,10 @@
 package quat
 
-import BYTES
-import f
-import glm.Companion.cos
-import glm.Companion.dot
-import glm.Companion.sin
+import main.BYTES
+import main.f
+import main.glm.Companion.cos
+import main.glm.Companion.dot
+import main.glm.Companion.sin
 import mat.QuatT
 import vec._3.Vec3
 

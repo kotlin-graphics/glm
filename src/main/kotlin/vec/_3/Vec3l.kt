@@ -1,8 +1,8 @@
 package vec._3
 
-import BYTES
-import L
-import getLong
+import main.BYTES
+import main.L
+import main.getLong
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t
@@ -18,7 +18,7 @@ import java.nio.*
 
 data class Vec3l(override var x: Long, override var y: Long, override var z: Long) : Vec3t<Long>() {
 
-    // -- Explicit basic, conversion other and conversion vector constructors --
+    // -- Explicit basic, conversion other main.and conversion vector constructors --
 
     constructor() : this(0)
 
@@ -116,7 +116,7 @@ data class Vec3l(override var x: Long, override var y: Long, override var z: Lon
 
     operator fun unaryMinus() = Vec3l(-x, -y, -z)
 
-    // -- Increment and decrement operators --
+    // -- Increment main.and decrement operators --
 
     operator fun inc(res: Vec3l = Vec3l()) = add(res, this, 1, 1, 1)
     fun inc_() = add(this, this, 1, 1, 1)

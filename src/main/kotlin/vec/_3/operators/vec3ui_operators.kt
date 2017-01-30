@@ -1,7 +1,7 @@
 package vec._3.operators
 
 import Uint
-import i
+import main.i
 import udiv
 import urem
 import vec._3.Vec3ui

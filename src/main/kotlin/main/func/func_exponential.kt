@@ -1,7 +1,7 @@
-package func
+package main.func
 
-import d
-import f
+import main.d
+import main.f
 import vec._2.Vec2
 import vec._2.Vec2d
 import vec._3.Vec3

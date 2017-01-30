@@ -1,3 +1,5 @@
+package main
+
 import mat.Mat2x2
 import mat.Mat3x3
 import mat.Mat4x4
@@ -230,7 +232,7 @@ interface func_matrix {
 
 
     /**
-     * Multiply matrix x by matrix y component-wise, i.e.,
+     * Multiply matrix x by matrix y component-wise, main.getI.e.,
      */
     fun matrixCompMult(a: Mat2x2, b: Mat2x2, res: Mat2x2 = Mat2x2()): Mat2x2 {
 
@@ -244,7 +246,7 @@ interface func_matrix {
     }
 
     /**
-     * Multiply matrix x by matrix y component-wise, i.e.,
+     * Multiply matrix x by matrix y component-wise, main.getI.e.,
      */
     fun matrixCompMult(a: Mat3x3, b: Mat3x3, res: Mat3x3 = Mat3x3()): Mat3x3 {
 
@@ -264,7 +266,7 @@ interface func_matrix {
     }
 
     /**
-     * Multiply matrix x by matrix y component-wise, i.e.,
+     * Multiply matrix x by matrix y component-wise, main.getI.e.,
      */
     fun matrixCompMult(a: Mat4x4, b: Mat4x4, res: Mat4x4 = Mat4x4()): Mat4x4 {
 
@@ -293,7 +295,7 @@ interface func_matrix {
 
 
     /**
-     * Treats the first parameter c as a column vector and the second parameter r as a row vector and does a linear
+     * Treats the first parameter c as a column vector main.and the second parameter r as a row vector main.and does a linear
      * algebraic matrix multiply c * r.
      */
     fun outerProduct(c: Vec2, r: Vec2, res: Mat2x2 = Mat2x2()): Mat2x2 {
@@ -308,7 +310,7 @@ interface func_matrix {
     }
 
     /**
-     * Treats the first parameter c as a column vector and the second parameter r as a row vector and does a linear
+     * Treats the first parameter c as a column vector main.and the second parameter r as a row vector main.and does a linear
      * algebraic matrix multiply c * r.
      */
     fun outerProduct(c: Vec3, r: Vec3, res: Mat3x3 = Mat3x3()): Mat3x3 {
@@ -329,7 +331,7 @@ interface func_matrix {
     }
 
     /**
-     * Treats the first parameter c as a column vector and the second parameter r as a row vector and does a linear
+     * Treats the first parameter c as a column vector main.and the second parameter r as a row vector main.and does a linear
      * algebraic matrix multiply c * r.
      */
     fun outerProduct(c: Vec4, r: Vec4, res: Mat4x4 = Mat4x4()): Mat4x4 {

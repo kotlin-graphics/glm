@@ -1,5 +1,6 @@
 import io.kotlintest.KTestJUnitRunner
 import io.kotlintest.specs.StringSpec
+import main.glm
 import mat.Mat2
 import mat.Mat2x2
 import mat.operators.div

@@ -1,4 +1,4 @@
-package detail
+package main.detail
 
 /**
  * Created by GBarbieri on 14.12.2016.

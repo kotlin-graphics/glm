@@ -1,6 +1,6 @@
 package vec.bool
 
-import glm
+import main.glm
 
 
 /**
@@ -9,7 +9,7 @@ import glm
 
 data class Vec2bool(var x: Boolean = false, var y: Boolean = false) {
 
-    // -- Explicit basic, conversion other and conversion vector constructors --
+    // -- Explicit basic, conversion other main.and conversion vector constructors --
 
     constructor(b: Boolean) : this(b, b)
 

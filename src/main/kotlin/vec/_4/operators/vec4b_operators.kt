@@ -1,11 +1,11 @@
 package vec._4.operators
 
-import b
-import and
-import or
-import xor
-import shl
-import shr
+import main.b
+import main.and
+import main.or
+import main.xor
+import main.shl
+import main.shr
 import vec._4.Vec4b
 import vec._4.Vec4b.Companion.add
 import vec._4.Vec4b.Companion.div

@@ -1,16 +1,15 @@
-package func
+package main.func
 
-import d
-import f
-import glm
+import main.d
+import main.f
+import main.glm.Companion.sqrt
+import main.glm.Companion.inverseSqrt
 import vec._2.Vec2
-import glm.Companion.sqrt
 import vec._2.Vec2d
 import vec._3.Vec3
 import vec._3.Vec3d
 import vec._4.Vec4
 import vec._4.Vec4d
-import glm.Companion.inverseSqrt
 import quat.Quat
 
 /**

@@ -1,7 +1,7 @@
-package func
+package main.func
 
-import d
-import f
+import main.d
+import main.f
 
 /**
  * Created by GBarbieri on 12.12.2016.

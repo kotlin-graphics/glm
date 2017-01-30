@@ -1,11 +1,11 @@
-package func
+package main.func
 
-import L
-import b
-import d
-import f
-import i
-import s
+import main.L
+import main.b
+import main.d
+import main.f
+import main.i
+import main.s
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t

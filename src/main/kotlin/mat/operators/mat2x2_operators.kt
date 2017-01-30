@@ -162,7 +162,7 @@ operator fun Mat2x2.unaryPlus() = this
 operator fun Mat2x2.unaryMinus() = Mat2x2(-value[0], -value[1])
 
 
-// -- Increment and decrement operators --
+// -- Increment main.and decrement operators --
 
 operator fun Mat2x2.inc(res: Mat2x2 = Mat2x2()): Mat2x2 = add(res, this, 1f)
 fun Mat2x2.inc_() = add(this, this, 1f)

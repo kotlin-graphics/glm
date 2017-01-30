@@ -1,28 +1,28 @@
-package func.common
+package main.func.common
 
 import vec._4.*
 import vec.bool.Vec4bool
-import glm.Companion.abs
-import glm.Companion.sign
-import glm.Companion.floor
-import glm.Companion.trunc
-import glm.Companion.round
-import glm.Companion.ceil
-import glm.Companion.fract
-import glm.Companion.mod
-import glm.Companion.min
-import glm.Companion.max
-import glm.Companion.mix
-import glm.Companion.clamp
-import glm.Companion.step
-import glm.Companion.smoothStep
-import glm.Companion.isInf
-import glm.Companion.isNan
-import glm.Companion.floatBitsToInt
-import glm.Companion.floatBitsToUint
-import glm.Companion.intBitsToFloat
-import glm.Companion.uintBitsToFloat
-import glm.Companion.fma
+import main.glm.Companion.abs
+import main.glm.Companion.sign
+import main.glm.Companion.floor
+import main.glm.Companion.trunc
+import main.glm.Companion.round
+import main.glm.Companion.ceil
+import main.glm.Companion.fract
+import main.glm.Companion.mod
+import main.glm.Companion.min
+import main.glm.Companion.max
+import main.glm.Companion.mix
+import main.glm.Companion.clamp
+import main.glm.Companion.step
+import main.glm.Companion.smoothStep
+import main.glm.Companion.isInf
+import main.glm.Companion.isNan
+import main.glm.Companion.floatBitsToInt
+import main.glm.Companion.floatBitsToUint
+import main.glm.Companion.intBitsToFloat
+import main.glm.Companion.uintBitsToFloat
+import main.glm.Companion.fma
 
 /**
  * Created by GBarbieri on 11.11.2016.

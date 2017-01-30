@@ -1,11 +1,11 @@
 package vec._3.operators
 
 import Ushort
-import and
-import i
-import or
-import s
-import shl
+import main.and
+import main.i
+import main.or
+import main.s
+import main.shl
 import udiv
 import urem
 import ushr
@@ -15,7 +15,7 @@ import vec._3.Vec3us.Companion.div
 import vec._3.Vec3us.Companion.mul
 import vec._3.Vec3us.Companion.rem
 import vec._3.Vec3us.Companion.sub
-import xor
+import main.xor
 
 
 /**

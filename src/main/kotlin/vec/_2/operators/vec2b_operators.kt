@@ -1,18 +1,18 @@
 package vec._2.operators
 
-import and
-import b
-import i
-import or
-import shl
-import shr
+import main.and
+import main.b
+import main.i
+import main.or
+import main.shl
+import main.shr
 import vec._2.Vec2b
 import vec._2.Vec2b.Companion.add
 import vec._2.Vec2b.Companion.div
 import vec._2.Vec2b.Companion.mul
 import vec._2.Vec2b.Companion.rem
 import vec._2.Vec2b.Companion.sub
-import xor
+import main.xor
 
 /**
  * Created by GBarbieri on 08.11.2016.
