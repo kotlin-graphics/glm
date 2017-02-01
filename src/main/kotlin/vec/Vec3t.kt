@@ -1,6 +1,7 @@
 package vec
 
 import main.b
+import main.d
 import main.glm
 import vec.bool.Vec2bool
 import vec.bool.Vec3bool
@@ -113,6 +114,7 @@ abstract class Vec3t<T : Number> {
         val y = list[index + 1]
         val z = list[index + 2]
         if (x is Number && y is Number && z is Number) put(x, y, z)
+        else if (x is String && y is String && z is String) put(x.d, y.d, z.d)
         else if (x is Char && y is Char && z is Char) put(x.b, y.b, z.b)
         else if (x is Boolean && y is Boolean && z is Boolean) put(x.b, y.b, z.b)
         else throw ArithmeticException("incompatible this type")
