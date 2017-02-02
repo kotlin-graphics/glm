@@ -8,6 +8,7 @@ import vec._4.Vec4
 import main.glm.Companion.inverse
 import main.glm.Companion.transpose
 import main.glm.Companion.determinant
+import vec._3.Vec3
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -284,10 +285,21 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
 
     // TODO others
+    fun scale_(scale: Vec3) = scale_(scale.x, scale.y, scale.z)
     fun scale_(scale: Float) = scale_(scale, scale, scale)
     fun scale_(scaleX: Float, scaleY: Float, scaleZ: Float) = glm.scale(this, scaleX, scaleY, scaleZ, this)
+    
+    fun scale(scale: Vec3) = scale(scale.x, scale.y, scale.z)
     fun scale(scale: Float) = scale(scale, scale, scale)
     fun scale(scaleX: Float, scaleY: Float, scaleZ: Float) = glm.scale(this, scaleX, scaleY, scaleZ)
+    
+    fun translate_(translate: Vec3) = translate_(translate.x, translate.y, translate.z)
+    fun translate_(translate: Float) = translate_(translate, translate, translate)
+    fun translate_(translateX: Float, translateY: Float, translateZ: Float) = glm.translate(this, translateX, translateY, translateZ, this)
+    
+    fun translate(translate: Vec3) = translate(translate.x, translate.y, translate.z)
+    fun translate(translate: Float) = translate(translate, translate, translate)
+    fun translate(translateX: Float, translateY: Float, translateZ: Float) = glm.translate(this, translateX, translateY, translateZ)
 
 
     // TODO others

@@ -28,11 +28,13 @@ interface matrix_transform {
      * @param res the resulting matrix
      * @return see [res]
      */
-    fun translate(m: Mat4x4, v: Vec3, res: Mat4x4 = Mat4x4()): Mat4x4 {
+    fun translate(m: Mat4x4, v: Vec3, res: Mat4x4 = Mat4x4()) = translate(m, v.x, v.y, v.z, res)
+
+    fun translate(m: Mat4x4, vX: Float, vY: Float, vZ: Float, res: Mat4x4 = Mat4x4()): Mat4x4 {
         res to m
-        res[3].x = m[0].x * v.x + m[1].x * v.y + m[2].x * v.z + m[3].x
-        res[3].y = m[0].y * v.x + m[1].y * v.y + m[2].y * v.z + m[3].y
-        res[3].z = m[0].z * v.x + m[1].z * v.y + m[2].z * v.z + m[3].z
+        res[3].x = m[0].x * vX + m[1].x * vY + m[2].x * vZ + m[3].x
+        res[3].y = m[0].y * vX + m[1].y * vY + m[2].y * vZ + m[3].y
+        res[3].z = m[0].z * vX + m[1].z * vY + m[2].z * vZ + m[3].z
         return res
     }
 
@@ -749,7 +751,7 @@ interface matrix_transform {
         val objY = i01 * tmpX + i11 * tmpY + i21 * tmpZ + i31 * tmpW
         val objZ = i02 * tmpX + i12 * tmpY + i22 * tmpZ + i32 * tmpW
         val objW = i03 * tmpX + i13 * tmpY + i23 * tmpZ + i33 * tmpW
-        
+
         res.put(objX, objY, objZ)
 
         return res div_ objW
@@ -757,14 +759,14 @@ interface matrix_transform {
 
     /**
      * Define a picking region
-     * 
+     *
      * @param center
      * @param delta
      * @param viewport
      * @param res the resulting matrix.
      * @return [res]
      */
-//    fun pickMatrix(center: Vec2, delta: Vec2, viewport: Vec4i, res: Mat4x4 = Mat4x4()): Mat4x4 {
+    //    fun pickMatrix(center: Vec2, delta: Vec2, viewport: Vec4i, res: Mat4x4 = Mat4x4()): Mat4x4 {
 //
 //        assert(delta.x > 0f && delta.y > 0f)
 //
