@@ -100,22 +100,24 @@ interface matrix_transform {
      * @param res the resulting matrix
      * @return see [res]
      */
-    fun scale(m: Mat4x4, v: Vec3, res: Mat4x4 = Mat4x4()): Mat4x4 {
+    fun scale(m: Mat4x4, v: Vec3, res: Mat4x4 = Mat4x4()) = scale(m, v.x, v.y, v.z, res)
 
-        res[0].x = m[0].x * v[0]
-        res[0].y = m[0].y * v[0]
-        res[0].z = m[0].z * v[0]
-        res[0].w = m[0].w * v[0]
+    fun scale(m: Mat4x4, vX: Float, vY: Float, vZ: Float, res: Mat4x4 = Mat4x4()): Mat4x4 {
 
-        res[1].x = m[1].x * v[1]
-        res[1].y = m[1].y * v[1]
-        res[1].z = m[1].z * v[1]
-        res[1].w = m[1].w * v[1]
+        res[0].x = m[0].x * vX
+        res[0].y = m[0].y * vX
+        res[0].z = m[0].z * vX
+        res[0].w = m[0].w * vX
 
-        res[2].x = m[2].x * v[2]
-        res[2].y = m[2].y * v[2]
-        res[2].z = m[2].z * v[2]
-        res[2].w = m[2].w * v[2]
+        res[1].x = m[1].x * vY
+        res[1].y = m[1].y * vY
+        res[1].z = m[1].z * vY
+        res[1].w = m[1].w * vY
+
+        res[2].x = m[2].x * vZ
+        res[2].y = m[2].y * vZ
+        res[2].z = m[2].z * vZ
+        res[2].w = m[2].w * vZ
 
         res[3].x = m[3].x
         res[3].y = m[3].y

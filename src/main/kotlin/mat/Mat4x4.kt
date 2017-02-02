@@ -1,6 +1,7 @@
 package  mat
 
 import main.BYTES
+import main.glm
 import mat.operators.mat4x4_operators
 import vec.Vec4t
 import vec._4.Vec4
@@ -280,6 +281,13 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
     fun transpose(res: Mat4x4 = Mat4x4()) = transpose(res, this)
     fun transpose_() = transpose(this, this)
+
+
+    // TODO others
+    fun scale_(scale: Float) = scale_(scale, scale, scale)
+    fun scale_(scaleX: Float, scaleY: Float, scaleZ: Float) = glm.scale(this, scaleX, scaleY, scaleZ, this)
+    fun scale(scale: Float) = scale(scale, scale, scale)
+    fun scale(scaleX: Float, scaleY: Float, scaleZ: Float) = glm.scale(this, scaleX, scaleY, scaleZ)
 
 
     // TODO others
