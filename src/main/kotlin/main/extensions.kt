@@ -222,10 +222,10 @@ operator fun CharBuffer.set(index: Int, char: Char) = put(index, char)
 operator fun CharBuffer.get(index: Int) = get(index)
 
 val Float.deg
-    get() = Math.toDegrees(this.d)
+    get() = Math.toDegrees(this.d).f
 val Double.deg
     get() = Math.toDegrees(this)
 val Float.rad
-    get() = Math.toRadians(this.d)
+    get() = Math.toRadians(this.d).f
 val Double.rad
     get() = Math.toRadians(this)
