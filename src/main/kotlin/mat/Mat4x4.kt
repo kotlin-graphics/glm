@@ -12,6 +12,8 @@ import vec._3.Vec3
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
+import main.get
+import main.set
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -193,49 +195,48 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     }
 
     // TODO others
-    fun toDBB(dbb: ByteBuffer = ByteBuffer.allocateDirect(SIZE).order(ByteOrder.nativeOrder())) = to(dbb)
+    infix fun to(dbb: ByteBuffer): ByteBuffer = to(dbb, 0)
 
-    infix fun to(dbb: ByteBuffer): ByteBuffer {
-        dbb.putFloat(0 * Float.BYTES, value[0][0])
-        dbb.putFloat(1 * Float.BYTES, value[0][1])
-        dbb.putFloat(2 * Float.BYTES, value[0][2])
-        dbb.putFloat(3 * Float.BYTES, value[0][3])
-        dbb.putFloat(4 * Float.BYTES, value[1][0])
-        dbb.putFloat(5 * Float.BYTES, value[1][1])
-        dbb.putFloat(6 * Float.BYTES, value[1][2])
-        dbb.putFloat(7 * Float.BYTES, value[1][3])
-        dbb.putFloat(8 * Float.BYTES, value[2][0])
-        dbb.putFloat(9 * Float.BYTES, value[2][1])
-        dbb.putFloat(10 * Float.BYTES, value[2][2])
-        dbb.putFloat(11 * Float.BYTES, value[2][3])
-        dbb.putFloat(12 * Float.BYTES, value[3][0])
-        dbb.putFloat(13 * Float.BYTES, value[3][1])
-        dbb.putFloat(14 * Float.BYTES, value[3][2])
-        dbb.putFloat(15 * Float.BYTES, value[3][3])
+    fun to(dbb: ByteBuffer, offset: Int): ByteBuffer {
+        dbb.putFloat(offset + 0 * Float.BYTES, value[0][0])
+        dbb.putFloat(offset + 1 * Float.BYTES, value[0][1])
+        dbb.putFloat(offset + 2 * Float.BYTES, value[0][2])
+        dbb.putFloat(offset + 3 * Float.BYTES, value[0][3])
+        dbb.putFloat(offset + 4 * Float.BYTES, value[1][0])
+        dbb.putFloat(offset + 5 * Float.BYTES, value[1][1])
+        dbb.putFloat(offset + 6 * Float.BYTES, value[1][2])
+        dbb.putFloat(offset + 7 * Float.BYTES, value[1][3])
+        dbb.putFloat(offset + 8 * Float.BYTES, value[2][0])
+        dbb.putFloat(offset + 9 * Float.BYTES, value[2][1])
+        dbb.putFloat(offset + 10 * Float.BYTES, value[2][2])
+        dbb.putFloat(offset + 11 * Float.BYTES, value[2][3])
+        dbb.putFloat(offset + 12 * Float.BYTES, value[3][0])
+        dbb.putFloat(offset + 13 * Float.BYTES, value[3][1])
+        dbb.putFloat(offset + 14 * Float.BYTES, value[3][2])
+        dbb.putFloat(offset + 15 * Float.BYTES, value[3][3])
         return dbb
     }
+
     // TODO others
-    fun toDFB(dfb: FloatBuffer = ByteBuffer.allocateDirect(SIZE).order(ByteOrder.nativeOrder()).asFloatBuffer()) = to(dfb)
+    infix fun to(dfb: FloatBuffer) = to(dfb, 0)
 
-    operator fun FloatBuffer.set(int: Int, float: Float) = put(int, float)
-
-    infix fun to(dfb: FloatBuffer): FloatBuffer {
-        dfb[0] = value[0][0]
-        dfb[1] = value[0][1]
-        dfb[2] = value[0][2]
-        dfb[3] = value[0][3]
-        dfb[4] = value[1][0]
-        dfb[5] = value[1][1]
-        dfb[6] = value[1][2]
-        dfb[7] = value[1][3]
-        dfb[8] = value[2][0]
-        dfb[9] = value[2][1]
-        dfb[10] = value[2][2]
-        dfb[11] = value[2][3]
-        dfb[12] = value[3][0]
-        dfb[13] = value[3][1]
-        dfb[14] = value[3][2]
-        dfb[15] = value[3][3]
+    fun to(dfb: FloatBuffer, offset: Int): FloatBuffer {
+        dfb[offset + 0] = value[0][0]
+        dfb[offset + 1] = value[0][1]
+        dfb[offset + 2] = value[0][2]
+        dfb[offset + 3] = value[0][3]
+        dfb[offset + 4] = value[1][0]
+        dfb[offset + 5] = value[1][1]
+        dfb[offset + 6] = value[1][2]
+        dfb[offset + 7] = value[1][3]
+        dfb[offset + 8] = value[2][0]
+        dfb[offset + 9] = value[2][1]
+        dfb[offset + 10] = value[2][2]
+        dfb[offset + 11] = value[2][3]
+        dfb[offset + 12] = value[3][0]
+        dfb[offset + 13] = value[3][1]
+        dfb[offset + 14] = value[3][2]
+        dfb[offset + 15] = value[3][3]
         return dfb
     }
 
