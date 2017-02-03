@@ -102,6 +102,16 @@ data class Vec2(override var x: Float, override var y: Float) : Vec2t<Float>() {
     }
 
 
+    // TODO others
+    infix fun to(floats: FloatArray) = to(floats, 0)
+
+    fun to(floats: FloatArray, index: Int): FloatArray {
+        floats[0] = x
+        floats[1] = y
+        return floats
+    }
+
+
     // -- Unary arithmetic operators --
 
     operator fun unaryPlus() = this
