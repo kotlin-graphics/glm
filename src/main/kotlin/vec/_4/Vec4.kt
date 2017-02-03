@@ -121,6 +121,17 @@ data class Vec4(override var x: Float, override var y: Float, override var z: Fl
         @JvmField val SIZE = 4 * Float.BYTES
     }
 
+    // TODO others
+    infix fun to(floats: FloatArray) = to(floats, 0)
+
+    fun to(floats: FloatArray, index: Int): FloatArray {
+        floats[0] = x
+        floats[1] = y
+        floats[2] = z
+        floats[3] = w
+        return floats
+    }
+
 
     // -- Unary arithmetic operators --
 
