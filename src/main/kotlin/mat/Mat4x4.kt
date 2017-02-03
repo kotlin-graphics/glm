@@ -11,6 +11,7 @@ import main.glm.Companion.determinant
 import vec._3.Vec3
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import java.nio.FloatBuffer
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -212,6 +213,30 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
         dbb.putFloat(14 * Float.BYTES, value[3][2])
         dbb.putFloat(15 * Float.BYTES, value[3][3])
         return dbb
+    }
+    // TODO others
+    fun toDFB(dfb: FloatBuffer = ByteBuffer.allocateDirect(SIZE).order(ByteOrder.nativeOrder()).asFloatBuffer()) = to(dfb)
+
+    operator fun FloatBuffer.set(int: Int, float: Float) = put(int, float)
+
+    infix fun to(dfb: FloatBuffer): FloatBuffer {
+        dfb[0] = value[0][0]
+        dfb[1] = value[0][1]
+        dfb[2] = value[0][2]
+        dfb[3] = value[0][3]
+        dfb[4] = value[1][0]
+        dfb[5] = value[1][1]
+        dfb[6] = value[1][2]
+        dfb[7] = value[1][3]
+        dfb[8] = value[2][0]
+        dfb[9] = value[2][1]
+        dfb[10] = value[2][2]
+        dfb[11] = value[2][3]
+        dfb[12] = value[3][0]
+        dfb[13] = value[3][1]
+        dfb[14] = value[3][2]
+        dfb[15] = value[3][3]
+        return dfb
     }
 
     // -- Accesses --
