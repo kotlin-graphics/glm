@@ -9,6 +9,8 @@ import main.glm.Companion.inverse
 import main.glm.Companion.transpose
 import main.glm.Companion.determinant
 import vec._3.Vec3
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -170,6 +172,8 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     }
 
     // TODO others
+    fun toMat3() = to(Mat3x3())
+
     infix fun to(res: Mat3x3): Mat3x3 {
 
         res[0][0] = this[0][0]
@@ -187,8 +191,28 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
         return res
     }
 
-    fun toMat3() = to(Mat3x3())
+    // TODO others
+    fun toDBB(dbb: ByteBuffer = ByteBuffer.allocateDirect(SIZE).order(ByteOrder.nativeOrder())) = to(dbb)
 
+    infix fun to(dbb: ByteBuffer): ByteBuffer {
+        dbb.putFloat(0 * Float.BYTES, value[0][0])
+        dbb.putFloat(1 * Float.BYTES, value[0][1])
+        dbb.putFloat(2 * Float.BYTES, value[0][2])
+        dbb.putFloat(3 * Float.BYTES, value[0][3])
+        dbb.putFloat(4 * Float.BYTES, value[1][0])
+        dbb.putFloat(5 * Float.BYTES, value[1][1])
+        dbb.putFloat(6 * Float.BYTES, value[1][2])
+        dbb.putFloat(7 * Float.BYTES, value[1][3])
+        dbb.putFloat(8 * Float.BYTES, value[2][0])
+        dbb.putFloat(9 * Float.BYTES, value[2][1])
+        dbb.putFloat(10 * Float.BYTES, value[2][2])
+        dbb.putFloat(11 * Float.BYTES, value[2][3])
+        dbb.putFloat(12 * Float.BYTES, value[3][0])
+        dbb.putFloat(13 * Float.BYTES, value[3][1])
+        dbb.putFloat(14 * Float.BYTES, value[3][2])
+        dbb.putFloat(15 * Float.BYTES, value[3][3])
+        return dbb
+    }
 
     // -- Accesses --
 
@@ -286,17 +310,18 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
     // TODO others
     fun scale_(scale: Vec3) = scale_(scale.x, scale.y, scale.z)
+
     fun scale_(scale: Float) = scale_(scale, scale, scale)
     fun scale_(scaleX: Float, scaleY: Float, scaleZ: Float) = glm.scale(this, scaleX, scaleY, scaleZ, this)
-    
+
     fun scale(scale: Vec3) = scale(scale.x, scale.y, scale.z)
     fun scale(scale: Float) = scale(scale, scale, scale)
     fun scale(scaleX: Float, scaleY: Float, scaleZ: Float) = glm.scale(this, scaleX, scaleY, scaleZ)
-    
+
     fun translate_(translate: Vec3) = translate_(translate.x, translate.y, translate.z)
     fun translate_(translate: Float) = translate_(translate, translate, translate)
     fun translate_(translateX: Float, translateY: Float, translateZ: Float) = glm.translate(this, translateX, translateY, translateZ, this)
-    
+
     fun translate(translate: Vec3) = translate(translate.x, translate.y, translate.z)
     fun translate(translate: Float) = translate(translate, translate, translate)
     fun translate(translateX: Float, translateY: Float, translateZ: Float) = glm.translate(this, translateX, translateY, translateZ)
