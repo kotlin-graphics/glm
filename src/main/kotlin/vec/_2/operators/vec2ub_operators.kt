@@ -8,6 +8,7 @@ import vec._2.Vec2ub.Companion.div
 import vec._2.Vec2ub.Companion.mul
 import vec._2.Vec2ub.Companion.rem
 import vec._2.Vec2ub.Companion.sub
+import kotlin.experimental.inv
 
 /**
  * Created by GBarbieri on 08.11.2016.
@@ -232,8 +233,8 @@ interface vec2ub_operators {
     }
 
     fun shr(res: Vec2ub, a: Vec2ub, bX: Ubyte, bY: Ubyte): Vec2ub {
-        res.x.v = a.x.v shr bX
-        res.y.v = a.y.v shr bY
+        res.x.v = a.x.v ushr bX
+        res.y.v = a.y.v ushr bY
         return res
     }
 

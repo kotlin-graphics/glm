@@ -12,6 +12,7 @@ import vec._4.Vec4b.Companion.div
 import vec._4.Vec4b.Companion.mul
 import vec._4.Vec4b.Companion.rem
 import vec._4.Vec4b.Companion.sub
+import kotlin.experimental.inv
 
 /**
  * Created by GBarbieri on 08.11.2016.

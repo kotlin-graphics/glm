@@ -8,6 +8,7 @@ import vec._4.Vec4ub.Companion.div
 import vec._4.Vec4ub.Companion.mul
 import vec._4.Vec4ub.Companion.rem
 import vec._4.Vec4ub.Companion.sub
+import kotlin.experimental.inv
 
 /**
  * Created by GBarbieri on 08.11.2016.
@@ -304,10 +305,10 @@ interface vec4ub_operators {
     }
 
     fun shr(res: Vec4ub, a: Vec4ub, bX: Ubyte, bY: Ubyte, bZ: Ubyte, bW: Ubyte): Vec4ub {
-        res.x.v = a.x.v shr bX
-        res.y.v = a.y.v shr bY
-        res.z.v = a.z.v shr bZ
-        res.w.v = a.w.v shr bW
+        res.x.v = a.x.v ushr bX
+        res.y.v = a.y.v ushr bY
+        res.z.v = a.z.v ushr bZ
+        res.w.v = a.w.v ushr bW // TODO -v shr?
         return res
     }
 

@@ -12,6 +12,7 @@ import vec._3.Vec3b.Companion.mul
 import vec._3.Vec3b.Companion.rem
 import vec._3.Vec3b.Companion.sub
 import main.xor
+import kotlin.experimental.inv
 
 /**
  * Created by GBarbieri on 08.11.2016.

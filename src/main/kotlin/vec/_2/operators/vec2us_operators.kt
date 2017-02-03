@@ -8,6 +8,7 @@ import vec._2.Vec2us.Companion.div
 import vec._2.Vec2us.Companion.mul
 import vec._2.Vec2us.Companion.rem
 import vec._2.Vec2us.Companion.sub
+import kotlin.experimental.inv
 
 /**
  * Created by elect on 09/11/16.

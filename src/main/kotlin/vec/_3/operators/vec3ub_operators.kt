@@ -8,6 +8,7 @@ import vec._3.Vec3ub.Companion.div
 import vec._3.Vec3ub.Companion.mul
 import vec._3.Vec3ub.Companion.rem
 import vec._3.Vec3ub.Companion.sub
+import kotlin.experimental.inv
 
 /**
  * Created by GBarbieri on 08.11.2016.
@@ -268,9 +269,9 @@ interface vec3ub_operators {
     }
 
     fun shr(res: Vec3ub, a: Vec3ub, bX: Ubyte, bY: Ubyte, bZ: Ubyte): Vec3ub {
-        res.x.v = a.x.v shr bX
-        res.y.v = a.y.v shr bY
-        res.z.v = a.z.v shr bZ
+        res.x.v = a.x.v ushr bX
+        res.y.v = a.y.v ushr bY
+        res.z.v = a.z.v ushr bZ
         return res
     }
 

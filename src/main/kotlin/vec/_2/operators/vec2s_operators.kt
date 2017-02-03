@@ -12,6 +12,7 @@ import vec._2.Vec2s.Companion.mul
 import vec._2.Vec2s.Companion.rem
 import vec._2.Vec2s.Companion.sub
 import main.xor
+import kotlin.experimental.inv
 
 /**
  * Created by GBarbieri on 08.11.2016.
