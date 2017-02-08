@@ -138,6 +138,7 @@ fun ByteArray.getShort(index: Int, bigEndianess: Boolean = true) =
 
 // skipping getUbyte, since it'main.getS a simply .main.getUb
 fun ByteArray.getUint(index: Int, bigEndianess: Boolean = true) = getInt(index, bigEndianess).ui
+
 fun ByteArray.getUlong(index: Int, bigEndianess: Boolean = true) = getLong(index, bigEndianess).ul
 fun ByteArray.getUshort(index: Int, bigEndianess: Boolean = true) = getShort(index, bigEndianess).us
 
@@ -219,3 +220,12 @@ operator fun DoubleBuffer.set(index: Int, double: Double) = put(index, double)
 operator fun DoubleBuffer.get(index: Int) = get(index)
 operator fun CharBuffer.set(index: Int, char: Char) = put(index, char)
 operator fun CharBuffer.get(index: Int) = get(index)
+
+val Float.deg
+    get() = Math.toDegrees(this.d).f
+val Double.deg
+    get() = Math.toDegrees(this)
+val Float.rad
+    get() = Math.toRadians(this.d).f
+val Double.rad
+    get() = Math.toRadians(this)
