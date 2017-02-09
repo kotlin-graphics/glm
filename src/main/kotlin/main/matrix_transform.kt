@@ -1,16 +1,15 @@
 package main
 
+import main.Glm.abs
+import main.Glm.cos
+import main.Glm.dot
+import main.Glm.inverseSqrt
+import main.Glm.sin
+import main.Glm.tan
 import main.detail.GLM_COORDINATE_SYSTEM
 import main.detail.GLM_DEPTH_CLIP_SPACE
 import main.detail.GLM_DEPTH_ZERO_TO_ONE
 import main.detail.GLM_LEFT_HANDED
-import main.glm.Companion.abs
-import main.glm.Companion.cos
-import main.glm.Companion.dot
-import main.glm.Companion.inverseSqrt
-import main.glm.Companion.sin
-import main.glm.Companion.tan
-import main.epsilon
 import mat.Mat4x4
 import vec._3.Vec3
 import vec._4.Vec4i

@@ -5,8 +5,8 @@ import main.f
 import mat.operators.mat2x2_operators
 import vec.Vec2t
 import vec._2.Vec2
-import main.glm.Companion.inverse
-import main.glm.Companion.transpose
+import main.Glm.inverse
+import main.Glm.transpose
 
 /**
  * Created by GBarbieri on 10.11.2016.

@@ -2,10 +2,12 @@ package vec
 
 import main.b
 import main.glm
+import vec._2.*
 import vec.bool.Vec2bool
 import vec.bool.Vec3bool
 import vec.bool.Vec4bool
 import java.nio.*
+import kotlin.properties.Delegates
 
 /**
  * Created bY GBarbieri on 05.10.2016.
@@ -15,33 +17,6 @@ abstract class Vec2t<T : Number> {
 
     abstract var x: T
     abstract var y: T
-
-    var r = x
-        get() = x
-        set(value) {
-            field = value
-            x = field
-        }
-    var g = y
-        get() = y
-        set(value) {
-            field = value
-            y = field
-        }
-
-
-    var s = x
-        get() = x
-        set(value) {
-            field = value
-            x = field
-        }
-    var t = y
-        get() = y
-        set(value) {
-            field = value
-            y = field
-        }
 
     // -- infix Generic Constructors --
 
@@ -132,4 +107,227 @@ abstract class Vec2t<T : Number> {
 
     infix fun notEqual(b: Vec2t<out Number>) = glm.notEqual(this, b, Vec2bool())
     fun notEqual(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.notEqual(this, b, res)
+
+    // component alias
+
+    var r
+        get() = x
+        set(value) {
+            x = value
+        }
+    var g
+        get() = y
+        set(value) {
+            y = value
+        }
+
+
+    var s
+        get() = x
+        set(value) {
+            x = value
+        }
+    var t
+        get() = y
+        set(value) {
+            y = value
+        }
+
+    // swizzling
+
+    val xx
+        get() = when (this) {
+            is Vec2 -> Vec2(x, x)
+            is Vec2d -> Vec2d(x, x)
+            is Vec2b -> Vec2b(x, x)
+            is Vec2i -> Vec2i(x, x)
+            is Vec2s -> Vec2s(x, x)
+            is Vec2l -> Vec2l(x, x)
+            is Vec2ub -> Vec2ub(x, x)
+            is Vec2ui -> Vec2ui(x, x)
+            is Vec2us -> Vec2us(x, x)
+            is Vec2ul -> Vec2ul(x, x)
+            else -> throw IllegalStateException()
+        }
+    var xy
+        get() = when (this) {
+            is Vec2 -> Vec2(this)
+            is Vec2d -> Vec2d(this)
+            is Vec2b -> Vec2b(this)
+            is Vec2i -> Vec2i(this)
+            is Vec2s -> Vec2s(this)
+            is Vec2l -> Vec2l(this)
+            is Vec2ub -> Vec2ub(this)
+            is Vec2ui -> Vec2ui(this)
+            is Vec2us -> Vec2us(this)
+            is Vec2ul -> Vec2ul(this)
+            else -> throw IllegalStateException()
+        }
+        set(value) {
+            x = value.x as T
+            y = value.y as T
+        }
+
+    var yx
+        get() = when (this) {
+            is Vec2 -> Vec2(y, x)
+            is Vec2d -> Vec2d(y, x)
+            is Vec2b -> Vec2b(y, x)
+            is Vec2i -> Vec2i(y, x)
+            is Vec2s -> Vec2s(y, x)
+            is Vec2l -> Vec2l(y, x)
+            is Vec2ub -> Vec2ub(y, x)
+            is Vec2ui -> Vec2ui(y, x)
+            is Vec2us -> Vec2us(y, x)
+            is Vec2ul -> Vec2ul(y, x)
+            else -> throw IllegalStateException()
+        }
+        set(value) {
+            y = value.x as T
+            x = value.y as T
+        }
+    val yy
+        get() = when (this) {
+            is Vec2 -> Vec2(y, y)
+            is Vec2d -> Vec2d(y, y)
+            is Vec2b -> Vec2b(y, y)
+            is Vec2i -> Vec2i(y, y)
+            is Vec2s -> Vec2s(y, y)
+            is Vec2l -> Vec2l(y, y)
+            is Vec2ub -> Vec2ub(y, y)
+            is Vec2ui -> Vec2ui(y, y)
+            is Vec2us -> Vec2us(y, y)
+            is Vec2ul -> Vec2ul(y, y)
+            else -> throw IllegalStateException()
+        }
+
+    val rr
+        get() = when (this) {
+            is Vec2 -> Vec2(x, x)
+            is Vec2d -> Vec2d(x, x)
+            is Vec2b -> Vec2b(x, x)
+            is Vec2i -> Vec2i(x, x)
+            is Vec2s -> Vec2s(x, x)
+            is Vec2l -> Vec2l(x, x)
+            is Vec2ub -> Vec2ub(x, x)
+            is Vec2ui -> Vec2ui(x, x)
+            is Vec2us -> Vec2us(x, x)
+            is Vec2ul -> Vec2ul(x, x)
+            else -> throw IllegalStateException()
+        }
+    var rg
+        get() = when (this) {
+            is Vec2 -> Vec2(this)
+            is Vec2d -> Vec2d(this)
+            is Vec2b -> Vec2b(this)
+            is Vec2i -> Vec2i(this)
+            is Vec2s -> Vec2s(this)
+            is Vec2l -> Vec2l(this)
+            is Vec2ub -> Vec2ub(this)
+            is Vec2ui -> Vec2ui(this)
+            is Vec2us -> Vec2us(this)
+            is Vec2ul -> Vec2ul(this)
+            else -> throw IllegalStateException()
+        }
+        set(value) {
+            x = value.x as T
+            y = value.y as T
+        }
+    var gr
+        get() = when (this) {
+            is Vec2 -> Vec2(y, x)
+            is Vec2d -> Vec2d(y, x)
+            is Vec2b -> Vec2b(y, x)
+            is Vec2i -> Vec2i(y, x)
+            is Vec2s -> Vec2s(y, x)
+            is Vec2l -> Vec2l(y, x)
+            is Vec2ub -> Vec2ub(y, x)
+            is Vec2ui -> Vec2ui(y, x)
+            is Vec2us -> Vec2us(y, x)
+            is Vec2ul -> Vec2ul(y, x)
+            else -> throw IllegalStateException()
+        }
+        set(value) {
+            y = value.x as T
+            x = value.y as T
+        }
+    val gg
+        get() = when (this) {
+            is Vec2 -> Vec2(y, y)
+            is Vec2d -> Vec2d(y, y)
+            is Vec2b -> Vec2b(y, y)
+            is Vec2i -> Vec2i(y, y)
+            is Vec2s -> Vec2s(y, y)
+            is Vec2l -> Vec2l(y, y)
+            is Vec2ub -> Vec2ub(y, y)
+            is Vec2ui -> Vec2ui(y, y)
+            is Vec2us -> Vec2us(y, y)
+            is Vec2ul -> Vec2ul(y, y)
+            else -> throw IllegalStateException()
+        }
+
+    val ss
+        get() = when (this) {
+            is Vec2 -> Vec2(x, x)
+            is Vec2d -> Vec2d(x, x)
+            is Vec2b -> Vec2b(x, x)
+            is Vec2i -> Vec2i(x, x)
+            is Vec2s -> Vec2s(x, x)
+            is Vec2l -> Vec2l(x, x)
+            is Vec2ub -> Vec2ub(x, x)
+            is Vec2ui -> Vec2ui(x, x)
+            is Vec2us -> Vec2us(x, x)
+            is Vec2ul -> Vec2ul(x, x)
+            else -> throw IllegalStateException()
+        }
+    var st
+        get() = when (this) {
+            is Vec2 -> Vec2(this)
+            is Vec2d -> Vec2d(this)
+            is Vec2b -> Vec2b(this)
+            is Vec2i -> Vec2i(this)
+            is Vec2s -> Vec2s(this)
+            is Vec2l -> Vec2l(this)
+            is Vec2ub -> Vec2ub(this)
+            is Vec2ui -> Vec2ui(this)
+            is Vec2us -> Vec2us(this)
+            is Vec2ul -> Vec2ul(this)
+            else -> throw IllegalStateException()
+        }
+        set(value) {
+            x = value.x as T
+            y = value.y as T
+        }
+    var ts
+        get() = when (this) {
+            is Vec2 -> Vec2(y, x)
+            is Vec2d -> Vec2d(y, x)
+            is Vec2b -> Vec2b(y, x)
+            is Vec2i -> Vec2i(y, x)
+            is Vec2s -> Vec2s(y, x)
+            is Vec2l -> Vec2l(y, x)
+            is Vec2ub -> Vec2ub(y, x)
+            is Vec2ui -> Vec2ui(y, x)
+            is Vec2us -> Vec2us(y, x)
+            is Vec2ul -> Vec2ul(y, x)
+            else -> throw IllegalStateException()
+        }
+        set(value) {
+            y = value.x as T
+            x = value.y as T
+        }
+    val tt
+        get() = when (this) {
+            is Vec2 -> Vec2(y, y)
+            is Vec2d -> Vec2d(y, y)
+            is Vec2b -> Vec2b(y, y)
+            is Vec2i -> Vec2i(y, y)
+            is Vec2s -> Vec2s(y, y)
+            is Vec2l -> Vec2l(y, y)
+            is Vec2ub -> Vec2ub(y, y)
+            is Vec2ui -> Vec2ui(y, y)
+            is Vec2us -> Vec2us(y, y)
+            is Vec2ul -> Vec2ul(y, y)
+            else -> throw IllegalStateException()
+        }
 }

@@ -1,3 +1,7 @@
+/**
+ * Created bY GBarbieri on 06.10.2016.
+ */
+
 package main
 
 import main.func.*
@@ -10,49 +14,40 @@ import mat.operators.mat3x3_operators
 import mat.operators.mat4x4_operators
 import vec._3.Vec3i
 
+@JvmField val glm = Glm
 
-/**
- * Created bY GBarbieri on 06.10.2016.
- */
+object Glm :
+        mat2x2_operators,
+        mat3x3_operators,
+        mat4x4_operators,
 
-interface glm {
+        func_common,
+        func_vector2_common,
+        func_vector3_common,
+        func_vector4_common,
 
-    companion object :
+        func_vector2_relational,
+        func_vector3_relational,
+        func_vector4_relational,
+        func_vectorBoolean_relational,
 
-            mat2x2_operators,
-            mat3x3_operators,
-            mat4x4_operators,
+        func_matrix,
 
-            func_common,
-            func_vector2_common,
-            func_vector3_common,
-            func_vector4_common,
+        func_exponential,
+        func_geometric,
+        func_trigonometric,
 
-            func_vector2_relational,
-            func_vector3_relational,
-            func_vector4_relational,
-            func_vectorBoolean_relational,
+        matrix_transform,
 
-            func_matrix,
+        epsilon,
 
-            func_exponential,
-            func_geometric,
-            func_trigonometric,
+        gli {
 
-            matrix_transform,
-
-            epsilon,
-
-            gli
+        @JvmField val detail = Detail
 }
 
-object glm2 : mat2x2_operators
+object Detail : noise
 
-
-//         {
-//
-//    object detail : noise
-//}
 
 interface gli {
 

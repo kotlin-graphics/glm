@@ -1,3 +1,5 @@
+package main
+
 /**
  * Created by GBarbieri on 05.10.2016.
  */
@@ -421,6 +423,25 @@ class coreVec2 : StringSpec() {
             val a = 1 + v0
 
 //        assert(v0.equals())
+        }
+
+        "swizzling" {
+
+            val a = Vec2(1, 2)
+            val b = Vec2(3, 4)
+
+            b.xy = a
+
+            b shouldBe Vec2(1, 2)
+
+            a.yx = b
+
+            a shouldBe Vec2(2, 1)
+            b shouldBe Vec2(1, 2)
+
+            a.yx = b.yx
+
+            a shouldBe Vec2(1, 2)
         }
     }
 }

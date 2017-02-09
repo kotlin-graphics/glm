@@ -6,6 +6,8 @@ import main.glm
 import vec.bool.Vec2bool
 import vec.bool.Vec3bool
 import vec.bool.Vec4bool
+import vec._2.*
+import vec._3.*
 import java.nio.*
 
 abstract class Vec3t<T : Number> {
@@ -17,45 +19,6 @@ abstract class Vec3t<T : Number> {
     abstract var x: T
     abstract var y: T
     abstract var z: T
-
-    var r = x
-        get() = x
-        set(value) {
-            field = value
-            x = field
-        }
-    var g = y
-        get() = y
-        set(value) {
-            field = value
-            y = field
-        }
-    var b = z
-        get() = z
-        set(value) {
-            field = value
-            z = field
-        }
-
-
-    var s = x
-        get() = x
-        set(value) {
-            field = value
-            x = field
-        }
-    var t = y
-        get() = y
-        set(value) {
-            field = value
-            y = field
-        }
-    var p = z
-        get() = z
-        set(value) {
-            field = value
-            z = field
-        }
 
 
     // -- infix Generic Constructors --
@@ -149,4 +112,34 @@ abstract class Vec3t<T : Number> {
 
     infix fun notEqual(b: Vec3t<out Number>) = glm.notEqual(this, b, Vec3bool())
     fun notEqual(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.notEqual(this, b, res)
+
+
+    // component alias
+
+    var r
+        get() = x
+        set(value) {
+            x = value
+        }
+    var g
+        get() = y
+        set(value) {
+            y = value
+        }
+
+
+    var s
+        get() = x
+        set(value) {
+            x = value
+        }
+    var t
+        get() = y
+        set(value) {
+            y = value
+        }
+
+    // swizzling
+
+
 }

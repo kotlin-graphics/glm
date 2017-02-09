@@ -1,8 +1,8 @@
 package main
 
-import main.glm.Companion.abs
-import main.glm.Companion.greaterThan
-import main.glm.Companion.lessThan
+import main.Glm.abs
+import main.Glm.greaterThan
+import main.Glm.lessThan
 import quat.Quat
 import quat.QuatD
 import vec._2.*

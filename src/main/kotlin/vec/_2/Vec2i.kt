@@ -101,7 +101,7 @@ data class Vec2i(override var x: Int, override var y: Int) : Vec2t<Int>() {
     // TODO
     fun compMul() = x * y
 
-    
+
     companion object : vec2i_operators {
         @JvmStatic val SIZE = 2 * Int.BYTES
     }

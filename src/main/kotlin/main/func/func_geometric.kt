@@ -2,8 +2,8 @@ package main.func
 
 import main.d
 import main.f
-import main.glm.Companion.sqrt
-import main.glm.Companion.inverseSqrt
+import main.Glm.sqrt
+import main.Glm.inverseSqrt
 import vec._2.Vec2
 import vec._2.Vec2d
 import vec._3.Vec3

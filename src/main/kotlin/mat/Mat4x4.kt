@@ -5,9 +5,9 @@ import main.glm
 import mat.operators.mat4x4_operators
 import vec.Vec4t
 import vec._4.Vec4
-import main.glm.Companion.inverse
-import main.glm.Companion.transpose
-import main.glm.Companion.determinant
+import main.Glm.inverse
+import main.Glm.transpose
+import main.Glm.determinant
 import vec._3.Vec3
 import java.nio.ByteBuffer
 import java.nio.ByteOrder

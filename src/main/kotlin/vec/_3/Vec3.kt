@@ -11,8 +11,8 @@ import vec.bool.Vec2bool
 import vec.bool.Vec3bool
 import vec.bool.Vec4bool
 import java.nio.*
-import main.glm.Companion.normalize
-import main.glm.Companion.cross
+import main.Glm.normalize
+import main.Glm.cross
 
 /**
  * Created bY GBarbieri on 05.10.2016.

@@ -2,9 +2,9 @@ package quat
 
 import main.BYTES
 import main.f
-import main.glm.Companion.cos
-import main.glm.Companion.dot
-import main.glm.Companion.sin
+import main.Glm.cos
+import main.Glm.dot
+import main.Glm.sin
 import mat.QuatT
 import vec._3.Vec3
 

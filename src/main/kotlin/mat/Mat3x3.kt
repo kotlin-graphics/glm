@@ -4,8 +4,8 @@ import main.BYTES
 import mat.operators.mat3x3_operators
 import vec.Vec3t
 import vec._3.Vec3
-import main.glm.Companion.inverse
-import main.glm.Companion.transpose
+import main.Glm.inverse
+import main.Glm.transpose
 
 /**
  * Created by GBarbieri on 10.11.2016.

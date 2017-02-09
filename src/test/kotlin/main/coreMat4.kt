@@ -1,3 +1,5 @@
+package main
+
 import io.kotlintest.KTestJUnitRunner
 import io.kotlintest.specs.StringSpec
 import main.glm
