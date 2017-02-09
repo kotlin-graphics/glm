@@ -157,4 +157,7 @@ abstract class Vec4t<T : Number> {
 
     infix fun notEqual(b: Vec4t<out Number>) = glm.notEqual(this, b, Vec4bool())
     fun notEqual(b: Vec4t<out Number>, res: Vec4bool = Vec4bool()) = glm.notEqual(this, b, res)
+
+    infix fun isEqual(b: Vec4t<out Number>) = glm.isEqual(this,b)
+
 }

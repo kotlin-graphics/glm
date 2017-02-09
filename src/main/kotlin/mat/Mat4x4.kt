@@ -353,6 +353,14 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     fun translate(translateX: Float, translateY: Float, translateZ: Float) = glm.translate(this, translateX, translateY, translateZ)
 
 
+    infix fun isEqual(b: Mat4x4) : Boolean {
+        return (this[0].isEqual(b[0])
+                && this[1].isEqual(b[1])
+                && this[2].isEqual(b[2])
+                && this[3].isEqual(b[3]))
+    }
+
+
     // TODO others
     var a0: Float
         get() = value[0][0]

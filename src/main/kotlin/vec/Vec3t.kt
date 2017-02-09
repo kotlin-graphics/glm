@@ -113,6 +113,8 @@ abstract class Vec3t<T : Number> {
     infix fun notEqual(b: Vec3t<out Number>) = glm.notEqual(this, b, Vec3bool())
     fun notEqual(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.notEqual(this, b, res)
 
+    infix fun isEqual(b: Vec3t<out Number>) = glm.isEqual(this,b)
+
 
     // component alias
 

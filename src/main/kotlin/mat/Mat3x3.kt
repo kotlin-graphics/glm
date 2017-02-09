@@ -240,4 +240,11 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
 
     infix fun div_(b: Float) = div(this, this, b)
     infix fun div_(b: Mat3x3) = div(this, this, b)
+
+
+    infix fun isEqual(b: Mat3x3) : Boolean {
+        return (this[0].isEqual(b[0])
+                && this[1].isEqual(b[1])
+                && this[2].isEqual(b[2]))
+    }
 }
