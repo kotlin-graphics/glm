@@ -10,6 +10,7 @@ import main.detail.GLM_COORDINATE_SYSTEM
 import main.detail.GLM_DEPTH_CLIP_SPACE
 import main.detail.GLM_DEPTH_ZERO_TO_ONE
 import main.detail.GLM_LEFT_HANDED
+import mat.Mat3
 import mat.Mat4x4
 import vec._3.Vec3
 import vec._4.Vec4i

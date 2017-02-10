@@ -8,6 +8,7 @@ import io.kotlintest.specs.StringSpec
 import vec._2.*
 import vec._2.operators.*
 import vec._2.Vec2
+import vec._3.Vec3
 
 
 class coreVec2 : StringSpec() {
