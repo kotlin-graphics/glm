@@ -2,7 +2,6 @@ package main
 
 import main.Glm.abs
 import main.Glm.cos
-import main.Glm.dot
 import main.Glm.inverseSqrt
 import main.Glm.sin
 import main.Glm.tan
@@ -10,7 +9,6 @@ import main.detail.GLM_COORDINATE_SYSTEM
 import main.detail.GLM_DEPTH_CLIP_SPACE
 import main.detail.GLM_DEPTH_ZERO_TO_ONE
 import main.detail.GLM_LEFT_HANDED
-import mat.Mat3
 import mat.Mat4x4
 import vec._3.Vec3
 import vec._4.Vec4i
@@ -46,14 +44,19 @@ interface matrix_transform {
      * @param res the resulting matrix
      * @return see [res]
      */
-    fun rotate(m: Mat4x4, angle: Float, v: Vec3, res: Mat4x4 = Mat4x4()): Mat4x4 {
+    fun rotate(m: Mat4x4, angle: Float, v: Vec3, res: Mat4x4 = Mat4x4()) = rotate(m, angle, v.x, v.y, v.z, res)
+
+    fun rotate(m: Mat4x4, angle: Float, vX: Float, vY: Float, vZ: Float, res: Mat4x4 = Mat4x4()): Mat4x4 {
 
         val c = cos(angle)
         val s = sin(angle)
 
-        val axisX = v.x * inverseSqrt(dot(v, v))
-        val axisY = v.y * inverseSqrt(dot(v, v))
-        val axisZ = v.z * inverseSqrt(dot(v, v))
+        val dot = vX * vX + vY * vY + vZ * vZ
+        val inv = inverseSqrt(dot)
+
+        val axisX = vX * inv
+        val axisY = vY * inv
+        val axisZ = vZ * inv
 
         val tempX = (1f - c) * axisX
         val tempY = (1f - c) * axisY
