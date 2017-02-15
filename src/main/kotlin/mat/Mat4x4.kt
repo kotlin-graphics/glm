@@ -362,6 +362,8 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
     fun rotate(angle: Float, vX: Float, vY: Float, vZ: Float, res: Mat4x4 = Mat4x4()) = glm.rotate(this, angle, vX, vY, vZ, res)
     fun rotate(angle: Float, v:Vec3, res: Mat4x4 = Mat4x4()) = glm.rotate(this, angle, v, res)
+    fun rotate_(angle: Float, vX: Float, vY: Float, vZ: Float) = glm.rotate(this, angle, vX, vY, vZ, this)
+    fun rotate_(angle: Float, v:Vec3) = glm.rotate(this, angle, v, this)
 
 
     // TODO others
