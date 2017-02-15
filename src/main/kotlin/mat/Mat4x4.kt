@@ -119,7 +119,7 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     }
 
     // TODO others
-    infix fun to(mat4x4: Mat4x4) {
+    infix fun put(mat4x4: Mat4x4) {
         value = mutableListOf(
                 Vec4(mat4x4[0]), Vec4(mat4x4[1]),
                 Vec4(mat4x4[2]), Vec4(mat4x4[3]))
