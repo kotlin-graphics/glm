@@ -266,7 +266,8 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
     infix fun rem_(b: Vec3t<Number>) = rem(this, this, b.x.f, b.y.f, b.z.f)
 
 
-    fun normalize() = normalize(this, this) // TODO others
+    fun normalize(res: Vec3) = normalize(this, res) // TODO others
+    fun normalize_() = normalize(this, this)
     infix fun cross(b: Vec3) = cross(this, b)
 }
 
