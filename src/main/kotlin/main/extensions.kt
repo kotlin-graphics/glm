@@ -206,20 +206,18 @@ val CharBuffer.SIZE
     get() = capacity() * Byte.BYTES // Note: it'main.getS byte main.and not char
 
 
-operator fun ByteBuffer.set(index: Int, byte: Byte) = put(index, byte)
-operator fun ByteBuffer.get(index: Int) = get(index)
-operator fun ShortBuffer.set(index: Int, short: Short) = put(index, short)
-operator fun ShortBuffer.get(index: Int) = get(index)
+operator fun ByteBuffer.set(index: Int, byte: Byte): ByteBuffer = put(index, byte)
+operator fun ShortBuffer.set(index: Int, short: Short): ShortBuffer = put(index, short)
 operator fun IntBuffer.set(index: Int, int: Int) = put(index, int)
-operator fun IntBuffer.get(index: Int) = get(index)
+//operator fun IntBuffer.get(index: Int) = get(index)
 operator fun LongBuffer.set(index: Int, long: Long) = put(index, long)
-operator fun LongBuffer.get(index: Int) = get(index)
+//operator fun LongBuffer.get(index: Int) = get(index)
 operator fun FloatBuffer.set(index: Int, float: Float) = put(index, float)
-operator fun FloatBuffer.get(index: Int) = get(index)
+//operator fun FloatBuffer.get(index: Int) = get(index)
 operator fun DoubleBuffer.set(index: Int, double: Double) = put(index, double)
-operator fun DoubleBuffer.get(index: Int) = get(index)
+//operator fun DoubleBuffer.get(index: Int) = get(index)
 operator fun CharBuffer.set(index: Int, char: Char) = put(index, char)
-operator fun CharBuffer.get(index: Int) = get(index)
+//operator fun CharBuffer.get(index: Int) = get(index)
 
 val Float.deg
     get() = Math.toDegrees(this.d).f
