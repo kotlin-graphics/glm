@@ -12,7 +12,6 @@ import vec._3.Vec3
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
-import main.get
 import main.set
 
 /**
