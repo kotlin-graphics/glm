@@ -41,9 +41,11 @@ object Glm :
 
         epsilon,
 
+        extensions,
+
         gli {
 
-        @JvmField val detail = Detail
+    @JvmField val detail = Detail
 }
 
 object Detail : noise
