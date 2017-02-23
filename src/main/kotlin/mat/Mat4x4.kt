@@ -367,8 +367,8 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
     // TODO others
     var a0: Float
-        get() = value[0][0]
-        set(v) {
+        @JvmName("get00") get() = value[0][0]
+        @JvmName("set00") set(v) {
             value[0][0] = v
         }
     var a1: Float
