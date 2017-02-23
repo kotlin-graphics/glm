@@ -15,56 +15,28 @@ abstract class Vec4t<T : Number> {
     abstract var z: T
     abstract var w: T
 
-    var r = x
-        get() = x
-        set(value) {
-            field = value
-            x = field
-        }
-    var g = y
-        get() = y
-        set(value) {
-            field = value
-            y = field
-        }
-    var b = z
-        get() = z
-        set(value) {
-            field = value
-            z = field
-        }
-    var a = w
-        get() = w
-        set(value) {
-            field = value
-            w = field
-        }
 
+    fun x(x: T) {
+        this.x = x
+    }
 
-    var s = x
-        get() = x
-        set(value) {
-            field = value
-            x = field
-        }
-    var t = y
-        get() = y
-        set(value) {
-            field = value
-            y = field
-        }
-    var p = z
-        get() = z
-        set(value) {
-            field = value
-            z = field
-        }
-    var q = w
-        get() = w
-        set(value) {
-            field = value
-            w = field
-        }
+    fun y(y: T) {
+        this.y = y
+    }
+
+    fun z(z: T) {
+        this.z = z
+    }
+
+    fun w(w: T) {
+        this.w = w
+    }
+
+    fun x() = x
+    fun y() = y
+    fun z() = z
+    fun w() = w
+
 
     // -- infix Generic Constructors --
 
@@ -158,6 +130,59 @@ abstract class Vec4t<T : Number> {
     infix fun notEqual(b: Vec4t<out Number>) = glm.notEqual(this, b, Vec4bool())
     fun notEqual(b: Vec4t<out Number>, res: Vec4bool = Vec4bool()) = glm.notEqual(this, b, res)
 
-    infix fun isEqual(b: Vec4t<out Number>) = glm.isEqual(this,b)
+    infix fun isEqual(b: Vec4t<out Number>) = glm.isEqual(this, b)
 
+
+    // components alias
+
+    var r = x
+        @JvmName("r") get() = x
+        @JvmName("r") set(value) {
+            field = value
+            x = field
+        }
+    var g = y
+        @JvmName("g") get() = y
+        @JvmName("g") set(value) {
+            field = value
+            y = field
+        }
+    var b = z
+        @JvmName("b") get() = z
+        @JvmName("b") set(value) {
+            field = value
+            z = field
+        }
+    var a = w
+        @JvmName("a") get() = w
+        @JvmName("a") set(value) {
+            field = value
+            w = field
+        }
+
+
+    var s = x
+        @JvmName("s") get() = x
+        @JvmName("s") set(value) {
+            field = value
+            x = field
+        }
+    var t = y
+        @JvmName("t") get() = y
+        @JvmName("t") set(value) {
+            field = value
+            y = field
+        }
+    var p = z
+        @JvmName("p") get() = z
+        @JvmName("p") set(value) {
+            field = value
+            z = field
+        }
+    var q = w
+        @JvmName("q") get() = w
+        @JvmName("q") set(value) {
+            field = value
+            w = field
+        }
 }
