@@ -1,18 +1,17 @@
 package  mat
 
 import main.BYTES
-import main.glm
-import mat.operators.mat4x4_operators
-import vec.Vec4t
-import vec._4.Vec4
+import main.Glm.determinant
 import main.Glm.inverse
 import main.Glm.transpose
-import main.Glm.determinant
-import vec._3.Vec3
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
-import java.nio.FloatBuffer
+import main.glm
 import main.set
+import mat.operators.mat4x4_operators
+import vec.Vec4t
+import vec._3.Vec3
+import vec._4.Vec4
+import java.nio.ByteBuffer
+import java.nio.FloatBuffer
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -352,7 +351,7 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     fun translate(translateX: Float, translateY: Float, translateZ: Float) = glm.translate(this, translateX, translateY, translateZ)
 
 
-    infix fun isEqual(b: Mat4x4) : Boolean {
+    infix fun isEqual(b: Mat4x4): Boolean {
         return (this[0].isEqual(b[0])
                 && this[1].isEqual(b[1])
                 && this[2].isEqual(b[2])
@@ -360,93 +359,93 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     }
 
     fun rotate(angle: Float, vX: Float, vY: Float, vZ: Float, res: Mat4x4 = Mat4x4()) = glm.rotate(this, angle, vX, vY, vZ, res)
-    fun rotate(angle: Float, v:Vec3, res: Mat4x4 = Mat4x4()) = glm.rotate(this, angle, v, res)
+    fun rotate(angle: Float, v: Vec3, res: Mat4x4 = Mat4x4()) = glm.rotate(this, angle, v, res)
     fun rotate_(angle: Float, vX: Float, vY: Float, vZ: Float) = glm.rotate(this, angle, vX, vY, vZ, this)
-    fun rotate_(angle: Float, v:Vec3) = glm.rotate(this, angle, v, this)
+    fun rotate_(angle: Float, v: Vec3) = glm.rotate(this, angle, v, this)
 
 
     // TODO others
     var a0: Float
-        @JvmName("get00") get() = value[0][0]
-        @JvmName("set00") set(v) {
+        @JvmName("v00") get() = value[0][0]
+        @JvmName("v00") set(v) {
             value[0][0] = v
         }
     var a1: Float
-        get() = value[0][1]
-        set(v) {
+        @JvmName("v01") get() = value[0][1]
+        @JvmName("v01") set(v) {
             value[0][1] = v
         }
     var a2: Float
-        get() = value[0][2]
-        set(v) {
+        @JvmName("v02") get() = value[0][2]
+        @JvmName("v02") set(v) {
             value[0][2] = v
         }
     var a3: Float
-        get() = value[0][3]
-        set(v) {
+        @JvmName("v03") get() = value[0][3]
+        @JvmName("v03") set(v) {
             value[0][3] = v
         }
 
     var b0: Float
-        get() = value[1][0]
-        set(v) {
+        @JvmName("v10") get() = value[1][0]
+        @JvmName("v10") set(v) {
             value[1][0] = v
         }
     var b1: Float
-        get() = value[1][1]
-        set(v) {
+        @JvmName("v11") get() = value[1][1]
+        @JvmName("v11") set(v) {
             value[1][1] = v
         }
     var b2: Float
-        get() = value[1][2]
-        set(v) {
+        @JvmName("v12") get() = value[1][2]
+        @JvmName("v12") set(v) {
             value[1][2] = v
         }
     var b3: Float
-        get() = value[1][3]
-        set(v) {
+        @JvmName("v13") get() = value[1][3]
+        @JvmName("v13") set(v) {
             value[1][3] = v
         }
 
     var c0: Float
-        get() = value[2][0]
-        set(v) {
+        @JvmName("v20") get() = value[2][0]
+        @JvmName("v20") set(v) {
             value[2][0] = v
         }
     var c1: Float
-        get() = value[2][1]
-        set(v) {
+        @JvmName("v21") get() = value[2][1]
+        @JvmName("v21") set(v) {
             value[2][1] = v
         }
     var c2: Float
-        get() = value[2][2]
-        set(v) {
+        @JvmName("v22") get() = value[2][2]
+        @JvmName("v22") set(v) {
             value[2][2] = v
         }
     var c3: Float
-        get() = value[2][3]
-        set(v) {
+        @JvmName("v23") get() = value[2][3]
+        @JvmName("v23") set(v) {
             value[2][3] = v
         }
 
     var d0: Float
-        get() = value[3][0]
-        set(v) {
+        @JvmName("v30") get() = value[3][0]
+        @JvmName("v30") set(v) {
             value[3][0] = v
         }
     var d1: Float
-        get() = value[3][1]
-        set(v) {
+        @JvmName("v31") get() = value[3][1]
+        @JvmName("v31") set(v) {
             value[3][1] = v
         }
     var d2: Float
-        get() = value[3][2]
-        set(v) {
+        @JvmName("v32") get() = value[3][2]
+        @JvmName("v32") set(v) {
             value[3][2] = v
         }
     var d3: Float
-        get() = value[3][3]
-        set(v) {
+        @JvmName("v33") get() = value[3][3]
+        @JvmName("v33") set(v) {
             value[3][3] = v
         }
 }

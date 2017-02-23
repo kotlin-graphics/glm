@@ -247,4 +247,53 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
                 && this[1].isEqual(b[1])
                 && this[2].isEqual(b[2]))
     }
+
+    // TODO others
+    var a0: Float
+        @JvmName("v00") get() = value[0][0]
+        @JvmName("v00") set(v) {
+            value[0][0] = v
+        }
+    var a1: Float
+        @JvmName("v01") get() = value[0][1]
+        @JvmName("v01") set(v) {
+            value[0][1] = v
+        }
+    var a2: Float
+        @JvmName("v02") get() = value[0][2]
+        @JvmName("v02") set(v) {
+            value[0][2] = v
+        }
+
+    var b0: Float
+        @JvmName("v10") get() = value[1][0]
+        @JvmName("v10") set(v) {
+            value[1][0] = v
+        }
+    var b1: Float
+        @JvmName("v11") get() = value[1][1]
+        @JvmName("v11") set(v) {
+            value[1][1] = v
+        }
+    var b2: Float
+        @JvmName("v12") get() = value[1][2]
+        @JvmName("v12") set(v) {
+            value[1][2] = v
+        }
+
+    var c0: Float
+        @JvmName("v20") get() = value[2][0]
+        @JvmName("v20") set(v) {
+            value[2][0] = v
+        }
+    var c1: Float
+        @JvmName("v21") get() = value[2][1]
+        @JvmName("v21") set(v) {
+            value[2][1] = v
+        }
+    var c2: Float
+        @JvmName("v22") get() = value[2][2]
+        @JvmName("v22") set(v) {
+            value[2][2] = v
+        }
 }

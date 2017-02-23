@@ -7,7 +7,6 @@ import vec.bool.Vec2bool
 import vec.bool.Vec3bool
 import vec.bool.Vec4bool
 import java.nio.*
-import kotlin.properties.Delegates
 
 /**
  * Created bY GBarbieri on 05.10.2016.
@@ -17,6 +16,16 @@ abstract class Vec2t<T : Number> {
 
     abstract var x: T
     abstract var y: T
+
+    fun x(x: T) {
+        this.x = x
+    }
+    fun y(y: T) {
+        this.y = y
+    }
+
+    fun x() = x
+    fun y() = y
 
     // -- infix Generic Constructors --
 
@@ -108,31 +117,31 @@ abstract class Vec2t<T : Number> {
     infix fun notEqual(b: Vec2t<out Number>) = glm.notEqual(this, b, Vec2bool())
     fun notEqual(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.notEqual(this, b, res)
 
-    infix fun isEqual(b: Vec2t<out Number>) = glm.isEqual(this,b)
+    infix fun isEqual(b: Vec2t<out Number>) = glm.isEqual(this, b)
 
 
     // component alias
 
     var r
-        get() = x
-        set(value) {
+        @JvmName("r") get() = x
+        @JvmName("r") set(value) {
             x = value
         }
     var g
-        get() = y
-        set(value) {
+        @JvmName("g") get() = y
+        @JvmName("g") set(value) {
             y = value
         }
 
 
     var s
-        get() = x
-        set(value) {
+        @JvmName("s") get() = x
+        @JvmName("s") set(value) {
             x = value
         }
     var t
-        get() = y
-        set(value) {
+        @JvmName("t") get() = y
+        @JvmName("t") set(value) {
             y = value
         }
 
