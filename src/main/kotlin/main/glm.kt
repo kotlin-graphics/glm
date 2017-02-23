@@ -41,7 +41,7 @@ object Glm :
 
         epsilon,
 
-        extensions,
+        ext,
 
         gli {
 
@@ -58,6 +58,7 @@ interface gli {
 
 
     fun floorMultiple(src: Int, mul: Int): Int {
+
         if (src >= 0) {
             return src - src % mul
         }

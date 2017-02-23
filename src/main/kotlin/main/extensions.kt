@@ -228,7 +228,7 @@ val Float.rad
 val Double.rad
     get() = Math.toRadians(this)
 
-interface extensions {
+interface ext {
 
     fun toDeg(rad: Float) = Math.toDegrees(rad.d)
     fun toDeg(rad: Double) = Math.toDegrees(rad)
