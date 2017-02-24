@@ -85,6 +85,7 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
     }
 
 
+    override fun put(s: Number) = put(s, s, s)
     override fun put(x: Number, y: Number, z: Number): Vec3 {
         this.x = x.f
         this.y = y.f
