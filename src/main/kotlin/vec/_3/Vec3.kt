@@ -224,7 +224,8 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
 
     fun sub(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = sub(res, this, bX.f, bY.f, bZ.f)
     fun sub(b: Number, res: Vec3 = Vec3()) = sub(res, this, b.f, b.f, b.f)
-    fun sub(b: Vec3t<Number>, res: Vec3 = Vec3()) = sub(res, this, b.x.f, b.y.f, b.z.f)
+    @JvmOverloads fun sub(b: Vec3t<Number>, res: Vec3 = Vec3()) = sub(res, this, b.x.f, b.y.f, b.z.f)
+    // TODO overload others
 
     fun sub_(bX: Number, bY: Number, bZ: Number) = sub(this, this, bX.f, bY.f, bZ.f)
     infix fun sub_(b: Number) = sub(this, this, b.f, b.f, b.f)
