@@ -1,18 +1,17 @@
 package  mat
 
 import main.BYTES
-import main.glm
-import mat.operators.mat4x4_operators
-import vec.Vec4t
-import vec._4.Vec4
+import main.Glm.determinant
 import main.Glm.inverse
 import main.Glm.transpose
-import main.Glm.determinant
-import vec._3.Vec3
-import java.nio.ByteBuffer
-import java.nio.ByteOrder
-import java.nio.FloatBuffer
+import main.glm
 import main.set
+import mat.operators.mat4x4_operators
+import vec.Vec4t
+import vec._3.Vec3
+import vec._4.Vec4
+import java.nio.ByteBuffer
+import java.nio.FloatBuffer
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -148,27 +147,31 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 //                Vec4(v1))
 //    }
 
-    infix fun put(s: Float): Mat4x4 {
+    infix fun put(s: Float) = put(s, s, s, s)
+    infix fun put(v: Vec3) = put(v.x, v.y, v.z, 1f)
+    infix fun put(v: Vec4) = put(v.x, v.y, v.z, v.w)
 
-        value[0][0] = s
+    fun put(x: Float, y: Float, z: Float, w: Float): Mat4x4 {
+
+        value[0][0] = x
         value[0][1] = 0f
         value[0][2] = 0f
         value[0][3] = 0f
 
         value[1][0] = 0f
-        value[1][1] = s
+        value[1][1] = y
         value[1][2] = 0f
         value[1][3] = 0f
 
         value[2][0] = 0f
         value[2][1] = 0f
-        value[2][2] = s
+        value[2][2] = z
         value[2][3] = 0f
 
         value[3][0] = 0f
         value[3][1] = 0f
         value[3][2] = 0f
-        value[3][3] = s
+        value[3][3] = w
 
         return this
     }
@@ -352,7 +355,7 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     fun translate(translateX: Float, translateY: Float, translateZ: Float) = glm.translate(this, translateX, translateY, translateZ)
 
 
-    infix fun isEqual(b: Mat4x4) : Boolean {
+    infix fun isEqual(b: Mat4x4): Boolean {
         return (this[0].isEqual(b[0])
                 && this[1].isEqual(b[1])
                 && this[2].isEqual(b[2])
@@ -360,9 +363,9 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     }
 
     fun rotate(angle: Float, vX: Float, vY: Float, vZ: Float, res: Mat4x4 = Mat4x4()) = glm.rotate(this, angle, vX, vY, vZ, res)
-    fun rotate(angle: Float, v:Vec3, res: Mat4x4 = Mat4x4()) = glm.rotate(this, angle, v, res)
+    fun rotate(angle: Float, v: Vec3, res: Mat4x4 = Mat4x4()) = glm.rotate(this, angle, v, res)
     fun rotate_(angle: Float, vX: Float, vY: Float, vZ: Float) = glm.rotate(this, angle, vX, vY, vZ, this)
-    fun rotate_(angle: Float, v:Vec3) = glm.rotate(this, angle, v, this)
+    fun rotate_(angle: Float, v: Vec3) = glm.rotate(this, angle, v, this)
 
 
     // TODO others
