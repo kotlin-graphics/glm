@@ -162,7 +162,7 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
 
     fun sub(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = sub(res, this, bX, bY, bZ)
     fun sub(b: Float, res: Vec3 = Vec3()) = sub(res, this, b, b, b)
-    @JvmOverloads fun sub(b: Vec3, res: Vec3 = Vec3()) = sub(res, this, b.x, b.y, b.z)
+    @JvmOverloads fun sub(b: Vec3, res: Vec3 = Vec3()) = sub(res, this, b.x, b.y, b.z) // TODO overload other
 
     fun sub_(bX: Float, bY: Float, bZ: Float) = sub(this, this, bX, bY, bZ)
     infix fun sub_(b: Float) = sub(this, this, b, b, b)
@@ -267,7 +267,7 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
     infix fun rem_(b: Vec3t<Number>) = rem(this, this, b.x.f, b.y.f, b.z.f)
 
 
-    fun normalize(res: Vec3) = normalize(this, res) // TODO others
+    @JvmOverloads fun normalize(res: Vec3 = Vec3()) = normalize(this, res) // TODO others
     fun normalize_() = normalize(this, this)
     infix fun cross(b: Vec3) = cross(this, b)
 }
