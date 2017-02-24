@@ -7,6 +7,8 @@ import main.Glm.transpose
 import main.glm
 import main.set
 import mat.operators.mat4x4_operators
+import vec.Vec2t
+import vec.Vec3t
 import vec.Vec4t
 import vec._3.Vec3
 import vec._4.Vec4
@@ -20,17 +22,24 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
     // -- Constructors --
 
-    constructor() : this(mutableListOf(
-            Vec4(1, 0, 0, 0),
-            Vec4(0, 1, 0, 0),
-            Vec4(0, 0, 1, 0),
-            Vec4(0, 0, 0, 1)))
+    constructor() : this(1)
 
-    constructor(scalar: Number) : this(mutableListOf(
-            Vec4(scalar, 0, 0, 0),
-            Vec4(0, scalar, 0, 0),
-            Vec4(0, 0, scalar, 0),
-            Vec4(0, 0, 0, scalar)))
+    constructor(s: Number) : this(s, s, s, s)
+
+    constructor(x: Number, y: Number, z: Number, w: Number) : this(mutableListOf(
+            Vec4(x, 0, 0, 0),
+            Vec4(0, y, 0, 0),
+            Vec4(0, 0, z, 0),
+            Vec4(0, 0, 0, w)))
+
+    // TODO others
+
+    constructor(v: Vec2t<*>) : this(v.x, v.y, 0, 1)
+    constructor(v: Vec2t<*>, z: Number) : this(v.x, v.y, z, 1)
+    constructor(v: Vec2t<*>, z: Number, w: Number) : this(v.x, v.y, z, w)
+    constructor(v: Vec3t<*>) : this(v.x, v.y, v.z, 1)
+    constructor(v: Vec3t<*>, w: Number) : this(v.x, v.y, v.z, w)
+    constructor(v: Vec4t<*>) : this(v.x, v.y, v.z, v.w)
 
     constructor(x0: Number, y0: Number, z0: Number, w0: Number,
                 x1: Number, y1: Number, z1: Number, w1: Number,
@@ -147,27 +156,31 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 //                Vec4(v1))
 //    }
 
-    infix fun put(s: Float): Mat4x4 {
+    infix fun put(s: Float) = put(s, s, s, s)
+    infix fun put(v: Vec3) = put(v.x, v.y, v.z, 1f)
+    infix fun put(v: Vec4) = put(v.x, v.y, v.z, v.w)
 
-        value[0][0] = s
+    fun put(x: Float, y: Float, z: Float, w: Float): Mat4x4 {
+
+        value[0][0] = x
         value[0][1] = 0f
         value[0][2] = 0f
         value[0][3] = 0f
 
         value[1][0] = 0f
-        value[1][1] = s
+        value[1][1] = y
         value[1][2] = 0f
         value[1][3] = 0f
 
         value[2][0] = 0f
         value[2][1] = 0f
-        value[2][2] = s
+        value[2][2] = z
         value[2][3] = 0f
 
         value[3][0] = 0f
         value[3][1] = 0f
         value[3][2] = 0f
-        value[3][3] = s
+        value[3][3] = w
 
         return this
     }

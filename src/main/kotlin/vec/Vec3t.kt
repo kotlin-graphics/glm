@@ -69,7 +69,7 @@ abstract class Vec3t<T : Number> {
     infix fun put(floats: FloatBuffer) = put(floats, 0)
     infix fun put(doubles: DoubleBuffer) = put(doubles, 0)
 
-    infix fun put(s: Number) = put(s, s, s)
+    open infix fun put(s: Number) = put(s, s, s)
     abstract fun put(x: Number, y: Number, z: Number): Vec3t<T>
 
     // -- indexed Generic Constructors --

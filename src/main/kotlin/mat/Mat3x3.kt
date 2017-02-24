@@ -130,19 +130,22 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
     fun transpose_() = transpose(this, this)
 
 
-    fun set(s: Float): Mat3x3 {
+    infix fun put(s: Float) = put(s, s, s)
+    infix fun put(v: Vec3) = put(v.x, v.y, v.z)
 
-        value[0][0] = s
+    fun put(x: Float, y: Float, z: Float): Mat3 {
+
+        value[0][0] = x
         value[0][1] = 0f
         value[0][2] = 0f
 
         value[1][0] = 0f
-        value[1][1] = s
+        value[1][1] = y
         value[1][2] = 0f
 
         value[2][0] = 0f
         value[2][1] = 0f
-        value[2][2] = s
+        value[2][2] = z
 
         return this
     }
