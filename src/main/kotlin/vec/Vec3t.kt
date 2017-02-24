@@ -21,6 +21,21 @@ abstract class Vec3t<T : Number> {
     abstract var z: T
 
 
+    fun x(x: T) {
+        this.x = x
+    }
+    fun y(y: T) {
+        this.y = y
+    }
+    fun z(z: T) {
+        this.z = z
+    }
+
+    fun x() = x
+    fun y() = y
+    fun z() = z
+
+
     // -- infix Generic Constructors --
 
     infix fun put(v: Vec2t<out Number>) = put(v.x, v.y, 0)
@@ -118,27 +133,45 @@ abstract class Vec3t<T : Number> {
 
     // component alias
 
-    var r
-        get() = x
-        set(value) {
-            x = value
+    // components alias
+
+    var r = x
+        @JvmName("r") get() = x
+        @JvmName("r") set(value) {
+            field = value
+            x = field
         }
-    var g
-        get() = y
-        set(value) {
-            y = value
+    var g = y
+        @JvmName("g") get() = y
+        @JvmName("g") set(value) {
+            field = value
+            y = field
+        }
+    var b = z
+        @JvmName("b") get() = z
+        @JvmName("b") set(value) {
+            field = value
+            z = field
         }
 
 
-    var s
-        get() = x
-        set(value) {
-            x = value
+    var s = x
+        @JvmName("s") get() = x
+        @JvmName("s") set(value) {
+            field = value
+            x = field
         }
-    var t
-        get() = y
-        set(value) {
-            y = value
+    var t = y
+        @JvmName("t") get() = y
+        @JvmName("t") set(value) {
+            field = value
+            y = field
+        }
+    var p = z
+        @JvmName("p") get() = z
+        @JvmName("p") set(value) {
+            field = value
+            z = field
         }
 
     // swizzling

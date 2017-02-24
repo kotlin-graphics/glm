@@ -123,4 +123,27 @@ data class Mat2x2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2> {
 
         @JvmStatic val SIZE = 2 * 2 * Float.BYTES
     }
+
+    // TODO others
+    var a0: Float
+        @JvmName("v00") get() = value[0][0]
+        @JvmName("v00") set(v) {
+            value[0][0] = v
+        }
+    var a1: Float
+        @JvmName("v01") get() = value[0][1]
+        @JvmName("v01") set(v) {
+            value[0][1] = v
+        }
+
+    var b0: Float
+        @JvmName("v10") get() = value[1][0]
+        @JvmName("v10") set(v) {
+            value[1][0] = v
+        }
+    var b1: Float
+        @JvmName("v11") get() = value[1][1]
+        @JvmName("v11") set(v) {
+            value[1][1] = v
+        }
 }

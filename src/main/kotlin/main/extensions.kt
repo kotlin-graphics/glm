@@ -208,15 +208,15 @@ val CharBuffer.SIZE
 
 operator fun ByteBuffer.set(index: Int, byte: Byte): ByteBuffer = put(index, byte)
 operator fun ShortBuffer.set(index: Int, short: Short): ShortBuffer = put(index, short)
-operator fun IntBuffer.set(index: Int, int: Int) = put(index, int)
+operator fun IntBuffer.set(index: Int, int: Int): IntBuffer = put(index, int)
 //operator fun IntBuffer.get(index: Int) = get(index)
-operator fun LongBuffer.set(index: Int, long: Long) = put(index, long)
+operator fun LongBuffer.set(index: Int, long: Long): LongBuffer = put(index, long)
 //operator fun LongBuffer.get(index: Int) = get(index)
-operator fun FloatBuffer.set(index: Int, float: Float) = put(index, float)
+operator fun FloatBuffer.set(index: Int, float: Float): FloatBuffer = put(index, float)
 //operator fun FloatBuffer.get(index: Int) = get(index)
-operator fun DoubleBuffer.set(index: Int, double: Double) = put(index, double)
+operator fun DoubleBuffer.set(index: Int, double: Double): DoubleBuffer = put(index, double)
 //operator fun DoubleBuffer.get(index: Int) = get(index)
-operator fun CharBuffer.set(index: Int, char: Char) = put(index, char)
+operator fun CharBuffer.set(index: Int, char: Char): CharBuffer = put(index, char)
 //operator fun CharBuffer.get(index: Int) = get(index)
 
 val Float.deg
@@ -227,3 +227,12 @@ val Float.rad
     get() = Math.toRadians(this.d).f
 val Double.rad
     get() = Math.toRadians(this)
+
+interface ext {
+
+    fun toDeg(rad: Float) = Math.toDegrees(rad.d)
+    fun toDeg(rad: Double) = Math.toDegrees(rad)
+
+    fun toRad(deg: Float) = Math.toRadians(deg.d)
+    fun toRad(deg: Double) = Math.toRadians(deg)
+}

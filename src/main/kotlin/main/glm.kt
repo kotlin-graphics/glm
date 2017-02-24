@@ -41,9 +41,11 @@ object Glm :
 
         epsilon,
 
+        ext,
+
         gli {
 
-        @JvmField val detail = Detail
+    @JvmField val detail = Detail
 }
 
 object Detail : noise
@@ -56,6 +58,7 @@ interface gli {
 
 
     fun floorMultiple(src: Int, mul: Int): Int {
+
         if (src >= 0) {
             return src - src % mul
         }

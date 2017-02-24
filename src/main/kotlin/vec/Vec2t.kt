@@ -7,7 +7,6 @@ import vec.bool.Vec2bool
 import vec.bool.Vec3bool
 import vec.bool.Vec4bool
 import java.nio.*
-import kotlin.properties.Delegates
 
 /**
  * Created bY GBarbieri on 05.10.2016.
@@ -17,6 +16,16 @@ abstract class Vec2t<T : Number> {
 
     abstract var x: T
     abstract var y: T
+
+    fun x(x: T) {
+        this.x = x
+    }
+    fun y(y: T) {
+        this.y = y
+    }
+
+    fun x() = x
+    fun y() = y
 
     // -- infix Generic Constructors --
 
@@ -108,38 +117,38 @@ abstract class Vec2t<T : Number> {
     infix fun notEqual(b: Vec2t<out Number>) = glm.notEqual(this, b, Vec2bool())
     fun notEqual(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.notEqual(this, b, res)
 
-    infix fun isEqual(b: Vec2t<out Number>) = glm.isEqual(this,b)
+    infix fun isEqual(b: Vec2t<out Number>) = glm.isEqual(this, b)
 
 
     // component alias
 
     var r
-        get() = x
-        set(value) {
+        @JvmName("r") get() = x
+        @JvmName("r") set(value) {
             x = value
         }
     var g
-        get() = y
-        set(value) {
+        @JvmName("g") get() = y
+        @JvmName("g") set(value) {
             y = value
         }
 
 
     var s
-        get() = x
-        set(value) {
+        @JvmName("s") get() = x
+        @JvmName("s") set(value) {
             x = value
         }
     var t
-        get() = y
-        set(value) {
+        @JvmName("t") get() = y
+        @JvmName("t") set(value) {
             y = value
         }
 
     // swizzling
 
     val xx
-        get() = when (this) {
+        @JvmName("xx") get() = when (this) {
             is Vec2 -> Vec2(x, x)
             is Vec2d -> Vec2d(x, x)
             is Vec2b -> Vec2b(x, x)
@@ -153,7 +162,7 @@ abstract class Vec2t<T : Number> {
             else -> throw IllegalStateException()
         }
     var xy
-        get() = when (this) {
+        @JvmName("xy") get() = when (this) {
             is Vec2 -> Vec2(this)
             is Vec2d -> Vec2d(this)
             is Vec2b -> Vec2b(this)
@@ -166,13 +175,13 @@ abstract class Vec2t<T : Number> {
             is Vec2ul -> Vec2ul(this)
             else -> throw IllegalStateException()
         }
-        set(value) {
+        @JvmName("xy") set(value) {
             x = value.x as T
             y = value.y as T
         }
 
     var yx
-        get() = when (this) {
+        @JvmName("yx") get() = when (this) {
             is Vec2 -> Vec2(y, x)
             is Vec2d -> Vec2d(y, x)
             is Vec2b -> Vec2b(y, x)
@@ -185,12 +194,12 @@ abstract class Vec2t<T : Number> {
             is Vec2ul -> Vec2ul(y, x)
             else -> throw IllegalStateException()
         }
-        set(value) {
+        @JvmName("yx") set(value) {
             y = value.x as T
             x = value.y as T
         }
     val yy
-        get() = when (this) {
+        @JvmName("yy") get() = when (this) {
             is Vec2 -> Vec2(y, y)
             is Vec2d -> Vec2d(y, y)
             is Vec2b -> Vec2b(y, y)
@@ -205,7 +214,7 @@ abstract class Vec2t<T : Number> {
         }
 
     val rr
-        get() = when (this) {
+        @JvmName("rr") get() = when (this) {
             is Vec2 -> Vec2(x, x)
             is Vec2d -> Vec2d(x, x)
             is Vec2b -> Vec2b(x, x)
@@ -219,7 +228,7 @@ abstract class Vec2t<T : Number> {
             else -> throw IllegalStateException()
         }
     var rg
-        get() = when (this) {
+        @JvmName("rg") get() = when (this) {
             is Vec2 -> Vec2(this)
             is Vec2d -> Vec2d(this)
             is Vec2b -> Vec2b(this)
@@ -232,12 +241,12 @@ abstract class Vec2t<T : Number> {
             is Vec2ul -> Vec2ul(this)
             else -> throw IllegalStateException()
         }
-        set(value) {
+        @JvmName("rg") set(value) {
             x = value.x as T
             y = value.y as T
         }
     var gr
-        get() = when (this) {
+        @JvmName("gr") get() = when (this) {
             is Vec2 -> Vec2(y, x)
             is Vec2d -> Vec2d(y, x)
             is Vec2b -> Vec2b(y, x)
@@ -250,12 +259,12 @@ abstract class Vec2t<T : Number> {
             is Vec2ul -> Vec2ul(y, x)
             else -> throw IllegalStateException()
         }
-        set(value) {
+        @JvmName("gr") set(value) {
             y = value.x as T
             x = value.y as T
         }
     val gg
-        get() = when (this) {
+        @JvmName("gg") get() = when (this) {
             is Vec2 -> Vec2(y, y)
             is Vec2d -> Vec2d(y, y)
             is Vec2b -> Vec2b(y, y)
@@ -270,7 +279,7 @@ abstract class Vec2t<T : Number> {
         }
 
     val ss
-        get() = when (this) {
+        @JvmName("ss") get() = when (this) {
             is Vec2 -> Vec2(x, x)
             is Vec2d -> Vec2d(x, x)
             is Vec2b -> Vec2b(x, x)
@@ -284,7 +293,7 @@ abstract class Vec2t<T : Number> {
             else -> throw IllegalStateException()
         }
     var st
-        get() = when (this) {
+        @JvmName("st") get() = when (this) {
             is Vec2 -> Vec2(this)
             is Vec2d -> Vec2d(this)
             is Vec2b -> Vec2b(this)
@@ -302,7 +311,7 @@ abstract class Vec2t<T : Number> {
             y = value.y as T
         }
     var ts
-        get() = when (this) {
+        @JvmName("ts") get() = when (this) {
             is Vec2 -> Vec2(y, x)
             is Vec2d -> Vec2d(y, x)
             is Vec2b -> Vec2b(y, x)
@@ -315,12 +324,12 @@ abstract class Vec2t<T : Number> {
             is Vec2ul -> Vec2ul(y, x)
             else -> throw IllegalStateException()
         }
-        set(value) {
+        @JvmName("ts") set(value) {
             y = value.x as T
             x = value.y as T
         }
     val tt
-        get() = when (this) {
+        @JvmName("tt") get() = when (this) {
             is Vec2 -> Vec2(y, y)
             is Vec2d -> Vec2d(y, y)
             is Vec2b -> Vec2b(y, y)
