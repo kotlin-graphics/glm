@@ -91,9 +91,7 @@ data class Mat2x2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2> {
 
     override operator fun get(i: Int) = value[i]
 
-    operator fun set(i: Int, v: Vec2) {
-        value[i] = v
-    }
+    operator fun set(i: Int, v: Vec2) = value[i] put v
 
     // -- Matrix functions --
 

@@ -270,6 +270,7 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
     @JvmOverloads fun normalize(res: Vec3 = Vec3()) = normalize(this, res) // TODO others
     fun normalize_() = normalize(this, this)
     infix fun cross(b: Vec3) = cross(this, b)
+    fun cross_(b: Vec3) = cross(this, b, this)
 }
 
 

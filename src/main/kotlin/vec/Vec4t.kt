@@ -41,7 +41,12 @@ abstract class Vec4t<T : Number> {
     // -- infix Generic Constructors --
 
     infix fun put(v: Vec2t<out Number>) = put(v.x, v.y, 0, 1)
+    fun put(v: Vec2t<out Number>, z: Number) = put(v.x, v.y, z, 1)
+    fun put(v: Vec2t<out Number>, z: Number, w: Number) = put(v.x, v.y, z, w)
+
     infix fun put(v: Vec3t<out Number>) = put(v.x, v.y, v.z, 1)
+    fun put(v: Vec3t<out Number>, w: Number) = put(v.x, v.y, v.z, w)
+
     infix fun put(v: Vec4t<out Number>) = put(v.x, v.y, v.z, v.w)
 
     infix fun put(v: Vec2bool) = put(v.x.b, v.y.b, 0, 1)
