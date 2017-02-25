@@ -271,6 +271,13 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
     fun normalize_() = normalize(this, this)
     infix fun cross(b: Vec3) = cross(this, b)
     fun cross_(b: Vec3) = cross(this, b, this)
+    @JvmOverloads fun negate(res: Vec3 = Vec3()): Vec3 {
+        x = -x
+        y = -y
+        z = -z
+        return this
+    }
+    fun negate_() = negate(this)
 }
 
 
