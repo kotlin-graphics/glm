@@ -230,9 +230,9 @@ val Double.rad
 
 interface ext {
 
-    fun toDeg(rad: Float) = Math.toDegrees(rad.d)
+    fun toDeg(rad: Float) = Math.toDegrees(rad.d).f
     fun toDeg(rad: Double) = Math.toDegrees(rad)
 
-    fun toRad(deg: Float) = Math.toRadians(deg.d)
+    fun toRad(deg: Float) = Math.toRadians(deg.d).f
     fun toRad(deg: Double) = Math.toRadians(deg)
 }

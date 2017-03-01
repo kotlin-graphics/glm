@@ -13,9 +13,7 @@ class Mat3x2(override var value: MutableList<Vec2>) : Mat3x2t<Vec2> {
 
     //operator fun get(main.getI: Int) = value[main.getI]
 
-    operator fun set(i: Int, v: Vec2) {
-        value[i] = v
-    }
+    operator fun set(i: Int, v: Vec2) = value[i] put v
 
     companion object {
         @JvmStatic val SIZE = 3 * 2 * Float.BYTES

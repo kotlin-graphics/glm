@@ -255,13 +255,12 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
     operator fun get(i: Int) = value[i]
 
-    operator fun set(i: Int, v: Vec4) {
-        value[i] = v
-    }
+    operator fun set(i: Int, v: Vec4) = value[i] put v
 
+    fun set(i: Int, v: Vec3, s: Float) = value[i].put(v, s) // TODO other cases
 
     companion object : mat4x4_operators {
-        @JvmStatic val SIZE = 4 * 4 * Float.BYTES
+        @JvmStatic val SIZE = 4 * Vec4.SIZE
     }
 
 
