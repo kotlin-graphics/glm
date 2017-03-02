@@ -2,6 +2,8 @@ import org.gradle.api.JavaVersion
 
 apply{
     plugin("java")
+    plugin("kotlin")
+    plugin("maven")
 }
 
 buildscript {
@@ -11,28 +13,23 @@ buildscript {
     }
 
     dependencies {
-        classpath(kotlinModule("gradle-plugin", "1.1.0-rc-91"))
+        classpath(kotlinModule("gradle-plugin", "1.1.0"))
     }
 }
 
-configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-apply {
-    plugin("kotlin")
-    plugin("maven")
-}
+//configure<JavaPluginConvention> {
+//    sourceCompatibility = JavaVersion.VERSION_1_8
+//    targetCompatibility = JavaVersion.VERSION_1_8
+//}
 
 repositories {
     gradleScriptKotlin()
 }
 
 dependencies {
-    compile(kotlinModule("stdlib", "1.1.0-rc-91"))
-    testCompile("com.github.elect86:kotlintest:c4b7b397a0d182d1adaf61f71a9423c228dc0106")
-    compile("com.github.elect86:kotlin-unsigned:606ec0ea2b11bc604647cc61280f01db399d7191")
+    compile(kotlinModule("stdlib", "1.1.0"))
+    testCompile("com.github.elect86:kotlintest:d8878d6da0944ec6bcbcdad6a1540bba021d768d")
+    compile("com.github.elect86:kotlin-unsigned:405b68c99309459eeb24c2639f016f26dcf59ba3")
 }
 
 allprojects {
