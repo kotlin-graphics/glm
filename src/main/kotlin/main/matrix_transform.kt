@@ -10,6 +10,7 @@ import main.detail.GLM_DEPTH_CLIP_SPACE
 import main.detail.GLM_DEPTH_ZERO_TO_ONE
 import main.detail.GLM_LEFT_HANDED
 import mat.Mat4x4
+import vec._2.Vec2
 import vec._3.Vec3
 import vec._4.Vec4i
 
@@ -74,20 +75,35 @@ interface matrix_transform {
         val rotate21 = tempZ * axisY - s * axisX
         val rotate22 = c + tempZ * axisZ
 
-        res[0].x = m[0].x * rotate00 + m[1].x * rotate01 + m[2].x * rotate02
-        res[0].y = m[0].y * rotate00 + m[1].y * rotate01 + m[2].y * rotate02
-        res[0].z = m[0].z * rotate00 + m[1].z * rotate01 + m[2].z * rotate02
-        res[0].w = m[0].w * rotate00 + m[1].w * rotate01 + m[2].w * rotate02
+        val res0x = m[0].x * rotate00 + m[1].x * rotate01 + m[2].x * rotate02
+        val res0y = m[0].y * rotate00 + m[1].y * rotate01 + m[2].y * rotate02
+        val res0z = m[0].z * rotate00 + m[1].z * rotate01 + m[2].z * rotate02
+        val res0w = m[0].w * rotate00 + m[1].w * rotate01 + m[2].w * rotate02
 
-        res[1].x = m[0].x * rotate10 + m[1].x * rotate11 + m[2].x * rotate12
-        res[1].y = m[0].y * rotate10 + m[1].y * rotate11 + m[2].y * rotate12
-        res[1].z = m[0].z * rotate10 + m[1].z * rotate11 + m[2].z * rotate12
-        res[1].w = m[0].w * rotate10 + m[1].w * rotate11 + m[2].w * rotate12
+        val res1x = m[0].x * rotate10 + m[1].x * rotate11 + m[2].x * rotate12
+        val res1y = m[0].y * rotate10 + m[1].y * rotate11 + m[2].y * rotate12
+        val res1z = m[0].z * rotate10 + m[1].z * rotate11 + m[2].z * rotate12
+        val res1w = m[0].w * rotate10 + m[1].w * rotate11 + m[2].w * rotate12
 
-        res[2].x = m[0].x * rotate20 + m[1].x * rotate21 + m[2].x * rotate22
-        res[2].y = m[0].y * rotate20 + m[1].y * rotate21 + m[2].y * rotate22
-        res[2].z = m[0].z * rotate20 + m[1].z * rotate21 + m[2].z * rotate22
-        res[2].w = m[0].w * rotate20 + m[1].w * rotate21 + m[2].w * rotate22
+        val res2x = m[0].x * rotate20 + m[1].x * rotate21 + m[2].x * rotate22
+        val res2y = m[0].y * rotate20 + m[1].y * rotate21 + m[2].y * rotate22
+        val res2z = m[0].z * rotate20 + m[1].z * rotate21 + m[2].z * rotate22
+        val res2w = m[0].w * rotate20 + m[1].w * rotate21 + m[2].w * rotate22
+
+        res[0].x = res0x
+        res[0].y = res0y
+        res[0].z = res0z
+        res[0].w = res0w
+
+        res[1].x = res1x
+        res[1].y = res1y
+        res[1].z = res1z
+        res[1].w = res1w
+
+        res[2].x = res2x
+        res[2].y = res2y
+        res[2].z = res2z
+        res[2].w = res2w
 
         res[3].x = m[3].x
         res[3].y = m[3].y
@@ -769,21 +785,23 @@ interface matrix_transform {
      * @param res the resulting matrix.
      * @return [res]
      */
-    //    fun pickMatrix(center: Vec2, delta: Vec2, viewport: Vec4i, res: Mat4x4 = Mat4x4()): Mat4x4 {
-//
-//        assert(delta.x > 0f && delta.y > 0f)
-//
-//        res to 1f
-//
-//        if(!(delta.x > 0f && delta.y > 0f)) throw ArithmeticException("! delta > 0")
-//
-//        val tmpX = (viewport[2] - 2f * (center.x - viewport[0])) / delta.x
-//        val tmpY = (viewport[3] - 2f * (center.y - viewport[1])) / delta.y
-//        //val tmpZ = 0f
-//
-//        // Translate main.and scale the picked region to the entire window
+    fun pickMatrix(center: Vec2, delta: Vec2, viewport: Vec4i, res: Mat4x4 = Mat4x4()): Mat4x4 {
+
+        assert(delta.x > 0f && delta.y > 0f)
+
+        res to 1f
+
+        if (!(delta.x > 0f && delta.y > 0f)) throw ArithmeticException("! delta > 0")
+
+        val tmpX = (viewport[2] - 2f * (center.x - viewport[0])) / delta.x
+        val tmpY = (viewport[3] - 2f * (center.y - viewport[1])) / delta.y
+        //val tmpZ = 0f
+
+        TODO()
+        // Translate main.and scale the picked region to the entire window
 //        res[3].x = res[0].x * tmpX + res[1].x * tmpY + res[2].x * v.z + res[3].x
 //        res[3].y = res[0].y * tmpX + res[1].y * tmpY + res[2].y * v.z + res[3].y
 //        res[3].z = res[0].z * tmpX + res[1].z * tmpY + res[2].z * v.z + res[3].z
-//    }
+
+    }
 }
