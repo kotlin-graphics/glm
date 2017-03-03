@@ -289,8 +289,8 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     operator fun plus(b: Float) = add(Mat4x4(), this, b)
     operator fun plus(b: Mat4x4) = add(Mat4x4(), this, b)
 
-    fun add(b: Float, res: Mat4x4 = Mat4x4()) = add(res, this, b)
-    fun add(b: Mat4x4, res: Mat4x4 = Mat4x4()) = add(res, this, b)
+    @JvmOverloads fun add(b: Float, res: Mat4x4 = Mat4x4()) = add(res, this, b)
+    @JvmOverloads fun add(b: Mat4x4, res: Mat4x4 = Mat4x4()) = add(res, this, b)
 
     infix fun add_(b: Float) = add(this, this, b)
     infix fun add_(b: Mat4x4) = add(this, this, b)
@@ -299,8 +299,8 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     operator fun minus(b: Float) = sub(Mat4x4(), this, b)
     operator fun minus(b: Mat4x4) = sub(Mat4x4(), this, b)
 
-    fun sub(b: Float, res: Mat4x4 = Mat4x4()) = sub(res, this, b)
-    fun sub(b: Mat4x4, res: Mat4x4 = Mat4x4()) = sub(res, this, b)
+    @JvmOverloads fun sub(b: Float, res: Mat4x4 = Mat4x4()) = sub(res, this, b)
+    @JvmOverloads fun sub(b: Mat4x4, res: Mat4x4 = Mat4x4()) = sub(res, this, b)
 
     infix fun sub_(b: Float) = sub(this, this, b)
     infix fun sub_(b: Mat4x4) = sub(this, this, b)
@@ -319,8 +319,8 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
      */
     @JvmOverloads fun mul(b: Float, res: Mat4x4 = Mat4x4()) = mul(res, this, b)
 
-    fun mul(b: Vec4, res: Vec4 = Vec4()) = mul(res, this, b)
-    fun mul(b: Mat4x4, res: Mat4x4 = Mat4x4()) = mul(res, this, b)
+    @JvmOverloads fun mul(b: Vec4, res: Vec4 = Vec4()) = mul(res, this, b)
+    @JvmOverloads fun mul(b: Mat4x4, res: Mat4x4 = Mat4x4()) = mul(res, this, b)
 
     infix fun mul_(b: Float) = mul(this, this, b)
     infix fun mul_(b: Vec4) = mul(b, this, b)
