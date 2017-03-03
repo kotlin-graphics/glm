@@ -1,10 +1,13 @@
 package quat
 
 import main.BYTES
-import main.f
 import main.Glm.cos
 import main.Glm.dot
 import main.Glm.sin
+import main.f
+import main.glm
+import mat.Mat3
+import mat.Mat4
 import mat.QuatT
 import vec._3.Vec3
 
@@ -24,7 +27,7 @@ data class Quat(var w: Float, var x: Float, var y: Float, var z: Float) : QuatT<
         val cY = a.z * b.x - b.z * a.x
         val cZ = a.x * b.y - b.x * a.y
         val dot = dot(a, b)
-        to(1f + dot, cX, cY, cZ)
+        put(1f + dot, cX, cY, cZ)
         normalize(this, this)
     }
 
@@ -50,13 +53,19 @@ data class Quat(var w: Float, var x: Float, var y: Float, var z: Float) : QuatT<
 //        quat_cast(m, this)
 //    }
 
+    infix fun to(res: Mat3) = glm.mat3_cast(res, this)
+    fun toMat3() = glm.mat3_cast(Mat3(), this)
+
+    infix fun to(res: Mat4) = glm.mat4_cast(res, this)
+    fun toMat4() = glm.mat4_cast(Mat4(), this)
+
     // -- Explicit basic constructors --
 
     constructor(q: QuatD) : this(q.w.f, q.x.f, q.y.f, q.z.f)
     constructor(w: Number, x: Number, y: Number, z: Number) : this(w.f, x.f, y.f, z.f)
 
 
-    fun to(w: Float, x: Float, y: Float, z: Float): Quat {
+    fun put(w: Float, x: Float, y: Float, z: Float): Quat {
         this.w = w
         this.x = x
         this.y = y

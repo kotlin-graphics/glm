@@ -33,7 +33,7 @@ interface quat_func {
     fun normalize(q: Quat, res: Quat = Quat()): Quat {
         val len = length(q)
         if (len <= 0f)   // Problem
-            return res.to(1f, 0f, 0f, 0f)
+            return res.put(1f, 0f, 0f, 0f)
         val oneOverLen = 1f / len
         res.w = q.w * oneOverLen
         res.x = q.x * oneOverLen

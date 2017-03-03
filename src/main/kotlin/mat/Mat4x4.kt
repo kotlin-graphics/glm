@@ -7,6 +7,7 @@ import main.Glm.transpose
 import main.glm
 import main.set
 import mat.operators.mat4x4_operators
+import quat.Quat
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t
@@ -250,6 +251,9 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
         dfb[offset + 15] = value[3][3]
         return dfb
     }
+
+    infix fun to(res: Quat) = glm.quat_cast(res, this)
+    fun toQuat() = glm.quat_cast(Quat(), this)
 
     // -- Accesses --
 

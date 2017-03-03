@@ -38,6 +38,7 @@ object Glm :
         func_trigonometric,
 
         matrix_transform,
+        quaternion,
 
         epsilon,
 

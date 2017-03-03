@@ -6,6 +6,8 @@ import vec.Vec3t
 import vec._3.Vec3
 import main.Glm.inverse
 import main.Glm.transpose
+import main.glm
+import quat.Quat
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -177,6 +179,9 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
     }
 
     fun toMat4() = to(Mat4x4())
+
+    infix fun to(res: Quat) = glm.quat_cast(res, this)
+    fun toQuat() = glm.quat_cast(Quat(), this)
 
 
     companion object : mat3x3_operators {
