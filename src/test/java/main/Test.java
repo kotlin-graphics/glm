@@ -1,5 +1,6 @@
 package main;
 
+import quat.Quat;
 import vec._2.Vec2;
 import vec._2.Vec2i;
 
@@ -19,5 +20,7 @@ public class Test {
         glm.detail.mod289(new Vec2());
 
         Vec2i v = new Vec2i(3, 4);
+
+        Quat quat = new Quat();
     }
 }
