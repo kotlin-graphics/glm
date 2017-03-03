@@ -148,4 +148,9 @@ data class Quat(var w: Float, var x: Float, var y: Float, var z: Float) : QuatT<
     fun div(b: Float, res: Quat = Quat()) = div(res, this, b)
 
     infix fun div_(b: Float) = div(this, this, b)
+
+
+    // -- Quat func --
+
+    @JvmOverloads fun conjugate(res: Quat = Quat()) = glm.conjugate(res, this)
 }

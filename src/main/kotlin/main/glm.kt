@@ -12,6 +12,7 @@ import main.func.common.func_vector4_common
 import mat.operators.mat2x2_operators
 import mat.operators.mat3x3_operators
 import mat.operators.mat4x4_operators
+import quat.quat_func
 import vec._3.Vec3i
 
 @JvmField val glm = Glm
@@ -38,7 +39,7 @@ object Glm :
         func_trigonometric,
 
         matrix_transform,
-        quaternion,
+        quat_func,
 
         epsilon,
 

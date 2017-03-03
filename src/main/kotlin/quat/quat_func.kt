@@ -13,7 +13,9 @@ import main.Glm.sqrt
 import main.epsilon
 import main.f
 import main.glm
+import mat.Mat3
 import mat.Mat3x3
+import mat.Mat4
 import mat.Mat4x4
 import vec._3.Vec3
 import vec.bool.Vec4bool
@@ -30,7 +32,7 @@ interface quat_func {
 
 
     /** Returns the normalized quaternion.  */
-    fun normalize(q: Quat, res: Quat = Quat()): Quat {
+    fun normalize(res: Quat, q: Quat): Quat {
         val len = length(q)
         if (len <= 0f)   // Problem
             return res.put(1f, 0f, 0f, 0f)
@@ -49,7 +51,7 @@ interface quat_func {
     /** Spherical linear interpolation of two quaternions.
      * The interpolation is oriented main.and the rotation is performed at constant speed.
      * For short path spherical linear interpolation, use the slerp function.     */
-    fun mix(a: Quat, b: Quat, interp: Float, res: Quat = Quat()): Quat {
+    fun mix(res: Quat, a: Quat, b: Quat, interp: Float): Quat {
 
         val cosTheta = dot(a, b)
 
@@ -78,7 +80,7 @@ interface quat_func {
 
     /** Linear interpolation of two quaternions.
      * The interpolation is oriented.     */
-    fun lerp(a: Quat, b: Quat, interp: Float, res: Quat = Quat()): Quat {
+    fun lerp(res: Quat, a: Quat, b: Quat, interp: Float): Quat {
         // Lerp is only defined in [0, 1]
         if (interp < 0f || interp > 1f)
             throw ArithmeticException("interp outside [0, 1]")
@@ -93,7 +95,7 @@ interface quat_func {
 
     /** Spherical linear interpolation of two quaternions.
      * The interpolation always take the short path main.and the rotation is performed at constant speed.     */
-    fun slerp(a: Quat, b: Quat, interp: Float, res: Quat = Quat()): Quat {
+    fun slerp(res: Quat, a: Quat, b: Quat, interp: Float): Quat {
 
         var zW = b.w
         var zX = b.x
@@ -136,7 +138,7 @@ interface quat_func {
 
 
     /** Returns the q conjugate.    */
-    fun conjugate(a: Quat, res: Quat = Quat()): Quat {
+    fun conjugate(res: Quat, a: Quat): Quat {
         res.w = a.w
         res.x = -a.x
         res.y = -a.y
@@ -145,7 +147,7 @@ interface quat_func {
     }
 
     /** Returns the q inverse.  */
-    fun inverse(a: Quat, res: Quat = Quat()): Quat {
+    fun inverse(res: Quat, a: Quat): Quat {
         val dot = dot(a, a)
         res.w = a.w / dot
         res.x = -a.x / dot
@@ -156,7 +158,7 @@ interface quat_func {
 
 
     /** Rotates a quaternion from a vector of 3 components axis main.and an angle.   */
-    fun rotate(q: Quat, angle: Float, v: Vec3, res: Quat = Quat()): Quat {
+    fun rotate(res: Quat, q: Quat, angle: Float, v: Vec3): Quat {
 
         var tmpX = v.x
         var tmpY = v.y
@@ -187,7 +189,7 @@ interface quat_func {
 
     /** Returns euler angles, pitch as x, yaw as y, roll as z.
      * The result is expressed in radians.     */
-    fun eulerAngles(a: Quat, res: Vec3 = Vec3()): Vec3 {
+    fun eulerAngles(res: Vec3, a: Quat): Vec3 {
         res.x = pitch(a)
         res.y = yaw(a)
         res.z = roll(a)
@@ -205,7 +207,7 @@ interface quat_func {
 
 
     /** Converts a quaternion to a 3 * 3 matrix.    */
-    fun mat3_cast(q: Quat, res: Mat3x3 = Mat3x3()): Mat3x3 {
+    fun mat3_cast(res: Mat3x3, q: Quat): Mat3x3 {
 
         val qxx = q.x * q.x
         val qyy = q.y * q.y
@@ -233,7 +235,7 @@ interface quat_func {
     }
 
     /** Converts a quaternion to a 4 * 4 matrix.    */
-    fun mat4_cast(q: Quat, res: Mat4x4 = Mat4x4()): Mat4x4 {
+    fun mat4_cast(res: Mat4x4, q: Quat): Mat4x4 {
 
         val qxx = q.x * q.x
         val qyy = q.y * q.y
@@ -262,69 +264,20 @@ interface quat_func {
 
 
     /** Converts a 3 * 3 matrix to a quaternion.    */
-    fun quat_cast(res: Quat, m: Mat3x3): Quat {
-
-        val fourXSquaredMinus1 = m[0][0] - m[1][1] - m[2][2]
-        val fourYSquaredMinus1 = m[1][1] - m[0][0] - m[2][2]
-        val fourZSquaredMinus1 = m[2][2] - m[0][0] - m[1][1]
-        val fourWSquaredMinus1 = m[0][0] + m[1][1] + m[2][2]
-
-        var biggestIndex = 0
-        var fourBiggestSquaredMinus1 = fourWSquaredMinus1
-        if (fourXSquaredMinus1 > fourBiggestSquaredMinus1) {
-            fourBiggestSquaredMinus1 = fourXSquaredMinus1
-            biggestIndex = 1
-        }
-        if (fourYSquaredMinus1 > fourBiggestSquaredMinus1) {
-            fourBiggestSquaredMinus1 = fourYSquaredMinus1
-            biggestIndex = 2
-        }
-        if (fourZSquaredMinus1 > fourBiggestSquaredMinus1) {
-            fourBiggestSquaredMinus1 = fourZSquaredMinus1
-            biggestIndex = 3
-        }
-
-        val biggestVal = glm.sqrt(fourBiggestSquaredMinus1 + 1f) * 0.5f
-        val mult = 0.25f / biggestVal
-
-        when (biggestIndex) {
-            0 -> {
-                res.w = biggestVal
-                res.x = (m[1][2] - m[2][1]) * mult
-                res.y = (m[2][0] - m[0][2]) * mult
-                res.z = (m[0][1] - m[1][0]) * mult
-            }
-            1 -> {
-                res.w = (m[1][2] - m[2][1]) * mult
-                res.x = biggestVal
-                res.y = (m[0][1] + m[1][0]) * mult
-                res.z = (m[2][0] + m[0][2]) * mult
-            }
-            2 -> {
-                res.w = (m[2][0] - m[0][2]) * mult
-                res.x = (m[0][1] + m[1][0]) * mult
-                res.y = biggestVal
-                res.z = (m[1][2] + m[2][1]) * mult
-            }
-            3 -> {
-                res.w = (m[0][1] - m[1][0]) * mult
-                res.x = (m[2][0] + m[0][2]) * mult
-                res.y = (m[1][2] + m[2][1]) * mult
-                res.z = biggestVal
-            }
-        // Silence a -Wswitch-default warning in GCC. Should never actually get here. Assert is just for sanity.
-            else -> throw ArithmeticException("biggestIndex invalid")
-        }
-        return res
-    }
+    fun quat_cast(res: Quat = Quat(), m: Mat3) = quat_cast(res, m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2])
 
     /** Converts a 4 * 4 matrix to a quaternion.    */
-    fun quat_cast(res: Quat, m: Mat4x4): Quat {
+    fun quat_cast(res: Quat = Quat(), m: Mat4) = quat_cast(res, m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2])
 
-        val fourXSquaredMinus1 = m[0][0] - m[1][1] - m[2][2]
-        val fourYSquaredMinus1 = m[1][1] - m[0][0] - m[2][2]
-        val fourZSquaredMinus1 = m[2][2] - m[0][0] - m[1][1]
-        val fourWSquaredMinus1 = m[0][0] + m[1][1] + m[2][2]
+    fun quat_cast(res: Quat,
+                  m00: Float, m01: Float, m02: Float,
+                  m10: Float, m11: Float, m12: Float,
+                  m20: Float, m21: Float, m22: Float): Quat {
+
+        val fourXSquaredMinus1 = m00 - m11 - m22
+        val fourYSquaredMinus1 = m11 - m00 - m22
+        val fourZSquaredMinus1 = m22 - m00 - m11
+        val fourWSquaredMinus1 = m00 + m11 + m22
 
         var biggestIndex = 0
         var fourBiggestSquaredMinus1 = fourWSquaredMinus1
@@ -341,36 +294,37 @@ interface quat_func {
             biggestIndex = 3
         }
 
-        val biggestVal = glm.sqrt(fourBiggestSquaredMinus1 + 1f) * 0.5f
+        val biggestVal = sqrt(fourBiggestSquaredMinus1 + 1f) * 0.5f
         val mult = 0.25f / biggestVal
 
         when (biggestIndex) {
             0 -> {
                 res.w = biggestVal
-                res.x = (m[1][2] - m[2][1]) * mult
-                res.y = (m[2][0] - m[0][2]) * mult
-                res.z = (m[0][1] - m[1][0]) * mult
+                res.x = (m12 - m21) * mult
+                res.y = (m20 - m02) * mult
+                res.z = (m01 - m10) * mult
             }
             1 -> {
-                res.w = (m[1][2] - m[2][1]) * mult
+                res.w = (m12 - m21) * mult
                 res.x = biggestVal
-                res.y = (m[0][1] + m[1][0]) * mult
-                res.z = (m[2][0] + m[0][2]) * mult
+                res.y = (m01 + m10) * mult
+                res.z = (m20 + m02) * mult
             }
             2 -> {
-                res.w = (m[2][0] - m[0][2]) * mult
-                res.x = (m[0][1] + m[1][0]) * mult
+                res.w = (m20 - m02) * mult
+                res.x = (m01 + m10) * mult
                 res.y = biggestVal
-                res.z = (m[1][2] + m[2][1]) * mult
+                res.z = (m12 + m21) * mult
             }
             3 -> {
-                res.w = (m[0][1] - m[1][0]) * mult
-                res.x = (m[2][0] + m[0][2]) * mult
-                res.y = (m[1][2] + m[2][1]) * mult
+                res.w = (m01 - m10) * mult
+                res.x = (m20 + m02) * mult
+                res.y = (m12 + m21) * mult
                 res.z = biggestVal
             }
+
         // Silence a -Wswitch-default warning in GCC. Should never actually get here. Assert is just for sanity.
-            else -> throw ArithmeticException("biggestIndex invalid")
+            else -> assert(false)
         }
         return res
     }
@@ -397,7 +351,7 @@ interface quat_func {
     }
 
     /** Build a quaternion from an angle main.and a normalized axis. */
-    fun angleAxis(angle: Float, axis: Vec3, res: Quat = Quat()): Quat {
+    fun angleAxis(res: Quat, angle: Float, axis: Vec3): Quat {
 
         val a = angle * 0.5f
         val s = sin(a)
@@ -411,6 +365,7 @@ interface quat_func {
     }
 
 
+    //TODO move res in front, default arg on classes
     /** Returns the component-wise comparison result of x < y.  */
     fun lessThan(a: Quat, b: Quat, res: Vec4bool = Vec4bool()): Vec4bool {
         res.x = a.x < b.x
