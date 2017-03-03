@@ -148,9 +148,9 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
     operator fun plus(b: Float) = add(Vec3(), this, b, b, b)
     operator fun plus(b: Vec3) = add(Vec3(), this, b.x, b.y, b.z)
 
-    fun add(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = add(res, this, bX, bY, bZ)
-    fun add(b: Float, res: Vec3 = Vec3()) = add(res, this, b, b, b)
-    fun add(b: Vec3, res: Vec3 = Vec3()) = add(res, this, b.x, b.y, b.z)
+    @JvmOverloads fun add(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = add(res, this, bX, bY, bZ)
+    @JvmOverloads fun add(b: Float, res: Vec3 = Vec3()) = add(res, this, b, b, b)
+    @JvmOverloads fun add(b: Vec3, res: Vec3 = Vec3()) = add(res, this, b.x, b.y, b.z)
 
     fun add_(bX: Float, bY: Float, bZ: Float) = add(this, this, bX, bY, bZ)
     infix fun add_(b: Float) = add(this, this, b, b, b)
@@ -160,9 +160,9 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
     operator fun minus(b: Float) = sub(Vec3(), this, b, b, b)
     operator fun minus(b: Vec3) = sub(Vec3(), this, b.x, b.y, b.z)
 
-    fun sub(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = sub(res, this, bX, bY, bZ)
-    fun sub(b: Float, res: Vec3 = Vec3()) = sub(res, this, b, b, b)
-    @JvmOverloads fun sub(b: Vec3, res: Vec3 = Vec3()) = sub(res, this, b.x, b.y, b.z) // TODO overload other
+    @JvmOverloads fun sub(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = sub(res, this, bX, bY, bZ)
+    @JvmOverloads fun sub(b: Float, res: Vec3 = Vec3()) = sub(res, this, b, b, b)
+    @JvmOverloads fun sub(b: Vec3, res: Vec3 = Vec3()) = sub(res, this, b.x, b.y, b.z) // TODO overload others
 
     fun sub_(bX: Float, bY: Float, bZ: Float) = sub(this, this, bX, bY, bZ)
     infix fun sub_(b: Float) = sub(this, this, b, b, b)
@@ -172,9 +172,9 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
     operator fun times(b: Float) = mul(Vec3(), this, b, b, b)
     operator fun times(b: Vec3) = mul(Vec3(), this, b.x, b.y, b.z)
 
-    fun mul(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = mul(res, this, bX, bY, bZ)
-    fun mul(b: Float, res: Vec3 = Vec3()) = mul(res, this, b, b, b)
-    fun mul(b: Vec3, res: Vec3 = Vec3()) = mul(res, this, b.x, b.y, b.z)
+    @JvmOverloads fun mul(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = mul(res, this, bX, bY, bZ)
+    @JvmOverloads fun mul(b: Float, res: Vec3 = Vec3()) = mul(res, this, b, b, b)
+    @JvmOverloads fun mul(b: Vec3, res: Vec3 = Vec3()) = mul(res, this, b.x, b.y, b.z)
 
     fun mul_(bX: Float, bY: Float, bZ: Float) = mul(this, this, bX, bY, bZ)
     infix fun mul_(b: Float) = mul(this, this, b, b, b)
@@ -184,7 +184,7 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
     operator fun div(b: Float) = div(Vec3(), this, b, b, b)
     operator fun div(b: Vec3) = div(Vec3(), this, b.x, b.y, b.z)
 
-    fun div(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = div(res, this, bX, bY, bZ)
+    @JvmOverloads fun div(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = div(res, this, bX, bY, bZ)
     fun div(b: Float, res: Vec3 = Vec3()) = div(res, this, b, b, b)
     fun div(b: Vec3, res: Vec3 = Vec3()) = div(res, this, b.x, b.y, b.z)
 
@@ -196,7 +196,7 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
     operator fun rem(b: Float) = rem(Vec3(), this, b, b, b)
     operator fun rem(b: Vec3) = rem(Vec3(), this, b.x, b.y, b.z)
 
-    fun rem(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = rem(res, this, bX, bY, bZ)
+    @JvmOverloads fun rem(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = rem(res, this, bX, bY, bZ)
     fun rem(b: Float, res: Vec3 = Vec3()) = rem(res, this, b, b, b)
     fun rem(b: Vec3, res: Vec3 = Vec3()) = rem(res, this, b.x, b.y, b.z)
 
