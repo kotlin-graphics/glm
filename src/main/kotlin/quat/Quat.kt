@@ -10,6 +10,7 @@ import mat.Mat3
 import mat.Mat4
 import mat.QuatT
 import vec._3.Vec3
+import vec._4.Vec4
 
 /**
  * Created by GBarbieri on 15.11.2016.
@@ -95,4 +96,56 @@ data class Quat(var w: Float, var x: Float, var y: Float, var z: Float) : QuatT<
     companion object : quat_operators, quat_func {
         @JvmStatic val SIZE = 4 * Float.BYTES
     }
+
+
+    // -- Unary arithmetic operators --
+
+    operator fun Quat.unaryPlus() = this
+
+    operator fun Quat.unaryMinus() = Quat(-w, -x, -y, -z)
+
+
+    // -- Specific binary arithmetic operators --
+
+    operator fun plus(b: Quat) = add(Quat(), this, b)
+
+    fun add(b: Quat, res: Quat = Quat()) = add(res, this, b)
+
+    infix fun add(b: Quat) = add(Quat(), this, b)
+    infix fun add_(b: Quat) = add(this, this, b)
+
+
+    operator fun minus(b: Quat) = sub(Quat(), this, b)
+
+    fun sub(b: Quat, res: Quat = Quat()) = sub(res, this, b)
+
+    infix fun sub(b: Quat) = sub(Quat(), this, b)
+    infix fun sub_(b: Quat) = sub(this, this, b)
+
+
+    operator fun times(b: Quat) = mul(Quat(), this, b)
+    operator fun times(b: Float) = mul(Quat(), this, b)
+    operator fun times(b: Vec3) = mul(Vec3(), this, b)
+    operator fun times(b: Vec4) = mul(Quat(), this, b)
+
+    fun mul(b: Quat, res: Quat = Quat()) = mul(res, this, b)
+    fun mul(b: Float, res: Quat = Quat()) = mul(res, this, b)
+    fun mul(b: Vec3, res: Vec3 = Vec3()) = mul(res, this, b)
+    fun mul(b: Vec4, res: Quat = Quat()) = mul(res, this, b)
+
+    infix fun mul(b: Quat) = mul(Quat(), this, b)
+    infix fun mul(b: Float) = mul(Quat(), this, b)
+    infix fun mul(b: Vec3) = mul(Vec3(), this, b)
+    infix fun mul(b: Vec4) = mul(Quat(), this, b)
+    infix fun mul_(b: Quat) = mul(this, this, b)
+    infix fun mul_(b: Float) = mul(this, this, b)
+    infix fun mul_(b: Vec3) = mul(b, this, b)
+    infix fun mul_(b: Vec4) = mul(this, this, b)
+
+
+    operator fun div(b: Float) = div(Quat(), this, b)
+
+    fun div(b: Float, res: Quat = Quat()) = div(res, this, b)
+
+    infix fun div_(b: Float) = div(this, this, b)
 }
