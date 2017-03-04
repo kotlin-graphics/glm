@@ -153,16 +153,21 @@ data class Quat(var w: Float, var x: Float, var y: Float, var z: Float) : QuatT<
 
     // -- Quat func --
 
+    fun length() = glm.length(this)
+
+    @JvmOverloads fun normalize(res: Quat = Quat()) = glm.normalize(res, this)
+    fun normalize_() = glm.normalize(this, this)
+
+    infix fun dot(b: Quat) = glm.dot(this, b)
+
     @JvmOverloads fun angleAxis(angle: Float, axis: Vec3, res: Quat = Quat()) = glm.angleAxis(res, angle, axis)
     fun angleAxis_(angle: Float, axis: Vec3) = glm.angleAxis(this, angle, axis)
 
     @JvmOverloads fun conjugate(res: Quat = Quat()) = glm.conjugate(res, this)
     fun conjugate_() = glm.conjugate(this, this)
 
-    @JvmOverloads fun normalize(res: Quat = Quat()) = glm.normalize(res, this)
-    fun normalize_() = glm.normalize(this, this)
-
-    fun length() = glm.length(this)
+    @JvmOverloads fun inverse(res: Quat = Quat()) = glm.inverse(res, this)
+    fun inverse_() = glm.inverse(this, this)
 
     fun angle() = glm.angle(this)
 
@@ -170,4 +175,7 @@ data class Quat(var w: Float, var x: Float, var y: Float, var z: Float) : QuatT<
 
     @JvmOverloads fun slerp(b: Quat, interp: Float, res: Quat = Quat()) = glm.slerp(res, this, b, interp)
     fun slerp_(b: Quat, interp: Float) = glm.slerp(this, this, b, interp)
+
+
+    override fun toString() = "($x, $y, $z), $w"
 }

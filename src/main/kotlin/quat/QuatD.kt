@@ -89,7 +89,7 @@ data class QuatD(var w: Double, var x: Double, var y: Double, var z: Double) : Q
     }
 
 
-    companion object : quat_operators, quat_func {
+    companion object : quatD_operators, quat_func {
 
         @JvmStatic val SIZE = 4 * Float.BYTES
     }
@@ -149,16 +149,21 @@ data class QuatD(var w: Double, var x: Double, var y: Double, var z: Double) : Q
 
     // -- Quat func --
 
+    fun length() = glm.length(this)
+
+    @JvmOverloads fun normalize(res: QuatD = QuatD()) = glm.normalize(res, this)
+    fun normalize_() = glm.normalize(this, this)
+
+    infix fun dot(b: QuatD) = glm.dot(this, b)
+
     @JvmOverloads fun angleAxis(angle: Double, axis: Vec3d, res: QuatD = QuatD()) = glm.angleAxis(res, angle, axis)
     fun angleAxis_(angle: Double, axis: Vec3d) = glm.angleAxis(this, angle, axis)
 
     @JvmOverloads fun conjugate(res: QuatD = QuatD()) = glm.conjugate(res, this)
     fun conjugate_() = glm.conjugate(this, this)
 
-    @JvmOverloads fun normalize(res: QuatD = QuatD()) = glm.normalize(res, this)
-    fun normalize_() = glm.normalize(this, this)
-
-    fun length() = glm.length(this)
+    @JvmOverloads fun inverse(res: QuatD = QuatD()) = glm.inverse(res, this)
+    fun inverse_() = glm.inverse(this, this)
 
     fun angle() = glm.angle(this)
 
@@ -166,4 +171,7 @@ data class QuatD(var w: Double, var x: Double, var y: Double, var z: Double) : Q
 
     @JvmOverloads fun slerp(b: QuatD, interp: Double, res: QuatD = QuatD()) = glm.slerp(res, this, b, interp)
     fun slerp_(b: QuatD, interp: Double) = glm.slerp(this, this, b, interp)
+
+
+    override fun toString() = "($x, $y, $z), $w"
 }

@@ -2,7 +2,7 @@ package main
 
 import main.Glm.abs
 import main.Glm.cos
-import main.Glm.epsilon
+import main.Glm.epsilonF
 import main.Glm.inverseSqrt
 import main.Glm.sin
 import main.Glm.tan
@@ -369,7 +369,7 @@ interface matrix_transform {
      */
     fun perspectiveRH(fovy: Float, aspect: Float, zNear: Float, zFar: Float, res: Mat4x4 = Mat4x4()): Mat4x4 {
 
-        assert(abs(aspect - glm.epsilon) > 0f)
+        assert(abs(aspect - glm.epsilonF) > 0f)
 
         val tanHalfFovy = tan(fovy / 2f)
 
@@ -403,7 +403,7 @@ interface matrix_transform {
      */
     fun perspectiveLH(fovy: Float, aspect: Float, zNear: Float, zFar: Float, res: Mat4x4 = Mat4x4()): Mat4x4 {
 
-        assert(abs(aspect - glm.epsilon) > 0f)
+        assert(abs(aspect - glm.epsilonF) > 0f)
 
         val tanHalfFovy = tan(fovy / 2f)
 
@@ -589,7 +589,7 @@ interface matrix_transform {
      * @param res the resulting matrix
      * @return [res]
      */
-    fun tweakedInfinitePerspective(fovy: Float, aspect: Float, zNear: Float, res: Mat4x4 = Mat4x4()) = tweakedInfinitePerspective(fovy, aspect, zNear, glm.epsilon)
+    fun tweakedInfinitePerspective(fovy: Float, aspect: Float, zNear: Float, res: Mat4x4 = Mat4x4()) = tweakedInfinitePerspective(fovy, aspect, zNear, glm.epsilonF)
 
     /**
      * Creates a matrix for a symmetric perspective-view frustum with far plane at infinite for graphics hardware that doesn't support depth clamping.

@@ -1,17 +1,17 @@
 package quat
 
-import main.Glm.dot
-import quat.Quat.Companion.mul
-import vec._3.Vec3
-import vec._4.Vec4
+import main.Glm
+import quat.QuatD.Companion.mul
+import vec._3.Vec3d
+import vec._4.Vec4d
 
 /**
- * Created by GBarbieri on 13.12.2016.
+ * Created by elect on 04/03/2017.
  */
 
-interface quat_operators {
+interface quatD_operators {
 
-    fun add(res: Quat, a: Quat, b: Quat): Quat {
+    fun add(res: QuatD, a: QuatD, b: QuatD): QuatD {
         res.w = a.w + b.w
         res.x = a.x + b.x
         res.y = a.y + b.y
@@ -20,7 +20,7 @@ interface quat_operators {
     }
 
 
-    fun sub(res: Quat, a: Quat, b: Quat): Quat {
+    fun sub(res: QuatD, a: QuatD, b: QuatD): QuatD {
         res.w = a.w - b.w
         res.x = a.x - b.x
         res.y = a.y - b.y
@@ -29,7 +29,7 @@ interface quat_operators {
     }
 
 
-    fun mul(res: Quat, a: Quat, b: Quat): Quat {
+    fun mul(res: QuatD, a: QuatD, b: QuatD): QuatD {
         val resW = a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z
         val resX = a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y
         val resY = a.w * b.y + a.y * b.w + a.z * b.x - a.x * b.z
@@ -37,7 +37,7 @@ interface quat_operators {
         return res.put(resW, resX, resY, resZ)
     }
 
-    fun mul(res: Quat, a: Quat, b: Float): Quat {
+    fun mul(res: QuatD, a: QuatD, b: Double): QuatD {
         res.w = a.w * b
         res.x = a.x * b
         res.y = a.y * b
@@ -45,21 +45,21 @@ interface quat_operators {
         return res
     }
 
-    fun mul(res: Vec3, a: Quat, b: Vec3): Vec3 {
+    fun mul(res: Vec3d, a: QuatD, b: Vec3d): Vec3d {
         val uvX = a.y * b.z - b.y * a.z
         val uvY = a.z * b.x - b.z * a.x
         val uvZ = a.x * b.y - b.x * a.y
         val uuvX = a.y * uvZ - uvY * a.z
         val uuvY = a.z * uvX - uvZ * a.x
         val uuvZ = a.x * uvY - uvX * a.y
-        res.x = b.x + (uvX * a.w + uuvX) * 2f
-        res.y = b.y + (uvY * a.w + uuvY) * 2f
-        res.z = b.z + (uvZ * a.w + uuvZ) * 2f
+        res.x = b.x + (uvX * a.w + uuvX) * 2.0
+        res.y = b.y + (uvY * a.w + uuvY) * 2.0
+        res.z = b.z + (uvZ * a.w + uuvZ) * 2.0
         return res
     }
 
-    fun mul(res: Vec3, a: Vec3, b: Quat): Vec3 {
-        val dot = dot(a, a)
+    fun mul(res: Vec3d, a: Vec3d, b: QuatD): Vec3d {
+        val dot = Glm.dot(a, a)
         val iW = b.w / dot
         val iX = -b.x / dot
         val iY = -b.y / dot
@@ -70,13 +70,13 @@ interface quat_operators {
         val uuvX = iY * uvZ - uvY * iZ
         val uuvY = iZ * uvX - uvZ * iX
         val uuvZ = iX * uvY - uvX * iY
-        res.x = a.x + (uvX * iW + uuvX) * 2f
-        res.y = a.y + (uvY * iW + uuvY) * 2f
-        res.z = a.z + (uvZ * iW + uuvZ) * 2f
+        res.x = a.x + (uvX * iW + uuvX) * 2.0
+        res.y = a.y + (uvY * iW + uuvY) * 2.0
+        res.z = a.z + (uvZ * iW + uuvZ) * 2.0
         return res
     }
 
-    fun mul(res: Quat, a: Quat, b: Vec4): Quat {
+    fun mul(res: QuatD, a: QuatD, b: Vec4d): QuatD {
         res.w = a.w
         res.x = a.x * b.x
         res.y = a.y * b.y
@@ -84,7 +84,8 @@ interface quat_operators {
         return res
     }
 
-    fun div(res: Quat, a: Quat, b: Float): Quat {
+
+    fun div(res: QuatD, a: QuatD, b: Double): QuatD {
         res.w = a.w / b
         res.x = a.x / b
         res.y = a.y / b
@@ -93,7 +94,6 @@ interface quat_operators {
     }
 }
 
-
-operator fun Float.times(b: Quat) = mul(Quat(), b, this)
-operator fun Vec3.times(b: Quat) = mul(Vec3(), this, b)
-operator fun Vec4.times(b: Quat) = mul(Quat(), b, this)
+operator fun Double.times(b: QuatD) = mul(QuatD(), b, this)
+operator fun Vec3d.times(b: QuatD) = mul(Vec3d(), this, b)
+operator fun Vec4d.times(b: QuatD) = mul(QuatD(), b, this)

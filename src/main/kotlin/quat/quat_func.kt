@@ -6,13 +6,14 @@ import main.Glm.asin
 import main.Glm.atan
 import main.Glm.clamp
 import main.Glm.cos
+import main.Glm.epsilonD
+import main.Glm.epsilonF
 import main.Glm.length
 import main.Glm.mix
 import main.Glm.sin
 import main.Glm.sqrt
-import main.epsilon
-import main.epsilon_
 import main.f
+import main.glm
 import mat.Mat3
 import mat.Mat3x3
 import mat.Mat4
@@ -69,7 +70,7 @@ interface quat_func {
         val cosTheta = dot(a, b)
 
         // Perform a linear interpolation when cosTheta is close to 1 to avoid side effect of sin(angle) becoming a zero denominator
-        if (cosTheta > 1f - epsilon(cosTheta, 1f)) {
+        if (cosTheta > 1f - epsilonF) {
             // Linear interpolation
             res.w = mix(a.w, b.w, interp)
             res.x = mix(a.x, b.x, interp)
@@ -98,7 +99,7 @@ interface quat_func {
         val cosTheta = dot(a, b)
 
         // Perform a linear interpolation when cosTheta is close to 1 to avoid side effect of sin(angle) becoming a zero denominator
-        if (cosTheta > 1.0 - epsilon(cosTheta, 1.0)) {
+        if (cosTheta > 1.0 - epsilonD) {
             // Linear interpolation
             res.w = mix(a.w, b.w, interp)
             res.x = mix(a.x, b.x, interp)
@@ -171,7 +172,7 @@ interface quat_func {
         }
 
         // Perform a linear interpolation when cosTheta is close to 1 to avoid side effect of sin(angle) becoming a zero denominator
-        if (cosTheta > 1f - epsilon(cosTheta, 1f)) {
+        if (cosTheta > 1f - epsilonF) {
             // Linear interpolation
             res.w = mix(a.w, zW, interp)
             res.x = mix(a.x, zX, interp)
@@ -184,10 +185,10 @@ interface quat_func {
             val s0 = sin((1f - interp) * angle)
             val s1 = sin(interp * angle)
             val s2 = sin(angle)
-            res.w = (s0 * a.w + s1 * b.w) / s2
-            res.x = (s0 * a.x + s1 * b.x) / s2
-            res.y = (s0 * a.y + s1 * b.y) / s2
-            res.z = (s0 * a.z + s1 * b.z) / s2
+            res.w = (s0 * a.w + s1 * zW) / s2
+            res.x = (s0 * a.x + s1 * zX) / s2
+            res.y = (s0 * a.y + s1 * zY) / s2
+            res.z = (s0 * a.z + s1 * zZ) / s2
             return res
         }
     }
@@ -214,7 +215,7 @@ interface quat_func {
         }
 
         // Perform a linear interpolation when cosTheta is close to 1 to avoid side effect of sin(angle) becoming a zero denominator
-        if (cosTheta > 1.0 - epsilon(cosTheta, 1.0)) {
+        if (cosTheta > 1.0 - epsilonD) {
             // Linear interpolation
             res.w = mix(a.w, zW, interp)
             res.x = mix(a.x, zX, interp)

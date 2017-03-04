@@ -124,10 +124,11 @@ class quaternion : StringSpec() {
 
             "quat slerp" {
 
+                val epsilon = .0001f
+
                 val sqrt2 = glm.sqrt(2f) / 2f
                 val id = Quat()
                 val y90rot = Quat(sqrt2, 0f, sqrt2, 0f)
-                val y180rot = Quat(0f, 0f, 1f, 0f)
 
                 // Testing a == 0
                 // Must be id
@@ -155,28 +156,51 @@ class quaternion : StringSpec() {
                 val y45rot3 = id.slerp(-y90rot, .5f)
                 val y45angle3 = y45rot3.angle()
                 epsilonEqual(y45angle3, pi.f * .25f, epsilon) shouldBe true
-//                all(epsilonEqual(ym45rot2, y45rot3, epsilon)) shouldBe true
-//
-//                // Same, but inverted
-//                // Must also be 45° rotation on Y :  0 0.38 0 0.92
-//                // -0 -0.38 -0 -0.92 is ok too
-//                glm::quat Y45rot4 = glm::slerp(-Y90rot, id, 0.5f);
-//                Error += glm::all(glm::epsilonEqual(Ym45rot2, -Y45rot4, Epsilon)) ? 0 : 1;
-//
-//                // Testing q1 = q2
-//                // Must be 90° rotation on Y : 0 0.7 0 0.7
-//                glm::quat Y90rot3 = glm::slerp(Y90rot, Y90rot, 0.5f);
-//                Error += glm::all(glm::epsilonEqual(Y90rot, Y90rot3, Epsilon)) ? 0 : 1;
-//
-//                // Testing 180° rotation
-//                // Must be 90° rotation on almost any axis that is on the XZ plane
-//                glm::quat XZ90rot = glm::slerp(id, -Y90rot, 0.5f);
-//                float XZ90angle = glm::angle(XZ90rot); // Must be PI/4 = 0.78;
-//                Error += glm::epsilonEqual(XZ90angle, glm::pi<float>() * 0.25f, Epsilon) ? 0 : 1;
-//
-//                // Testing almost equal quaternions (this test should pass through the linear interpolation)
-//                // Must be 0 0.00X 0 0.99999
-//                glm::quat almostid = glm::slerp(id, glm::angleAxis(0.1f, glm::vec3(0.0f, 1.0f, 0.0f)), 0.5f);
+                all(epsilonEqual(ym45rot2, y45rot3, epsilon)) shouldBe true
+
+                // Same, but inverted
+                // Must also be 45° rotation on Y :  0 0.38 0 0.92
+                // -0 -0.38 -0 -0.92 is ok too
+                val y45rot4 = slerp(Quat(), -y90rot, id, 0.5f)
+                all(epsilonEqual(ym45rot2, -y45rot4, epsilon)) shouldBe true
+
+                // Testing q1 = q2
+                // Must be 90° rotation on Y : 0 0.7 0 0.7
+                val y90rot3 = y90rot.slerp(y90rot, .5f)
+                all(epsilonEqual(y90rot, y90rot3, epsilon)) shouldBe true
+
+                // Testing 180° rotation
+                // Must be 90° rotation on almost any axis that is on the XZ plane
+                val xz90rot = id.slerp(-y90rot, .5f)
+                val xz90angle = xz90rot.angle() // Must be PI/4 = 0.78
+                epsilonEqual(xz90angle, pi.f * .25f, epsilon) shouldBe true
+
+                // Testing almost equal quaternions (this test should pass through the linear interpolation)
+                // Must be 0 0.00X 0 0.99999
+                val almostid = id.slerp(angleAxis(Quat(), .1f, Vec3(0f, 1f, 0f)), .5f)
+                all(epsilonEqual(almostid, Quat(.99968f, 0.f, .02499f, 0f), epsilon)) shouldBe true
+
+                // Testing quaternions with opposite sign
+                run {
+
+                    val a = Quat(-1, 0, 0, 0)
+
+                    val result = a.slerp(id, .5f)
+
+                    val b = id dot result
+                    val c = pow(id dot result, 2f)
+                    epsilonEqual(pow(id dot result, 2f), 1f, .01f) shouldBe true
+                }
+            }
+
+            "quat mul" {
+
+                val temp1 = Quat(1f, Vec3(0, 1, 0)).normalize()
+                val temp2 = Quat(.5f, Vec3(1, 0, 0)).normalize()
+
+                val a = temp1 * Vec3(0, 1, 0)
+                val transformed0 = a * temp1.inverse()
+//                val transformed0 = temp1 * Vec3(0, 1, 0) * temp1.inverse()
             }
         }
     }
