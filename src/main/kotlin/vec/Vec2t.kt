@@ -84,7 +84,7 @@ abstract class Vec2t<T : Number> {
         if (x is Number && y is Number) put(x, y)
         else if (x is Char && y is Char) put(x.b, y.b)
         else if (x is Boolean && y is Boolean) put(x.b, y.b)
-        else throw ArithmeticException("incompatible this type")
+        else throw ArithmeticException("incompatible with this type")
     }
 
     fun put(bytes: ByteBuffer, index: Int) = put(bytes[index], bytes[index + 1])
@@ -94,9 +94,6 @@ abstract class Vec2t<T : Number> {
     fun put(longs: LongBuffer, index: Int) = put(longs[index], longs[index + 1])
     fun put(floats: FloatBuffer, index: Int) = put(floats[index], floats[index + 1])
     fun put(doubles: DoubleBuffer, index: Int) = put(doubles[index], doubles[index + 1])
-
-
-    fun length() = 2
 
 
     infix fun lessThan(b: Vec2t<out Number>) = glm.lessThan(this, b, Vec2bool())
@@ -118,6 +115,15 @@ abstract class Vec2t<T : Number> {
     fun notEqual(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.notEqual(this, b, res)
 
     infix fun isEqual(b: Vec2t<out Number>) = glm.isEqual(this, b)
+
+
+    companion object {
+
+        // -- functions --
+
+        @JvmField val length = 2
+    }
+
 
 
     // component alias

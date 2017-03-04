@@ -3,6 +3,7 @@ package vec._2
 import main.BYTES
 import main.d
 import main.getDouble
+import main.glm
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t
@@ -241,4 +242,19 @@ data class Vec2d(override var x: Double, override var y: Double) : Vec2t<Double>
     fun rem_(bX: Number, bY: Number) = rem(this, this, bX.d, bY.d)
     infix fun rem_(b: Number) = rem(this, this, b.d, b.d)
     infix fun rem_(b: Vec2t<Number>) = rem(this, this, b.x.d, b.y.d)
+
+
+    // -- functions --
+
+    fun length() = glm.length(this)
+
+    @JvmOverloads fun normalize(res: Vec2d = Vec2d()) = glm.normalize(this, res) // TODO others
+    fun normalize_() = glm.normalize(this, this)
+
+    @JvmOverloads fun negate(res: Vec2d = Vec2d()): Vec2d {
+        x = -x
+        y = -y
+        return this
+    }
+    fun negate_() = negate(this)
 }

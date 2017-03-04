@@ -20,7 +20,7 @@ data class Quat(var w: Float, var x: Float, var y: Float, var z: Float) : QuatT<
 
     // -- Implicit basic constructors --
 
-    constructor() : this(0f, 0f, 0f, 1f)
+    constructor() : this(1f, 0f, 0f, 0f)
     constructor(q: Quat) : this(q.w, q.x, q.y, q.z)
     constructor(s: Float, v: Vec3) : this(s, v.x, v.y, v.z)
     constructor(a: Vec3, b: Vec3) : this() {
@@ -94,15 +94,16 @@ data class Quat(var w: Float, var x: Float, var y: Float, var z: Float) : QuatT<
 
 
     companion object : quat_operators, quat_func {
+
         @JvmStatic val SIZE = 4 * Float.BYTES
     }
 
 
     // -- Unary arithmetic operators --
 
-    operator fun Quat.unaryPlus() = this
+    operator fun unaryPlus() = this
 
-    operator fun Quat.unaryMinus() = Quat(-w, -x, -y, -z)
+    operator fun unaryMinus() = Quat(-w, -x, -y, -z)
 
 
     // -- Specific binary arithmetic operators --
@@ -152,9 +153,21 @@ data class Quat(var w: Float, var x: Float, var y: Float, var z: Float) : QuatT<
 
     // -- Quat func --
 
+    @JvmOverloads fun angleAxis(angle: Float, axis: Vec3, res: Quat = Quat()) = glm.angleAxis(res, angle, axis)
+    fun angleAxis_(angle: Float, axis: Vec3) = glm.angleAxis(this, angle, axis)
+
     @JvmOverloads fun conjugate(res: Quat = Quat()) = glm.conjugate(res, this)
     fun conjugate_() = glm.conjugate(this, this)
 
     @JvmOverloads fun normalize(res: Quat = Quat()) = glm.normalize(res, this)
     fun normalize_() = glm.normalize(this, this)
+
+    fun length() = glm.length(this)
+
+    fun angle() = glm.angle(this)
+
+    @JvmOverloads fun eulerAngles(res: Vec3 = Vec3()) = glm.eulerAngles(res, this)
+
+    @JvmOverloads fun slerp(b: Quat, interp: Float, res: Quat = Quat()) = glm.slerp(res, this, b, interp)
+    fun slerp_(b: Quat, interp: Float) = glm.slerp(this, this, b, interp)
 }

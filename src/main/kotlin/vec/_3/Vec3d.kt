@@ -1,8 +1,6 @@
 package vec._3
 
-import main.BYTES
-import main.d
-import main.getDouble
+import main.*
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t
@@ -248,4 +246,23 @@ data class Vec3d(override var x: Double, override var y: Double, override var z:
     fun rem_(bX: Number, bY: Number, bZ: Number) = rem(this, this, bX.d, bY.d, bZ.d)
     infix fun rem_(b: Number) = rem(this, this, b.d, b.d, b.d)
     infix fun rem_(b: Vec3t<Number>) = rem(this, this, b.x.d, b.y.d, b.z.d)
+
+
+    // -- functions --
+
+    fun length() = glm.length(this)
+
+    @JvmOverloads fun normalize(res: Vec3d = Vec3d()) = glm.normalize(this, res) // TODO others
+    fun normalize_() = glm.normalize(this, this)
+
+    infix fun cross(b: Vec3d) = glm.cross(this, b)
+    fun cross_(b: Vec3d) = glm.cross(this, b, this)
+
+    @JvmOverloads fun negate(res: Vec3d = Vec3d()): Vec3d {
+        x = -x
+        y = -y
+        z = -z
+        return this
+    }
+    fun negate_() = negate(this)
 }

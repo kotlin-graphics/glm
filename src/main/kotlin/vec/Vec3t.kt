@@ -12,10 +12,6 @@ import java.nio.*
 
 abstract class Vec3t<T : Number> {
 
-    companion object {
-        fun length() = 3
-    }
-
     abstract var x: T
     abstract var y: T
     abstract var z: T
@@ -107,9 +103,6 @@ abstract class Vec3t<T : Number> {
     fun put(doubles: DoubleBuffer, index: Int) = put(doubles[index], doubles[index + 1], doubles[index + 2])
 
 
-    fun length() = 3
-
-
     infix fun lessThan(b: Vec3t<out Number>) = glm.lessThan(this, b, Vec3bool())
     fun lessThan(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.lessThan(this, b, res)
 
@@ -131,7 +124,12 @@ abstract class Vec3t<T : Number> {
     infix fun isEqual(b: Vec3t<out Number>) = glm.isEqual(this,b)
 
 
-    // component alias
+    companion object {
+
+        // -- functions --
+
+        @JvmField val length = 3
+    }
 
     // components alias
 

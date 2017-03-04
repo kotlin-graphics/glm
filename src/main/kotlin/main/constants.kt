@@ -6,4 +6,4 @@ package main
 
 
 fun epsilon(a: Float, b:Float) = Math.max(Math.ulp(a), Math.ulp(b))
-fun epsilon() = Float.MIN_VALUE
+fun epsilon(a: Double, b:Double) = Math.max(Math.ulp(a), Math.ulp(b))

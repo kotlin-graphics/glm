@@ -41,13 +41,16 @@ object Glm :
         matrix_transform,
         quat_func,
 
-        epsilon,
+        epsilon_,
 
         ext,
 
         gli {
 
     @JvmField val detail = Detail
+
+    @JvmField val pi = Math.PI
+    @JvmField val epsilon = Float.MIN_VALUE
 }
 
 object Detail : noise

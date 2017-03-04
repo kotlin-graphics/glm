@@ -1,9 +1,6 @@
 package vec._4
 
-import main.BYTES
-import main.f
-import main.getFloat
-import main.glm
+import main.*
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t
@@ -273,5 +270,19 @@ data class Vec4(override var x: Float, override var y: Float, override var z: Fl
     infix fun rem_(b: Vec4t<Number>) = rem(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
 
 
-    fun normalize() = glm.normalize(this, this) // TODO others
+    // -- functions --
+
+    fun length() = glm.length(this)
+
+    @JvmOverloads fun normalize(res: Vec4 = Vec4()) = glm.normalize(this, res) // TODO others
+    fun normalize_() = glm.normalize(this, this)
+
+    @JvmOverloads fun negate(res: Vec4 = Vec4()): Vec4 {
+        x = -x
+        y = -y
+        z = -z
+        w = -w
+        return this
+    }
+    fun negate_() = negate(this)
 }

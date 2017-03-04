@@ -15,7 +15,7 @@ import vec.bool.Vec4bool
 /**
  * Created by GBarbieri on 11.11.2016.
  */
-interface epsilon {
+interface epsilon_ {
 
     fun epsilonEqual(x: Float, y: Float, epsilon: Float) = Math.abs(x - y) < epsilon
     fun epsilonEqual(x: Byte, y: Byte, epsilon: Byte) = Math.abs(x - y) < epsilon

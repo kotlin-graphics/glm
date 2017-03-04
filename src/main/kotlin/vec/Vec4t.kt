@@ -114,9 +114,6 @@ abstract class Vec4t<T : Number> {
     fun put(doubles: DoubleBuffer, index: Int) = put(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
 
-    fun length() = 4
-
-
     infix fun lessThan(b: Vec4t<out Number>) = glm.lessThan(this, b, Vec4bool())
     fun lessThan(b: Vec4t<out Number>, res: Vec4bool = Vec4bool()) = glm.lessThan(this, b, res)
 
@@ -137,6 +134,13 @@ abstract class Vec4t<T : Number> {
 
     infix fun isEqual(b: Vec4t<out Number>) = glm.isEqual(this, b)
 
+
+    companion object {
+
+        // -- functions --
+
+        @JvmField val length = 4
+    }
 
     // components alias
 

@@ -13,6 +13,7 @@ import vec.bool.Vec4bool
 import java.nio.*
 import main.Glm.normalize
 import main.Glm.cross
+import main.glm
 
 /**
  * Created bY GBarbieri on 05.10.2016.
@@ -267,10 +268,16 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
     infix fun rem_(b: Vec3t<Number>) = rem(this, this, b.x.f, b.y.f, b.z.f)
 
 
+    // -- functions --
+
+    fun length() = glm.length(this)
+
     @JvmOverloads fun normalize(res: Vec3 = Vec3()) = normalize(this, res) // TODO others
     fun normalize_() = normalize(this, this)
+
     infix fun cross(b: Vec3) = cross(this, b)
     fun cross_(b: Vec3) = cross(this, b, this)
+
     @JvmOverloads fun negate(res: Vec3 = Vec3()): Vec3 {
         x = -x
         y = -y
