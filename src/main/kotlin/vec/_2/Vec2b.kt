@@ -82,7 +82,7 @@ data class Vec2b(override var x: Byte, override var y: Byte) : Vec2t<Byte>() {
 
 
     companion object : vec2b_operators {
-        @JvmStatic val SIZE = 2 * Byte.BYTES
+        @JvmField val SIZE = 2 * Byte.BYTES
     }
 
 

@@ -10,6 +10,6 @@ import  vec._4.Vec4
 class Mat3x4(override var value: MutableList<Vec4>) : Mat3x4t<Vec4> {
 
     companion object {
-        @JvmStatic val SIZE = 3 * 4 * Float.BYTES
+        @JvmField val SIZE = 3 * 4 * Float.BYTES
     }
 }

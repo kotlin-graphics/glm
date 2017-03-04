@@ -16,6 +16,6 @@ data class Mat4x2(override var value: MutableList<Vec2>) : Mat4x2t<Vec2> {
     operator fun set(i: Int, v: Vec2) = value[i] put v
 
     companion object {
-        @JvmStatic val SIZE = 4 * 2 * Float.BYTES
+        @JvmField val SIZE = 4 * 2 * Float.BYTES
     }
 }

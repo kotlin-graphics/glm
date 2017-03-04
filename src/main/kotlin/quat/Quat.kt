@@ -95,7 +95,7 @@ data class Quat(var w: Float, var x: Float, var y: Float, var z: Float) : QuatT<
 
     companion object : quat_operators, quat_func {
 
-        @JvmStatic val SIZE = 4 * Float.BYTES
+        @JvmField val SIZE = 4 * Float.BYTES
     }
 
 

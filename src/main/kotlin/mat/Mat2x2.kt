@@ -119,7 +119,7 @@ data class Mat2x2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2> {
 
     companion object : mat2x2_operators {
 
-        @JvmStatic val SIZE = 2 * 2 * Float.BYTES
+        @JvmField val SIZE = 2 * 2 * Float.BYTES
     }
 
     // TODO others

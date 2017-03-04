@@ -4,6 +4,7 @@ import io.kotlintest.KTestJUnitRunner
 import io.kotlintest.specs.StringSpec
 import org.junit.runner.RunWith
 import quat.Quat
+import quat.times
 import vec._3.Vec3
 
 /**
@@ -198,9 +199,7 @@ class quaternion : StringSpec() {
                 val temp1 = Quat(1f, Vec3(0, 1, 0)).normalize()
                 val temp2 = Quat(.5f, Vec3(1, 0, 0)).normalize()
 
-                val a = temp1 * Vec3(0, 1, 0)
-                val transformed0 = a * temp1.inverse()
-//                val transformed0 = temp1 * Vec3(0, 1, 0) * temp1.inverse()
+                val transformed0 = temp1 * Vec3(0, 1, 0) * temp1.inverse()
             }
         }
     }

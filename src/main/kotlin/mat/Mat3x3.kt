@@ -185,7 +185,7 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
 
 
     companion object : mat3x3_operators {
-        @JvmStatic val SIZE = 3 * 3 * Float.BYTES
+        @JvmField val SIZE = 3 * 3 * Float.BYTES
     }
 
 

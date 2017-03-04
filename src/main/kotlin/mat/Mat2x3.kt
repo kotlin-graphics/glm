@@ -18,6 +18,6 @@ data class Mat2x3(override var value: MutableList<Vec3>) : Mat2x3t<Vec3> {
 
     companion object {
 
-        @JvmStatic val SIZE = 2 * 3 * Float.BYTES
+        @JvmField val SIZE = 2 * 3 * Float.BYTES
     }
 }

@@ -102,7 +102,7 @@ data class Vec2ui(override var x: Uint, override var y: Uint) : Vec2t<Uint>() {
 
 
     companion object : vec2ui_operators {
-        @JvmStatic val SIZE = 2 * Uint.BYTES
+        @JvmField val SIZE = 2 * Uint.BYTES
     }
 
 

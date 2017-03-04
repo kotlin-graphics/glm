@@ -89,7 +89,7 @@ data class Vec4b(override var x: Byte, override var y: Byte, override var z: Byt
 
 
     companion object : vec4b_operators {
-        @JvmStatic val SIZE = 4 * Byte.BYTES
+        @JvmField val SIZE = 4 * Byte.BYTES
     }
 
 
