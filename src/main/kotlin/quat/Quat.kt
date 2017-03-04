@@ -153,4 +153,8 @@ data class Quat(var w: Float, var x: Float, var y: Float, var z: Float) : QuatT<
     // -- Quat func --
 
     @JvmOverloads fun conjugate(res: Quat = Quat()) = glm.conjugate(res, this)
+    fun conjugate_() = glm.conjugate(this, this)
+
+    @JvmOverloads fun normalize(res: Quat = Quat()) = glm.normalize(res, this)
+    fun normalize_() = glm.normalize(this, this)
 }

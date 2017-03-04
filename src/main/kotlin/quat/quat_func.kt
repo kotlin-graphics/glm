@@ -12,7 +12,6 @@ import main.Glm.sin
 import main.Glm.sqrt
 import main.epsilon
 import main.f
-import main.glm
 import mat.Mat3
 import mat.Mat3x3
 import mat.Mat4
@@ -37,11 +36,7 @@ interface quat_func {
         if (len <= 0f)   // Problem
             return res.put(1f, 0f, 0f, 0f)
         val oneOverLen = 1f / len
-        res.w = q.w * oneOverLen
-        res.x = q.x * oneOverLen
-        res.y = q.y * oneOverLen
-        res.z = q.z * oneOverLen
-        return res
+        return res.put(q.w * oneOverLen, q.x * oneOverLen, q.y * oneOverLen, q.z * oneOverLen)
     }
 
     /** Returns dot product of q1 main.and q2, main.getI.e., q1[0] * q2[0] + q1[1] * q2[1] + ... */
