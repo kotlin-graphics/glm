@@ -264,7 +264,8 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     fun set(i: Int, v: Vec3, s: Float) = value[i].put(v, s) // TODO other cases
 
     companion object : mat4x4_operators {
-        @JvmField val SIZE = 4 * Vec4.SIZE
+        @JvmField val length = 4    // TODO others
+        @JvmField val SIZE = length * Vec4.SIZE
     }
 
 
