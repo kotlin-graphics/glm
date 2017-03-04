@@ -349,22 +349,24 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
 
     // TODO others
-    fun scale_(scale: Vec3) = scale_(scale.x, scale.y, scale.z)
+    @JvmOverloads fun scale(scale: Vec3, res: Mat4x4 = Mat4()) = scale(scale.x, scale.y, scale.z, res)
 
+    @JvmOverloads fun scale(scale: Float, res: Mat4x4 = Mat4x4()) = scale(scale, scale, scale, res)
+    @JvmOverloads fun scale(scaleX: Float, scaleY: Float, scaleZ: Float, res: Mat4 = Mat4()) = glm.scale(this, scaleX, scaleY, scaleZ, res)
+
+    fun scale_(scale: Vec3) = scale_(scale.x, scale.y, scale.z)
     fun scale_(scale: Float) = scale_(scale, scale, scale)
     fun scale_(scaleX: Float, scaleY: Float, scaleZ: Float) = glm.scale(this, scaleX, scaleY, scaleZ, this)
 
-    fun scale(scale: Vec3) = scale(scale.x, scale.y, scale.z)
-    fun scale(scale: Float) = scale(scale, scale, scale)
-    fun scale(scaleX: Float, scaleY: Float, scaleZ: Float) = glm.scale(this, scaleX, scaleY, scaleZ)
+
+    @JvmOverloads fun translate(translate: Vec3, res: Mat4x4 = Mat4x4()) = translate(translate.x, translate.y, translate.z, res)
+    @JvmOverloads fun translate(translate: Float, res: Mat4x4 = Mat4x4()) = translate(translate, translate, translate, res)
+    @JvmOverloads fun translate(translateX: Float, translateY: Float, translateZ: Float, res: Mat4x4 = Mat4x4()) =
+            glm.translate(this, translateX, translateY, translateZ, res)
 
     fun translate_(translate: Vec3) = translate_(translate.x, translate.y, translate.z)
     fun translate_(translate: Float) = translate_(translate, translate, translate)
     fun translate_(translateX: Float, translateY: Float, translateZ: Float) = glm.translate(this, translateX, translateY, translateZ, this)
-
-    fun translate(translate: Vec3) = translate(translate.x, translate.y, translate.z)
-    fun translate(translate: Float) = translate(translate, translate, translate)
-    fun translate(translateX: Float, translateY: Float, translateZ: Float) = glm.translate(this, translateX, translateY, translateZ)
 
 
     infix fun isEqual(b: Mat4x4): Boolean {
@@ -374,8 +376,8 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
                 && this[3].isEqual(b[3]))
     }
 
-    fun rotate(angle: Float, vX: Float, vY: Float, vZ: Float, res: Mat4x4 = Mat4x4()) = glm.rotate(this, angle, vX, vY, vZ, res)
-    fun rotate(angle: Float, v: Vec3, res: Mat4x4 = Mat4x4()) = glm.rotate(this, angle, v, res)
+    @JvmOverloads fun rotate(angle: Float, vX: Float, vY: Float, vZ: Float, res: Mat4x4 = Mat4x4()) = glm.rotate(this, angle, vX, vY, vZ, res)
+    @JvmOverloads fun rotate(angle: Float, v: Vec3, res: Mat4x4 = Mat4x4()) = glm.rotate(this, angle, v, res)
     fun rotate_(angle: Float, vX: Float, vY: Float, vZ: Float) = glm.rotate(this, angle, vX, vY, vZ, this)
     fun rotate_(angle: Float, v: Vec3) = glm.rotate(this, angle, v, this)
 
