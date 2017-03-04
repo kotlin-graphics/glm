@@ -1,8 +1,11 @@
 package vec._3
 
 import main.BYTES
+import main.Glm.cross
+import main.Glm.normalize
 import main.f
 import main.getFloat
+import main.glm
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t
@@ -11,9 +14,6 @@ import vec.bool.Vec2bool
 import vec.bool.Vec3bool
 import vec.bool.Vec4bool
 import java.nio.*
-import main.Glm.normalize
-import main.Glm.cross
-import main.glm
 
 /**
  * Created bY GBarbieri on 05.10.2016.
@@ -113,7 +113,8 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
 
 
     companion object : vec3_operators {
-        @JvmField val SIZE = 3 * Float.BYTES
+        @JvmField val length = 3
+        @JvmField val SIZE = length * Float.BYTES
     }
 
 
@@ -284,6 +285,7 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
         z = -z
         return this
     }
+
     fun negate_() = negate(this)
 }
 
