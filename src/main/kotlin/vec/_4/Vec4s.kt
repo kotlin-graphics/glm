@@ -113,7 +113,8 @@ data class Vec4s(override var x: Short, override var y: Short, override var z: S
 
 
     companion object : vec4s_operators {
-        @JvmField val SIZE = 4 * Short.BYTES
+        @JvmField val length = 4
+        @JvmField val SIZE = length * Short.BYTES
     }
 
 

@@ -100,7 +100,8 @@ data class Vec2d(override var x: Double, override var y: Double) : Vec2t<Double>
 
 
     companion object : vec2d_operators {
-        @JvmField val SIZE = 2 * Double.BYTES
+        @JvmField val length = 2
+        @JvmField val SIZE = length * Double.BYTES
     }
 
 

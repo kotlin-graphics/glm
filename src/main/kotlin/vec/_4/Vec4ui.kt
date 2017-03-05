@@ -112,7 +112,8 @@ data class Vec4ui(override var x: Uint, override var y: Uint, override var z: Ui
 
 
     companion object : vec4ui_operators {
-        @JvmField val SIZE = 4 * Uint.BYTES
+        @JvmField val length = 4
+        @JvmField val SIZE = length * Uint.BYTES
     }
 
 

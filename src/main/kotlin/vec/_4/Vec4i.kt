@@ -113,7 +113,8 @@ data class Vec4i(override var x: Int, override var y: Int, override var z: Int, 
 
 
     companion object : vec4i_operators {
-        @JvmField val SIZE = 4 * Int.BYTES
+        @JvmField val length = 4
+        @JvmField val SIZE = length * Int.BYTES
     }
 
 

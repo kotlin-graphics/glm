@@ -96,7 +96,8 @@ data class Vec2(override var x: Float, override var y: Float) : Vec2t<Float>() {
 
 
     companion object : vec2_operators {
-        @JvmField val SIZE = 2 * Float.BYTES
+        @JvmField val length = 2
+        @JvmField val SIZE = length * Float.BYTES
     }
 
 

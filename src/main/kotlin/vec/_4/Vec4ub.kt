@@ -89,7 +89,8 @@ data class Vec4ub(override var x: Ubyte, override var y: Ubyte, override var z: 
 
 
     companion object : vec4ub_operators {
-        @JvmField val SIZE = 4 * Ubyte.BYTES
+        @JvmField val length = 4
+        @JvmField val SIZE = length * Ubyte.BYTES
     }
 
 

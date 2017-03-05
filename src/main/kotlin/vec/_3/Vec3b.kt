@@ -85,7 +85,8 @@ data class Vec3b(override var x: Byte, override var y: Byte, override var z: Byt
 
 
     companion object : vec3b_operators {
-        @JvmField val SIZE = 3 * Byte.BYTES
+        @JvmField val length = 3
+        @JvmField val SIZE = length * Byte.BYTES
     }
 
 

@@ -113,7 +113,8 @@ data class Vec4d(override var x: Double, override var y: Double, override var z:
 
 
     companion object : vec4d_operators {
-        @JvmField val SIZE = 4 * Double.BYTES
+        @JvmField val length = 4
+        @JvmField val SIZE = length * Double.BYTES
     }
 
 

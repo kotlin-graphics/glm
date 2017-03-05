@@ -103,7 +103,8 @@ data class Vec2us(override var x: Ushort, override var y: Ushort) : Vec2t<Ushort
 
 
     companion object : vec2us_operators {
-        @JvmField val SIZE = 2 * Ushort.BYTES
+        @JvmField val length = 2
+        @JvmField val SIZE = length * Ushort.BYTES
     }
 
 

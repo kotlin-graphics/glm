@@ -106,7 +106,8 @@ data class Vec3s(override var x: Short, override var y: Short, override var z: S
 
 
     companion object : vec3s_operators {
-        @JvmField val SIZE = 3 * Short.BYTES
+        @JvmField val length = 3
+        @JvmField val SIZE = length * Short.BYTES
     }
 
 

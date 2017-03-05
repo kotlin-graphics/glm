@@ -105,7 +105,8 @@ data class Vec3ui(override var x: Uint, override var y: Uint, override var z: Ui
 
 
     companion object : vec3ui_operators {
-        @JvmField val SIZE = 3 * Uint.BYTES
+        @JvmField val length = 3
+        @JvmField val SIZE = length * Uint.BYTES
     }
 
 

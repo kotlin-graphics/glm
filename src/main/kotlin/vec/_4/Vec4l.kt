@@ -113,7 +113,8 @@ data class Vec4l(override var x: Long, override var y: Long, override var z: Lon
 
 
     companion object : vec4l_operators {
-        @JvmField val SIZE = 4 * Long.BYTES
+        @JvmField val length = 4
+        @JvmField val SIZE = length * Long.BYTES
     }
 
 
