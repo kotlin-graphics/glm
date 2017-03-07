@@ -16,7 +16,7 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-data class Vec3b(override var x: Byte, override var y: Byte, override var z: Byte) : Vec3t<Byte>() {
+class Vec3b(x: Byte, y: Byte, z: Byte) : Vec3t<Byte>(x, y, z) {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -426,4 +426,10 @@ data class Vec3b(override var x: Byte, override var y: Byte, override var z: Byt
     fun shr(bX: Number, bY: Number, bZ: Number, res: Vec3b = Vec3b()) = shr(res, this, bX.b, bY.b, bZ.b)
 
     fun shr_(bX: Number, bY: Number, bZ: Number) = shr(this, this, bX.b, bY.b, bZ.b)
+
+
+    override fun equals(other: Any?) =
+            if (other is Vec3b)
+                this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
+            else false
 }

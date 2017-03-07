@@ -17,7 +17,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-data class Vec3ub(override var x: Ubyte, override var y: Ubyte, override var z: Ubyte) : Vec3t<Ubyte>() {
+class Vec3ub(x: Ubyte, y: Ubyte, z: Ubyte) : Vec3t<Ubyte>(x, y, z) {
 
     // -- Explicit basic, conversion main.getB main.and conversion vector constructors --
 

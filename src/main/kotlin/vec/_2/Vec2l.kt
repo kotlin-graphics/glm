@@ -16,7 +16,7 @@ import java.nio.*
  * Created bY GBarbieri on 06.10.2016.
  */
 
-data class Vec2l(override var x: Long, override var y: Long) : Vec2t<Long>() {
+class Vec2l(x: Long, y: Long) : Vec2t<Long>(x, y) {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -390,4 +390,10 @@ data class Vec2l(override var x: Long, override var y: Long) : Vec2t<Long>() {
     fun shr(bX: Number, bY: Number, res: Vec2l = Vec2l()) = shr(res, this, bX.L, bY.L)
 
     fun shr_(bX: Number, bY: Number) = shr(this, this, bX.L, bY.L)
+
+
+    override fun equals(other: Any?) =
+            if (other is Vec2l)
+                this[0] == other[0] && this[1] == other[1]
+            else false
 }

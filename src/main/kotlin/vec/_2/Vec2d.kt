@@ -17,7 +17,7 @@ import java.nio.*
  * Created bY GBarbieri on 06.10.2016.
  */
 
-data class Vec2d(override var x: Double, override var y: Double) : Vec2t<Double>() {
+class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -258,4 +258,10 @@ data class Vec2d(override var x: Double, override var y: Double) : Vec2t<Double>
         return this
     }
     fun negate_() = negate(this)
+
+
+    override fun equals(other: Any?) =
+            if (other is Vec2d)
+                this[0] == other[0] && this[1] == other[1]
+            else false
 }

@@ -16,7 +16,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-data class Vec4d(override var x: Double, override var y: Double, override var z: Double, override var w: Double) : Vec4t<Double>() {
+class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z, w) {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 

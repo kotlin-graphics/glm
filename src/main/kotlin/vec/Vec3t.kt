@@ -10,26 +10,11 @@ import vec._2.*
 import vec._3.*
 import java.nio.*
 
-abstract class Vec3t<T : Number> {
+abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
 
-    abstract var x: T
-    abstract var y: T
-    abstract var z: T
-
-
-    fun x(x: T) {
-        this.x = x
-    }
-    fun y(y: T) {
-        this.y = y
-    }
-    fun z(z: T) {
-        this.z = z
-    }
-
-    fun x() = x
-    fun y() = y
-    fun z() = z
+    @JvmField var x = _x
+    @JvmField var y = _y
+    @JvmField var z = _z
 
 
     // -- infix Generic Constructors --
@@ -121,7 +106,7 @@ abstract class Vec3t<T : Number> {
     infix fun notEqual(b: Vec3t<out Number>) = glm.notEqual(this, b, Vec3bool())
     fun notEqual(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.notEqual(this, b, res)
 
-    infix fun isEqual(b: Vec3t<out Number>) = glm.isEqual(this,b)
+    infix fun isEqual(b: Vec3t<out Number>) = glm.isEqual(this, b)
 
 
     companion object {

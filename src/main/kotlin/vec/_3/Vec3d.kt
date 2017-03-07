@@ -14,7 +14,7 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-data class Vec3d(override var x: Double, override var y: Double, override var z: Double) : Vec3t<Double>() {
+class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -266,4 +266,10 @@ data class Vec3d(override var x: Double, override var y: Double, override var z:
         return this
     }
     fun negate_() = negate(this)
+
+
+    override fun equals(other: Any?) =
+            if (other is Vec3d)
+                this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
+            else false
 }

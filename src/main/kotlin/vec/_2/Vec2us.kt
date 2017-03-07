@@ -20,7 +20,7 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-data class Vec2us(override var x: Ushort, override var y: Ushort) : Vec2t<Ushort>() {
+class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -494,4 +494,10 @@ data class Vec2us(override var x: Ushort, override var y: Ushort) : Vec2t<Ushort
     fun shr(b: Number, res: Vec2us) = shr(res, this, b.i, b.i)
     fun shr(bX: Number, bY: Number, res: Vec2us) = shr(res, this, bX.i, bY.i)
     fun shr(b: Vec2t<Number>, res: Vec2us) = shr(res, this, b.x.i, b.y.i)
+
+
+    override fun equals(other: Any?) =
+            if (other is Vec2us)
+                this[0] == other[0] && this[1] == other[1]
+            else false
 }

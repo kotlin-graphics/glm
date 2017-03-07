@@ -304,4 +304,9 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
         @JvmName("v22") set(v) {
             value[2][2] = v
         }
+
+    override fun equals(other: Any?) =
+            if (other is Mat3x3)
+                this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
+            else false
 }

@@ -15,7 +15,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-data class Vec4ui(override var x: Uint, override var y: Uint, override var z: Uint, override var w: Uint) : Vec4t<Uint>() {
+class Vec4ui(x: Uint, y: Uint, z: Uint, w: Uint) : Vec4t<Uint>(x, y, z, w) {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 

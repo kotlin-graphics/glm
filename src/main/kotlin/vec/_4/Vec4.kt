@@ -14,7 +14,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-data class Vec4(override var x: Float, override var y: Float, override var z: Float, override var w: Float) : Vec4t<Float>() {
+class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -286,4 +286,10 @@ data class Vec4(override var x: Float, override var y: Float, override var z: Fl
         return this
     }
     fun negate_() = negate(this)
+
+
+    override fun equals(other: Any?) =
+            if (other is Vec4)
+                this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
+            else false
 }

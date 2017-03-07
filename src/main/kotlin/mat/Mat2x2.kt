@@ -105,14 +105,10 @@ data class Mat2x2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2> {
 
     // TODO inc
 
+
     fun identity(): Mat2x2 {
-
-        value[0][0] = 1f
-        value[0][1] = 0f
-
-        value[1][0] = 0f
-        value[1][1] = 1f
-
+        value[0][0] = 1f; value[1][0] = 0f
+        value[0][1] = 0f; value[1][1] = 1f
         return this
     }
 
@@ -121,6 +117,60 @@ data class Mat2x2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2> {
 
         @JvmField val SIZE = 2 * 2 * Float.BYTES
     }
+
+
+    // -- operators --
+
+    operator fun plus(b: Mat2x2) = Mat2x2.add(Mat2x2(), this, b)
+    operator fun plus(b: Float) = Mat2x2.add(Mat2x2(), this, b)
+
+    infix fun add(b: Mat2x2) = Mat2x2.add(Mat2x2(), this, b)
+    infix fun add(b: Float) = Mat2x2.add(Mat2x2(), this, b)
+
+    fun add(b: Mat2x2, res: Mat2x2) = Mat2x2.add(res, this, b)
+    fun add(b: Float, res: Mat2x2) = Mat2x2.add(res, this, b)
+
+    fun add_(b: Mat2x2) = Mat2x2.add(this, this, b)
+    fun add_(b: Float) = Mat2x2.add(this, this, b)
+
+
+    operator fun minus(b: Mat2x2) = Mat2x2.sub(Mat2x2(), this, b)
+    operator fun minus(b: Float) = Mat2x2.sub(Mat2x2(), this, b)
+
+    infix fun sub(b: Mat2x2) = Mat2x2.sub(Mat2x2(), this, b)
+    infix fun sub(b: Float) = Mat2x2.sub(Mat2x2(), this, b)
+
+    fun sub(b: Mat2x2, res: Mat2x2) = Mat2x2.sub(res, this, b)
+    fun sub(b: Float, res: Mat2x2) = Mat2x2.sub(res, this, b)
+
+    fun sub_(b: Mat2x2) = Mat2x2.sub(this, this, b)
+    fun sub_(b: Float) = Mat2x2.sub(this, this, b)
+
+
+    operator fun times(b: Mat2x2) = Mat2x2.mul(Mat2x2(), this, b)
+    operator fun times(b: Mat3x2) = Mat2x2.mul(TODO(), this, b)
+    operator fun times(b: Mat4x2) = Mat2x2.mul(TODO(), this, b)
+    operator fun times(b: Float) = Mat2x2.mul(Mat2x2(), this, b)
+
+    infix fun mul(b: Mat2x2) = Mat2x2.mul(Mat2x2(), this, b)
+    infix fun mul(b: Float) = Mat2x2.mul(Mat2x2(), this, b)
+
+    fun mul(b: Mat2x2, res: Mat2x2) = Mat2x2.mul(res, this, b)
+    fun mul(b: Float, res: Mat2x2) = Mat2x2.mul(res, this, b)
+
+    fun mul_(b: Mat2x2) = Mat2x2.mul(this, this, b)
+    fun mul_(b: Float) = Mat2x2.mul(this, this, b)
+
+
+    infix operator fun div(b: Mat2x2) = Mat2x2.div(Mat2x2(), this, b)
+    infix operator fun div(b: Float) = Mat2x2.div(Mat2x2(), this, b)
+
+    fun div(b: Mat2x2, res: Mat2x2) = Mat2x2.div(res, this, b)
+    fun div(b: Float, res: Mat2x2) = Mat2x2.div(res, this, b)
+
+    fun div_(b: Mat2x2) = Mat2x2.div(this, this, b)
+    fun div_(b: Float) = Mat2x2.div(this, this, b)
+
 
     // TODO others
     var a0: Float
@@ -144,4 +194,9 @@ data class Mat2x2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2> {
         @JvmName("v11") set(v) {
             value[1][1] = v
         }
+
+    override fun equals(other: Any?) =
+            if (other is Mat2x2)
+                this[0] == other[0] && this[1] == other[1]
+            else false
 }

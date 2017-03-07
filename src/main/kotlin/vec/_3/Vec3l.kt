@@ -16,7 +16,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-data class Vec3l(override var x: Long, override var y: Long, override var z: Long) : Vec3t<Long>() {
+class Vec3l(x: Long, y: Long, z: Long) : Vec3t<Long>(x, y, z) {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 

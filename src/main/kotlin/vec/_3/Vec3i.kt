@@ -17,7 +17,7 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-data class Vec3i(override var x: Int, override var y: Int, override var z: Int) : Vec3t<Int>() {
+class Vec3i(x: Int, y: Int, z: Int) : Vec3t<Int>(x, y, z) {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 

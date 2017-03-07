@@ -19,7 +19,7 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-data class Vec3(override var x: Float, override var y: Float, override var z: Float) : Vec3t<Float>() {
+class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
 
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
@@ -287,6 +287,12 @@ data class Vec3(override var x: Float, override var y: Float, override var z: Fl
     }
 
     fun negate_() = negate(this)
+
+
+    override fun equals(other: Any?) =
+            if (other is Vec3)
+                this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
+            else false
 }
 
 

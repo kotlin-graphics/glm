@@ -12,20 +12,10 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-abstract class Vec2t<T : Number> {
+abstract class Vec2t<T : Number> (_x:T, _y:T){
 
-    abstract var x: T
-    abstract var y: T
-
-    fun x(x: T) {
-        this.x = x
-    }
-    fun y(y: T) {
-        this.y = y
-    }
-
-    fun x() = x
-    fun y() = y
+    @JvmField var x = _x
+    @JvmField var y = _y
 
     // -- infix Generic Constructors --
 

@@ -19,8 +19,11 @@ public class Test {
         glm.normalize(3.4);
         glm.detail.mod289(new Vec2());
 
-        Vec2i v = new Vec2i(3, 4);
+        Vec2 v = new Vec2(3, 4);
 
         Quat quat = new Quat();
+
+        v.x = 3f;
+        float x = v.x;
     }
 }

@@ -16,7 +16,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-data class Vec4b(override var x: Byte, override var y: Byte, override var z: Byte, override var w: Byte) : Vec4t<Byte>() {
+class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
 
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --

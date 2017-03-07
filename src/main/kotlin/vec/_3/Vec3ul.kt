@@ -15,7 +15,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-data class Vec3ul(override var x: Ulong, override var y: Ulong, override var z: Ulong) : Vec3t<Ulong>() {
+class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 

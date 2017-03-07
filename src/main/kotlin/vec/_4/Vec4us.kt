@@ -15,7 +15,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-data class Vec4us(override var x: Ushort, override var y: Ushort, override var z: Ushort, override var w: Ushort) : Vec4t<Ushort>() {
+class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z, w) {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 

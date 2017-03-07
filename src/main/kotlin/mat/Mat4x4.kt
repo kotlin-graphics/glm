@@ -467,5 +467,12 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
         @JvmName("v33") set(v) {
             value[3][3] = v
         }
+
+    override fun equals(other: Any?) =
+            if (other is Mat4)
+                this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
+            else false
+
+//    override fun toString() = "$a0 $b0 $c0 $d0\n$a1 $b1 $c1 $d1\n$a2 $b2 $c2 $d2\n$a3 $b3 $c3 $d3"
 }
 

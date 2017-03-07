@@ -20,8 +20,8 @@ class coreMat2 : StringSpec() {
 
         "test operators" {
 
-            val l = Mat2x2(1f)
-            val m = Mat2x2(1f)
+            val l = Mat2(1f)
+            val m = Mat2(1f)
             val u = Vec2(1f)
             val v = Vec2(1f)
             val x = 1f

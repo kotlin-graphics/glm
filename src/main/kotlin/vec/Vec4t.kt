@@ -8,12 +8,12 @@ import vec.bool.Vec4bool
 import java.nio.*
 
 // TODO other
-abstract class Vec4t<T : Number> {
+abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
 
-    abstract var x: T
-    abstract var y: T
-    abstract var z: T
-    abstract var w: T
+    @JvmField var x = _x
+    @JvmField var y = _y
+    @JvmField var z = _z
+    @JvmField var w = _w
 
 
     fun x(x: T) {
