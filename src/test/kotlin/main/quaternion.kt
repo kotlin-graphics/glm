@@ -18,6 +18,8 @@ class quaternion : StringSpec() {
 
         with(glm) {
 
+            val epsilon = .0001f
+
             "quat angle" {
 
                 run {
@@ -124,8 +126,6 @@ class quaternion : StringSpec() {
             }
 
             "quat slerp" {
-
-                val epsilon = .0001f
 
                 val sqrt2 = glm.sqrt(2f) / 2f
                 val id = Quat()

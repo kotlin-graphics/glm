@@ -136,10 +136,16 @@ interface func_matrix {
 
         val oneOverDet = 1 / m.det()
 
-        res[0][0] = +m[1][1] * oneOverDet
-        res[0][1] = -m[0][1] * oneOverDet
-        res[1][0] = -m[1][0] * oneOverDet
-        res[1][1] = +m[0][0] * oneOverDet
+        val res00 = +m[1][1] * oneOverDet
+        val res01 = -m[0][1] * oneOverDet
+        val res10 = -m[1][0] * oneOverDet
+        val res11 = +m[0][0] * oneOverDet
+
+        res[0][0] = res00
+        res[0][1] = res01
+
+        res[1][0] = res10
+        res[1][1] = res11
 
         return res
     }
@@ -149,15 +155,27 @@ interface func_matrix {
 
         val oneOverDet = 1 / m.det()
 
-        m[0][0] = +(m[1][1] * m[2][2] - m[2][1] * m[1][2]) * oneOverDet
-        m[1][0] = -(m[1][0] * m[2][2] - m[2][0] * m[1][2]) * oneOverDet
-        m[2][0] = +(m[1][0] * m[2][1] - m[2][0] * m[1][1]) * oneOverDet
-        m[0][1] = -(m[0][1] * m[2][2] - m[2][1] * m[0][2]) * oneOverDet
-        m[1][1] = +(m[0][0] * m[2][2] - m[2][0] * m[0][2]) * oneOverDet
-        m[2][1] = -(m[0][0] * m[2][1] - m[2][0] * m[0][1]) * oneOverDet
-        m[0][2] = +(m[0][1] * m[1][2] - m[1][1] * m[0][2]) * oneOverDet
-        m[1][2] = -(m[0][0] * m[1][2] - m[1][0] * m[0][2]) * oneOverDet
-        m[2][2] = +(m[0][0] * m[1][1] - m[1][0] * m[0][1]) * oneOverDet
+        val res00 = +(m[1][1] * m[2][2] - m[2][1] * m[1][2]) * oneOverDet
+        val res10 = -(m[1][0] * m[2][2] - m[2][0] * m[1][2]) * oneOverDet
+        val res20 = +(m[1][0] * m[2][1] - m[2][0] * m[1][1]) * oneOverDet
+        val res01 = -(m[0][1] * m[2][2] - m[2][1] * m[0][2]) * oneOverDet
+        val res11 = +(m[0][0] * m[2][2] - m[2][0] * m[0][2]) * oneOverDet
+        val res21 = -(m[0][0] * m[2][1] - m[2][0] * m[0][1]) * oneOverDet
+        val res02 = +(m[0][1] * m[1][2] - m[1][1] * m[0][2]) * oneOverDet
+        val res12 = -(m[0][0] * m[1][2] - m[1][0] * m[0][2]) * oneOverDet
+        val res22 = +(m[0][0] * m[1][1] - m[1][0] * m[0][1]) * oneOverDet
+
+        res[0][0] = res00
+        res[0][1] = res01
+        res[0][2] = res02
+
+        res[1][0] = res10
+        res[1][1] = res11
+        res[1][2] = res12
+
+        res[2][0] = res20
+        res[2][1] = res21
+        res[2][2] = res22
 
         return res
     }

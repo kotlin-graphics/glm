@@ -69,7 +69,7 @@ class coreFuncMatrix : StringSpec() {
 
             run {
                 val a = Mat2(
-                        1, 0,
+                        1, 1,
                         0, 1)
                 val b = a.inverse()
                 val i = a * b
@@ -77,7 +77,7 @@ class coreFuncMatrix : StringSpec() {
             }
             run {
                 val a = Mat3(
-                        1, 0, 0,
+                        1, 0, 1,
                         0, 1, 0,
                         0, 0, 1)
                 val b = a.inverse()
@@ -86,7 +86,7 @@ class coreFuncMatrix : StringSpec() {
             }
             run {
                 val a = Mat4(
-                        1, 0, 0, 0,
+                        1, 0, 1, 0,
                         0, 1, 0, 0,
                         0, 0, 1, 0,
                         0, 0, 0, 1)
@@ -94,6 +94,13 @@ class coreFuncMatrix : StringSpec() {
                 val i = a * b
                 i.isIdentity() shouldBe true
             }
+        }
+
+        "determinant" {
+
+            Mat2(0, 1, 2, 3).det() shouldBe -2f
+            Mat3(0, 1, 2, 3, 4, 5, 6, 7, 8).det() shouldBe 0f
+            Mat4(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15).det() shouldBe 0f
         }
     }
 }
