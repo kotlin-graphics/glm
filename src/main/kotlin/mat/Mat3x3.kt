@@ -1,13 +1,13 @@
 package  mat
 
 import main.BYTES
-import mat.operators.mat3x3_operators
-import vec.Vec3t
-import vec._3.Vec3
 import main.Glm.inverse
 import main.Glm.transpose
 import main.glm
+import mat.operators.mat3x3_operators
 import quat.Quat
+import vec.Vec3t
+import vec._3.Vec3
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -250,7 +250,7 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
     infix fun div_(b: Mat3x3) = div(this, this, b)
 
 
-    infix fun isEqual(b: Mat3x3) : Boolean {
+    infix fun isEqual(b: Mat3x3): Boolean {
         return (this[0].isEqual(b[0])
                 && this[1].isEqual(b[1])
                 && this[2].isEqual(b[2]))
@@ -304,6 +304,12 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
         @JvmName("v22") set(v) {
             value[2][2] = v
         }
+
+
+    fun isIdentity() = this[0][0] == 1f && this[1][0] == 0f && this[2][0] == 0f &&
+            this[0][1] == 0f && this[1][1] == 1f && this[2][1] == 0f &&
+            this[0][2] == 0f && this[1][2] == 0f && this[2][2] == 1f
+
 
     override fun equals(other: Any?) =
             if (other is Mat3x3)

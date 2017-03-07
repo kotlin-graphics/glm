@@ -468,6 +468,13 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
             value[3][3] = v
         }
 
+
+    fun isIdentity() = this[0][0] == 1f && this[1][0] == 0f && this[2][0] == 0f && this[3][0] == 0f &&
+            this[0][1] == 0f && this[1][1] == 1f && this[2][1] == 0f && this[3][1] == 0f &&
+            this[0][2] == 0f && this[1][2] == 0f && this[2][2] == 1f && this[3][2] == 0f &&
+            this[0][3] == 0f && this[1][3] == 0f && this[2][3] == 0f && this[3][3] == 1f
+
+
     override fun equals(other: Any?) =
             if (other is Mat4)
                 this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]

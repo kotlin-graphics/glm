@@ -1,30 +1,30 @@
 package  mat
 
 import main.BYTES
+import main.Glm.inverse
+import main.Glm.transpose
 import main.f
 import mat.operators.mat2x2_operators
 import vec.Vec2t
 import vec._2.Vec2
-import main.Glm.inverse
-import main.Glm.transpose
 
 /**
  * Created by GBarbieri on 10.11.2016.
  */
 data class Mat2x2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2> {
 
-
     // -- Constructors --
 
     constructor() : this(mutableListOf(
-            Vec2(1f, 0f),
-            Vec2(0f, 1f)))
+            Vec2(1, 0),
+            Vec2(0, 1)))
 
     constructor(scalar: Number) : this(mutableListOf(
             Vec2(scalar, 0),
             Vec2(0, scalar)))
 
-    constructor(x0: Number, x1: Number, y0: Number, y1: Number) : this(mutableListOf(
+    constructor(x0: Number, y0: Number,
+                x1: Number, y1: Number) : this(mutableListOf(
             Vec2(x0, y0),
             Vec2(x1, y1)))
 
@@ -194,6 +194,10 @@ data class Mat2x2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2> {
         @JvmName("v11") set(v) {
             value[1][1] = v
         }
+
+
+    fun isIdentity() = this[0][0] == 1f && this[1][0] == 0f && this[0][1] == 0f && this[1][1] == 1f
+
 
     override fun equals(other: Any?) =
             if (other is Mat2x2)

@@ -1,8 +1,6 @@
 package main
 
-import mat.Mat2x2
-import mat.Mat3x3
-import mat.Mat4x4
+import mat.*
 import vec._2.Vec2
 import vec._3.Vec3
 import vec._4.Vec4
@@ -14,7 +12,8 @@ import vec._4.Vec4
 interface func_matrix {
 
 
-    fun transpose(m: Mat2x2, res: Mat2x2 = Mat2x2()): Mat2x2 {
+    fun transpose(m: Mat2x2) = transpose(Mat2(), m)
+    fun transpose(res: Mat2x2, m: Mat2x2): Mat2x2 {
 
         val v00 = m[0][0]
         val v01 = m[1][0]
@@ -31,7 +30,8 @@ interface func_matrix {
         return res
     }
 
-    fun transpose(m: Mat3x3, res: Mat3x3 = Mat3x3()): Mat3x3 {
+    fun transpose(m: Mat3x3) = transpose(Mat3x3(), m)
+    fun transpose(res: Mat3x3, m: Mat3x3): Mat3x3 {
 
         val v00 = m[0][0]
         val v01 = m[1][0]
@@ -60,7 +60,8 @@ interface func_matrix {
         return res
     }
 
-    fun transpose(m: Mat4x4, res: Mat4x4 = Mat4x4()): Mat4x4 {
+    fun transpose(m: Mat4x4) = transpose(Mat4x4(), m)
+    fun transpose(res: Mat4, m: Mat4x4): Mat4x4 {
 
         val v00 = m[0][0]
         val v01 = m[1][0]
@@ -130,7 +131,8 @@ interface func_matrix {
     }
 
 
-    fun inverse(m: Mat2x2, res: Mat2x2 = Mat2x2()): Mat2x2 {
+    fun inverse(m: Mat2x2) = inverse(Mat2x2(), m)
+    fun inverse(res: Mat2x2, m: Mat2x2): Mat2x2 {
 
         val oneOverDet = 1 / m.det()
 
@@ -142,7 +144,8 @@ interface func_matrix {
         return res
     }
 
-    fun inverse(m: Mat3x3, res: Mat3x3 = Mat3x3()): Mat3x3 {
+    fun inverse(m: Mat3x3) = inverse(Mat3x3(), m)
+    fun inverse(res: Mat3x3, m: Mat3x3): Mat3x3 {
 
         val oneOverDet = 1 / m.det()
 
@@ -159,7 +162,8 @@ interface func_matrix {
         return res
     }
 
-    fun inverse(m: Mat4x4, res: Mat4x4 = Mat4x4()): Mat4x4 {
+    fun inverse(m: Mat4x4) = inverse(Mat4x4(), m)
+    fun inverse(res: Mat4x4, m: Mat4x4): Mat4x4 {
 
         val c00 = m[2][2] * m[3][3] - m[3][2] * m[2][3]
         val c02 = m[1][2] * m[3][3] - m[3][2] * m[1][3]
@@ -234,7 +238,7 @@ interface func_matrix {
     /**
      * Multiply matrix x by matrix y component-wise, main.getI.e.,
      */
-    fun matrixCompMult(a: Mat2x2, b: Mat2x2, res: Mat2x2 = Mat2x2()): Mat2x2 {
+    fun matrixCompMult(res: Mat2x2, a: Mat2x2, b: Mat2x2): Mat2x2 {
 
         res[0][0] = a[0][0] * b[0][0]
         res[0][1] = a[0][1] * b[0][1]
@@ -245,10 +249,12 @@ interface func_matrix {
         return res
     }
 
+    fun matrixCompMult(a: Mat2x2, b: Mat2x2) = matrixCompMult(Mat2x2(), a, b)
+
     /**
      * Multiply matrix x by matrix y component-wise, main.getI.e.,
      */
-    fun matrixCompMult(a: Mat3x3, b: Mat3x3, res: Mat3x3 = Mat3x3()): Mat3x3 {
+    fun matrixCompMult(res: Mat3x3, a: Mat3x3, b: Mat3x3): Mat3x3 {
 
         res[0][0] = a[0][0] * b[0][0]
         res[0][1] = a[0][1] * b[0][1]
@@ -265,10 +271,12 @@ interface func_matrix {
         return res
     }
 
+    fun matrixCompMult(a: Mat3x3, b: Mat3x3) = matrixCompMult(Mat3x3(), a, b)
+
     /**
      * Multiply matrix x by matrix y component-wise, main.getI.e.,
      */
-    fun matrixCompMult(a: Mat4x4, b: Mat4x4, res: Mat4x4 = Mat4x4()): Mat4x4 {
+    fun matrixCompMult(res: Mat4x4, a: Mat4x4, b: Mat4x4): Mat4x4 {
 
         res[0][0] = a[0][0] * b[0][0]
         res[0][1] = a[0][1] * b[0][1]
@@ -293,12 +301,14 @@ interface func_matrix {
         return res
     }
 
+    fun matrixCompMult(a: Mat4x4, b: Mat4x4) = matrixCompMult(Mat4x4(), a, b)
+
 
     /**
      * Treats the first parameter c as a column vector main.and the second parameter r as a row vector main.and does a linear
      * algebraic matrix multiply c * r.
      */
-    fun outerProduct(c: Vec2, r: Vec2, res: Mat2x2 = Mat2x2()): Mat2x2 {
+    fun outerProduct(res: Mat2x2, c: Vec2, r: Vec2): Mat2x2 {
 
         res[0].x = c.x * r[0]
         res[0].y = c.y * r[0]
@@ -309,11 +319,13 @@ interface func_matrix {
         return res
     }
 
+    fun outerProduct(c: Vec2, r: Vec2) = outerProduct(Mat2x2(), c, r)
+
     /**
      * Treats the first parameter c as a column vector main.and the second parameter r as a row vector main.and does a linear
      * algebraic matrix multiply c * r.
      */
-    fun outerProduct(c: Vec3, r: Vec3, res: Mat3x3 = Mat3x3()): Mat3x3 {
+    fun outerProduct(res: Mat3x3, c: Vec3, r: Vec3): Mat3x3 {
 
         res[0].x = c.x * r[0]
         res[0].y = c.y * r[0]
@@ -330,11 +342,13 @@ interface func_matrix {
         return res
     }
 
+    fun outerProduct(c: Vec3, r: Vec3) = outerProduct(Mat3x3(), c, r)
+
     /**
      * Treats the first parameter c as a column vector main.and the second parameter r as a row vector main.and does a linear
      * algebraic matrix multiply c * r.
      */
-    fun outerProduct(c: Vec4, r: Vec4, res: Mat4x4 = Mat4x4()): Mat4x4 {
+    fun outerProduct(res: Mat4x4, c: Vec4, r: Vec4): Mat4x4 {
 
         res[0].x = c.x * r[0]
         res[0].y = c.y * r[0]
@@ -358,6 +372,8 @@ interface func_matrix {
 
         return res
     }
+
+    fun outerProduct(c: Vec4, r: Vec4) = outerProduct(Mat4x4(), c, r)
 
     // TODO other matrices
 }
