@@ -1,6 +1,6 @@
 package vec._3.operators
 
-import main.*
+import glm.*
 import unsigned.*
 import vec._3.Vec3ub
 import vec._3.Vec3ub.Companion.add

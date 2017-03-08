@@ -1,6 +1,6 @@
 package vec._2.operators
 
-import main.i
+import glm.i
 import unsigned.Uint
 import unsigned.udiv
 import unsigned.urem

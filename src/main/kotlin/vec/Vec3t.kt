@@ -1,8 +1,8 @@
 package vec
 
-import main.b
-import main.d
-import main.glm
+import glm.b
+import glm.d
+import glm.glm
 import vec.bool.Vec2bool
 import vec.bool.Vec3bool
 import vec.bool.Vec4bool

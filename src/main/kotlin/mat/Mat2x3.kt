@@ -1,6 +1,6 @@
 package  mat
 
-import main.BYTES
+import glm.BYTES
 import  vec._3.Vec3
 
 /**

@@ -1,8 +1,8 @@
 package vec._2
 
-import main.BYTES
-import main.L
-import main.getLong
+import glm.BYTES
+import glm.L
+import glm.getLong
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t

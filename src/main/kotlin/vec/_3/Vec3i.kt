@@ -1,9 +1,9 @@
 package vec._3
 
-import main.BYTES
-import main.ceilMultiple
-import main.getInt
-import main.i
+import glm.BYTES
+import glm.ceilMultiple
+import glm.getInt
+import glm.i
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t

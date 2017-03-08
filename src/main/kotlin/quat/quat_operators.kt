@@ -1,6 +1,6 @@
 package quat
 
-import main.Glm.dot
+import glm.Glm.dot
 import quat.Quat.Companion.mul
 import vec._3.Vec3
 import vec._4.Vec4

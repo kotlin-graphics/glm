@@ -1,6 +1,6 @@
 package vec._4.operators
 
-import main.f
+import glm.f
 import vec.Vec2t
 import vec._2.Vec2
 import vec._4.Vec4

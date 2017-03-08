@@ -1,18 +1,18 @@
 package vec._2.operators
 
-import main.and
-import main.b
-import main.i
-import main.or
-import main.shl
-import main.shr
+import glm.and
+import glm.b
+import glm.i
+import glm.or
+import glm.shl
+import glm.shr
 import vec._2.Vec2b
 import vec._2.Vec2b.Companion.plus
 import vec._2.Vec2b.Companion.div
 import vec._2.Vec2b.Companion.times
 import vec._2.Vec2b.Companion.rem
 import vec._2.Vec2b.Companion.minus
-import main.xor
+import glm.xor
 import kotlin.experimental.inv
 
 /**
@@ -123,7 +123,7 @@ interface vec2b_operators {
     }
 
     fun and(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
-        res.x = a.x and bX
+        res.x = a.x and  bX
         res.y = a.y and bY
         return res
     }

@@ -1,6 +1,6 @@
 package vec._2.operators
 
-import main.d
+import glm.d
 import vec._2.Vec2d
 import vec._2.Vec2d.Companion.plus
 import vec._2.Vec2d.Companion.div

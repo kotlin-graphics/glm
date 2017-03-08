@@ -1,11 +1,11 @@
 package vec._2
 
-import main.BYTES
-import main.L
+import glm.BYTES
+import glm.L
 import unsigned.Ulong
-import main.getLong
-import main.getUlong
-import main.ul
+import glm.getLong
+import glm.getUlong
+import glm.ul
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t

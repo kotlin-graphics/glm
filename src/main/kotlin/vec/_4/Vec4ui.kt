@@ -1,6 +1,6 @@
 package vec._4
 
-import main.*
+import glm.*
 import unsigned.Uint
 import vec.Vec2t
 import vec.Vec3t
