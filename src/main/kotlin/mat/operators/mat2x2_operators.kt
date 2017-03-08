@@ -8,10 +8,10 @@ import mat.Mat2x2.Companion.sub
 import mat.Mat3x2
 import mat.Mat4x2
 import vec._2.Vec2
-import vec._2.Vec2.Companion.add
+import vec._2.Vec2.Companion.plus
 import vec._2.Vec2.Companion.div
-import vec._2.Vec2.Companion.mul
-import vec._2.Vec2.Companion.sub
+import vec._2.Vec2.Companion.times
+import vec._2.Vec2.Companion.minus
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -19,40 +19,40 @@ import vec._2.Vec2.Companion.sub
 interface mat2x2_operators {
 
     fun add(res: Mat2x2, a: Mat2x2, b: Float): Mat2x2 {
-        add(res[0], a[0], b, b)
-        add(res[1], a[1], b, b)
+        plus(res[0], a[0], b, b)
+        plus(res[1], a[1], b, b)
         return res
     }
 
     fun add(res: Mat2x2, a: Mat2x2, b: Mat2x2): Mat2x2 {
-        add(res[0], a[0], b[0][0], b[0][1])
-        add(res[1], a[1], b[1][0], b[1][1])
+        plus(res[0], a[0], b[0][0], b[0][1])
+        plus(res[1], a[1], b[1][0], b[1][1])
         return res
     }
 
 
     fun sub(res: Mat2x2, a: Mat2x2, b: Float): Mat2x2 {
-        sub(res[0], a[0], b, b)
-        sub(res[1], a[1], b, b)
+        minus(res[0], a[0], b, b)
+        minus(res[1], a[1], b, b)
         return res
     }
 
     fun sub(res: Mat2x2, a: Float, b: Mat2x2): Mat2x2 {
-        sub(res[0], a, a, b[0])
-        sub(res[1], a, a, b[1])
+        minus(res[0], a, a, b[0])
+        minus(res[1], a, a, b[1])
         return res
     }
 
     fun sub(res: Mat2x2, a: Mat2x2, b: Mat2x2): Mat2x2 {
-        sub(res[0], a[0], b[0][0], b[0][1])
-        sub(res[1], a[1], b[1][0], b[1][1])
+        minus(res[0], a[0], b[0][0], b[0][1])
+        minus(res[1], a[1], b[1][0], b[1][1])
         return res
     }
 
 
     fun mul(res: Mat2x2, a: Mat2x2, b: Float): Mat2x2 {
-        mul(res[0], a[0], b, b)
-        mul(res[1], a[1], b, b)
+        times(res[0], a[0], b, b)
+        times(res[1], a[1], b, b)
         return res
     }
 

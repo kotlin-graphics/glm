@@ -82,9 +82,15 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
 
     // -- Component accesses --
 
-    operator fun get(i: Int) = when (i) {
+    infix operator fun get(i: Int) = when (i) {
         0 -> x
         1 -> y
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
+
+    operator fun set(i: Int, s: Float) = when (i) {
+        0 -> x = s
+        1 -> y = s
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
@@ -127,69 +133,69 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
 
     // -- Increment main.and decrement operators --
 
-    operator fun inc(res: Vec2 = Vec2()) = add(res, this, 1f, 1f)
-    fun inc_() = add(this, this, 1f, 1f)
+    @JvmOverloads operator fun inc(res: Vec2 = Vec2()) = plus(res, this, 1f, 1f)
+    fun inc_() = plus(this, this, 1f, 1f)
 
 
-    operator fun dec(res: Vec2 = Vec2()) = sub(res, this, 1f, 1f)
-    fun dec_() = sub(this, this, 1f, 1f)
+    @JvmOverloads operator fun dec(res: Vec2 = Vec2()) = minus(res, this, 1f, 1f)
+    fun dec_() = minus(this, this, 1f, 1f)
 
     // -- Specific binary arithmetic operators --
 
-    operator fun plus(b: Float) = add(Vec2(), this, b, b)
-    operator fun plus(b: Vec2) = add(Vec2(), this, b.x, b.y)
+    infix operator fun plus(b: Float) = plus(Vec2(), this, b, b)
+    infix operator fun plus(b: Vec2) = plus(Vec2(), this, b.x, b.y)
 
-    fun add(bX: Float, bY: Float, res: Vec2 = Vec2()) = add(res, this, bX, bY)
-    fun add(b: Float, res: Vec2 = Vec2()) = add(res, this, b, b)
-    fun add(b: Vec2, res: Vec2 = Vec2()) = add(res, this, b.x, b.y)
+    @JvmOverloads fun plus(bX: Float, bY: Float, res: Vec2 = Vec2()) = plus(res, this, bX, bY)
+    fun plus(b: Float, res: Vec2) = plus(res, this, b, b)
+    fun plus(b: Vec2, res: Vec2) = plus(res, this, b.x, b.y)
 
-    fun add_(bX: Float, bY: Float) = add(this, this, bX, bY)
-    infix fun add_(b: Float) = add(this, this, b, b)
-    infix fun add_(b: Vec2) = add(this, this, b.x, b.y)
-
-
-    operator fun minus(b: Float) = sub(Vec2(), this, b, b)
-    operator fun minus(b: Vec2) = sub(Vec2(), this, b.x, b.y)
-
-    fun sub(bX: Float, bY: Float, res: Vec2 = Vec2()) = sub(res, this, bX, bY)
-    fun sub(b: Float, res: Vec2 = Vec2()) = sub(res, this, b, b)
-    fun sub(b: Vec2, res: Vec2 = Vec2()) = sub(res, this, b.x, b.y)
-
-    fun sub_(bX: Float, bY: Float) = sub(this, this, bX, bY)
-    infix fun sub_(b: Float) = sub(this, this, b, b)
-    infix fun sub_(b: Vec2) = sub(this, this, b.x, b.y)
+    fun plus_(bX: Float, bY: Float) = plus(this, this, bX, bY)
+    infix fun plus_(b: Float) = plus(this, this, b, b)
+    infix fun plus_(b: Vec2) = plus(this, this, b.x, b.y)
 
 
-    operator fun times(b: Float) = mul(Vec2(), this, b, b)
-    operator fun times(b: Vec2) = mul(Vec2(), this, b.x, b.y)
+    infix operator fun minus(b: Float) = minus(Vec2(), this, b, b)
+    infix operator fun minus(b: Vec2) = minus(Vec2(), this, b.x, b.y)
 
-    fun mul(bX: Float, bY: Float, res: Vec2 = Vec2()) = mul(res, this, bX, bY)
-    fun mul(b: Float, res: Vec2 = Vec2()) = mul(res, this, b, b)
-    fun mul(b: Vec2, res: Vec2 = Vec2()) = mul(res, this, b.x, b.y)
+    @JvmOverloads fun minus(bX: Float, bY: Float, res: Vec2 = Vec2()) = minus(res, this, bX, bY)
+    fun minus(b: Float, res: Vec2) = minus(res, this, b, b)
+    fun minus(b: Vec2, res: Vec2) = minus(res, this, b.x, b.y)
 
-    fun mul_(bX: Float, bY: Float) = mul(this, this, bX, bY)
-    infix fun mul_(b: Float) = mul(this, this, b, b)
-    infix fun mul_(b: Vec2) = mul(this, this, b.x, b.y)
+    fun minus_(bX: Float, bY: Float) = minus(this, this, bX, bY)
+    infix fun minus_(b: Float) = minus(this, this, b, b)
+    infix fun minus_(b: Vec2) = minus(this, this, b.x, b.y)
 
 
-    operator fun div(b: Float) = div(Vec2(), this, b, b)
-    operator fun div(b: Vec2) = div(Vec2(), this, b.x, b.y)
+    infix operator fun times(b: Float) = times(Vec2(), this, b, b)
+    infix operator fun times(b: Vec2) = times(Vec2(), this, b.x, b.y)
 
-    fun div(bX: Float, bY: Float, res: Vec2 = Vec2()) = div(res, this, bX, bY)
-    fun div(b: Float, res: Vec2 = Vec2()) = div(res, this, b, b)
-    fun div(b: Vec2, res: Vec2 = Vec2()) = div(res, this, b.x, b.y)
+    @JvmOverloads fun times(bX: Float, bY: Float, res: Vec2 = Vec2()) = times(res, this, bX, bY)
+    fun times(b: Float, res: Vec2) = times(res, this, b, b)
+    fun times(b: Vec2, res: Vec2) = times(res, this, b.x, b.y)
+
+    fun times_(bX: Float, bY: Float) = times(this, this, bX, bY)
+    infix fun times_(b: Float) = times(this, this, b, b)
+    infix fun times_(b: Vec2) = times(this, this, b.x, b.y)
+
+
+    infix operator fun div(b: Float) = div(Vec2(), this, b, b)
+    infix operator fun div(b: Vec2) = div(Vec2(), this, b.x, b.y)
+
+    @JvmOverloads fun div(bX: Float, bY: Float, res: Vec2 = Vec2()) = div(res, this, bX, bY)
+    fun div(b: Float, res: Vec2) = div(res, this, b, b)
+    fun div(b: Vec2, res: Vec2) = div(res, this, b.x, b.y)
 
     fun div_(bX: Float, bY: Float) = div(this, this, bX, bY)
     infix fun div_(b: Float) = div(this, this, b, b)
     infix fun div_(b: Vec2) = div(this, this, b.x, b.y)
 
 
-    operator fun rem(b: Float) = rem(Vec2(), this, b, b)
-    operator fun rem(b: Vec2) = rem(Vec2(), this, b.x, b.y)
+    infix operator fun rem(b: Float) = rem(Vec2(), this, b, b)
+    infix operator fun rem(b: Vec2) = rem(Vec2(), this, b.x, b.y)
 
-    fun rem(bX: Float, bY: Float, res: Vec2 = Vec2()) = rem(res, this, bX, bY)
-    fun rem(b: Float, res: Vec2 = Vec2()) = rem(res, this, b, b)
-    fun rem(b: Vec2, res: Vec2 = Vec2()) = rem(res, this, b.x, b.y)
+    @JvmOverloads fun rem(bX: Float, bY: Float, res: Vec2 = Vec2()) = rem(res, this, bX, bY)
+    fun rem(b: Float, res: Vec2) = rem(res, this, b, b)
+    fun rem(b: Vec2, res: Vec2) = rem(res, this, b.x, b.y)
 
     fun rem_(bX: Float, bY: Float) = rem(this, this, bX, bY)
     infix fun rem_(b: Float) = rem(this, this, b, b)
@@ -198,60 +204,60 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
 
     // -- Generic binary arithmetic operators --
 
-    operator fun plus(b: Number) = add(Vec2(), this, b.f, b.f)
-    operator fun plus(b: Vec2t<Number>) = add(Vec2(), this, b.x.f, b.y.f)
+    infix operator fun plus(b: Number) = plus(Vec2(), this, b.f, b.f)
+    infix operator fun plus(b: Vec2t<Number>) = plus(Vec2(), this, b.x.f, b.y.f)
 
-    fun add(bX: Number, bY: Number, res: Vec2 = Vec2()) = add(res, this, bX.f, bY.f)
-    fun add(b: Number, res: Vec2 = Vec2()) = add(res, this, b.f, b.f)
-    fun add(b: Vec2t<Number>, res: Vec2 = Vec2()) = add(res, this, b.x.f, b.y.f)
+    @JvmOverloads fun plus(bX: Number, bY: Number, res: Vec2 = Vec2()) = plus(res, this, bX.f, bY.f)
+    fun plus(b: Number, res: Vec2) = plus(res, this, b.f, b.f)
+    fun plus(b: Vec2t<Number>, res: Vec2) = plus(res, this, b.x.f, b.y.f)
 
-    fun add_(bX: Number, bY: Number) = add(this, this, bX.f, bY.f)
-    infix fun add_(b: Number) = add(this, this, b.f, b.f)
-    infix fun add_(b: Vec2t<Number>) = add(this, this, b.x.f, b.y.f)
-
-
-    operator fun minus(b: Number) = sub(Vec2(), this, b.f, b.f)
-    operator fun minus(b: Vec2t<Number>) = sub(Vec2(), this, b.x.f, b.y.f)
-
-    fun sub(bX: Number, bY: Number, res: Vec2 = Vec2()) = sub(res, this, bX.f, bY.f)
-    fun sub(b: Number, res: Vec2 = Vec2()) = sub(res, this, b.f, b.f)
-    fun sub(b: Vec2t<Number>, res: Vec2 = Vec2()) = sub(res, this, b.x.f, b.y.f)
-
-    fun sub_(bX: Number, bY: Number) = sub(this, this, bX.f, bY.f)
-    infix fun sub_(b: Number) = sub(this, this, b.f, b.f)
-    infix fun sub_(b: Vec2t<Number>) = sub(this, this, b.x.f, b.y.f)
+    fun plus_(bX: Number, bY: Number) = plus(this, this, bX.f, bY.f)
+    infix fun plus_(b: Number) = plus(this, this, b.f, b.f)
+    infix fun plus_(b: Vec2t<Number>) = plus(this, this, b.x.f, b.y.f)
 
 
-    operator fun times(b: Number) = mul(Vec2(), this, b.f, b.f)
-    operator fun times(b: Vec2t<Number>) = mul(Vec2(), this, b.x.f, b.y.f)
+    infix operator fun minus(b: Number) = minus(Vec2(), this, b.f, b.f)
+    infix operator fun minus(b: Vec2t<Number>) = minus(Vec2(), this, b.x.f, b.y.f)
 
-    fun mul(bX: Number, bY: Number, res: Vec2 = Vec2()) = mul(res, this, bX.f, bY.f)
-    fun mul(b: Number, res: Vec2 = Vec2()) = mul(res, this, b.f, b.f)
-    fun mul(b: Vec2t<Number>, res: Vec2 = Vec2()) = mul(res, this, b.x.f, b.y.f)
+    @JvmOverloads fun minus(bX: Number, bY: Number, res: Vec2 = Vec2()) = minus(res, this, bX.f, bY.f)
+    fun minus(b: Number, res: Vec2) = minus(res, this, b.f, b.f)
+    fun minus(b: Vec2t<Number>, res: Vec2) = minus(res, this, b.x.f, b.y.f)
 
-    fun mul_(bX: Number, bY: Number) = mul(this, this, bX.f, bY.f)
-    infix fun mul_(b: Number) = mul(this, this, b.f, b.f)
-    infix fun mul_(b: Vec2t<Number>) = mul(this, this, b.x.f, b.y.f)
+    fun minus_(bX: Number, bY: Number) = minus(this, this, bX.f, bY.f)
+    infix fun minus_(b: Number) = minus(this, this, b.f, b.f)
+    infix fun minus_(b: Vec2t<Number>) = minus(this, this, b.x.f, b.y.f)
 
 
-    operator fun div(b: Number) = div(Vec2(), this, b.f, b.f)
-    operator fun div(b: Vec2t<Number>) = div(Vec2(), this, b.x.f, b.y.f)
+    infix operator fun times(b: Number) = times(Vec2(), this, b.f, b.f)
+    infix operator fun times(b: Vec2t<Number>) = times(Vec2(), this, b.x.f, b.y.f)
 
-    fun div(bX: Number, bY: Number, res: Vec2 = Vec2()) = div(res, this, bX.f, bY.f)
-    fun div(b: Number, res: Vec2 = Vec2()) = div(res, this, b.f, b.f)
-    fun div(b: Vec2t<Number>, res: Vec2 = Vec2()) = div(res, this, b.x.f, b.y.f)
+    @JvmOverloads fun times(bX: Number, bY: Number, res: Vec2 = Vec2()) = times(res, this, bX.f, bY.f)
+    fun times(b: Number, res: Vec2) = times(res, this, b.f, b.f)
+    fun times(b: Vec2t<Number>, res: Vec2) = times(res, this, b.x.f, b.y.f)
+
+    fun times_(bX: Number, bY: Number) = times(this, this, bX.f, bY.f)
+    infix fun times_(b: Number) = times(this, this, b.f, b.f)
+    infix fun times_(b: Vec2t<Number>) = times(this, this, b.x.f, b.y.f)
+
+
+    infix operator fun div(b: Number) = div(Vec2(), this, b.f, b.f)
+    infix operator fun div(b: Vec2t<Number>) = div(Vec2(), this, b.x.f, b.y.f)
+
+    @JvmOverloads fun div(bX: Number, bY: Number, res: Vec2 = Vec2()) = div(res, this, bX.f, bY.f)
+    fun div(b: Number, res: Vec2) = div(res, this, b.f, b.f)
+    fun div(b: Vec2t<Number>, res: Vec2) = div(res, this, b.x.f, b.y.f)
 
     fun div_(bX: Number, bY: Number) = div(this, this, bX.f, bY.f)
     infix fun div_(b: Number) = div(this, this, b.f, b.f)
     infix fun div_(b: Vec2t<Number>) = div(this, this, b.x.f, b.y.f)
 
 
-    operator fun rem(b: Number) = rem(Vec2(), this, b.f, b.f)
-    operator fun rem(b: Vec2t<Number>) = rem(Vec2(), this, b.x.f, b.y.f)
+    infix operator fun rem(b: Number) = rem(Vec2(), this, b.f, b.f)
+    infix operator fun rem(b: Vec2t<Number>) = rem(Vec2(), this, b.x.f, b.y.f)
 
-    fun rem(bX: Number, bY: Number, res: Vec2 = Vec2()) = rem(res, this, bX.f, bY.f)
-    fun rem(b: Number, res: Vec2 = Vec2()) = rem(res, this, b.f, b.f)
-    fun rem(b: Vec2t<Number>, res: Vec2 = Vec2()) = rem(res, this, b.x.f, b.y.f)
+    @JvmOverloads fun rem(bX: Number, bY: Number, res: Vec2 = Vec2()) = rem(res, this, bX.f, bY.f)
+    fun rem(b: Number, res: Vec2) = rem(res, this, b.f, b.f)
+    fun rem(b: Vec2t<Number>, res: Vec2) = rem(res, this, b.x.f, b.y.f)
 
     fun rem_(bX: Number, bY: Number) = rem(this, this, bX.f, bY.f)
     infix fun rem_(b: Number) = rem(this, this, b.f, b.f)

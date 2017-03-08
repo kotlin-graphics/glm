@@ -85,7 +85,7 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
 
     // -- Component accesses --
 
-    operator fun get(i: Int) = when (i) {
+    infix operator fun get(i: Int) = when (i) {
         0 -> x
         1 -> y
         else -> throw ArrayIndexOutOfBoundsException()
@@ -116,50 +116,50 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
 
     // -- Increment main.and decrement operators --
 
-    operator fun inc(res: Vec2i = Vec2i()) = add(res, this, 1, 1)
-    fun inc_() = add(this, this, 1, 1)
+    operator fun inc(res: Vec2i = Vec2i()) = plus(res, this, 1, 1)
+    fun inc_() = plus(this, this, 1, 1)
 
 
-    operator fun dec(res: Vec2i = Vec2i()) = sub(res, this, 1, 1)
-    fun dec_() = sub(this, this, 1, 1)
+    operator fun dec(res: Vec2i = Vec2i()) = minus(res, this, 1, 1)
+    fun dec_() = minus(this, this, 1, 1)
 
 
     // -- Specific binary arithmetic operators --
 
-    operator fun plus(b: Int) = add(Vec2i(), this, b, b)
-    operator fun plus(b: Vec2i) = add(Vec2i(), this, b.x, b.y)
+    operator fun plus(b: Int) = plus(Vec2i(), this, b, b)
+    operator fun plus(b: Vec2i) = plus(Vec2i(), this, b.x, b.y)
 
-    fun add(bX: Int, bY: Int, res: Vec2i = Vec2i()) = add(res, this, bX, bY)
-    fun add(b: Int, res: Vec2i = Vec2i()) = add(res, this, b, b)
-    fun add(b: Vec2i, res: Vec2i = Vec2i()) = add(res, this, b.x, b.y)
+    fun add(bX: Int, bY: Int, res: Vec2i = Vec2i()) = plus(res, this, bX, bY)
+    fun add(b: Int, res: Vec2i = Vec2i()) = plus(res, this, b, b)
+    fun add(b: Vec2i, res: Vec2i = Vec2i()) = plus(res, this, b.x, b.y)
 
-    fun add_(bX: Int, bY: Int) = add(this, this, bX, bY)
-    infix fun add_(b: Int) = add(this, this, b, b)
-    infix fun add_(b: Vec2i) = add(this, this, b.x, b.y)
-
-
-    operator fun minus(b: Int) = sub(Vec2i(), this, b, b)
-    operator fun minus(b: Vec2i) = sub(Vec2i(), this, b.x, b.y)
-
-    fun sub(bX: Int, bY: Int, res: Vec2i = Vec2i()) = sub(res, this, bX, bY)
-    fun sub(b: Int, res: Vec2i = Vec2i()) = sub(res, this, b, b)
-    fun sub(b: Vec2i, res: Vec2i = Vec2i()) = sub(res, this, b.x, b.y)
-
-    fun sub_(bX: Int, bY: Int) = sub(this, this, bX, bY)
-    infix fun sub_(b: Int) = sub(this, this, b, b)
-    infix fun sub_(b: Vec2i) = sub(this, this, b.x, b.y)
+    fun add_(bX: Int, bY: Int) = plus(this, this, bX, bY)
+    infix fun add_(b: Int) = plus(this, this, b, b)
+    infix fun add_(b: Vec2i) = plus(this, this, b.x, b.y)
 
 
-    operator fun times(b: Int) = mul(Vec2i(), this, b, b)
-    operator fun times(b: Vec2i) = mul(Vec2i(), this, b.x, b.y)
+    operator fun minus(b: Int) = minus(Vec2i(), this, b, b)
+    operator fun minus(b: Vec2i) = minus(Vec2i(), this, b.x, b.y)
 
-    fun mul(bX: Int, bY: Int, res: Vec2i = Vec2i()) = mul(res, this, bX, bY)
-    fun mul(b: Int, res: Vec2i = Vec2i()) = mul(res, this, b, b)
-    fun mul(b: Vec2i, res: Vec2i = Vec2i()) = mul(res, this, b.x, b.y)
+    fun sub(bX: Int, bY: Int, res: Vec2i = Vec2i()) = minus(res, this, bX, bY)
+    fun sub(b: Int, res: Vec2i = Vec2i()) = minus(res, this, b, b)
+    fun sub(b: Vec2i, res: Vec2i = Vec2i()) = minus(res, this, b.x, b.y)
 
-    fun mul_(bX: Int, bY: Int) = mul(this, this, bX, bY)
-    infix fun mul_(b: Int) = mul(this, this, b, b)
-    infix fun mul_(b: Vec2i) = mul(this, this, b.x, b.y)
+    fun sub_(bX: Int, bY: Int) = minus(this, this, bX, bY)
+    infix fun sub_(b: Int) = minus(this, this, b, b)
+    infix fun sub_(b: Vec2i) = minus(this, this, b.x, b.y)
+
+
+    operator fun times(b: Int) = times(Vec2i(), this, b, b)
+    operator fun times(b: Vec2i) = times(Vec2i(), this, b.x, b.y)
+
+    fun mul(bX: Int, bY: Int, res: Vec2i = Vec2i()) = times(res, this, bX, bY)
+    fun mul(b: Int, res: Vec2i = Vec2i()) = times(res, this, b, b)
+    fun mul(b: Vec2i, res: Vec2i = Vec2i()) = times(res, this, b.x, b.y)
+
+    fun mul_(bX: Int, bY: Int) = times(this, this, bX, bY)
+    infix fun mul_(b: Int) = times(this, this, b, b)
+    infix fun mul_(b: Vec2i) = times(this, this, b.x, b.y)
 
 
     operator fun div(b: Int) = div(Vec2i(), this, b, b)
@@ -188,40 +188,40 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
 
     // -- Generic binary arithmetic operators --
 
-    operator fun plus(b: Number) = add(Vec2i(), this, b.i, b.i)
-    operator fun plus(b: Vec2t<Number>) = add(Vec2i(), this, b.x.i, b.y.i)
+    operator fun plus(b: Number) = plus(Vec2i(), this, b.i, b.i)
+    operator fun plus(b: Vec2t<Number>) = plus(Vec2i(), this, b.x.i, b.y.i)
 
-    fun add(bX: Number, bY: Number, res: Vec2i = Vec2i()) = add(res, this, bX.i, bY.i)
-    fun add(b: Number, res: Vec2i = Vec2i()) = add(res, this, b.i, b.i)
-    fun add(b: Vec2t<Number>, res: Vec2i = Vec2i()) = add(res, this, b.x.i, b.y.i)
+    fun add(bX: Number, bY: Number, res: Vec2i = Vec2i()) = plus(res, this, bX.i, bY.i)
+    fun add(b: Number, res: Vec2i = Vec2i()) = plus(res, this, b.i, b.i)
+    fun add(b: Vec2t<Number>, res: Vec2i = Vec2i()) = plus(res, this, b.x.i, b.y.i)
 
-    fun add_(bX: Number, bY: Number) = add(this, this, bX.i, bY.i)
-    infix fun add_(b: Number) = add(this, this, b.i, b.i)
-    infix fun add_(b: Vec2t<Number>) = add(this, this, b.x.i, b.y.i)
-
-
-    operator fun minus(b: Number) = sub(Vec2i(), this, b.i, b.i)
-    operator fun minus(b: Vec2t<Number>) = sub(Vec2i(), this, b.x.i, b.y.i)
-
-    fun sub(bX: Number, bY: Number, res: Vec2i = Vec2i()) = sub(res, this, bX.i, bY.i)
-    fun sub(b: Number, res: Vec2i = Vec2i()) = sub(res, this, b.i, b.i)
-    fun sub(b: Vec2t<Number>, res: Vec2i = Vec2i()) = sub(res, this, b.x.i, b.y.i)
-
-    fun sub_(bX: Number, bY: Number) = sub(this, this, bX.i, bY.i)
-    infix fun sub_(b: Number) = sub(this, this, b.i, b.i)
-    infix fun sub_(b: Vec2t<Number>) = sub(this, this, b.x.i, b.y.i)
+    fun add_(bX: Number, bY: Number) = plus(this, this, bX.i, bY.i)
+    infix fun add_(b: Number) = plus(this, this, b.i, b.i)
+    infix fun add_(b: Vec2t<Number>) = plus(this, this, b.x.i, b.y.i)
 
 
-    operator fun times(b: Number) = mul(Vec2i(), this, b.i, b.i)
-    operator fun times(b: Vec2t<Number>) = mul(Vec2i(), this, b.x.i, b.y.i)
+    operator fun minus(b: Number) = minus(Vec2i(), this, b.i, b.i)
+    operator fun minus(b: Vec2t<Number>) = minus(Vec2i(), this, b.x.i, b.y.i)
 
-    fun mul(bX: Number, bY: Number, res: Vec2i = Vec2i()) = mul(res, this, bX.i, bY.i)
-    fun mul(b: Number, res: Vec2i = Vec2i()) = mul(res, this, b.i, b.i)
-    fun mul(b: Vec2t<Number>, res: Vec2i = Vec2i()) = mul(res, this, b.x.i, b.y.i)
+    fun sub(bX: Number, bY: Number, res: Vec2i = Vec2i()) = minus(res, this, bX.i, bY.i)
+    fun sub(b: Number, res: Vec2i = Vec2i()) = minus(res, this, b.i, b.i)
+    fun sub(b: Vec2t<Number>, res: Vec2i = Vec2i()) = minus(res, this, b.x.i, b.y.i)
 
-    fun mul_(bX: Number, bY: Number) = mul(this, this, bX.i, bY.i)
-    infix fun mul_(b: Number) = mul(this, this, b.i, b.i)
-    infix fun mul_(b: Vec2t<Number>) = mul(this, this, b.x.i, b.y.i)
+    fun sub_(bX: Number, bY: Number) = minus(this, this, bX.i, bY.i)
+    infix fun sub_(b: Number) = minus(this, this, b.i, b.i)
+    infix fun sub_(b: Vec2t<Number>) = minus(this, this, b.x.i, b.y.i)
+
+
+    operator fun times(b: Number) = times(Vec2i(), this, b.i, b.i)
+    operator fun times(b: Vec2t<Number>) = times(Vec2i(), this, b.x.i, b.y.i)
+
+    fun mul(bX: Number, bY: Number, res: Vec2i = Vec2i()) = times(res, this, bX.i, bY.i)
+    fun mul(b: Number, res: Vec2i = Vec2i()) = times(res, this, b.i, b.i)
+    fun mul(b: Vec2t<Number>, res: Vec2i = Vec2i()) = times(res, this, b.x.i, b.y.i)
+
+    fun mul_(bX: Number, bY: Number) = times(this, this, bX.i, bY.i)
+    infix fun mul_(b: Number) = times(this, this, b.i, b.i)
+    infix fun mul_(b: Vec2t<Number>) = times(this, this, b.x.i, b.y.i)
 
 
     operator fun div(b: Number) = div(Vec2i(), this, b.i, b.i)

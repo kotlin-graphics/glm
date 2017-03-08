@@ -195,14 +195,14 @@ class coreVec2 : StringSpec() {
             // custom
             run {
                 val a = Vec2(1f, 2f)
-                a add_ 1f
+                a plus_ 1f
 
                 a shouldBe Vec2(2f, 3f)
             }
             run {
                 val a = Vec2(1f, 2f)
                 val b = Vec2(3f, 4f)
-                a add_ b
+                a plus_ b
 
                 a shouldBe Vec2(4f, 6f)
             }
@@ -380,14 +380,14 @@ class coreVec2 : StringSpec() {
             // custom
             run {
                 val a = Vec2(1f, 2f)
-                a add_ 1f
+                a plus_ 1f
 
                 a shouldBe Vec2(2f, 3f)
             }
             run {
                 val a = Vec2(1f, 2f)
                 val b = Vec2(3f, 4f)
-                a add_ b
+                a plus_ b
 
                 a shouldBe Vec2(4f, 6f)
             }
