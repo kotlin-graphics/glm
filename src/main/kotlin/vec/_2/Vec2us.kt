@@ -1,12 +1,12 @@
 package vec._2
 
-import main.BYTES
+import glm.BYTES
 import unsigned.Ushort
-import main.getShort
-import main.getUshort
-import main.i
-import main.s
-import main.us
+import glm.getShort
+import glm.getUshort
+import glm.i
+import glm.s
+import glm.us
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t

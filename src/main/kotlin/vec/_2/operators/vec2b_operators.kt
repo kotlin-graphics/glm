@@ -1,18 +1,18 @@
 package vec._2.operators
 
-import main.and
-import main.b
-import main.i
-import main.or
-import main.shl
-import main.shr
+import glm.and
+import glm.b
+import glm.i
+import glm.or
+import glm.shl
+import glm.shr
 import vec._2.Vec2b
 import vec._2.Vec2b.Companion.add
 import vec._2.Vec2b.Companion.div
 import vec._2.Vec2b.Companion.mul
 import vec._2.Vec2b.Companion.rem
 import vec._2.Vec2b.Companion.sub
-import main.xor
+import glm.xor
 import kotlin.experimental.inv
 
 /**

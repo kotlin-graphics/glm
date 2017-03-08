@@ -1,8 +1,8 @@
 package vec._4
 
-import main.BYTES
-import main.d
-import main.getDouble
+import glm.BYTES
+import glm.d
+import glm.getDouble
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t

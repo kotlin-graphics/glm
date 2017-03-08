@@ -1,6 +1,6 @@
 package vec.bool
 
-import main.glm
+import glm.glm
 
 
 /**

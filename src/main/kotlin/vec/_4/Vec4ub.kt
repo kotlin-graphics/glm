@@ -1,8 +1,8 @@
 package vec._4
 
-import main.BYTES
-import main.i
-import main.ub
+import glm.BYTES
+import glm.i
+import glm.ub
 import unsigned.Ubyte
 import vec.Vec2t
 import vec.Vec3t

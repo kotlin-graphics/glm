@@ -1,11 +1,11 @@
 package vec._3
 
-import main.BYTES
-import main.Glm.cross
-import main.Glm.normalize
-import main.f
-import main.getFloat
-import main.glm
+import glm.BYTES
+import glm.Glm.cross
+import glm.Glm.normalize
+import glm.f
+import glm.getFloat
+import glm.glm
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t

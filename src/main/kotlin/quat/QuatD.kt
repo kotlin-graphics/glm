@@ -1,6 +1,6 @@
 package quat
 
-import main.*
+import glm.*
 import mat.QuatT
 import vec._3.Vec3
 import vec._3.Vec3d

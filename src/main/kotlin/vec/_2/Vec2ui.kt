@@ -1,10 +1,10 @@
 package vec._2
 
-import main.BYTES
-import main.getInt
-import main.getUint
-import main.i
-import main.ui
+import glm.BYTES
+import glm.getInt
+import glm.getUint
+import glm.i
+import glm.ui
 import unsigned.Uint
 import vec.Vec2t
 import vec.Vec3t

@@ -1,8 +1,8 @@
 package vec._2
 
-import main.BYTES
-import main.b
-import main.i
+import glm.BYTES
+import glm.b
+import glm.i
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t

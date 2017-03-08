@@ -1,6 +1,6 @@
 package vec._4
 
-import main.*
+import glm.*
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t

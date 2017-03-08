@@ -1,6 +1,6 @@
 package vec._4.operators
 
-import main.i
+import glm.i
 import vec._4.Vec4i
 import vec._4.Vec4i.Companion.add
 import vec._4.Vec4i.Companion.div

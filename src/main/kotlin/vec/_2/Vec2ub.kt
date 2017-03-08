@@ -1,9 +1,9 @@
 package vec._2
 
-import main.BYTES
+import glm.BYTES
 import unsigned.Ubyte
-import main.i
-import main.ub
+import glm.i
+import glm.ub
 import vec.Vec2t
 import vec.Vec3t
 import vec.Vec4t

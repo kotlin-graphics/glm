@@ -1,17 +1,17 @@
 package vec._3.operators
 
-import main.and
-import main.b
-import main.or
-import main.shl
-import main.shr
+import glm.and
+import glm.b
+import glm.or
+import glm.shl
+import glm.shr
 import vec._3.Vec3b
 import vec._3.Vec3b.Companion.add
 import vec._3.Vec3b.Companion.div
 import vec._3.Vec3b.Companion.mul
 import vec._3.Vec3b.Companion.rem
 import vec._3.Vec3b.Companion.sub
-import main.xor
+import glm.xor
 import kotlin.experimental.inv
 
 /**

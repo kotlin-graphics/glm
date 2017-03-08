@@ -1,11 +1,11 @@
 package quat
 
-import main.BYTES
-import main.Glm.cos
-import main.Glm.dot
-import main.Glm.sin
-import main.f
-import main.glm
+import glm.BYTES
+import glm.Glm.cos
+import glm.Glm.dot
+import glm.Glm.sin
+import glm.f
+import glm.glm
 import mat.Mat3
 import mat.Mat4
 import mat.QuatT

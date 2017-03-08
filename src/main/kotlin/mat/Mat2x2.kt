@@ -1,9 +1,9 @@
 package  mat
 
-import main.BYTES
-import main.Glm.inverse
-import main.Glm.transpose
-import main.f
+import glm.BYTES
+import glm.Glm.inverse
+import glm.Glm.transpose
+import glm.f
 import mat.operators.mat2x2_operators
 import vec.Vec2t
 import vec._2.Vec2

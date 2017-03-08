@@ -1,11 +1,11 @@
 package  mat
 
-import main.BYTES
-import main.Glm.determinant
-import main.Glm.inverse
-import main.Glm.transpose
-import main.glm
-import main.set
+import glm.BYTES
+import glm.Glm.determinant
+import glm.Glm.inverse
+import glm.Glm.transpose
+import glm.glm
+import glm.set
 import mat.operators.mat4x4_operators
 import quat.Quat
 import vec.Vec2t

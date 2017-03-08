@@ -1,9 +1,9 @@
 package  mat
 
-import main.BYTES
-import main.Glm.inverse
-import main.Glm.transpose
-import main.glm
+import glm.BYTES
+import glm.Glm.inverse
+import glm.Glm.transpose
+import glm.glm
 import mat.operators.mat3x3_operators
 import quat.Quat
 import vec.Vec3t
