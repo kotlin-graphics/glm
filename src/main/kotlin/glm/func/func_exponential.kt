@@ -285,8 +285,8 @@ interface func_exponential {
     }
     
     
-    fun inverseSqrt(a: Double) = 1.d / Math.sqrt(a)
-    fun inverseSqrt(a: Float) = (1.d / Math.sqrt(a.d)).f
+    fun inverseSqrt(a: Double) = 1.0 / Math.sqrt(a)
+    fun inverseSqrt(a: Float) = (1.0 / Math.sqrt(a.d)).f
 
     fun inverseSqrt(a: Vec2, res: Vec2 = Vec2()) {
         res.x = inverseSqrt(a.x)

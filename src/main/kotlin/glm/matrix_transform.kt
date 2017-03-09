@@ -2,7 +2,6 @@ package glm
 
 import glm.Glm.abs
 import glm.Glm.cos
-import glm.Glm.epsilonF
 import glm.Glm.inverseSqrt
 import glm.Glm.sin
 import glm.Glm.tan
@@ -677,6 +676,7 @@ interface matrix_transform {
 
         return res
     }
+
     fun project(obj: Vec3, model: Mat4x4, proj: Mat4x4, viewport: Vec4i) = project(Vec3(), obj, model, proj, viewport)
 
     /**
@@ -779,7 +779,7 @@ interface matrix_transform {
         var tmpX = win.x
         var tmpY = win.y
         var tmpZ = win.z
-        var tmpW = 1f
+        val tmpW = 1f
 
         tmpX = (tmpX - viewport[0]) / viewport[2]
         tmpY = (tmpY - viewport[1]) / viewport[3]
@@ -800,6 +800,7 @@ interface matrix_transform {
 
         return res div_ objW
     }
+
     fun unProject(win: Vec3, model: Mat4x4, proj: Mat4x4, viewport: Vec4i) = unProject(Vec3(), win, model, proj, viewport)
 
     /**
@@ -813,22 +814,135 @@ interface matrix_transform {
      */
     fun pickMatrix(res: Mat4x4, center: Vec2, delta: Vec2, viewport: Vec4i): Mat4x4 {
 
-        assert(delta.x > 0f && delta.y > 0f)
+        res put 1f
 
-        res to 1f
+        if (!(delta.x > 0f && delta.y > 0f))
+            throw ArithmeticException()
 
-        if (!(delta.x > 0f && delta.y > 0f)) throw ArithmeticException("! delta > 0")
+        val tempX = (viewport[2] - 2f * (center.x - viewport[0])) / delta.x
+        val tempY = (viewport[3] - 2f * (center.y - viewport[1])) / delta.y
+        val tempZ = 0f
 
-        val tmpX = (viewport[2] - 2f * (center.x - viewport[0])) / delta.x
-        val tmpY = (viewport[3] - 2f * (center.y - viewport[1])) / delta.y
-        //val tmpZ = 0f
-
-        TODO()
         // Translate main.and scale the picked region to the entire window
-//        res[3].x = res[0].x * tmpX + res[1].x * tmpY + res[2].x * v.z + res[3].x
-//        res[3].y = res[0].y * tmpX + res[1].y * tmpY + res[2].y * v.z + res[3].y
-//        res[3].z = res[0].z * tmpX + res[1].z * tmpY + res[2].z * v.z + res[3].z
-
+        res.translate_(tempX, tempY, tempZ)
+        return res.scale_(viewport[2] / delta.x, viewport[3] / delta.y, 1f)
     }
+
     fun pickMatrix(center: Vec2, delta: Vec2, viewport: Vec4i) = pickMatrix(Mat4x4(), center, delta, viewport)
+
+
+    /** Build a look at view matrix based on the default handedness.
+     *
+     * @param eye Position of the camera
+     * @param center Position where the camera is looking at
+     * @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     * @see gtc_matrix_transform
+     * @see - frustum(left, right, bottom, top, nearVal, farVal) frustum(left, right, bottom, top, nearVal, farVal) */
+    fun lookAt(res: Mat4x4, eye: Vec3, center: Vec3, up: Vec3) =
+            if(GLM_COORDINATE_SYSTEM == GLM_LEFT_HANDED)
+                lookAtLH(res, eye, center, up)
+            else
+                lookAtRH(res, eye, center, up)
+
+    fun lookAt(eye: Vec3, center: Vec3, up: Vec3) = lookAt(Mat4x4(), eye, center, up)
+
+    /** Build a right handed look at view matrix.
+     *
+     * @param eye Position of the camera
+     * @param center Position where the camera is looking at
+     * @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     * @see gtc_matrix_transform
+     * @see - frustum(left, right, bottom, top, nearVal, farVal) frustum(left, right, bottom, top, nearVal, farVal) */
+    fun lookAtRH(res: Mat4x4, eye: Vec3, center: Vec3, up: Vec3): Mat4x4 {
+
+        val ceX = center.x - eye.x
+        val ceY = center.y - eye.y
+        val ceZ = center.z - eye.z
+
+        var dot = ceX * ceX + ceY * ceY + ceZ * ceZ
+        var invSpqr = glm.inverseSqrt(dot)
+        val fX = ceX * invSpqr
+        val fY = ceY * invSpqr
+        val fZ = ceZ * invSpqr
+
+        val fuX = fY * up.z - up.y * fZ
+        val fuY = fZ * up.x - up.z * fX
+        val fuZ = fX * up.y - up.x * fY
+        dot = fuX * fuX + fuY * fuY + fuZ * fuZ
+        invSpqr = glm.inverseSqrt(dot)
+        val sX = fuX * invSpqr
+        val sY = fuY * invSpqr
+        val sZ = fuZ * invSpqr
+
+        val uX = sY * fZ - fY * sZ
+        val uY = sZ * fX - fZ * sX
+        val uZ = sX * fY - fX * sY
+
+        res put 1f
+
+        res[0][0] = sX
+        res[1][0] = sY
+        res[2][0] = sZ
+        res[0][1] = uX
+        res[1][1] = uY
+        res[2][1] = uZ
+        res[0][2] = -fX
+        res[1][2] = -fY
+        res[2][2] = -fZ
+        res[3][0] = -(sX * eye.x + sY * eye.y + sZ * eye.z)
+        res[3][1] = -(uX * eye.x + uY * eye.y + uZ * eye.z)
+        res[3][2] = fX * eye.x + fY * eye.y + fZ * eye.z
+
+        return res
+    }
+
+    /** Build a left handed look at view matrix.
+     *
+     * @param eye Position of the camera
+     * @param center Position where the camera is looking at
+     * @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     * @see gtc_matrix_transform
+     * @see - frustum(left, right, bottom, top, nearVal, farVal) frustum(left, right, bottom, top, nearVal, farVal) */
+    fun lookAtLH(res: Mat4x4, eye: Vec3, center: Vec3, up: Vec3): Mat4x4 {
+
+        val ceX = center.x - eye.x
+        val ceY = center.y - eye.y
+        val ceZ = center.z - eye.z
+
+        var dot = ceX * ceX + ceY * ceY + ceZ * ceZ
+        var invSpqr = glm.inverseSqrt(dot)
+        val fX = ceX * invSpqr
+        val fY = ceY * invSpqr
+        val fZ = ceZ * invSpqr
+
+        val ufX = up.y * fZ - fY * up.z
+        val ufY = up.z * fX - fZ * up.x
+        val ufZ = up.x * fY - fX * up.y
+        dot = ufX * ufX + ufY * ufY + ufZ * ufZ
+        invSpqr = glm.inverseSqrt(dot)
+        val sX = ufX * invSpqr
+        val sY = ufY * invSpqr
+        val sZ = ufZ * invSpqr
+
+        val uX = fY * sZ - sY * fZ
+        val uY = fZ * sX - sZ * fX
+        val uZ = fX * sY - sX * fY
+
+        res put 1f
+
+        res[0][0] = sX
+        res[1][0] = sY
+        res[2][0] = sZ
+        res[0][1] = uX
+        res[1][1] = uY
+        res[2][1] = uZ
+        res[0][2] = fX
+        res[1][2] = fY
+        res[2][2] = fZ
+        res[3][0] = -(sX * eye.x + sY * eye.y + sZ * eye.z)
+        res[3][1] = -(uX * eye.x + uY * eye.y + uZ * eye.z)
+        res[3][2] = -(fX * eye.x + fY * eye.y + fZ * eye.z)
+
+        return res
+    }
 }
