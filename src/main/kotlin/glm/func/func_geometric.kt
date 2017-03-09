@@ -4,6 +4,7 @@ import glm.d
 import glm.f
 import glm.Glm.sqrt
 import glm.Glm.inverseSqrt
+import glm.deg
 import glm.vec._2.Vec2
 import glm.vec._2.Vec2d
 import glm.vec._3.Vec3
@@ -11,12 +12,18 @@ import glm.vec._3.Vec3d
 import glm.vec._4.Vec4
 import glm.vec._4.Vec4d
 import glm.quat.Quat
+import glm.rad
 
 /**
  * Created by GBarbieri on 12.12.2016.
  */
 
 interface func_geometric {
+
+    fun toRad(deg: Float) = Math.toRadians(deg.d).f
+    fun toRad(deg: Double) = Math.toRadians(deg)
+    fun toDeg(rad: Float) = Math.toDegrees(rad.d).f
+    fun toDeg(rad: Double) = Math.toDegrees(rad)
 
     fun length(a: Vec2) = sqrt(dot(a, a))
     fun length(a: Vec2d) = sqrt(dot(a, a))
