@@ -5,15 +5,15 @@ package glm
  */
 
 import glm.Glm.floor
-import vec._2.Vec2
-import vec._2.Vec2d
-import vec._3.Vec3
-import vec._3.Vec3d
-import vec._4.Vec4
-import vec._4.Vec4d
-import vec._2.operators.*
-import vec._3.operators.*
-import vec._4.operators.*
+import glm.vec._2.Vec2
+import glm.vec._2.Vec2d
+import glm.vec._3.Vec3
+import glm.vec._3.Vec3d
+import glm.vec._4.Vec4
+import glm.vec._4.Vec4d
+import glm.vec._2.operators.*
+import glm.vec._3.operators.*
+import glm.vec._4.operators.*
 
 interface noise {
 

@@ -2,12 +2,12 @@ package glm.func
 
 import glm.d
 import glm.f
-import vec._2.Vec2
-import vec._2.Vec2d
-import vec._3.Vec3
-import vec._3.Vec3d
-import vec._4.Vec4
-import vec._4.Vec4d
+import glm.vec._2.Vec2
+import glm.vec._2.Vec2d
+import glm.vec._3.Vec3
+import glm.vec._3.Vec3d
+import glm.vec._4.Vec4
+import glm.vec._4.Vec4d
 
 /**
  * Created by GBarbieri on 12.12.2016.

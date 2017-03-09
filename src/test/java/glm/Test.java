@@ -1,7 +1,7 @@
 package glm;
 
-import quat.Quat;
-import vec._2.Vec2;
+import glm.quat.Quat;
+import glm.vec._2.Vec2;
 
 import static glm.GlmKt.glm;
 

@@ -9,11 +9,11 @@ import glm.func.common.func_common
 import glm.func.common.func_vector2_common
 import glm.func.common.func_vector3_common
 import glm.func.common.func_vector4_common
-import mat.operators.mat2x2_operators
-import mat.operators.mat3x3_operators
-import mat.operators.mat4x4_operators
-import quat.quat_func
-import vec._3.Vec3i
+import glm.mat.operators.mat2x2_operators
+import glm.mat.operators.mat3x3_operators
+import glm.mat.operators.mat4x4_operators
+import glm.quat.quat_func
+import glm.vec._3.Vec3i
 
 @JvmField val glm = Glm
 

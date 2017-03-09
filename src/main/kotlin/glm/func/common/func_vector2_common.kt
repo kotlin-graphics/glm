@@ -21,8 +21,8 @@ import glm.Glm.smoothStep
 import glm.Glm.step
 import glm.Glm.trunc
 import glm.Glm.uintBitsToFloat
-import vec._2.*
-import vec.bool.Vec2bool
+import glm.vec._2.*
+import glm.vec.bool.Vec2bool
 
 /**
  * Created by GBarbieri on 11.11.2016.

@@ -6,15 +6,15 @@ import glm.d
 import glm.f
 import glm.i
 import glm.s
-import vec.Vec2t
-import vec.Vec3t
-import vec.Vec4t
-import vec._2.*
-import vec._3.*
-import vec._4.*
-import vec.bool.Vec2bool
-import vec.bool.Vec3bool
-import vec.bool.Vec4bool
+import glm.vec.Vec2t
+import glm.vec.Vec3t
+import glm.vec.Vec4t
+import glm.vec._2.*
+import glm.vec._3.*
+import glm.vec._4.*
+import glm.vec.bool.Vec2bool
+import glm.vec.bool.Vec3bool
+import glm.vec.bool.Vec4bool
 
 /**
  * Created by GBarbieri on 08.11.2016.

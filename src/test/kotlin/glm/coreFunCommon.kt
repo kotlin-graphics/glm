@@ -6,8 +6,8 @@ import glm.d
 import glm.glm
 import org.junit.Test
 import org.junit.runner.RunWith
-import vec._2.Vec2
-import vec._2.Vec2ub
+import glm.vec._2.Vec2
+import glm.vec._2.Vec2ub
 
 /**
  * Created by elect on 11/11/16.

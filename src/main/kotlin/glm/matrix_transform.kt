@@ -10,10 +10,10 @@ import glm.detail.GLM_COORDINATE_SYSTEM
 import glm.detail.GLM_DEPTH_CLIP_SPACE
 import glm.detail.GLM_DEPTH_ZERO_TO_ONE
 import glm.detail.GLM_LEFT_HANDED
-import mat.Mat4x4
-import vec._2.Vec2
-import vec._3.Vec3
-import vec._4.Vec4i
+import glm.mat.Mat4x4
+import glm.vec._2.Vec2
+import glm.vec._3.Vec3
+import glm.vec._4.Vec4i
 
 /**
  * Created by GBarbieri on 12.12.2016.

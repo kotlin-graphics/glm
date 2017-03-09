@@ -3,9 +3,9 @@ package glm
 import io.kotlintest.KTestJUnitRunner
 import io.kotlintest.specs.StringSpec
 import org.junit.runner.RunWith
-import quat.Quat
-import quat.times
-import vec._3.Vec3
+import glm.quat.Quat
+import glm.quat.times
+import glm.vec._3.Vec3
 
 /**
  * Created by elect on 04/03/2017.

@@ -4,13 +4,13 @@ import glm.d
 import glm.f
 import glm.Glm.sqrt
 import glm.Glm.inverseSqrt
-import vec._2.Vec2
-import vec._2.Vec2d
-import vec._3.Vec3
-import vec._3.Vec3d
-import vec._4.Vec4
-import vec._4.Vec4d
-import quat.Quat
+import glm.vec._2.Vec2
+import glm.vec._2.Vec2d
+import glm.vec._3.Vec3
+import glm.vec._3.Vec3d
+import glm.vec._4.Vec4
+import glm.vec._4.Vec4d
+import glm.quat.Quat
 
 /**
  * Created by GBarbieri on 12.12.2016.

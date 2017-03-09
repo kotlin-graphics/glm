@@ -3,10 +3,10 @@ package glm
 import io.kotlintest.KTestJUnitRunner
 import io.kotlintest.specs.StringSpec
 import glm.glm
-import mat.Mat4
-import mat.operators.div
-import mat.operators.times
-import vec._4.Vec4
+import glm.mat.Mat4
+import glm.mat.operators.div
+import glm.mat.operators.times
+import glm.vec._4.Vec4
 import org.junit.runner.RunWith
 
 /**

@@ -5,11 +5,11 @@ package glm
  */
 
 import io.kotlintest.specs.StringSpec
-import vec.Vec2t
-import vec._2.*
-import vec._2.operators.*
-import vec._2.Vec2
-import vec._3.Vec3
+import glm.vec.Vec2t
+import glm.vec._2.*
+import glm.vec._2.operators.*
+import glm.vec._2.Vec2
+import glm.vec._3.Vec3
 
 
 class coreVec2 : StringSpec() {
@@ -416,15 +416,24 @@ class coreVec2 : StringSpec() {
 
         "operator_increment" {
 
-            var v0 = Vec2i(1)
-            var v1 = Vec2i(v0)
-            var v2 = Vec2i(v0)
-            var v3 = ++v1
-            var v4 = v2++
+            run {
+                var v0 = Vec2i(1)
+                var v1 = Vec2i(v0)
+                var v2 = Vec2i(v0)
+                var v3 = ++v1
+                var v4 = v2++
 
-            val a = 1 + v0
+                val a = 1 + v0
 
 //        assert(v0.equals())
+            }
+
+            run {
+                val a = Vec2()
+                val b = Vec2(10)
+
+                a inc b
+            }
         }
 
         "swizzling" {

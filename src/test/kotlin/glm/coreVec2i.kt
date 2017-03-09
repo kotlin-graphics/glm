@@ -1,8 +1,8 @@
 package glm
 
 import io.kotlintest.specs.StringSpec
-import vec._2.Vec2i
-import vec.bool.Vec2bool
+import glm.vec._2.Vec2i
+import glm.vec.bool.Vec2bool
 
 /**
  * Created by fschaefers on 09.02.2017.

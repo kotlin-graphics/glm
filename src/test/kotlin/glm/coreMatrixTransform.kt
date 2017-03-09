@@ -1,7 +1,7 @@
 package glm
 
 import io.kotlintest.specs.StringSpec
-import mat.Mat4
+import glm.mat.Mat4
 
 /**
  * Created by GBarbieri on 08.03.2017.

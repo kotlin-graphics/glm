@@ -1,9 +1,9 @@
 package glm
 
-import mat.*
-import vec._2.Vec2
-import vec._3.Vec3
-import vec._4.Vec4
+import glm.mat.*
+import glm.vec._2.Vec2
+import glm.vec._3.Vec3
+import glm.vec._4.Vec4
 
 /**
  * Created by GBarbieri on 15.12.2016.

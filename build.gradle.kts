@@ -29,7 +29,7 @@ repositories {
 dependencies {
     compile(kotlinModule("stdlib", "1.1.0"))
     testCompile("com.github.elect86:kotlintest:d8878d6da0944ec6bcbcdad6a1540bba021d768d")
-    compile("com.github.elect86:kotlin-unsigned:405b68c99309459eeb24c2639f016f26dcf59ba3")
+    compile("com.github.elect86:kotlin-unsigned:v2.0")
 }
 
 allprojects {

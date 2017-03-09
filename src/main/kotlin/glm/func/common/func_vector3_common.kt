@@ -1,7 +1,7 @@
 package glm.func.common
 
-import vec._3.*
-import vec.bool.Vec3bool
+import glm.vec._3.*
+import glm.vec.bool.Vec3bool
 import glm.Glm.abs
 import glm.Glm.sign
 import glm.Glm.floor

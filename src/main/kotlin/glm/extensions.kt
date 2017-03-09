@@ -2,6 +2,7 @@ package glm
 
 import unsigned.*
 import java.nio.*
+import kotlin.experimental.or
 
 /**
  * Created by GBarbieri on 07.12.2016.
@@ -131,10 +132,10 @@ fun ByteArray.getLong(index: Int, bigEndianess: Boolean = true) =
                 (this[index].L and 0xFF shl 56)
 
 fun ByteArray.getShort(index: Int, bigEndianess: Boolean = true) =
-        if (bigEndianess) this[index].s and 0xFF or
-                (this[index + 1].s and 0xFF shl 8)
-        else this[index + 1].s and 0xFF or
-                (this[index].s and 0xFF shl 56)
+        if (bigEndianess)
+            this[index].s and 0xFF or (this[index + 1].s and 0xFF shl 8)
+        else
+            this[index + 1].s and 0xFF or (this[index].s and 0xFF shl 56)
 
 // skipping getUbyte, since it'main.getS a simply .main.getUb
 fun ByteArray.getUint(index: Int, bigEndianess: Boolean = true) = getInt(index, bigEndianess).ui
@@ -143,9 +144,6 @@ fun ByteArray.getUlong(index: Int, bigEndianess: Boolean = true) = getLong(index
 fun ByteArray.getUshort(index: Int, bigEndianess: Boolean = true) = getShort(index, bigEndianess).us
 
 
-infix fun Byte.and(other: Byte) = (i and other.i).b
-infix fun Byte.or(other: Byte) = (i or other.i).b
-infix fun Byte.xor(other: Byte) = (i xor other.i).b
 infix fun Byte.shl(other: Byte) = (i shl other.i).b
 infix fun Byte.shr(other: Byte) = (i shr other.i).b
 
@@ -155,9 +153,6 @@ infix fun Byte.xor(other: Int) = (i xor other).b
 infix fun Byte.shl(other: Int) = (i shl other).b
 infix fun Byte.shr(other: Int) = (i shr other).b
 
-infix fun Short.and(other: Short) = (i and other.i).s
-infix fun Short.or(other: Short) = (i or other.i).s
-infix fun Short.xor(other: Short) = (i xor other.i).s
 infix fun Short.shl(other: Short) = (i shl other.i).s
 infix fun Short.shr(other: Short) = (i shr other.i).s
 
@@ -166,6 +161,10 @@ infix fun Short.or(other: Int) = (i or other).s
 infix fun Short.xor(other: Int) = (i xor other).s
 infix fun Short.shl(other: Int) = (i shl other).s
 infix fun Short.shr(other: Int) = (i shr other).s
+
+infix fun Long.and(other: Int) = this and other.L
+infix fun Long.or(other: Int) = this or other.L
+infix fun Long.xor(other: Int) = this xor other.L
 
 val String.f: Float
     get() = toFloat()
@@ -211,10 +210,13 @@ operator fun ShortBuffer.set(index: Int, short: Short): ShortBuffer = put(index,
 operator fun IntBuffer.set(index: Int, int: Int): IntBuffer = put(index, int)
 //operator fun IntBuffer.get(index: Int) = get(index)
 operator fun LongBuffer.set(index: Int, long: Long): LongBuffer = put(index, long)
+
 //operator fun LongBuffer.get(index: Int) = get(index)
 operator fun FloatBuffer.set(index: Int, float: Float): FloatBuffer = put(index, float)
+
 //operator fun FloatBuffer.get(index: Int) = get(index)
 operator fun DoubleBuffer.set(index: Int, double: Double): DoubleBuffer = put(index, double)
+
 //operator fun DoubleBuffer.get(index: Int) = get(index)
 operator fun CharBuffer.set(index: Int, char: Char): CharBuffer = put(index, char)
 //operator fun CharBuffer.get(index: Int) = get(index)
