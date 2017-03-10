@@ -47,7 +47,7 @@ class coreVec2i : StringSpec() {
                 v3 += 1
                 v4 += v1
 
-                v1.add(v2) shouldBe Vec2i(3, 3)
+                v1 plus v2 shouldBe Vec2i(3, 3)
                 v1 + v2 shouldBe Vec2i(3, 3)
                 (v1 + v2 != r2) shouldBe true
                 v1 + 2 shouldBe Vec2i(3, 3)
@@ -61,7 +61,7 @@ class coreVec2i : StringSpec() {
                 var v3 = Vec2i(0, 0)
                 v3 -= v2
 
-                v1.sub(v2) shouldBe Vec2i(-1, -3)
+                v1 minus v2 shouldBe Vec2i(-1, -3)
                 v1 - v2 shouldBe Vec2i(-1, -3)
                 v1 - 5 shouldBe Vec2i(-4, -5)
                 v3 shouldBe Vec2i(-2, -3)
@@ -76,7 +76,7 @@ class coreVec2i : StringSpec() {
                 v3 *= v2
 
                 v1 * v2 shouldBe Vec2i(2, 0)
-                v1.mul(v2) shouldBe Vec2i(2, 0)
+                v1 times v2 shouldBe Vec2i(2, 0)
                 v2 * 3 shouldBe Vec2i(6, 9)
                 v3 shouldBe Vec2i(4, 6)
             }
