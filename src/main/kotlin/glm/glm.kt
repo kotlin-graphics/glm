@@ -49,10 +49,10 @@ object Glm :
 
     @JvmField val detail = Detail
 
-    val pi = Math.PI
+    @JvmField val pi = Math.PI
 
-    val epsilonF = 1.1920928955078125e-7f
-    val epsilonD = 2.2204460492503131e-16
+    @JvmField val epsilonF = 1.1920928955078125e-7f
+    @JvmField val epsilonD = 2.2204460492503131e-16
 }
 
 object Detail : noise
