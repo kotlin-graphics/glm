@@ -230,6 +230,15 @@ val Float.rad
 val Double.rad
     get() = Math.toRadians(this)
 
+val Float.cos
+    get() = Math.cos(this.d).f
+val Double.cos
+    get() = Math.cos(this)
+val Float.sin
+    get() = Math.sin(this.d).f
+val Double.sin
+    get() = Math.sin(this)
+
 interface ext {
 
     fun toDeg(rad: Float) = Math.toDegrees(rad.d).f
