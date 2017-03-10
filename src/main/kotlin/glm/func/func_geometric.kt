@@ -20,10 +20,6 @@ import glm.rad
 
 interface func_geometric {
 
-    fun toRad(deg: Float) = Math.toRadians(deg.d).f
-    fun toRad(deg: Double) = Math.toRadians(deg)
-    fun toDeg(rad: Float) = Math.toDegrees(rad.d).f
-    fun toDeg(rad: Double) = Math.toDegrees(rad)
 
     fun length(a: Vec2) = sqrt(dot(a, a))
     fun length(a: Vec2d) = sqrt(dot(a, a))
