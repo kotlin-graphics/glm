@@ -1,7 +1,7 @@
 package glm.quat
 
 import glm.Glm.dot
-import glm.quat.Quat.Companion.mul
+import glm.quat.Quat.Companion.times
 import glm.vec._3.Vec3
 import glm.vec._4.Vec4
 
@@ -11,7 +11,7 @@ import glm.vec._4.Vec4
 
 interface quat_operators {
 
-    fun add(res: Quat, a: Quat, b: Quat): Quat {
+    fun plus(res: Quat, a: Quat, b: Quat): Quat {
         res.w = a.w + b.w
         res.x = a.x + b.x
         res.y = a.y + b.y
@@ -20,7 +20,7 @@ interface quat_operators {
     }
 
 
-    fun sub(res: Quat, a: Quat, b: Quat): Quat {
+    fun minus(res: Quat, a: Quat, b: Quat): Quat {
         res.w = a.w - b.w
         res.x = a.x - b.x
         res.y = a.y - b.y
@@ -29,7 +29,7 @@ interface quat_operators {
     }
 
 
-    fun mul(res: Quat, a: Quat, b: Quat): Quat {
+    fun times(res: Quat, a: Quat, b: Quat): Quat {
         val resW = a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z
         val resX = a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y
         val resY = a.w * b.y + a.y * b.w + a.z * b.x - a.x * b.z
@@ -37,7 +37,7 @@ interface quat_operators {
         return res.put(resW, resX, resY, resZ)
     }
 
-    fun mul(res: Quat, a: Quat, b: Float): Quat {
+    fun times(res: Quat, a: Quat, b: Float): Quat {
         res.w = a.w * b
         res.x = a.x * b
         res.y = a.y * b
@@ -45,7 +45,7 @@ interface quat_operators {
         return res
     }
 
-    fun mul(res: Vec3, a: Quat, b: Vec3): Vec3 {
+    fun times(res: Vec3, a: Quat, b: Vec3): Vec3 {
         val uvX = a.y * b.z - b.y * a.z
         val uvY = a.z * b.x - b.z * a.x
         val uvZ = a.x * b.y - b.x * a.y
@@ -58,7 +58,7 @@ interface quat_operators {
         return res
     }
 
-    fun mul(res: Vec3, a: Vec3, b: Quat): Vec3 {
+    fun times(res: Vec3, a: Vec3, b: Quat): Vec3 {
         val dot = dot(a, a)
         val iW = b.w / dot
         val iX = -b.x / dot
@@ -76,7 +76,7 @@ interface quat_operators {
         return res
     }
 
-    fun mul(res: Quat, a: Quat, b: Vec4): Quat {
+    fun times(res: Quat, a: Quat, b: Vec4): Quat {
         res.w = a.w
         res.x = a.x * b.x
         res.y = a.y * b.y
@@ -94,6 +94,6 @@ interface quat_operators {
 }
 
 
-operator fun Float.times(b: Quat) = mul(Quat(), b, this)
-operator fun Vec3.times(b: Quat) = mul(Vec3(), this, b)
-operator fun Vec4.times(b: Quat) = mul(Quat(), b, this)
+infix operator fun Float.times(b: Quat) = times(Quat(), b, this)
+infix operator fun Vec3.times(b: Quat) = times(Vec3(), this, b)
+infix operator fun Vec4.times(b: Quat) = times(Quat(), b, this)

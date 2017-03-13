@@ -15,7 +15,7 @@ import glm.vec._4.Vec4
 /**
  * Created by GBarbieri on 15.11.2016.
  */
-data class Quat(var w: Float, var x: Float, var y: Float, var z: Float) : QuatT<Float> {
+class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
 
     // -- Implicit basic constructors --
@@ -108,46 +108,31 @@ data class Quat(var w: Float, var x: Float, var y: Float, var z: Float) : QuatT<
 
     // -- Specific binary arithmetic operators --
 
-    operator fun plus(b: Quat) = add(Quat(), this, b)
+    infix operator fun plus(b: Quat) = plus(Quat(), this, b)
+    fun plus(b: Quat, res: Quat) = plus(res, this, b)
+    infix fun plus_(b: Quat) = plus(this, this, b)
 
-    fun add(b: Quat, res: Quat = Quat()) = add(res, this, b)
+    infix operator fun minus(b: Quat) = minus(Quat(), this, b)
+    fun minus(b: Quat, res: Quat) = minus(res, this, b)
+    infix fun minus_(b: Quat) = minus(this, this, b)
 
-    infix fun add(b: Quat) = add(Quat(), this, b)
-    infix fun add_(b: Quat) = add(this, this, b)
-
-
-    operator fun minus(b: Quat) = sub(Quat(), this, b)
-
-    fun sub(b: Quat, res: Quat = Quat()) = sub(res, this, b)
-
-    infix fun sub(b: Quat) = sub(Quat(), this, b)
-    infix fun sub_(b: Quat) = sub(this, this, b)
-
-
-    operator fun times(b: Quat) = mul(Quat(), this, b)
-    operator fun times(b: Float) = mul(Quat(), this, b)
-    operator fun times(b: Vec3) = mul(Vec3(), this, b)
-    operator fun times(b: Vec4) = mul(Quat(), this, b)
-
-    fun mul(b: Quat, res: Quat = Quat()) = mul(res, this, b)
-    fun mul(b: Float, res: Quat = Quat()) = mul(res, this, b)
-    fun mul(b: Vec3, res: Vec3 = Vec3()) = mul(res, this, b)
-    fun mul(b: Vec4, res: Quat = Quat()) = mul(res, this, b)
-
-    infix fun mul(b: Quat) = mul(Quat(), this, b)
-    infix fun mul(b: Float) = mul(Quat(), this, b)
-    infix fun mul(b: Vec3) = mul(Vec3(), this, b)
-    infix fun mul(b: Vec4) = mul(Quat(), this, b)
-    infix fun mul_(b: Quat) = mul(this, this, b)
-    infix fun mul_(b: Float) = mul(this, this, b)
-    infix fun mul_(b: Vec3) = mul(b, this, b)
-    infix fun mul_(b: Vec4) = mul(this, this, b)
+    
+    infix operator fun times(b: Quat) = times(Quat(), this, b)
+    infix operator fun times(b: Float) = times(Quat(), this, b)
+    infix operator fun times(b: Vec3) = times(Vec3(), this, b)
+    infix operator fun times(b: Vec4) = times(Quat(), this, b)
+    fun times(b: Quat, res: Quat) = times(res, this, b)
+    fun times(b: Float, res: Quat) = times(res, this, b)
+    fun times(b: Vec3, res: Vec3) = times(res, this, b)
+    fun times(b: Vec4, res: Quat) = times(res, this, b)
+    infix fun times_(b: Quat) = times(this, this, b)
+    infix fun times_(b: Float) = times(this, this, b)
+    infix fun times_(b: Vec3) = times(b, this, b)
+    infix fun times_(b: Vec4) = times(this, this, b)
 
 
-    operator fun div(b: Float) = div(Quat(), this, b)
-
-    fun div(b: Float, res: Quat = Quat()) = div(res, this, b)
-
+    infix operator fun div(b: Float) = div(Quat(), this, b)
+    fun div(b: Float, res: Quat) = div(res, this, b)
     infix fun div_(b: Float) = div(this, this, b)
 
 
@@ -178,4 +163,9 @@ data class Quat(var w: Float, var x: Float, var y: Float, var z: Float) : QuatT<
 
 
     override fun toString() = "($x, $y, $z), $w"
+
+    override fun equals(other: Any?) =
+            if (other is Quat)
+                this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
+            else false
 }

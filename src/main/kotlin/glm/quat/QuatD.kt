@@ -11,7 +11,7 @@ import glm.vec._4.Vec4d
 /**
  * Created by GBarbieri on 15.11.2016.
  */
-data class QuatD(var w: Double, var x: Double, var y: Double, var z: Double) : QuatT<Double> {
+class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y, z) {
 
     // -- Implicit basic constructors --
 
@@ -104,46 +104,32 @@ data class QuatD(var w: Double, var x: Double, var y: Double, var z: Double) : Q
 
     // -- Specific binary arithmetic operators --
 
-    operator fun plus(b: QuatD) = add(QuatD(), this, b)
-
-    fun add(b: QuatD, res: QuatD = QuatD()) = add(res, this, b)
-
-    infix fun add(b: QuatD) = add(QuatD(), this, b)
-    infix fun add_(b: QuatD) = add(this, this, b)
+    infix operator fun plus(b: QuatD) = plus(QuatD(), this, b)
+    fun plus(b: QuatD, res: QuatD) = plus(res, this, b)
+    infix fun plus_(b: QuatD) = plus(this, this, b)
 
 
-    operator fun minus(b: QuatD) = sub(QuatD(), this, b)
-
-    fun sub(b: QuatD, res: QuatD = QuatD()) = sub(res, this, b)
-
-    infix fun sub(b: QuatD) = sub(QuatD(), this, b)
-    infix fun sub_(b: QuatD) = sub(this, this, b)
+    operator fun minus(b: QuatD) = minus(QuatD(), this, b)
+    fun minus(b: QuatD, res: QuatD) = minus(res, this, b)
+    infix fun minus_(b: QuatD) = minus(this, this, b)
 
 
-    operator fun times(b: QuatD) = mul(QuatD(), this, b)
-    operator fun times(b: Double) = mul(QuatD(), this, b)
-    operator fun times(b: Vec3d) = mul(Vec3d(), this, b)
-    operator fun times(b: Vec4d) = mul(QuatD(), this, b)
-
-    fun mul(b: QuatD, res: QuatD = QuatD()) = mul(res, this, b)
-    fun mul(b: Double, res: QuatD = QuatD()) = mul(res, this, b)
-    fun mul(b: Vec3d, res: Vec3d = Vec3d()) = mul(res, this, b)
-    fun mul(b: Vec4d, res: QuatD = QuatD()) = mul(res, this, b)
-
-    infix fun mul(b: QuatD) = mul(QuatD(), this, b)
-    infix fun mul(b: Double) = mul(QuatD(), this, b)
-    infix fun mul(b: Vec3d) = mul(Vec3d(), this, b)
-    infix fun mul(b: Vec4d) = mul(QuatD(), this, b)
-    infix fun mul_(b: QuatD) = mul(this, this, b)
-    infix fun mul_(b: Double) = mul(this, this, b)
-    infix fun mul_(b: Vec3d) = mul(b, this, b)
-    infix fun mul_(b: Vec4d) = mul(this, this, b)
+    infix operator fun times(b: QuatD) = times(QuatD(), this, b)
+    infix operator fun times(b: Double) = times(QuatD(), this, b)
+    infix operator fun times(b: Vec3d) = times(Vec3d(), this, b)
+    infix operator fun times(b: Vec4d) = times(QuatD(), this, b)
+    fun times(b: QuatD, res: QuatD) = times(res, this, b)
+    fun times(b: Double, res: QuatD) = times(res, this, b)
+    fun times(b: Vec3d, res: Vec3d) = times(res, this, b)
+    fun times(b: Vec4d, res: QuatD) = times(res, this, b)
+    infix fun times_(b: QuatD) = times(this, this, b)
+    infix fun times_(b: Double) = times(this, this, b)
+    infix fun times_(b: Vec3d) = times(b, this, b)
+    infix fun times_(b: Vec4d) = times(this, this, b)
 
 
-    operator fun div(b: Double) = div(QuatD(), this, b)
-
-    fun div(b: Double, res: QuatD = QuatD()) = div(res, this, b)
-
+    infix operator fun div(b: Double) = div(QuatD(), this, b)
+    fun div(b: Double, res: QuatD) = div(res, this, b)
     infix fun div_(b: Double) = div(this, this, b)
 
 
@@ -174,4 +160,9 @@ data class QuatD(var w: Double, var x: Double, var y: Double, var z: Double) : Q
 
 
     override fun toString() = "($x, $y, $z), $w"
+
+    override fun equals(other: Any?) =
+            if (other is QuatD)
+                this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
+            else false
 }

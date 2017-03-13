@@ -1,7 +1,7 @@
 package glm.quat
 
 import glm.Glm
-import glm.quat.QuatD.Companion.mul
+import glm.quat.QuatD.Companion.times
 import glm.vec._3.Vec3d
 import glm.vec._4.Vec4d
 
@@ -11,7 +11,7 @@ import glm.vec._4.Vec4d
 
 interface quatD_operators {
 
-    fun add(res: QuatD, a: QuatD, b: QuatD): QuatD {
+    fun plus(res: QuatD, a: QuatD, b: QuatD): QuatD {
         res.w = a.w + b.w
         res.x = a.x + b.x
         res.y = a.y + b.y
@@ -20,7 +20,7 @@ interface quatD_operators {
     }
 
 
-    fun sub(res: QuatD, a: QuatD, b: QuatD): QuatD {
+    fun minus(res: QuatD, a: QuatD, b: QuatD): QuatD {
         res.w = a.w - b.w
         res.x = a.x - b.x
         res.y = a.y - b.y
@@ -29,7 +29,7 @@ interface quatD_operators {
     }
 
 
-    fun mul(res: QuatD, a: QuatD, b: QuatD): QuatD {
+    fun times(res: QuatD, a: QuatD, b: QuatD): QuatD {
         val resW = a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z
         val resX = a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y
         val resY = a.w * b.y + a.y * b.w + a.z * b.x - a.x * b.z
@@ -37,7 +37,7 @@ interface quatD_operators {
         return res.put(resW, resX, resY, resZ)
     }
 
-    fun mul(res: QuatD, a: QuatD, b: Double): QuatD {
+    fun times(res: QuatD, a: QuatD, b: Double): QuatD {
         res.w = a.w * b
         res.x = a.x * b
         res.y = a.y * b
@@ -45,7 +45,7 @@ interface quatD_operators {
         return res
     }
 
-    fun mul(res: Vec3d, a: QuatD, b: Vec3d): Vec3d {
+    fun times(res: Vec3d, a: QuatD, b: Vec3d): Vec3d {
         val uvX = a.y * b.z - b.y * a.z
         val uvY = a.z * b.x - b.z * a.x
         val uvZ = a.x * b.y - b.x * a.y
@@ -58,7 +58,7 @@ interface quatD_operators {
         return res
     }
 
-    fun mul(res: Vec3d, a: Vec3d, b: QuatD): Vec3d {
+    fun times(res: Vec3d, a: Vec3d, b: QuatD): Vec3d {
         val dot = Glm.dot(a, a)
         val iW = b.w / dot
         val iX = -b.x / dot
@@ -76,7 +76,7 @@ interface quatD_operators {
         return res
     }
 
-    fun mul(res: QuatD, a: QuatD, b: Vec4d): QuatD {
+    fun times(res: QuatD, a: QuatD, b: Vec4d): QuatD {
         res.w = a.w
         res.x = a.x * b.x
         res.y = a.y * b.y
@@ -94,6 +94,6 @@ interface quatD_operators {
     }
 }
 
-operator fun Double.times(b: QuatD) = mul(QuatD(), b, this)
-operator fun Vec3d.times(b: QuatD) = mul(Vec3d(), this, b)
-operator fun Vec4d.times(b: QuatD) = mul(QuatD(), b, this)
+infix operator fun Double.times(b: QuatD) = times(QuatD(), b, this)
+infix operator fun Vec3d.times(b: QuatD) = times(Vec3d(), this, b)
+infix operator fun Vec4d.times(b: QuatD) = times(QuatD(), b, this)

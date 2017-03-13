@@ -194,7 +194,7 @@ class quaternion : StringSpec() {
                 }
             }
 
-            "quat mul" {
+            "quat times" {
 
                 val temp1 = Quat(1f, Vec3(0, 1, 0)).normalize()
                 val temp2 = Quat(.5f, Vec3(1, 0, 0)).normalize()
