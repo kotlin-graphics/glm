@@ -114,11 +114,17 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
             Vec4(mat4x3[3], 1)))
 
     // TODO others
-    constructor(floats: FloatArray) : this(mutableListOf(
-            Vec4(floats, 0),
-            Vec4(floats, 4),
-            Vec4(floats, 8),
-            Vec4(floats, 12)))
+    @JvmOverloads constructor(floats: FloatArray, transpose: Boolean = false) : this(
+            if (transpose) mutableListOf(
+                    Vec4(floats, 0),
+                    Vec4(floats, 4),
+                    Vec4(floats, 8),
+                    Vec4(floats, 12))
+            else mutableListOf(
+                    Vec4(floats[0], floats[4], floats[8], floats[12]),
+                    Vec4(floats[1], floats[5], floats[9], floats[13]),
+                    Vec4(floats[2], floats[6], floats[10], floats[14]),
+                    Vec4(floats[3], floats[7], floats[11], floats[15])))
 
     // set
 
