@@ -194,4 +194,6 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
             field = value
             w = field
         }
+
+    override fun toString() = "$x, $y, $z, $w"
 }
