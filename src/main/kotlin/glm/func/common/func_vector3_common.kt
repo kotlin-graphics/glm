@@ -351,19 +351,19 @@ interface func_vector3_common {
     }
 
 
-    fun mix(a: Vec3, b: Float, interp: Float) = mix(a, b, interp, Vec3())
-    fun mix(a: Vec3, b: Float, interp: Float, res: Vec3): Vec3 {
-        res.x = mix(a.x, b, interp)
-        res.y = mix(a.y, b, interp)
-        res.z = mix(a.z, b, interp)
+    fun mix(a: Vec3, b: Vec3, interp: Float) = mix(a, b, interp, Vec3())
+    fun mix(a: Vec3, b: Vec3, interp: Float, res: Vec3): Vec3 {
+        res.x = mix(a.x, b.x, interp)
+        res.y = mix(a.y, b.y, interp)
+        res.z = mix(a.z, b.z, interp)
         return res
     }
 
-    fun mix(a: Vec3d, b: Double, interp: Double) = mix(a, b, interp, Vec3d())
-    fun mix(a: Vec3d, b: Double, interp: Double, res: Vec3d): Vec3d {
-        res.x = mix(a.x, b, interp)
-        res.y = mix(a.y, b, interp)
-        res.z = mix(a.z, b, interp)
+    fun mix(a: Vec3d, b: Vec3d, interp: Double) = mix(a, b, interp, Vec3d())
+    fun mix(a: Vec3d, b: Vec3d, interp: Double, res: Vec3d): Vec3d {
+        res.x = mix(a.x, b.x, interp)
+        res.y = mix(a.y, b.y, interp)
+        res.z = mix(a.z, b.z, interp)
         return res
     }
 

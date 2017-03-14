@@ -388,21 +388,21 @@ interface func_vector4_common {
     }
 
 
-    fun mix(a: Vec4, b: Float, interp: Float) = mix(a, b, interp, Vec4())
-    fun mix(a: Vec4, b: Float, interp: Float, res: Vec4): Vec4 {
-        res.x = mix(a.x, b, interp)
-        res.y = mix(a.y, b, interp)
-        res.z = mix(a.z, b, interp)
-        res.w = mix(a.w, b, interp)
+    fun mix(a: Vec4, b: Vec4, interp: Float) = mix(a, b, interp, Vec4())
+    fun mix(a: Vec4, b: Vec4, interp: Float, res: Vec4): Vec4 {
+        res.x = mix(a.x, b.x, interp)
+        res.y = mix(a.y, b.y, interp)
+        res.z = mix(a.z, b.z, interp)
+        res.w = mix(a.w, b.w, interp)
         return res
     }
 
-    fun mix(a: Vec4d, b: Double, interp: Double) = mix(a, b, interp, Vec4d())
-    fun mix(a: Vec4d, b: Double, interp: Double, res: Vec4d): Vec4d {
-        res.x = mix(a.x, b, interp)
-        res.y = mix(a.y, b, interp)
-        res.z = mix(a.z, b, interp)
-        res.w = mix(a.w, b, interp)
+    fun mix(a: Vec4d, b: Vec4d, interp: Double) = mix(a, b, interp, Vec4d())
+    fun mix(a: Vec4d, b: Vec4d, interp: Double, res: Vec4d): Vec4d {
+        res.x = mix(a.x, b.x, interp)
+        res.y = mix(a.y, b.y, interp)
+        res.z = mix(a.z, b.z, interp)
+        res.w = mix(a.w, b.w, interp)
         return res
     }
 

@@ -314,17 +314,17 @@ interface func_vector2_common {
     }
 
 
-    fun mix(a: Vec2, b: Float, interp: Float) = mix(a, b, interp, Vec2())
-    fun mix(a: Vec2, b: Float, interp: Float, res: Vec2): Vec2 {
-        res.x = mix(a.x, b, interp)
-        res.y = mix(a.y, b, interp)
+    fun mix(a: Vec2, b: Vec2, interp: Float) = mix(a, b, interp, Vec2())
+    fun mix(a: Vec2, b: Vec2, interp: Float, res: Vec2): Vec2 {
+        res.x = mix(a.x, b.x, interp)
+        res.y = mix(a.y, b.y, interp)
         return res
     }
 
-    fun mix(a: Vec2d, b: Double, interp: Double) = mix(a, b, interp, Vec2d())
-    fun mix(a: Vec2d, b: Double, interp: Double, res: Vec2d): Vec2d {
-        res.x = mix(a.x, b, interp)
-        res.y = mix(a.y, b, interp)
+    fun mix(a: Vec2d, b: Vec2d, interp: Double) = mix(a, b, interp, Vec2d())
+    fun mix(a: Vec2d, b: Vec2d, interp: Double, res: Vec2d): Vec2d {
+        res.x = mix(a.x, b.x, interp)
+        res.y = mix(a.y, b.y, interp)
         return res
     }
 
