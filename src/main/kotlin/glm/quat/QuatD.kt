@@ -165,4 +165,6 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
             if (other is QuatD)
                 this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
             else false
+
+    @JvmOverloads fun vectorize(res: Vec4d = Vec4d()) = res.put(x, y, z, w)
 }
