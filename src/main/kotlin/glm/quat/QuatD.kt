@@ -2,6 +2,7 @@ package glm.quat
 
 import glm.*
 import glm.mat.QuatT
+import glm.vec.Vec4t
 import glm.vec._3.Vec3
 import glm.vec._3.Vec3d
 import glm.vec._4.Vec4
@@ -42,6 +43,8 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
         y = cX * sY * cZ + sX * cY * sZ
         z = cX * cY * sZ - sX * sY * cZ
     }
+
+    constructor(vec4: Vec4d) : this(vec4.w, vec4.x, vec4.y, vec4.z)
 //    constructor(m: Mat3x3) : this() {
 //        quat_cast(m, this)
 //    }
@@ -60,6 +63,7 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
 
     constructor(q: QuatD) : this(q.w.f, q.x.f, q.y.f, q.z.f)
     constructor(w: Number, x: Number, y: Number, z: Number) : this(w.d, x.d, y.d, z.d)
+    constructor(vec4: Vec4t<*>) : this(vec4.w.d, vec4.x.d, vec4.y.d, vec4.z.d)
 
 
     fun put(w: Double, x: Double, y: Double, z: Double): QuatD {
