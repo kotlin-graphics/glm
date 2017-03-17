@@ -74,7 +74,7 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
         return this
     }
 
-    fun put(quat: QuatD) = put(quat.w, quat.x, quat.y, quat.z)
+    infix fun put(quat: QuatD) = put(quat.w, quat.x, quat.y, quat.z)
 
     // -- Component accesses --
 

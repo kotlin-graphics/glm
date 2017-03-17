@@ -79,7 +79,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
         return this
     }
 
-    fun put(quat: Quat) = put(quat.w, quat.x, quat.y, quat.z)
+    infix fun put(quat: Quat) = put(quat.w, quat.x, quat.y, quat.z)
 
     // -- Component accesses --
 
