@@ -50,6 +50,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     }
 
     constructor(vec4: Vec4) : this(vec4.w, vec4.x, vec4.y, vec4.z)
+
 //    constructor(m: Mat3x3) : this() {
 //        quat_cast(m, this)
 //    }
@@ -77,6 +78,8 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
         this.z = z
         return this
     }
+
+    fun put(quat: Quat) = put(quat.w, quat.x, quat.y, quat.z)
 
     // -- Component accesses --
 
