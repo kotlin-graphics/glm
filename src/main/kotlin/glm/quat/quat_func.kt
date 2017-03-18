@@ -8,10 +8,10 @@ import glm.Glm.clamp
 import glm.Glm.cos
 import glm.Glm.epsilonD
 import glm.Glm.epsilonF
-import glm.Glm.length
 import glm.Glm.mix
 import glm.Glm.sin
 import glm.Glm.sqrt
+import glm.glm
 import glm.mat.Mat3
 import glm.mat.Mat3x3
 import glm.mat.Mat4
@@ -300,13 +300,13 @@ interface quat_func {
 
 
     /** Rotates a quaternion from a vector of 3 components axis main.and an angle.   */
-    fun rotate(q: Quat, angle: Float, v: Vec3, res: Quat): Quat {
+    fun rotate(q: Quat, angle: Float, vX: Float, vY: Float, vZ: Float, res: Quat): Quat {
 
-        var tmpX = v.x
-        var tmpY = v.y
-        var tmpZ = v.z
+        var tmpX = vX
+        var tmpY = vY
+        var tmpZ = vZ
         // Axis of rotation must be normalised
-        val len = length(v)
+        val len = glm.sqrt(vX * vX + vY * vY + vZ * vZ)
         if (abs(len - 1f) > 0.001f) {
             val oneOverLen = 1f / len
             tmpX *= oneOverLen
@@ -333,16 +333,18 @@ interface quat_func {
         return res
     }
 
-    fun rotate(q: Quat, angle: Float, v: Vec3) = rotate(q, angle, v, Quat())
+    fun rotate(q: Quat, angle: Float, vX: Float, vY: Float, vZ: Float) = rotate(q, angle, vX, vY, vZ, Quat())
+    fun rotate(q: Quat, angle: Float, v: Vec3, res: Quat) = rotate(q, angle, v.x, v.y, v.z, res)
+    fun rotate(q: Quat, angle: Float, v: Vec3) = rotate(q, angle, v.x, v.y, v.z, Quat())
 
     /** Rotates a quaternion from a vector of 3 components axis main.and an angle.   */
-    fun rotate(q: QuatD, angle: Double, v: Vec3d, res: QuatD): QuatD {
+    fun rotate(q: QuatD, angle: Double, vX: Double, vY: Double, vZ: Double, res: QuatD): QuatD {
 
-        var tmpX = v.x
-        var tmpY = v.y
-        var tmpZ = v.z
+        var tmpX = vX
+        var tmpY = vY
+        var tmpZ = vZ
         // Axis of rotation must be normalised
-        val len = length(v)
+        val len = glm.sqrt(vX * vX + vY * vY + vZ * vZ)
         if (abs(len - 1f) > 0.001) {
             val oneOverLen = 1f / len
             tmpX *= oneOverLen
@@ -369,7 +371,9 @@ interface quat_func {
         return res
     }
 
-    fun rotate(q: QuatD, angle: Double, v: Vec3d) = rotate(q, angle, v, QuatD())
+    fun rotate(q: QuatD, angle: Double, vX: Double, vY: Double, vZ: Double) = rotate(q, angle, vX, vY, vZ, QuatD())
+    fun rotate(q: QuatD, angle: Double, v: Vec3d, res: QuatD) = rotate(q, angle, v.x, v.y, v.z, res)
+    fun rotate(q: QuatD, angle: Double, v: Vec3d) = rotate(q, angle, v.x, v.y, v.z, QuatD())
 
 
     /** Returns euler angles, pitch as x, yaw as y, roll as z.
@@ -593,10 +597,10 @@ interface quat_func {
 
 
     fun quat_cast(
-                  m00: Double, m01: Double, m02: Double,
-                  m10: Double, m11: Double, m12: Double,
-                  m20: Double, m21: Double, m22: Double,
-                  res: QuatD): QuatD {
+            m00: Double, m01: Double, m02: Double,
+            m10: Double, m11: Double, m12: Double,
+            m20: Double, m21: Double, m22: Double,
+            res: QuatD): QuatD {
 
         val fourXSquaredMinus1 = m00 - m11 - m22
         val fourYSquaredMinus1 = m11 - m00 - m22
@@ -682,6 +686,7 @@ interface quat_func {
         res.z = q.z * tmp2
         return res
     }
+
     fun axis(q: Quat) = axis(q, Vec3())
 
     /** Returns the q rotation axis.    */
@@ -700,39 +705,44 @@ interface quat_func {
         res.z = q.z * tmp2
         return res
     }
+
     fun axis(q: QuatD) = axis(q, Vec3d())
 
 
-            /** Build a quaternion from an angle main.and a normalized axis. */
-    fun angleAxis(angle: Float, axis: Vec3, res: Quat): Quat {
+    /** Build a quaternion from an angle main.and a normalized axis. */
+    fun angleAxis(angle: Float, axisX: Float, axisY: Float, axisZ: Float, res: Quat): Quat {
 
         val a = angle * 0.5f
         val s = sin(a)
 
         res.w = cos(a)
-        res.x = axis.x * s
-        res.y = axis.y * s
-        res.z = axis.z * s
+        res.x = axisX * s
+        res.y = axisY * s
+        res.z = axisZ * s
 
         return res
     }
-    fun angleAxis(angle: Float, axis: Vec3) = angleAxis(angle, axis, Quat())
+    fun angleAxis(angle: Float, axisX: Float, axisY: Float, axisZ: Float) = angleAxis(angle, axisX, axisY, axisZ, Quat())
+    fun angleAxis(angle: Float, axis: Vec3, res: Quat) = angleAxis(angle, axis.x, axis.y, axis.z, res)
+    fun angleAxis(angle: Float, axis: Vec3) = angleAxis(angle, axis.x, axis.y, axis.z, Quat())
 
 
     /** Build a quaternion from an angle main.and a normalized axis. */
-    fun angleAxis(angle: Double, axis: Vec3d, res: QuatD): QuatD {
+    fun angleAxis(angle: Double, axisX: Double, axisY: Double, axisZ: Double, res: QuatD): QuatD {
 
         val a = angle * 0.5
         val s = sin(a)
 
         res.w = cos(a)
-        res.x = axis.x * s
-        res.y = axis.y * s
-        res.z = axis.z * s
+        res.x = axisX * s
+        res.y = axisY * s
+        res.z = axisZ * s
 
         return res
     }
-    fun angleAxis(angle: Double, axis: Vec3d) = angleAxis(angle, axis, QuatD())
+    fun angleAxis(angle: Double, axisX: Double, axisY: Double, axisZ: Double) = angleAxis(angle, axisX, axisY, axisZ, QuatD())
+    fun angleAxis(angle: Double, axis: Vec3d, res: QuatD) = angleAxis(angle, axis.x, axis.y, axis.z, res)
+    fun angleAxis(angle: Double, axis: Vec3d) = angleAxis(angle, axis.x, axis.y, axis.z, QuatD())
 
 
     //TODO move res in front, default arg on classes
@@ -744,6 +754,7 @@ interface quat_func {
         res.w = a.w < b.w
         return res
     }
+
     fun lessThan(a: Quat, b: Quat) = lessThan(a, b, Vec4bool())
 
     /** Returns the component-wise comparison result of x <= y.  */
@@ -754,6 +765,7 @@ interface quat_func {
         res.w = a.w <= b.w
         return res
     }
+
     fun lessThanEqual(a: Quat, b: Quat) = lessThanEqual(a, b, Vec4bool())
 
     /** Returns the component-wise comparison result of x > y.  */
@@ -764,6 +776,7 @@ interface quat_func {
         res.w = a.w > b.w
         return res
     }
+
     fun greater(a: Quat, b: Quat) = greater(a, b, Vec4bool())
 
     /** Returns the component-wise comparison result of x >= y.  */
@@ -774,6 +787,7 @@ interface quat_func {
         res.w = a.w >= b.w
         return res
     }
+
     fun greaterThan(a: Quat, b: Quat) = greaterThan(a, b, Vec4bool())
 
 
@@ -785,6 +799,7 @@ interface quat_func {
         res.w = a.w == b.w
         return res
     }
+
     fun equal(a: Quat, b: Quat) = equal(a, b, Vec4bool())
 
 
@@ -796,6 +811,7 @@ interface quat_func {
         res.w = a.w != b.w
         return res
     }
+
     fun notEqual(a: Quat, b: Quat) = notEqual(a, b, Vec4bool())
 
 
@@ -807,6 +823,7 @@ interface quat_func {
         res.w = q.w.isNaN()
         return res
     }
+
     fun isNan(q: Quat) = isNan(q, Vec4bool())
 
 
