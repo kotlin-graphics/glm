@@ -58,11 +58,11 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 //        quat_cast(m, this)
 //    }
 
-    infix fun to(res: Mat3) = glm.mat3_cast(res, this)
-    fun toMat3() = glm.mat3_cast(Mat3(), this)
+    infix fun to(res: Mat3) = glm.mat3_cast(this, res)
+    fun toMat3() = glm.mat3_cast(this, Mat3())
 
-    infix fun to(res: Mat4) = glm.mat4_cast(res, this)
-    fun toMat4() = glm.mat4_cast(Mat4(), this)
+    infix fun to(res: Mat4) = glm.mat4_cast(this, res)
+    fun toMat4() = glm.mat4_cast(this, Mat4())
 
     // -- Explicit basic constructors --
 
@@ -147,26 +147,26 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
     fun length() = glm.length(this)
 
-    @JvmOverloads fun normalize(res: Quat = Quat()) = glm.normalize(res, this)
+    @JvmOverloads fun normalize(res: Quat = Quat()) = glm.normalize(this, res)
     fun normalize_() = glm.normalize(this, this)
 
     infix fun dot(b: Quat) = glm.dot(this, b)
 
-    @JvmOverloads fun angleAxis(angle: Float, axis: Vec3, res: Quat = Quat()) = glm.angleAxis(res, angle, axis)
-    fun angleAxis_(angle: Float, axis: Vec3) = glm.angleAxis(this, angle, axis)
+    @JvmOverloads fun angleAxis(angle: Float, axis: Vec3, res: Quat = Quat()) = glm.angleAxis(angle, axis, res)
+    fun angleAxis_(angle: Float, axis: Vec3) = glm.angleAxis(angle, axis, this)
 
-    @JvmOverloads fun conjugate(res: Quat = Quat()) = glm.conjugate(res, this)
+    @JvmOverloads fun conjugate(res: Quat = Quat()) = glm.conjugate(this, res)
     fun conjugate_() = glm.conjugate(this, this)
 
-    @JvmOverloads fun inverse(res: Quat = Quat()) = glm.inverse(res, this)
+    @JvmOverloads fun inverse(res: Quat = Quat()) = glm.inverse(this, res)
     fun inverse_() = glm.inverse(this, this)
 
     fun angle() = glm.angle(this)
 
-    @JvmOverloads fun eulerAngles(res: Vec3 = Vec3()) = glm.eulerAngles(res, this)
+    @JvmOverloads fun eulerAngles(res: Vec3 = Vec3()) = glm.eulerAngles(this, res)
 
-    @JvmOverloads fun slerp(b: Quat, interp: Float, res: Quat = Quat()) = glm.slerp(res, this, b, interp)
-    fun slerp_(b: Quat, interp: Float) = glm.slerp(this, this, b, interp)
+    @JvmOverloads fun slerp(b: Quat, interp: Float, res: Quat = Quat()) = glm.slerp(this, b, interp, res)
+    fun slerp_(b: Quat, interp: Float) = glm.slerp(this, b, interp, this)
 
 
     override fun toString() = "($x, $y, $z), $w"

@@ -5,7 +5,6 @@ import glm.mat.QuatT
 import glm.vec.Vec4t
 import glm.vec._3.Vec3
 import glm.vec._3.Vec3d
-import glm.vec._4.Vec4
 import glm.vec._4.Vec4d
 
 
@@ -143,26 +142,26 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
 
     fun length() = glm.length(this)
 
-    @JvmOverloads fun normalize(res: QuatD = QuatD()) = glm.normalize(res, this)
+    @JvmOverloads fun normalize(res: QuatD = QuatD()) = glm.normalize(this, res)
     fun normalize_() = glm.normalize(this, this)
 
     infix fun dot(b: QuatD) = glm.dot(this, b)
 
-    @JvmOverloads fun angleAxis(angle: Double, axis: Vec3d, res: QuatD = QuatD()) = glm.angleAxis(res, angle, axis)
-    fun angleAxis_(angle: Double, axis: Vec3d) = glm.angleAxis(this, angle, axis)
+    @JvmOverloads fun angleAxis(angle: Double, axis: Vec3d, res: QuatD = QuatD()) = glm.angleAxis(angle, axis, res)
+    fun angleAxis_(angle: Double, axis: Vec3d) = glm.angleAxis(angle, axis, this)
 
-    @JvmOverloads fun conjugate(res: QuatD = QuatD()) = glm.conjugate(res, this)
+    @JvmOverloads fun conjugate(res: QuatD = QuatD()) = glm.conjugate(this, res)
     fun conjugate_() = glm.conjugate(this, this)
 
-    @JvmOverloads fun inverse(res: QuatD = QuatD()) = glm.inverse(res, this)
+    @JvmOverloads fun inverse(res: QuatD = QuatD()) = glm.inverse(this, res)
     fun inverse_() = glm.inverse(this, this)
 
     fun angle() = glm.angle(this)
 
-    @JvmOverloads fun eulerAngles(res: Vec3d = Vec3d()) = glm.eulerAngles(res, this)
+    @JvmOverloads fun eulerAngles(res: Vec3d = Vec3d()) = glm.eulerAngles(this, res)
 
-    @JvmOverloads fun slerp(b: QuatD, interp: Double, res: QuatD = QuatD()) = glm.slerp(res, this, b, interp)
-    fun slerp_(b: QuatD, interp: Double) = glm.slerp(this, this, b, interp)
+    @JvmOverloads fun slerp(b: QuatD, interp: Double, res: QuatD = QuatD()) = glm.slerp(this, b, interp, res)
+    fun slerp_(b: QuatD, interp: Double) = glm.slerp(this, b, interp, this)
 
 
     override fun toString() = "($x, $y, $z), $w"

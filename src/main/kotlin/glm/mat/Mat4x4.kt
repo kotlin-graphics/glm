@@ -258,8 +258,8 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
         return dfb
     }
 
-    infix fun to(res: Quat) = glm.quat_cast(res, this)
-    fun toQuat() = glm.quat_cast(Quat(), this)
+    infix fun to(res: Quat) = glm.quat_cast(this, res)
+    fun toQuat() = glm.quat_cast(this, Quat())
 
     // -- Accesses --
 

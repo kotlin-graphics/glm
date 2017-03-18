@@ -1,11 +1,11 @@
 package glm
 
-import io.kotlintest.KTestJUnitRunner
-import io.kotlintest.specs.StringSpec
-import org.junit.runner.RunWith
 import glm.quat.Quat
 import glm.quat.times
 import glm.vec._3.Vec3
+import io.kotlintest.KTestJUnitRunner
+import io.kotlintest.specs.StringSpec
+import org.junit.runner.RunWith
 
 /**
  * Created by elect on 04/03/2017.
@@ -66,7 +66,7 @@ class quaternion : StringSpec() {
 
                 val a = Quat().angleAxis(0f, Vec3(0, 0, 1))
                 val b = Quat().angleAxis(pi.f * .5f, Vec3(0, 0, 1))
-                val c = glm.mix(Quat(), a, b, .5f)
+                val c = glm.mix(a, b, .5f, Quat())
                 val d = Quat().angleAxis(pi.f * .25f, Vec3(0, 0, 1))
 
                 all(epsilonEqual(c, d, .01f)) shouldBe true
@@ -76,7 +76,7 @@ class quaternion : StringSpec() {
 
                 val a = Quat().angleAxis(0f, Vec3(0, 0, 1))
                 val b = Quat().angleAxis(pi.f * .5f, Vec3(0, 0, 1))
-                val c = glm.mix(Quat(), a, b, .5f)
+                val c = glm.mix(a, b, .5f, Quat())
                 val d = Quat().angleAxis(pi.f * .25f, Vec3(0, 0, 1))
 
                 all(epsilonEqual(c, d, .01f)) shouldBe true
@@ -162,7 +162,7 @@ class quaternion : StringSpec() {
                 // Same, but inverted
                 // Must also be 45° rotation on Y :  0 0.38 0 0.92
                 // -0 -0.38 -0 -0.92 is ok too
-                val y45rot4 = slerp(Quat(), -y90rot, id, 0.5f)
+                val y45rot4 = slerp(-y90rot, id, 0.5f, Quat())
                 all(epsilonEqual(ym45rot2, -y45rot4, epsilon)) shouldBe true
 
                 // Testing q1 = q2
@@ -178,7 +178,7 @@ class quaternion : StringSpec() {
 
                 // Testing almost equal quaternions (this test should pass through the linear interpolation)
                 // Must be 0 0.00X 0 0.99999
-                val almostid = id.slerp(angleAxis(Quat(), .1f, Vec3(0f, 1f, 0f)), .5f)
+                val almostid = id.slerp(angleAxis(.1f, Vec3(0f, 1f, 0f)), .5f, Quat())
                 all(epsilonEqual(almostid, Quat(.99968f, 0.f, .02499f, 0f), epsilon)) shouldBe true
 
                 // Testing quaternions with opposite sign

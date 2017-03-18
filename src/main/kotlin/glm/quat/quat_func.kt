@@ -12,8 +12,6 @@ import glm.Glm.length
 import glm.Glm.mix
 import glm.Glm.sin
 import glm.Glm.sqrt
-import glm.f
-import glm.glm
 import glm.mat.Mat3
 import glm.mat.Mat3x3
 import glm.mat.Mat4
@@ -37,7 +35,7 @@ interface quat_func {
 
 
     /** Returns the normalized quaternion.  */
-    fun normalize(res: Quat, q: Quat): Quat {
+    fun normalize(q: Quat, res: Quat): Quat {
         val len = length(q)
         if (len <= 0f)   // Problem
             return res.put(1f, 0f, 0f, 0f)
@@ -45,14 +43,18 @@ interface quat_func {
         return res.put(q.w * oneOverLen, q.x * oneOverLen, q.y * oneOverLen, q.z * oneOverLen)
     }
 
+    fun normalize(q: Quat) = normalize(q, Quat())
+
     /** Returns the normalized quaternion.  */
-    fun normalize(res: QuatD, q: QuatD): QuatD {
+    fun normalize(q: QuatD, res: QuatD): QuatD {
         val len = length(q)
         if (len <= 0.0)   // Problem
             return res.put(1.0, 0.0, 0.0, 0.0)
         val oneOverLen = 1.0 / len
         return res.put(q.w * oneOverLen, q.x * oneOverLen, q.y * oneOverLen, q.z * oneOverLen)
     }
+
+    fun normalize(q: QuatD) = normalize(q, QuatD())
 
 
     /** Returns dot product of q1 main.and q2, main.getI.e., q1[0] * q2[0] + q1[1] * q2[1] + ... */
@@ -65,7 +67,7 @@ interface quat_func {
     /** Spherical linear interpolation of two quaternions.
      * The interpolation is oriented main.and the rotation is performed at constant speed.
      * For short path spherical linear interpolation, use the slerp function.     */
-    fun mix(res: Quat, a: Quat, b: Quat, interp: Float): Quat {
+    fun mix(a: Quat, b: Quat, interp: Float, res: Quat): Quat {
 
         val cosTheta = dot(a, b)
 
@@ -91,10 +93,12 @@ interface quat_func {
         }
     }
 
+    fun mix(a: Quat, b: Quat, interp: Float) = mix(a, b, interp, Quat())
+
     /** Spherical linear interpolation of two quaternions.
      * The interpolation is oriented main.and the rotation is performed at constant speed.
      * For short path spherical linear interpolation, use the slerp function.     */
-    fun mix(res: QuatD, a: QuatD, b: QuatD, interp: Double): QuatD {
+    fun mix(a: QuatD, b: QuatD, interp: Double, res: QuatD): QuatD {
 
         val cosTheta = dot(a, b)
 
@@ -120,10 +124,12 @@ interface quat_func {
         }
     }
 
+    fun mix(a: QuatD, b: QuatD, interp: Double) = mix(a, b, interp, QuatD())
+
 
     /** Linear interpolation of two quaternions.
      * The interpolation is oriented.     */
-    fun lerp(res: Quat, a: Quat, b: Quat, interp: Float): Quat {
+    fun lerp(a: Quat, b: Quat, interp: Float, res: Quat): Quat {
         // Lerp is only defined in [0, 1]
         if (interp < 0f || interp > 1f)
             throw ArithmeticException("interp outside [0, 1]")
@@ -135,9 +141,11 @@ interface quat_func {
         return res
     }
 
+    fun lerp(a: Quat, b: Quat, interp: Float) = lerp(a, b, interp, Quat())
+
     /** Linear interpolation of two quaternions.
      * The interpolation is oriented.     */
-    fun lerp(res: QuatD, a: QuatD, b: QuatD, interp: Double): QuatD {
+    fun lerp(a: QuatD, b: QuatD, interp: Double, res: QuatD): QuatD {
         // Lerp is only defined in [0, 1]
         if (interp < 0.0 || interp > 1.0)
             throw ArithmeticException("interp outside [0, 1]")
@@ -149,10 +157,12 @@ interface quat_func {
         return res
     }
 
+    fun lerp(a: QuatD, b: QuatD, interp: Double) = lerp(a, b, interp, QuatD())
+
 
     /** Spherical linear interpolation of two quaternions.
      * The interpolation always take the short path main.and the rotation is performed at constant speed.     */
-    fun slerp(res: Quat, a: Quat, b: Quat, interp: Float): Quat {
+    fun slerp(a: Quat, b: Quat, interp: Float, res: Quat): Quat {
 
         var zW = b.w
         var zX = b.x
@@ -193,9 +203,11 @@ interface quat_func {
         }
     }
 
+    fun slerp(a: Quat, b: Quat, interp: Float) = slerp(a, b, interp, Quat())
+
     /** Spherical linear interpolation of two quaternions.
      * The interpolation always take the short path main.and the rotation is performed at constant speed.     */
-    fun slerp(res: QuatD, a: QuatD, b: QuatD, interp: Double): QuatD {
+    fun slerp(a: QuatD, b: QuatD, interp: Double, res: QuatD): QuatD {
 
         var zW = b.w
         var zX = b.x
@@ -236,9 +248,11 @@ interface quat_func {
         }
     }
 
+    fun slerp(a: QuatD, b: QuatD, interp: Double) = slerp(a, b, interp, QuatD())
+
 
     /** Returns the q conjugate.    */
-    fun conjugate(res: Quat, a: Quat): Quat {
+    fun conjugate(a: Quat, res: Quat): Quat {
         res.w = a.w
         res.x = -a.x
         res.y = -a.y
@@ -246,18 +260,22 @@ interface quat_func {
         return res
     }
 
+    fun conjugate(a: Quat) = conjugate(a, Quat())
+
     /** Returns the q conjugate.    */
-    fun conjugate(res: QuatD, a: QuatD): QuatD {
+    fun conjugate(a: QuatD, res: QuatD): QuatD {
         res.w = a.w
         res.x = -a.x
         res.y = -a.y
         res.z = -a.z
         return res
     }
+
+    fun conjugate(a: QuatD) = conjugate(a, QuatD())
 
 
     /** Returns the q inverse.  */
-    fun inverse(res: Quat, a: Quat): Quat {
+    fun inverse(a: Quat, res: Quat): Quat {
         val dot = dot(a, a)
         res.w = a.w / dot
         res.x = -a.x / dot
@@ -266,8 +284,10 @@ interface quat_func {
         return res
     }
 
+    fun inverse(a: Quat) = inverse(a, Quat())
+
     /** Returns the q inverse.  */
-    fun inverse(res: QuatD, a: QuatD): QuatD {
+    fun inverse(a: QuatD, res: QuatD): QuatD {
         val dot = dot(a, a)
         res.w = a.w / dot
         res.x = -a.x / dot
@@ -275,10 +295,12 @@ interface quat_func {
         res.z = -a.z / dot
         return res
     }
+
+    fun inverse(a: QuatD) = inverse(a, QuatD())
 
 
     /** Rotates a quaternion from a vector of 3 components axis main.and an angle.   */
-    fun rotate(res: Quat, q: Quat, angle: Float, v: Vec3): Quat {
+    fun rotate(q: Quat, angle: Float, v: Vec3, res: Quat): Quat {
 
         var tmpX = v.x
         var tmpY = v.y
@@ -298,16 +320,23 @@ interface quat_func {
         val pY = tmpY * sin
         val pZ = tmpZ * sin
 
-        res.w = q.w * pW - q.x * pX - q.y * pY - q.z * pZ
-        res.x = q.w * pX + q.x * pW + q.y * pZ - q.z * pY
-        res.y = q.w * pY + q.y * pW + q.z * pX - q.x * pZ
-        res.z = q.w * pZ + q.z * pW + q.x * pY - q.y * pX
+        val w = q.w * pW - q.x * pX - q.y * pY - q.z * pZ
+        val x = q.w * pX + q.x * pW + q.y * pZ - q.z * pY
+        val y = q.w * pY + q.y * pW + q.z * pX - q.x * pZ
+        val z = q.w * pZ + q.z * pW + q.x * pY - q.y * pX
+
+        res.w = w
+        res.x = x
+        res.y = y
+        res.z = z
 
         return res
     }
 
+    fun rotate(q: Quat, angle: Float, v: Vec3) = rotate(q, angle, v, Quat())
+
     /** Rotates a quaternion from a vector of 3 components axis main.and an angle.   */
-    fun rotate(res: QuatD, q: QuatD, angle: Double, v: Vec3d): QuatD {
+    fun rotate(q: QuatD, angle: Double, v: Vec3d, res: QuatD): QuatD {
 
         var tmpX = v.x
         var tmpY = v.y
@@ -327,32 +356,43 @@ interface quat_func {
         val pY = tmpY * sin
         val pZ = tmpZ * sin
 
-        res.w = q.w * pW - q.x * pX - q.y * pY - q.z * pZ
-        res.x = q.w * pX + q.x * pW + q.y * pZ - q.z * pY
-        res.y = q.w * pY + q.y * pW + q.z * pX - q.x * pZ
-        res.z = q.w * pZ + q.z * pW + q.x * pY - q.y * pX
+        val w = q.w * pW - q.x * pX - q.y * pY - q.z * pZ
+        val x = q.w * pX + q.x * pW + q.y * pZ - q.z * pY
+        val y = q.w * pY + q.y * pW + q.z * pX - q.x * pZ
+        val z = q.w * pZ + q.z * pW + q.x * pY - q.y * pX
+
+        res.w = w
+        res.x = x
+        res.y = y
+        res.z = z
 
         return res
     }
 
+    fun rotate(q: QuatD, angle: Double, v: Vec3d) = rotate(q, angle, v, QuatD())
+
 
     /** Returns euler angles, pitch as x, yaw as y, roll as z.
      * The result is expressed in radians.     */
-    fun eulerAngles(res: Vec3, a: Quat): Vec3 {
+    fun eulerAngles(a: Quat, res: Vec3): Vec3 {
         res.x = pitch(a)
         res.y = yaw(a)
         res.z = roll(a)
         return res
     }
 
+    fun eulerAngles(a: Quat) = eulerAngles(a, Vec3())
+
     /** Returns euler angles, pitch as x, yaw as y, roll as z.
      * The result is expressed in radians.     */
-    fun eulerAngles(res: Vec3d, a: QuatD): Vec3d {
+    fun eulerAngles(a: QuatD, res: Vec3d): Vec3d {
         res.x = pitch(a)
         res.y = yaw(a)
         res.z = roll(a)
         return res
     }
+
+    fun eulerAngles(a: QuatD) = eulerAngles(a, Vec3d())
 
     /** Returns roll value of euler angles expressed in radians.    */
     fun roll(q: Quat) = atan(2f * (q.x * q.y + q.w * q.z), q.w * q.w + q.x * q.x - q.y * q.y - q.z * q.z)
@@ -376,7 +416,7 @@ interface quat_func {
 
 
     /** Converts a quaternion to a 3 * 3 matrix.    */
-    fun mat3_cast(res: Mat3, q: Quat): Mat3 {
+    fun mat3_cast(q: Quat, res: Mat3): Mat3 {
 
         val qxx = q.x * q.x
         val qyy = q.y * q.y
@@ -403,37 +443,39 @@ interface quat_func {
         return res
     }
 
+    fun mat3_cast(q: Quat) = mat3_cast(q, Mat3())
+
     /** Converts a quaternion to a 3 * 3 matrix.    */
-    fun mat3d_cast(res: Mat3, q: QuatD): Mat3x3 {
+    fun mat3d_cast(q: QuatD, m: Mat3): Mat3x3 {
 
         TODO()
-        val qxx = q.x * q.x
-        val qyy = q.y * q.y
-        val qzz = q.z * q.z
-        val qxz = q.x * q.z
-        val qxy = q.x * q.y
-        val qyz = q.y * q.z
-        val qwx = q.w * q.x
-        val qwy = q.w * q.y
-        val qwz = q.w * q.z
-
-        res[0][0] = 1f - 2f * (qyy + qzz)
-        res[0][1] = 2f * (qxy + qwz)
-        res[0][2] = 2f * (qxz - qwy)
-
-        res[1][0] = 2f * (qxy - qwz)
-        res[1][1] = 1f - 2f * (qxx + qzz)
-        res[1][2] = 2f * (qyz + qwx)
-
-        res[2][0] = 2f * (qxz + qwy)
-        res[2][1] = 2f * (qyz - qwx)
-        res[2][2] = 1f - 2f * (qxx + qyy)
-
-        return res
+//        val qxx = q.x * q.x
+//        val qyy = q.y * q.y
+//        val qzz = q.z * q.z
+//        val qxz = q.x * q.z
+//        val qxy = q.x * q.y
+//        val qyz = q.y * q.z
+//        val qwx = q.w * q.x
+//        val qwy = q.w * q.y
+//        val qwz = q.w * q.z
+//
+//        res[0][0] = 1f - 2f * (qyy + qzz)
+//        res[0][1] = 2f * (qxy + qwz)
+//        res[0][2] = 2f * (qxz - qwy)
+//
+//        res[1][0] = 2f * (qxy - qwz)
+//        res[1][1] = 1f - 2f * (qxx + qzz)
+//        res[1][2] = 2f * (qyz + qwx)
+//
+//        res[2][0] = 2f * (qxz + qwy)
+//        res[2][1] = 2f * (qyz - qwx)
+//        res[2][2] = 1f - 2f * (qxx + qyy)
+//
+//        return res
     }
 
     /** Converts a quaternion to a 4 * 4 matrix.    */
-    fun mat4_cast(res: Mat4x4, q: Quat): Mat4x4 {
+    fun mat4_cast(q: Quat, res: Mat4): Mat4 {
 
         val qxx = q.x * q.x
         val qyy = q.y * q.y
@@ -459,27 +501,35 @@ interface quat_func {
 
         return res
     }
+
+    fun mat4_cast(q: Quat) = mat4_cast(q, Mat4())
+
 
     fun mat4d_cast(res: Mat4x4, q: QuatD): Mat4x4 = TODO()
 
 
     /** Converts a 3 * 3 matrix to a quaternion.    */
-    fun quat_cast(res: Quat = Quat(), m: Mat3) = quat_cast(res, m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2])
+    fun quat_cast(m: Mat3, res: Quat) = quat_cast(m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2], res)
+
+    fun quat_cast(m: Mat3) = quat_cast(m, Quat())
 
     /** Converts a 3 * 3 matrix to a quaternion.    */
     fun quatD_cast(res: QuatD = QuatD(), m: Mat3): Mat3 = TODO()
 
     /** Converts a 4 * 4 matrix to a quaternion.    */
-    fun quat_cast(res: Quat = Quat(), m: Mat4) = quat_cast(res, m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2])
+    fun quat_cast(m: Mat4, res: Quat) = quat_cast(m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2], res)
+
+    fun quat_cast(m: Mat4) = quat_cast(m, Quat())
 
     /** Converts a 4 * 4 matrix to a quaternion.    */
     fun quatD_cast(res: QuatD = QuatD(), m: Mat4): Mat4 = TODO()
 
 
-    fun quat_cast(res: Quat,
-                  m00: Float, m01: Float, m02: Float,
-                  m10: Float, m11: Float, m12: Float,
-                  m20: Float, m21: Float, m22: Float): Quat {
+    fun quat_cast(
+            m00: Float, m01: Float, m02: Float,
+            m10: Float, m11: Float, m12: Float,
+            m20: Float, m21: Float, m22: Float,
+            res: Quat): Quat {
 
         val fourXSquaredMinus1 = m00 - m11 - m22
         val fourYSquaredMinus1 = m11 - m00 - m22
@@ -536,10 +586,17 @@ interface quat_func {
         return res
     }
 
-    fun quat_cast(res: QuatD,
+    fun quat_cast(
+            m00: Float, m01: Float, m02: Float,
+            m10: Float, m11: Float, m12: Float,
+            m20: Float, m21: Float, m22: Float) = quat_cast(m00, m01, m02, m10, m11, m12, m20, m21, m22, Quat())
+
+
+    fun quat_cast(
                   m00: Double, m01: Double, m02: Double,
                   m10: Double, m11: Double, m12: Double,
-                  m20: Double, m21: Double, m22: Double): QuatD {
+                  m20: Double, m21: Double, m22: Double,
+                  res: QuatD): QuatD {
 
         val fourXSquaredMinus1 = m00 - m11 - m22
         val fourYSquaredMinus1 = m11 - m00 - m22
@@ -596,6 +653,11 @@ interface quat_func {
         return res
     }
 
+    fun quat_cast(
+            m00: Double, m01: Double, m02: Double,
+            m10: Double, m11: Double, m12: Double,
+            m20: Double, m21: Double, m22: Double) = quat_cast(m00, m01, m02, m10, m11, m12, m20, m21, m22, QuatD())
+
 
     /** Returns the quaternion rotation angle.  */
     fun angle(q: Quat) = acos(q.w) * 2f
@@ -620,6 +682,7 @@ interface quat_func {
         res.z = q.z * tmp2
         return res
     }
+    fun axis(q: Quat) = axis(q, Vec3())
 
     /** Returns the q rotation axis.    */
     fun axis(q: QuatD, res: Vec3d): Vec3d {
@@ -637,10 +700,11 @@ interface quat_func {
         res.z = q.z * tmp2
         return res
     }
+    fun axis(q: QuatD) = axis(q, Vec3d())
 
 
-    /** Build a quaternion from an angle main.and a normalized axis. */
-    fun angleAxis(res: Quat = Quat(), angle: Float, axis: Vec3): Quat {
+            /** Build a quaternion from an angle main.and a normalized axis. */
+    fun angleAxis(angle: Float, axis: Vec3, res: Quat): Quat {
 
         val a = angle * 0.5f
         val s = sin(a)
@@ -652,9 +716,11 @@ interface quat_func {
 
         return res
     }
+    fun angleAxis(angle: Float, axis: Vec3) = angleAxis(angle, axis, Quat())
+
 
     /** Build a quaternion from an angle main.and a normalized axis. */
-    fun angleAxis(res: QuatD = QuatD(), angle: Double, axis: Vec3d): QuatD {
+    fun angleAxis(angle: Double, axis: Vec3d, res: QuatD): QuatD {
 
         val a = angle * 0.5
         val s = sin(a)
@@ -666,78 +732,92 @@ interface quat_func {
 
         return res
     }
+    fun angleAxis(angle: Double, axis: Vec3d) = angleAxis(angle, axis, QuatD())
 
 
     //TODO move res in front, default arg on classes
     /** Returns the component-wise comparison result of x < y.  */
-    fun lessThan(a: Quat, b: Quat, res: Vec4bool = Vec4bool()): Vec4bool {
+    fun lessThan(a: Quat, b: Quat, res: Vec4bool): Vec4bool {
         res.x = a.x < b.x
         res.y = a.y < b.y
         res.z = a.z < b.z
         res.w = a.w < b.w
         return res
     }
+    fun lessThan(a: Quat, b: Quat) = lessThan(a, b, Vec4bool())
 
     /** Returns the component-wise comparison result of x <= y.  */
-    fun lessThanEqual(a: Quat, b: Quat, res: Vec4bool = Vec4bool()): Vec4bool {
+    fun lessThanEqual(a: Quat, b: Quat, res: Vec4bool): Vec4bool {
         res.x = a.x <= b.x
         res.y = a.y <= b.y
         res.z = a.z <= b.z
         res.w = a.w <= b.w
         return res
     }
+    fun lessThanEqual(a: Quat, b: Quat) = lessThanEqual(a, b, Vec4bool())
 
     /** Returns the component-wise comparison result of x > y.  */
-    fun greater(a: Quat, b: Quat, res: Vec4bool = Vec4bool()): Vec4bool {
+    fun greater(a: Quat, b: Quat, res: Vec4bool): Vec4bool {
         res.x = a.x > b.x
         res.y = a.y > b.y
         res.z = a.z > b.z
         res.w = a.w > b.w
         return res
     }
+    fun greater(a: Quat, b: Quat) = greater(a, b, Vec4bool())
 
     /** Returns the component-wise comparison result of x >= y.  */
-    fun greaterThan(a: Quat, b: Quat, res: Vec4bool = Vec4bool()): Vec4bool {
+    fun greaterThan(a: Quat, b: Quat, res: Vec4bool): Vec4bool {
         res.x = a.x >= b.x
         res.y = a.y >= b.y
         res.z = a.z >= b.z
         res.w = a.w >= b.w
         return res
     }
+    fun greaterThan(a: Quat, b: Quat) = greaterThan(a, b, Vec4bool())
+
 
     /** Returns the component-wise comparison of result x == y. */
-    fun equal(a: Quat, b: Quat, res: Vec4bool = Vec4bool()): Vec4bool {
+    fun equal(a: Quat, b: Quat, res: Vec4bool): Vec4bool {
         res.x = a.x == b.x
         res.y = a.y == b.y
         res.z = a.z == b.z
         res.w = a.w == b.w
         return res
     }
+    fun equal(a: Quat, b: Quat) = equal(a, b, Vec4bool())
+
 
     /** Returns the component-wise comparison of result x != y. */
-    fun notEqual(a: Quat, b: Quat, res: Vec4bool = Vec4bool()): Vec4bool {
+    fun notEqual(a: Quat, b: Quat, res: Vec4bool): Vec4bool {
         res.x = a.x != b.x
         res.y = a.y != b.y
         res.z = a.z != b.z
         res.w = a.w != b.w
         return res
     }
+    fun notEqual(a: Quat, b: Quat) = notEqual(a, b, Vec4bool())
+
 
     /** Returns true if x holds a NaN (not a number).   */
-    fun isNan(q: Quat, res: Vec4bool = Vec4bool()): Vec4bool {
+    fun isNan(q: Quat, res: Vec4bool): Vec4bool {
         res.x = q.x.isNaN()
         res.y = q.y.isNaN()
         res.z = q.z.isNaN()
         res.w = q.w.isNaN()
         return res
     }
+    fun isNan(q: Quat) = isNan(q, Vec4bool())
+
 
     /** Returns true if x holds a positive infinity main.or negative infinity.   */
-    fun isInf(q: Quat, res: Vec4bool = Vec4bool()): Vec4bool {
+    fun isInf(q: Quat, res: Vec4bool): Vec4bool {
         res.x = q.x.isInfinite()
         res.y = q.y.isInfinite()
         res.z = q.z.isInfinite()
         res.w = q.w.isInfinite()
         return res
     }
+
+    fun isInf(q: Quat) = isInf(q, Vec4bool())
 }
