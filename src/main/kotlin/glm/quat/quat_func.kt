@@ -13,8 +13,6 @@ import glm.Glm.sin
 import glm.Glm.sqrt
 import glm.glm
 import glm.mat.Mat3
-import glm.mat.Mat3
-import glm.mat.Mat4
 import glm.mat.Mat4
 import glm.vec._3.Vec3
 import glm.vec._3.Vec3d

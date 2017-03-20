@@ -1,14 +1,11 @@
 package glm
 
+import glm.mat.Mat2
+import glm.mat.operators.times
+import glm.vec._2.Vec2
 import io.kotlintest.KTestJUnitRunner
 import io.kotlintest.specs.StringSpec
-import glm.glm
-import glm.mat.Mat2
-import glm.mat.Mat2
-import glm.mat.operators.div
-import glm.mat.operators.times
 import org.junit.runner.RunWith
-import glm.vec._2.Vec2
 
 /**
  * Created by GBarbieri on 11.11.2016.
