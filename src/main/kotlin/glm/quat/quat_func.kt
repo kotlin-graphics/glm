@@ -13,9 +13,9 @@ import glm.Glm.sin
 import glm.Glm.sqrt
 import glm.glm
 import glm.mat.Mat3
-import glm.mat.Mat3x3
+import glm.mat.Mat3
 import glm.mat.Mat4
-import glm.mat.Mat4x4
+import glm.mat.Mat4
 import glm.vec._3.Vec3
 import glm.vec._3.Vec3d
 import glm.vec.bool.Vec4bool
@@ -450,7 +450,7 @@ interface quat_func {
     fun mat3_cast(q: Quat) = mat3_cast(q, Mat3())
 
     /** Converts a quaternion to a 3 * 3 matrix.    */
-    fun mat3d_cast(q: QuatD, m: Mat3): Mat3x3 {
+    fun mat3d_cast(q: QuatD, m: Mat3): Mat3 {
 
         TODO()
 //        val qxx = q.x * q.x
@@ -509,7 +509,7 @@ interface quat_func {
     fun mat4_cast(q: Quat) = mat4_cast(q, Mat4())
 
 
-    fun mat4d_cast(res: Mat4x4, q: QuatD): Mat4x4 = TODO()
+    fun mat4d_cast(res: Mat4, q: QuatD): Mat4 = TODO()
 
 
     /** Converts a 3 * 3 matrix to a quaternion.    */

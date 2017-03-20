@@ -4,7 +4,7 @@ import io.kotlintest.KTestJUnitRunner
 import io.kotlintest.specs.StringSpec
 import glm.glm
 import glm.mat.Mat2
-import glm.mat.Mat2x2
+import glm.mat.Mat2
 import glm.mat.operators.div
 import glm.mat.operators.times
 import org.junit.runner.RunWith

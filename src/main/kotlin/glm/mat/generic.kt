@@ -8,9 +8,9 @@ import glm.vec.Vec4t
  * Created by GBarbieri on 08.11.2016.
  */
 
-typealias Mat2 = Mat2x2
-typealias Mat3 = Mat3x3
-typealias Mat4 = Mat4x4
+typealias Mat2x2 = Mat2
+typealias Mat3x3 = Mat3
+typealias Mat4x4 = Mat4
 
 abstract interface Mat2x4t<T : Vec4t<*>> {
 
