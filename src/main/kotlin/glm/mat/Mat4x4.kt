@@ -126,10 +126,12 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
                     Vec4(floats, 8),
                     Vec4(floats, 12)))
 
-    // set
 
     fun put(v0: Vec4, v1: Vec4, v2: Vec4, v3: Vec4) {
         value[0] to v0
+        value[1] to v1
+        value[2] to v2
+        value[3] to v3
     }
 
     // TODO others
@@ -138,30 +140,6 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
                 Vec4(mat4x4[0]), Vec4(mat4x4[1]),
                 Vec4(mat4x4[2]), Vec4(mat4x4[3]))
     }
-
-//    fun to(mat2x2: Mat2x2t<*>) {
-//        value = mutableListOf(
-//                Vec4(mat2x2[0]),
-//                Vec4(mat2x2[1]))
-//    }
-
-//    fun to(scalar: Number) {
-//        value = mutableListOf(
-//                Vec4(scalar.main.getF, 0),
-//                Vec4(0, scalar.main.getF))
-//    }
-//
-//    fun to(x0: Number, x1: Number, y0: Number, y1: Number) {
-//        value = mutableListOf(
-//                Vec4(x0.main.getF, y0.main.getF),
-//                Vec4(x1.main.getF, y1.main.getF))
-//    }
-//
-//    fun to(v0: Vec4t<*>, v1: Vec4t<*>) {
-//        value = mutableListOf(
-//                Vec4(v0),
-//                Vec4(v1))
-//    }
 
     infix fun put(s: Float) = put(s, s, s, s)
     infix fun put(v: Vec3) = put(v.x, v.y, v.z, 1f)
@@ -260,6 +238,33 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
     infix fun to(res: Quat) = glm.quat_cast(this, res)
     fun toQuat() = glm.quat_cast(this, Quat())
+
+    // -- put --
+
+    fun to(mat2x2: Mat2x2t<*>) {
+        value = mutableListOf(
+                Vec4(mat2x2[0]),
+                Vec4(mat2x2[1]))
+    }
+
+//    fun to(scalar: Number) {
+//        value = mutableListOf(
+//                Vec4(scalar.main.getF, 0),
+//                Vec4(0, scalar.main.getF))
+//    }
+//
+//    fun to(x0: Number, x1: Number, y0: Number, y1: Number) {
+//        value = mutableListOf(
+//                Vec4(x0.main.getF, y0.main.getF),
+//                Vec4(x1.main.getF, y1.main.getF))
+//    }
+//
+//    fun to(v0: Vec4t<*>, v1: Vec4t<*>) {
+//        value = mutableListOf(
+//                Vec4(v0),
+//                Vec4(v1))
+//    }
+
 
     // -- Accesses --
 

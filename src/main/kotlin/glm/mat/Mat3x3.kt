@@ -6,8 +6,12 @@ import glm.Glm.transpose
 import glm.glm
 import glm.mat.operators.mat3x3_operators
 import glm.quat.Quat
+import glm.set
+import glm.vec.Vec2t
 import glm.vec.Vec3t
+import glm.vec.Vec4t
 import glm.vec._3.Vec3
+import java.nio.FloatBuffer
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -17,15 +21,21 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
 
     // -- Constructors --
 
-    constructor() : this(mutableListOf(
-            Vec3(1, 0, 0),
-            Vec3(0, 1, 0),
-            Vec3(0, 0, 1)))
+    constructor() : this(1)
 
-    constructor(scalar: Number) : this(mutableListOf(
-            Vec3(scalar, 0, 0),
-            Vec3(0, scalar, 0),
-            Vec3(0, 0, scalar)))
+    constructor(s: Number) : this(s, s, s)
+
+    constructor(x: Number, y: Number, z: Number) : this(mutableListOf(
+            Vec3(x, 0, 0),
+            Vec3(0, y, 0),
+            Vec3(0, 0, z)))
+
+    constructor(v: Vec2t<*>) : this(v.x, v.y, 0)
+    constructor(v: Vec2t<*>, z: Number) : this(v.x, v.y, z)
+    constructor(v: Vec2t<*>, z: Number, w: Number) : this(v.x, v.y, z)
+    constructor(v: Vec3t<*>) : this(v.x, v.y, v.z)
+    constructor(v: Vec3t<*>, w: Number) : this(v.x, v.y, v.z)
+    constructor(v: Vec4t<*>) : this(v.x, v.y, v.z)
 
     constructor(x0: Number, y0: Number, z0: Number,
                 x1: Number, y1: Number, z1: Number,
@@ -85,6 +95,16 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
             Vec3(mat4x3[0]),
             Vec3(mat4x3[1]),
             Vec3(mat4x3[2])))
+
+    @JvmOverloads constructor(floats: FloatArray, transpose: Boolean = false) : this(
+            if (transpose) mutableListOf(
+                    Vec3(floats[0], floats[4], floats[8]),
+                    Vec3(floats[1], floats[5], floats[9]),
+                    Vec3(floats[2], floats[6], floats[10]))
+            else mutableListOf(
+                    Vec3(floats, 0),
+                    Vec3(floats, 4),
+                    Vec3(floats, 8)))
 
     // to
     fun to(mat2x2: Mat2x2t<*>) {
@@ -182,6 +202,22 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
 
     infix fun to(res: Quat) = glm.quat_cast(this, res)
     fun toQuat() = glm.quat_cast(this, Quat())
+
+
+    infix fun to(dfb: FloatBuffer) = to(dfb, 0)
+
+    fun to(dfb: FloatBuffer, offset: Int): FloatBuffer {
+        dfb[offset + 0] = value[0][0]
+        dfb[offset + 1] = value[0][1]
+        dfb[offset + 2] = value[0][2]
+        dfb[offset + 3] = value[1][0]
+        dfb[offset + 4] = value[1][1]
+        dfb[offset + 5] = value[1][2]
+        dfb[offset + 6] = value[2][0]
+        dfb[offset + 7] = value[2][1]
+        dfb[offset + 8] = value[2][2]
+        return dfb
+    }
 
 
     companion object : mat3x3_operators {
