@@ -195,8 +195,8 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix fun div_(b: Vec3) = div(this, this, b.x, b.y, b.z)
 
 
-    operator fun rem(b: Float) = rem(Vec3(), this, b, b, b)
-    operator fun rem(b: Vec3) = rem(Vec3(), this, b.x, b.y, b.z)
+    infix operator fun rem(b: Float) = rem(Vec3(), this, b, b, b)
+    infix operator fun rem(b: Vec3) = rem(Vec3(), this, b.x, b.y, b.z)
 
     @JvmOverloads fun rem(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = rem(res, this, bX, bY, bZ)
     fun rem(b: Float, res: Vec3 = Vec3()) = rem(res, this, b, b, b)
@@ -209,11 +209,11 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
 
     // -- Generic binary arithmetic operators --
 
-    operator fun plus(b: Number) = plus(Vec3(), this, b.f, b.f, b.f)
-    operator fun plus(b: Vec3t<Number>) = plus(Vec3(), this, b.x.f, b.y.f, b.z.f)
+    infix operator fun plus(b: Number) = plus(Vec3(), this, b.f, b.f, b.f)
+    infix operator fun plus(b: Vec3t<Number>) = plus(Vec3(), this, b.x.f, b.y.f, b.z.f)
 
-    fun plus(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = plus(res, this, bX.f, bY.f, bZ.f)
-    fun plus(b: Number, res: Vec3 = Vec3()) = plus(res, this, b.f, b.f, b.f)
+    @JvmOverloads fun plus(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = plus(res, this, bX.f, bY.f, bZ.f)
+    fun plus(b: Number, res: Vec3) = plus(res, this, b.f, b.f, b.f)
     fun plus(b: Vec3t<Number>, res: Vec3 = Vec3()) = plus(res, this, b.x.f, b.y.f, b.z.f)
 
     fun plus_(bX: Number, bY: Number, bZ: Number) = plus(this, this, bX.f, bY.f, bZ.f)
@@ -221,8 +221,8 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix fun plus_(b: Vec3t<Number>) = plus(this, this, b.x.f, b.y.f, b.z.f)
 
 
-    operator fun minus(b: Number) = minus(Vec3(), this, b.f, b.f, b.f)
-    operator fun minus(b: Vec3t<Number>) = minus(Vec3(), this, b.x.f, b.y.f, b.z.f)
+    infix operator fun minus(b: Number) = minus(Vec3(), this, b.f, b.f, b.f)
+    infix operator fun minus(b: Vec3t<Number>) = minus(Vec3(), this, b.x.f, b.y.f, b.z.f)
 
     fun minus(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = minus(res, this, bX.f, bY.f, bZ.f)
     fun minus(b: Number, res: Vec3 = Vec3()) = minus(res, this, b.f, b.f, b.f)
@@ -233,8 +233,8 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix fun minus_(b: Vec3t<Number>) = minus(this, this, b.x.f, b.y.f, b.z.f)
 
 
-    operator fun times(b: Number) = times(Vec3(), this, b.f, b.f, b.f)
-    operator fun times(b: Vec3t<Number>) = times(Vec3(), this, b.x.f, b.y.f, b.z.f)
+    infix operator fun times(b: Number) = times(Vec3(), this, b.f, b.f, b.f)
+    infix operator fun times(b: Vec3t<Number>) = times(Vec3(), this, b.x.f, b.y.f, b.z.f)
 
     fun times(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = times(res, this, bX.f, bY.f, bZ.f)
     fun times(b: Number, res: Vec3 = Vec3()) = times(res, this, b.f, b.f, b.f)
@@ -245,8 +245,8 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix fun times_(b: Vec3t<Number>) = times(this, this, b.x.f, b.y.f, b.z.f)
 
 
-    operator fun div(b: Number) = div(Vec3(), this, b.f, b.f, b.f)
-    operator fun div(b: Vec3t<Number>) = div(Vec3(), this, b.x.f, b.y.f, b.z.f)
+    infix operator fun div(b: Number) = div(Vec3(), this, b.f, b.f, b.f)
+    infix operator fun div(b: Vec3t<Number>) = div(Vec3(), this, b.x.f, b.y.f, b.z.f)
 
     fun div(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = div(res, this, bX.f, bY.f, bZ.f)
     fun div(b: Number, res: Vec3 = Vec3()) = div(res, this, b.f, b.f, b.f)
@@ -257,8 +257,8 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix fun div_(b: Vec3t<Number>) = div(this, this, b.x.f, b.y.f, b.z.f)
 
 
-    operator fun rem(b: Number) = rem(Vec3(), this, b.f, b.f, b.f)
-    operator fun rem(b: Vec3t<Number>) = rem(Vec3(), this, b.x.f, b.y.f, b.z.f)
+    infix operator fun rem(b: Number) = rem(Vec3(), this, b.f, b.f, b.f)
+    infix operator fun rem(b: Vec3t<Number>) = rem(Vec3(), this, b.x.f, b.y.f, b.z.f)
 
     fun rem(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = rem(res, this, bX.f, bY.f, bZ.f)
     fun rem(b: Number, res: Vec3 = Vec3()) = rem(res, this, b.f, b.f, b.f)

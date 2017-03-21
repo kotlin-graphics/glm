@@ -125,15 +125,15 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
 
     // -- Specific binary arithmetic operators --
 
-    operator fun plus(b: Ulong) = plus(Vec2ul(), this, b, b)
-    operator fun plus(b: Long) = plus(Vec2ul(), this, b, b)
-    operator fun plus(b: Vec2ul) = plus(Vec2ul(), this, b.x, b.y)
+    infix operator fun plus(b: Ulong) = plus(Vec2ul(), this, b, b)
+    infix operator fun plus(b: Long) = plus(Vec2ul(), this, b, b)
+    infix operator fun plus(b: Vec2ul) = plus(Vec2ul(), this, b.x, b.y)
 
-    fun plus(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = plus(res, this, bX, bY)
-    fun plus(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = plus(res, this, bX, bY)
-    fun plus(b: Ulong, res: Vec2ul = Vec2ul()) = plus(res, this, b, b)
-    fun plus(b: Long, res: Vec2ul = Vec2ul()) = plus(res, this, b, b)
-    fun plus(b: Vec2ul, res: Vec2ul = Vec2ul()) = plus(res, this, b.x, b.y)
+    @JvmOverloads fun plus(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = plus(res, this, bX, bY)
+    @JvmOverloads fun plus(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = plus(res, this, bX, bY)
+    fun plus(b: Ulong, res: Vec2ul) = plus(res, this, b, b)
+    fun plus(b: Long, res: Vec2ul) = plus(res, this, b, b)
+    fun plus(b: Vec2ul, res: Vec2ul) = plus(res, this, b.x, b.y)
 
     fun plus_(bX: Ulong, bY: Ulong) = plus(this, this, bX, bY)
     fun plus_(bX: Long, bY: Long) = plus(this, this, bX, bY)
@@ -142,15 +142,15 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix fun plus_(b: Vec2ul) = plus(this, this, b.x, b.y)
 
 
-    operator fun minus(b: Ulong) = minus(Vec2ul(), this, b, b)
-    operator fun minus(b: Long) = minus(Vec2ul(), this, b, b)
-    operator fun minus(b: Vec2ul) = minus(Vec2ul(), this, b.x, b.y)
+    infix operator fun minus(b: Ulong) = minus(Vec2ul(), this, b, b)
+    infix operator fun minus(b: Long) = minus(Vec2ul(), this, b, b)
+    infix operator fun minus(b: Vec2ul) = minus(Vec2ul(), this, b.x, b.y)
 
-    fun minus(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = minus(res, this, bX, bY)
-    fun minus(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = minus(res, this, bX, bY)
-    fun minus(b: Ulong, res: Vec2ul = Vec2ul()) = minus(res, this, b, b)
-    fun minus(b: Long, res: Vec2ul = Vec2ul()) = minus(res, this, b, b)
-    fun minus(b: Vec2ul, res: Vec2ul = Vec2ul()) = minus(res, this, b.x, b.y)
+    @JvmOverloads fun minus(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = minus(res, this, bX, bY)
+    @JvmOverloads fun minus(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = minus(res, this, bX, bY)
+    fun minus(b: Ulong, res: Vec2ul) = minus(res, this, b, b)
+    fun minus(b: Long, res: Vec2ul) = minus(res, this, b, b)
+    fun minus(b: Vec2ul, res: Vec2ul) = minus(res, this, b.x, b.y)
 
     fun minus_(bX: Ulong, bY: Ulong) = minus(this, this, bX, bY)
     fun minus_(bX: Long, bY: Long) = minus(this, this, bX, bY)
@@ -159,15 +159,15 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix fun minus_(b: Vec2ul) = minus(this, this, b.x, b.y)
 
 
-    operator fun times(b: Ulong) = times(Vec2ul(), this, b, b)
-    operator fun times(b: Long) = times(Vec2ul(), this, b, b)
-    operator fun times(b: Vec2ul) = times(Vec2ul(), this, b.x, b.y)
+    infix operator fun times(b: Ulong) = times(Vec2ul(), this, b, b)
+    infix operator fun times(b: Long) = times(Vec2ul(), this, b, b)
+    infix operator fun times(b: Vec2ul) = times(Vec2ul(), this, b.x, b.y)
 
-    fun times(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = times(res, this, bX, bY)
-    fun times(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = times(res, this, bX, bY)
-    fun times(b: Ulong, res: Vec2ul = Vec2ul()) = times(res, this, b, b)
-    fun times(b: Long, res: Vec2ul = Vec2ul()) = times(res, this, b, b)
-    fun times(b: Vec2ul, res: Vec2ul = Vec2ul()) = times(res, this, b.x, b.y)
+    @JvmOverloads fun times(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = times(res, this, bX, bY)
+    @JvmOverloads fun times(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = times(res, this, bX, bY)
+    fun times(b: Ulong, res: Vec2ul) = times(res, this, b, b)
+    fun times(b: Long, res: Vec2ul) = times(res, this, b, b)
+    fun times(b: Vec2ul, res: Vec2ul) = times(res, this, b.x, b.y)
 
     fun times_(bX: Ulong, bY: Ulong) = times(this, this, bX, bY)
     fun times_(bX: Long, bY: Long) = times(this, this, bX, bY)
@@ -176,15 +176,15 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix fun times_(b: Vec2ul) = times(this, this, b.x, b.y)
 
 
-    operator fun div(b: Ulong) = div(Vec2ul(), this, b, b)
-    operator fun div(b: Long) = div(Vec2ul(), this, b, b)
-    operator fun div(b: Vec2ul) = div(Vec2ul(), this, b.x, b.y)
+    infix operator fun div(b: Ulong) = div(Vec2ul(), this, b, b)
+    infix operator fun div(b: Long) = div(Vec2ul(), this, b, b)
+    infix operator fun div(b: Vec2ul) = div(Vec2ul(), this, b.x, b.y)
 
-    fun div(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = div(res, this, bX, bY)
-    fun div(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = div(res, this, bX, bY)
-    fun div(b: Ulong, res: Vec2ul = Vec2ul()) = div(res, this, b, b)
-    fun div(b: Long, res: Vec2ul = Vec2ul()) = div(res, this, b, b)
-    fun div(b: Vec2ul, res: Vec2ul = Vec2ul()) = div(res, this, b.x, b.y)
+    @JvmOverloads fun div(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = div(res, this, bX, bY)
+    @JvmOverloads fun div(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = div(res, this, bX, bY)
+    fun div(b: Ulong, res: Vec2ul) = div(res, this, b, b)
+    fun div(b: Long, res: Vec2ul) = div(res, this, b, b)
+    fun div(b: Vec2ul, res: Vec2ul) = div(res, this, b.x, b.y)
 
     fun div_(bX: Ulong, bY: Ulong) = div(this, this, bX, bY)
     fun div_(bX: Long, bY: Long) = div(this, this, bX, bY)
@@ -193,15 +193,15 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix fun div_(b: Vec2ul) = div(this, this, b.x, b.y)
 
 
-    operator fun rem(b: Ulong) = rem(Vec2ul(), this, b, b)
-    operator fun rem(b: Long) = rem(Vec2ul(), this, b, b)
-    operator fun rem(b: Vec2ul) = rem(Vec2ul(), this, b.x, b.y)
+    infix operator fun rem(b: Ulong) = rem(Vec2ul(), this, b, b)
+    infix operator fun rem(b: Long) = rem(Vec2ul(), this, b, b)
+    infix operator fun rem(b: Vec2ul) = rem(Vec2ul(), this, b.x, b.y)
 
-    fun rem(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = rem(res, this, bX, bY)
-    fun rem(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = rem(res, this, bX, bY)
-    fun rem(b: Ulong, res: Vec2ul = Vec2ul()) = rem(res, this, b, b)
-    fun rem(b: Long, res: Vec2ul = Vec2ul()) = rem(res, this, b, b)
-    fun rem(b: Vec2ul, res: Vec2ul = Vec2ul()) = rem(res, this, b.x, b.y)
+    @JvmOverloads fun rem(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = rem(res, this, bX, bY)
+    @JvmOverloads fun rem(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = rem(res, this, bX, bY)
+    fun rem(b: Ulong, res: Vec2ul) = rem(res, this, b, b)
+    fun rem(b: Long, res: Vec2ul) = rem(res, this, b, b)
+    fun rem(b: Vec2ul, res: Vec2ul) = rem(res, this, b.x, b.y)
 
     fun rem_(bX: Ulong, bY: Ulong) = rem(this, this, bX, bY)
     fun rem_(bX: Long, bY: Long) = rem(this, this, bX, bY)
@@ -212,60 +212,60 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
 
     // -- Generic binary arithmetic operators --
 
-    operator fun plus(b: Number) = plus(Vec2ul(), this, b.L, b.L)
-    operator fun plus(b: Vec2t<Number>) = plus(Vec2ul(), this, b.x.L, b.y.L)
+    infix operator fun plus(b: Number) = plus(Vec2ul(), this, b.L, b.L)
+    infix operator fun plus(b: Vec2t<Number>) = plus(Vec2ul(), this, b.x.L, b.y.L)
 
-    fun plus(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = plus(res, this, bX.L, bY.L)
-    fun plus(b: Number, res: Vec2ul = Vec2ul()) = plus(res, this, b.L, b.L)
-    fun plus(b: Vec2t<Number>, res: Vec2ul = Vec2ul()) = plus(res, this, b.x.L, b.y.L)
+    @JvmOverloads fun plus(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = plus(res, this, bX.L, bY.L)
+    fun plus(b: Number, res: Vec2ul) = plus(res, this, b.L, b.L)
+    fun plus(b: Vec2t<Number>, res: Vec2ul) = plus(res, this, b.x.L, b.y.L)
 
     fun plus_(bX: Number, bY: Number) = plus(this, this, bX.L, bY.L)
     infix fun plus_(b: Number) = plus(this, this, b.L, b.L)
     infix fun plus_(b: Vec2t<Number>) = plus(this, this, b.x.L, b.y.L)
 
 
-    operator fun minus(b: Number) = minus(Vec2ul(), this, b.L, b.L)
-    operator fun minus(b: Vec2t<Number>) = minus(Vec2ul(), this, b.x.L, b.y.L)
+    infix operator fun minus(b: Number) = minus(Vec2ul(), this, b.L, b.L)
+    infix operator fun minus(b: Vec2t<Number>) = minus(Vec2ul(), this, b.x.L, b.y.L)
 
-    fun minus(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = minus(res, this, bX.L, bY.L)
-    fun minus(b: Number, res: Vec2ul = Vec2ul()) = minus(res, this, b.L, b.L)
-    fun minus(b: Vec2t<Number>, res: Vec2ul = Vec2ul()) = minus(res, this, b.x.L, b.y.L)
+    @JvmOverloads fun minus(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = minus(res, this, bX.L, bY.L)
+    fun minus(b: Number, res: Vec2ul) = minus(res, this, b.L, b.L)
+    fun minus(b: Vec2t<Number>, res: Vec2ul) = minus(res, this, b.x.L, b.y.L)
 
     fun minus_(bX: Number, bY: Number) = minus(this, this, bX.L, bY.L)
     infix fun minus_(b: Number) = minus(this, this, b.L, b.L)
     infix fun minus_(b: Vec2t<Number>) = minus(this, this, b.x.L, b.y.L)
 
 
-    operator fun times(b: Number) = times(Vec2ul(), this, b.L, b.L)
-    operator fun times(b: Vec2t<Number>) = times(Vec2ul(), this, b.x.L, b.y.L)
+    infix operator fun times(b: Number) = times(Vec2ul(), this, b.L, b.L)
+    infix operator fun times(b: Vec2t<Number>) = times(Vec2ul(), this, b.x.L, b.y.L)
 
-    fun times(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = times(res, this, bX.L, bY.L)
-    fun times(b: Number, res: Vec2ul = Vec2ul()) = times(res, this, b.L, b.L)
-    fun times(b: Vec2t<Number>, res: Vec2ul = Vec2ul()) = times(res, this, b.x.L, b.y.L)
+    @JvmOverloads fun times(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = times(res, this, bX.L, bY.L)
+    fun times(b: Number, res: Vec2ul) = times(res, this, b.L, b.L)
+    fun times(b: Vec2t<Number>, res: Vec2ul) = times(res, this, b.x.L, b.y.L)
 
     fun times_(bX: Number, bY: Number) = times(this, this, bX.L, bY.L)
     infix fun times_(b: Number) = times(this, this, b.L, b.L)
     infix fun times_(b: Vec2t<Number>) = times(this, this, b.x.L, b.y.L)
 
 
-    operator fun div(b: Number) = div(Vec2ul(), this, b.L, b.L)
-    operator fun div(b: Vec2t<Number>) = div(Vec2ul(), this, b.x.L, b.y.L)
+    infix operator fun div(b: Number) = div(Vec2ul(), this, b.L, b.L)
+    infix operator fun div(b: Vec2t<Number>) = div(Vec2ul(), this, b.x.L, b.y.L)
 
-    fun div(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = div(res, this, bX.L, bY.L)
-    fun div(b: Number, res: Vec2ul = Vec2ul()) = div(res, this, b.L, b.L)
-    fun div(b: Vec2t<Number>, res: Vec2ul = Vec2ul()) = div(res, this, b.x.L, b.y.L)
+    @JvmOverloads fun div(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = div(res, this, bX.L, bY.L)
+    fun div(b: Number, res: Vec2ul) = div(res, this, b.L, b.L)
+    fun div(b: Vec2t<Number>, res: Vec2ul) = div(res, this, b.x.L, b.y.L)
 
     fun div_(bX: Number, bY: Number) = div(this, this, bX.L, bY.L)
     infix fun div_(b: Number) = div(this, this, b.L, b.L)
     infix fun div_(b: Vec2t<Number>) = div(this, this, b.x.L, b.y.L)
 
 
-    operator fun rem(b: Number) = rem(Vec2ul(), this, b.L, b.L)
-    operator fun rem(b: Vec2t<Number>) = rem(Vec2ul(), this, b.x.L, b.y.L)
+    infix operator fun rem(b: Number) = rem(Vec2ul(), this, b.L, b.L)
+    infix operator fun rem(b: Vec2t<Number>) = rem(Vec2ul(), this, b.x.L, b.y.L)
 
-    fun rem(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = rem(res, this, bX.L, bY.L)
-    fun rem(b: Number, res: Vec2ul = Vec2ul()) = rem(res, this, b.L, b.L)
-    fun rem(b: Vec2t<Number>, res: Vec2ul = Vec2ul()) = rem(res, this, b.x.L, b.y.L)
+    @JvmOverloads fun rem(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = rem(res, this, bX.L, bY.L)
+    fun rem(b: Number, res: Vec2ul) = rem(res, this, b.L, b.L)
+    fun rem(b: Vec2t<Number>, res: Vec2ul) = rem(res, this, b.x.L, b.y.L)
 
     fun rem_(bX: Number, bY: Number) = rem(this, this, bX.L, bY.L)
     infix fun rem_(b: Number) = rem(this, this, b.L, b.L)

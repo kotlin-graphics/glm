@@ -125,15 +125,15 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
 
     // -- Specific binary arithmetic operators --
 
-    operator fun plus(b: Uint) = plus(Vec2ui(), this, b, b)
-    operator fun plus(b: Int) = plus(Vec2ui(), this, b, b)
-    operator fun plus(b: Vec2ui) = plus(Vec2ui(), this, b.x, b.y)
+    infix operator fun plus(b: Uint) = plus(Vec2ui(), this, b, b)
+    infix operator fun plus(b: Int) = plus(Vec2ui(), this, b, b)
+    infix operator fun plus(b: Vec2ui) = plus(Vec2ui(), this, b.x, b.y)
 
-    fun plus(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = plus(res, this, bX, bY)
-    fun plus(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = plus(res, this, bX, bY)
-    fun plus(b: Uint, res: Vec2ui = Vec2ui()) = plus(res, this, b, b)
-    fun plus(b: Int, res: Vec2ui = Vec2ui()) = plus(res, this, b, b)
-    fun plus(b: Vec2ui, res: Vec2ui = Vec2ui()) = plus(res, this, b.x, b.y)
+    @JvmOverloads fun plus(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = plus(res, this, bX, bY)
+    @JvmOverloads fun plus(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = plus(res, this, bX, bY)
+    fun plus(b: Uint, res: Vec2ui) = plus(res, this, b, b)
+    fun plus(b: Int, res: Vec2ui) = plus(res, this, b, b)
+    fun plus(b: Vec2ui, res: Vec2ui) = plus(res, this, b.x, b.y)
 
     fun plus_(bX: Uint, bY: Uint) = plus(this, this, bX, bY)
     fun plus_(bX: Int, bY: Int) = plus(this, this, bX, bY)
@@ -142,15 +142,15 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     infix fun plus_(b: Vec2ui) = plus(this, this, b.x, b.y)
 
 
-    operator fun minus(b: Uint) = minus(Vec2ui(), this, b, b)
-    operator fun minus(b: Int) = minus(Vec2ui(), this, b, b)
-    operator fun minus(b: Vec2ui) = minus(Vec2ui(), this, b.x, b.y)
+    infix operator fun minus(b: Uint) = minus(Vec2ui(), this, b, b)
+    infix operator fun minus(b: Int) = minus(Vec2ui(), this, b, b)
+    infix operator fun minus(b: Vec2ui) = minus(Vec2ui(), this, b.x, b.y)
 
-    fun minus(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = minus(res, this, bX, bY)
-    fun minus(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = minus(res, this, bX, bY)
-    fun minus(b: Uint, res: Vec2ui = Vec2ui()) = minus(res, this, b, b)
-    fun minus(b: Int, res: Vec2ui = Vec2ui()) = minus(res, this, b, b)
-    fun minus(b: Vec2ui, res: Vec2ui = Vec2ui()) = minus(res, this, b.x, b.y)
+    @JvmOverloads fun minus(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = minus(res, this, bX, bY)
+    @JvmOverloads fun minus(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = minus(res, this, bX, bY)
+    fun minus(b: Uint, res: Vec2ui) = minus(res, this, b, b)
+    fun minus(b: Int, res: Vec2ui) = minus(res, this, b, b)
+    fun minus(b: Vec2ui, res: Vec2ui) = minus(res, this, b.x, b.y)
 
     fun minus_(bX: Uint, bY: Uint) = minus(this, this, bX, bY)
     fun minus_(bX: Int, bY: Int) = minus(this, this, bX, bY)
@@ -159,15 +159,15 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     infix fun minus_(b: Vec2ui) = minus(this, this, b.x, b.y)
 
 
-    operator fun times(b: Uint) = times(Vec2ui(), this, b, b)
-    operator fun times(b: Int) = times(Vec2ui(), this, b, b)
-    operator fun times(b: Vec2ui) = times(Vec2ui(), this, b.x, b.y)
+    infix operator fun times(b: Uint) = times(Vec2ui(), this, b, b)
+    infix operator fun times(b: Int) = times(Vec2ui(), this, b, b)
+    infix operator fun times(b: Vec2ui) = times(Vec2ui(), this, b.x, b.y)
 
-    fun times(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = times(res, this, bX, bY)
-    fun times(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = times(res, this, bX, bY)
-    fun times(b: Uint, res: Vec2ui = Vec2ui()) = times(res, this, b, b)
-    fun times(b: Int, res: Vec2ui = Vec2ui()) = times(res, this, b, b)
-    fun times(b: Vec2ui, res: Vec2ui = Vec2ui()) = times(res, this, b.x, b.y)
+    @JvmOverloads fun times(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = times(res, this, bX, bY)
+    @JvmOverloads fun times(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = times(res, this, bX, bY)
+    fun times(b: Uint, res: Vec2ui) = times(res, this, b, b)
+    fun times(b: Int, res: Vec2ui) = times(res, this, b, b)
+    fun times(b: Vec2ui, res: Vec2ui) = times(res, this, b.x, b.y)
 
     fun times_(bX: Uint, bY: Uint) = times(this, this, bX, bY)
     fun times_(bX: Int, bY: Int) = times(this, this, bX, bY)
@@ -176,12 +176,12 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     infix fun times_(b: Vec2ui) = times(this, this, b.x, b.y)
 
 
-    operator fun div(b: Uint) = div(Vec2ui(), this, b, b)
-    operator fun div(b: Int) = div(Vec2ui(), this, b, b)
-    operator fun div(b: Vec2ui) = div(Vec2ui(), this, b.x, b.y)
+    infix operator fun div(b: Uint) = div(Vec2ui(), this, b, b)
+    infix operator fun div(b: Int) = div(Vec2ui(), this, b, b)
+    infix operator fun div(b: Vec2ui) = div(Vec2ui(), this, b.x, b.y)
 
-    fun div(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = div(res, this, bX, bY)
-    fun div(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = div(res, this, bX, bY)
+    @JvmOverloads fun div(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = div(res, this, bX, bY)
+    @JvmOverloads fun div(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = div(res, this, bX, bY)
     fun div(b: Uint, res: Vec2ui) = div(res, this, b, b)
     fun div(b: Int, res: Vec2ui) = div(res, this, b, b)
     fun div(b: Vec2ui, res: Vec2ui) = div(res, this, b.x, b.y)
@@ -193,12 +193,12 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     infix fun div_(b: Vec2ui) = div(this, this, b.x, b.y)
 
 
-    operator fun rem(b: Uint) = rem(Vec2ui(), this, b, b)
-    operator fun rem(b: Int) = rem(Vec2ui(), this, b, b)
-    operator fun rem(b: Vec2ui) = rem(Vec2ui(), this, b.x, b.y)
+    infix operator fun rem(b: Uint) = rem(Vec2ui(), this, b, b)
+    infix operator fun rem(b: Int) = rem(Vec2ui(), this, b, b)
+    infix operator fun rem(b: Vec2ui) = rem(Vec2ui(), this, b.x, b.y)
 
-    fun rem(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = rem(res, this, bX, bY)
-    fun rem(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = rem(res, this, bX, bY)
+    @JvmOverloads fun rem(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = rem(res, this, bX, bY)
+    @JvmOverloads fun rem(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = rem(res, this, bX, bY)
     fun rem(b: Uint, res: Vec2ui) = rem(res, this, b, b)
     fun rem(b: Int, res: Vec2ui) = rem(res, this, b, b)
     fun rem(b: Vec2ui, res: Vec2ui) = rem(res, this, b.x, b.y)
@@ -212,46 +212,46 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
 
     // -- Generic binary arithmetic operators --
 
-    operator fun plus(b: Number) = plus(Vec2ui(), this, b.i, b.i)
-    operator fun plus(b: Vec2t<Number>) = plus(Vec2ui(), this, b.x.i, b.y.i)
+    infix operator fun plus(b: Number) = plus(Vec2ui(), this, b.i, b.i)
+    infix operator fun plus(b: Vec2t<Number>) = plus(Vec2ui(), this, b.x.i, b.y.i)
 
-    fun plus(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = plus(res, this, bX.i, bY.i)
-    fun plus(b: Number, res: Vec2ui = Vec2ui()) = plus(res, this, b.i, b.i)
-    fun plus(b: Vec2t<Number>, res: Vec2ui = Vec2ui()) = plus(res, this, b.x.i, b.y.i)
+    @JvmOverloads fun plus(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = plus(res, this, bX.i, bY.i)
+    fun plus(b: Number, res: Vec2ui) = plus(res, this, b.i, b.i)
+    fun plus(b: Vec2t<Number>, res: Vec2ui) = plus(res, this, b.x.i, b.y.i)
 
     fun plus_(bX: Number, bY: Number) = plus(this, this, bX.i, bY.i)
     infix fun plus_(b: Number) = plus(this, this, b.i, b.i)
     infix fun plus_(b: Vec2t<Number>) = plus(this, this, b.x.i, b.y.i)
 
 
-    operator fun minus(b: Number) = minus(Vec2ui(), this, b.i, b.i)
-    operator fun minus(b: Vec2t<Number>) = minus(Vec2ui(), this, b.x.i, b.y.i)
+    infix operator fun minus(b: Number) = minus(Vec2ui(), this, b.i, b.i)
+    infix operator fun minus(b: Vec2t<Number>) = minus(Vec2ui(), this, b.x.i, b.y.i)
 
-    fun minus(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = minus(res, this, bX.i, bY.i)
-    fun minus(b: Number, res: Vec2ui = Vec2ui()) = minus(res, this, b.i, b.i)
-    fun minus(b: Vec2t<Number>, res: Vec2ui = Vec2ui()) = minus(res, this, b.x.i, b.y.i)
+    @JvmOverloads fun minus(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = minus(res, this, bX.i, bY.i)
+    fun minus(b: Number, res: Vec2ui) = minus(res, this, b.i, b.i)
+    fun minus(b: Vec2t<Number>, res: Vec2ui) = minus(res, this, b.x.i, b.y.i)
 
     fun minus_(bX: Number, bY: Number) = minus(this, this, bX.i, bY.i)
     infix fun minus_(b: Number) = minus(this, this, b.i, b.i)
     infix fun minus_(b: Vec2t<Number>) = minus(this, this, b.x.i, b.y.i)
 
 
-    operator fun times(b: Number) = times(Vec2ui(), this, b.i, b.i)
-    operator fun times(b: Vec2t<Number>) = times(Vec2ui(), this, b.x.i, b.y.i)
+    infix operator fun times(b: Number) = times(Vec2ui(), this, b.i, b.i)
+    infix operator fun times(b: Vec2t<Number>) = times(Vec2ui(), this, b.x.i, b.y.i)
 
-    fun times(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = times(res, this, bX.i, bY.i)
-    fun times(b: Number, res: Vec2ui = Vec2ui()) = times(res, this, b.i, b.i)
-    fun times(b: Vec2t<Number>, res: Vec2ui = Vec2ui()) = times(res, this, b.x.i, b.y.i)
+    @JvmOverloads fun times(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = times(res, this, bX.i, bY.i)
+    fun times(b: Number, res: Vec2ui) = times(res, this, b.i, b.i)
+    fun times(b: Vec2t<Number>, res: Vec2ui) = times(res, this, b.x.i, b.y.i)
 
     fun times_(bX: Number, bY: Number) = times(this, this, bX.i, bY.i)
     infix fun times_(b: Number) = times(this, this, b.i, b.i)
     infix fun times_(b: Vec2t<Number>) = times(this, this, b.x.i, b.y.i)
 
 
-    operator fun div(b: Number) = div(Vec2ui(), this, b.i, b.i)
-    operator fun div(b: Vec2t<Number>) = div(Vec2ui(), this, b.x.i, b.y.i)
+    infix operator fun div(b: Number) = div(Vec2ui(), this, b.i, b.i)
+    infix operator fun div(b: Vec2t<Number>) = div(Vec2ui(), this, b.x.i, b.y.i)
 
-    fun div(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = div(res, this, bX.i, bY.i)
+    @JvmOverloads fun div(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = div(res, this, bX.i, bY.i)
     fun div(b: Number, res: Vec2ui) = div(res, this, b.i, b.i)
     fun div(b: Vec2t<Number>, res: Vec2ui) = div(res, this, b.x.i, b.y.i)
 
@@ -260,10 +260,10 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     infix fun div_(b: Vec2t<Number>) = div(this, this, b.x.i, b.y.i)
 
 
-    operator fun rem(b: Number) = rem(Vec2ui(), this, b.i, b.i)
-    operator fun rem(b: Vec2t<Number>) = rem(Vec2ui(), this, b.x.i, b.y.i)
+    infix operator fun rem(b: Number) = rem(Vec2ui(), this, b.i, b.i)
+    infix operator fun rem(b: Vec2t<Number>) = rem(Vec2ui(), this, b.x.i, b.y.i)
 
-    fun rem(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = rem(res, this, bX.i, bY.i)
+    @JvmOverloads fun rem(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = rem(res, this, bX.i, bY.i)
     fun rem(b: Number, res: Vec2ui) = rem(res, this, b.i, b.i)
     fun rem(b: Vec2t<Number>, res: Vec2ui) = rem(res, this, b.x.i, b.y.i)
 
@@ -286,8 +286,8 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     fun and(b: Int, res: Vec2ui) = and(res, this, b, b)
     fun and(b: Vec2ui, res: Vec2ui) = and(res, this, b.x, b.y)
 
-    fun and(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = and(res, this, bX, bY)
-    fun and(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = and(res, this, bX, bY)
+    @JvmOverloads fun and(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = and(res, this, bX, bY)
+    @JvmOverloads fun and(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = and(res, this, bX, bY)
 
     fun and_(bX: Uint, bY: Uint) = and(this, this, bX, bY)
     fun and_(bX: Int, bY: Int) = and(this, this, bX, bY)
@@ -305,8 +305,8 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     fun or(b: Int, res: Vec2ui) = or(res, this, b, b)
     fun or(b: Vec2ui, res: Vec2ui) = or(res, this, b.x, b.y)
 
-    fun or(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = or(res, this, bX, bY)
-    fun or(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = or(res, this, bX, bY)
+    @JvmOverloads fun or(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = or(res, this, bX, bY)
+    @JvmOverloads fun or(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = or(res, this, bX, bY)
 
     fun or_(bX: Uint, bY: Uint) = or(this, this, bX, bY)
     fun or_(bX: Int, bY: Int) = or(this, this, bX, bY)
@@ -324,8 +324,8 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     fun xor(b: Int, res: Vec2ui) = xor(res, this, b, b)
     fun xor(b: Vec2ui, res: Vec2ui) = xor(res, this, b.x, b.y)
 
-    fun xor(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = xor(res, this, bX, bY)
-    fun xor(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = xor(res, this, bX, bY)
+    @JvmOverloads fun xor(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = xor(res, this, bX, bY)
+    @JvmOverloads fun xor(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = xor(res, this, bX, bY)
 
     fun xor_(bX: Uint, bY: Uint) = xor(this, this, bX, bY)
     fun xor_(bX: Int, bY: Int) = xor(this, this, bX, bY)
@@ -343,8 +343,8 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     fun shl(b: Int, res: Vec2ui) = shl(res, this, b, b)
     fun shl(b: Vec2ui, res: Vec2ui) = shl(res, this, b.x, b.y)
 
-    fun shl(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = shl(res, this, bX, bY)
-    fun shl(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = shl(res, this, bX, bY)
+    @JvmOverloads fun shl(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = shl(res, this, bX, bY)
+    @JvmOverloads fun shl(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = shl(res, this, bX, bY)
 
     fun shl_(bX: Uint, bY: Uint) = shl(this, this, bX, bY)
     fun shl_(bX: Int, bY: Int) = shl(this, this, bX, bY)
@@ -362,8 +362,8 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     fun shr(b: Int, res: Vec2ui) = shr(res, this, b, b)
     fun shr(b: Vec2ui, res: Vec2ui) = shr(res, this, b.x, b.y)
 
-    fun shr(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = shr(res, this, bX, bY)
-    fun shr(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = shr(res, this, bX, bY)
+    @JvmOverloads fun shr(bX: Uint, bY: Uint, res: Vec2ui = Vec2ui()) = shr(res, this, bX, bY)
+    @JvmOverloads fun shr(bX: Int, bY: Int, res: Vec2ui = Vec2ui()) = shr(res, this, bX, bY)
 
     fun shr_(bX: Uint, bY: Uint) = shr(this, this, bX, bY)
     fun shr_(bX: Int, bY: Int) = shr(this, this, bX, bY)
@@ -384,7 +384,7 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     fun and(b: Number, res: Vec2ui) = and(res, this, b.i, b.i)
     fun and(b: Vec2t<Number>, res: Vec2ui) = and(res, this, b.x.i, b.y.i)
 
-    fun and(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = and(res, this, bX.i, bY.i)
+    @JvmOverloads fun and(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = and(res, this, bX.i, bY.i)
 
     fun and_(bX: Number, bY: Number) = and(this, this, bX.i, bY.i)
 
@@ -398,7 +398,7 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     fun or(b: Number, res: Vec2ui) = or(res, this, b.i, b.i)
     fun or(b: Vec2t<Number>, res: Vec2ui) = or(res, this, b.x.i, b.y.i)
 
-    fun or(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = or(res, this, bX.i, bY.i)
+    @JvmOverloads fun or(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = or(res, this, bX.i, bY.i)
 
     fun or_(bX: Number, bY: Number) = or(this, this, bX.i, bY.i)
 
@@ -412,7 +412,7 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     fun xor(b: Number, res: Vec2ui) = xor(res, this, b.i, b.i)
     fun xor(b: Vec2t<Number>, res: Vec2ui) = xor(res, this, b.x.i, b.y.i)
 
-    fun xor(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = xor(res, this, bX.i, bY.i)
+    @JvmOverloads fun xor(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = xor(res, this, bX.i, bY.i)
 
     fun xor_(bX: Number, bY: Number) = xor(this, this, bX.i, bY.i)
 
@@ -426,7 +426,7 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     fun shl(b: Number, res: Vec2ui) = shl(res, this, b.i, b.i)
     fun shl(b: Vec2t<Number>, res: Vec2ui) = shl(res, this, b.x.i, b.y.i)
 
-    fun shl(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = shl(res, this, bX.i, bY.i)
+    @JvmOverloads fun shl(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = shl(res, this, bX.i, bY.i)
 
     fun shl_(bX: Number, bY: Number) = shl(this, this, bX.i, bY.i)
 
@@ -440,7 +440,7 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     fun shr(b: Number, res: Vec2ui) = shr(res, this, b.i, b.i)
     fun shr(b: Vec2t<Number>, res: Vec2ui) = shr(res, this, b.x.i, b.y.i)
 
-    fun shr(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = shr(res, this, bX.i, bY.i)
+    @JvmOverloads fun shr(bX: Number, bY: Number, res: Vec2ui = Vec2ui()) = shr(res, this, bX.i, bY.i)
 
     fun shr_(bX: Number, bY: Number) = shr(this, this, bX.i, bY.i)
 

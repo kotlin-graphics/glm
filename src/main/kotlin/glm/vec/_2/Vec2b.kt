@@ -272,17 +272,15 @@ class Vec2b(x: Byte, y: Byte) : Vec2t<Byte>(x, y) {
     infix fun and(b: Int) = and(Vec2b(), this, b, b)
     infix fun and(b: Vec2b) = and(Vec2b(), this, b.x, b.y)
 
-    infix fun and_(b: Byte) = and(this, this, b, b)
-    infix fun and_(b: Int) = and(this, this, b, b)
-    infix fun and_(b: Vec2b) = and(this, this, b.x, b.y)
-
     fun and(b: Byte, res: Vec2b) = and(res, this, b, b)
     fun and(b: Int, res: Vec2b) = and(res, this, b, b)
     fun and(b: Vec2b, res: Vec2b) = and(res, this, b.x, b.y)
-
     @JvmOverloads fun and(bX: Byte, bY: Byte, res: Vec2b = Vec2b()) = and(res, this, bX, bY)
     @JvmOverloads fun and(bX: Int, bY: Int, res: Vec2b = Vec2b()) = and(res, this, bX, bY)
 
+    infix fun and_(b: Byte) = and(this, this, b, b)
+    infix fun and_(b: Int) = and(this, this, b, b)
+    infix fun and_(b: Vec2b) = and(this, this, b.x, b.y)
     fun and_(bX: Byte, bY: Byte) = and(this, this, bX, bY)
     fun and_(bX: Int, bY: Int) = and(this, this, bX, bY)
 
@@ -291,17 +289,15 @@ class Vec2b(x: Byte, y: Byte) : Vec2t<Byte>(x, y) {
     infix fun or(b: Int) = or(Vec2b(), this, b, b)
     infix fun or(b: Vec2b) = or(Vec2b(), this, b.x, b.y)
 
-    infix fun or_(b: Byte) = or(this, this, b, b)
-    infix fun or_(b: Int) = or(this, this, b, b)
-    infix fun or_(b: Vec2b) = or(this, this, b.x, b.y)
-
     fun or(b: Byte, res: Vec2b) = or(res, this, b, b)
     fun or(b: Int, res: Vec2b) = or(res, this, b, b)
     fun or(b: Vec2b, res: Vec2b) = or(res, this, b.x, b.y)
-
     @JvmOverloads fun or(bX: Byte, bY: Byte, res: Vec2b = Vec2b()) = or(res, this, bX, bY)
     @JvmOverloads fun or(bX: Int, bY: Int, res: Vec2b = Vec2b()) = or(res, this, bX, bY)
 
+    infix fun or_(b: Byte) = or(this, this, b, b)
+    infix fun or_(b: Int) = or(this, this, b, b)
+    infix fun or_(b: Vec2b) = or(this, this, b.x, b.y)
     fun or_(bX: Byte, bY: Byte) = or(this, this, bX, bY)
     fun or_(bX: Int, bY: Int) = or(this, this, bX, bY)
 
@@ -310,17 +306,15 @@ class Vec2b(x: Byte, y: Byte) : Vec2t<Byte>(x, y) {
     infix fun xor(b: Int) = xor(Vec2b(), this, b, b)
     infix fun xor(b: Vec2b) = xor(Vec2b(), this, b.x, b.y)
 
-    infix fun xor_(b: Byte) = xor(this, this, b, b)
-    infix fun xor_(b: Int) = xor(this, this, b, b)
-    infix fun xor_(b: Vec2b) = xor(this, this, b.x, b.y)
-
     fun xor(b: Byte, res: Vec2b) = xor(res, this, b, b)
     fun xor(b: Int, res: Vec2b) = xor(res, this, b, b)
     fun xor(b: Vec2b, res: Vec2b) = xor(res, this, b.x, b.y)
-
     @JvmOverloads fun xor(bX: Byte, bY: Byte, res: Vec2b = Vec2b()) = xor(res, this, bX, bY)
     @JvmOverloads fun xor(bX: Int, bY: Int, res: Vec2b = Vec2b()) = xor(res, this, bX, bY)
 
+    infix fun xor_(b: Byte) = xor(this, this, b, b)
+    infix fun xor_(b: Int) = xor(this, this, b, b)
+    infix fun xor_(b: Vec2b) = xor(this, this, b.x, b.y)
     fun xor_(bX: Byte, bY: Byte) = xor(this, this, bX, bY)
     fun xor_(bX: Int, bY: Int) = xor(this, this, bX, bY)
 
@@ -329,17 +323,15 @@ class Vec2b(x: Byte, y: Byte) : Vec2t<Byte>(x, y) {
     infix fun shl(b: Int) = shl(Vec2b(), this, b, b)
     infix fun shl(b: Vec2b) = shl(Vec2b(), this, b.x, b.y)
 
-    infix fun shl_(b: Byte) = shl(this, this, b, b)
-    infix fun shl_(b: Int) = shl(this, this, b, b)
-    infix fun shl_(b: Vec2b) = shl(this, this, b.x, b.y)
-
     fun shl(b: Byte, res: Vec2b) = shl(res, this, b, b)
     fun shl(b: Int, res: Vec2b) = shl(res, this, b, b)
     fun shl(b: Vec2b, res: Vec2b) = shl(res, this, b.x, b.y)
-
     @JvmOverloads fun shl(bX: Byte, bY: Byte, res: Vec2b = Vec2b()) = shl(res, this, bX, bY)
     @JvmOverloads fun shl(bX: Int, bY: Int, res: Vec2b = Vec2b()) = shl(res, this, bX, bY)
 
+    infix fun shl_(b: Byte) = shl(this, this, b, b)
+    infix fun shl_(b: Int) = shl(this, this, b, b)
+    infix fun shl_(b: Vec2b) = shl(this, this, b.x, b.y)
     fun shl_(bX: Byte, bY: Byte) = shl(this, this, bX, bY)
     fun shl_(bX: Int, bY: Int) = shl(this, this, bX, bY)
 
@@ -348,17 +340,15 @@ class Vec2b(x: Byte, y: Byte) : Vec2t<Byte>(x, y) {
     infix fun shr(b: Int) = shr(Vec2b(), this, b, b)
     infix fun shr(b: Vec2b) = shr(Vec2b(), this, b.x, b.y)
 
-    infix fun shr_(b: Byte) = shr(this, this, b, b)
-    infix fun shr_(b: Int) = shr(this, this, b, b)
-    infix fun shr_(b: Vec2b) = shr(this, this, b.x, b.y)
-
     fun shr(b: Byte, res: Vec2b) = shr(res, this, b, b)
     fun shr(b: Int, res: Vec2b) = shr(res, this, b, b)
     fun shr(b: Vec2b, res: Vec2b) = shr(res, this, b.x, b.y)
-
     @JvmOverloads fun shr(bX: Byte, bY: Byte, res: Vec2b = Vec2b()) = shr(res, this, bX, bY)
     @JvmOverloads fun shr(bX: Int, bY: Int, res: Vec2b = Vec2b()) = shr(res, this, bX, bY)
 
+    infix fun shr_(b: Byte) = shr(this, this, b, b)
+    infix fun shr_(b: Int) = shr(this, this, b, b)
+    infix fun shr_(b: Vec2b) = shr(this, this, b.x, b.y)
     fun shr_(bX: Byte, bY: Byte) = shr(this, this, bX, bY)
     fun shr_(bX: Int, bY: Int) = shr(this, this, bX, bY)
 
@@ -372,70 +362,60 @@ class Vec2b(x: Byte, y: Byte) : Vec2t<Byte>(x, y) {
     infix fun and(b: Number) = and(Vec2b(), this, b.b, b.b)
     infix fun and(b: Vec2t<Number>) = and(Vec2b(), this, b.x.b, b.y.b)
 
-    infix fun and_(b: Number) = and(this, this, b.b, b.b)
-    infix fun and_(b: Vec2t<Number>) = and(this, this, b.x.b, b.y.b)
-
     fun and(b: Number, res: Vec2b) = and(res, this, b.b, b.b)
     fun and(b: Vec2t<Number>, res: Vec2b) = and(res, this, b.x.b, b.y.b)
-
     @JvmOverloads fun and(bX: Number, bY: Number, res: Vec2b = Vec2b()) = and(res, this, bX.b, bY.b)
 
+    infix fun and_(b: Number) = and(this, this, b.b, b.b)
+    infix fun and_(b: Vec2t<Number>) = and(this, this, b.x.b, b.y.b)
     fun and_(bX: Number, bY: Number) = and(this, this, bX.b, bY.b)
 
 
     infix fun or(b: Number) = or(Vec2b(), this, b.b, b.b)
     infix fun or(b: Vec2t<Number>) = or(Vec2b(), this, b.x.b, b.y.b)
 
-    infix fun or_(b: Number) = or(this, this, b.b, b.b)
-    infix fun or_(b: Vec2t<Number>) = or(this, this, b.x.b, b.y.b)
-
     fun or(b: Number, res: Vec2b) = or(res, this, b.b, b.b)
     fun or(b: Vec2t<Number>, res: Vec2b) = or(res, this, b.x.b, b.y.b)
-
     @JvmOverloads fun or(bX: Number, bY: Number, res: Vec2b = Vec2b()) = or(res, this, bX.b, bY.b)
 
+    infix fun or_(b: Number) = or(this, this, b.b, b.b)
+    infix fun or_(b: Vec2t<Number>) = or(this, this, b.x.b, b.y.b)
     fun or_(bX: Number, bY: Number) = or(this, this, bX.b, bY.b)
 
 
     infix fun xor(b: Number) = xor(Vec2b(), this, b.b, b.b)
     infix fun xor(b: Vec2t<Number>) = xor(Vec2b(), this, b.x.b, b.y.b)
 
-    infix fun xor_(b: Number) = xor(this, this, b.b, b.b)
-    infix fun xor_(b: Vec2t<Number>) = xor(this, this, b.x.b, b.y.b)
-
     fun xor(b: Number, res: Vec2b) = xor(res, this, b.b, b.b)
     fun xor(b: Vec2t<Number>, res: Vec2b) = xor(res, this, b.x.b, b.y.b)
-
     @JvmOverloads fun xor(bX: Number, bY: Number, res: Vec2b = Vec2b()) = xor(res, this, bX.b, bY.b)
 
+    infix fun xor_(b: Number) = xor(this, this, b.b, b.b)
+    infix fun xor_(b: Vec2t<Number>) = xor(this, this, b.x.b, b.y.b)
     fun xor_(bX: Number, bY: Number) = xor(this, this, bX.b, bY.b)
 
 
     infix fun shl(b: Number) = shl(Vec2b(), this, b.b, b.b)
     infix fun shl(b: Vec2t<Number>) = shl(Vec2b(), this, b.x.b, b.y.b)
 
-    infix fun shl_(b: Number) = shl(this, this, b.b, b.b)
-    infix fun shl_(b: Vec2t<Number>) = shl(this, this, b.x.b, b.y.b)
-
     fun shl(b: Number, res: Vec2b) = shl(res, this, b.b, b.b)
     fun shl(b: Vec2t<Number>, res: Vec2b) = shl(res, this, b.x.b, b.y.b)
-
     @JvmOverloads fun shl(bX: Number, bY: Number, res: Vec2b = Vec2b()) = shl(res, this, bX.b, bY.b)
 
+    infix fun shl_(b: Number) = shl(this, this, b.b, b.b)
+    infix fun shl_(b: Vec2t<Number>) = shl(this, this, b.x.b, b.y.b)
     fun shl_(bX: Number, bY: Number) = shl(this, this, bX.b, bY.b)
 
 
     infix fun shr(b: Number) = shr(Vec2b(), this, b.b, b.b)
     infix fun shr(b: Vec2t<Number>) = shr(Vec2b(), this, b.x.b, b.y.b)
 
-    infix fun shr_(b: Number) = shr(this, this, b.b, b.b)
-    infix fun shr_(b: Vec2t<Number>) = shr(this, this, b.x.b, b.y.b)
-
     fun shr(b: Number, res: Vec2b) = shr(res, this, b.b, b.b)
     fun shr(b: Vec2t<Number>, res: Vec2b) = shr(res, this, b.x.b, b.y.b)
-
     @JvmOverloads fun shr(bX: Number, bY: Number, res: Vec2b = Vec2b()) = shr(res, this, bX.b, bY.b)
 
+    infix fun shr_(b: Number) = shr(this, this, b.b, b.b)
+    infix fun shr_(b: Vec2t<Number>) = shr(this, this, b.x.b, b.y.b)
     fun shr_(bX: Number, bY: Number) = shr(this, this, bX.b, bY.b)
 
 
