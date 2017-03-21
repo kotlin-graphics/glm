@@ -57,24 +57,34 @@ interface func_geometric {
 
 
     fun cross(a: Vec3, b: Vec3, res: Vec3 = Vec3()): Vec3 {
-        res.x = a.y * b.z - b.y * a.z
-        res.y = a.z * b.x - b.z * a.x
-        res.z = a.x * b.y - b.x * a.y
+        val x = a.y * b.z - b.y * a.z
+        val y = a.z * b.x - b.z * a.x
+        val z = a.x * b.y - b.x * a.y
+        res.x = x
+        res.y = y
+        res.z = z
         return res
     }
 
     fun cross(a: Vec3d, b: Vec3d, res: Vec3d = Vec3d()): Vec3d {
-        res.x = a.y * b.z - b.y * a.z
-        res.y = a.z * b.x - b.z * a.x
-        res.z = a.x * b.y - b.x * a.y
+        val x = a.y * b.z - b.y * a.z
+        val y = a.z * b.x - b.z * a.x
+        val z = a.x * b.y - b.x * a.y
+        res.x = x
+        res.y = y
+        res.z = z
         return res
     }
 
     fun cross(a: Quat, b: Quat, res: Quat = Quat()): Quat {
-        res.w = a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z
-        res.x = a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y
-        res.y = a.w * b.y + a.y * b.w + a.z * b.x - a.x * b.z
-        res.z = a.w * b.z + a.z * b.w + a.x * b.y - a.y * b.x
+        val w = a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z
+        val x = a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y
+        val y = a.w * b.y + a.y * b.w + a.z * b.x - a.x * b.z
+        val z = a.w * b.z + a.z * b.w + a.x * b.y - a.y * b.x
+        res.w = x
+        res.x = y
+        res.y = z
+        res.z = w
         return res
     }
 
@@ -83,44 +93,62 @@ interface func_geometric {
     fun normalize(a: Double) = if (a < 0.0) -1.0 else 1.0
 
     fun normalize(a: Vec2, res: Vec2 = Vec2()): Vec2 {
-        res.x = a.x * inverseSqrt(dot(a, a))
-        res.y = a.y * inverseSqrt(dot(a, a))
+        val x = a.x * inverseSqrt(dot(a, a))
+        val y = a.y * inverseSqrt(dot(a, a))
+        res.x = x
+        res.y = y
         return res
     }
 
     fun normalize(a: Vec2d, res: Vec2d = Vec2d()): Vec2d {
-        res.x = a.x * inverseSqrt(dot(a, a))
-        res.y = a.y * inverseSqrt(dot(a, a))
+        val x = a.x * inverseSqrt(dot(a, a))
+        val y = a.y * inverseSqrt(dot(a, a))
+        res.x = x
+        res.y = y
         return res
     }
 
     fun normalize(a: Vec3, res: Vec3 = Vec3()): Vec3 {
-        res.x = a.x * inverseSqrt(dot(a, a))
-        res.y = a.y * inverseSqrt(dot(a, a))
-        res.z = a.z * inverseSqrt(dot(a, a))
+        val x = a.x * inverseSqrt(dot(a, a))
+        val y = a.y * inverseSqrt(dot(a, a))
+        val z = a.z * inverseSqrt(dot(a, a))
+        res.x = x
+        res.y = y
+        res.z = z
         return res
     }
 
     fun normalize(a: Vec3d, res: Vec3d = Vec3d()): Vec3d {
-        res.x = a.x * inverseSqrt(dot(a, a))
-        res.y = a.y * inverseSqrt(dot(a, a))
-        res.z = a.z * inverseSqrt(dot(a, a))
+        val x = a.x * inverseSqrt(dot(a, a))
+        val y = a.y * inverseSqrt(dot(a, a))
+        val z = a.z * inverseSqrt(dot(a, a))
+        res.x = x
+        res.y = y
+        res.z = z
         return res
     }
 
     fun normalize(a: Vec4, res: Vec4 = Vec4()): Vec4 {
-        res.x = a.x * inverseSqrt(dot(a, a))
-        res.y = a.y * inverseSqrt(dot(a, a))
-        res.z = a.z * inverseSqrt(dot(a, a))
-        res.w = a.w * inverseSqrt(dot(a, a))
+        val x = a.x * inverseSqrt(dot(a, a))
+        val y = a.y * inverseSqrt(dot(a, a))
+        val z = a.z * inverseSqrt(dot(a, a))
+        val w = a.w * inverseSqrt(dot(a, a))
+        res.x = x
+        res.y = y
+        res.z = z
+        res.w = w
         return res
     }
 
     fun normalize(a: Vec4d, res: Vec4d = Vec4d()): Vec4d {
-        res.x = a.x * inverseSqrt(dot(a, a))
-        res.y = a.y * inverseSqrt(dot(a, a))
-        res.z = a.z * inverseSqrt(dot(a, a))
-        res.w = a.w * inverseSqrt(dot(a, a))
+        val x = a.x * inverseSqrt(dot(a, a))
+        val y = a.y * inverseSqrt(dot(a, a))
+        val z = a.z * inverseSqrt(dot(a, a))
+        val w = a.w * inverseSqrt(dot(a, a))
+        res.x = x
+        res.y = y
+        res.z = z
+        res.w = w
         return res
     }
 
