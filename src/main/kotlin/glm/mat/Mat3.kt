@@ -17,7 +17,7 @@ import java.nio.FloatBuffer
  * Created by GBarbieri on 10.11.2016.
  */
 
-class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
+class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
 
     // -- Constructors --
 
@@ -56,12 +56,12 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
             Vec3(mat2x2[1], 0),
             Vec3(0, 0, 1)))
 
-    constructor(mat3: Mat3x3) : this(mutableListOf(
+    constructor(mat3: Mat3) : this(mutableListOf(
             Vec3(mat3[0]),
             Vec3(mat3[1]),
             Vec3(mat3[2])))
 
-    constructor(mat4: Mat4x4) : this(mutableListOf(
+    constructor(mat4: Mat4) : this(mutableListOf(
             Vec3(mat4[0]),
             Vec3(mat4[1]),
             Vec3(mat4[2])))
@@ -145,10 +145,10 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
             value[1][0] * (value[0][1] * value[2][2] - value[2][1] * value[0][2]) +
             value[2][0] * (value[0][1] * value[1][2] - value[1][1] * value[0][2])
 
-    fun inverse(res: Mat3x3 = Mat3x3()) = inverse(res, this)
+    fun inverse(res: Mat3 = Mat3()) = inverse(res, this)
     fun inverse_() = inverse(this, this)
 
-    fun transpose(res: Mat3x3 = Mat3x3()) = transpose(res, this)
+    fun transpose(res: Mat3 = Mat3()) = transpose(res, this)
     fun transpose_() = transpose(this, this)
 
 
@@ -173,7 +173,7 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
     }
 
     // TODO others
-    infix fun to(res: Mat4x4): Mat4x4 {
+    infix fun to(res: Mat4): Mat4 {
 
         res[0][0] = this[0][0]
         res[0][1] = this[0][1]
@@ -198,7 +198,7 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
         return res
     }
 
-    fun toMat4() = to(Mat4x4())
+    fun toMat4() = to(Mat4())
 
     infix fun to(res: Quat) = glm.quat_cast(this, res)
     fun toQuat() = glm.quat_cast(this, Quat())
@@ -229,64 +229,64 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
 
     operator fun unaryPlus() = this
 
-    operator fun unaryMinus() = Mat3x3(-value[0], -value[1], -value[2])
+    operator fun unaryMinus() = Mat3(-value[0], -value[1], -value[2])
 
 
 // -- Increment main.and decrement operators --
 
-    operator fun inc(res: Mat3x3 = Mat3x3()): Mat3x3 = plus(res, this, 1f)
+    operator fun inc(res: Mat3 = Mat3()): Mat3 = plus(res, this, 1f)
     fun inc_() = plus(this, this, 1f)
 
-    operator fun dec(res: Mat3x3 = Mat3x3()): Mat3x3 = minus(res, this, 1f)
+    operator fun dec(res: Mat3 = Mat3()): Mat3 = minus(res, this, 1f)
     fun dec_() = minus(this, this, 1f)
 
 
 // -- Specific binary arithmetic operators --
 
-    infix operator fun plus(b: Float) = plus(Mat3x3(), this, b)
-    infix operator fun plus(b: Mat3x3) = plus(Mat3x3(), this, b)
+    infix operator fun plus(b: Float) = plus(Mat3(), this, b)
+    infix operator fun plus(b: Mat3) = plus(Mat3(), this, b)
 
-    fun plus(b: Float, res: Mat3x3) = plus(res, this, b)
-    fun plus(b: Mat3x3, res: Mat3x3) = plus(res, this, b)
+    fun plus(b: Float, res: Mat3) = plus(res, this, b)
+    fun plus(b: Mat3, res: Mat3) = plus(res, this, b)
 
     infix fun plus_(b: Float) = plus(this, this, b)
-    infix fun plus_(b: Mat3x3) = plus(this, this, b)
+    infix fun plus_(b: Mat3) = plus(this, this, b)
 
 
-    infix operator fun minus(b: Float) = minus(Mat3x3(), this, b)
-    infix operator fun minus(b: Mat3x3) = minus(Mat3x3(), this, b)
+    infix operator fun minus(b: Float) = minus(Mat3(), this, b)
+    infix operator fun minus(b: Mat3) = minus(Mat3(), this, b)
 
-    fun minus(b: Float, res: Mat3x3) = minus(res, this, b)
-    fun minus(b: Mat3x3, res: Mat3x3) = minus(res, this, b)
+    fun minus(b: Float, res: Mat3) = minus(res, this, b)
+    fun minus(b: Mat3, res: Mat3) = minus(res, this, b)
 
     infix fun minus_(b: Float) = minus(this, this, b)
-    infix fun minus_(b: Mat3x3) = minus(this, this, b)
+    infix fun minus_(b: Mat3) = minus(this, this, b)
 
 
-    infix operator fun times(b: Float) = times(Mat3x3(), this, b)
+    infix operator fun times(b: Float) = times(Mat3(), this, b)
     infix operator fun times(b: Vec3) = times(Vec3(), this, b)
-    infix operator fun times(b: Mat3x3) = times(Mat3x3(), this, b)
+    infix operator fun times(b: Mat3) = times(Mat3(), this, b)
 
-    fun times(b: Float, res: Mat3x3) = times(res, this, b)
+    fun times(b: Float, res: Mat3) = times(res, this, b)
     fun times(b: Vec3, res: Vec3) = times(res, this, b)
-    fun times(b: Mat3x3, res: Mat3x3) = times(res, this, b)
+    fun times(b: Mat3, res: Mat3) = times(res, this, b)
 
     infix fun times_(b: Float) = times(this, this, b)
     infix fun times_(b: Vec3) = times(b, this, b)
-    infix fun times_(b: Mat3x3) = times(this, this, b)
+    infix fun times_(b: Mat3) = times(this, this, b)
 
 
-    infix operator fun div(b: Float) = div(Mat3x3(), this, b)
-    infix operator fun div(b: Mat3x3) = div(Mat3x3(), this, b)
+    infix operator fun div(b: Float) = div(Mat3(), this, b)
+    infix operator fun div(b: Mat3) = div(Mat3(), this, b)
 
-    fun div(b: Float, res: Mat3x3) = div(res, this, b)
-    fun div(b: Mat3x3, res: Mat3x3) = div(res, this, b)
+    fun div(b: Float, res: Mat3) = div(res, this, b)
+    fun div(b: Mat3, res: Mat3) = div(res, this, b)
 
     infix fun div_(b: Float) = div(this, this, b)
-    infix fun div_(b: Mat3x3) = div(this, this, b)
+    infix fun div_(b: Mat3) = div(this, this, b)
 
 
-    infix fun isEqual(b: Mat3x3): Boolean {
+    infix fun isEqual(b: Mat3): Boolean {
         return (this[0].isEqual(b[0])
                 && this[1].isEqual(b[1])
                 && this[2].isEqual(b[2]))
@@ -348,7 +348,7 @@ class Mat3x3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
 
 
     override fun equals(other: Any?) =
-            if (other is Mat3x3)
+            if (other is Mat3)
                 this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
             else false
 }

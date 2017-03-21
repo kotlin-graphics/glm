@@ -1,11 +1,11 @@
 package  glm.mat.operators
 
 import  glm.mat.Mat2x3
-import  glm.mat.Mat3x3
-import  glm.mat.Mat3x3.Companion.plus
-import  glm.mat.Mat3x3.Companion.div
-import  glm.mat.Mat3x3.Companion.times
-import  glm.mat.Mat3x3.Companion.minus
+import  glm.mat.Mat3
+import  glm.mat.Mat3.Companion.plus
+import  glm.mat.Mat3.Companion.div
+import  glm.mat.Mat3.Companion.times
+import  glm.mat.Mat3.Companion.minus
 import  glm.mat.Mat4x3
 import  glm.vec._3.Vec3
 import  glm.vec._3.Vec3.Companion.plus
@@ -19,14 +19,14 @@ import  glm.vec._3.Vec3.Companion.minus
 interface mat3x3_operators {
 
 
-    fun plus(res: Mat3x3, a: Mat3x3, b: Float): Mat3x3 {
+    fun plus(res: Mat3, a: Mat3, b: Float): Mat3 {
         plus(res[0], a[0], b, b, b)
         plus(res[1], a[1], b, b, b)
         plus(res[2], a[2], b, b, b)
         return res
     }
 
-    fun plus(res: Mat3x3, a: Mat3x3, b: Mat3x3): Mat3x3 {
+    fun plus(res: Mat3, a: Mat3, b: Mat3): Mat3 {
         plus(res[0], a[0], b[0][0], b[0][1], b[0][2])
         plus(res[1], a[1], b[1][0], b[1][1], b[1][2])
         plus(res[2], a[2], b[2][0], b[2][1], b[2][2])
@@ -34,21 +34,21 @@ interface mat3x3_operators {
     }
 
 
-    fun minus(res: Mat3x3, a: Mat3x3, b: Float): Mat3x3 {
+    fun minus(res: Mat3, a: Mat3, b: Float): Mat3 {
         minus(res[0], a[0], b, b, b)
         minus(res[1], a[1], b, b, b)
         minus(res[2], a[2], b, b, b)
         return res
     }
 
-    fun minus(res: Mat3x3, a: Float, b: Mat3x3): Mat3x3 {
+    fun minus(res: Mat3, a: Float, b: Mat3): Mat3 {
         minus(res[0], a, a, a, b[0])
         minus(res[1], a, a, a, b[1])
         minus(res[2], a, a, a, b[2])
         return res
     }
 
-    fun minus(res: Mat3x3, a: Mat3x3, b: Mat3x3): Mat3x3 {
+    fun minus(res: Mat3, a: Mat3, b: Mat3): Mat3 {
         minus(res[0], a[0], b[0][0], b[0][1], b[0][2])
         minus(res[1], a[1], b[1][0], b[1][1], b[1][2])
         minus(res[2], a[2], b[2][0], b[2][1], b[2][2])
@@ -56,28 +56,28 @@ interface mat3x3_operators {
     }
 
 
-    fun times(res: Mat3x3, a: Mat3x3, b: Float): Mat3x3 {
+    fun times(res: Mat3, a: Mat3, b: Float): Mat3 {
         times(res[0], a[0], b, b, b)
         times(res[1], a[1], b, b, b)
         times(res[2], a[2], b, b, b)
         return res
     }
 
-    fun times(res: Vec3, a: Mat3x3, b: Vec3): Vec3 {
+    fun times(res: Vec3, a: Mat3, b: Vec3): Vec3 {
         res[0] = a[0][0] * b.x + a[1][0] * b.y + a[2][0] * b.z
         res[1] = a[0][1] * b.x + a[1][1] * b.y + a[2][1] * b.z
         res[2] = a[0][2] * b.x + a[1][2] * b.y + a[2][2] * b.z
         return res
     }
 
-    fun times(res: Vec3, a: Vec3, b: Mat3x3): Vec3 {
+    fun times(res: Vec3, a: Vec3, b: Mat3): Vec3 {
         res[0] = a.x * b[0][0] + a.y * b[0][1] + a.z * b[0][2]
         res[1] = a.x * b[1][0] + a.y * b[1][1] + a.z * b[1][2]
         res[2] = a.x * b[2][0] + a.y * b[2][1] + a.z * b[2][2]
         return res
     }
 
-    fun times(res: Mat3x3, a: Mat3x3, b: Mat3x3): Mat3x3 {
+    fun times(res: Mat3, a: Mat3, b: Mat3): Mat3 {
         val v00 = a[0][0] * b[0][0] + a[1][0] * b[0][1] + a[2][0] * b[0][2]
         val v01 = a[0][1] * b[0][0] + a[1][1] * b[0][1] + a[2][1] * b[0][2]
         val v02 = a[0][2] * b[0][0] + a[1][2] * b[0][1] + a[2][2] * b[0][2]
@@ -99,7 +99,7 @@ interface mat3x3_operators {
         return res
     }
 
-    fun times(res: Mat2x3, a: Mat3x3, b: Mat2x3): Mat2x3 {
+    fun times(res: Mat2x3, a: Mat3, b: Mat2x3): Mat2x3 {
         val v00 = a[0][0] * b[0][0] + a[1][0] * b[0][1] + a[2][0] * b[0][2]
         val v01 = a[0][1] * b[0][0] + a[1][1] * b[0][1] + a[2][1] * b[0][2]
         val v02 = a[0][2] * b[0][0] + a[1][2] * b[0][1] + a[2][2] * b[0][2]
@@ -115,7 +115,7 @@ interface mat3x3_operators {
         return res
     }
 
-    fun times(res: Mat4x3, a: Mat3x3, b: Mat4x3): Mat4x3 {
+    fun times(res: Mat4x3, a: Mat3, b: Mat4x3): Mat4x3 {
         val v00 = a[0][0] * b[0][0] + a[1][0] * b[0][1] + a[2][0] * b[0][2]
         val v01 = a[0][1] * b[0][0] + a[1][1] * b[0][1] + a[2][1] * b[0][2]
         val v02 = a[0][2] * b[0][0] + a[1][2] * b[0][1] + a[2][2] * b[0][2]
@@ -144,21 +144,21 @@ interface mat3x3_operators {
     }
 
 
-    fun div(res: Mat3x3, a: Mat3x3, b: Float): Mat3x3 {
+    fun div(res: Mat3, a: Mat3, b: Float): Mat3 {
         div(res[0], a[0], b, b, b)
         div(res[1], a[1], b, b, b)
         div(res[2], a[2], b, b, b)
         return res
     }
 
-    fun div(res: Mat3x3, a: Float, b: Mat3x3): Mat3x3 {
+    fun div(res: Mat3, a: Float, b: Mat3): Mat3 {
         div(res[0], a, a, a, b[0])
         div(res[1], a, a, a, b[1])
         div(res[2], a, a, a, b[2])
         return res
     }
 
-    fun div(res: Vec3, a: Mat3x3, b: Vec3): Vec3 {
+    fun div(res: Vec3, a: Mat3, b: Vec3): Vec3 {
         val oneOverDet = 1 / a.det()
         val i00 = +(a[1][1] * a[2][2] - a[2][1] * a[1][2]) * oneOverDet
         val i01 = -(a[1][0] * a[2][2] - a[2][0] * a[1][2]) * oneOverDet
@@ -175,7 +175,7 @@ interface mat3x3_operators {
         return res
     }
 
-    fun div(res: Vec3, a: Vec3, b: Mat3x3): Vec3 {
+    fun div(res: Vec3, a: Vec3, b: Mat3): Vec3 {
         val oneOverDet = 1 / b.det()
         val i00 = +(b[1][1] * b[2][2] - b[2][1] * b[1][2]) * oneOverDet
         val i01 = -(b[1][0] * b[2][2] - b[2][0] * b[1][2]) * oneOverDet
@@ -192,28 +192,28 @@ interface mat3x3_operators {
         return res
     }
 
-    fun div(res: Mat3x3, a: Mat3x3, b: Mat3x3) = b.inverse(res) times_ a
+    fun div(res: Mat3, a: Mat3, b: Mat3) = b.inverse(res) times_ a
 }
 
 
 // -- Specific binary arithmetic operators --
 
-operator fun Float.plus(b: Mat3x3) = plus(Mat3x3(), b, this)
-fun Float.plus(b: Mat3x3, res: Mat3x3 = Mat3x3()) = plus(res, b, this)
-infix fun Float.plus_(b: Mat3x3) = plus(b, b, this)
+operator fun Float.plus(b: Mat3) = plus(Mat3(), b, this)
+fun Float.plus(b: Mat3, res: Mat3 = Mat3()) = plus(res, b, this)
+infix fun Float.plus_(b: Mat3) = plus(b, b, this)
 
-operator fun Float.minus(b: Mat3x3) = minus(Mat3x3(), this, b)
-fun Float.minus(b: Mat3x3, res: Mat3x3 = Mat3x3()) = minus(res, this, b)
-infix fun Float.minus_(b: Mat3x3) = minus(b, this, b)
+operator fun Float.minus(b: Mat3) = minus(Mat3(), this, b)
+fun Float.minus(b: Mat3, res: Mat3 = Mat3()) = minus(res, this, b)
+infix fun Float.minus_(b: Mat3) = minus(b, this, b)
 
-operator fun Float.times(b: Mat3x3) = times(Mat3x3(), b, this)
-fun Float.times(b: Mat3x3, res: Mat3x3 = Mat3x3()) = times(res, b, this)
-infix fun Float.times_(b: Mat3x3) = times(b, b, this)
+operator fun Float.times(b: Mat3) = times(Mat3(), b, this)
+fun Float.times(b: Mat3, res: Mat3 = Mat3()) = times(res, b, this)
+infix fun Float.times_(b: Mat3) = times(b, b, this)
 
-operator fun Vec3.times(b: Mat3x3) = times(Vec3(), this, b)
-fun Vec3.times(b: Mat3x3, res: Vec3 = Vec3()) = times(res, this, b)
-infix fun Vec3.times_(b: Mat3x3) = times(this, this, b)
+operator fun Vec3.times(b: Mat3) = times(Vec3(), this, b)
+fun Vec3.times(b: Mat3, res: Vec3 = Vec3()) = times(res, this, b)
+infix fun Vec3.times_(b: Mat3) = times(this, this, b)
 
-operator fun Float.div(b: Mat3x3) = div(Mat3x3(), this, b)
-fun Float.div(b: Mat3x3, res: Mat3x3 = Mat3x3()) = div(res, this, b)
-infix fun Float.div_(b: Mat3x3) = div(b, this, b)
+operator fun Float.div(b: Mat3) = div(Mat3(), this, b)
+fun Float.div(b: Mat3, res: Mat3 = Mat3()) = div(res, this, b)
+infix fun Float.div_(b: Mat3) = div(b, this, b)

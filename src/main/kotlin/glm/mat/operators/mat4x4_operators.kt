@@ -2,11 +2,11 @@ package  glm.mat.operators
 
 import  glm.mat.Mat2x4
 import  glm.mat.Mat3x4
-import  glm.mat.Mat4x4
-import  glm.mat.Mat4x4.Companion.plus
-import  glm.mat.Mat4x4.Companion.div
-import  glm.mat.Mat4x4.Companion.times
-import  glm.mat.Mat4x4.Companion.minus
+import  glm.mat.Mat4
+import  glm.mat.Mat4.Companion.plus
+import  glm.mat.Mat4.Companion.div
+import  glm.mat.Mat4.Companion.times
+import  glm.mat.Mat4.Companion.minus
 import  glm.vec._4.Vec4
 import  glm.vec._4.Vec4.Companion.plus
 import  glm.vec._4.Vec4.Companion.div
@@ -19,7 +19,7 @@ import  glm.vec._4.Vec4.Companion.minus
 interface mat4x4_operators {
 
 
-    fun plus(res: Mat4x4, a: Mat4x4, b: Float): Mat4x4 {
+    fun plus(res: Mat4, a: Mat4, b: Float): Mat4 {
         plus(res[0], a[0], b, b, b, b)
         plus(res[1], a[1], b, b, b, b)
         plus(res[2], a[2], b, b, b, b)
@@ -27,7 +27,7 @@ interface mat4x4_operators {
         return res
     }
 
-    fun plus(res: Mat4x4, a: Mat4x4, b: Mat4x4): Mat4x4 {
+    fun plus(res: Mat4, a: Mat4, b: Mat4): Mat4 {
         plus(res[0], a[0], b[0][0], b[0][1], b[0][2], b[0][3])
         plus(res[1], a[1], b[1][0], b[1][1], b[1][2], b[1][3])
         plus(res[2], a[2], b[2][0], b[2][1], b[2][2], b[2][3])
@@ -35,7 +35,7 @@ interface mat4x4_operators {
         return res
     }
 
-    fun minus(res: Mat4x4, a: Mat4x4, b: Float): Mat4x4 {
+    fun minus(res: Mat4, a: Mat4, b: Float): Mat4 {
         minus(res[0], a[0], b, b, b, b)
         minus(res[1], a[1], b, b, b, b)
         minus(res[2], a[2], b, b, b, b)
@@ -43,7 +43,7 @@ interface mat4x4_operators {
         return res
     }
 
-    fun minus(res: Mat4x4, a: Float, b: Mat4x4): Mat4x4 {
+    fun minus(res: Mat4, a: Float, b: Mat4): Mat4 {
         minus(res[0], a, a, a, a, b[0])
         minus(res[1], a, a, a, a, b[1])
         minus(res[2], a, a, a, a, b[2])
@@ -51,7 +51,7 @@ interface mat4x4_operators {
         return res
     }
 
-    fun minus(res: Mat4x4, a: Mat4x4, b: Mat4x4): Mat4x4 {
+    fun minus(res: Mat4, a: Mat4, b: Mat4): Mat4 {
         minus(res[0], a[0], b[0][0], b[0][1], b[0][2], b[0][3])
         minus(res[1], a[1], b[1][0], b[1][1], b[1][2], b[1][3])
         minus(res[2], a[2], b[2][0], b[2][1], b[2][2], b[2][3])
@@ -63,7 +63,7 @@ interface mat4x4_operators {
     /**
      * [res] = [a] * [b]
      */
-    fun times(res: Mat4x4, a: Mat4x4, b: Float): Mat4x4 {
+    fun times(res: Mat4, a: Mat4, b: Float): Mat4 {
         times(res[0], a[0], b, b, b, b)
         times(res[1], a[1], b, b, b, b)
         times(res[2], a[2], b, b, b, b)
@@ -71,7 +71,7 @@ interface mat4x4_operators {
         return res
     }
 
-    fun times(res: Vec4, a: Mat4x4, b: Vec4): Vec4 {
+    fun times(res: Vec4, a: Mat4, b: Vec4): Vec4 {
         res[0] = a[0][0] * b.x + a[1][0] * b.y + a[2][0] * b.z + a[3][0] * b.w
         res[1] = a[0][1] * b.x + a[1][1] * b.y + a[2][1] * b.z + a[3][1] * b.w
         res[2] = a[0][2] * b.x + a[1][2] * b.y + a[2][2] * b.z + a[3][2] * b.w
@@ -79,7 +79,7 @@ interface mat4x4_operators {
         return res
     }
 
-    fun times(res: Vec4, a: Vec4, b: Mat4x4): Vec4 {
+    fun times(res: Vec4, a: Vec4, b: Mat4): Vec4 {
         res[0] = a.x * b[0][0] + a.y * b[0][1] + a.z * b[0][2] + a.w * b[0][3]
         res[1] = a.x * b[1][0] + a.y * b[1][1] + a.z * b[1][2] + a.w * b[1][3]
         res[2] = a.x * b[2][0] + a.y * b[2][1] + a.z * b[2][2] + a.w * b[2][3]
@@ -87,7 +87,7 @@ interface mat4x4_operators {
         return res
     }
 
-    fun times(res: Mat2x4, a: Mat4x4, b: Mat2x4): Mat2x4 {
+    fun times(res: Mat2x4, a: Mat4, b: Mat2x4): Mat2x4 {
         val v00 = a[0][0] * b[0][0] + a[1][0] * b[0][1] + a[2][0] * b[0][2] + a[3][0] * b[0][3]
         val v01 = a[0][1] * b[0][0] + a[1][1] * b[0][1] + a[2][1] * b[0][2] + a[3][1] * b[0][3]
         val v02 = a[0][2] * b[0][0] + a[1][2] * b[0][1] + a[2][2] * b[0][2] + a[3][2] * b[0][3]
@@ -107,7 +107,7 @@ interface mat4x4_operators {
         return res
     }
 
-    fun times(res: Mat3x4, a: Mat4x4, b: Mat3x4): Mat3x4 {
+    fun times(res: Mat3x4, a: Mat4, b: Mat3x4): Mat3x4 {
         val v00 = a[0][0] * b[0][0] + a[1][0] * b[0][1] + a[2][0] * b[0][2] + a[3][0] * b[0][3]
         val v01 = a[0][1] * b[0][0] + a[1][1] * b[0][1] + a[2][1] * b[0][2] + a[3][1] * b[0][3]
         val v02 = a[0][2] * b[0][0] + a[1][2] * b[0][1] + a[2][2] * b[0][2] + a[3][2] * b[0][3]
@@ -135,7 +135,7 @@ interface mat4x4_operators {
         return res
     }
 
-    fun times(res: Mat4x4, a: Mat4x4, b: Mat4x4): Mat4x4 {
+    fun times(res: Mat4, a: Mat4, b: Mat4): Mat4 {
         val v00 = a[0][0] * b[0][0] + a[1][0] * b[0][1] + a[2][0] * b[0][2] + a[3][0] * b[0][3]
         val v01 = a[0][1] * b[0][0] + a[1][1] * b[0][1] + a[2][1] * b[0][2] + a[3][1] * b[0][3]
         val v02 = a[0][2] * b[0][0] + a[1][2] * b[0][1] + a[2][2] * b[0][2] + a[3][2] * b[0][3]
@@ -172,7 +172,7 @@ interface mat4x4_operators {
     }
 
 
-    fun div(res: Mat4x4, a: Mat4x4, b: Float): Mat4x4 {
+    fun div(res: Mat4, a: Mat4, b: Float): Mat4 {
         div(res[0], a[0], b, b, b, b)
         div(res[1], a[1], b, b, b, b)
         div(res[2], a[2], b, b, b, b)
@@ -180,7 +180,7 @@ interface mat4x4_operators {
         return res
     }
 
-    fun div(res: Mat4x4, a: Float, b: Mat4x4): Mat4x4 {
+    fun div(res: Mat4, a: Float, b: Mat4): Mat4 {
         div(res[0], a, a, a, a, b[0])
         div(res[1], a, a, a, a, b[1])
         div(res[2], a, a, a, a, b[2])
@@ -188,7 +188,7 @@ interface mat4x4_operators {
         return res
     }
 
-    fun div(res: Vec4, a: Mat4x4, b: Vec4): Vec4 {
+    fun div(res: Vec4, a: Mat4, b: Vec4): Vec4 {
 
         // invert a
         val c00 = a[2][2] * a[3][3] - a[3][2] * a[2][3]
@@ -266,7 +266,7 @@ interface mat4x4_operators {
         return res
     }
 
-    fun div(res: Vec4, a: Vec4, b: Mat4x4): Vec4 {
+    fun div(res: Vec4, a: Vec4, b: Mat4): Vec4 {
 
         // invert main.getB
         val c00 = b[2][2] * b[3][3] - b[3][2] * b[2][3]
@@ -344,28 +344,28 @@ interface mat4x4_operators {
         return res
     }
 
-    fun div(res: Mat4x4, a: Mat4x4, b: Mat4x4) = b.inverse(res) times_ a
+    fun div(res: Mat4, a: Mat4, b: Mat4) = b.inverse(res) times_ a
 }
 
 
 // -- Specific binary arithmetic operators --
 
-operator fun Float.plus(b: Mat4x4) = plus(Mat4x4(), b, this)
-fun Float.plus(b: Mat4x4, res: Mat4x4 = Mat4x4()) = plus(res, b, this)
-infix fun Float.plus_(b: Mat4x4) = plus(b, b, this)
+operator fun Float.plus(b: Mat4) = plus(Mat4(), b, this)
+fun Float.plus(b: Mat4, res: Mat4 = Mat4()) = plus(res, b, this)
+infix fun Float.plus_(b: Mat4) = plus(b, b, this)
 
-operator fun Float.minus(b: Mat4x4) = minus(Mat4x4(), this, b)
-fun Float.minus(b: Mat4x4, res: Mat4x4 = Mat4x4()) = minus(res, this, b)
-infix fun Float.minus_(b: Mat4x4) = minus(b, this, b)
+operator fun Float.minus(b: Mat4) = minus(Mat4(), this, b)
+fun Float.minus(b: Mat4, res: Mat4 = Mat4()) = minus(res, this, b)
+infix fun Float.minus_(b: Mat4) = minus(b, this, b)
 
-operator fun Float.times(b: Mat4x4) = times(Mat4x4(), b, this)
-fun Float.times(b: Mat4x4, res: Mat4x4 = Mat4x4()) = times(res, b, this)
-infix fun Float.times_(b: Mat4x4) = times(b, b, this)
+operator fun Float.times(b: Mat4) = times(Mat4(), b, this)
+fun Float.times(b: Mat4, res: Mat4 = Mat4()) = times(res, b, this)
+infix fun Float.times_(b: Mat4) = times(b, b, this)
 
-operator fun Vec4.times(b: Mat4x4) = times(Vec4(), this, b)
-fun Vec4.times(b: Mat4x4, res: Vec4 = Vec4()) = times(res, this, b)
-infix fun Vec4.times_(b: Mat4x4) = times(this, this, b)
+operator fun Vec4.times(b: Mat4) = times(Vec4(), this, b)
+fun Vec4.times(b: Mat4, res: Vec4 = Vec4()) = times(res, this, b)
+infix fun Vec4.times_(b: Mat4) = times(this, this, b)
 
-operator fun Float.div(b: Mat4x4) = div(Mat4x4(), this, b)
-fun Float.div(b: Mat4x4, res: Mat4x4 = Mat4x4()) = div(res, this, b)
-infix fun Float.div_(b: Mat4x4) = div(b, this, b)
+operator fun Float.div(b: Mat4) = div(Mat4(), this, b)
+fun Float.div(b: Mat4, res: Mat4 = Mat4()) = div(res, this, b)
+infix fun Float.div_(b: Mat4) = div(b, this, b)

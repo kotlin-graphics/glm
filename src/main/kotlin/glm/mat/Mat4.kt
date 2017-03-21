@@ -19,7 +19,7 @@ import java.nio.FloatBuffer
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
+data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
     // -- Constructors --
 
@@ -65,13 +65,13 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
             Vec4(0, 0, 1, 0),
             Vec4(0, 0, 0, 1)))
 
-    constructor(mat3: Mat3x3) : this(mutableListOf(
+    constructor(mat3: Mat3) : this(mutableListOf(
             Vec4(mat3[0], 0),
             Vec4(mat3[1], 0),
             Vec4(mat3[2], 0),
             Vec4(0, 0, 0, 1)))
 
-    constructor(mat4: Mat4x4) : this(mutableListOf(
+    constructor(mat4: Mat4) : this(mutableListOf(
             Vec4(mat4[0]),
             Vec4(mat4[1]),
             Vec4(mat4[2]),
@@ -135,17 +135,17 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     }
 
     // TODO others
-    infix fun put(mat4x4: Mat4x4) {
+    infix fun put(mat4: Mat4) {
         value = mutableListOf(
-                Vec4(mat4x4[0]), Vec4(mat4x4[1]),
-                Vec4(mat4x4[2]), Vec4(mat4x4[3]))
+                Vec4(mat4[0]), Vec4(mat4[1]),
+                Vec4(mat4[2]), Vec4(mat4[3]))
     }
 
     infix fun put(s: Float) = put(s, s, s, s)
     infix fun put(v: Vec3) = put(v.x, v.y, v.z, 1f)
     infix fun put(v: Vec4) = put(v.x, v.y, v.z, v.w)
 
-    fun put(x: Float, y: Float, z: Float, w: Float): Mat4x4 {
+    fun put(x: Float, y: Float, z: Float, w: Float): Mat4 {
 
         value[0][0] = x
         value[0][1] = 0f
@@ -171,9 +171,9 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     }
 
     // TODO others
-    fun toMat3() = to(Mat3x3())
+    fun toMat3() = to(Mat3())
 
-    infix fun to(res: Mat3x3): Mat3x3 {
+    infix fun to(res: Mat3): Mat3 {
 
         res[0][0] = this[0][0]
         res[0][1] = this[0][1]
@@ -284,86 +284,86 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
     operator fun unaryPlus() = this
 
-    operator fun unaryMinus() = Mat4x4(-value[0], -value[1], -value[2], -value[3])
+    operator fun unaryMinus() = Mat4(-value[0], -value[1], -value[2], -value[3])
 
 
     // -- Increment main.and decrement operators --
 
-    operator fun inc(res: Mat4x4 = Mat4x4()): Mat4x4 = plus(res, this, 1f)
+    operator fun inc(res: Mat4 = Mat4()): Mat4 = plus(res, this, 1f)
     fun inc_() = plus(this, this, 1f)
 
-    operator fun dec(res: Mat4x4 = Mat4x4()): Mat4x4 = minus(res, this, 1f)
+    operator fun dec(res: Mat4 = Mat4()): Mat4 = minus(res, this, 1f)
     fun dec_() = minus(this, this, 1f)
 
 
     // -- Specific binary arithmetic operators --
 
-    infix operator fun plus(b: Float) = plus(Mat4x4(), this, b)
-    infix operator fun plus(b: Mat4x4) = plus(Mat4x4(), this, b)
+    infix operator fun plus(b: Float) = plus(Mat4(), this, b)
+    infix operator fun plus(b: Mat4) = plus(Mat4(), this, b)
 
-    fun plus(b: Float, res: Mat4x4) = plus(res, this, b)
-    fun plus(b: Mat4x4, res: Mat4x4) = plus(res, this, b)
+    fun plus(b: Float, res: Mat4) = plus(res, this, b)
+    fun plus(b: Mat4, res: Mat4) = plus(res, this, b)
 
     infix fun plus_(b: Float) = plus(this, this, b)
-    infix fun plus_(b: Mat4x4) = plus(this, this, b)
+    infix fun plus_(b: Mat4) = plus(this, this, b)
 
 
-    infix operator fun minus(b: Float) = minus(Mat4x4(), this, b)
-    infix operator fun minus(b: Mat4x4) = minus(Mat4x4(), this, b)
+    infix operator fun minus(b: Float) = minus(Mat4(), this, b)
+    infix operator fun minus(b: Mat4) = minus(Mat4(), this, b)
 
-    fun minus(b: Float, res: Mat4x4) = minus(res, this, b)
-    fun minus(b: Mat4x4, res: Mat4x4) = minus(res, this, b)
+    fun minus(b: Float, res: Mat4) = minus(res, this, b)
+    fun minus(b: Mat4, res: Mat4) = minus(res, this, b)
 
     infix fun minus_(b: Float) = minus(this, this, b)
-    infix fun minus_(b: Mat4x4) = minus(this, this, b)
+    infix fun minus_(b: Mat4) = minus(this, this, b)
 
 
     /**
      * @return = [b] * @this
      */
-    infix operator fun times(b: Float) = times(Mat4x4(), this, b)
+    infix operator fun times(b: Float) = times(Mat4(), this, b)
 
     infix operator fun times(b: Vec4) = times(Vec4(), this, b)
-    infix operator fun times(b: Mat4x4) = times(Mat4x4(), this, b)
+    infix operator fun times(b: Mat4) = times(Mat4(), this, b)
 
     /**
      * [res] = [b] * @this
      */
-    fun times(b: Float, res: Mat4x4) = times(res, this, b)
+    fun times(b: Float, res: Mat4) = times(res, this, b)
 
     fun times(b: Vec4, res: Vec4) = times(res, this, b)
-    fun times(b: Mat4x4, res: Mat4x4) = times(res, this, b)
+    fun times(b: Mat4, res: Mat4) = times(res, this, b)
 
     infix fun times_(b: Float) = times(this, this, b)
     infix fun times_(b: Vec4) = times(b, this, b)
-    infix fun times_(b: Mat4x4) = times(this, this, b)
+    infix fun times_(b: Mat4) = times(this, this, b)
 
 
-    infix operator fun div(b: Float) = div(Mat4x4(), this, b)
-    infix operator fun div(b: Mat4x4) = div(Mat4x4(), this, b)
+    infix operator fun div(b: Float) = div(Mat4(), this, b)
+    infix operator fun div(b: Mat4) = div(Mat4(), this, b)
 
-    fun div(b: Float, res: Mat4x4) = div(res, this, b)
-    fun div(b: Mat4x4, res: Mat4x4) = div(res, this, b)
+    fun div(b: Float, res: Mat4) = div(res, this, b)
+    fun div(b: Mat4, res: Mat4) = div(res, this, b)
 
     infix fun div_(b: Float) = div(this, this, b)
-    infix fun div_(b: Mat4x4) = div(this, this, b)
+    infix fun div_(b: Mat4) = div(this, this, b)
 
 
     // -- Matrix functions --
 
     fun det() = determinant(this)
 
-    fun inverse(res: Mat4x4 = Mat4x4()) = inverse(res, this)
+    fun inverse(res: Mat4 = Mat4()) = inverse(res, this)
     fun inverse_() = inverse(this, this)
 
-    fun transpose(res: Mat4x4 = Mat4x4()) = transpose(res, this)
+    fun transpose(res: Mat4 = Mat4()) = transpose(res, this)
     fun transpose_() = transpose(this, this)
 
 
     // TODO others
-    @JvmOverloads fun scale(scale: Vec3, res: Mat4x4 = Mat4()) = scale(scale.x, scale.y, scale.z, res)
+    @JvmOverloads fun scale(scale: Vec3, res: Mat4 = Mat4()) = scale(scale.x, scale.y, scale.z, res)
 
-    @JvmOverloads fun scale(scale: Float, res: Mat4x4 = Mat4x4()) = scale(scale, scale, scale, res)
+    @JvmOverloads fun scale(scale: Float, res: Mat4 = Mat4()) = scale(scale, scale, scale, res)
     @JvmOverloads fun scale(scaleX: Float, scaleY: Float, scaleZ: Float, res: Mat4 = Mat4()) = glm.scale(res, this, scaleX, scaleY, scaleZ)
 
     infix fun scale_(scale: Vec3) = scale_(scale.x, scale.y, scale.z)
@@ -371,9 +371,9 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     fun scale_(scaleX: Float, scaleY: Float, scaleZ: Float) = glm.scale(this, this, scaleX, scaleY, scaleZ)
 
 
-    @JvmOverloads fun translate(translate: Vec3, res: Mat4x4 = Mat4x4()) = translate(translate.x, translate.y, translate.z, res)
-    @JvmOverloads fun translate(translate: Float, res: Mat4x4 = Mat4x4()) = translate(translate, translate, translate, res)
-    @JvmOverloads fun translate(translateX: Float, translateY: Float, translateZ: Float, res: Mat4x4 = Mat4x4()) =
+    @JvmOverloads fun translate(translate: Vec3, res: Mat4 = Mat4()) = translate(translate.x, translate.y, translate.z, res)
+    @JvmOverloads fun translate(translate: Float, res: Mat4 = Mat4()) = translate(translate, translate, translate, res)
+    @JvmOverloads fun translate(translateX: Float, translateY: Float, translateZ: Float, res: Mat4 = Mat4()) =
             glm.translate(res, this, translateX, translateY, translateZ)
 
     infix fun translate_(translate: Vec3) = translate_(translate.x, translate.y, translate.z)
@@ -381,15 +381,15 @@ data class Mat4x4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     fun translate_(translateX: Float, translateY: Float, translateZ: Float) = glm.translate(this, this, translateX, translateY, translateZ)
 
 
-    infix fun isEqual(b: Mat4x4): Boolean {
+    infix fun isEqual(b: Mat4): Boolean {
         return (this[0].isEqual(b[0])
                 && this[1].isEqual(b[1])
                 && this[2].isEqual(b[2])
                 && this[3].isEqual(b[3]))
     }
 
-    @JvmOverloads fun rotate(angle: Float, vX: Float, vY: Float, vZ: Float, res: Mat4x4 = Mat4x4()) = glm.rotate(res, this, angle, vX, vY, vZ)
-    @JvmOverloads fun rotate(angle: Float, v: Vec3, res: Mat4x4 = Mat4x4()) = glm.rotate(res, this, angle, v)
+    @JvmOverloads fun rotate(angle: Float, vX: Float, vY: Float, vZ: Float, res: Mat4 = Mat4()) = glm.rotate(res, this, angle, vX, vY, vZ)
+    @JvmOverloads fun rotate(angle: Float, v: Vec3, res: Mat4 = Mat4()) = glm.rotate(res, this, angle, v)
     fun rotate_(angle: Float, vX: Float, vY: Float, vZ: Float) = glm.rotate(this, this, angle, vX, vY, vZ)
     fun rotate_(angle: Float, v: Vec3) = glm.rotate(this, this, angle, v)
 

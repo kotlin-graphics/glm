@@ -9,7 +9,7 @@ import glm.detail.GLM_COORDINATE_SYSTEM
 import glm.detail.GLM_DEPTH_CLIP_SPACE
 import glm.detail.GLM_DEPTH_ZERO_TO_ONE
 import glm.detail.GLM_LEFT_HANDED
-import glm.mat.Mat4x4
+import glm.mat.Mat4
 import glm.vec._2.Vec2
 import glm.vec._3.Vec3
 import glm.vec._4.Vec4i
@@ -27,7 +27,7 @@ interface matrix_transform {
      * @param res the resulting matrix
      * @return see [res]
      */
-    fun translate(res: Mat4x4, m: Mat4x4, vX: Float, vY: Float, vZ: Float): Mat4x4 {
+    fun translate(res: Mat4, m: Mat4, vX: Float, vY: Float, vZ: Float): Mat4 {
         res put m
         res[3].x = m[0].x * vX + m[1].x * vY + m[2].x * vZ + m[3].x
         res[3].y = m[0].y * vX + m[1].y * vY + m[2].y * vZ + m[3].y
@@ -36,9 +36,9 @@ interface matrix_transform {
         return res
     }
 
-    fun translate(m: Mat4x4, v: Vec3) = translate(Mat4x4(), m, v.x, v.y, v.z)
-    fun translate(res: Mat4x4, m: Mat4x4, v: Vec3) = translate(res, m, v.x, v.y, v.z)
-    fun translate(m: Mat4x4, vX: Float, vY: Float, vZ: Float) = translate(Mat4x4(), m, vX, vY, vZ)
+    fun translate(m: Mat4, v: Vec3) = translate(Mat4(), m, v.x, v.y, v.z)
+    fun translate(res: Mat4, m: Mat4, v: Vec3) = translate(res, m, v.x, v.y, v.z)
+    fun translate(m: Mat4, vX: Float, vY: Float, vZ: Float) = translate(Mat4(), m, vX, vY, vZ)
 
     /**
      * Builds a rotation 4 * 4 matrix created from an axis vector main.and an angle.
@@ -48,7 +48,7 @@ interface matrix_transform {
      * @param res the resulting matrix
      * @return see [res]
      */
-    fun rotate(res: Mat4x4, m: Mat4x4, angle: Float, vX: Float, vY: Float, vZ: Float): Mat4x4 {
+    fun rotate(res: Mat4, m: Mat4, angle: Float, vX: Float, vY: Float, vZ: Float): Mat4 {
 
         val c = cos(angle)
         val s = sin(angle)
@@ -114,9 +114,9 @@ interface matrix_transform {
         return res
     }
 
-    fun rotate(res: Mat4x4, m: Mat4x4, angle: Float, v: Vec3) = rotate(res, m, angle, v.x, v.y, v.z)
-    fun rotate(m: Mat4x4, angle: Float, v: Vec3) = rotate(Mat4x4(), m, angle, v.x, v.y, v.z)
-    fun rotate(m: Mat4x4, angle: Float, vX: Float, vY: Float, vZ: Float) = rotate(Mat4x4(), m, angle, vX, vY, vZ)
+    fun rotate(res: Mat4, m: Mat4, angle: Float, v: Vec3) = rotate(res, m, angle, v.x, v.y, v.z)
+    fun rotate(m: Mat4, angle: Float, v: Vec3) = rotate(Mat4(), m, angle, v.x, v.y, v.z)
+    fun rotate(m: Mat4, angle: Float, vX: Float, vY: Float, vZ: Float) = rotate(Mat4(), m, angle, vX, vY, vZ)
 
     /**
      * Builds a scale 4 * 4 matrix created from 3 scalars.
@@ -126,7 +126,7 @@ interface matrix_transform {
      * @param res the resulting matrix
      * @return see [res]
      */
-    fun scale(res: Mat4x4, m: Mat4x4, vX: Float, vY: Float, vZ: Float): Mat4x4 {
+    fun scale(res: Mat4, m: Mat4, vX: Float, vY: Float, vZ: Float): Mat4 {
 
         res[0].x = m[0].x * vX
         res[0].y = m[0].y * vX
@@ -151,9 +151,9 @@ interface matrix_transform {
         return res
     }
 
-    fun scale(res: Mat4x4, m: Mat4x4, v: Vec3) = scale(res, m, v.x, v.y, v.z)
-    fun scale(m: Mat4x4, v: Vec3) = scale(Mat4x4(), m, v.x, v.y, v.z)
-    fun scale(m: Mat4x4, vX: Float, vY: Float, vZ: Float) = scale(Mat4x4(), m, vX, vY, vZ)
+    fun scale(res: Mat4, m: Mat4, v: Vec3) = scale(res, m, v.x, v.y, v.z)
+    fun scale(m: Mat4, v: Vec3) = scale(Mat4(), m, v.x, v.y, v.z)
+    fun scale(m: Mat4, vX: Float, vY: Float, vZ: Float) = scale(Mat4(), m, vX, vY, vZ)
 
     /**
      * Creates a matrix for an orthographic parallel viewing volume, using the default handedness.
@@ -167,13 +167,13 @@ interface matrix_transform {
      *  @param res the resulting matrix
      *  @return see [res]
      */
-    fun ortho(res: Mat4x4, left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float) =
+    fun ortho(res: Mat4, left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float) =
             if (GLM_COORDINATE_SYSTEM == GLM_LEFT_HANDED)
                 orthoLH(res, left, right, bottom, top, zNear, zFar)
             else
                 orthoRH(res, left, right, bottom, top, zNear, zFar)
 
-    fun ortho(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float) = ortho(Mat4x4(), left, right, bottom, top, zNear, zFar)
+    fun ortho(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float) = ortho(Mat4(), left, right, bottom, top, zNear, zFar)
 
     /**
      * Creates a matrix for an orthographic parallel viewing volume, using left-handedness.
@@ -187,7 +187,7 @@ interface matrix_transform {
      *  @param res the resulting matrix
      *  @return see [res]
      */
-    fun orthoLH(res: Mat4x4, left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4x4 {
+    fun orthoLH(res: Mat4, left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 {
 
         res put 1f
 
@@ -219,7 +219,7 @@ interface matrix_transform {
      *  @param res the resulting matrix
      *  @return see [res]
      */
-    fun orthoRH(res: Mat4x4, left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4x4 {
+    fun orthoRH(res: Mat4, left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 {
 
         res put 1f
 
@@ -249,7 +249,7 @@ interface matrix_transform {
      *  @param res the resulting matrix
      *  @return see [res]
      */
-    fun ortho(res: Mat4x4, left: Float, right: Float, bottom: Float, top: Float): Mat4x4 {
+    fun ortho(res: Mat4, left: Float, right: Float, bottom: Float, top: Float): Mat4 {
 
         res put 1f
 
@@ -262,7 +262,7 @@ interface matrix_transform {
         return res
     }
 
-    fun ortho(left: Float, right: Float, bottom: Float, top: Float) = ortho(Mat4x4(), left, right, bottom, top)
+    fun ortho(left: Float, right: Float, bottom: Float, top: Float) = ortho(Mat4(), left, right, bottom, top)
 
     /**
      * Creates a frustum matrix with default handedness.
@@ -276,13 +276,13 @@ interface matrix_transform {
      *  @param res the resulting matrix
      *  @return [res]
      */
-    fun frustum(res: Mat4x4, left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float) =
+    fun frustum(res: Mat4, left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float) =
             if (GLM_COORDINATE_SYSTEM == GLM_LEFT_HANDED)
                 frustumLH(res, left, right, bottom, top, near, far)
             else
                 frustumRH(res, left, right, bottom, top, near, far)
 
-    fun frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float) = frustum(Mat4x4(), left, right, bottom, top, near, far)
+    fun frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float) = frustum(Mat4(), left, right, bottom, top, near, far)
 
     /**
      * Creates a left handed frustum matrix.
@@ -296,7 +296,7 @@ interface matrix_transform {
      *  @param res the resulting matrix
      *  @return [res]
      */
-    fun frustumLH(res: Mat4x4, left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float): Mat4x4 {
+    fun frustumLH(res: Mat4, left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float): Mat4 {
 
         res put 0f
 
@@ -329,7 +329,7 @@ interface matrix_transform {
      *  @param res the resulting matrix
      *  @return [res]
      */
-    fun frustumRH(res: Mat4x4, left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float): Mat4x4 {
+    fun frustumRH(res: Mat4, left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float): Mat4 {
 
         res put 0f
 
@@ -362,13 +362,13 @@ interface matrix_transform {
      *  @param res the resulting matrix
      *  @return [res]
      */
-    fun perspective(res: Mat4x4, fovy: Float, aspect: Float, zNear: Float, zFar: Float) =
+    fun perspective(res: Mat4, fovy: Float, aspect: Float, zNear: Float, zFar: Float) =
             if (GLM_COORDINATE_SYSTEM == GLM_LEFT_HANDED)
                 perspectiveLH(res, fovy, aspect, zNear, zFar)
             else
                 perspectiveRH(res, fovy, aspect, zNear, zFar)
 
-    fun perspective(fovy: Float, aspect: Float, zNear: Float, zFar: Float) = perspective(Mat4x4(), fovy, aspect, zNear, zFar)
+    fun perspective(fovy: Float, aspect: Float, zNear: Float, zFar: Float) = perspective(Mat4(), fovy, aspect, zNear, zFar)
 
     /**
      * Creates a left handed frustum matrix.
@@ -381,7 +381,7 @@ interface matrix_transform {
      *  @param res the resulting matrix
      *  @return [res]
      */
-    fun perspectiveRH(res: Mat4x4, fovy: Float, aspect: Float, zNear: Float, zFar: Float): Mat4x4 {
+    fun perspectiveRH(res: Mat4, fovy: Float, aspect: Float, zNear: Float, zFar: Float): Mat4 {
 
         assert(abs(aspect - glm.epsilonF) > 0f)
 
@@ -415,7 +415,7 @@ interface matrix_transform {
      *  @param res the resulting matrix
      *  @return [res]
      */
-    fun perspectiveLH(res: Mat4x4, fovy: Float, aspect: Float, zNear: Float, zFar: Float): Mat4x4 {
+    fun perspectiveLH(res: Mat4, fovy: Float, aspect: Float, zNear: Float, zFar: Float): Mat4 {
 
         assert(abs(aspect - glm.epsilonF) > 0f)
 
@@ -449,13 +449,13 @@ interface matrix_transform {
      *  @param res the resulting matrix
      *  @return [res]
      */
-    fun perspectiveFov(res: Mat4x4, fov: Float, width: Float, height: Float, zNear: Float, zFar: Float) =
+    fun perspectiveFov(res: Mat4, fov: Float, width: Float, height: Float, zNear: Float, zFar: Float) =
             if (GLM_COORDINATE_SYSTEM == GLM_LEFT_HANDED)
                 perspectiveFovLH(res, fov, width, height, zNear, zFar)
             else
                 perspectiveFovRH(res, fov, width, height, zNear, zFar)
 
-    fun perspectiveFov(fov: Float, width: Float, height: Float, zNear: Float, zFar: Float) = perspectiveFov(Mat4x4(), fov, width, height, zNear, zFar)
+    fun perspectiveFov(fov: Float, width: Float, height: Float, zNear: Float, zFar: Float) = perspectiveFov(Mat4(), fov, width, height, zNear, zFar)
 
     /**
      * Builds a right handed perspective projection matrix based on a field of view.
@@ -468,7 +468,7 @@ interface matrix_transform {
      *  @param res the resulting matrix
      *  @return [res]
      */
-    fun perspectiveFovRH(res: Mat4x4, fov: Float, width: Float, height: Float, zNear: Float, zFar: Float): Mat4x4 {
+    fun perspectiveFovRH(res: Mat4, fov: Float, width: Float, height: Float, zNear: Float, zFar: Float): Mat4 {
 
         assert(width > 0f && height > 0f && fov > 0f)
 
@@ -503,7 +503,7 @@ interface matrix_transform {
      *  @param res the resulting matrix
      *  @return [res]
      */
-    fun perspectiveFovLH(res: Mat4x4, fov: Float, width: Float, height: Float, zNear: Float, zFar: Float): Mat4x4 {
+    fun perspectiveFovLH(res: Mat4, fov: Float, width: Float, height: Float, zNear: Float, zFar: Float): Mat4 {
 
         assert(width > 0f && height > 0f && fov > 0f)
 
@@ -536,13 +536,13 @@ interface matrix_transform {
      * @param res the resulting matrix
      * @return [res]
      */
-    fun infinitePerspective(res: Mat4x4, fovy: Float, aspect: Float, zNear: Float) =
+    fun infinitePerspective(res: Mat4, fovy: Float, aspect: Float, zNear: Float) =
             if (GLM_COORDINATE_SYSTEM == GLM_LEFT_HANDED)
                 infinitePerspectiveLH(res, fovy, aspect, zNear)
             else
                 infinitePerspectiveRH(res, fovy, aspect, zNear)
 
-    fun infinitePerspective(fovy: Float, aspect: Float, zNear: Float) = infinitePerspective(Mat4x4(), fovy, aspect, zNear)
+    fun infinitePerspective(fovy: Float, aspect: Float, zNear: Float) = infinitePerspective(Mat4(), fovy, aspect, zNear)
 
     /**
      * Builds a right handed perspective projection matrix based on a field of view.
@@ -553,7 +553,7 @@ interface matrix_transform {
      * @param res the resulting matrix
      * @return [res]
      */
-    fun infinitePerspectiveRH(res: Mat4x4, fovy: Float, aspect: Float, zNear: Float): Mat4x4 {
+    fun infinitePerspectiveRH(res: Mat4, fovy: Float, aspect: Float, zNear: Float): Mat4 {
 
         val range = tan(fovy / 2f) * zNear
         val left = -range * aspect
@@ -580,7 +580,7 @@ interface matrix_transform {
      * @param res the resulting matrix
      * @return [res]
      */
-    fun infinitePerspectiveLH(res: Mat4x4, fovy: Float, aspect: Float, zNear: Float): Mat4x4 {
+    fun infinitePerspectiveLH(res: Mat4, fovy: Float, aspect: Float, zNear: Float): Mat4 {
 
         val range = tan(fovy / 2f) * zNear
         val left = -range * aspect
@@ -607,9 +607,9 @@ interface matrix_transform {
      * @param res the resulting matrix
      * @return [res]
      */
-    fun tweakedInfinitePerspective(res: Mat4x4, fovy: Float, aspect: Float, zNear: Float) = tweakedInfinitePerspective(res, fovy, aspect, zNear, glm.epsilonF)
+    fun tweakedInfinitePerspective(res: Mat4, fovy: Float, aspect: Float, zNear: Float) = tweakedInfinitePerspective(res, fovy, aspect, zNear, glm.epsilonF)
 
-    fun tweakedInfinitePerspective(fovy: Float, aspect: Float, zNear: Float) = tweakedInfinitePerspective(Mat4x4(), fovy, aspect, zNear, glm.epsilonF)
+    fun tweakedInfinitePerspective(fovy: Float, aspect: Float, zNear: Float) = tweakedInfinitePerspective(Mat4(), fovy, aspect, zNear, glm.epsilonF)
 
     /**
      * Creates a matrix for a symmetric perspective-view frustum with far plane at infinite for graphics hardware that doesn't support depth clamping.
@@ -621,7 +621,7 @@ interface matrix_transform {
      * @param res the resulting matrix
      * @return [res]
      */
-    fun tweakedInfinitePerspective(res: Mat4x4, fovy: Float, aspect: Float, zNear: Float, ep: Float): Mat4x4 {
+    fun tweakedInfinitePerspective(res: Mat4, fovy: Float, aspect: Float, zNear: Float, ep: Float): Mat4 {
 
         val range = tan(fovy / 2f) * zNear
         val left = -range * aspect
@@ -638,7 +638,7 @@ interface matrix_transform {
         return res
     }
 
-    fun tweakedInfinitePerspective(fovy: Float, aspect: Float, zNear: Float, ep: Float) = tweakedInfinitePerspective(Mat4x4(), fovy, aspect, zNear, ep)
+    fun tweakedInfinitePerspective(fovy: Float, aspect: Float, zNear: Float, ep: Float) = tweakedInfinitePerspective(Mat4(), fovy, aspect, zNear, ep)
 
     /**
      * Map the specified object coordinates (obj.x, obj.y, obj.z) into window coordinates.
@@ -650,7 +650,7 @@ interface matrix_transform {
      * @param res the computed window coordinates.
      * @return [res]
      */
-    fun project(res: Vec3, obj: Vec3, model: Mat4x4, proj: Mat4x4, viewport: Vec4i): Vec3 {
+    fun project(res: Vec3, obj: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 {
 
         // tmp = model * obj
         val tmpX = model[0][0] * obj.x + model[1][0] * obj.y + model[2][0] * obj.z + model[3][0]
@@ -677,7 +677,7 @@ interface matrix_transform {
         return res
     }
 
-    fun project(obj: Vec3, model: Mat4x4, proj: Mat4x4, viewport: Vec4i) = project(Vec3(), obj, model, proj, viewport)
+    fun project(obj: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i) = project(Vec3(), obj, model, proj, viewport)
 
     /**
      * Map the specified window coordinates (win.x, win.y, win.z) into object coordinates.
@@ -689,7 +689,7 @@ interface matrix_transform {
      * @param res the computed object coordinates.
      * @return [res]
      */
-    fun unProject(res: Vec3, win: Vec3, model: Mat4x4, proj: Mat4x4, viewport: Vec4i): Vec3 {
+    fun unProject(res: Vec3, win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 {
 
         // pm = proj * model
         val pm00 = proj[0][0] * model[0][0] + proj[1][0] * model[0][1] + proj[2][0] * model[0][2] + proj[3][0] * model[0][3]
@@ -801,7 +801,7 @@ interface matrix_transform {
         return res div_ objW
     }
 
-    fun unProject(win: Vec3, model: Mat4x4, proj: Mat4x4, viewport: Vec4i) = unProject(Vec3(), win, model, proj, viewport)
+    fun unProject(win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i) = unProject(Vec3(), win, model, proj, viewport)
 
     /**
      * Define a picking region
@@ -812,7 +812,7 @@ interface matrix_transform {
      * @param res the resulting matrix.
      * @return [res]
      */
-    fun pickMatrix(res: Mat4x4, center: Vec2, delta: Vec2, viewport: Vec4i): Mat4x4 {
+    fun pickMatrix(res: Mat4, center: Vec2, delta: Vec2, viewport: Vec4i): Mat4 {
 
         res put 1f
 
@@ -828,7 +828,7 @@ interface matrix_transform {
         return res.scale_(viewport[2] / delta.x, viewport[3] / delta.y, 1f)
     }
 
-    fun pickMatrix(center: Vec2, delta: Vec2, viewport: Vec4i) = pickMatrix(Mat4x4(), center, delta, viewport)
+    fun pickMatrix(center: Vec2, delta: Vec2, viewport: Vec4i) = pickMatrix(Mat4(), center, delta, viewport)
 
 
     /** Build a look at view matrix based on the default handedness.
@@ -838,13 +838,13 @@ interface matrix_transform {
      * @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
      * @see gtc_matrix_transform
      * @see - frustum(left, right, bottom, top, nearVal, farVal) frustum(left, right, bottom, top, nearVal, farVal) */
-    fun lookAt(res: Mat4x4, eye: Vec3, center: Vec3, up: Vec3) =
+    fun lookAt(res: Mat4, eye: Vec3, center: Vec3, up: Vec3) =
             if(GLM_COORDINATE_SYSTEM == GLM_LEFT_HANDED)
                 lookAtLH(res, eye, center, up)
             else
                 lookAtRH(res, eye, center, up)
 
-    fun lookAt(eye: Vec3, center: Vec3, up: Vec3) = lookAt(Mat4x4(), eye, center, up)
+    fun lookAt(eye: Vec3, center: Vec3, up: Vec3) = lookAt(Mat4(), eye, center, up)
 
     /** Build a right handed look at view matrix.
      *
@@ -853,7 +853,7 @@ interface matrix_transform {
      * @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
      * @see gtc_matrix_transform
      * @see - frustum(left, right, bottom, top, nearVal, farVal) frustum(left, right, bottom, top, nearVal, farVal) */
-    fun lookAtRH(res: Mat4x4, eye: Vec3, center: Vec3, up: Vec3): Mat4x4 {
+    fun lookAtRH(res: Mat4, eye: Vec3, center: Vec3, up: Vec3): Mat4 {
 
         val ceX = center.x - eye.x
         val ceY = center.y - eye.y
@@ -903,7 +903,7 @@ interface matrix_transform {
      * @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
      * @see gtc_matrix_transform
      * @see - frustum(left, right, bottom, top, nearVal, farVal) frustum(left, right, bottom, top, nearVal, farVal) */
-    fun lookAtLH(res: Mat4x4, eye: Vec3, center: Vec3, up: Vec3): Mat4x4 {
+    fun lookAtLH(res: Mat4, eye: Vec3, center: Vec3, up: Vec3): Mat4 {
 
         val ceX = center.x - eye.x
         val ceY = center.y - eye.y
