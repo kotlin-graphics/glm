@@ -3,6 +3,7 @@ package glm.vec._2
 import glm.BYTES
 import glm.getInt
 import glm.i
+import glm.set
 import glm.vec.Vec2t
 import glm.vec.Vec3t
 import glm.vec.Vec4t
@@ -117,6 +118,15 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     companion object : vec2i_operators {
         @JvmField val length = 2
         @JvmField val SIZE = length * Int.BYTES
+    }
+
+    // TODO others + ints
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+
+    fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putInt(index, x)
+        bytes.putInt(index + Int.BYTES, y)
+        return bytes
     }
 
 
