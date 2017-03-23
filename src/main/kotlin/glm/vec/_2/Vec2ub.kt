@@ -393,7 +393,7 @@ class Vec2ub(x: Ubyte, y: Ubyte) : Vec2t<Ubyte>(x, y) {
     fun shr_(bX: Int, bY: Int) = shr(this, this, bX, bY)
 
 
-    fun inv(res: Vec2ub = Vec2ub()) = inv(res, this)
+    @JvmOverloads fun inv(res: Vec2ub = Vec2ub()) = inv(res, this)
     fun inv_() = inv(this, this)
 
 
