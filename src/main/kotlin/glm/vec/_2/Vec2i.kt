@@ -123,9 +123,9 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     // TODO others + ints
     infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
 
-    fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.putInt(index, x)
-        bytes.putInt(index + Int.BYTES, y)
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+        bytes.putInt(offset, x)
+        bytes.putInt(offset + Int.BYTES, y)
         return bytes
     }
 
