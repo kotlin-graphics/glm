@@ -353,10 +353,10 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
     fun det() = determinant(this)
 
-    fun inverse(res: Mat4 = Mat4()) = inverse(res, this)
+    @JvmOverloads fun inverse(res: Mat4 = Mat4()) = inverse(res, this)
     fun inverse_() = inverse(this, this)
 
-    fun transpose(res: Mat4 = Mat4()) = transpose(res, this)
+    @JvmOverloads fun transpose(res: Mat4 = Mat4()) = transpose(res, this)
     fun transpose_() = transpose(this, this)
 
 

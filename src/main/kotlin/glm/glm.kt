@@ -49,7 +49,8 @@ object Glm :
 
     @JvmField val detail = Detail
 
-    @JvmField val pi = Math.PI
+    @JvmField val PI = Math.PI
+    @JvmField val PIf = Math.PI.f
 
     @JvmField val epsilonF = 1.1920928955078125e-7f
     @JvmField val epsilonD = 2.2204460492503131e-16

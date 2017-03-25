@@ -145,10 +145,10 @@ class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
             value[1][0] * (value[0][1] * value[2][2] - value[2][1] * value[0][2]) +
             value[2][0] * (value[0][1] * value[1][2] - value[1][1] * value[0][2])
 
-    fun inverse(res: Mat3 = Mat3()) = inverse(res, this)
+    @JvmOverloads fun inverse(res: Mat3 = Mat3()) = inverse(res, this)
     fun inverse_() = inverse(this, this)
 
-    fun transpose(res: Mat3 = Mat3()) = transpose(res, this)
+    @JvmOverloads fun transpose(res: Mat3 = Mat3()) = transpose(res, this)
     fun transpose_() = transpose(this, this)
 
 
