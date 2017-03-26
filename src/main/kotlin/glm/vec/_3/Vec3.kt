@@ -276,8 +276,8 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     @JvmOverloads fun normalize(res: Vec3 = Vec3()) = normalize(this, res) // TODO others
     fun normalize_() = normalize(this, this)
 
-    infix fun cross(b: Vec3) = cross(this, b)
-    fun cross_(b: Vec3) = cross(this, b, this)
+    infix fun cross(b: Vec3) = cross(this, b, Vec3())
+    infix fun cross_(b: Vec3) = cross(this, b, this)
 
     @JvmOverloads fun negate(res: Vec3 = Vec3()): Vec3 {
         x = -x
