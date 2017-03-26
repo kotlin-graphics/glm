@@ -1,11 +1,8 @@
 package glm.vec._3
 
-import glm.BYTES
+import glm.*
 import glm.Glm.cross
 import glm.Glm.normalize
-import glm.f
-import glm.getFloat
-import glm.glm
 import glm.vec.Vec2t
 import glm.vec.Vec3t
 import glm.vec.Vec4t
@@ -127,6 +124,19 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
         floats[2] = z
         return floats
     }
+
+    infix fun to(floats: FloatBuffer) = to(floats, floats.position())
+
+    fun to(floats: FloatBuffer, index: Int): FloatBuffer {
+        floats[0] = x
+        floats[1] = y
+        floats[2] = z
+        return floats
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+
+    fun to(bytes: ByteBuffer, offset: Int):ByteBuffer = bytes.putFloat(offset, x).putFloat(offset + Float.BYTES, y).putFloat(offset + Float.BYTES * 2, z)
 
 
     // -- Unary arithmetic operators --
