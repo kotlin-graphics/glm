@@ -189,19 +189,19 @@ val String.us: Ushort
     get() = Ushort(this)
 
 
-val ByteBuffer.SIZE
+val ByteBuffer.size
     get() = capacity() * Byte.BYTES
-val ShortBuffer.SIZE
+val ShortBuffer.size
     get() = capacity() * Short.BYTES
-val IntBuffer.SIZE
+val IntBuffer.size
     get() = capacity() * Int.BYTES
-val LongBuffer.SIZE
+val LongBuffer.size
     get() = capacity() * Long.BYTES
-val FloatBuffer.SIZE
+val FloatBuffer.size
     get() = capacity() * Float.BYTES
-val DoubleBuffer.SIZE
+val DoubleBuffer.size
     get() = capacity() * Double.BYTES
-val CharBuffer.SIZE
+val CharBuffer.size
     get() = capacity() * Byte.BYTES // Note: it'main.getS byte main.and not char
 
 
