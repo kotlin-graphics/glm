@@ -336,7 +336,7 @@ class Vec3i(x: Int, y: Int, z: Int) : Vec3t<Int>(x, y, z) {
 
 
     // TODO others
-    fun ushr(b: Int) = ushr(Vec3i(), this, b, b, b)
+    infix fun ushr(b: Int) = ushr(Vec3i(), this, b, b, b)
 
 
     // -- Generic bitwise operators --
