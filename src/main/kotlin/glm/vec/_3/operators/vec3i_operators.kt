@@ -105,6 +105,14 @@ interface vec3i_operators {
         return res
     }
 
+    // TODO others
+    fun ushr(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
+        res.x = a.x ushr bX
+        res.y = a.y ushr bY
+        res.z = a.z ushr bZ
+        return res
+    }
+
     fun inv(res: Vec3i, a: Vec3i): Vec3i {
         res.x = a.x.inv()
         res.y = a.y.inv()
