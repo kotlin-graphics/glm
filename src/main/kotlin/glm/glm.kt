@@ -45,6 +45,8 @@ object Glm :
 
         ext,
 
+        componentWise,
+
         gli {
 
     @JvmField val detail = Detail
