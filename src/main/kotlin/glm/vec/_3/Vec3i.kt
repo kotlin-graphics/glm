@@ -400,4 +400,10 @@ class Vec3i(x: Int, y: Int, z: Int) : Vec3t<Int>(x, y, z) {
     fun shr(bX: Number, bY: Number, bZ: Number, res: Vec3i = Vec3i()) = shr(res, this, bX.i, bY.i, bZ.i)
 
     fun shr_(bX: Number, bY: Number, bZ: Number) = shr(this, this, bX.i, bY.i, bZ.i)
+
+
+    override fun equals(other: Any?): Boolean {
+        return if (other !is Vec3i) false
+        else x == other.x && y == other.y && z == other.z
+    }
 }
