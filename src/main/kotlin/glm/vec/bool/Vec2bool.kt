@@ -19,25 +19,39 @@ data class Vec2bool(var x: Boolean = false, var y: Boolean = false) {
 
     // -- Component accesses --
 
-    operator fun get(i: Int): Boolean = when (i) {0 -> x; else -> y; }
+    operator fun get(i: Int): Boolean = when (i) {
+        0 -> x
+        1 -> y
+        else -> throw IndexOutOfBoundsException()}
 
-    operator fun set(i: Int, b: Boolean) = when (i) {0 -> x = b; else -> y = b; }
+    operator fun set(i: Int, b: Boolean) = when (i) {
+        0 -> x = b
+        1 -> y = b
+        else -> throw IndexOutOfBoundsException()}
 
 
-    fun set(b: Boolean): Vec2bool {
-        x = b; y = b; return this
+    fun put(b: Boolean): Vec2bool {
+        x = b
+        y = b
+        return this
     }
 
-    fun set(x: Boolean, y: Boolean): Vec2bool {
-        this.x = x; this.y = y; return this
+    fun put(x: Boolean, y: Boolean): Vec2bool {
+        this.x = x
+        this.y = y
+        return this
     }
 
-    fun set(ba: BooleanArray): Vec2bool {
-        x = ba[0]; y = ba[1]; return this
+    fun put(ba: BooleanArray): Vec2bool {
+        x = ba[0]
+        y = ba[1]
+        return this
     }
 
-    fun set(ba: Array<Boolean>): Vec2bool {
-        x = ba[0]; y = ba[1]; return this
+    fun put(ba: Array<Boolean>): Vec2bool {
+        x = ba[0]
+        y = ba[1]
+        return this
     }
 
 

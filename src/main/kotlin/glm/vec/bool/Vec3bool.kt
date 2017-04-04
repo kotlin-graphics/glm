@@ -16,33 +16,53 @@ data class Vec3bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
 
     // -- Component accesses --
 
-    operator fun get(i: Int): Boolean = when (i) {0 -> x; 1 -> y; else -> z; }
+    operator fun get(i: Int): Boolean = when (i) {
+        0 -> x
+        1 -> y
+        2 -> z
+        else -> throw IndexOutOfBoundsException()}
 
-    operator fun set(i: Int, b: Boolean) = when (i) {0 -> x = b; 1 -> y = b; else -> z = b; }
+    operator fun set(i: Int, b: Boolean) = when (i) {
+        0 -> x = b
+        1 -> y = b
+        2 -> z = b
+        else -> throw IndexOutOfBoundsException()}
 
 
-    fun set(b: Boolean): Vec3bool {
-        x = b; y = b; z = b; return this
+    fun put(b: Boolean): Vec3bool {
+        x = b
+        y = b
+        z = b
+        return this
     }
 
-    fun set(x: Boolean, y: Boolean, z: Boolean): Vec3bool {
-        this.x = x; this.y = y; this.z = z; return this
+    fun put(x: Boolean, y: Boolean, z: Boolean): Vec3bool {
+        this.x = x
+        this.y = y
+        this.z = z
+        return this
     }
 
-    fun set(ba: BooleanArray): Vec3bool {
-        x = ba[0]; y = ba[1]; z = ba[2]; return this
+    fun put(ba: BooleanArray): Vec3bool {
+        x = ba[0]
+        y = ba[1]
+        z = ba[2]
+        return this
     }
 
-    fun set(ba: Array<Boolean>): Vec3bool {
-        x = ba[0]; y = ba[1]; z = ba[2]; return this
+    fun put(ba: Array<Boolean>): Vec3bool {
+        x = ba[0]
+        y = ba[1]
+        z = ba[2]
+        return this
     }
 
 
     // -- Unary arithmetic vecOperators --
 
-    operator fun not(): Vec3bool = Vec3bool(x = !x, y = !y, z = !z)
+    operator fun not(): Vec3bool = Vec3bool(!x, !y, !z)
 
-    fun notAss(): Vec3bool {
+    fun not_(): Vec3bool {
         x = !x
         y = !y
         z = !z
@@ -50,7 +70,10 @@ data class Vec3bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
     }
 
     infix fun not(res: Vec3bool): Vec3bool {
-        res.x = !x; res.y = !y; res.z = !z; return this
+        res.x = !x
+        res.y = !y
+        res.z = !z
+        return this
     }
 
     fun all() = x && y && z

@@ -28,7 +28,7 @@ repositories {
 
 dependencies {
     compile(kotlinModule("stdlib", "1.1.1"))
-    testCompile("com.github.elect86:kotlintest:d8878d6da0944ec6bcbcdad6a1540bba021d768d")
+    testCompile("io.kotlintest:kotlintest:2.0.0")
     compile("com.github.elect86:kotlin-unsigned:v2.0")
 }
 

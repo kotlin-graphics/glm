@@ -3,14 +3,13 @@ package glm
 import glm.mat.Mat2
 import glm.mat.operators.times
 import glm.vec._2.Vec2
-import io.kotlintest.KTestJUnitRunner
+import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
-import org.junit.runner.RunWith
 
 /**
  * Created by GBarbieri on 11.11.2016.
  */
-@RunWith(KTestJUnitRunner::class)
+
 class coreMat2 : StringSpec() {
 
     init {

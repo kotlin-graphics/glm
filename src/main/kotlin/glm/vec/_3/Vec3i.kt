@@ -109,16 +109,6 @@ class Vec3i(x: Int, y: Int, z: Int) : Vec3t<Int>(x, y, z) {
     }
 
 
-    // TODO
-    infix fun ceilMultiple(b: Vec3i) = ceilMultiple(b.x, b.y, b.z)
-
-    fun ceilMultiple(bX: Int, bY: Int, bZ: Int) = Vec3i(x ceilMultiple bX, y ceilMultiple bY, z ceilMultiple bZ)
-    fun greaterThan(b: Int) = Vec3bool(x > b, y > b, z > b)
-    infix fun max(b: Int) = max(b, b, b)
-    fun max(bX: Int, bY: Int, bZ: Int) = Vec3i(Math.max(x, bX), Math.max(y, bY), Math.max(z, bZ))
-    fun comptimes() = x * y * z
-
-
     // -- Unary arithmetic operators --
 
     operator fun unaryPlus() = this
