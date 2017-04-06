@@ -6,7 +6,7 @@ import glm.vec._3.Vec3i
  * Created by GBarbieri on 04.04.2017.
  */
 
-interface round {
+interface round_ {
 
 
     fun ceilMultiple(source: Float, multiple: Float) =

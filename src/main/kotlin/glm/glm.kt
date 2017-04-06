@@ -13,7 +13,6 @@ import glm.mat.operators.mat2x2_operators
 import glm.mat.operators.mat3x3_operators
 import glm.mat.operators.mat4x4_operators
 import glm.quat.quat_func
-import glm.vec._3.Vec3i
 
 @JvmField val glm = Glm
 
@@ -47,7 +46,9 @@ object Glm :
 
         componentWise,
 
-        round {
+        round_,
+
+        func_integer {
 
     @JvmField val detail = Detail
 
