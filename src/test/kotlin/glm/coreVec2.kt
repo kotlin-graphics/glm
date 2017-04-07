@@ -23,8 +23,6 @@ class coreVec2 : StringSpec() {
             run {
                 val a = Vec2(1f)
                 val b = Vec2(1f)
-                val c = Vec2i(1)
-                val d = b + c
 
                 a shouldBe b
                 (a != b) shouldBe false
