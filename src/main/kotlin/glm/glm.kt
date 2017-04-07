@@ -42,8 +42,6 @@ object Glm :
 
         epsilon,
 
-        ext,
-
         componentWise,
 
         round_,
