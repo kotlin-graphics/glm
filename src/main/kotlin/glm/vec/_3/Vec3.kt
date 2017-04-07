@@ -220,63 +220,63 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     // -- Generic binary arithmetic operators --
 
     infix operator fun plus(b: Number) = plus(Vec3(), this, b.f, b.f, b.f)
-    infix operator fun plus(b: Vec3t<Number>) = plus(Vec3(), this, b.x.f, b.y.f, b.z.f)
+    infix operator fun plus(b: Vec3t<out Number>) = plus(Vec3(), this, b.x.f, b.y.f, b.z.f)
 
     @JvmOverloads fun plus(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = plus(res, this, bX.f, bY.f, bZ.f)
     fun plus(b: Number, res: Vec3) = plus(res, this, b.f, b.f, b.f)
-    fun plus(b: Vec3t<Number>, res: Vec3 = Vec3()) = plus(res, this, b.x.f, b.y.f, b.z.f)
+    fun plus(b: Vec3t<out Number>, res: Vec3 = Vec3()) = plus(res, this, b.x.f, b.y.f, b.z.f)
 
     fun plus_(bX: Number, bY: Number, bZ: Number) = plus(this, this, bX.f, bY.f, bZ.f)
     infix fun plus_(b: Number) = plus(this, this, b.f, b.f, b.f)
-    infix fun plus_(b: Vec3t<Number>) = plus(this, this, b.x.f, b.y.f, b.z.f)
+    infix fun plus_(b: Vec3t<out Number>) = plus(this, this, b.x.f, b.y.f, b.z.f)
 
 
     infix operator fun minus(b: Number) = minus(Vec3(), this, b.f, b.f, b.f)
-    infix operator fun minus(b: Vec3t<Number>) = minus(Vec3(), this, b.x.f, b.y.f, b.z.f)
+    infix operator fun minus(b: Vec3t<out Number>) = minus(Vec3(), this, b.x.f, b.y.f, b.z.f)
 
     fun minus(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = minus(res, this, bX.f, bY.f, bZ.f)
     fun minus(b: Number, res: Vec3 = Vec3()) = minus(res, this, b.f, b.f, b.f)
-    fun minus(b: Vec3t<Number>, res: Vec3 = Vec3()) = minus(res, this, b.x.f, b.y.f, b.z.f)
+    fun minus(b: Vec3t<out Number>, res: Vec3 = Vec3()) = minus(res, this, b.x.f, b.y.f, b.z.f)
 
     fun minus_(bX: Number, bY: Number, bZ: Number) = minus(this, this, bX.f, bY.f, bZ.f)
     infix fun minus_(b: Number) = minus(this, this, b.f, b.f, b.f)
-    infix fun minus_(b: Vec3t<Number>) = minus(this, this, b.x.f, b.y.f, b.z.f)
+    infix fun minus_(b: Vec3t<out Number>) = minus(this, this, b.x.f, b.y.f, b.z.f)
 
 
     infix operator fun times(b: Number) = times(Vec3(), this, b.f, b.f, b.f)
-    infix operator fun times(b: Vec3t<Number>) = times(Vec3(), this, b.x.f, b.y.f, b.z.f)
+    infix operator fun times(b: Vec3t<out Number>) = times(Vec3(), this, b.x.f, b.y.f, b.z.f)
 
     fun times(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = times(res, this, bX.f, bY.f, bZ.f)
     fun times(b: Number, res: Vec3 = Vec3()) = times(res, this, b.f, b.f, b.f)
-    fun times(b: Vec3t<Number>, res: Vec3 = Vec3()) = times(res, this, b.x.f, b.y.f, b.z.f)
+    fun times(b: Vec3t<out Number>, res: Vec3 = Vec3()) = times(res, this, b.x.f, b.y.f, b.z.f)
 
     fun times_(bX: Number, bY: Number, bZ: Number) = times(this, this, bX.f, bY.f, bZ.f)
     infix fun times_(b: Number) = times(this, this, b.f, b.f, b.f)
-    infix fun times_(b: Vec3t<Number>) = times(this, this, b.x.f, b.y.f, b.z.f)
+    infix fun times_(b: Vec3t<out Number>) = times(this, this, b.x.f, b.y.f, b.z.f)
 
 
     infix operator fun div(b: Number) = div(Vec3(), this, b.f, b.f, b.f)
-    infix operator fun div(b: Vec3t<Number>) = div(Vec3(), this, b.x.f, b.y.f, b.z.f)
+    infix operator fun div(b: Vec3t<out Number>) = div(Vec3(), this, b.x.f, b.y.f, b.z.f)
 
     fun div(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = div(res, this, bX.f, bY.f, bZ.f)
     fun div(b: Number, res: Vec3 = Vec3()) = div(res, this, b.f, b.f, b.f)
-    fun div(b: Vec3t<Number>, res: Vec3 = Vec3()) = div(res, this, b.x.f, b.y.f, b.z.f)
+    fun div(b: Vec3t<out Number>, res: Vec3 = Vec3()) = div(res, this, b.x.f, b.y.f, b.z.f)
 
     fun div_(bX: Number, bY: Number, bZ: Number) = div(this, this, bX.f, bY.f, bZ.f)
     infix fun div_(b: Number) = div(this, this, b.f, b.f, b.f)
-    infix fun div_(b: Vec3t<Number>) = div(this, this, b.x.f, b.y.f, b.z.f)
+    infix fun div_(b: Vec3t<out Number>) = div(this, this, b.x.f, b.y.f, b.z.f)
 
 
     infix operator fun rem(b: Number) = rem(Vec3(), this, b.f, b.f, b.f)
-    infix operator fun rem(b: Vec3t<Number>) = rem(Vec3(), this, b.x.f, b.y.f, b.z.f)
+    infix operator fun rem(b: Vec3t<out Number>) = rem(Vec3(), this, b.x.f, b.y.f, b.z.f)
 
     fun rem(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = rem(res, this, bX.f, bY.f, bZ.f)
     fun rem(b: Number, res: Vec3 = Vec3()) = rem(res, this, b.f, b.f, b.f)
-    fun rem(b: Vec3t<Number>, res: Vec3 = Vec3()) = rem(res, this, b.x.f, b.y.f, b.z.f)
+    fun rem(b: Vec3t<out Number>, res: Vec3 = Vec3()) = rem(res, this, b.x.f, b.y.f, b.z.f)
 
     fun rem_(bX: Number, bY: Number, bZ: Number) = rem(this, this, bX.f, bY.f, bZ.f)
     infix fun rem_(b: Number) = rem(this, this, b.f, b.f, b.f)
-    infix fun rem_(b: Vec3t<Number>) = rem(this, this, b.x.f, b.y.f, b.z.f)
+    infix fun rem_(b: Vec3t<out Number>) = rem(this, this, b.x.f, b.y.f, b.z.f)
 
 
     // -- functions --

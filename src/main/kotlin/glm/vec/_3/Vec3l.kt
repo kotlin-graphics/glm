@@ -192,63 +192,63 @@ class Vec3l(x: Long, y: Long, z: Long) : Vec3t<Long>(x, y, z) {
     // -- Generic binary arithmetic operators --
 
     operator fun plus(b: Number) = plus(Vec3l(), this, b.L, b.L, b.L)
-    operator fun plus(b: Vec3t<Number>) = plus(Vec3l(), this, b.x.L, b.y.L, b.z.L)
+    operator fun plus(b: Vec3t<out Number>) = plus(Vec3l(), this, b.x.L, b.y.L, b.z.L)
 
     fun plus(bX: Number, bY: Number, bZ: Number, res: Vec3l = Vec3l()) = plus(res, this, bX.L, bY.L, bZ.L)
     fun plus(b: Number, res: Vec3l = Vec3l()) = plus(res, this, b.L, b.L, b.L)
-    fun plus(b: Vec3t<Number>, res: Vec3l = Vec3l()) = plus(res, this, b.x.L, b.y.L, b.z.L)
+    fun plus(b: Vec3t<out Number>, res: Vec3l = Vec3l()) = plus(res, this, b.x.L, b.y.L, b.z.L)
 
     fun plus_(bX: Number, bY: Number, bZ: Number) = plus(this, this, bX.L, bY.L, bZ.L)
     infix fun plus_(b: Number) = plus(this, this, b.L, b.L, b.L)
-    infix fun plus_(b: Vec3t<Number>) = plus(this, this, b.x.L, b.y.L, b.z.L)
+    infix fun plus_(b: Vec3t<out Number>) = plus(this, this, b.x.L, b.y.L, b.z.L)
 
 
     operator fun minus(b: Number) = minus(Vec3l(), this, b.L, b.L, b.L)
-    operator fun minus(b: Vec3t<Number>) = minus(Vec3l(), this, b.x.L, b.y.L, b.z.L)
+    operator fun minus(b: Vec3t<out Number>) = minus(Vec3l(), this, b.x.L, b.y.L, b.z.L)
 
     fun minus(bX: Number, bY: Number, bZ: Number, res: Vec3l = Vec3l()) = minus(res, this, bX.L, bY.L, bZ.L)
     fun minus(b: Number, res: Vec3l = Vec3l()) = minus(res, this, b.L, b.L, b.L)
-    fun minus(b: Vec3t<Number>, res: Vec3l = Vec3l()) = minus(res, this, b.x.L, b.y.L, b.z.L)
+    fun minus(b: Vec3t<out Number>, res: Vec3l = Vec3l()) = minus(res, this, b.x.L, b.y.L, b.z.L)
 
     fun minus_(bX: Number, bY: Number, bZ: Number) = minus(this, this, bX.L, bY.L, bZ.L)
     infix fun minus_(b: Number) = minus(this, this, b.L, b.L, b.L)
-    infix fun minus_(b: Vec3t<Number>) = minus(this, this, b.x.L, b.y.L, b.z.L)
+    infix fun minus_(b: Vec3t<out Number>) = minus(this, this, b.x.L, b.y.L, b.z.L)
 
 
     operator fun times(b: Number) = times(Vec3l(), this, b.L, b.L, b.L)
-    operator fun times(b: Vec3t<Number>) = times(Vec3l(), this, b.x.L, b.y.L, b.z.L)
+    operator fun times(b: Vec3t<out Number>) = times(Vec3l(), this, b.x.L, b.y.L, b.z.L)
 
     fun times(bX: Number, bY: Number, bZ: Number, res: Vec3l = Vec3l()) = times(res, this, bX.L, bY.L, bZ.L)
     fun times(b: Number, res: Vec3l = Vec3l()) = times(res, this, b.L, b.L, b.L)
-    fun times(b: Vec3t<Number>, res: Vec3l = Vec3l()) = times(res, this, b.x.L, b.y.L, b.z.L)
+    fun times(b: Vec3t<out Number>, res: Vec3l = Vec3l()) = times(res, this, b.x.L, b.y.L, b.z.L)
 
     fun times_(bX: Number, bY: Number, bZ: Number) = times(this, this, bX.L, bY.L, bZ.L)
     infix fun times_(b: Number) = times(this, this, b.L, b.L, b.L)
-    infix fun times_(b: Vec3t<Number>) = times(this, this, b.x.L, b.y.L, b.z.L)
+    infix fun times_(b: Vec3t<out Number>) = times(this, this, b.x.L, b.y.L, b.z.L)
 
 
     operator fun div(b: Number) = div(Vec3l(), this, b.L, b.L, b.L)
-    operator fun div(b: Vec3t<Number>) = div(Vec3l(), this, b.x.L, b.y.L, b.z.L)
+    operator fun div(b: Vec3t<out Number>) = div(Vec3l(), this, b.x.L, b.y.L, b.z.L)
 
     fun div(bX: Number, bY: Number, bZ: Number, res: Vec3l = Vec3l()) = div(res, this, bX.L, bY.L, bZ.L)
     fun div(b: Number, res: Vec3l) = div(res, this, b.L, b.L, b.L)
-    fun div(b: Vec3t<Number>, res: Vec3l) = div(res, this, b.x.L, b.y.L, b.z.L)
+    fun div(b: Vec3t<out Number>, res: Vec3l) = div(res, this, b.x.L, b.y.L, b.z.L)
 
     fun div_(bX: Number, bY: Number, bZ: Number) = div(this, this, bX.L, bY.L, bZ.L)
     infix fun div_(b: Number) = div(this, this, b.L, b.L, b.L)
-    infix fun div_(b: Vec3t<Number>) = div(this, this, b.x.L, b.y.L, b.z.L)
+    infix fun div_(b: Vec3t<out Number>) = div(this, this, b.x.L, b.y.L, b.z.L)
 
 
     operator fun rem(b: Number) = rem(Vec3l(), this, b.L, b.L, b.L)
-    operator fun rem(b: Vec3t<Number>) = rem(Vec3l(), this, b.x.L, b.y.L, b.z.L)
+    operator fun rem(b: Vec3t<out Number>) = rem(Vec3l(), this, b.x.L, b.y.L, b.z.L)
 
     fun rem(bX: Number, bY: Number, bZ: Number, res: Vec3l = Vec3l()) = rem(res, this, bX.L, bY.L, bZ.L)
     fun rem(b: Number, res: Vec3l) = rem(res, this, b.L, b.L, b.L)
-    fun rem(b: Vec3t<Number>, res: Vec3l) = rem(res, this, b.x.L, b.y.L, b.z.L)
+    fun rem(b: Vec3t<out Number>, res: Vec3l) = rem(res, this, b.x.L, b.y.L, b.z.L)
 
     fun rem_(bX: Number, bY: Number, bZ: Number) = rem(this, this, bX.L, bY.L, bZ.L)
     infix fun rem_(b: Number) = rem(this, this, b.L, b.L, b.L)
-    infix fun rem_(b: Vec3t<Number>) = rem(this, this, b.x.L, b.y.L, b.z.L)
+    infix fun rem_(b: Vec3t<out Number>) = rem(this, this, b.x.L, b.y.L, b.z.L)
 
 
     // -- Specific bitwise operators --
@@ -330,13 +330,13 @@ class Vec3l(x: Long, y: Long, z: Long) : Vec3t<Long>(x, y, z) {
     // -- Generic bitwise operators --
 
     infix fun and(b: Number) = and(Vec3l(), this, b.L, b.L, b.L)
-    infix fun and(b: Vec3t<Number>) = and(Vec3l(), this, b.x.L, b.y.L, b.z.L)
+    infix fun and(b: Vec3t<out Number>) = and(Vec3l(), this, b.x.L, b.y.L, b.z.L)
 
     infix fun and_(b: Number) = and(this, this, b.L, b.L, b.L)
-    infix fun and_(b: Vec3t<Number>) = and(this, this, b.x.L, b.y.L, b.z.L)
+    infix fun and_(b: Vec3t<out Number>) = and(this, this, b.x.L, b.y.L, b.z.L)
 
     fun and(b: Number, res: Vec3l) = and(res, this, b.L, b.L, b.L)
-    fun and(b: Vec3t<Number>, res: Vec3l) = and(res, this, b.x.L, b.y.L, b.z.L)
+    fun and(b: Vec3t<out Number>, res: Vec3l) = and(res, this, b.x.L, b.y.L, b.z.L)
 
     fun and(bX: Number, bY: Number, bZ: Number, res: Vec3l = Vec3l()) = and(res, this, bX.L, bY.L, bZ.L)
 
@@ -344,13 +344,13 @@ class Vec3l(x: Long, y: Long, z: Long) : Vec3t<Long>(x, y, z) {
 
 
     infix fun or(b: Number) = or(Vec3l(), this, b.L, b.L, b.L)
-    infix fun or(b: Vec3t<Number>) = or(Vec3l(), this, b.x.L, b.y.L, b.z.L)
+    infix fun or(b: Vec3t<out Number>) = or(Vec3l(), this, b.x.L, b.y.L, b.z.L)
 
     infix fun or_(b: Number) = or(this, this, b.L, b.L, b.L)
-    infix fun or_(b: Vec3t<Number>) = or(this, this, b.x.L, b.y.L, b.z.L)
+    infix fun or_(b: Vec3t<out Number>) = or(this, this, b.x.L, b.y.L, b.z.L)
 
     fun or(b: Number, res: Vec3l) = or(res, this, b.L, b.L, b.L)
-    fun or(b: Vec3t<Number>, res: Vec3l) = or(res, this, b.x.L, b.y.L, b.z.L)
+    fun or(b: Vec3t<out Number>, res: Vec3l) = or(res, this, b.x.L, b.y.L, b.z.L)
 
     fun or(bX: Number, bY: Number, bZ: Number, res: Vec3l = Vec3l()) = or(res, this, bX.L, bY.L, bZ.L)
 
@@ -358,13 +358,13 @@ class Vec3l(x: Long, y: Long, z: Long) : Vec3t<Long>(x, y, z) {
 
 
     infix fun xor(b: Number) = xor(Vec3l(), this, b.L, b.L, b.L)
-    infix fun xor(b: Vec3t<Number>) = xor(Vec3l(), this, b.x.L, b.y.L, b.z.L)
+    infix fun xor(b: Vec3t<out Number>) = xor(Vec3l(), this, b.x.L, b.y.L, b.z.L)
 
     infix fun xor_(b: Number) = xor(this, this, b.L, b.L, b.L)
-    infix fun xor_(b: Vec3t<Number>) = xor(this, this, b.x.L, b.y.L, b.z.L)
+    infix fun xor_(b: Vec3t<out Number>) = xor(this, this, b.x.L, b.y.L, b.z.L)
 
     fun xor(b: Number, res: Vec3l) = xor(res, this, b.L, b.L, b.L)
-    fun xor(b: Vec3t<Number>, res: Vec3l) = xor(res, this, b.x.L, b.y.L, b.z.L)
+    fun xor(b: Vec3t<out Number>, res: Vec3l) = xor(res, this, b.x.L, b.y.L, b.z.L)
 
     fun xor(bX: Number, bY: Number, bZ: Number, res: Vec3l = Vec3l()) = xor(res, this, bX.L, bY.L, bZ.L)
 
@@ -372,13 +372,13 @@ class Vec3l(x: Long, y: Long, z: Long) : Vec3t<Long>(x, y, z) {
 
 
     infix fun shl(b: Number) = shl(Vec3l(), this, b.L, b.L, b.L)
-    infix fun shl(b: Vec3t<Number>) = shl(Vec3l(), this, b.x.L, b.y.L, b.z.L)
+    infix fun shl(b: Vec3t<out Number>) = shl(Vec3l(), this, b.x.L, b.y.L, b.z.L)
 
     infix fun shl_(b: Number) = shl(this, this, b.L, b.L, b.L)
-    infix fun shl_(b: Vec3t<Number>) = shl(this, this, b.x.L, b.y.L, b.z.L)
+    infix fun shl_(b: Vec3t<out Number>) = shl(this, this, b.x.L, b.y.L, b.z.L)
 
     fun shl(b: Number, res: Vec3l) = shl(res, this, b.L, b.L, b.L)
-    fun shl(b: Vec3t<Number>, res: Vec3l) = shl(res, this, b.x.L, b.y.L, b.z.L)
+    fun shl(b: Vec3t<out Number>, res: Vec3l) = shl(res, this, b.x.L, b.y.L, b.z.L)
 
     fun shl(bX: Number, bY: Number, bZ: Number, res: Vec3l = Vec3l()) = shl(res, this, bX.L, bY.L, bZ.L)
 
@@ -386,13 +386,13 @@ class Vec3l(x: Long, y: Long, z: Long) : Vec3t<Long>(x, y, z) {
 
 
     infix fun shr(b: Number) = shr(Vec3l(), this, b.L, b.L, b.L)
-    infix fun shr(b: Vec3t<Number>) = shr(Vec3l(), this, b.x.L, b.y.L, b.z.L)
+    infix fun shr(b: Vec3t<out Number>) = shr(Vec3l(), this, b.x.L, b.y.L, b.z.L)
 
     infix fun shr_(b: Number) = shr(this, this, b.L, b.L, b.L)
-    infix fun shr_(b: Vec3t<Number>) = shr(this, this, b.x.L, b.y.L, b.z.L)
+    infix fun shr_(b: Vec3t<out Number>) = shr(this, this, b.x.L, b.y.L, b.z.L)
 
     fun shr(b: Number, res: Vec3l) = shr(res, this, b.L, b.L, b.L)
-    fun shr(b: Vec3t<Number>, res: Vec3l) = shr(res, this, b.x.L, b.y.L, b.z.L)
+    fun shr(b: Vec3t<out Number>, res: Vec3l) = shr(res, this, b.x.L, b.y.L, b.z.L)
 
     fun shr(bX: Number, bY: Number, bZ: Number, res: Vec3l = Vec3l()) = shr(res, this, bX.L, bY.L, bZ.L)
 
