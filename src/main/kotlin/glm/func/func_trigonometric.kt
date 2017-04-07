@@ -41,6 +41,13 @@ interface func_trigonometric {
     fun degrees(rad: Float) = Math.toDegrees(rad.d).f
     fun degrees(rad: Double) = Math.toDegrees(rad)
 
+    fun degrees(rad: Vec2) = degrees(rad, Vec2())
+    fun degrees(rad: Vec2d) = degrees(rad, Vec2d())
+    fun degrees(rad: Vec3) = degrees(rad, Vec3())
+    fun degrees(rad: Vec3d) = degrees(rad, Vec3d())
+    fun degrees(rad: Vec4) = degrees(rad, Vec4())
+    fun degrees(rad: Vec4d) = degrees(rad, Vec4d())
+    
     fun degrees(rad: Vec2, res: Vec2): Vec2 {
         res.x = Math.toDegrees(rad.x.d).f
         res.y = Math.toDegrees(rad.y.d).f
@@ -84,43 +91,50 @@ interface func_trigonometric {
     fun radians(deg: Float) = Math.toRadians(deg.d).f
     fun radians(deg: Double) = Math.toRadians(deg)
 
-    fun radians(rad: Vec2, res: Vec2): Vec2 {
-        res.x = Math.toRadians(rad.x.d).f
-        res.y = Math.toRadians(rad.y.d).f
+    fun radians(rad: Vec2) = radians(rad, Vec2())
+    fun radians(rad: Vec2d) = radians(rad, Vec2d())
+    fun radians(rad: Vec3) = radians(rad, Vec3())
+    fun radians(rad: Vec3d) = radians(rad, Vec3d())
+    fun radians(rad: Vec4) = radians(rad, Vec4())
+    fun radians(rad: Vec4d) = radians(rad, Vec4d())
+
+    fun radians(deg: Vec2, res: Vec2): Vec2 {
+        res.x = Math.toRadians(deg.x.d).f
+        res.y = Math.toRadians(deg.y.d).f
         return res
     }
 
-    fun radians(rad: Vec2d, res: Vec2d): Vec2d {
-        res.x = Math.toRadians(rad.x)
-        res.y = Math.toRadians(rad.y)
+    fun radians(deg: Vec2d, res: Vec2d): Vec2d {
+        res.x = Math.toRadians(deg.x)
+        res.y = Math.toRadians(deg.y)
         return res
     }
 
-    fun radians(rad: Vec3, res: Vec3): Vec3 {
-        res.x = Math.toRadians(rad.x.d).f
-        res.y = Math.toRadians(rad.y.d).f
-        res.z = Math.toRadians(rad.z.d).f
+    fun radians(deg: Vec3, res: Vec3): Vec3 {
+        res.x = Math.toRadians(deg.x.d).f
+        res.y = Math.toRadians(deg.y.d).f
+        res.z = Math.toRadians(deg.z.d).f
         return res
     }
 
-    fun radians(rad: Vec3d, res: Vec3d): Vec3d {
-        res.x = Math.toRadians(rad.x)
-        res.y = Math.toRadians(rad.y)
-        res.z = Math.toRadians(rad.z)
+    fun radians(deg: Vec3d, res: Vec3d): Vec3d {
+        res.x = Math.toRadians(deg.x)
+        res.y = Math.toRadians(deg.y)
+        res.z = Math.toRadians(deg.z)
         return res
     }
 
-    fun radians(rad: Vec4, res: Vec4): Vec4 {
-        res.x = Math.toRadians(rad.x.d).f
-        res.y = Math.toRadians(rad.y.d).f
-        res.z = Math.toRadians(rad.z.d).f
+    fun radians(deg: Vec4, res: Vec4): Vec4 {
+        res.x = Math.toRadians(deg.x.d).f
+        res.y = Math.toRadians(deg.y.d).f
+        res.z = Math.toRadians(deg.z.d).f
         return res
     }
 
-    fun radians(rad: Vec4d, res: Vec4d): Vec4d {
-        res.x = Math.toRadians(rad.x)
-        res.y = Math.toRadians(rad.y)
-        res.z = Math.toRadians(rad.z)
+    fun radians(deg: Vec4d, res: Vec4d): Vec4d {
+        res.x = Math.toRadians(deg.x)
+        res.y = Math.toRadians(deg.y)
+        res.z = Math.toRadians(deg.z)
         return res
     }
 }
