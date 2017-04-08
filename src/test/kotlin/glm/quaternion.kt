@@ -3,15 +3,13 @@ package glm
 import glm.quat.Quat
 import glm.quat.times
 import glm.vec._3.Vec3
-import io.kotlintest.KTestJUnitRunner
+import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
-import org.junit.runner.RunWith
 
 /**
  * Created by elect on 04/03/2017.
  */
 
-@RunWith(KTestJUnitRunner::class)
 class quaternion : StringSpec() {
 
     init {

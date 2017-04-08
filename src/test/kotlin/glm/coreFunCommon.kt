@@ -1,19 +1,14 @@
 package glm
 
-import io.kotlintest.KTestJUnitRunner
-import io.kotlintest.specs.StringSpec
-import glm.d
-import glm.glm
-import org.junit.Test
-import org.junit.runner.RunWith
 import glm.vec._2.Vec2
 import glm.vec._2.Vec2ub
+import io.kotlintest.matchers.shouldBe
+import io.kotlintest.specs.StringSpec
 
 /**
  * Created by elect on 11/11/16.
  */
 
-@RunWith(KTestJUnitRunner::class)
 class coreFunCommon : StringSpec() {
 
     init {
@@ -22,7 +17,7 @@ class coreFunCommon : StringSpec() {
 
             run {
                 val a = 1.1f
-                glm.floor(a) shouldBe 1f
+                glm.floor(a) shouldBe  1f
             }
 
             run {

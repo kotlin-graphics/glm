@@ -16,33 +16,61 @@ data class Vec4bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
 
     // -- Component accesses --
 
-    operator fun get(i: Int): Boolean = when (i) {0 -> x; 1 -> y; 2 -> z; else -> w; }
-
-    operator fun set(i: Int, b: Boolean) = when (i) {0 -> x = b; 1 -> y = b; 2 -> z = b; else -> w = b; }
-
-
-    fun set(b: Boolean): Vec4bool {
-        x = b; y = b; z = b; w = b; return this
+    operator fun get(i: Int): Boolean = when (i) {
+        0 -> x
+        1 -> y
+        2 -> z
+        3 -> w
+        else -> throw IndexOutOfBoundsException()
     }
 
-    fun set(x: Boolean, y: Boolean, z: Boolean): Vec4bool {
-        this.x = x; this.y = y; this.z = z; this.w = w; return this
+    operator fun set(i: Int, b: Boolean) = when (i) {
+        0 -> x = b
+        1 -> y = b
+        2 -> z = b
+        3 -> w = b
+        else -> throw IndexOutOfBoundsException()
     }
 
-    fun set(ba: BooleanArray): Vec4bool {
-        x = ba[0]; y = ba[1]; z = ba[2]; w = ba[3]; return this
+
+    fun put(b: Boolean): Vec4bool {
+        x = b
+        y = b
+        z = b
+        w = b
+        return this
     }
 
-    fun set(ba: Array<Boolean>): Vec4bool {
-        x = ba[0]; y = ba[1]; z = ba[2]; w = ba[3]; return this
+    fun put(x: Boolean, y: Boolean, z: Boolean): Vec4bool {
+        this.x = x
+        this.y = y
+        this.z = z
+        this.w = w
+        return this
+    }
+
+    fun put(ba: BooleanArray): Vec4bool {
+        x = ba[0]
+        y = ba[1]
+        z = ba[2]
+        w = ba[3]
+        return this
+    }
+
+    fun put(ba: Array<Boolean>): Vec4bool {
+        x = ba[0]
+        y = ba[1]
+        z = ba[2]
+        w = ba[3]
+        return this
     }
 
 
     // -- Unary arithmetic vecOperators --
 
-    operator fun not(): Vec4bool = Vec4bool(x = !x, y = !y, z = !z, w = !w)
+    operator fun not(): Vec4bool = Vec4bool(!x, !y, !z, !w)
 
-    fun notAss(): Vec4bool {
+    fun not_(): Vec4bool {
         x = !x
         y = !y
         z = !z
@@ -51,6 +79,10 @@ data class Vec4bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
     }
 
     infix fun not(res: Vec4bool): Vec4bool {
-        res.x = !x; res.y = !y; res.z = !z; res.w = !w; return this
+        res.x = !x
+        res.y = !y
+        res.z = !z
+        res.w = !w
+        return this
     }
 }

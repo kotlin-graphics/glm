@@ -230,63 +230,63 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     // -- Generic binary arithmetic operators --
 
     operator fun plus(b: Number) = plus(Vec4(), this, b.f, b.f, b.f, b.f)
-    operator fun plus(b: Vec4t<Number>) = plus(Vec4(), this, b.x.f, b.y.f, b.z.f, b.w.f)
+    operator fun plus(b: Vec4t<out Number>) = plus(Vec4(), this, b.x.f, b.y.f, b.z.f, b.w.f)
 
     fun plus(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4 = Vec4()) = plus(res, this, bX.f, bY.f, bZ.f, bW.f)
     fun plus(b: Number, res: Vec4 = Vec4()) = plus(res, this, b.f, b.f, b.f, b.f)
-    fun plus(b: Vec4t<Number>, res: Vec4 = Vec4()) = plus(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    fun plus(b: Vec4t<out Number>, res: Vec4 = Vec4()) = plus(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
 
     fun plus_(bX: Number, bY: Number, bZ: Number, bW: Number) = plus(this, this, bX.f, bY.f, bZ.f, bW.f)
     infix fun plus_(b: Number) = plus(this, this, b.f, b.f, b.f, b.f)
-    infix fun plus_(b: Vec4t<Number>) = plus(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    infix fun plus_(b: Vec4t<out Number>) = plus(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
 
 
     operator fun minus(b: Number) = minus(Vec4(), this, b.f, b.f, b.f, b.f)
-    operator fun minus(b: Vec4t<Number>) = minus(Vec4(), this, b.x.f, b.y.f, b.z.f, b.w.f)
+    operator fun minus(b: Vec4t<out Number>) = minus(Vec4(), this, b.x.f, b.y.f, b.z.f, b.w.f)
 
     fun minus(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4 = Vec4()) = minus(res, this, bX.f, bY.f, bZ.f, bW.f)
     fun minus(b: Number, res: Vec4 = Vec4()) = minus(res, this, b.f, b.f, b.f, b.f)
-    fun minus(b: Vec4t<Number>, res: Vec4 = Vec4()) = minus(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    fun minus(b: Vec4t<out Number>, res: Vec4 = Vec4()) = minus(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
 
     fun minus_(bX: Number, bY: Number, bZ: Number, bW: Number) = minus(this, this, bX.f, bY.f, bZ.f, bW.f)
     infix fun minus_(b: Number) = minus(this, this, b.f, b.f, b.f, b.f)
-    infix fun minus_(b: Vec4t<Number>) = minus(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    infix fun minus_(b: Vec4t<out Number>) = minus(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
 
 
     operator fun times(b: Number) = times(Vec4(), this, b.f, b.f, b.f, b.f)
-    operator fun times(b: Vec4t<Number>) = times(Vec4(), this, b.x.f, b.y.f, b.z.f, b.w.f)
+    operator fun times(b: Vec4t<out Number>) = times(Vec4(), this, b.x.f, b.y.f, b.z.f, b.w.f)
 
     fun times(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4 = Vec4()) = times(res, this, bX.f, bY.f, bZ.f, bW.f)
     fun times(b: Number, res: Vec4 = Vec4()) = times(res, this, b.f, b.f, b.f, b.f)
-    fun times(b: Vec4t<Number>, res: Vec4 = Vec4()) = times(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    fun times(b: Vec4t<out Number>, res: Vec4 = Vec4()) = times(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
 
     fun times_(bX: Number, bY: Number, bZ: Number, bW: Number) = times(this, this, bX.f, bY.f, bZ.f, bW.f)
     infix fun times_(b: Number) = times(this, this, b.f, b.f, b.f, b.f)
-    infix fun times_(b: Vec4t<Number>) = times(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    infix fun times_(b: Vec4t<out Number>) = times(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
 
 
     operator fun div(b: Number) = div(Vec4(), this, b.f, b.f, b.f, b.f)
-    operator fun div(b: Vec4t<Number>) = div(Vec4(), this, b.x.f, b.y.f, b.z.f, b.w.f)
+    operator fun div(b: Vec4t<out Number>) = div(Vec4(), this, b.x.f, b.y.f, b.z.f, b.w.f)
 
     fun div(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4 = Vec4()) = div(res, this, bX.f, bY.f, bZ.f, bW.f)
     fun div(b: Number, res: Vec4 = Vec4()) = div(res, this, b.f, b.f, b.f, b.f)
-    fun div(b: Vec4t<Number>, res: Vec4 = Vec4()) = div(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    fun div(b: Vec4t<out Number>, res: Vec4 = Vec4()) = div(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
 
     fun div_(bX: Number, bY: Number, bZ: Number, bW: Number) = div(this, this, bX.f, bY.f, bZ.f, bW.f)
     infix fun div_(b: Number) = div(this, this, b.f, b.f, b.f, b.f)
-    infix fun div_(b: Vec4t<Number>) = div(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    infix fun div_(b: Vec4t<out Number>) = div(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
 
 
     operator fun rem(b: Number) = rem(Vec4(), this, b.f, b.f, b.f, b.f)
-    operator fun rem(b: Vec4t<Number>) = rem(Vec4(), this, b.x.f, b.y.f, b.z.f, b.w.f)
+    operator fun rem(b: Vec4t<out Number>) = rem(Vec4(), this, b.x.f, b.y.f, b.z.f, b.w.f)
 
     fun rem(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4 = Vec4()) = rem(res, this, bX.f, bY.f, bZ.f, bW.f)
     fun rem(b: Number, res: Vec4 = Vec4()) = rem(res, this, b.f, b.f, b.f, b.f)
-    fun rem(b: Vec4t<Number>, res: Vec4 = Vec4()) = rem(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    fun rem(b: Vec4t<out Number>, res: Vec4 = Vec4()) = rem(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
 
     fun rem_(bX: Number, bY: Number, bZ: Number, bW: Number) = rem(this, this, bX.f, bY.f, bZ.f, bW.f)
     infix fun rem_(b: Number) = rem(this, this, b.f, b.f, b.f, b.f)
-    infix fun rem_(b: Vec4t<Number>) = rem(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    infix fun rem_(b: Vec4t<out Number>) = rem(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
 
 
     // -- functions --

@@ -238,12 +238,3 @@ val Float.sin
     get() = Math.sin(this.d).f
 val Double.sin
     get() = Math.sin(this)
-
-interface ext {
-
-    fun toDeg(rad: Float) = Math.toDegrees(rad.d).f
-    fun toDeg(rad: Double) = Math.toDegrees(rad)
-
-    fun toRad(deg: Float) = Math.toRadians(deg.d).f
-    fun toRad(deg: Double) = Math.toRadians(deg)
-}

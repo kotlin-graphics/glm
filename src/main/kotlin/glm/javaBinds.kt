@@ -13,8 +13,8 @@ fun Float.Companion.intBitsToFloat(bits: Int) = java.lang.Float.intBitsToFloat(b
 fun Double.Companion.longBitsToDouble(bits: Long) = java.lang.Double.longBitsToDouble(bits)
 
 // TODO check https://youtrack.jetbrains.com/issue/KT-8247
-val Byte.Companion.BYTES: Long
-    get() = java.lang.Byte.BYTES.L
+val Byte.Companion.BYTES: Int
+    get() = java.lang.Byte.BYTES
 val Float.Companion.BYTES: Int
     get() = java.lang.Float.BYTES
 val Double.Companion.BYTES: Int

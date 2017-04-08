@@ -1,6 +1,5 @@
 package glm
 
-import io.kotlintest.specs.StringSpec
 import glm.Glm.matrixCompMult
 import glm.mat.Mat2
 import glm.mat.Mat3
@@ -8,6 +7,8 @@ import glm.mat.Mat4
 import glm.vec._2.Vec2
 import glm.vec._3.Vec3
 import glm.vec._4.Vec4
+import io.kotlintest.matchers.shouldBe
+import io.kotlintest.specs.StringSpec
 
 /**
  * Created by GBarbieri on 07.03.2017.
@@ -23,7 +24,7 @@ class coreFuncMatrix : StringSpec() {
                 val m = Mat2(0, 1, 2, 3)
                 val n = matrixCompMult(m, m)
 
-                n shouldBe Mat2(0, 1, 4, 9)
+                n shouldBe  Mat2(0, 1, 4, 9)
             }
 
             run {

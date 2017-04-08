@@ -301,6 +301,7 @@ interface func_vector3_common {
         return res
     }
 
+
     fun max(a: Vec3, b: Float) = max(a, b, Vec3())
     fun max(a: Vec3, b: Float, res: Vec3): Vec3 {
         res.x = max(a.x, b)

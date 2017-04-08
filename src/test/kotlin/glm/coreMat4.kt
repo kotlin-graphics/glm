@@ -1,19 +1,15 @@
 package glm
 
-import io.kotlintest.KTestJUnitRunner
-import io.kotlintest.specs.StringSpec
-import glm.glm
 import glm.mat.Mat4
-import glm.mat.operators.div
 import glm.mat.operators.times
 import glm.vec._4.Vec4
-import org.junit.runner.RunWith
+import io.kotlintest.matchers.shouldBe
+import io.kotlintest.specs.StringSpec
 
 /**
  * Created by GBarbieri on 12.12.2016.
  */
 
-@RunWith(KTestJUnitRunner::class)
 class coreMat4 : StringSpec() {
 
     init {
