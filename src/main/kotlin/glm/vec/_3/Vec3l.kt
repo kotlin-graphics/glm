@@ -397,4 +397,10 @@ class Vec3l(x: Long, y: Long, z: Long) : Vec3t<Long>(x, y, z) {
     fun shr(bX: Number, bY: Number, bZ: Number, res: Vec3l = Vec3l()) = shr(res, this, bX.L, bY.L, bZ.L)
 
     fun shr_(bX: Number, bY: Number, bZ: Number) = shr(this, this, bX.L, bY.L, bZ.L)
+
+
+    override fun equals(other: Any?) =
+            if (other is Vec3l)
+                this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
+            else false
 }

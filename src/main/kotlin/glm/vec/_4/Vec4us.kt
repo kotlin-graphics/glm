@@ -515,4 +515,10 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
     fun shr(b: Number, res: Vec4us) = shr(res, this, b.i, b.i, b.i, b.i)
     fun shr(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4us) = shr(res, this, bX.i, bY.i, bZ.i, bW.i)
     fun shr(b: Vec4t<out Number>, res: Vec4us) = shr(res, this, b.x.i, b.y.i, b.z.i, b.w.i)
+
+
+    override fun equals(other: Any?) =
+            if (other is Vec4us)
+                this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
+            else false
 }

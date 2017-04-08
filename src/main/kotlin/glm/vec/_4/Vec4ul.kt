@@ -436,4 +436,10 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
 
     fun shr(b: Number, res: Vec4ul) = shr(res, this, b.L, b.L, b.L, b.L)
     fun shr(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4ul) = shr(res, this, bX.L, bY.L, bZ.L, bW.L)
+
+
+    override fun equals(other: Any?) =
+            if (other is Vec4ul)
+                this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
+            else false
 }

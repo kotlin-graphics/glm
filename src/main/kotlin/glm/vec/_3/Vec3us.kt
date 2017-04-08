@@ -496,4 +496,10 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
     fun shr(b: Number, res: Vec3us) = shr(res, this, b.i, b.i, b.i)
     fun shr(bX: Number, bY: Number, bZ: Number, res: Vec3us) = shr(res, this, bX.i, bY.i, bZ.i)
     fun shr(b: Vec3t<out Number>, res: Vec3us) = shr(res, this, b.x.i, b.y.i, b.z.i)
+
+
+    override fun equals(other: Any?) =
+            if (other is Vec3us)
+                this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
+            else false
 }

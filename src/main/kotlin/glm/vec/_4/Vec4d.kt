@@ -266,4 +266,10 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     fun rem_(bX: Number, bY: Number, bZ: Number, bW: Number) = rem(this, this, bX.d, bY.d, bZ.d, bW.d)
     infix fun rem_(b: Number) = rem(this, this, b.d, b.d, b.d, b.d)
     infix fun rem_(b: Vec4t<out Number>) = rem(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
+
+
+    override fun equals(other: Any?) =
+            if (other is Vec4d)
+                this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
+            else false
 }
