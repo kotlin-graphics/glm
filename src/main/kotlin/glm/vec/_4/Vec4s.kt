@@ -116,6 +116,7 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
         @JvmField val length = 4
         @JvmField val SIZE = length * Short.BYTES
     }
+    override fun instanceSIZE() = SIZE
 
     override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
 

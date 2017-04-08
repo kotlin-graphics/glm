@@ -1,7 +1,6 @@
 package glm.vec._4
 
 import glm.*
-import unsigned.Ushort
 import glm.vec.Vec2t
 import glm.vec.Vec3t
 import glm.vec.Vec4t
@@ -9,6 +8,7 @@ import glm.vec._4.operators.vec4us_operators
 import glm.vec.bool.Vec2bool
 import glm.vec.bool.Vec3bool
 import glm.vec.bool.Vec4bool
+import unsigned.Ushort
 import java.nio.*
 
 /**
@@ -109,6 +109,8 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
         3 -> w = s.us
         else -> throw ArrayIndexOutOfBoundsException()
     }
+
+    override fun instanceSIZE() = SIZE
 
 
     companion object : vec4us_operators {

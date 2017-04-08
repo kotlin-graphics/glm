@@ -116,6 +116,8 @@ class Vec4ui(x: Uint, y: Uint, z: Uint, w: Uint) : Vec4t<Uint>(x, y, z, w) {
         @JvmField val SIZE = length * Uint.BYTES
     }
 
+    override fun instanceSIZE() = SIZE
+
     override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
 
     override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {

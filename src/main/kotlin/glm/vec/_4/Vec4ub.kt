@@ -4,7 +4,6 @@ import glm.BYTES
 import glm.i
 import glm.set
 import glm.ub
-import unsigned.Ubyte
 import glm.vec.Vec2t
 import glm.vec.Vec3t
 import glm.vec.Vec4t
@@ -12,6 +11,7 @@ import glm.vec._4.operators.vec4ub_operators
 import glm.vec.bool.Vec2bool
 import glm.vec.bool.Vec3bool
 import glm.vec.bool.Vec4bool
+import unsigned.Ubyte
 import java.nio.*
 
 /**
@@ -93,6 +93,8 @@ class Vec4ub(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : Vec4t<Ubyte>(x, y, z, w) 
         @JvmField val length = 4
         @JvmField val SIZE = length * Ubyte.BYTES
     }
+
+    override fun instanceSIZE() = SIZE
 
     override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
 
