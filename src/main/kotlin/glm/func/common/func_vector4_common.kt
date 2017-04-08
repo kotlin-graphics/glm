@@ -1,28 +1,28 @@
 package glm.func.common
 
-import glm.vec._4.*
-import glm.vec.bool.Vec4bool
 import glm.Glm.abs
-import glm.Glm.sign
-import glm.Glm.floor
-import glm.Glm.trunc
-import glm.Glm.round
 import glm.Glm.ceil
-import glm.Glm.fract
-import glm.Glm.mod
-import glm.Glm.min
-import glm.Glm.max
-import glm.Glm.mix
 import glm.Glm.clamp
-import glm.Glm.step
-import glm.Glm.smoothStep
-import glm.Glm.isInf
-import glm.Glm.isNan
 import glm.Glm.floatBitsToInt
 import glm.Glm.floatBitsToUint
-import glm.Glm.intBitsToFloat
-import glm.Glm.uintBitsToFloat
+import glm.Glm.floor
 import glm.Glm.fma
+import glm.Glm.fract
+import glm.Glm.intBitsToFloat
+import glm.Glm.isInf
+import glm.Glm.isNan
+import glm.Glm.max
+import glm.Glm.min
+import glm.Glm.mix
+import glm.Glm.mod
+import glm.Glm.round
+import glm.Glm.sign
+import glm.Glm.smoothStep
+import glm.Glm.step
+import glm.Glm.trunc
+import glm.Glm.uintBitsToFloat
+import glm.vec._4.*
+import glm.vec.bool.Vec4bool
 
 /**
  * Created by GBarbieri on 11.11.2016.
@@ -314,6 +314,28 @@ interface func_vector4_common {
         return res
     }
 
+
+    fun min(a: Vec4i, b: Int) = min(a, b, Vec4i())
+    fun min(a: Vec4i, b: Int, res: Vec4i): Vec4i {
+        res.x = min(a.x, b)
+        res.y = min(a.y, b)
+        res.z = min(a.z, b)
+        res.w = min(a.w, b)
+        return res
+    }
+
+    fun min(a: Vec4i, b: Vec4i) = min(a, b, Vec4i())
+    fun min(a: Vec4i, b: Vec4i, res: Vec4i): Vec4i {
+        res.x = min(a.x, b.x)
+        res.y = min(a.y, b.y)
+        res.z = min(a.z, b.z)
+        res.w = min(a.w, b.w)
+        return res
+    }
+
+
+
+
     fun max(a: Vec4, b: Float) = max(a, b, Vec4())
     fun max(a: Vec4, b: Float, res: Vec4): Vec4 {
         res.x = max(a.x, b)
@@ -343,6 +365,25 @@ interface func_vector4_common {
 
     fun max(a: Vec4d, b: Vec4d) = max(a, b, Vec4d())
     fun max(a: Vec4d, b: Vec4d, res: Vec4d): Vec4d {
+        res.x = max(a.x, b.x)
+        res.y = max(a.y, b.y)
+        res.z = max(a.z, b.z)
+        res.w = max(a.w, b.w)
+        return res
+    }
+
+
+    fun max(a: Vec4i, b: Int) = max(a, b, Vec4i())
+    fun max(a: Vec4i, b: Int, res: Vec4i): Vec4i {
+        res.x = max(a.x, b)
+        res.y = max(a.y, b)
+        res.z = max(a.z, b)
+        res.w = max(a.w, b)
+        return res
+    }
+
+    fun max(a: Vec4i, b: Vec4i) = max(a, b, Vec4i())
+    fun max(a: Vec4i, b: Vec4i, res: Vec4i): Vec4i {
         res.x = max(a.x, b.x)
         res.y = max(a.y, b.y)
         res.z = max(a.z, b.z)

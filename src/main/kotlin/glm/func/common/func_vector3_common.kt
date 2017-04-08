@@ -285,6 +285,22 @@ interface func_vector3_common {
         return res
     }
 
+    fun min(a: Vec3i, b: Int) = min(a, b, Vec3i())
+    fun min(a: Vec3i, b: Int, res: Vec3i): Vec3i {
+        res.x = min(a.x, b)
+        res.y = min(a.y, b)
+        res.z = min(a.z, b)
+        return res
+    }
+
+    fun min(a: Vec3i, b: Vec3i) = min(a, b, Vec3i())
+    fun min(a: Vec3i, b: Vec3i, res: Vec3i): Vec3i {
+        res.x = min(a.x, b.x)
+        res.y = min(a.y, b.y)
+        res.z = min(a.z, b.z)
+        return res
+    }
+
     fun max(a: Vec3, b: Float) = max(a, b, Vec3())
     fun max(a: Vec3, b: Float, res: Vec3): Vec3 {
         res.x = max(a.x, b)
@@ -311,6 +327,22 @@ interface func_vector3_common {
 
     fun max(a: Vec3d, b: Vec3d) = max(a, b, Vec3d())
     fun max(a: Vec3d, b: Vec3d, res: Vec3d): Vec3d {
+        res.x = max(a.x, b.x)
+        res.y = max(a.y, b.y)
+        res.z = max(a.z, b.z)
+        return res
+    }
+
+    fun max(a: Vec3i, b: Int) = max(a, b, Vec3i())
+    fun max(a: Vec3i, b: Int, res: Vec3i): Vec3i {
+        res.x = max(a.x, b)
+        res.y = max(a.y, b)
+        res.z = max(a.z, b)
+        return res
+    }
+
+    fun max(a: Vec3i, b: Vec3i) = max(a, b, Vec3i())
+    fun max(a: Vec3i, b: Vec3i, res: Vec3i): Vec3i {
         res.x = max(a.x, b.x)
         res.y = max(a.y, b.y)
         res.z = max(a.z, b.z)

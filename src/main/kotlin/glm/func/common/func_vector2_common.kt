@@ -256,6 +256,22 @@ interface func_vector2_common {
         return res
     }
 
+    // TODO others
+    fun min(a: Vec2i, b: Int) = min(a, b, Vec2i())
+    fun min(a: Vec2i, b: Int, res: Vec2i): Vec2i {
+        res.x = min(a.x, b)
+        res.y = min(a.y, b)
+        return res
+    }
+
+    fun min(a: Vec2i, b: Vec2i) = min(a, b, Vec2i())
+    fun min(a: Vec2i, b: Vec2i, res: Vec2i): Vec2i {
+        res.x = min(a.x, b.x)
+        res.y = min(a.y, b.y)
+        return res
+    }
+
+
     fun max(a: Vec2, b: Float) = max(a, b, Vec2())
     fun max(a: Vec2, b: Float, res: Vec2): Vec2 {
         res.x = max(a.x, b)
@@ -284,6 +300,20 @@ interface func_vector2_common {
         return res
     }
 
+    fun max(a: Vec2i, b: Int) = max(a, b, Vec2i())
+    fun max(a: Vec2i, b: Int, res: Vec2i): Vec2i {
+        res.x = max(a.x, b)
+        res.y = max(a.y, b)
+        return res
+    }
+
+    fun max(a: Vec2i, b: Vec2i) = max(a, b, Vec2i())
+    fun max(a: Vec2i, b: Vec2i, res: Vec2i): Vec2i {
+        res.x = max(a.x, b.x)
+        res.y = max(a.y, b.y)
+        return res
+    }
+    
 
     fun clamp(a: Vec2, min: Float, max: Float) = clamp(a, min, max, Vec2())
     fun clamp(a: Vec2, min: Float, max: Float, res: Vec2): Vec2 {
