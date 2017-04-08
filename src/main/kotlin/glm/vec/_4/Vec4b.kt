@@ -3,6 +3,7 @@ package glm.vec._4
 import glm.BYTES
 import glm.b
 import glm.i
+import glm.set
 import glm.vec.Vec2t
 import glm.vec.Vec3t
 import glm.vec.Vec4t
@@ -93,6 +94,15 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
         @JvmField val SIZE = length * Byte.BYTES
     }
 
+    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes[index] = x
+        bytes[index + 1] = y
+        bytes[index + 2] = z
+        bytes[index + 3] = w
+        return bytes
+    }
 
     // -- Unary arithmetic operators --
 

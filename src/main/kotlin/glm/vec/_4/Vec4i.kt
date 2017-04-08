@@ -117,6 +117,16 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
         @JvmField val SIZE = length * Int.BYTES
     }
 
+    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putInt(index, x)
+        bytes.putInt(index + Int.BYTES, y)
+        bytes.putInt(index + Int.BYTES * 2, z)
+        bytes.putInt(index + Int.BYTES * 3, w)
+        return bytes
+    }
+
 
     // -- Unary arithmetic operators --
 

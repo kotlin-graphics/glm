@@ -2,6 +2,7 @@ package glm.vec._4
 
 import glm.BYTES
 import glm.i
+import glm.set
 import glm.ub
 import unsigned.Ubyte
 import glm.vec.Vec2t
@@ -91,6 +92,16 @@ class Vec4ub(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : Vec4t<Ubyte>(x, y, z, w) 
     companion object : vec4ub_operators {
         @JvmField val length = 4
         @JvmField val SIZE = length * Ubyte.BYTES
+    }
+
+    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes[index] = x.v
+        bytes[index + 1] = y.v
+        bytes[index + 2] = z.v
+        bytes[index + 3] = w.v
+        return bytes
     }
 
 

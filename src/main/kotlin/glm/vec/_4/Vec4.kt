@@ -4,12 +4,12 @@ import glm.*
 import glm.vec.Vec2t
 import glm.vec.Vec3t
 import glm.vec.Vec4t
+import glm.vec._3.Vec3
 import glm.vec._4.operators.vec4_operators
 import glm.vec.bool.Vec2bool
 import glm.vec.bool.Vec3bool
 import glm.vec.bool.Vec4bool
 import java.nio.*
-import glm.vec._3.Vec3
 
 /**
  * Created by elect on 09/10/16.
@@ -141,10 +141,10 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
         return floats
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
 
-    fun to(bytes: ByteBuffer, offset: Int):ByteBuffer = bytes.putFloat(offset, x).putFloat(offset + Float.BYTES, y).putFloat(offset + Float.BYTES * 2, z)
-            .putFloat(offset + Float.BYTES * 3, w)
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer = bytes.putFloat(index, x).putFloat(index + Float.BYTES, y)
+            .putFloat(index + Float.BYTES * 2, z).putFloat(index + Float.BYTES * 3, w)
 
     fun toVec3() = Vec3(this)
     fun to(res: Vec3) = res put this

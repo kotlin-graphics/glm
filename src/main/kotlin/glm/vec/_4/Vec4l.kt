@@ -117,6 +117,16 @@ class Vec4l(x: Long, y: Long, z: Long, w: Long) : Vec4t<Long>(x, y, z, w) {
         @JvmField val SIZE = length * Long.BYTES
     }
 
+    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putLong(index, x)
+        bytes.putLong(index + Long.BYTES, y)
+        bytes.putLong(index + Long.BYTES * 2, z)
+        bytes.putLong(index + Long.BYTES * 3, w)
+        return bytes
+    }
+
 
     // -- Unary arithmetic operators --
 
