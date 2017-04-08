@@ -1,17 +1,15 @@
 package glm.func
 
-import glm.L
-import glm.b
-import glm.d
-import glm.f
-import glm.i
-import glm.s
+import glm.*
+import glm.vec.Vec1t
 import glm.vec.Vec2t
 import glm.vec.Vec3t
 import glm.vec.Vec4t
+import glm.vec._1.Vec1i
 import glm.vec._2.*
 import glm.vec._3.*
 import glm.vec._4.*
+import glm.vec.bool.Vec1bool
 import glm.vec.bool.Vec2bool
 import glm.vec.bool.Vec3bool
 import glm.vec.bool.Vec4bool
@@ -19,6 +17,139 @@ import glm.vec.bool.Vec4bool
 /**
  * Created by GBarbieri on 08.11.2016.
  */
+
+interface func_vector1_relational {
+
+    fun lessThan(a: Vec1t<out Number>, b: Vec1t<out Number>, res: Vec1bool = Vec1bool()): Vec1bool {
+        val A = a
+        when (A) {
+//            is Vec1 -> res.x = A.x < b.x.f
+//            is Vec1b -> res.x = A.x < b.x.i
+//            is Vec1d -> res.x = A.x < b.x.d
+            is Vec1i -> res.x = A.x < b.x.i
+//            is Vec1l -> res.x = A.x < b.x.L
+//            is Vec1s -> res.x = A.x < b.x.i
+//            is Vec1ub -> res.x = A.x < b.x.i
+//            is Vec1ui -> res.x = A.x < b.x.i
+//            is Vec1ul -> res.x = A.x < b.x.L
+//            is Vec1us -> res.x = A.x < b.x.i
+        }
+        return res
+    }
+
+    fun lessThanEqual(a: Vec1t<out Number>, b: Vec1t<out Number>, res: Vec1bool = Vec1bool()): Vec1bool {
+        val A = a
+        when (A) {
+//            is Vec1 -> res.x = A.x <= b.x.f
+//            is Vec1b -> res.x = A.x <= b.x.i
+//            is Vec1d -> res.x = A.x <= b.x.d
+            is Vec1i -> res.x = A.x <= b.x.i
+//            is Vec1l -> res.x = A.x <= b.x.L
+//            is Vec1s -> res.x = A.x <= b.x.i
+//            is Vec1ub -> res.x = A.x <= b.x.i
+//            is Vec1ui -> res.x = A.x <= b.x.i
+//            is Vec1ul -> res.x = A.x <= b.x.L
+//            is Vec1us -> res.x = A.x <= b.x.i
+        }
+        return res
+    }
+
+    fun greaterThan(a: Vec1t<out Number>, b: Vec1t<out Number>, res: Vec1bool = Vec1bool()): Vec1bool {
+        val A = a
+        when (A) {
+//            is Vec1 -> res.x = A.x > b.x.f
+//            is Vec1b -> res.x = A.x > b.x.i
+//            is Vec1d -> res.x = A.x > b.x.d
+            is Vec1i -> res.x = A.x > b.x.i
+//            is Vec1l -> res.x = A.x > b.x.L
+//            is Vec1s -> res.x = A.x > b.x.i
+//            is Vec1ub -> res.x = A.x > b.x.i
+//            is Vec1ui -> res.x = A.x > b.x.i
+//            is Vec1ul -> res.x = A.x > b.x.L
+//            is Vec1us -> res.x = A.x > b.x.i
+        }
+        return res
+    }
+
+    fun greaterThanEqual(a: Vec1t<out Number>, b: Vec1t<out Number>, res: Vec1bool = Vec1bool()): Vec1bool {
+        val A = a
+        when (A) {
+//            is Vec1 -> res.x = A.x >= b.x.f
+//            is Vec1b -> res.x = A.x >= b.x.i
+//            is Vec1d -> res.x = A.x >= b.x.d
+            is Vec1i -> res.x = A.x >= b.x.i
+//            is Vec1l -> res.x = A.x >= b.x.L
+//            is Vec1s -> res.x = A.x >= b.x.i
+//            is Vec1ub -> res.x = A.x >= b.x.i
+//            is Vec1ui -> res.x = A.x >= b.x.i
+//            is Vec1ul -> res.x = A.x >= b.x.L
+//            is Vec1us -> res.x = A.x >= b.x.i
+        }
+        return res
+    }
+
+    fun equal(a: Vec1t<out Number>, b: Vec1t<out Number>, res: Vec1bool = Vec1bool()): Vec1bool {
+        val A = a
+        when (A) {
+//            is Vec1 -> res.x = A.x == b.x.f
+//            is Vec1b -> res.x = A.x == b.x.b
+//            is Vec1d -> res.x = A.x == b.x.d
+            is Vec1i -> res.x = A.x == b.x.i
+//            is Vec1l -> res.x = A.x == b.x.L
+//            is Vec1s -> res.x = A.x == b.x.s
+//            is Vec1ub -> res.x = A.x.v == b.x.b
+//            is Vec1ui -> res.x = A.x.v == b.x.i
+//            is Vec1ul -> res.x = A.x.v == b.x.L
+//            is Vec1us -> res.x = A.x.v == b.x.s
+        }
+        return res
+    }
+
+    fun notEqual(a: Vec1t<out Number>, b: Vec1t<out Number>, res: Vec1bool = Vec1bool()): Vec1bool {
+        val A = a
+        when (A) {
+//            is Vec1 -> res.x = A.x != b.x.f
+//            is Vec1b -> res.x = A.x != b.x.b
+//            is Vec1d -> res.x = A.x != b.x.d
+            is Vec1i -> res.x = A.x != b.x.i
+//            is Vec1l -> res.x = A.x != b.x.L
+//            is Vec1s -> res.x = A.x != b.x.s
+//            is Vec1ub -> res.x = A.x.v != b.x.b
+//            is Vec1ui -> res.x = A.x.v != b.x.i
+//            is Vec1ul -> res.x = A.x.v != b.x.L
+//            is Vec1us -> res.x = A.x.v != b.x.s
+        }
+        return res
+    }
+
+    fun isEqual(a: Vec1t<out Number>, b: Vec1t<out Number>): Boolean {
+        val A = a
+        return when (A) {
+//            is Vec1 -> A.x == b.x.f
+//            is Vec1b -> A.x == b.x.b
+//            is Vec1d -> A.x == b.x.d
+            is Vec1i -> A.x == b.x.i
+//            is Vec1l -> A.x == b.x.L
+//            is Vec1s -> A.x == b.x.s
+//            is Vec1ub -> A.x.v == b.x.b
+//            is Vec1ui -> A.x.v == b.x.i
+//            is Vec1ul -> A.x.v == b.x.L
+//            is Vec1us -> A.x.v == b.x.s
+            else -> false
+        }
+    }
+
+
+    fun any(a: Vec1bool) = a[0] || a[1]
+
+    fun all(a: Vec1bool) = a[0] && a[1]
+
+    fun not(a: Vec1bool, res: Vec1bool = Vec1bool()): Vec1bool {
+        res[0] = !a[0]
+        res[1] = !a[1]
+        return res
+    }
+}
 
 interface func_vector2_relational {
 
@@ -303,6 +434,7 @@ interface func_vector2_relational {
         }
         return res
     }
+
     fun isEqual(a: Vec2t<out Number>, b: Vec2t<out Number>): Boolean {
         val A = a
         var res = false
@@ -1272,27 +1404,27 @@ interface func_vectorBoolean_relational {
         res[1] = a[1] == b[1]
         return res
     }
-    
+
     fun notEqual(a: Vec2bool, b: Vec2bool, res: Vec2bool = Vec2bool()): Vec2bool {
         res[0] = a[0] != b[0]
         res[1] = a[1] != b[1]
         return res
     }
-    
+
     fun equal(a: Vec3bool, b: Vec3bool, res: Vec3bool = Vec3bool()): Vec3bool {
         res[0] = a[0] == b[0]
         res[1] = a[1] == b[1]
         res[2] = a[2] == b[2]
         return res
     }
-    
+
     fun notEqual(a: Vec3bool, b: Vec3bool, res: Vec3bool = Vec3bool()): Vec3bool {
         res[0] = a[0] != b[0]
         res[1] = a[1] != b[1]
         res[2] = a[2] != b[2]
         return res
     }
-    
+
     fun equal(a: Vec4bool, b: Vec4bool, res: Vec4bool = Vec4bool()): Vec4bool {
         res[0] = a[0] == b[0]
         res[1] = a[1] == b[1]
@@ -1300,7 +1432,7 @@ interface func_vectorBoolean_relational {
         res[3] = a[3] == b[3]
         return res
     }
-    
+
     fun notEqual(a: Vec4bool, b: Vec4bool, res: Vec4bool = Vec4bool()): Vec4bool {
         res[0] = a[0] != b[0]
         res[1] = a[1] != b[1]

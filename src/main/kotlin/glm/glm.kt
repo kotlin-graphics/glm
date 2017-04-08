@@ -26,6 +26,7 @@ object Glm :
         func_vector3_common,
         func_vector4_common,
 
+        func_vector1_relational,
         func_vector2_relational,
         func_vector3_relational,
         func_vector4_relational,
