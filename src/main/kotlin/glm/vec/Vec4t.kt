@@ -143,6 +143,7 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
         // -- functions --
 
         @JvmField val length = 4
+        @JvmField val SIZE = 0
     }
 
     // components alias
