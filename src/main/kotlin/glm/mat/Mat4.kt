@@ -145,27 +145,39 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
     infix fun put(v: Vec3) = put(v.x, v.y, v.z, 1f)
     infix fun put(v: Vec4) = put(v.x, v.y, v.z, v.w)
 
-    fun put(x: Float, y: Float, z: Float, w: Float): Mat4 {
+    infix fun put(floats: FloatArray) = put(floats[0], floats[1], floats[2], floats[3], floats[4], floats[5], floats[6],
+            floats[7], floats[8], floats[9], floats[10], floats[11], floats[12], floats[13], floats[14], floats[15])
 
-        value[0][0] = x
-        value[0][1] = 0f
-        value[0][2] = 0f
-        value[0][3] = 0f
+    fun put(x: Float, y: Float, z: Float, w: Float) = put(
+            x, 0f, 0f, 0f,
+            0f, y, 0f, 0f,
+            0f, 0f, z, 0f,
+            0f, 0f, 0f, w)
 
-        value[1][0] = 0f
-        value[1][1] = y
-        value[1][2] = 0f
-        value[1][3] = 0f
+    fun put(a0: Float, a1: Float, a2: Float, a3: Float,
+            b0: Float, b1: Float, b2: Float, b3: Float,
+            c0: Float, c1: Float, c2: Float, c3: Float,
+            d0: Float, d1: Float, d2: Float, d3: Float): Mat4 {
 
-        value[2][0] = 0f
-        value[2][1] = 0f
-        value[2][2] = z
-        value[2][3] = 0f
+        value[0][0] = a0
+        value[0][1] = a1
+        value[0][2] = a2
+        value[0][3] = a3
 
-        value[3][0] = 0f
-        value[3][1] = 0f
-        value[3][2] = 0f
-        value[3][3] = w
+        value[1][0] = b0
+        value[1][1] = b1
+        value[1][2] = b2
+        value[1][3] = b3
+
+        value[2][0] = c0
+        value[2][1] = c1
+        value[2][2] = c2
+        value[2][3] = c3
+
+        value[3][0] = d0
+        value[3][1] = d1
+        value[3][2] = d2
+        value[3][3] = d3
 
         return this
     }
