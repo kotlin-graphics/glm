@@ -11,6 +11,7 @@ import glm.detail.GLM_DEPTH_ZERO_TO_ONE
 import glm.detail.GLM_LEFT_HANDED
 import glm.mat.Mat4
 import glm.vec._2.Vec2
+import glm.vec._2.Vec2i
 import glm.vec._3.Vec3
 import glm.vec._4.Vec4i
 
@@ -369,6 +370,7 @@ interface matrix_transform {
                 perspectiveRH(res, fovy, aspect, zNear, zFar)
 
     fun perspective(fovy: Float, aspect: Float, zNear: Float, zFar: Float) = perspective(Mat4(), fovy, aspect, zNear, zFar)
+    fun perspective(fovy: Float, size: Vec2i, zNear: Float, zFar: Float) = perspective(Mat4(), fovy, size.x.f / size.y, zNear, zFar)
 
     /**
      * Creates a left handed frustum matrix.
