@@ -173,51 +173,6 @@ fun Mat2.dec_() = minus(this, this, 1f)
 
 // -- Specific binary arithmetic operators --
 
-operator fun Mat2.plus(b: Float) = plus(Mat2(), this, b)
-operator fun Mat2.plus(b: Mat2) = plus(Mat2(), this, b)
-
-fun Mat2.plus(b: Float, res: Mat2 = Mat2()) = plus(res, this, b)
-fun Mat2.plus(b: Mat2, res: Mat2 = Mat2()) = plus(res, this, b)
-
-infix fun Mat2.plus_(b: Float) = plus(this, this, b)
-infix fun Mat2.plus_(b: Mat2) = plus(this, this, b)
-
-
-operator fun Mat2.minus(b: Float) = minus(Mat2(), this, b)
-operator fun Mat2.minus(b: Mat2) = minus(Mat2(), this, b)
-
-fun Mat2.minus(b: Float, res: Mat2 = Mat2()) = minus(res, this, b)
-fun Mat2.minus(b: Mat2, res: Mat2 = Mat2()) = minus(res, this, b)
-
-infix fun Mat2.minus_(b: Float) = minus(this, this, b)
-infix fun Mat2.minus_(b: Mat2) = minus(this, this, b)
-
-
-operator fun Mat2.times(b: Float) = times(Mat2(), this, b)
-operator fun Mat2.times(b: Vec2) = times(Vec2(), this, b)
-operator fun Mat2.times(b: Mat2) = times(Mat2(), this, b)
-
-fun Mat2.times(b: Float, res: Mat2 = Mat2()) = times(res, this, b)
-fun Mat2.times(b: Vec2, res: Vec2 = Vec2()) = times(res, this, b)
-fun Mat2.times(b: Mat2, res: Mat2 = Mat2()) = times(res, this, b)
-
-infix fun Mat2.times_(b: Float) = times(this, this, b)
-infix fun Mat2.times_(b: Vec2) = times(b, this, b)
-infix fun Mat2.times_(b: Mat2) = times(this, this, b)
-
-
-operator fun Mat2.div(b: Float) = div(Mat2(), this, b)
-operator fun Mat2.div(b: Mat2) = div(Mat2(), this, b)
-
-fun Mat2.div(b: Float, res: Mat2 = Mat2()) = div(res, this, b)
-fun Mat2.div(b: Mat2, res: Mat2 = Mat2()) = div(res, this, b)
-
-infix fun Mat2.div_(b: Float) = div(this, this, b)
-infix fun Mat2.div_(b: Mat2) = div(this, this, b)
-
-
-// -- Specific binary arithmetic operators --
-
 operator fun Float.plus(b: Mat2) = plus(Mat2(), b, this)
 fun Float.plus(b: Mat2, res: Mat2 = Mat2()) = plus(res, b, this)
 infix fun Float.plus_(b: Mat2) = plus(b, b, this)

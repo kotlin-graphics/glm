@@ -1,0 +1,32 @@
+apply plugin: 'maven'
+apply plugin: 'kotlin'
+apply plugin: 'java'
+
+buildscript {
+
+    ext.kotlinVersion = '1.1.2-eap-73'
+
+    repositories {
+        mavenCentral()
+        maven { url "https://dl.bintray.com/kotlin/kotlin-dev" }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+
+dependencies {
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+    compile "com.github.kotlin-graphics:kotlin-unsigned:554d85dca494a22761b2f553f01abeb11a00f285"
+
+    testCompile("io.kotlintest:kotlintest:2.0.0")
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+    maven { url "https://dl.bintray.com/kotlin/kotlin-dev" }
+}

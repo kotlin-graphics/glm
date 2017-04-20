@@ -144,14 +144,21 @@ data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2> {
     infix operator fun times(b: Mat2) = Mat2.times(Mat2(), this, b)
     infix operator fun times(b: Mat3x2) = Mat2.times(TODO(), this, b)
     infix operator fun times(b: Mat4x2) = Mat2.times(TODO(), this, b)
+
+    operator fun times(b: Vec2) = times(Vec2(), this, b)
     infix operator fun times(b: Float) = Mat2.times(Mat2(), this, b)
 
     fun times(b: Mat2, res: Mat2) = Mat2.times(res, this, b)
     fun times(b: Float, res: Mat2) = Mat2.times(res, this, b)
 
-    fun times_(b: Mat2) = Mat2.times(this, this, b)
+
+    fun times(b: Vec2, res: Vec2 = Vec2()) = times(res, this, b)
+
+    infix fun times_(b: Mat2) = Mat2.times(this, this, b) // TODO
     fun times_(b: Float) = Mat2.times(this, this, b)
 
+
+    infix fun times_(b: Vec2) = times(b, this, b)
 
     infix operator fun div(b: Mat2) = Mat2.div(Mat2(), this, b)
     infix operator fun div(b: Float) = Mat2.div(Mat2(), this, b)
