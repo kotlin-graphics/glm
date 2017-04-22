@@ -126,20 +126,20 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     infix fun to(floats: FloatArray) = to(floats, 0)
 
     fun to(floats: FloatArray, index: Int): FloatArray {
-        floats[0] = x
-        floats[1] = y
-        floats[2] = z
-        floats[3] = w
+        floats[index] = x
+        floats[index + 1] = y
+        floats[index + 2] = z
+        floats[index + 3] = w
         return floats
     }
 
     infix fun to(floats: FloatBuffer) = to(floats, floats.position())
 
     fun to(floats: FloatBuffer, index: Int): FloatBuffer {
-        floats[0] = x
-        floats[1] = y
-        floats[2] = z
-        floats[3] = w
+        floats[index] = x
+        floats[index + 1] = y
+        floats[index + 2] = z
+        floats[index + 3] = w
         return floats
     }
 

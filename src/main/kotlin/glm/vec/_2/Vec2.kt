@@ -117,16 +117,16 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix fun to(floats: FloatArray) = to(floats, 0)
 
     fun to(floats: FloatArray, index: Int): FloatArray {
-        floats[0] = x
-        floats[1] = y
+        floats[index] = x
+        floats[index + 1] = y
         return floats
     }
 
     infix fun to(floats: FloatBuffer) = to(floats, 0)
 
     fun to(floats: FloatBuffer, index: Int): FloatBuffer {
-        floats[0] = x
-        floats[1] = y
+        floats[index] = x
+        floats[index + 1] = y
         return floats
     }
 

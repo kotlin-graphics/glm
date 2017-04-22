@@ -119,18 +119,18 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix fun to(floats: FloatArray) = to(floats, 0)
 
     fun to(floats: FloatArray, index: Int): FloatArray {
-        floats[0] = x
-        floats[1] = y
-        floats[2] = z
+        floats[index] = x
+        floats[index + 1] = y
+        floats[index + 2] = z
         return floats
     }
 
     infix fun to(floats: FloatBuffer) = to(floats, floats.position())
 
     fun to(floats: FloatBuffer, index: Int): FloatBuffer {
-        floats[0] = x
-        floats[1] = y
-        floats[2] = z
+        floats[index] = x
+        floats[index + 1] = y
+        floats[index + 2] = z
         return floats
     }
 
