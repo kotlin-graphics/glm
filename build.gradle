@@ -20,7 +20,7 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
-    compile "com.github.kotlin-graphics:kotlin-unsigned:554d85dca494a22761b2f553f01abeb11a00f285"
+    compile "com.github.kotlin-graphics:kotlin-unsigned:490865899e7a908626737e3bea7bd2b20744583e"
 
     testCompile("io.kotlintest:kotlintest:2.0.0")
 }
@@ -30,3 +30,10 @@ repositories {
     maven { url "https://jitpack.io" }
     maven { url "https://dl.bintray.com/kotlin/kotlin-dev" }
 }
+
+task packageSources(type: Jar, dependsOn: 'classes') {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts { archives packageSources }
