@@ -16,9 +16,9 @@ The source code and the documentation are licensed under both the [Happy Bunny L
 Thanks for contributing to the project by submitting [issues](https://github.com/kotlin-graphics/glm/issues) or [pull requests](https://github.com/kotlin-graphics/glm/pulls) for bugs and features. Any feedback is welcome at [elect86@gmail.com](mailto://elect86@gmail.com).
 
 ```kotlin
-import glm.vec._2.Vec2
-import glm.vec._3.Vec3
-import glm.mat.Mat4
+import glm.vec2.Vec2
+import glm.vec3.Vec3
+import glm.mat4x4.Mat4
 import glm.glm
 
 fun camera(translate: Float, rotate: Vec2): Mat4 {
