@@ -1,4 +1,4 @@
-package  glm.mat
+package  glm.mat2x2
 
 import glm.vec2.Vec2t
 

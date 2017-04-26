@@ -12,8 +12,8 @@ import glm.glm.mix
 import glm.glm.sin
 import glm.glm.sqrt
 import glm.glm
-import glm.mat.Mat3
-import glm.mat.Mat4
+import glm.mat3x3.Mat3
+import glm.mat4x4.Mat4
 import glm.vec3.Vec3
 import glm.vec3.Vec3d
 import glm.vec4.Vec4bool

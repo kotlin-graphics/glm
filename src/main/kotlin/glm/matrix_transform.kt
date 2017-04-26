@@ -9,7 +9,7 @@ import glm.detail.GLM_COORDINATE_SYSTEM
 import glm.detail.GLM_DEPTH_CLIP_SPACE
 import glm.detail.GLM_DEPTH_ZERO_TO_ONE
 import glm.detail.GLM_LEFT_HANDED
-import glm.mat.Mat4
+import glm.mat4x4.Mat4
 import glm.vec2.Vec2
 import glm.vec3.Vec3
 import glm.vec2.Vec2i

@@ -5,7 +5,7 @@ import glm.glm.acos
 import glm.glm.sin
 import glm.glm.cos
 import glm.glm.cross
-import glm.mat.Mat4
+import glm.mat4x4.Mat4
 import glm.vec2.Vec2
 import glm.vec3.Vec3
 import glm.vec4.Vec4

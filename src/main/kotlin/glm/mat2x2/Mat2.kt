@@ -1,12 +1,19 @@
-package  glm.mat
+package glm.mat2x2
 
 import glm.BYTES
-import glm.glm.inverse
-import glm.glm.transpose
 import glm.f
-import glm.mat.operators.mat2x2_operators
-import glm.vec2.Vec2t
+import glm.glm
+import glm.mat2x2.operators.mat2x2_operators
+import glm.mat2x3.Mat2x3t
+import glm.mat3x2.Mat3x2
+import glm.mat3x2.Mat3x2t
+import glm.mat3x3.Mat3
+import glm.mat2x4.Mat2x4t
+import glm.mat4x2.Mat4x2
+import glm.mat4x2.Mat4x2t
+import glm.mat4x4.Mat4
 import glm.vec2.Vec2
+import glm.vec2.Vec2t
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -97,11 +104,11 @@ data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2> {
 
     fun det() = value[0][0] * value[1][1] - value[1][0] * value[0][1]
 
-    fun inverse(res: Mat2 = Mat2()) = inverse(res, this)
-    fun inverse_() = inverse(this, this)
+    fun inverse(res: Mat2 = Mat2()) =  glm.inverse(res, this)
+    fun inverse_() = glm.inverse(this, this)
 
-    fun transpose(res: Mat2 = Mat2()) = transpose(res, this)
-    fun transpose_() = transpose(this, this)
+    fun transpose(res: Mat2 = Mat2()) = glm.transpose(res, this)
+    fun transpose_() = glm.transpose(this, this)
 
     // TODO inc
 
@@ -114,60 +121,59 @@ data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2> {
 
 
     companion object : mat2x2_operators {
-
         @JvmField val size = 2 * 2 * Float.BYTES
     }
 
 
     // -- operators --
 
-    infix operator fun plus(b: Mat2) = Mat2.plus(Mat2(), this, b)
-    infix operator fun plus(b: Float) = Mat2.plus(Mat2(), this, b)
+    infix operator fun plus(b: Mat2) = plus(Mat2(), this, b)
+    infix operator fun plus(b: Float) = plus(Mat2(), this, b)
 
-    fun plus(b: Mat2, res: Mat2) = Mat2.plus(res, this, b)
-    fun plus(b: Float, res: Mat2) = Mat2.plus(res, this, b)
+    fun plus(b: Mat2, res: Mat2) = plus(res, this, b)
+    fun plus(b: Float, res: Mat2) = plus(res, this, b)
 
-    fun plus_(b: Mat2) = Mat2.plus(this, this, b)
-    fun plus_(b: Float) = Mat2.plus(this, this, b)
-
-
-    infix operator fun minus(b: Mat2) = Mat2.minus(Mat2(), this, b)
-    infix operator fun minus(b: Float) = Mat2.minus(Mat2(), this, b)
-
-    fun minus(b: Mat2, res: Mat2) = Mat2.minus(res, this, b)
-    fun minus(b: Float, res: Mat2) = Mat2.minus(res, this, b)
-
-    fun minus_(b: Mat2) = Mat2.minus(this, this, b)
-    fun minus_(b: Float) = Mat2.minus(this, this, b)
+    fun plus_(b: Mat2) = plus(this, this, b)
+    fun plus_(b: Float) = plus(this, this, b)
 
 
-    infix operator fun times(b: Mat2) = Mat2.times(Mat2(), this, b)
-    infix operator fun times(b: Mat3x2) = Mat2.times(TODO(), this, b)
-    infix operator fun times(b: Mat4x2) = Mat2.times(TODO(), this, b)
+    infix operator fun minus(b: Mat2) = minus(Mat2(), this, b)
+    infix operator fun minus(b: Float) = minus(Mat2(), this, b)
+
+    fun minus(b: Mat2, res: Mat2) = minus(res, this, b)
+    fun minus(b: Float, res: Mat2) = minus(res, this, b)
+
+    fun minus_(b: Mat2) = minus(this, this, b)
+    fun minus_(b: Float) = minus(this, this, b)
+
+
+    infix operator fun times(b: Mat2) = times(Mat2(), this, b)
+    infix operator fun times(b: Mat3x2) = times(TODO(), this, b)
+    infix operator fun times(b: Mat4x2) = times(TODO(), this, b)
 
     operator fun times(b: Vec2) = times(Vec2(), this, b)
-    infix operator fun times(b: Float) = Mat2.times(Mat2(), this, b)
+    infix operator fun times(b: Float) = times(Mat2(), this, b)
 
-    fun times(b: Mat2, res: Mat2) = Mat2.times(res, this, b)
-    fun times(b: Float, res: Mat2) = Mat2.times(res, this, b)
+    fun times(b: Mat2, res: Mat2) = times(res, this, b)
+    fun times(b: Float, res: Mat2) = times(res, this, b)
 
 
     fun times(b: Vec2, res: Vec2 = Vec2()) = times(res, this, b)
 
-    infix fun times_(b: Mat2) = Mat2.times(this, this, b) // TODO
-    fun times_(b: Float) = Mat2.times(this, this, b)
+    infix fun times_(b: Mat2) = times(this, this, b) // TODO
+    fun times_(b: Float) = times(this, this, b)
 
 
     infix fun times_(b: Vec2) = times(b, this, b)
 
-    infix operator fun div(b: Mat2) = Mat2.div(Mat2(), this, b)
-    infix operator fun div(b: Float) = Mat2.div(Mat2(), this, b)
+    infix operator fun div(b: Mat2) = div(Mat2(), this, b)
+    infix operator fun div(b: Float) = div(Mat2(), this, b)
 
-    fun div(b: Mat2, res: Mat2) = Mat2.div(res, this, b)
-    fun div(b: Float, res: Mat2) = Mat2.div(res, this, b)
+    fun div(b: Mat2, res: Mat2) = div(res, this, b)
+    fun div(b: Float, res: Mat2) = div(res, this, b)
 
-    fun div_(b: Mat2) = Mat2.div(this, this, b)
-    fun div_(b: Float) = Mat2.div(this, this, b)
+    fun div_(b: Mat2) = div(this, this, b)
+    fun div_(b: Float) = div(this, this, b)
 
 
     // TODO others

@@ -1,12 +1,12 @@
-package  glm.mat.operators
+package  glm.mat3x3.operators
 
-import  glm.mat.Mat2x3
-import  glm.mat.Mat3
-import  glm.mat.Mat3.Companion.plus
-import  glm.mat.Mat3.Companion.div
-import  glm.mat.Mat3.Companion.times
-import  glm.mat.Mat3.Companion.minus
-import  glm.mat.Mat4x3
+import  glm.mat2x3.Mat2x3
+import  glm.mat3x3.Mat3
+import  glm.mat3x3.Mat3.Companion.plus
+import  glm.mat3x3.Mat3.Companion.div
+import  glm.mat3x3.Mat3.Companion.times
+import  glm.mat3x3.Mat3.Companion.minus
+import  glm.mat4x3.Mat4x3
 import  glm.vec3.Vec3
 import  glm.vec3.Vec3.Companion.plus
 import  glm.vec3.Vec3.Companion.div
@@ -16,6 +16,7 @@ import  glm.vec3.Vec3.Companion.minus
 /**
  * Created by GBarbieri on 10.11.2016.
  */
+
 interface mat3x3_operators {
 
 

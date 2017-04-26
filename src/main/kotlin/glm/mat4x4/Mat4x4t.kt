@@ -1,4 +1,4 @@
-package  glm.mat
+package  glm.mat4x4
 
 import  glm.vec4.Vec4t
 

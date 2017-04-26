@@ -31,6 +31,7 @@ import unsigned.Uint
 /**
  * Created by elect on 11/11/16.
  */
+
 interface func_common {
 
     fun abs(a: Float) = Math.abs(a)

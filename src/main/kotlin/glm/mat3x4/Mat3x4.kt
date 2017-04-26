@@ -1,7 +1,7 @@
-package  glm.mat
+package  glm.mat3x4
 
 import glm.BYTES
-import  glm.vec4.Vec4
+import glm.vec4.Vec4
 
 /**
  * Created by GBarbieri on 09.12.2016.

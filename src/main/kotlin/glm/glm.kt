@@ -9,9 +9,9 @@ import glm.func.common.func_common
 import glm.func.common.func_vector2_common
 import glm.func.common.func_vector3_common
 import glm.func.common.func_vector4_common
-import glm.mat.operators.mat2x2_operators
-import glm.mat.operators.mat3x3_operators
-import glm.mat.operators.mat4x4_operators
+import glm.mat2x2.operators.mat2x2_operators
+import glm.mat3x3.operators.mat3x3_operators
+import glm.mat4x4.operators.mat4x4_operators
 import glm.quat.quat_func
 
 object glm :

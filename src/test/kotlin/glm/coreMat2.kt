@@ -1,8 +1,8 @@
 package glm
 
-import glm.mat.Mat2
 import glm.vec2.Vec2
-import glm.mat.operators.times
+import glm.mat2x2.Mat2
+import glm.mat2x2.operators.times
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
 

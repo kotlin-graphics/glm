@@ -1,7 +1,7 @@
 package glm
 
-import glm.mat.Mat4
-import glm.mat.operators.times
+import glm.mat4x4.Mat4
+import glm.mat4x4.operators.times
 import glm.vec4.Vec4
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec

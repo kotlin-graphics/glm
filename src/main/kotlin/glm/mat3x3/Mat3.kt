@@ -1,16 +1,23 @@
-package  glm.mat
+package  glm.mat3x3
 
 import glm.BYTES
+import glm.glm
 import glm.glm.inverse
 import glm.glm.transpose
-import glm.glm
-import glm.mat.operators.mat3x3_operators
+import glm.mat2x2.Mat2x2t
+import glm.mat2x3.Mat2x3t
+import glm.mat2x4.Mat2x4t
+import glm.mat3x2.Mat3x2t
+import glm.mat3x3.operators.mat3x3_operators
+import glm.mat3x4.Mat3x4t
+import glm.mat4x2.Mat4x2t
+import glm.mat4x3.Mat4x3t
+import glm.mat4x4.Mat4
 import glm.quat.Quat
 import glm.set
 import glm.vec2.Vec2t
 import glm.vec3.Vec3
 import glm.vec3.Vec3t
-import glm.vec4.Vec4
 import glm.vec4.Vec4t
 import java.nio.FloatBuffer
 

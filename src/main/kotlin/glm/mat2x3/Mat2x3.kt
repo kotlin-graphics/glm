@@ -1,6 +1,7 @@
-package  glm.mat
+package  glm.mat2x3
 
 import glm.BYTES
+import glm.mat2x3.Mat2x3t
 import  glm.vec3.Vec3
 
 /**
