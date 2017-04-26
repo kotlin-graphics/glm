@@ -4,16 +4,19 @@ package glm
  * Created by GBarbieri on 08.02.2017.
  */
 
-import glm.Glm.floor
-import glm.vec._2.Vec2
-import glm.vec._2.Vec2d
-import glm.vec._3.Vec3
-import glm.vec._3.Vec3d
-import glm.vec._4.Vec4
-import glm.vec._4.Vec4d
-import glm.vec._2.operators.*
-import glm.vec._3.operators.*
-import glm.vec._4.operators.*
+import glm.glm.floor
+import glm.vec2.Vec2
+import glm.vec2.Vec2d
+import glm.vec2.operators.minus
+import glm.vec3.operators.minus
+import glm.vec4.operators.minus
+import glm.vec2.operators.times
+import glm.vec3.operators.times
+import glm.vec4.operators.times
+import glm.vec3.Vec3
+import glm.vec3.Vec3d
+import glm.vec4.Vec4
+import glm.vec4.Vec4d
 
 interface noise {
 

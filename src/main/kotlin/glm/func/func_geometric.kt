@@ -2,17 +2,15 @@ package glm.func
 
 import glm.d
 import glm.f
-import glm.Glm.sqrt
-import glm.Glm.inverseSqrt
-import glm.deg
-import glm.vec._2.Vec2
-import glm.vec._2.Vec2d
-import glm.vec._3.Vec3
-import glm.vec._3.Vec3d
-import glm.vec._4.Vec4
-import glm.vec._4.Vec4d
+import glm.glm.sqrt
+import glm.glm.inverseSqrt
+import glm.vec2.Vec2
+import glm.vec2.Vec2d
+import glm.vec3.Vec3
+import glm.vec3.Vec3d
+import glm.vec4.Vec4
+import glm.vec4.Vec4d
 import glm.quat.Quat
-import glm.rad
 
 /**
  * Created by GBarbieri on 12.12.2016.

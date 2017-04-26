@@ -1,6 +1,6 @@
 package  glm.mat
 
-import  glm.vec.Vec4t
+import  glm.vec4.Vec4t
 
 abstract interface Mat4x4t<T : Vec4t<*>> {
 

@@ -1,10 +1,9 @@
 package glm
 
-import glm.vec._3.Vec3i
-import glm.glm
-import glm.vec._1.Vec1i
-import glm.vec._2.Vec2i
-import glm.vec._4.Vec4i
+import glm.vec1.Vec1i
+import glm.vec2.Vec2i
+import glm.vec3.Vec3i
+import glm.vec4.Vec4i
 
 /**
  * Created by GBarbieri on 03.04.2017.

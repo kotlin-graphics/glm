@@ -1,7 +1,7 @@
 package  glm.mat
 
 import glm.BYTES
-import  glm.vec._3.Vec3
+import  glm.vec3.Vec3
 
 /**
  * Created by GBarbieri on 09.12.2016.
@@ -18,6 +18,6 @@ data class Mat2x3(override var value: MutableList<Vec3>) : Mat2x3t<Vec3> {
 
     companion object {
 
-        @JvmField val SIZE = 2 * 3 * Float.BYTES
+        @JvmField val size = 2 * 3 * Float.BYTES
     }
 }

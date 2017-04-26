@@ -1,22 +1,22 @@
 package glm.quat
 
-import glm.Glm.abs
-import glm.Glm.acos
-import glm.Glm.asin
-import glm.Glm.atan
-import glm.Glm.clamp
-import glm.Glm.cos
-import glm.Glm.epsilonD
-import glm.Glm.epsilonF
-import glm.Glm.mix
-import glm.Glm.sin
-import glm.Glm.sqrt
+import glm.glm.abs
+import glm.glm.acos
+import glm.glm.asin
+import glm.glm.atan
+import glm.glm.clamp
+import glm.glm.cos
+import glm.glm.epsilonD
+import glm.glm.epsilonF
+import glm.glm.mix
+import glm.glm.sin
+import glm.glm.sqrt
 import glm.glm
 import glm.mat.Mat3
 import glm.mat.Mat4
-import glm.vec._3.Vec3
-import glm.vec._3.Vec3d
-import glm.vec.bool.Vec4bool
+import glm.vec3.Vec3
+import glm.vec3.Vec3d
+import glm.vec4.Vec4bool
 
 /**
  * Created by GBarbieri on 14.12.2016.

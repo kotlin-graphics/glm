@@ -7,11 +7,11 @@ import glm.mat.Mat2.Companion.times
 import glm.mat.Mat2.Companion.minus
 import glm.mat.Mat3x2
 import glm.mat.Mat4x2
-import glm.vec._2.Vec2
-import glm.vec._2.Vec2.Companion.plus
-import glm.vec._2.Vec2.Companion.div
-import glm.vec._2.Vec2.Companion.times
-import glm.vec._2.Vec2.Companion.minus
+import glm.vec2.Vec2
+import glm.vec2.Vec2.Companion.plus
+import glm.vec2.Vec2.Companion.div
+import glm.vec2.Vec2.Companion.times
+import glm.vec2.Vec2.Companion.minus
 
 /**
  * Created by GBarbieri on 10.11.2016.

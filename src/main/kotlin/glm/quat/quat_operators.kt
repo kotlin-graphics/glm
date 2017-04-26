@@ -1,9 +1,9 @@
 package glm.quat
 
-import glm.Glm.dot
+import glm.glm.dot
 import glm.quat.Quat.Companion.times
-import glm.vec._3.Vec3
-import glm.vec._4.Vec4
+import glm.vec3.Vec3
+import glm.vec4.Vec4
 
 /**
  * Created by GBarbieri on 13.12.2016.

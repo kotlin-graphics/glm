@@ -2,10 +2,10 @@ package glm.quat
 
 import glm.*
 import glm.mat.QuatT
-import glm.vec.Vec4t
-import glm.vec._3.Vec3
-import glm.vec._3.Vec3d
-import glm.vec._4.Vec4d
+import glm.vec3.Vec3
+import glm.vec3.Vec3d
+import glm.vec4.Vec4d
+import glm.vec4.Vec4t
 
 
 /**
@@ -31,12 +31,12 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
         val eX = eulerAngle.x * .5
         val eY = eulerAngle.y * .5
         val eZ = eulerAngle.z * .5
-        val cX = Glm.cos(eX)
-        val cY = Glm.cos(eY)
-        val cZ = Glm.cos(eZ)
-        val sX = Glm.sin(eX)
-        val sY = Glm.sin(eY)
-        val sZ = Glm.sin(eZ)
+        val cX = glm.cos(eX)
+        val cY = glm.cos(eY)
+        val cZ = glm.cos(eZ)
+        val sX = glm.sin(eX)
+        val sY = glm.sin(eY)
+        val sZ = glm.sin(eZ)
         w = cX * cY * cZ + sX * sY * sZ
         x = sX * cY * cZ - cX * sY * sZ
         y = cX * sY * cZ + sX * cY * sZ

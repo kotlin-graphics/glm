@@ -1,28 +1,28 @@
 package glm.func.common
 
-import glm.Glm.abs
-import glm.Glm.ceil
-import glm.Glm.clamp
-import glm.Glm.floatBitsToInt
-import glm.Glm.floatBitsToUint
-import glm.Glm.floor
-import glm.Glm.fma
-import glm.Glm.fract
-import glm.Glm.intBitsToFloat
-import glm.Glm.isInf
-import glm.Glm.isNan
-import glm.Glm.max
-import glm.Glm.min
-import glm.Glm.mix
-import glm.Glm.mod
-import glm.Glm.round
-import glm.Glm.sign
-import glm.Glm.smoothStep
-import glm.Glm.step
-import glm.Glm.trunc
-import glm.Glm.uintBitsToFloat
-import glm.vec._4.*
-import glm.vec.bool.Vec4bool
+import glm.vec4.Vec4bool
+import glm.vec4.*
+import glm.glm.abs
+import glm.glm.sign
+import glm.glm.floor
+import glm.glm.trunc
+import glm.glm.round
+import glm.glm.ceil
+import glm.glm.fract
+import glm.glm.mod
+import glm.glm.min
+import glm.glm.max
+import glm.glm.clamp
+import glm.glm.mix
+import glm.glm.step
+import glm.glm.smoothStep
+import glm.glm.isNan
+import glm.glm.isInf
+import glm.glm.intBitsToFloat
+import glm.glm.uintBitsToFloat
+import glm.glm.floatBitsToInt
+import glm.glm.floatBitsToUint
+import glm.glm.fma
 
 /**
  * Created by GBarbieri on 11.11.2016.

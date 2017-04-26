@@ -1,12 +1,12 @@
 package  glm.mat
 
 import glm.BYTES
-import glm.Glm.inverse
-import glm.Glm.transpose
+import glm.glm.inverse
+import glm.glm.transpose
 import glm.f
 import glm.mat.operators.mat2x2_operators
-import glm.vec.Vec2t
-import glm.vec._2.Vec2
+import glm.vec2.Vec2t
+import glm.vec2.Vec2
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -115,7 +115,7 @@ data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2> {
 
     companion object : mat2x2_operators {
 
-        @JvmField val SIZE = 2 * 2 * Float.BYTES
+        @JvmField val size = 2 * 2 * Float.BYTES
     }
 
 

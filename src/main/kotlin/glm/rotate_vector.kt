@@ -1,14 +1,14 @@
 package glm
 
-import glm.vec._3.Vec3
-import glm.Glm.dot
-import glm.Glm.acos
-import glm.Glm.sin
-import glm.Glm.cos
-import glm.Glm.cross
+import glm.glm.dot
+import glm.glm.acos
+import glm.glm.sin
+import glm.glm.cos
+import glm.glm.cross
 import glm.mat.Mat4
-import glm.vec._2.Vec2
-import glm.vec._4.Vec4
+import glm.vec2.Vec2
+import glm.vec3.Vec3
+import glm.vec4.Vec4
 
 /**
  * Created by GBarbieri on 09.02.2017.

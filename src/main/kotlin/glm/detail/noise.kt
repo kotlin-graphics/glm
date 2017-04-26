@@ -1,21 +1,21 @@
 package glm.detail
 
-import glm.Glm.floor
-import glm.vec.Vec2t
-import glm.vec.Vec3t
-import glm.vec.Vec4t
-import glm.vec._2.Vec2
-import glm.vec._2.Vec2d
-import glm.vec._2.operators.minus
-import glm.vec._2.operators.times
-import glm.vec._3.Vec3
-import glm.vec._3.Vec3d
-import glm.vec._3.operators.minus
-import glm.vec._3.operators.times
-import glm.vec._4.Vec4
-import glm.vec._4.Vec4d
-import glm.vec._4.operators.minus
-import glm.vec._4.operators.times
+import glm.glm.floor
+import glm.vec2.Vec2t
+import glm.vec3.Vec3t
+import glm.vec4.Vec4t
+import glm.vec2.Vec2
+import glm.vec2.Vec2d
+import glm.vec2.operators.minus
+import glm.vec2.operators.times
+import glm.vec3.Vec3
+import glm.vec3.Vec3d
+import glm.vec3.operators.minus
+import glm.vec3.operators.times
+import glm.vec4.Vec4
+import glm.vec4.Vec4d
+import glm.vec4.operators.minus
+import glm.vec4.operators.times
 
 /**
  * Created by GBarbieri on 13.12.2016.

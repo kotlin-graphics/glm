@@ -1,8 +1,8 @@
 package  glm.mat
 
-import glm.vec.Vec2t
-import glm.vec.Vec3t
-import glm.vec.Vec4t
+import glm.vec2.Vec2t
+import glm.vec3.Vec3t
+import glm.vec4.Vec4t
 
 /**
  * Created by GBarbieri on 08.11.2016.

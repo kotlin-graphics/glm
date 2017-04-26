@@ -1,17 +1,16 @@
 package glm.quat
 
 import glm.BYTES
-import glm.Glm.cos
-import glm.Glm.dot
-import glm.Glm.sin
+import glm.glm.cos
+import glm.glm.sin
 import glm.f
 import glm.glm
 import glm.mat.Mat3
 import glm.mat.Mat4
 import glm.mat.QuatT
-import glm.vec.Vec4t
-import glm.vec._3.Vec3
-import glm.vec._4.Vec4
+import glm.vec3.Vec3
+import glm.vec4.Vec4
+import glm.vec4.Vec4t
 
 /**
  * Created by GBarbieri on 15.11.2016.
@@ -28,7 +27,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
         val cX = a.y * b.z - b.y * a.z
         val cY = a.z * b.x - b.z * a.x
         val cZ = a.x * b.y - b.x * a.y
-        val dot = dot(a, b)
+        val dot = glm.dot(a, b)
         put(1f + dot, cX, cY, cZ)
         normalize(this, this)
     }

@@ -1,12 +1,12 @@
 package glm
 
-import glm.Glm.matrixCompMult
+import glm.glm.matrixCompMult
 import glm.mat.Mat2
 import glm.mat.Mat3
 import glm.mat.Mat4
-import glm.vec._2.Vec2
-import glm.vec._3.Vec3
-import glm.vec._4.Vec4
+import glm.vec2.Vec2
+import glm.vec3.Vec3
+import glm.vec4.Vec4
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
 

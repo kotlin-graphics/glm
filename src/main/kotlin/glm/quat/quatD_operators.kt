@@ -1,9 +1,9 @@
 package glm.quat
 
-import glm.Glm
+import glm.glm
 import glm.quat.QuatD.Companion.times
-import glm.vec._3.Vec3d
-import glm.vec._4.Vec4d
+import glm.vec3.Vec3d
+import glm.vec4.Vec4d
 
 /**
  * Created by elect on 04/03/2017.
@@ -59,7 +59,7 @@ interface quatD_operators {
     }
 
     fun times(res: Vec3d, a: Vec3d, b: QuatD): Vec3d {
-        val dot = Glm.dot(a, a)
+        val dot = glm.dot(a, a)
         val iW = b.w / dot
         val iX = -b.x / dot
         val iY = -b.y / dot

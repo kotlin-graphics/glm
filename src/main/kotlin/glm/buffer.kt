@@ -1,7 +1,7 @@
 package glm
 
-import glm.vec.Vec4t
 import java.nio.*
+import glm.vec4.Vec4t
 
 /**
  * Created by elect on 08/04/17.

@@ -4,12 +4,12 @@ package glm
  * Created by GBarbieri on 05.10.2016.
  */
 
-import glm.vec._2.Vec2
-import glm.vec._2.Vec2i
-import glm.vec._2.operators.div
-import glm.vec._2.operators.minus
-import glm.vec._2.operators.plus
-import glm.vec._2.operators.times
+import glm.vec2.Vec2
+import glm.vec2.Vec2i
+import glm.vec2.operators.div
+import glm.vec2.operators.minus
+import glm.vec2.operators.plus
+import glm.vec2.operators.times
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
 

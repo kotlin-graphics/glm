@@ -1,18 +1,10 @@
 package glm.func
 
 import glm.*
-import glm.vec.Vec1t
-import glm.vec.Vec2t
-import glm.vec.Vec3t
-import glm.vec.Vec4t
-import glm.vec._1.Vec1i
-import glm.vec._2.*
-import glm.vec._3.*
-import glm.vec._4.*
-import glm.vec.bool.Vec1bool
-import glm.vec.bool.Vec2bool
-import glm.vec.bool.Vec3bool
-import glm.vec.bool.Vec4bool
+import glm.vec4.*
+import glm.vec3.*
+import glm.vec2.*
+import glm.vec1.*
 
 /**
  * Created by GBarbieri on 08.11.2016.

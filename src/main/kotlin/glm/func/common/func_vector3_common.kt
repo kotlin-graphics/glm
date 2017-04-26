@@ -1,28 +1,27 @@
 package glm.func.common
 
-import glm.vec._3.*
-import glm.vec.bool.Vec3bool
-import glm.Glm.abs
-import glm.Glm.sign
-import glm.Glm.floor
-import glm.Glm.trunc
-import glm.Glm.round
-import glm.Glm.ceil
-import glm.Glm.fract
-import glm.Glm.mod
-import glm.Glm.min
-import glm.Glm.max
-import glm.Glm.mix
-import glm.Glm.clamp
-import glm.Glm.step
-import glm.Glm.smoothStep
-import glm.Glm.isInf
-import glm.Glm.isNan
-import glm.Glm.floatBitsToInt
-import glm.Glm.floatBitsToUint
-import glm.Glm.intBitsToFloat
-import glm.Glm.uintBitsToFloat
-import glm.Glm.fma
+import glm.glm.abs
+import glm.glm.ceil
+import glm.glm.clamp
+import glm.glm.floatBitsToInt
+import glm.glm.floatBitsToUint
+import glm.glm.floor
+import glm.glm.fma
+import glm.glm.fract
+import glm.glm.intBitsToFloat
+import glm.glm.isInf
+import glm.glm.isNan
+import glm.glm.max
+import glm.glm.min
+import glm.glm.mix
+import glm.glm.mod
+import glm.glm.round
+import glm.glm.sign
+import glm.glm.smoothStep
+import glm.glm.step
+import glm.glm.trunc
+import glm.glm.uintBitsToFloat
+import glm.vec3.*
 
 
 /**

@@ -1,16 +1,17 @@
 package  glm.mat
 
 import glm.BYTES
-import glm.Glm.inverse
-import glm.Glm.transpose
+import glm.glm.inverse
+import glm.glm.transpose
 import glm.glm
 import glm.mat.operators.mat3x3_operators
 import glm.quat.Quat
 import glm.set
-import glm.vec.Vec2t
-import glm.vec.Vec3t
-import glm.vec.Vec4t
-import glm.vec._3.Vec3
+import glm.vec2.Vec2t
+import glm.vec3.Vec3
+import glm.vec3.Vec3t
+import glm.vec4.Vec4
+import glm.vec4.Vec4t
 import java.nio.FloatBuffer
 
 /**
@@ -221,7 +222,7 @@ class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
 
 
     companion object : mat3x3_operators {
-        @JvmField val SIZE = 3 * 3 * Float.BYTES
+        @JvmField val size = 3 * 3 * Float.BYTES
     }
 
 

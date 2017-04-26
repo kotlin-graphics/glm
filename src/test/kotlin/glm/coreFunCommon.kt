@@ -1,9 +1,9 @@
 package glm
 
-import glm.vec._2.Vec2
-import glm.vec._2.Vec2ub
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
+import glm.vec2.Vec2
+import glm.vec2.Vec2ub
 
 /**
  * Created by elect on 11/11/16.

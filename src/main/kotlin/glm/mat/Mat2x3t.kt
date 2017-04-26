@@ -1,6 +1,6 @@
 package  glm.mat
 
-import  glm.vec.Vec3t
+import  glm.vec3.Vec3t
 
 abstract interface Mat2x3t<T : Vec3t<*>> {
 

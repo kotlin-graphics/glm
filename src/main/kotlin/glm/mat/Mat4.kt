@@ -1,18 +1,18 @@
 package  glm.mat
 
 import glm.BYTES
-import glm.Glm.determinant
-import glm.Glm.inverse
-import glm.Glm.transpose
+import glm.glm.determinant
+import glm.glm.inverse
+import glm.glm.transpose
 import glm.glm
 import glm.set
 import glm.mat.operators.mat4x4_operators
 import glm.quat.Quat
-import glm.vec.Vec2t
-import glm.vec.Vec3t
-import glm.vec.Vec4t
-import glm.vec._3.Vec3
-import glm.vec._4.Vec4
+import glm.vec2.Vec2t
+import glm.vec4.Vec4
+import glm.vec4.Vec4t
+import glm.vec3.Vec3
+import glm.vec3.Vec3t
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 
@@ -288,7 +288,7 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
     companion object : mat4x4_operators {
         @JvmField val length = 4    // TODO others
-        @JvmField val SIZE = length * Vec4.SIZE
+        @JvmField val size = length * Vec4.size
     }
 
 

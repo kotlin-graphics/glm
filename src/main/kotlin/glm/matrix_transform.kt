@@ -1,19 +1,19 @@
 package glm
 
-import glm.Glm.abs
-import glm.Glm.cos
-import glm.Glm.inverseSqrt
-import glm.Glm.sin
-import glm.Glm.tan
+import glm.glm.abs
+import glm.glm.cos
+import glm.glm.inverseSqrt
+import glm.glm.sin
+import glm.glm.tan
 import glm.detail.GLM_COORDINATE_SYSTEM
 import glm.detail.GLM_DEPTH_CLIP_SPACE
 import glm.detail.GLM_DEPTH_ZERO_TO_ONE
 import glm.detail.GLM_LEFT_HANDED
 import glm.mat.Mat4
-import glm.vec._2.Vec2
-import glm.vec._2.Vec2i
-import glm.vec._3.Vec3
-import glm.vec._4.Vec4i
+import glm.vec2.Vec2
+import glm.vec3.Vec3
+import glm.vec2.Vec2i
+import glm.vec4.Vec4i
 
 /**
  * Created by GBarbieri on 12.12.2016.

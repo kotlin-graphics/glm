@@ -35,4 +35,3 @@ val Ushort.Companion.BYTES: Int
     get() = java.lang.Short.BYTES
 val Char.Companion.BYTES: Int
     get() = Character.BYTES
-
