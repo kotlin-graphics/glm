@@ -4,7 +4,7 @@ apply plugin: 'java'
 
 buildscript {
 
-    ext.kotlinVersion = '1.1.2-eap-77'
+    ext.kotlinVersion = '1.1.2'
 
     repositories {
         mavenCentral()
@@ -20,15 +20,15 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
-    compile "com.github.kotlin-graphics:kotlin-unsigned:490865899e7a908626737e3bea7bd2b20744583e"
+    compile "com.github.kotlin-graphics:kotlin-unsigned:c0990c3aa0"
 
     testCompile("io.kotlintest:kotlintest:2.0.0")
 }
 
 repositories {
     mavenCentral()
-    maven { url "https://jitpack.io" }
     maven { url "https://dl.bintray.com/kotlin/kotlin-dev" }
+    maven { url "https://jitpack.io" }
 }
 
 task packageSources(type: Jar, dependsOn: 'classes') {
