@@ -89,6 +89,15 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
         return this
     }
 
+    // TODO others
+    fun put(s: Float) = put(s, s, s)
+    fun put(x: Float, y: Float, z: Float): Vec3 {
+        this.x = x
+        this.y = y
+        this.z = z
+        return this
+    }
+
 
     // -- Component accesses --
 
