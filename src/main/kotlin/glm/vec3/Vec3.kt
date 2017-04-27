@@ -81,7 +81,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     }
 
 
-    override fun put(s: Number) = put(s, s, s)
+    override infix fun put(s: Number) = put(s, s, s)
     override fun put(x: Number, y: Number, z: Number): Vec3 {
         this.x = x.f
         this.y = y.f
@@ -90,8 +90,8 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     }
 
     // TODO others
-    fun put(s: Float) = put(s, s, s)
-    fun put(v: Vec3) = put(v.x, v.y, v.z)
+    infix fun put(s: Float) = put(s, s, s)
+    infix fun put(v: Vec3) = put(v.x, v.y, v.z)
     fun put(x: Float, y: Float, z: Float): Vec3 {
         this.x = x
         this.y = y
