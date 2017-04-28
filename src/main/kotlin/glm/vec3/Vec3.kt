@@ -22,8 +22,8 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     constructor() : this(0)
 
     constructor(v: Vec2t<out Number>) : this(v, 0)
-    constructor(v: Vec2t<out Number>, z: Number) : this(v.x, v.y, z) // TODO
-    constructor(x: Number, v: Vec2t<out Number>) : this(x, v.x, v.y) // TODO
+    constructor(v: Vec2t<out Number>, z: Number) : this(v.x, v.y, z)
+    constructor(x: Number, v: Vec2t<out Number>) : this(x, v.x, v.y)
     constructor(v: Vec3t<out Number>) : this(v.x, v.y, v.z)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z)
 

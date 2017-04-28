@@ -3,6 +3,8 @@ package glm.vec4
 import glm.BYTES
 import glm.L
 import glm.getLong
+import glm.vec2.Vec2t
+import glm.vec3.Vec3t
 
 /**
  * Created by elect on 09/10/16.
@@ -14,9 +16,12 @@ class Vec4l(x: Long, y: Long, z: Long, w: Long) : glm.vec4.Vec4t<Long>(x, y, z, 
 
     constructor() : this(0)
 
-    constructor(v: glm.vec2.Vec2t<out Number>) : this(v.x, v.y, 0, 1)
-    constructor(v: glm.vec3.Vec3t<out Number>) : this(v.x, v.y, v.z, 1)
-    constructor(v: glm.vec4.Vec4t<out Number>) : this(v.x, v.y, v.z, v.w)
+    constructor(v: Vec2t<out Number>) : this(v.x, v.y, 0, 1)
+    constructor(v: Vec2t<out Number>, z: Number, w: Number) : this(v.x, v.y, z, w)
+    constructor(v: Vec3t<out Number>) : this(v, 1)
+    constructor(v: Vec3t<out Number>, w: Number) : this(v.x, v.y, v.z, w)
+    constructor(x: Number, v: Vec3t<out Number>) : this(x, v.x, v.y, v.z)
+    constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z, v.w)
 
     constructor(v: glm.vec2.Vec2bool) : this(v.x.L, v.y.L, 0, 1)
     constructor(v: glm.vec3.Vec3bool) : this(v.x.L, v.y.L, v.z.L, 1)

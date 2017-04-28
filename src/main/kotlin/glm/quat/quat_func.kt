@@ -13,7 +13,9 @@ import glm.glm.sin
 import glm.glm.sqrt
 import glm.glm
 import glm.mat3x3.Mat3
+import glm.mat3x3.Mat3d
 import glm.mat4x4.Mat4
+import glm.mat4x4.Mat4d
 import glm.vec3.Vec3
 import glm.vec3.Vec3d
 import glm.vec4.Vec4bool
@@ -512,19 +514,17 @@ interface quat_func {
 
     /** Converts a 3 * 3 matrix to a quaternion.    */
     fun quat_cast(m: Mat3, res: Quat) = quat_cast(m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2], res)
+    fun quatD_cast(m: Mat3d, res: QuatD) = quatD_cast(m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2], res)
 
     fun quat_cast(m: Mat3) = quat_cast(m, Quat())
-
-    /** Converts a 3 * 3 matrix to a quaternion.    */
-    fun quatD_cast(res: QuatD = QuatD(), m: Mat3): Mat3 = TODO()
+    fun quatD_cast(m: Mat3d) = quatD_cast(m, QuatD())
 
     /** Converts a 4 * 4 matrix to a quaternion.    */
     fun quat_cast(m: Mat4, res: Quat) = quat_cast(m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2], res)
+    fun quatD_cast(m: Mat4d, res: QuatD) = quatD_cast(m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2], res)
 
     fun quat_cast(m: Mat4) = quat_cast(m, Quat())
-
-    /** Converts a 4 * 4 matrix to a quaternion.    */
-    fun quatD_cast(res: QuatD = QuatD(), m: Mat4): Mat4 = TODO()
+    fun quatD_cast(m: Mat4d) = quatD_cast(m, QuatD())
 
 
     fun quat_cast(
@@ -594,7 +594,7 @@ interface quat_func {
             m20: Float, m21: Float, m22: Float) = quat_cast(m00, m01, m02, m10, m11, m12, m20, m21, m22, Quat())
 
 
-    fun quat_cast(
+    fun quatD_cast(
             m00: Double, m01: Double, m02: Double,
             m10: Double, m11: Double, m12: Double,
             m20: Double, m21: Double, m22: Double,
@@ -655,10 +655,10 @@ interface quat_func {
         return res
     }
 
-    fun quat_cast(
+    fun quatD_cast(
             m00: Double, m01: Double, m02: Double,
             m10: Double, m11: Double, m12: Double,
-            m20: Double, m21: Double, m22: Double) = quat_cast(m00, m01, m02, m10, m11, m12, m20, m21, m22, QuatD())
+            m20: Double, m21: Double, m22: Double) = quatD_cast(m00, m01, m02, m10, m11, m12, m20, m21, m22, QuatD())
 
 
     /** Returns the quaternion rotation angle.  */

@@ -21,7 +21,10 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     constructor() : this(0)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y, 0, 1)
-    constructor(v: Vec3t<out Number>) : this(v.x, v.y, v.z, 1)
+    constructor(v: Vec2t<out Number>, z: Number, w: Number) : this(v.x, v.y, z, w)
+    constructor(v: Vec3t<out Number>) : this(v, 1)
+    constructor(v: Vec3t<out Number>, w: Number) : this(v.x, v.y, v.z, w)
+    constructor(x: Number, v: Vec3t<out Number>) : this(x, v.x, v.y, v.z)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z, v.w)
 
     constructor(v: Vec2bool) : this(v.x.i, v.y.i, 0, 1)

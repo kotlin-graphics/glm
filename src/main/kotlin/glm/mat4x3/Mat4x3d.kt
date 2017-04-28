@@ -1,29 +1,28 @@
 package  glm.mat4x3
 
 import glm.BYTES
-import  glm.vec3.Vec3
+import  glm.vec3.Vec3d
 
 /**
  * Created by GBarbieri on 09.12.2016.
  */
 
-import glm.mat4x3.Mat4x3
 import glm.set
-import java.nio.FloatBuffer
+import java.nio.DoubleBuffer
 
 
-data class Mat4x3(override var value: MutableList<Vec3>) : Mat4x3t<Vec3> {
+data class Mat4x3d(override var value: MutableList<Vec3d>) : Mat4x3t<Vec3d> {
 
     // -- Accesses --
 
     override operator fun get(i: Int) = value[i]
 
-    operator fun set(i: Int, v: Vec3) = value[i] put v
+    operator fun set(i: Int, v: Vec3d) = value[i] put v
 
 
-    infix fun to(dfb: FloatBuffer) = to(dfb, 0)
+    infix fun to(dfb: DoubleBuffer) = to(dfb, 0)
 
-    fun to(dfb: FloatBuffer, offset: Int): FloatBuffer {
+    fun to(dfb: DoubleBuffer, offset: Int): DoubleBuffer {
         dfb[offset + 0] = value[0][0]
         dfb[offset + 1] = value[0][1]
         dfb[offset + 2] = value[0][2]
@@ -40,6 +39,6 @@ data class Mat4x3(override var value: MutableList<Vec3>) : Mat4x3t<Vec3> {
     }
 
     companion object {
-        @JvmField val size = 4 * 3 * Float.BYTES
+        @JvmField val size = 4 * 3 * Double.BYTES
     }
 }

@@ -10,8 +10,10 @@ import glm.detail.GLM_DEPTH_CLIP_SPACE
 import glm.detail.GLM_DEPTH_ZERO_TO_ONE
 import glm.detail.GLM_LEFT_HANDED
 import glm.mat4x4.Mat4
+import glm.mat4x4.Mat4d
 import glm.vec2.Vec2
 import glm.vec3.Vec3
+import glm.vec3.Vec3d
 import glm.vec2.Vec2i
 import glm.vec4.Vec4i
 
@@ -40,6 +42,20 @@ interface matrix_transform {
     fun translate(m: Mat4, v: Vec3) = translate(Mat4(), m, v.x, v.y, v.z)
     fun translate(res: Mat4, m: Mat4, v: Vec3) = translate(res, m, v.x, v.y, v.z)
     fun translate(m: Mat4, vX: Float, vY: Float, vZ: Float) = translate(Mat4(), m, vX, vY, vZ)
+    
+    
+    fun translate(res: Mat4d, m: Mat4d, vX: Double, vY: Double, vZ: Double): Mat4d {
+        res put m
+        res[3].x = m[0].x * vX + m[1].x * vY + m[2].x * vZ + m[3].x
+        res[3].y = m[0].y * vX + m[1].y * vY + m[2].y * vZ + m[3].y
+        res[3].z = m[0].z * vX + m[1].z * vY + m[2].z * vZ + m[3].z
+        res[3].w = m[0].w * vX + m[1].w * vY + m[2].w * vZ + m[3].w
+        return res
+    }
+
+    fun translate(m: Mat4d, v: Vec3d) = translate(Mat4d(), m, v.x, v.y, v.z)
+    fun translate(res: Mat4d, m: Mat4d, v: Vec3d) = translate(res, m, v.x, v.y, v.z)
+    fun translate(m: Mat4d, vX: Double, vY: Double, vZ: Double) = translate(Mat4d(), m, vX, vY, vZ)
 
     /**
      * Builds a rotation 4 * 4 matrix created from an axis vector main.and an angle.
@@ -118,6 +134,77 @@ interface matrix_transform {
     fun rotate(res: Mat4, m: Mat4, angle: Float, v: Vec3) = rotate(res, m, angle, v.x, v.y, v.z)
     fun rotate(m: Mat4, angle: Float, v: Vec3) = rotate(Mat4(), m, angle, v.x, v.y, v.z)
     fun rotate(m: Mat4, angle: Float, vX: Float, vY: Float, vZ: Float) = rotate(Mat4(), m, angle, vX, vY, vZ)
+    
+    
+    fun rotate(res: Mat4d, m: Mat4d, angle: Double, vX: Double, vY: Double, vZ: Double): Mat4d {
+
+        val c = cos(angle)
+        val s = sin(angle)
+
+        val dot = vX * vX + vY * vY + vZ * vZ
+        val inv = inverseSqrt(dot)
+
+        val axisX = vX * inv
+        val axisY = vY * inv
+        val axisZ = vZ * inv
+
+        val tempX = (1f - c) * axisX
+        val tempY = (1f - c) * axisY
+        val tempZ = (1f - c) * axisZ
+
+        val rotate00 = c + tempX * axisX
+        val rotate01 = tempX * axisY + s * axisZ
+        val rotate02 = tempX * axisZ - s * axisY
+
+        val rotate10 = tempY * axisX - s * axisZ
+        val rotate11 = c + tempY * axisY
+        val rotate12 = tempY * axisZ + s * axisX
+
+        val rotate20 = tempZ * axisX + s * axisY
+        val rotate21 = tempZ * axisY - s * axisX
+        val rotate22 = c + tempZ * axisZ
+
+        val res0x = m[0].x * rotate00 + m[1].x * rotate01 + m[2].x * rotate02
+        val res0y = m[0].y * rotate00 + m[1].y * rotate01 + m[2].y * rotate02
+        val res0z = m[0].z * rotate00 + m[1].z * rotate01 + m[2].z * rotate02
+        val res0w = m[0].w * rotate00 + m[1].w * rotate01 + m[2].w * rotate02
+
+        val res1x = m[0].x * rotate10 + m[1].x * rotate11 + m[2].x * rotate12
+        val res1y = m[0].y * rotate10 + m[1].y * rotate11 + m[2].y * rotate12
+        val res1z = m[0].z * rotate10 + m[1].z * rotate11 + m[2].z * rotate12
+        val res1w = m[0].w * rotate10 + m[1].w * rotate11 + m[2].w * rotate12
+
+        val res2x = m[0].x * rotate20 + m[1].x * rotate21 + m[2].x * rotate22
+        val res2y = m[0].y * rotate20 + m[1].y * rotate21 + m[2].y * rotate22
+        val res2z = m[0].z * rotate20 + m[1].z * rotate21 + m[2].z * rotate22
+        val res2w = m[0].w * rotate20 + m[1].w * rotate21 + m[2].w * rotate22
+
+        res[0].x = res0x
+        res[0].y = res0y
+        res[0].z = res0z
+        res[0].w = res0w
+
+        res[1].x = res1x
+        res[1].y = res1y
+        res[1].z = res1z
+        res[1].w = res1w
+
+        res[2].x = res2x
+        res[2].y = res2y
+        res[2].z = res2z
+        res[2].w = res2w
+
+        res[3].x = m[3].x
+        res[3].y = m[3].y
+        res[3].z = m[3].z
+        res[3].w = m[3].w
+
+        return res
+    }
+
+    fun rotate(res: Mat4d, m: Mat4d, angle: Double, v: Vec3d) = rotate(res, m, angle, v.x, v.y, v.z)
+    fun rotate(m: Mat4d, angle: Double, v: Vec3d) = rotate(Mat4d(), m, angle, v.x, v.y, v.z)
+    fun rotate(m: Mat4d, angle: Double, vX: Double, vY: Double, vZ: Double) = rotate(Mat4d(), m, angle, vX, vY, vZ)
 
     /**
      * Builds a scale 4 * 4 matrix created from 3 scalars.
@@ -155,6 +242,36 @@ interface matrix_transform {
     fun scale(res: Mat4, m: Mat4, v: Vec3) = scale(res, m, v.x, v.y, v.z)
     fun scale(m: Mat4, v: Vec3) = scale(Mat4(), m, v.x, v.y, v.z)
     fun scale(m: Mat4, vX: Float, vY: Float, vZ: Float) = scale(Mat4(), m, vX, vY, vZ)
+    
+    
+    fun scale(res: Mat4d, m: Mat4d, vX: Double, vY: Double, vZ: Double): Mat4d {
+
+        res[0].x = m[0].x * vX
+        res[0].y = m[0].y * vX
+        res[0].z = m[0].z * vX
+        res[0].w = m[0].w * vX
+
+        res[1].x = m[1].x * vY
+        res[1].y = m[1].y * vY
+        res[1].z = m[1].z * vY
+        res[1].w = m[1].w * vY
+
+        res[2].x = m[2].x * vZ
+        res[2].y = m[2].y * vZ
+        res[2].z = m[2].z * vZ
+        res[2].w = m[2].w * vZ
+
+        res[3].x = m[3].x
+        res[3].y = m[3].y
+        res[3].z = m[3].z
+        res[3].w = m[3].w
+
+        return res
+    }
+
+    fun scale(res: Mat4d, m: Mat4d, v: Vec3d) = scale(res, m, v.x, v.y, v.z)
+    fun scale(m: Mat4d, v: Vec3d) = scale(Mat4d(), m, v.x, v.y, v.z)
+    fun scale(m: Mat4d, vX: Double, vY: Double, vZ: Double) = scale(Mat4d(), m, vX, vY, vZ)
 
     /**
      * Creates a matrix for an orthographic parallel viewing volume, using the default handedness.

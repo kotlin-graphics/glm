@@ -21,6 +21,8 @@ class Vec3b(x: Byte, y: Byte, z: Byte) : Vec3t<Byte>(x, y, z) {
     constructor() : this(0)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y, 0)
+    constructor(v: Vec2t<out Number>, z: Number) : this(v.x, v.y, z)
+    constructor(x: Number, v: Vec2t<out Number>) : this(x, v.x, v.y)
     constructor(v: Vec3t<out Number>) : this(v.x, v.y, v.z)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z)
 

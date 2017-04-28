@@ -12,8 +12,10 @@ import glm.mat2x4.Mat2x4t
 import glm.mat4x2.Mat4x2
 import glm.mat4x2.Mat4x2t
 import glm.mat4x4.Mat4
+import glm.set
 import glm.vec2.Vec2
 import glm.vec2.Vec2t
+import java.nio.FloatBuffer
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -117,6 +119,16 @@ data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2> {
         value[0][0] = 1f; value[1][0] = 0f
         value[0][1] = 0f; value[1][1] = 1f
         return this
+    }
+
+    infix fun to(dfb: FloatBuffer) = to(dfb, 0)
+
+    fun to(dfb: FloatBuffer, offset: Int): FloatBuffer {
+        dfb[offset + 0] = value[0][0]
+        dfb[offset + 1] = value[0][1]
+        dfb[offset + 2] = value[1][0]
+        dfb[offset + 3] = value[1][1]
+        return dfb
     }
 
 

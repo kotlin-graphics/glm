@@ -21,7 +21,10 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     constructor() : this(0)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y, 0, 1)
-    constructor(v: Vec3t<out Number>) : this(v.x, v.y, v.z, 1)
+    constructor(v: Vec2t<out Number>, z: Number, w: Number) : this(v.x, v.y, z, w)
+    constructor(v: Vec3t<out Number>) : this(v, 1)
+    constructor(v: Vec3t<out Number>, w: Number) : this(v.x, v.y, v.z, w)
+    constructor(x: Number, v: Vec3t<out Number>) : this(x, v.x, v.y, v.z)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z, v.w)
 
     constructor(v: Vec2bool) : this(v.x.d, v.y.d, 0, 1)
@@ -93,7 +96,7 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
 
     // -- Component accesses --
 
-    operator fun Vec4d.get(i: Int) = when (i) {
+    operator fun get(i: Int) = when (i) {
         0 -> x
         1 -> y
         2 -> z
@@ -101,7 +104,7 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
-    operator fun Vec4d.set(i: Int, s: Number) = when (i) {
+    operator fun set(i: Int, s: Number) = when (i) {
         0 -> x = s.d
         1 -> y = s.d
         2 -> z = s.d
