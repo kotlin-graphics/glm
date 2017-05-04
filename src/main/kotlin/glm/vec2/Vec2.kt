@@ -1,6 +1,10 @@
 package glm.vec2
 
-import glm.*
+import glm.BYTES
+import glm.f
+import glm.getFloat
+import glm.glm
+import glm.set
 import glm.vec2.operators.vec2_operators
 import glm.vec3.Vec3bool
 import glm.vec3.Vec3t
@@ -126,6 +130,13 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
         floats[index] = x
         floats[index + 1] = y
         return floats
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+
+    fun to(bytes: ByteBuffer, offset: Int) {
+        bytes.putFloat(offset, x)
+        bytes.putFloat(offset + Float.BYTES, y)
     }
 
 
