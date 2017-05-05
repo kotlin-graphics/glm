@@ -8,70 +8,42 @@ import kotlin.experimental.or
  * Created by GBarbieri on 07.12.2016.
  */
 
-val Number.f: Float
-    get() = toFloat()
-val Number.b: Byte
-    get() = toByte()
-val Number.d: Double
-    get() = toDouble()
-val Number.i: Int
-    get() = toInt()
-val Number.L: Long
-    get() = toLong()
-val Number.s: Short
-    get() = toShort()
-val Number.ub: Ubyte
-    get() = toUbyte()
-val Number.ui: Uint
-    get() = toUint()
-val Number.ul: Ulong
-    get() = toUlong()
-val Number.us: Ushort
-    get() = toUshort()
+val Number.f get() = toFloat()
+val Number.b get() = toByte()
+val Number.d get() = toDouble()
+val Number.i get() = toInt()
+val Number.L get() = toLong()
+val Number.s get() = toShort()
+val Number.ub get() = toUbyte()
+val Number.ui get() = toUint()
+val Number.ul get() = toUlong()
+val Number.us get() = toUshort()
+val Number.c get() = toChar()
+val Number.bool get() = i != 0
 
 
-val Boolean.f: Float
-    get() = if (this) 1f else 0f
-val Boolean.b: Byte
-    get() = if (this) 1.b else 0.b
-val Boolean.d: Double
-    get() = if (this) 1.0 else 0.0
-val Boolean.i: Int
-    get() = if (this) 1 else 0
-val Boolean.L: Long
-    get() = if (this) 1L else 0L
-val Boolean.s: Short
-    get() = if (this) 1.s else 0.s
-val Boolean.ub: Ubyte
-    get() = if (this) 1.ub else 0.ub
-val Boolean.ui: Uint
-    get() = if (this) 1.ui else 0.ui
-val Boolean.ul: Ulong
-    get() = if (this) 1.ul else 0.ul
-val Boolean.us: Ushort
-    get() = if (this) 1.us else 0.us
+val Boolean.f get() = if (this) 1f else 0f
+val Boolean.b get() = if (this) 1.b else 0.b
+val Boolean.d get() = if (this) 1.0 else 0.0
+val Boolean.i get() = if (this) 1 else 0
+val Boolean.L get() = if (this) 1L else 0L
+val Boolean.s get() = if (this) 1.s else 0.s
+val Boolean.ub get() = if (this) 1.ub else 0.ub
+val Boolean.ui get() = if (this) 1.ui else 0.ui
+val Boolean.ul get() = if (this) 1.ul else 0.ul
+val Boolean.us get() = if (this) 1.us else 0.us
 
 
-val Char.f: Float
-    get() = toFloat()
-val Char.b: Byte
-    get() = toByte()
-val Char.d: Double
-    get() = toDouble()
-val Char.i: Int
-    get() = toInt()
-val Char.L: Long
-    get() = toLong()
-val Char.s: Short
-    get() = toShort()
-val Char.ub: Ubyte
-    get() = toUbyte()
-val Char.ui: Uint
-    get() = toUint()
-val Char.ul: Ulong
-    get() = toUlong()
-val Char.us: Ushort
-    get() = toUshort()
+val Char.f get() = toFloat()
+val Char.b get() = toByte()
+val Char.d get() = toDouble()
+val Char.i get() = toInt()
+val Char.L get() = toLong()
+val Char.s get() = toShort()
+val Char.ub get() = toUbyte()
+val Char.ui get() = toUint()
+val Char.ul get() = toUlong()
+val Char.us get() = toUshort()
 
 
 fun ByteArray.getFloat(index: Int, bigEndianess: Boolean = true) = Float.intBitsToFloat(
@@ -166,43 +138,25 @@ infix fun Long.and(other: Int) = this and other.L
 infix fun Long.or(other: Int) = this or other.L
 infix fun Long.xor(other: Int) = this xor other.L
 
-val String.f: Float
-    get() = toFloat()
-val String.b: Byte
-    get() = toByte()
-val String.d: Double
-    get() = toDouble()
-val String.i: Int
-    get() = toInt()
-val String.L: Long
-    get() = toLong()
-val String.s: Short
-    get() = toShort()
+val String.f get() = toFloat()
+val String.b get() = toByte()
+val String.d get() = toDouble()
+val String.i get() = toInt()
+val String.L get() = toLong()
+val String.s get() = toShort()
 // TODO unsigned String extensions
-val String.ub: Ubyte
-    get() = Ubyte(this)
-val String.ui: Uint
-    get() = Uint(this)
-val String.ul: Ulong
-    get() = Ulong(this)
-val String.us: Ushort
-    get() = Ushort(this)
+val String.ub get() = Ubyte(this)
+val String.ui get() = Uint(this)
+val String.ul get() = Ulong(this)
+val String.us get() = Ushort(this)
 
 
-val Float.deg
-    get() = Math.toDegrees(this.d).f
-val Double.deg
-    get() = Math.toDegrees(this)
-val Float.rad
-    get() = Math.toRadians(this.d).f
-val Double.rad
-    get() = Math.toRadians(this)
+val Float.deg get() = Math.toDegrees(this.d).f
+val Double.deg get() = Math.toDegrees(this)
+val Float.rad get() = Math.toRadians(this.d).f
+val Double.rad get() = Math.toRadians(this)
 
-val Float.cos
-    get() = Math.cos(this.d).f
-val Double.cos
-    get() = Math.cos(this)
-val Float.sin
-    get() = Math.sin(this.d).f
-val Double.sin
-    get() = Math.sin(this)
+val Float.cos get() = Math.cos(this.d).f
+val Double.cos get() = Math.cos(this)
+val Float.sin get() = Math.sin(this.d).f
+val Double.sin get() = Math.sin(this)

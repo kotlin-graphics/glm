@@ -8,6 +8,7 @@ import glm.vec3.Vec3bool
 import glm.vec3.Vec3t
 import glm.vec4.Vec4bool
 import glm.vec4.Vec4t
+import java.nio.*
 
 /**
  * Created bY GBarbieri on 06.10.2016.
@@ -47,19 +48,20 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
         put(list, index)
     }
 
-    constructor(bytes: java.nio.ByteBuffer, index: Int = bytes.position(), oneByteOneInt: Boolean = true) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneInt: Boolean = true) : this(
             if (oneByteOneInt) bytes[index].i else bytes.getInt(index),
             if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES))
 
-    constructor(chars: java.nio.CharBuffer, index: Int = chars.position()) : this(chars[index].i, chars[index + 1].i)
-    constructor(shorts: java.nio.ShortBuffer, index: Int = shorts.position()) : this(shorts[index], shorts[index + 1])
-    constructor(ints: java.nio.IntBuffer, index: Int = ints.position()) : this(ints[index], ints[index + 1])
-    constructor(longs: java.nio.LongBuffer, index: Int = longs.position()) : this(longs[index], longs[index + 1])
-    constructor(floats: java.nio.FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1])
-    constructor(doubles: java.nio.DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1])
+    constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].i, chars[index + 1].i)
+    constructor(shorts: ShortBuffer, index: Int = shorts.position()) : this(shorts[index], shorts[index + 1])
+    constructor(ints: IntBuffer, index: Int = ints.position()) : this(ints[index], ints[index + 1])
+    constructor(longs: LongBuffer, index: Int = longs.position()) : this(longs[index], longs[index + 1])
+    constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1])
+    constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1])
 
     constructor(s: Number) : this(s, s)
     constructor(x: Number, y: Number) : this(x.i, y.i)
+    constructor(x: IntBuffer, y: IntBuffer) : this(x[0], y[0]) // TODO others
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = true, bigEndianess: Boolean = true) {
@@ -67,7 +69,7 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
         y = if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES, bigEndianess)
     }
 
-    fun set(bytes: java.nio.ByteBuffer, index: Int = bytes.position(), oneByteOneInt: Boolean = true) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneInt: Boolean = true) {
         x = if (oneByteOneInt) bytes[index].i else bytes.getInt(index)
         y = if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES)
     }
@@ -117,9 +119,9 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     }
 
     // TODO others + ints
-    infix fun to(bytes: java.nio.ByteBuffer) = to(bytes, bytes.position())
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
 
-    fun to(bytes: java.nio.ByteBuffer, offset: Int): java.nio.ByteBuffer {
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
         bytes.putInt(offset, x)
         bytes.putInt(offset + Int.BYTES, y)
         return bytes
