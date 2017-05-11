@@ -19,6 +19,7 @@ import glm.vec2.Vec2t
 import glm.vec3.Vec3
 import glm.vec3.Vec3t
 import glm.vec4.Vec4t
+import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 
 /**
@@ -210,6 +211,22 @@ class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
 
     infix fun to(res: Quat) = glm.quat_cast(this, res)
     fun toQuat() = glm.quat_cast(this, Quat())
+
+
+    infix fun to(dbb: ByteBuffer): ByteBuffer = to(dbb, 0)
+
+    fun to(dbb: ByteBuffer, offset: Int): ByteBuffer {
+        dbb.putFloat(offset + 0 * Float.BYTES, value[0][0])
+        dbb.putFloat(offset + 1 * Float.BYTES, value[0][1])
+        dbb.putFloat(offset + 2 * Float.BYTES, value[0][2])
+        dbb.putFloat(offset + 3 * Float.BYTES, value[1][0])
+        dbb.putFloat(offset + 4 * Float.BYTES, value[1][1])
+        dbb.putFloat(offset + 5 * Float.BYTES, value[1][2])
+        dbb.putFloat(offset + 6 * Float.BYTES, value[2][0])
+        dbb.putFloat(offset + 7 * Float.BYTES, value[2][1])
+        dbb.putFloat(offset + 8 * Float.BYTES, value[2][2])
+        return dbb
+    }
 
 
     infix fun to(dfb: FloatBuffer) = to(dfb, 0)
