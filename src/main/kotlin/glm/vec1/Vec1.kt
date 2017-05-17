@@ -1,7 +1,9 @@
 package glm.vec1
 
+import glm.BYTES
 import glm.f
 import glm.getFloat
+import glm.set
 import glm.vec2.Vec2bool
 import glm.vec2.Vec2t
 import glm.vec3.Vec3bool
@@ -80,6 +82,23 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
         this.x = x.f
         return this
     }
+
+    infix fun to(floats: FloatArray) = to(floats, 0)
+
+    fun to(floats: FloatArray, index: Int): FloatArray {
+        floats[index] = x
+        return floats
+    }
+
+    infix fun to(floats: FloatBuffer) = to(floats, floats.position())
+
+    fun to(floats: FloatBuffer, index: Int): FloatBuffer {
+        floats[index] = x
+        return floats
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, index: Int): ByteBuffer = bytes.putFloat(index, x)
 
 
     // -- Component accesses --
