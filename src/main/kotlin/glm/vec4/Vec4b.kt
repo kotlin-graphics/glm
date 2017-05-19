@@ -92,10 +92,10 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
 
     companion object : vec4b_operators {
         @JvmField val length = 4
-        @JvmField val SIZE = length * Byte.BYTES
+        @JvmField val size = length * Byte.BYTES
     }
 
-    override fun instanceSIZE() = SIZE
+    override fun instanceSIZE() = size
 
     override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
 

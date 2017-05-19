@@ -111,9 +111,9 @@ class Vec4l(x: Long, y: Long, z: Long, w: Long) : glm.vec4.Vec4t<Long>(x, y, z, 
 
     companion object : glm.vec4.operators.vec4l_operators {
         @JvmField val length = 4
-        @JvmField val SIZE = glm.vec4.Vec4l.Companion.length * Long.BYTES
+        @JvmField val size = glm.vec4.Vec4l.Companion.length * Long.BYTES
     }
-    override fun instanceSIZE() = glm.vec4.Vec4l.Companion.SIZE
+    override fun instanceSIZE() = glm.vec4.Vec4l.Companion.size
 
     override infix fun to(bytes: java.nio.ByteBuffer) = to(bytes, bytes.position())
 

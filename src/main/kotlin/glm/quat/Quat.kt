@@ -101,7 +101,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
     companion object : quat_operators, quat_func {
 
-        @JvmField val SIZE = 4 * Float.BYTES
+        @JvmField val size = 4 * Float.BYTES
     }
 
 
