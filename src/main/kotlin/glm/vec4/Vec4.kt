@@ -118,7 +118,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
         @JvmField val size = length * Float.BYTES
     }
 
-    override fun instanceSIZE() = size
+    override fun instanceSize() = size
 
     // TODO others
     infix fun to(floats: FloatArray) = to(floats, 0)

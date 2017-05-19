@@ -138,7 +138,7 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
 
     infix fun isEqual(b: Vec4t<out Number>) = glm.isEqual(this, b)
 
-    abstract fun instanceSIZE(): Int // TODO check
+    abstract fun instanceSize(): Int // TODO check
 
     // components alias
 

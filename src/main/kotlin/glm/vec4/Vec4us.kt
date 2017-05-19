@@ -111,7 +111,7 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
-    override fun instanceSIZE() = size
+    override fun instanceSize() = size
 
 
     companion object : vec4us_operators {

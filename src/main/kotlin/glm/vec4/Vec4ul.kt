@@ -111,7 +111,7 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
-    override fun instanceSIZE() = size
+    override fun instanceSize() = size
 
 
     companion object : vec4ul_operators {
