@@ -72,18 +72,26 @@ interface mat4x4_operators {
     }
 
     fun times(res: Vec4, a: Mat4, b: Vec4): Vec4 {
-        res[0] = a[0][0] * b.x + a[1][0] * b.y + a[2][0] * b.z + a[3][0] * b.w
-        res[1] = a[0][1] * b.x + a[1][1] * b.y + a[2][1] * b.z + a[3][1] * b.w
-        res[2] = a[0][2] * b.x + a[1][2] * b.y + a[2][2] * b.z + a[3][2] * b.w
-        res[3] = a[0][3] * b.x + a[1][3] * b.y + a[2][3] * b.z + a[3][3] * b.w
+        val x = a[0][0] * b.x + a[1][0] * b.y + a[2][0] * b.z + a[3][0] * b.w
+        val y = a[0][1] * b.x + a[1][1] * b.y + a[2][1] * b.z + a[3][1] * b.w
+        val z = a[0][2] * b.x + a[1][2] * b.y + a[2][2] * b.z + a[3][2] * b.w
+        val w = a[0][3] * b.x + a[1][3] * b.y + a[2][3] * b.z + a[3][3] * b.w
+        res.x = x
+        res.y = y
+        res.z = z
+        res.w = w
         return res
     }
 
     fun times(res: Vec4, a: Vec4, b: Mat4): Vec4 {
-        res[0] = a.x * b[0][0] + a.y * b[0][1] + a.z * b[0][2] + a.w * b[0][3]
-        res[1] = a.x * b[1][0] + a.y * b[1][1] + a.z * b[1][2] + a.w * b[1][3]
-        res[2] = a.x * b[2][0] + a.y * b[2][1] + a.z * b[2][2] + a.w * b[2][3]
-        res[3] = a.x * b[3][0] + a.y * b[3][1] + a.z * b[3][2] + a.w * b[3][3]
+        val x = a.x * b[0][0] + a.y * b[0][1] + a.z * b[0][2] + a.w * b[0][3]
+        val y = a.x * b[1][0] + a.y * b[1][1] + a.z * b[1][2] + a.w * b[1][3]
+        val z = a.x * b[2][0] + a.y * b[2][1] + a.z * b[2][2] + a.w * b[2][3]
+        val w = a.x * b[3][0] + a.y * b[3][1] + a.z * b[3][2] + a.w * b[3][3]
+        res.x = x
+        res.y = y
+        res.z = z
+        res.w = w
         return res
     }
 
