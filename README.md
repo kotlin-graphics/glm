@@ -32,4 +32,6 @@ fun camera(translate: Float, rotate: Vec2): Mat4 {
 }
 ```
 
+[Gradle, Maven, Sbt, Leiningen](https://jitpack.io/#kotlin-graphics/glm/0.01)
+
 
