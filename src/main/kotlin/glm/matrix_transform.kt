@@ -12,6 +12,7 @@ import glm.detail.GLM_LEFT_HANDED
 import glm.mat4x4.Mat4
 import glm.mat4x4.Mat4d
 import glm.vec2.Vec2
+import glm.vec2.Vec2t
 import glm.vec3.Vec3
 import glm.vec3.Vec3d
 import glm.vec2.Vec2i
@@ -42,8 +43,8 @@ interface matrix_transform {
     fun translate(m: Mat4, v: Vec3) = translate(Mat4(), m, v.x, v.y, v.z)
     fun translate(res: Mat4, m: Mat4, v: Vec3) = translate(res, m, v.x, v.y, v.z)
     fun translate(m: Mat4, vX: Float, vY: Float, vZ: Float) = translate(Mat4(), m, vX, vY, vZ)
-    
-    
+
+
     fun translate(res: Mat4d, m: Mat4d, vX: Double, vY: Double, vZ: Double): Mat4d {
         res put m
         res[3].x = m[0].x * vX + m[1].x * vY + m[2].x * vZ + m[3].x
@@ -134,8 +135,8 @@ interface matrix_transform {
     fun rotate(res: Mat4, m: Mat4, angle: Float, v: Vec3) = rotate(res, m, angle, v.x, v.y, v.z)
     fun rotate(m: Mat4, angle: Float, v: Vec3) = rotate(Mat4(), m, angle, v.x, v.y, v.z)
     fun rotate(m: Mat4, angle: Float, vX: Float, vY: Float, vZ: Float) = rotate(Mat4(), m, angle, vX, vY, vZ)
-    
-    
+
+
     fun rotate(res: Mat4d, m: Mat4d, angle: Double, vX: Double, vY: Double, vZ: Double): Mat4d {
 
         val c = cos(angle)
@@ -242,8 +243,8 @@ interface matrix_transform {
     fun scale(res: Mat4, m: Mat4, v: Vec3) = scale(res, m, v.x, v.y, v.z)
     fun scale(m: Mat4, v: Vec3) = scale(Mat4(), m, v.x, v.y, v.z)
     fun scale(m: Mat4, vX: Float, vY: Float, vZ: Float) = scale(Mat4(), m, vX, vY, vZ)
-    
-    
+
+
     fun scale(res: Mat4d, m: Mat4d, vX: Double, vY: Double, vZ: Double): Mat4d {
 
         res[0].x = m[0].x * vX
@@ -379,6 +380,8 @@ interface matrix_transform {
 
         return res
     }
+
+    fun ortho(res: Mat4, size: Vec2t<*>) = ortho(res, 0f, size.x.f, 0f, size.y.f)
 
     fun ortho(left: Float, right: Float, bottom: Float, top: Float) = ortho(Mat4(), left, right, bottom, top)
 
@@ -958,7 +961,7 @@ interface matrix_transform {
      * @see gtc_matrix_transform
      * @see - frustum(left, right, bottom, top, nearVal, farVal) frustum(left, right, bottom, top, nearVal, farVal) */
     fun lookAt(res: Mat4, eye: Vec3, center: Vec3, up: Vec3) =
-            if(GLM_COORDINATE_SYSTEM == GLM_LEFT_HANDED)
+            if (GLM_COORDINATE_SYSTEM == GLM_LEFT_HANDED)
                 lookAtLH(res, eye, center, up)
             else
                 lookAtRH(res, eye, center, up)
