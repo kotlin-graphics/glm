@@ -45,6 +45,8 @@ val Char.ui get() = toUint()
 val Char.ul get() = toUlong()
 val Char.us get() = toUshort()
 
+infix fun Char.shl(bits: Int) = i shl bits
+
 
 fun ByteArray.getFloat(index: Int, bigEndianess: Boolean = true) = Float.intBitsToFloat(
         if (bigEndianess) this[index].i and 0xFF or
