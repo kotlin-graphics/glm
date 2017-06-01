@@ -46,6 +46,7 @@ val Char.ul get() = toUlong()
 val Char.us get() = toUshort()
 
 infix fun Char.shl(bits: Int) = i shl bits
+operator fun Char.compareTo(other: Int) = i.compareTo(other)
 operator fun Int.plus(b: Char) = this + b.i
 operator fun Int.minus(b: Char) = this - b.i
 
