@@ -23,7 +23,7 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
-    compile "com.github.kotlin-graphics:kotlin-unsigned:48c570946f845fb2a016bf4f7e9caa9129765529"
+    compile "com.github.kotlin-graphics:kotlin-unsigned:1e9b807c1efda8478824ac629378584ec947963b"
 
     testCompile("io.kotlintest:kotlintest:2.0.0")
 }
@@ -32,6 +32,11 @@ repositories {
     mavenCentral()
     maven { url "https://dl.bintray.com/kotlin/kotlin-dev" }
     maven { url "https://jitpack.io" }
+}
+
+allprojects {
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
 }
 
 task packageSources(type: Jar, dependsOn: 'classes') {
