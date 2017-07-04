@@ -23,9 +23,9 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
-    compile "com.github.kotlin-graphics:kotlin-unsigned:3a6ff81a10414e01fa228b18b73f9ea388938ca1"
+    compile 'com.github.kotlin-graphics:kotlin-unsigned:4b98a41d94ae1dc47cd0569f909280600fb15bbc'
 
-    compile 'com.github.elect86:kotlintest:43281b7e1b'
+    testCompile 'com.github.elect86:kotlintest:43281b7e1b'
 }
 
 repositories {
