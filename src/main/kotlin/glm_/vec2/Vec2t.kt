@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package glm_.vec2
 
 import glm_.b
