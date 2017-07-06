@@ -159,4 +159,7 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
     // swizzling
 
 
+    operator fun component1() = x
+    operator fun component2() = y
+    operator fun component3() = z
 }

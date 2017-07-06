@@ -194,4 +194,10 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
         }
 
     override fun toString() = "$x, $y, $z, $w"
+
+
+    operator fun component1() = x
+    operator fun component2() = y
+    operator fun component3() = z
+    operator fun component4() = w
 }
