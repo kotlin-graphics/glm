@@ -101,7 +101,7 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
         1 -> y = s
         else -> throw ArrayIndexOutOfBoundsException()
     }
-    
+
     operator fun set(i: Int, s: Number) = when (i) {
         0 -> x = s.i
         1 -> y = s.i

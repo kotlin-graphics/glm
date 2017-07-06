@@ -336,4 +336,7 @@ abstract class Vec2t<T : Number>(_x: T, _y: T) {
             is Vec2ul -> Vec2ul(y, y)
             else -> throw IllegalStateException()
         }
+
+    fun component1() = x
+    fun component2() = y
 }
