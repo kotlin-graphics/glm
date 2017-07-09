@@ -11,6 +11,8 @@ import glm_.mat.QuatT
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
+import java.io.DataInputStream
+import java.io.InputStream
 
 /**
  * Created by GBarbieri on 15.11.2016.
@@ -56,6 +58,9 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 //    constructor(m: Mat4x4) : this() {
 //        quat_cast(m, this)
 //    }
+
+    constructor(inputStream: InputStream) : this(DataInputStream(inputStream))
+    constructor(dataInputStream: DataInputStream) : this(dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat())
 
     infix fun to(res: Mat3) = glm.mat3_cast(this, res)
     fun toMat3() = glm.mat3_cast(this, Mat3())
