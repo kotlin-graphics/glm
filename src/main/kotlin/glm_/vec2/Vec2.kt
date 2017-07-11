@@ -284,9 +284,9 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     fun normalize_() = glm.normalize(this, this)
 
     @JvmOverloads fun negate(res: Vec2 = Vec2()): Vec2 {
-        x = -x
-        y = -y
-        return this
+        res.x = -x
+        res.y = -y
+        return res
     }
 
     fun negate_() = negate(this)

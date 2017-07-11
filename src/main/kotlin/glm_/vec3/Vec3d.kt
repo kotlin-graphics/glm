@@ -263,10 +263,10 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     fun cross_(b: Vec3d) = glm.cross(this, b, this)
 
     @JvmOverloads fun negate(res: Vec3d = Vec3d()): Vec3d {
-        x = -x
-        y = -y
-        z = -z
-        return this
+        res.x = -x
+        res.y = -y
+        res.z = -z
+        return res
     }
 
     fun negate_() = negate(this)

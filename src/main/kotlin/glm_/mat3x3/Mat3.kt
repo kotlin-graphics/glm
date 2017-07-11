@@ -41,9 +41,7 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
 
     constructor(v: Vec2t<*>) : this(v.x, v.y, 0)
     constructor(v: Vec2t<*>, z: Number) : this(v.x, v.y, z)
-    constructor(v: Vec2t<*>, z: Number, w: Number) : this(v.x, v.y, z)
     constructor(v: Vec3t<*>) : this(v.x, v.y, v.z)
-    constructor(v: Vec3t<*>, w: Number) : this(v.x, v.y, v.z)
     constructor(v: Vec4t<*>) : this(v.x, v.y, v.z)
 
     constructor(x0: Number, y0: Number, z0: Number,

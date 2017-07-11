@@ -265,9 +265,9 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     fun normalize_() = glm.normalize(this, this)
 
     @JvmOverloads fun negate(res: Vec2d = Vec2d()): Vec2d {
-        x = -x
-        y = -y
-        return this
+        res.x = -x
+        res.y = -y
+        return res
     }
 
     fun negate_() = negate(this)

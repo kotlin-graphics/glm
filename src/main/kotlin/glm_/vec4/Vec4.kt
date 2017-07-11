@@ -302,11 +302,11 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     fun normalize_() = glm.normalize(this, this)
 
     @JvmOverloads fun negate(res: Vec4 = Vec4()): Vec4 {
-        x = -x
-        y = -y
-        z = -z
-        w = -w
-        return this
+        res.x = -x
+        res.y = -y
+        res.z = -z
+        res.w = -w
+        return res
     }
 
     fun negate_() = negate(this)

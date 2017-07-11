@@ -303,10 +303,10 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix fun cross_(b: Vec3) = glm.cross(this, b, this)
 
     @JvmOverloads fun negate(res: Vec3 = Vec3()): Vec3 {
-        x = -x
-        y = -y
-        z = -z
-        return this
+        res.x = -x
+        res.y = -y
+        res.z = -z
+        return res
     }
 
     fun negate_() = negate(this)
