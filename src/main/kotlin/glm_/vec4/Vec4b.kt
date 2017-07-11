@@ -4,11 +4,11 @@ import glm_.BYTES
 import glm_.b
 import glm_.i
 import glm_.set
+import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
+import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4b_operators
-import glm_.vec2.Vec2bool
-import glm_.vec3.Vec3bool
 import java.nio.*
 
 /**

@@ -3,9 +3,9 @@ package glm_.vec4
 import glm_.BYTES
 import glm_.L
 import glm_.getLong
-import glm_.vec3.Vec3bool
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
+import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4l_operators
 import java.nio.*
@@ -117,6 +117,7 @@ class Vec4l(x: Long, y: Long, z: Long, w: Long) : Vec4t<Long>(x, y, z, w) {
         @JvmField val length = 4
         @JvmField val size = length * Long.BYTES
     }
+
     override fun instanceSize() = Vec4l.size
 
     override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())

@@ -1,11 +1,11 @@
 package glm_.vec3
 
 import glm_.*
-import glm_.vec2.Vec2t
-import glm_.vec4.Vec4t
 import glm_.vec2.Vec2bool
-import glm_.vec4.Vec4bool
+import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3_operators
+import glm_.vec4.Vec4bool
+import glm_.vec4.Vec4t
 import java.io.DataInputStream
 import java.io.InputStream
 import java.nio.*

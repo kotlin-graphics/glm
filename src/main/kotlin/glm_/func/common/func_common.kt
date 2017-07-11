@@ -1,30 +1,25 @@
 package glm_.func.common
 
+import glm_.*
 import glm_.glm.abs
 import glm_.glm.ceil
 import glm_.glm.clamp
-import glm_.glm.floor
-import glm_.glm.fract
-import glm_.glm.max
-import glm_.glm.min
-import glm_.glm.sign
-import glm_.glm.trunc
-import glm_.glm.mix
-import glm_.glm.step
-import glm_.glm.smoothStep
-import glm_.glm.isNan
-import glm_.glm.isInf
 import glm_.glm.floatBitsToInt
 import glm_.glm.floatBitsToUint
-import glm_.glm.intBitsToFloat
-import glm_.glm.uintBitsToFloat
+import glm_.glm.floor
 import glm_.glm.fma
-import glm_.i
-import glm_.f
-import glm_.b
-import glm_.d
-import glm_.s
-import glm_.L
+import glm_.glm.fract
+import glm_.glm.intBitsToFloat
+import glm_.glm.isInf
+import glm_.glm.isNan
+import glm_.glm.max
+import glm_.glm.min
+import glm_.glm.mix
+import glm_.glm.sign
+import glm_.glm.smoothStep
+import glm_.glm.step
+import glm_.glm.trunc
+import glm_.glm.uintBitsToFloat
 import unsigned.Uint
 
 
@@ -108,7 +103,6 @@ interface func_common {
 
     fun mix(a: Float, b: Float, interp: Boolean) = if (interp) a else b
     fun mix(a: Double, b: Double, interp: Boolean) = if (interp) a else b
-
 
 
     fun step(edge: Float, a: Float) = mix(1f, 0f, a < edge)

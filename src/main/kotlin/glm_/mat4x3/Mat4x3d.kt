@@ -1,13 +1,12 @@
 package  glm_.mat4x3
 
-import glm_.BYTES
-import  glm_.vec3.Vec3d
-
 /**
  * Created by GBarbieri on 09.12.2016.
  */
 
+import glm_.BYTES
 import glm_.set
+import glm_.vec3.Vec3d
 import java.nio.DoubleBuffer
 
 

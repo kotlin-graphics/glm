@@ -1,21 +1,21 @@
 package glm_
 
+import glm_.detail.GLM_COORDINATE_SYSTEM
+import glm_.detail.GLM_DEPTH_CLIP_SPACE
+import glm_.detail.GLM_DEPTH_ZERO_TO_ONE
+import glm_.detail.GLM_LEFT_HANDED
 import glm_.glm.abs
 import glm_.glm.cos
 import glm_.glm.inverseSqrt
 import glm_.glm.sin
 import glm_.glm.tan
-import glm_.detail.GLM_COORDINATE_SYSTEM
-import glm_.detail.GLM_DEPTH_CLIP_SPACE
-import glm_.detail.GLM_DEPTH_ZERO_TO_ONE
-import glm_.detail.GLM_LEFT_HANDED
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.vec2.Vec2
+import glm_.vec2.Vec2i
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
-import glm_.vec2.Vec2i
 import glm_.vec4.Vec4i
 
 /**

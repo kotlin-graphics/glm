@@ -1,28 +1,27 @@
 package glm_.func.common
 
-import glm_.vec4.Vec4bool
-import glm_.vec4.*
 import glm_.glm.abs
-import glm_.glm.sign
-import glm_.glm.floor
-import glm_.glm.trunc
-import glm_.glm.round
 import glm_.glm.ceil
-import glm_.glm.fract
-import glm_.glm.mod
-import glm_.glm.min
-import glm_.glm.max
 import glm_.glm.clamp
-import glm_.glm.mix
-import glm_.glm.step
-import glm_.glm.smoothStep
-import glm_.glm.isNan
-import glm_.glm.isInf
-import glm_.glm.intBitsToFloat
-import glm_.glm.uintBitsToFloat
 import glm_.glm.floatBitsToInt
 import glm_.glm.floatBitsToUint
+import glm_.glm.floor
 import glm_.glm.fma
+import glm_.glm.fract
+import glm_.glm.intBitsToFloat
+import glm_.glm.isInf
+import glm_.glm.isNan
+import glm_.glm.max
+import glm_.glm.min
+import glm_.glm.mix
+import glm_.glm.mod
+import glm_.glm.round
+import glm_.glm.sign
+import glm_.glm.smoothStep
+import glm_.glm.step
+import glm_.glm.trunc
+import glm_.glm.uintBitsToFloat
+import glm_.vec4.*
 
 /**
  * Created by GBarbieri on 11.11.2016.
@@ -332,8 +331,6 @@ interface func_vector4_common {
         res.w = min(a.w, b.w)
         return res
     }
-
-
 
 
     fun max(a: Vec4, b: Float) = max(a, b, Vec4())

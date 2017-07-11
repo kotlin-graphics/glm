@@ -1,16 +1,12 @@
 package glm_.vec2
 
-import glm_.BYTES
-import glm_.L
-import unsigned.Ulong
-import glm_.getLong
-import glm_.getUlong
-import glm_.ul
+import glm_.*
 import glm_.vec2.operators.vec2ul_operators
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import unsigned.Ulong
 import java.nio.*
 
 /**

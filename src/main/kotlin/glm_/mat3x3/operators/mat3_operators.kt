@@ -1,17 +1,17 @@
 package  glm_.mat3x3.operators
 
-import  glm_.mat2x3.Mat2x3
-import  glm_.mat3x3.Mat3
-import  glm_.mat3x3.Mat3.Companion.plus
-import  glm_.mat3x3.Mat3.Companion.div
-import  glm_.mat3x3.Mat3.Companion.times
-import  glm_.mat3x3.Mat3.Companion.minus
-import  glm_.mat4x3.Mat4x3
-import  glm_.vec3.Vec3
-import  glm_.vec3.Vec3.Companion.plus
-import  glm_.vec3.Vec3.Companion.div
-import  glm_.vec3.Vec3.Companion.times
-import  glm_.vec3.Vec3.Companion.minus
+import glm_.mat2x3.Mat2x3
+import glm_.mat3x3.Mat3
+import glm_.mat3x3.Mat3.Companion.div
+import glm_.mat3x3.Mat3.Companion.minus
+import glm_.mat3x3.Mat3.Companion.plus
+import glm_.mat3x3.Mat3.Companion.times
+import glm_.mat4x3.Mat4x3
+import glm_.vec3.Vec3
+import glm_.vec3.Vec3.Companion.div
+import glm_.vec3.Vec3.Companion.minus
+import glm_.vec3.Vec3.Companion.plus
+import glm_.vec3.Vec3.Companion.times
 
 /**
  * Created by GBarbieri on 10.11.2016.

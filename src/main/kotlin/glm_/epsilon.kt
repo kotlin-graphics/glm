@@ -164,7 +164,7 @@ interface epsilon {
         res.w = abs(a.w - b.w) < epsilon
         return res
     }
-    
+
     fun epsilonEqual(a: QuatD, b: QuatD, epsilon: Double, res: Vec4bool = Vec4bool()): Vec4bool {
         res.x = abs(a.x - b.x) < epsilon
         res.y = abs(a.y - b.y) < epsilon
@@ -172,6 +172,7 @@ interface epsilon {
         res.w = abs(a.w - b.w) < epsilon
         return res
     }
+
     fun epsilonNotEqual(a: Quat, b: Quat, epsilon: Float, res: Vec4bool = Vec4bool()): Vec4bool {
         res.x = abs(a.x - b.x) >= epsilon
         res.y = abs(a.y - b.y) >= epsilon
@@ -179,7 +180,7 @@ interface epsilon {
         res.w = abs(a.w - b.w) >= epsilon
         return res
     }
-    
+
     fun epsilonNotEqual(a: QuatD, b: QuatD, epsilon: Double, res: Vec4bool = Vec4bool()): Vec4bool {
         res.x = abs(a.x - b.x) >= epsilon
         res.y = abs(a.y - b.y) >= epsilon

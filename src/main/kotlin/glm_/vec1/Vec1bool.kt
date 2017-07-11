@@ -18,11 +18,13 @@ data class Vec1bool(var x: Boolean = false) {
 
     operator fun get(i: Int): Boolean = when (i) {
         0 -> x
-        else -> throw IndexOutOfBoundsException()}
+        else -> throw IndexOutOfBoundsException()
+    }
 
     operator fun set(i: Int, b: Boolean) = when (i) {
         0 -> x = b
-        else -> throw IndexOutOfBoundsException()}
+        else -> throw IndexOutOfBoundsException()
+    }
 
 
     fun put(b: Boolean): Vec1bool {

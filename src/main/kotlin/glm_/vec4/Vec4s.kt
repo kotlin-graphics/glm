@@ -7,8 +7,8 @@ import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
-import java.nio.*
 import glm_.vec4.operators.vec4s_operators
+import java.nio.*
 
 /**
  * Created by elect on 09/10/16.
@@ -117,6 +117,7 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
         @JvmField val length = 4
         @JvmField val size = length * Short.BYTES
     }
+
     override fun instanceSize() = size
 
     override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())

@@ -20,13 +20,15 @@ data class Vec3bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
         0 -> x
         1 -> y
         2 -> z
-        else -> throw IndexOutOfBoundsException()}
+        else -> throw IndexOutOfBoundsException()
+    }
 
     operator fun set(i: Int, b: Boolean) = when (i) {
         0 -> x = b
         1 -> y = b
         2 -> z = b
-        else -> throw IndexOutOfBoundsException()}
+        else -> throw IndexOutOfBoundsException()
+    }
 
 
     fun put(b: Boolean): Vec3bool {

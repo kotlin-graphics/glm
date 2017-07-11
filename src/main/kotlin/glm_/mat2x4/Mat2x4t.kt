@@ -17,7 +17,7 @@ abstract class Mat2x4t<T : Vec4t<*>>(open var value: MutableList<T>) {
 
     override fun toString() =
             "| ${this[0, 0]}, ${this[1, 0]} |\n" +
-            "| ${this[0, 1]}, ${this[1, 1]} |\n" +
-            "| ${this[0, 2]}, ${this[1, 2]} |\n" +
-            "| ${this[0, 3]}, ${this[1, 3]} |"
+                    "| ${this[0, 1]}, ${this[1, 1]} |\n" +
+                    "| ${this[0, 2]}, ${this[1, 2]} |\n" +
+                    "| ${this[0, 3]}, ${this[1, 3]} |"
 }

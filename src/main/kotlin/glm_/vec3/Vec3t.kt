@@ -5,11 +5,11 @@ package glm_.vec3
 import glm_.b
 import glm_.d
 import glm_.glm
-import java.nio.*
-import glm_.vec2.Vec2t
-import glm_.vec4.Vec4t
 import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2t
 import glm_.vec4.Vec4bool
+import glm_.vec4.Vec4t
+import java.nio.*
 
 abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
 
@@ -17,7 +17,7 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
     @JvmField var y = _y
     @JvmField var z = _z
 
-    open operator fun get(i: Int) = when(i) {
+    open operator fun get(i: Int) = when (i) {
         0 -> x
         1 -> y
         2 -> z

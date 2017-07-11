@@ -2,11 +2,11 @@ package glm_.vec2.operators
 
 import glm_.*
 import glm_.vec2.Vec2s
-import glm_.vec2.Vec2s.Companion.plus
-import glm_.vec2.Vec2s.Companion.minus
-import glm_.vec2.Vec2s.Companion.times
 import glm_.vec2.Vec2s.Companion.div
+import glm_.vec2.Vec2s.Companion.minus
+import glm_.vec2.Vec2s.Companion.plus
 import glm_.vec2.Vec2s.Companion.rem
+import glm_.vec2.Vec2s.Companion.times
 import kotlin.experimental.and
 import kotlin.experimental.inv
 import kotlin.experimental.or
@@ -120,7 +120,7 @@ interface vec2s_operators {
     }
 
     fun and(res: Vec2s, a: Vec2s, bX: Int, bY: Int): Vec2s {
-        res.x = a.x and  bX
+        res.x = a.x and bX
         res.y = a.y and bY
         return res
     }

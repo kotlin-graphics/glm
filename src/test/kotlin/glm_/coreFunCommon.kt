@@ -1,9 +1,9 @@
 package glm_
 
-import io.kotlintest.matchers.shouldBe
-import io.kotlintest.specs.StringSpec
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2ub
+import io.kotlintest.matchers.shouldBe
+import io.kotlintest.specs.StringSpec
 
 /**
  * Created by elect on 11/11/16.
@@ -17,7 +17,7 @@ class coreFunCommon : StringSpec() {
 
             run {
                 val a = 1.1f
-                glm.floor(a) shouldBe  1f
+                glm.floor(a) shouldBe 1f
             }
 
             run {

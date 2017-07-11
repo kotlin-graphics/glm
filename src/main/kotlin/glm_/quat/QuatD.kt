@@ -1,6 +1,9 @@
 package glm_.quat
 
-import glm_.*
+import glm_.BYTES
+import glm_.d
+import glm_.f
+import glm_.glm
 import glm_.mat.QuatT
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d

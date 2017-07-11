@@ -1,5 +1,6 @@
 package glm_.quat
 
+import glm_.glm
 import glm_.glm.abs
 import glm_.glm.acos
 import glm_.glm.asin
@@ -11,7 +12,6 @@ import glm_.glm.epsilonF
 import glm_.glm.mix
 import glm_.glm.sin
 import glm_.glm.sqrt
-import glm_.glm
 import glm_.mat3x3.Mat3
 import glm_.mat3x3.Mat3d
 import glm_.mat4x4.Mat4
@@ -514,6 +514,7 @@ interface quat_func {
 
     /** Converts a 3 * 3 matrix to a quaternion.    */
     fun quat_cast(m: Mat3, res: Quat) = quat_cast(m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2], res)
+
     fun quatD_cast(m: Mat3d, res: QuatD) = quatD_cast(m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2], res)
 
     fun quat_cast(m: Mat3) = quat_cast(m, Quat())
@@ -521,6 +522,7 @@ interface quat_func {
 
     /** Converts a 4 * 4 matrix to a quaternion.    */
     fun quat_cast(m: Mat4, res: Quat) = quat_cast(m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2], res)
+
     fun quatD_cast(m: Mat4d, res: QuatD) = quatD_cast(m[0][0], m[0][1], m[0][2], m[1][0], m[1][1], m[1][2], m[2][0], m[2][1], m[2][2], res)
 
     fun quat_cast(m: Mat4) = quat_cast(m, Quat())
@@ -720,6 +722,7 @@ interface quat_func {
 
         return res
     }
+
     fun angleAxis(angle: Float, axisX: Float, axisY: Float, axisZ: Float) = angleAxis(angle, axisX, axisY, axisZ, Quat())
     fun angleAxis(angle: Float, axis: Vec3, res: Quat) = angleAxis(angle, axis.x, axis.y, axis.z, res)
     fun angleAxis(angle: Float, axis: Vec3) = angleAxis(angle, axis.x, axis.y, axis.z, Quat())
@@ -738,6 +741,7 @@ interface quat_func {
 
         return res
     }
+
     fun angleAxis(angle: Double, axisX: Double, axisY: Double, axisZ: Double) = angleAxis(angle, axisX, axisY, axisZ, QuatD())
     fun angleAxis(angle: Double, axis: Vec3d, res: QuatD) = angleAxis(angle, axis.x, axis.y, axis.z, res)
     fun angleAxis(angle: Double, axis: Vec3d) = angleAxis(angle, axis.x, axis.y, axis.z, QuatD())

@@ -1,13 +1,13 @@
 package glm_.vec3
 
 import glm_.*
+import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2t
+import glm_.vec3.operators.vec3ul_operators
+import glm_.vec4.Vec4bool
+import glm_.vec4.Vec4t
 import unsigned.Ulong
 import java.nio.*
-import glm_.vec2.Vec2t
-import glm_.vec2.Vec2bool
-import glm_.vec4.Vec4t
-import glm_.vec4.Vec4bool
-import glm_.vec3.operators.vec3ul_operators
 
 /**
  * Created by elect on 09/10/16.

@@ -2,11 +2,11 @@ package glm_.vec4
 
 import glm_.b
 import glm_.glm
-import java.nio.*
-import glm_.vec2.Vec2t
 import glm_.vec2.Vec2bool
-import glm_.vec3.Vec3t
+import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
+import glm_.vec3.Vec3t
+import java.nio.*
 
 // TODO other
 abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
@@ -16,7 +16,7 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
     @JvmField var z = _z
     @JvmField var w = _w
 
-    open operator fun get(i: Int) = when(i) {
+    open operator fun get(i: Int) = when (i) {
         0 -> x
         1 -> y
         2 -> z
@@ -52,8 +52,8 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
     fun put(v: Vec2t<out Number>, z: Number) = put(v.x, v.y, z, 1)
     fun put(v: Vec2t<out Number>, z: Number, w: Number) = put(v.x, v.y, z, w)
 
-    infix fun put(v:Vec3t<out Number>) = put(v.x, v.y, v.z, 1)
-    fun put(v:Vec3t<out Number>, w: Number) = put(v.x, v.y, v.z, w)
+    infix fun put(v: Vec3t<out Number>) = put(v.x, v.y, v.z, 1)
+    fun put(v: Vec3t<out Number>, w: Number) = put(v.x, v.y, v.z, w)
 
     infix fun put(v: Vec4t<out Number>) = put(v.x, v.y, v.z, v.w)
 

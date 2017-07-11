@@ -10,6 +10,7 @@ import unsigned.Ushort
  */
 
 fun Float.Companion.intBitsToFloat(bits: Int) = java.lang.Float.intBitsToFloat(bits)
+
 fun Double.Companion.longBitsToDouble(bits: Long) = java.lang.Double.longBitsToDouble(bits)
 
 // TODO check https://youtrack.jetbrains.com/issue/KT-8247

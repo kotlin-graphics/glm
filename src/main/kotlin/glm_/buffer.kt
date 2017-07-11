@@ -1,7 +1,7 @@
 package glm_
 
-import java.nio.*
 import glm_.vec4.Vec4t
+import java.nio.*
 
 /**
  * Created by elect on 08/04/17.
@@ -33,4 +33,4 @@ operator fun DoubleBuffer.set(index: Int, double: Double): DoubleBuffer = put(in
 
 operator fun CharBuffer.set(index: Int, char: Char): CharBuffer = put(index, char)
 
-operator fun ByteBuffer.set(index: Int, vec4: Vec4t<*>) =  vec4.to(this, vec4.instanceSize() * index)
+operator fun ByteBuffer.set(index: Int, vec4: Vec4t<*>) = vec4.to(this, vec4.instanceSize() * index)

@@ -22,12 +22,14 @@ data class Vec2bool(var x: Boolean = false, var y: Boolean = false) {
     operator fun get(i: Int): Boolean = when (i) {
         0 -> x
         1 -> y
-        else -> throw IndexOutOfBoundsException()}
+        else -> throw IndexOutOfBoundsException()
+    }
 
     operator fun set(i: Int, b: Boolean) = when (i) {
         0 -> x = b
         1 -> y = b
-        else -> throw IndexOutOfBoundsException()}
+        else -> throw IndexOutOfBoundsException()
+    }
 
 
     fun put(b: Boolean): Vec2bool {

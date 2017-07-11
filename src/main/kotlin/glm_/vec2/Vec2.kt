@@ -1,10 +1,6 @@
 package glm_.vec2
 
-import glm_.BYTES
-import glm_.f
-import glm_.getFloat
-import glm_.glm
-import glm_.set
+import glm_.*
 import glm_.vec2.operators.vec2_operators
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t

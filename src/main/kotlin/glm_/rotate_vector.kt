@@ -1,10 +1,10 @@
 package glm_
 
-import glm_.glm.dot
 import glm_.glm.acos
-import glm_.glm.sin
 import glm_.glm.cos
 import glm_.glm.cross
+import glm_.glm.dot
+import glm_.glm.sin
 import glm_.mat4x4.Mat4
 import glm_.vec2.Vec2
 import glm_.vec3.Vec3
@@ -172,7 +172,7 @@ interface rotate_vector {
      */
     fun orientation(res: Mat4, normal: Vec3, up: Vec3, tmp: Vec3 = Vec3()): Mat4 {
 
-        if(normal.x == up.x && normal.y == up.y && normal.z == up.z)
+        if (normal.x == up.x && normal.y == up.y && normal.z == up.z)
             return res put 1f
 
         val rotationAxis = cross(tmp, up, normal)

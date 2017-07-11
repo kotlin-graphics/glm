@@ -1,14 +1,16 @@
 package glm_.vec4.operators
 
 import glm_.*
-import unsigned.*
-import glm_.vec4.Vec4ul.Companion.plus
-import glm_.vec4.Vec4ul.Companion.div
-import glm_.vec4.Vec4ul.Companion.times
-import glm_.vec4.Vec4ul.Companion.rem
-import glm_.vec4.Vec4ul.Companion.minus
 import glm_.vec4.Vec4ul
+import glm_.vec4.Vec4ul.Companion.div
+import glm_.vec4.Vec4ul.Companion.minus
+import glm_.vec4.Vec4ul.Companion.plus
+import glm_.vec4.Vec4ul.Companion.rem
+import glm_.vec4.Vec4ul.Companion.times
 import udiv
+import unsigned.Ulong
+import unsigned.udiv
+import unsigned.urem
 import urem
 
 /**

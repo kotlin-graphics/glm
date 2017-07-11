@@ -108,7 +108,7 @@ interface func_exponential {
         res.y = exp(a.y)
         res.z = exp(a.z)
     }
-    
+
     fun exp(a: Vec3d, res: Vec3d = Vec3d()) {
         res.x = exp(a.x)
         res.y = exp(a.y)
@@ -127,8 +127,8 @@ interface func_exponential {
         res.y = exp(a.y)
         res.w = exp(a.w)
     }
-    
-    
+
+
     fun log(a: Double) = Math.log(a)
     fun log(a: Float) = Math.log(a.d).f
 
@@ -166,8 +166,8 @@ interface func_exponential {
         res.y = log(a.y)
         res.w = log(a.w)
     }
-    
-    
+
+
     fun exp2(a: Double) = Math.pow(2.d, a)
     fun exp2(a: Float) = Math.pow(2.d, a.d).f
 
@@ -206,7 +206,7 @@ interface func_exponential {
         res.w = exp2(a.w)
     }
 
-    
+
     fun log2(a: Double) = Math.log(a) / Math.log(2.d)
     fun log2(a: Float) = (Math.log(a.d) / Math.log(2.d)).f
 
@@ -244,8 +244,8 @@ interface func_exponential {
         res.y = log2(a.y)
         res.w = log2(a.w)
     }
-    
-    
+
+
     fun sqrt(a: Double) = Math.sqrt(a)
     fun sqrt(a: Float) = Math.sqrt(a.d).f
 
@@ -283,8 +283,8 @@ interface func_exponential {
         res.y = sqrt(a.y)
         res.w = sqrt(a.w)
     }
-    
-    
+
+
     fun inverseSqrt(a: Double) = 1.0 / Math.sqrt(a)
     fun inverseSqrt(a: Float) = (1.0 / Math.sqrt(a.d)).f
 

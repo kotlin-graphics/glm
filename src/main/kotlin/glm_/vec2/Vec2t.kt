@@ -4,11 +4,11 @@ package glm_.vec2
 
 import glm_.b
 import glm_.glm
-import java.nio.*
-import glm_.vec3.Vec3t
 import glm_.vec3.Vec3bool
-import glm_.vec4.Vec4t
+import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
+import glm_.vec4.Vec4t
+import java.nio.*
 
 /**
  * Created bY GBarbieri on 05.10.2016.
@@ -19,7 +19,7 @@ abstract class Vec2t<T : Number>(_x: T, _y: T) {
     @JvmField var x = _x
     @JvmField var y = _y
 
-    open operator fun get(i: Int) = when(i) {
+    open operator fun get(i: Int) = when (i) {
         0 -> x
         1 -> y
         else -> throw IndexOutOfBoundsException()

@@ -1,9 +1,12 @@
 package glm_.vec3
 
-import glm_.*
-import glm_.vec3.operators.vec3d_operators
+import glm_.BYTES
+import glm_.d
+import glm_.getDouble
+import glm_.glm
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
+import glm_.vec3.operators.vec3d_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import java.nio.*
@@ -265,6 +268,7 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
         z = -z
         return this
     }
+
     fun negate_() = negate(this)
 
 

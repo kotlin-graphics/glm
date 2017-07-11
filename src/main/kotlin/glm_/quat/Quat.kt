@@ -1,13 +1,13 @@
 package glm_.quat
 
 import glm_.BYTES
-import glm_.glm.cos
-import glm_.glm.sin
 import glm_.f
 import glm_.glm
+import glm_.glm.cos
+import glm_.glm.sin
+import glm_.mat.QuatT
 import glm_.mat3x3.Mat3
 import glm_.mat4x4.Mat4
-import glm_.mat.QuatT
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
@@ -127,7 +127,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     fun minus(b: Quat, res: Quat) = minus(res, this, b)
     infix fun minus_(b: Quat) = minus(this, this, b)
 
-    
+
     infix operator fun times(b: Quat) = times(Quat(), this, b)
     infix operator fun times(b: Float) = times(Quat(), this, b)
     infix operator fun times(b: Vec3) = times(Vec3(), this, b)

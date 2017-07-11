@@ -1,13 +1,15 @@
 package glm_.vec3.operators
 
-import glm_.*
-import unsigned.*
-import glm_.vec3.Vec3ui.Companion.plus
-import glm_.vec3.Vec3ui.Companion.div
-import glm_.vec3.Vec3ui.Companion.times
-import glm_.vec3.Vec3ui.Companion.rem
-import glm_.vec3.Vec3ui.Companion.minus
+import glm_.i
 import glm_.vec3.Vec3ui
+import glm_.vec3.Vec3ui.Companion.div
+import glm_.vec3.Vec3ui.Companion.minus
+import glm_.vec3.Vec3ui.Companion.plus
+import glm_.vec3.Vec3ui.Companion.rem
+import glm_.vec3.Vec3ui.Companion.times
+import unsigned.Uint
+import unsigned.udiv
+import unsigned.urem
 
 
 /**

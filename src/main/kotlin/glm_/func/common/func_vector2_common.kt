@@ -1,28 +1,27 @@
 package glm_.func.common
 
+import glm_.glm.abs
+import glm_.glm.ceil
+import glm_.glm.clamp
 import glm_.glm.floatBitsToInt
 import glm_.glm.floatBitsToUint
-import glm_.vec2.Vec2bool
-import glm_.vec2.*
-import glm_.glm.abs
-import glm_.glm.sign
 import glm_.glm.floor
-import glm_.glm.trunc
-import glm_.glm.round
-import glm_.glm.ceil
-import glm_.glm.fract
-import glm_.glm.mod
-import glm_.glm.min
-import glm_.glm.max
-import glm_.glm.clamp
-import glm_.glm.mix
-import glm_.glm.step
-import glm_.glm.smoothStep
-import glm_.glm.isNan
-import glm_.glm.isInf
-import glm_.glm.intBitsToFloat
-import glm_.glm.uintBitsToFloat
 import glm_.glm.fma
+import glm_.glm.fract
+import glm_.glm.intBitsToFloat
+import glm_.glm.isInf
+import glm_.glm.isNan
+import glm_.glm.max
+import glm_.glm.min
+import glm_.glm.mix
+import glm_.glm.mod
+import glm_.glm.round
+import glm_.glm.sign
+import glm_.glm.smoothStep
+import glm_.glm.step
+import glm_.glm.trunc
+import glm_.glm.uintBitsToFloat
+import glm_.vec2.*
 
 /**
  * Created by GBarbieri on 11.11.2016.
@@ -258,6 +257,7 @@ interface func_vector2_common {
 
     // TODO others
     fun min(a: Vec2i, b: Int) = min(a, b, Vec2i())
+
     fun min(a: Vec2i, b: Int, res: Vec2i): Vec2i {
         res.x = min(a.x, b)
         res.y = min(a.y, b)
@@ -313,7 +313,7 @@ interface func_vector2_common {
         res.y = max(a.y, b.y)
         return res
     }
-    
+
 
     fun clamp(a: Vec2, min: Float, max: Float) = clamp(a, min, max, Vec2())
     fun clamp(a: Vec2, min: Float, max: Float, res: Vec2): Vec2 {

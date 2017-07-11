@@ -47,7 +47,7 @@ interface func_trigonometric {
     fun degrees(rad: Vec3d) = degrees(rad, Vec3d())
     fun degrees(rad: Vec4) = degrees(rad, Vec4())
     fun degrees(rad: Vec4d) = degrees(rad, Vec4d())
-    
+
     fun degrees(rad: Vec2, res: Vec2): Vec2 {
         res.x = Math.toDegrees(rad.x.d).f
         res.y = Math.toDegrees(rad.y.d).f

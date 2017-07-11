@@ -2,7 +2,6 @@ package glm_.vec2
 
 import glm_.BYTES
 import glm_.b
-import unsigned.Ubyte
 import glm_.i
 import glm_.ub
 import glm_.vec2.operators.vec2ub_operators
@@ -10,6 +9,7 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import unsigned.Ubyte
 import java.nio.*
 
 /**

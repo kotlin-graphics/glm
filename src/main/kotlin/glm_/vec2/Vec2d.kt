@@ -1,9 +1,9 @@
 package glm_.vec2
 
 import glm_.BYTES
-import glm_.glm
 import glm_.d
 import glm_.getDouble
+import glm_.glm
 import glm_.vec2.operators.vec2d_operators
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
@@ -269,6 +269,7 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
         y = -y
         return this
     }
+
     fun negate_() = negate(this)
 
 

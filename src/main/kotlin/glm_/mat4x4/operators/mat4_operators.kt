@@ -3,15 +3,15 @@ package  glm_.mat4x4.operators
 import glm_.mat2x4.Mat2x4
 import glm_.mat3x4.Mat3x4
 import glm_.mat4x4.Mat4
-import glm_.mat4x4.Mat4.Companion.plus
-import glm_.mat4x4.Mat4.Companion.minus
-import glm_.mat4x4.Mat4.Companion.times
 import glm_.mat4x4.Mat4.Companion.div
+import glm_.mat4x4.Mat4.Companion.minus
+import glm_.mat4x4.Mat4.Companion.plus
+import glm_.mat4x4.Mat4.Companion.times
 import glm_.vec4.Vec4
-import glm_.vec4.Vec4.Companion.plus
 import glm_.vec4.Vec4.Companion.div
-import glm_.vec4.Vec4.Companion.times
 import glm_.vec4.Vec4.Companion.minus
+import glm_.vec4.Vec4.Companion.plus
+import glm_.vec4.Vec4.Companion.times
 
 /**
  * Created by GBarbieri on 10.11.2016.

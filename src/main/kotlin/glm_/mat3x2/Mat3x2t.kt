@@ -6,7 +6,7 @@ package glm_.mat3x2
 
 import glm_.vec2.Vec2t
 
-abstract class Mat3x2t<T : Vec2t<*>>(open var value:MutableList<T>) {
+abstract class Mat3x2t<T : Vec2t<*>>(open var value: MutableList<T>) {
 
     fun length() = 3
 
@@ -17,5 +17,5 @@ abstract class Mat3x2t<T : Vec2t<*>>(open var value:MutableList<T>) {
 
     override fun toString() =
             "| ${this[0, 0]}, ${this[1, 0]}, ${this[2, 0]} |\n" +
-            "| ${this[0, 1]}, ${this[1, 1]}, ${this[2, 1]} |"
+                    "| ${this[0, 1]}, ${this[1, 1]}, ${this[2, 1]} |"
 }

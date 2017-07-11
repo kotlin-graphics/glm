@@ -8,15 +8,15 @@ import glm_.glm.floor
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2d
 import glm_.vec2.operators.minus
-import glm_.vec3.operators.minus
-import glm_.vec4.operators.minus
 import glm_.vec2.operators.times
-import glm_.vec3.operators.times
-import glm_.vec4.operators.times
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
+import glm_.vec3.operators.minus
+import glm_.vec3.operators.times
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4d
+import glm_.vec4.operators.minus
+import glm_.vec4.operators.times
 
 interface noise {
 

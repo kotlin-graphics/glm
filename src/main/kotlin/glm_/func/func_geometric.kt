@@ -2,15 +2,15 @@ package glm_.func
 
 import glm_.d
 import glm_.f
-import glm_.glm.sqrt
 import glm_.glm.inverseSqrt
+import glm_.glm.sqrt
+import glm_.quat.Quat
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2d
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4d
-import glm_.quat.Quat
 
 /**
  * Created by GBarbieri on 12.12.2016.
@@ -50,8 +50,6 @@ interface func_geometric {
 
     fun dot(a: Vec4, b: Vec4) = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
     fun dot(a: Vec4d, b: Vec4d) = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
-
-
 
 
     fun cross(a: Vec3, b: Vec3, res: Vec3 = Vec3()): Vec3 {

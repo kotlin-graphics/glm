@@ -3,12 +3,12 @@ package glm_.vec3
 import glm_.BYTES
 import glm_.getShort
 import glm_.s
-import glm_.vec4.Vec4bool
-import glm_.vec4.Vec4t
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
-import java.nio.*
 import glm_.vec3.operators.vec3s_operators
+import glm_.vec4.Vec4bool
+import glm_.vec4.Vec4t
+import java.nio.*
 
 /**
  * Created by elect on 09/10/16.

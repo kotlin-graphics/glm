@@ -1,21 +1,16 @@
 package glm_.vec4.operators
 
-import glm_.b
-import glm_.and
-import glm_.or
-import glm_.xor
-import glm_.shl
-import glm_.shr
+import glm_.*
 import glm_.vec4.Vec4b
-import glm_.vec4.Vec4b.Companion.plus
 import glm_.vec4.Vec4b.Companion.div
-import glm_.vec4.Vec4b.Companion.times
-import glm_.vec4.Vec4b.Companion.rem
 import glm_.vec4.Vec4b.Companion.minus
-import kotlin.experimental.inv
+import glm_.vec4.Vec4b.Companion.plus
+import glm_.vec4.Vec4b.Companion.rem
+import glm_.vec4.Vec4b.Companion.times
 import kotlin.experimental.and
-import kotlin.experimental.xor
+import kotlin.experimental.inv
 import kotlin.experimental.or
+import kotlin.experimental.xor
 
 /**
  * Created by GBarbieri on 08.11.2016.

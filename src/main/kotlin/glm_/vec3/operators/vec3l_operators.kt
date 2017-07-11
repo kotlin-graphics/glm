@@ -1,16 +1,12 @@
 package glm_.vec3.operators
 
-import glm_.L
-import glm_.i
+import glm_.*
 import glm_.vec3.Vec3l
-import glm_.vec3.Vec3l.Companion.plus
 import glm_.vec3.Vec3l.Companion.div
-import glm_.vec3.Vec3l.Companion.times
-import glm_.vec3.Vec3l.Companion.rem
 import glm_.vec3.Vec3l.Companion.minus
-import glm_.and
-import glm_.or
-import glm_.xor
+import glm_.vec3.Vec3l.Companion.plus
+import glm_.vec3.Vec3l.Companion.rem
+import glm_.vec3.Vec3l.Companion.times
 
 /**
  * Created by GBarbieri on 08.11.2016.

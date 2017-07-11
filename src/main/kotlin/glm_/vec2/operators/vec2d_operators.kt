@@ -2,11 +2,11 @@ package glm_.vec2.operators
 
 import glm_.d
 import glm_.vec2.Vec2d
-import glm_.vec2.Vec2d.Companion.plus
 import glm_.vec2.Vec2d.Companion.div
-import glm_.vec2.Vec2d.Companion.times
-import glm_.vec2.Vec2d.Companion.rem
 import glm_.vec2.Vec2d.Companion.minus
+import glm_.vec2.Vec2d.Companion.plus
+import glm_.vec2.Vec2d.Companion.rem
+import glm_.vec2.Vec2d.Companion.times
 
 /**
  * Created by GBarbieri on 08.11.2016.

@@ -1,17 +1,12 @@
 package glm_.vec2
 
-import glm_.BYTES
-import unsigned.Ushort
-import glm_.getShort
-import glm_.getUshort
-import glm_.i
-import glm_.s
-import glm_.us
-import glm_.vec3.Vec3t
-import glm_.vec4.Vec4t
+import glm_.*
 import glm_.vec2.operators.vec2us_operators
 import glm_.vec3.Vec3bool
+import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
+import glm_.vec4.Vec4t
+import unsigned.Ushort
 import java.nio.*
 
 /**

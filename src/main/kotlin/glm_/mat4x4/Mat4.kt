@@ -138,6 +138,7 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
 
     // TODO others
     constructor(inputStream: InputStream) : this(DataInputStream(inputStream))
+
     constructor(dataInputStream: DataInputStream) : this(
             dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(),
             dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(),

@@ -5,10 +5,10 @@ import glm_.f
 import glm_.glm
 import glm_.mat2x2.operators.mat2d_operators
 import glm_.mat2x3.Mat2x3t
+import glm_.mat2x4.Mat2x4t
 import glm_.mat3x2.Mat3x2d
 import glm_.mat3x2.Mat3x2t
 import glm_.mat3x3.Mat3
-import glm_.mat2x4.Mat2x4t
 import glm_.mat4x2.Mat4x2d
 import glm_.mat4x2.Mat4x2t
 import glm_.mat4x4.Mat4
@@ -104,7 +104,7 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value)
 
     fun det() = value[0][0] * value[1][1] - value[1][0] * value[0][1]
 
-    fun inverse(res: Mat2d = Mat2d()) =  glm.inverse(res, this)
+    fun inverse(res: Mat2d = Mat2d()) = glm.inverse(res, this)
     fun inverse_() = glm.inverse(this, this)
 
     fun transpose(res: Mat2d = Mat2d()) = glm.transpose(res, this)

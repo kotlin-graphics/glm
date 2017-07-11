@@ -14,5 +14,5 @@ abstract class Mat2x2t<T : Vec2t<*>>(open var value: MutableList<T>) {
 
     override fun toString() =
             "| ${this[0, 0]}, ${this[1, 0]} |\n" +
-            "| ${this[0, 1]}, ${this[1, 1]} |"
+                    "| ${this[0, 1]}, ${this[1, 1]} |"
 }

@@ -1,14 +1,17 @@
 package glm_.vec3.operators
 
 import glm_.*
+import glm_.vec3.Vec3us
 import glm_.vec3.Vec3us.Companion.div
 import glm_.vec3.Vec3us.Companion.minus
 import glm_.vec3.Vec3us.Companion.plus
 import glm_.vec3.Vec3us.Companion.rem
 import glm_.vec3.Vec3us.Companion.times
-import glm_.vec3.Vec3us
 import unsigned.*
-import kotlin.experimental.*
+import kotlin.experimental.and
+import kotlin.experimental.inv
+import kotlin.experimental.or
+import kotlin.experimental.xor
 
 
 /**

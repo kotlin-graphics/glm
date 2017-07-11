@@ -1,17 +1,17 @@
 package glm_.mat2x2.operators
 
 import glm_.mat2x2.Mat2
-import glm_.mat2x2.Mat2.Companion.plus
 import glm_.mat2x2.Mat2.Companion.div
-import glm_.mat2x2.Mat2.Companion.times
 import glm_.mat2x2.Mat2.Companion.minus
+import glm_.mat2x2.Mat2.Companion.plus
+import glm_.mat2x2.Mat2.Companion.times
 import glm_.mat3x2.Mat3x2
 import glm_.mat4x2.Mat4x2
 import glm_.vec2.Vec2
-import glm_.vec2.Vec2.Companion.plus
 import glm_.vec2.Vec2.Companion.div
-import glm_.vec2.Vec2.Companion.times
 import glm_.vec2.Vec2.Companion.minus
+import glm_.vec2.Vec2.Companion.plus
+import glm_.vec2.Vec2.Companion.times
 
 /**
  * Created by GBarbieri on 10.11.2016.

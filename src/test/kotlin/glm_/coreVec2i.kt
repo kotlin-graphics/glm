@@ -1,9 +1,9 @@
 package glm_
 
+import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2i
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
-import glm_.vec2.Vec2i
-import glm_.vec2.Vec2bool
 
 /**
  * Created by fschaefers on 09.02.2017.

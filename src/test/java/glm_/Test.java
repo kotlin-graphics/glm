@@ -1,8 +1,8 @@
 package glm_;
 
+import glm_.Java.Glm;
 import glm_.quat.Quat;
 import glm_.vec2.Vec2;
-import glm_.Java.Glm;
 
 //import static glm.Java.glm;
 

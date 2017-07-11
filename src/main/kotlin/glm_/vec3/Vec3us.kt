@@ -3,9 +3,9 @@ package glm_.vec3
 import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
+import glm_.vec3.operators.vec3us_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import glm_.vec3.operators.vec3us_operators
 import unsigned.Ushort
 import java.nio.*
 

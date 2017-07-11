@@ -405,7 +405,7 @@ class coreVec2 : StringSpec() {
 
         "size" {
 
-//            Vec2.length shouldBe 2 TODO
+            //            Vec2.length shouldBe 2 TODO
 //            Vec2d().length() shouldBe 2
         }
 
