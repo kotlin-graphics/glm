@@ -6,6 +6,8 @@ import glm_.vec4.Vec4t
 import glm_.vec2.Vec2bool
 import glm_.vec4.Vec4bool
 import glm_.vec3.operators.vec3_operators
+import java.io.DataInputStream
+import java.io.InputStream
 import java.nio.*
 
 /**
@@ -66,6 +68,10 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     constructor(x: Number, y: Number, z: Number) : this(x.f, y.f, z.f)
 
 
+    constructor(inputStream: InputStream) : this(DataInputStream(inputStream))
+    constructor(dataInputStream: DataInputStream) : this(dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat())
+
+
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndianess: Boolean = true) {
         x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndianess)
         y = if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES, bigEndianess)
@@ -89,6 +95,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
 
     // TODO others
     infix fun put(s: Float) = put(s, s, s)
+
     infix fun put(v: Vec3) = put(v.x, v.y, v.z)
     fun put(x: Float, y: Float, z: Float): Vec3 {
         this.x = x

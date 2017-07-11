@@ -21,6 +21,8 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
+import java.io.DataInputStream
+import java.io.InputStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 
@@ -134,6 +136,13 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
                     Vec4(floats, 8),
                     Vec4(floats, 12)))
 
+    // TODO others
+    constructor(inputStream: InputStream) : this(DataInputStream(inputStream))
+    constructor(dataInputStream: DataInputStream) : this(
+            dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(),
+            dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(),
+            dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(),
+            dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat())
 
     fun put(v0: Vec4, v1: Vec4, v2: Vec4, v3: Vec4) {
         value[0] to v0

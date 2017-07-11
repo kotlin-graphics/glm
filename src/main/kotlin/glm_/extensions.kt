@@ -1,6 +1,8 @@
 package glm_
 
+import glm_.mat4x4.Mat4
 import unsigned.*
+import java.io.DataInputStream
 import kotlin.experimental.or
 
 /**
@@ -166,3 +168,9 @@ val Float.cos get() = Math.cos(this.d).f
 val Double.cos get() = Math.cos(this)
 val Float.sin get() = Math.sin(this.d).f
 val Double.sin get() = Math.sin(this)
+
+fun DataInputStream.readMat4() = Mat4(
+        readFloat(), readFloat(), readFloat(), readFloat(),
+        readFloat(), readFloat(), readFloat(), readFloat(),
+        readFloat(), readFloat(), readFloat(), readFloat(),
+        readFloat(), readFloat(), readFloat(), readFloat())
