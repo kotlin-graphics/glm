@@ -86,7 +86,7 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
 
     // -- Component accesses --
 
-    operator fun get(i: Int) = when (i) {
+    override operator fun get(i: Int) = when (i) {
         0 -> x
         1 -> y
         else -> throw ArrayIndexOutOfBoundsException()

@@ -87,7 +87,7 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
 
     // -- Component accesses --
 
-    operator fun get(i: Int) = when (i) {
+    override operator fun get(i: Int) = when (i) {
         0 -> x
         1 -> y
         else -> throw ArrayIndexOutOfBoundsException()

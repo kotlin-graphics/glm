@@ -96,7 +96,7 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
 
     // -- Component accesses --
 
-    operator fun get(i: Int) = when (i) {
+    override operator fun get(i: Int) = when (i) {
         0 -> x
         1 -> y
         2 -> z

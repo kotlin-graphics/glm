@@ -20,7 +20,7 @@ import java.nio.DoubleBuffer
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d> {
+data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value) {
 
     // -- Constructors --
 
@@ -97,8 +97,6 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d> {
     }
 
     // -- Accesses --
-
-    override operator fun get(i: Int) = value[i]
 
     operator fun set(i: Int, v: Vec2d) = value[i] put v
 
@@ -215,8 +213,5 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d> {
     fun isIdentity() = this[0][0] == 1.0 && this[1][0] == 0.0 && this[0][1] == 0.0 && this[1][1] == 1.0
 
 
-    override fun equals(other: Any?) =
-            if (other is Mat2d)
-                this[0] == other[0] && this[1] == other[1]
-            else false
+    override fun toString() = super.toString()
 }

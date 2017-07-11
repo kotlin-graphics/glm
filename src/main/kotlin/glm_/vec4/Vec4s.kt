@@ -96,7 +96,7 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
 
     // -- Component accesses --
 
-    operator fun get(i: Int) = when (i) {
+    override operator fun get(i: Int) = when (i) {
         0 -> x
         1 -> y
         2 -> z

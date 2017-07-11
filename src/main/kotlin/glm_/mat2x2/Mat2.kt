@@ -20,7 +20,7 @@ import java.nio.FloatBuffer
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2> {
+data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2>(value) {
 
     // -- Constructors --
 
@@ -97,8 +97,6 @@ data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2> {
     }
 
     // -- Accesses --
-
-    override operator fun get(i: Int) = value[i]
 
     operator fun set(i: Int, v: Vec2) = value[i] put v
 
@@ -214,9 +212,5 @@ data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2> {
 
     fun isIdentity() = this[0][0] == 1f && this[1][0] == 0f && this[0][1] == 0f && this[1][1] == 1f
 
-
-    override fun equals(other: Any?) =
-            if (other is Mat2)
-                this[0] == other[0] && this[1] == other[1]
-            else false
+    override fun toString() = super.toString()
 }

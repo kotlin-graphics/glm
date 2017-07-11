@@ -11,11 +11,9 @@ import glm_.set
 import java.nio.DoubleBuffer
 
 
-data class Mat4x3d(override var value: MutableList<Vec3d>) : Mat4x3t<Vec3d> {
+data class Mat4x3d(override var value: MutableList<Vec3d>) : Mat4x3t<Vec3d>(value) {
 
     // -- Accesses --
-
-    override operator fun get(i: Int) = value[i]
 
     operator fun set(i: Int, v: Vec3d) = value[i] put v
 
@@ -41,4 +39,6 @@ data class Mat4x3d(override var value: MutableList<Vec3d>) : Mat4x3t<Vec3d> {
     companion object {
         @JvmField val size = 4 * 3 * Double.BYTES
     }
+
+    override fun toString() = super.toString()
 }

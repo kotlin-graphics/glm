@@ -95,7 +95,7 @@ class Vec4ui(x: Uint, y: Uint, z: Uint, w: Uint) : Vec4t<Uint>(x, y, z, w) {
 
     // -- Component accesses --
 
-    operator fun get(i: Int) = when (i) {
+    override operator fun get(i: Int) = when (i) {
         0 -> x
         1 -> y
         2 -> z

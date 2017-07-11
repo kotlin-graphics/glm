@@ -26,7 +26,7 @@ import java.nio.DoubleBuffer
  * Created by GBarbieri on 10.11.2016.
  */
 
-class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d> {
+data class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d>(value) {
 
     // -- Constructors --
 
@@ -141,8 +141,6 @@ class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d> {
 //    }
 
     // -- Accesses --
-
-    operator fun get(i: Int) = value[i]
 
     operator fun set(i: Int, v: Vec3d) {
         value[i] = v
@@ -356,8 +354,5 @@ class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d> {
             this[0][2] == 0.0 && this[1][2] == 0.0 && this[2][2] == 1.0
 
 
-    override fun equals(other: Any?) =
-            if (other is Mat3d)
-                this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
-            else false
+    override fun toString() = super.toString()
 }

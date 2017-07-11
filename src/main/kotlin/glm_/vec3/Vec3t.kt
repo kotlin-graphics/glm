@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package glm_.vec3
 
 import glm_.b
@@ -15,6 +17,12 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
     @JvmField var y = _y
     @JvmField var z = _z
 
+    open operator fun get(i: Int) = when(i) {
+        0 -> x
+        1 -> y
+        2 -> z
+        else -> throw IndexOutOfBoundsException()
+    }
 
     // -- infix Generic Constructors --
 
@@ -162,4 +170,6 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
     operator fun component1() = x
     operator fun component2() = y
     operator fun component3() = z
+
+    override fun toString() = "($x, $y, $z)"
 }

@@ -89,7 +89,7 @@ class Vec2l(x: Long, y: Long) : Vec2t<Long>(x, y) {
 
     // -- Component accesses --
 
-    operator fun get(i: Int) = when (i) {
+    override operator fun get(i: Int) = when (i) {
         0 -> x
         1 -> y
         else -> throw ArrayIndexOutOfBoundsException()

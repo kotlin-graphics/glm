@@ -90,7 +90,7 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
 
     // -- Component accesses --
 
-    infix operator fun get(i: Int) = when (i) {
+    override operator fun get(i: Int) = when (i) {
         0 -> x
         1 -> y
         else -> throw ArrayIndexOutOfBoundsException()

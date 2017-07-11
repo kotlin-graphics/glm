@@ -11,11 +11,9 @@ import glm_.set
 import java.nio.FloatBuffer
 
 
-data class Mat4x3(override var value: MutableList<Vec3>) : Mat4x3t<Vec3> {
+data class Mat4x3(override var value: MutableList<Vec3>) : Mat4x3t<Vec3>(value) {
 
     // -- Accesses --
-
-    override operator fun get(i: Int) = value[i]
 
     operator fun set(i: Int, v: Vec3) = value[i] put v
 
@@ -41,4 +39,6 @@ data class Mat4x3(override var value: MutableList<Vec3>) : Mat4x3t<Vec3> {
     companion object {
         @JvmField val size = 4 * 3 * Float.BYTES
     }
+
+    override fun toString() = super.toString()
 }

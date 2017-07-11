@@ -27,7 +27,7 @@ import java.nio.DoubleBuffer
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d> {
+data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d>(value) {
 
     // -- Constructors --
 
@@ -288,8 +288,6 @@ data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d> {
 
     // -- Accesses --
 
-    operator fun get(i: Int) = value[i]
-
     operator fun set(i: Int, v: Vec4d) = value[i] put v
 
     fun set(i: Int, v: Vec3d, s: Double) = value[i].put(v, s) // TODO other cases
@@ -506,11 +504,6 @@ data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d> {
             this[0][3] == 0.0 && this[1][3] == 0.0 && this[2][3] == 0.0 && this[3][3] == 1.0
 
 
-    override fun equals(other: Any?) =
-            if (other is Mat4d)
-                this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
-            else false
-
-//    override fun toString() = "$a0 $b0 $c0 $d0\n$a1 $b1 $c1 $d1\n$a2 $b2 $c2 $d2\n$a3 $b3 $c3 $d3"
+    override fun toString() = super.toString()
 }
 

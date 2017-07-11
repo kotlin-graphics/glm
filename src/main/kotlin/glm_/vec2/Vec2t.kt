@@ -19,6 +19,12 @@ abstract class Vec2t<T : Number>(_x: T, _y: T) {
     @JvmField var x = _x
     @JvmField var y = _y
 
+    open operator fun get(i: Int) = when(i) {
+        0 -> x
+        1 -> y
+        else -> throw IndexOutOfBoundsException()
+    }
+
     // -- infix Generic Constructors --
 
     infix fun put(v: Vec2t<out Number>) = put(v.x, v.y)
@@ -339,4 +345,6 @@ abstract class Vec2t<T : Number>(_x: T, _y: T) {
 
     operator fun component1() = x
     operator fun component2() = y
+
+    override fun toString() = "($x, $y)"
 }

@@ -90,7 +90,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
 
     // -- Component accesses --
 
-    infix operator fun get(i: Int) = when (i) {
+    override operator fun get(i: Int) = when (i) {
         0 -> x
         1 -> y
         else -> throw ArrayIndexOutOfBoundsException()

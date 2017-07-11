@@ -19,6 +19,8 @@ public class Test {
 
         Vec2 v = new Vec2(3, 4);
 
+        float f = v.x;
+
         Quat quat = new Quat();
 
         v.x = 3f;

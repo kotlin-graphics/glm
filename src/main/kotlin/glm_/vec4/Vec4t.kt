@@ -16,6 +16,13 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
     @JvmField var z = _z
     @JvmField var w = _w
 
+    open operator fun get(i: Int) = when(i) {
+        0 -> x
+        1 -> y
+        2 -> z
+        3 -> 2
+        else -> throw IndexOutOfBoundsException()
+    }
 
     fun x(x: T) {
         this.x = x
@@ -193,11 +200,11 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
             w = field
         }
 
-    override fun toString() = "$x, $y, $z, $w"
-
 
     operator fun component1() = x
     operator fun component2() = y
     operator fun component3() = z
     operator fun component4() = w
+
+    override fun toString() = "($x, $y, $z, $w)"
 }

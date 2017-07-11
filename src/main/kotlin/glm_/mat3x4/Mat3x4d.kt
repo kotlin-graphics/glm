@@ -9,11 +9,9 @@ import java.nio.DoubleBuffer
  * Created by GBarbieri on 09.12.2016.
  */
 
-class Mat3x4d(override var value: MutableList<Vec4d>) : Mat3x4t<Vec4d> {
+data class Mat3x4d(override var value: MutableList<Vec4d>) : Mat3x4t<Vec4d>(value) {
 
     // -- Accesses --
-
-    override operator fun get(i: Int) = value[i]
 
     operator fun set(i: Int, v: Vec4d) = value[i] put v
 
@@ -38,4 +36,6 @@ class Mat3x4d(override var value: MutableList<Vec4d>) : Mat3x4t<Vec4d> {
     companion object {
         @JvmField val size = 3 * 4 * Double.BYTES
     }
+
+    override fun toString() = super.toString()
 }

@@ -9,11 +9,9 @@ import java.nio.FloatBuffer
  * Created by GBarbieri on 09.12.2016.
  */
 
-data class Mat2x4(override var value: MutableList<Vec4>) : Mat2x4t<Vec4> {
+data class Mat2x4(override var value: MutableList<Vec4>) : Mat2x4t<Vec4>(value) {
 
     // -- Accesses --
-
-    override operator fun get(i: Int) = value[i]
 
     operator fun set(i: Int, v: Vec4) = value[i] put v
 
@@ -34,4 +32,6 @@ data class Mat2x4(override var value: MutableList<Vec4>) : Mat2x4t<Vec4> {
     companion object {
         @JvmField val size = 2 * 4 * Float.BYTES
     }
+
+    override fun toString() = super.toString()
 }

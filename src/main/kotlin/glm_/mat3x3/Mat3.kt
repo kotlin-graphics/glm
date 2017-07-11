@@ -26,7 +26,7 @@ import java.nio.FloatBuffer
  * Created by GBarbieri on 10.11.2016.
  */
 
-class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
+data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
 
     // -- Constructors --
 
@@ -141,8 +141,6 @@ class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
 //    }
 
     // -- Accesses --
-
-    operator fun get(i: Int) = value[i]
 
     operator fun set(i: Int, v: Vec3) {
         value[i] = v
@@ -372,8 +370,5 @@ class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3> {
             this[0][2] == 0f && this[1][2] == 0f && this[2][2] == 1f
 
 
-    override fun equals(other: Any?) =
-            if (other is Mat3)
-                this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
-            else false
+    override fun toString() = super.toString()
 }

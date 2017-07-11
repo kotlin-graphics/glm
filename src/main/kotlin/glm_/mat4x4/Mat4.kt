@@ -27,7 +27,7 @@ import java.nio.FloatBuffer
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
+data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
 
     // -- Constructors --
 
@@ -288,7 +288,8 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
 
     // -- Accesses --
 
-    operator fun get(i: Int) = value[i]
+    override operator fun get(i: Int) = value[i]
+    override operator fun get(c: Int, r: Int) = value[c][r]
 
     operator fun set(i: Int, v: Vec4) = value[i] put v
 
@@ -506,11 +507,6 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4> {
             this[0][3] == 0f && this[1][3] == 0f && this[2][3] == 0f && this[3][3] == 1f
 
 
-    override fun equals(other: Any?) =
-            if (other is Mat4)
-                this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
-            else false
-
-//    override fun toString() = "$a0 $b0 $c0 $d0\n$a1 $b1 $c1 $d1\n$a2 $b2 $c2 $d2\n$a3 $b3 $c3 $d3"
+    override fun toString() = super.toString()
 }
 
