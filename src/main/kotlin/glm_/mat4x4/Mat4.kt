@@ -1,6 +1,7 @@
 package  glm_.mat4x4
 
 import glm_.BYTES
+import glm_.float
 import glm_.glm
 import glm_.glm.determinant
 import glm_.glm.inverse
@@ -21,7 +22,6 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
-import java.io.DataInputStream
 import java.io.InputStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
@@ -137,13 +137,11 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
                     Vec4(floats, 12)))
 
     // TODO others
-    constructor(inputStream: InputStream) : this(DataInputStream(inputStream))
-
-    constructor(dataInputStream: DataInputStream) : this(
-            dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(),
-            dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(),
-            dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(),
-            dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat())
+    constructor(inputStream: InputStream, bigEndianess: Boolean = true) : this(
+            inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess),
+            inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess),
+            inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess),
+            inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess))
 
     fun put(v0: Vec4, v1: Vec4, v2: Vec4, v3: Vec4) {
         value[0] to v0

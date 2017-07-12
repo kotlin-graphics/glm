@@ -2,6 +2,7 @@ package glm_.quat
 
 import glm_.BYTES
 import glm_.f
+import glm_.float
 import glm_.glm
 import glm_.glm.cos
 import glm_.glm.sin
@@ -59,8 +60,8 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 //        quat_cast(m, this)
 //    }
 
-    constructor(inputStream: InputStream) : this(DataInputStream(inputStream))
-    constructor(dataInputStream: DataInputStream) : this(dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat())
+    constructor(inputStream: InputStream, bigEndianess: Boolean = true) :
+            this(inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess))
 
     infix fun to(res: Mat3) = glm.mat3_cast(this, res)
     fun toMat3() = glm.mat3_cast(this, Mat3())
