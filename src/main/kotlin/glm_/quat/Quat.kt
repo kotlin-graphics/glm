@@ -174,7 +174,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     fun slerp_(b: Quat, interp: Float) = glm.slerp(this, b, interp, this)
 
 
-    override fun toString() = "($x, $y, $z), $w"
+    override fun toString() = "$w ($x, $y, $z)"
 
     override fun equals(other: Any?) =
             if (other is Quat)
