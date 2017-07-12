@@ -199,10 +199,7 @@ fun InputStream.double(bigEndianess: Boolean = true) = Double.longBitsToDouble(l
 fun InputStream.long(bigEndianess: Boolean = true): Long {
     val a = int(bigEndianess)
     val b = int(bigEndianess)
-    if (bigEndianess)
-        return (a.L shl 32) + b
-    else
-        return (b.L shl 32) + a
+    return (b.L shl 32) + a
 }
 
 fun InputStream.mat4(bigEndianess: Boolean = true) = Mat4(
