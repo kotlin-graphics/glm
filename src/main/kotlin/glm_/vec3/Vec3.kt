@@ -68,8 +68,8 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     constructor(x: Number, y: Number, z: Number) : this(x.f, y.f, z.f)
 
 
-    constructor(inputStream: InputStream) : this(DataInputStream(inputStream))
-    constructor(dataInputStream: DataInputStream) : this(dataInputStream.readFloat(), dataInputStream.readFloat(), dataInputStream.readFloat())
+    constructor(inputStream: InputStream, bigEndianess: Boolean = true) :
+            this(inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess))
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndianess: Boolean = true) {

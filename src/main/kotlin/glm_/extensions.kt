@@ -3,6 +3,7 @@ package glm_
 import glm_.mat4x4.Mat4
 import unsigned.*
 import java.io.DataInputStream
+import java.io.InputStream
 import kotlin.experimental.or
 
 /**
@@ -169,8 +170,40 @@ val Double.cos get() = Math.cos(this)
 val Float.sin get() = Math.sin(this.d).f
 val Double.sin get() = Math.sin(this)
 
-fun DataInputStream.readMat4() = Mat4(
-        readFloat(), readFloat(), readFloat(), readFloat(),
-        readFloat(), readFloat(), readFloat(), readFloat(),
-        readFloat(), readFloat(), readFloat(), readFloat(),
-        readFloat(), readFloat(), readFloat(), readFloat())
+
+fun InputStream.int(bigEndianess: Boolean = true): Int {
+    val a = read()
+    val b = read()
+    val c = read()
+    val d = read()
+    if (bigEndianess)
+        return (a shl 24) + (b shl 16) + (c shl 8) + d
+    else
+        return (d shl 24) + (c shl 16) + (b shl 8) + a
+}
+
+fun InputStream.short(bigEndianess: Boolean = true): Int {
+    val a = read()
+    val b = read()
+    if (bigEndianess)
+        return (a shl 8) + b
+    else
+        return (b shl 8) + a
+}
+
+fun InputStream.byte() = read().b
+
+fun InputStream.float(bigEndianess: Boolean = true) = Float.intBitsToFloat(int(bigEndianess))
+fun InputStream.double(bigEndianess: Boolean = true) = Double.longBitsToDouble(long(bigEndianess))
+
+fun InputStream.long(bigEndianess: Boolean = true): Long {
+    val a = int(bigEndianess)
+    val b = int(bigEndianess)
+    return (b.L shl 32) + a
+}
+
+fun InputStream.mat4(bigEndianess: Boolean = true) = Mat4(
+        float(bigEndianess), float(bigEndianess), float(bigEndianess), float(bigEndianess),
+        float(bigEndianess), float(bigEndianess), float(bigEndianess), float(bigEndianess),
+        float(bigEndianess), float(bigEndianess), float(bigEndianess), float(bigEndianess),
+        float(bigEndianess), float(bigEndianess), float(bigEndianess), float(bigEndianess))
