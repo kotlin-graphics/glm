@@ -45,9 +45,7 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     constructor(chars: Array<Char>, index: Int = 0) : this(chars[index].d, chars[index + 1].d)
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].d, booleans[index + 1].d)
 
-    constructor(list: List<Any>, index: Int = 0) : this() {
-        put(list, index)
-    }
+    constructor(list: List<Any>, index: Int = 0) : this(list[index].d, list[index + 1].d)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneDouble: Boolean = true) : this(
             if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index),

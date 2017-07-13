@@ -46,9 +46,7 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
     constructor(chars: Array<Char>, index: Int = 0) : this(chars[index].ui, chars[index + 1].ui, chars[index + 2].ui)
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].ui, booleans[index + 1].ui, booleans[index + 2].ui)
 
-    constructor(list: List<Any>, index: Int = 0) : this() {
-        put(list, index)
-    }
+    constructor(list: List<Any>, index: Int = 0) : this(list[index].i, list[index + 1].i, list[index + 2].i)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUint: Boolean = true) : this(
             if (oneByteOneUint) bytes[index].ui else bytes.getInt(index).ui,

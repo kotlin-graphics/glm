@@ -41,9 +41,7 @@ class Vec2b(x: Byte, y: Byte) : Vec2t<Byte>(x, y) {
     constructor(chars: Array<Char>, index: Int = 0) : this(chars[index].b, chars[index + 1].b)
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].b, booleans[index + 1].b)
 
-    constructor(list: List<Any>, index: Int = 0) : this() {
-        put(list, index)
-    }
+    constructor(list: List<Any>, index: Int = 0) : this(list[index].b, list[index + 1].b)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position()) : this(bytes[index], bytes[index + 1])
     constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].b, chars[index + 1].b)

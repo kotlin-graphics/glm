@@ -79,10 +79,12 @@ abstract class Vec2t<T : Number>(_x: T, _y: T) {
     fun put(list: List<Any>, index: Int) {
         val x = list[index]
         val y = list[index + 1]
-        if (x is Number && y is Number) put(x, y)
-        else if (x is Char && y is Char) put(x.b, y.b)
-        else if (x is Boolean && y is Boolean) put(x.b, y.b)
-        else throw ArithmeticException("incompatible with this type")
+        when {
+            x is Number && y is Number -> put(x, y)
+            x is Char && y is Char -> put(x.b, y.b)
+            x is Boolean && y is Boolean -> put(x.b, y.b)
+            else -> throw ArithmeticException("incompatible type")
+        }
     }
 
     fun put(bytes: ByteBuffer, index: Int) = put(bytes[index], bytes[index + 1])
