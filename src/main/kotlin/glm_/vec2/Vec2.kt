@@ -278,6 +278,25 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
 
     // -- functions --
 
+    // TODO others
+    infix fun max(b: Vec2) = glm.max(this, b, Vec2())
+    infix fun max_(b: Vec2) {
+        x = glm.max(x, b.x)
+        y = glm.max(y, b.y)
+    }
+
+    infix fun max(b: Vec2t<*>): Vec2 {
+        val res = Vec2()
+        res.x = glm.max(x, b.x.f)
+        res.y = glm.max(y, b.y.f)
+        return res
+    }
+
+    infix fun max_(b: Vec2t<*>) {
+        x = glm.max(x, b.x.f)
+        y = glm.max(y, b.y.f)
+    }
+
     fun length() = glm.length(this)
 
     @JvmOverloads fun normalize(res: Vec2 = Vec2()) = glm.normalize(this, res) // TODO others
@@ -296,4 +315,6 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
             if (other is Vec2)
                 this[0] == other[0] && this[1] == other[1]
             else false
+
+
 }
