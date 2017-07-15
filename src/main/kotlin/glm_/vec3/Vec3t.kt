@@ -6,7 +6,7 @@ import glm_.b
 import glm_.d
 import glm_.glm
 import glm_.vec2.Vec2bool
-import glm_.vec2.Vec2t
+import glm_.vec2.*
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import java.nio.*
@@ -123,8 +123,13 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
         @JvmField val length = 3
     }
 
-    // components alias
+    operator fun component1() = x
+    operator fun component2() = y
+    operator fun component3() = z
 
+    override fun toString() = "($x, $y, $z)"
+
+    // components alias
     var r = x
         @JvmName("r") get() = x
         @JvmName("r") set(value) {
@@ -144,7 +149,6 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
             z = field
         }
 
-
     var s = x
         @JvmName("s") get() = x
         @JvmName("s") set(value) {
@@ -157,6 +161,7 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
             field = value
             y = field
         }
+
     var p = z
         @JvmName("p") get() = z
         @JvmName("p") set(value) {
@@ -164,12 +169,450 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
             z = field
         }
 
+
     // swizzling
 
+    val xx @JvmName("xx") get() = when (this) {
+        is Vec3 -> Vec2(x, x)
+        is Vec3d -> Vec2d(x, x)
+        is Vec3b -> Vec2b(x, x)
+        is Vec3i -> Vec2i(x, x)
+        is Vec3s -> Vec2s(x, x)
+        is Vec3l -> Vec2l(x, x)
+        is Vec3ub -> Vec2ub(x, x)
+        is Vec3ui -> Vec2ui(x, x)
+        is Vec3us -> Vec2us(x, x)
+        is Vec3ul -> Vec2ul(x, x)
+        else -> throw IllegalStateException()
+    }
+    var xy @JvmName("xy") get() = when (this) {
+        is Vec3 -> Vec2(this)
+        is Vec3d -> Vec2d(this)
+        is Vec3b -> Vec2b(this)
+        is Vec3i -> Vec2i(this)
+        is Vec3s -> Vec2s(this)
+        is Vec3l -> Vec2l(this)
+        is Vec3ub -> Vec2ub(this)
+        is Vec3ui -> Vec2ui(this)
+        is Vec3us -> Vec2us(this)
+        is Vec3ul -> Vec2ul(this)
+        else -> throw IllegalStateException()
+    }
+        @JvmName("xy") set(value) {
+            x = value.x as T
+            y = value.y as T
+        }
+    var yx @JvmName("yx") get() = when (this) {
+        is Vec3 -> Vec2(y, x)
+        is Vec3d -> Vec2d(y, x)
+        is Vec3b -> Vec2b(y, x)
+        is Vec3i -> Vec2i(y, x)
+        is Vec3s -> Vec2s(y, x)
+        is Vec3l -> Vec2l(y, x)
+        is Vec3ub -> Vec2ub(y, x)
+        is Vec3ui -> Vec2ui(y, x)
+        is Vec3us -> Vec2us(y, x)
+        is Vec3ul -> Vec2ul(y, x)
+        else -> throw IllegalStateException()
+    }
+        @JvmName("yx") set(value) {
+            y = value.x as T
+            x = value.y as T
+        }
+    val yy @JvmName("yy") get() = when (this) {
+        is Vec3 -> Vec2(y, y)
+        is Vec3d -> Vec2d(y, y)
+        is Vec3b -> Vec2b(y, y)
+        is Vec3i -> Vec2i(y, y)
+        is Vec3s -> Vec2s(y, y)
+        is Vec3l -> Vec2l(y, y)
+        is Vec3ub -> Vec2ub(y, y)
+        is Vec3ui -> Vec2ui(y, y)
+        is Vec3us -> Vec2us(y, y)
+        is Vec3ul -> Vec2ul(y, y)
+        else -> throw IllegalStateException()
+    }
 
-    operator fun component1() = x
-    operator fun component2() = y
-    operator fun component3() = z
 
-    override fun toString() = "($x, $y, $z)"
+    val xxx @JvmName("xxx") get() = when (this) {
+        is Vec3 -> Vec3(x, x, x)
+        is Vec3d -> Vec3d(x, x, x)
+        is Vec3b -> Vec3b(x, x, x)
+        is Vec3i -> Vec3i(x, x, x)
+        is Vec3s -> Vec3s(x, x, x)
+        is Vec3l -> Vec3l(x, x, x)
+        is Vec3ub -> Vec3ub(x, x, x)
+        is Vec3ui -> Vec3ui(x, x, x)
+        is Vec3us -> Vec3us(x, x, x)
+        is Vec3ul -> Vec3ul(x, x, x)
+        else -> throw IllegalStateException()
+    }
+    val xxy @JvmName("xxy") get() = when (this) {
+        is Vec3 -> Vec3(x, x, y)
+        is Vec3d -> Vec3d(x, x, y)
+        is Vec3b -> Vec3b(x, x, y)
+        is Vec3i -> Vec3i(x, x, y)
+        is Vec3s -> Vec3s(x, x, y)
+        is Vec3l -> Vec3l(x, x, y)
+        is Vec3ub -> Vec3ub(x, x, y)
+        is Vec3ui -> Vec3ui(x, x, y)
+        is Vec3us -> Vec3us(x, x, y)
+        is Vec3ul -> Vec3ul(x, x, y)
+        else -> throw IllegalStateException()
+    }
+    val xxz @JvmName("xxz") get() = when (this) {
+        is Vec3 -> Vec3(x, x, z)
+        is Vec3d -> Vec3d(x, x, z)
+        is Vec3b -> Vec3b(x, x, z)
+        is Vec3i -> Vec3i(x, x, z)
+        is Vec3s -> Vec3s(x, x, z)
+        is Vec3l -> Vec3l(x, x, z)
+        is Vec3ub -> Vec3ub(x, x, z)
+        is Vec3ui -> Vec3ui(x, x, z)
+        is Vec3us -> Vec3us(x, x, z)
+        is Vec3ul -> Vec3ul(x, x, z)
+        else -> throw IllegalStateException()
+    }
+    val xyx @JvmName("xyx") get() = when (this) {
+        is Vec3 -> Vec3(x, y, x)
+        is Vec3d -> Vec3d(x, y, x)
+        is Vec3b -> Vec3b(x, y, x)
+        is Vec3i -> Vec3i(x, y, x)
+        is Vec3s -> Vec3s(x, y, x)
+        is Vec3l -> Vec3l(x, y, x)
+        is Vec3ub -> Vec3ub(x, y, x)
+        is Vec3ui -> Vec3ui(x, y, x)
+        is Vec3us -> Vec3us(x, y, x)
+        is Vec3ul -> Vec3ul(x, y, x)
+        else -> throw IllegalStateException()
+    }
+    val xyy @JvmName("xyy") get() = when (this) {
+        is Vec3 -> Vec3(x, y, y)
+        is Vec3d -> Vec3d(x, y, y)
+        is Vec3b -> Vec3b(x, y, y)
+        is Vec3i -> Vec3i(x, y, y)
+        is Vec3s -> Vec3s(x, y, y)
+        is Vec3l -> Vec3l(x, y, y)
+        is Vec3ub -> Vec3ub(x, y, y)
+        is Vec3ui -> Vec3ui(x, y, y)
+        is Vec3us -> Vec3us(x, y, y)
+        is Vec3ul -> Vec3ul(x, y, y)
+        else -> throw IllegalStateException()
+    }
+    var xyz @JvmName("xyz") get() = when (this) {
+        is Vec3 -> Vec3(x, y, z)
+        is Vec3d -> Vec3d(x, y, z)
+        is Vec3b -> Vec3b(x, y, z)
+        is Vec3i -> Vec3i(x, y, z)
+        is Vec3s -> Vec3s(x, y, z)
+        is Vec3l -> Vec3l(x, y, z)
+        is Vec3ub -> Vec3ub(x, y, z)
+        is Vec3ui -> Vec3ui(x, y, z)
+        is Vec3us -> Vec3us(x, y, z)
+        is Vec3ul -> Vec3ul(x, y, z)
+        else -> throw IllegalStateException()
+    }
+        @JvmName("xyz") set(value) {
+            x = value.x as T
+            y = value.y as T
+            z = value.z as T
+        }
+    val xzx @JvmName("xzx") get() = when (this) {
+        is Vec3 -> Vec3(x, z, x)
+        is Vec3d -> Vec3d(x, z, x)
+        is Vec3b -> Vec3b(x, z, x)
+        is Vec3i -> Vec3i(x, z, x)
+        is Vec3s -> Vec3s(x, z, x)
+        is Vec3l -> Vec3l(x, z, x)
+        is Vec3ub -> Vec3ub(x, z, x)
+        is Vec3ui -> Vec3ui(x, z, x)
+        is Vec3us -> Vec3us(x, z, x)
+        is Vec3ul -> Vec3ul(x, z, x)
+        else -> throw IllegalStateException()
+    }
+    var xzy @JvmName("xzy") get() = when (this) {
+        is Vec3 -> Vec3(x, z, y)
+        is Vec3d -> Vec3d(x, z, y)
+        is Vec3b -> Vec3b(x, z, y)
+        is Vec3i -> Vec3i(x, z, y)
+        is Vec3s -> Vec3s(x, z, y)
+        is Vec3l -> Vec3l(x, z, y)
+        is Vec3ub -> Vec3ub(x, z, y)
+        is Vec3ui -> Vec3ui(x, z, y)
+        is Vec3us -> Vec3us(x, z, y)
+        is Vec3ul -> Vec3ul(x, z, y)
+        else -> throw IllegalStateException()
+    }
+        @JvmName("xzy") set(value) {
+            x = value.x as T
+            z = value.y as T
+            y = value.z as T
+        }
+    val xzz @JvmName("xzz") get() = when (this) {
+        is Vec3 -> Vec3(x, z, z)
+        is Vec3d -> Vec3d(x, z, z)
+        is Vec3b -> Vec3b(x, z, z)
+        is Vec3i -> Vec3i(x, z, z)
+        is Vec3s -> Vec3s(x, z, z)
+        is Vec3l -> Vec3l(x, z, z)
+        is Vec3ub -> Vec3ub(x, z, z)
+        is Vec3ui -> Vec3ui(x, z, z)
+        is Vec3us -> Vec3us(x, z, z)
+        is Vec3ul -> Vec3ul(x, z, z)
+        else -> throw IllegalStateException()
+    }
+    val yxx @JvmName("yxx") get() = when (this) {
+        is Vec3 -> Vec3(y, x, x)
+        is Vec3d -> Vec3d(y, x, x)
+        is Vec3b -> Vec3b(y, x, x)
+        is Vec3i -> Vec3i(y, x, x)
+        is Vec3s -> Vec3s(y, x, x)
+        is Vec3l -> Vec3l(y, x, x)
+        is Vec3ub -> Vec3ub(y, x, x)
+        is Vec3ui -> Vec3ui(y, x, x)
+        is Vec3us -> Vec3us(y, x, x)
+        is Vec3ul -> Vec3ul(y, x, x)
+        else -> throw IllegalStateException()
+    }
+    val yxy @JvmName("yxy") get() = when (this) {
+        is Vec3 -> Vec3(y, x, y)
+        is Vec3d -> Vec3d(y, x, y)
+        is Vec3b -> Vec3b(y, x, y)
+        is Vec3i -> Vec3i(y, x, y)
+        is Vec3s -> Vec3s(y, x, y)
+        is Vec3l -> Vec3l(y, x, y)
+        is Vec3ub -> Vec3ub(y, x, y)
+        is Vec3ui -> Vec3ui(y, x, y)
+        is Vec3us -> Vec3us(y, x, y)
+        is Vec3ul -> Vec3ul(y, x, y)
+        else -> throw IllegalStateException()
+    }
+    var yxz @JvmName("yxz") get() = when (this) {
+        is Vec3 -> Vec3(y, x, z)
+        is Vec3d -> Vec3d(y, x, z)
+        is Vec3b -> Vec3b(y, x, z)
+        is Vec3i -> Vec3i(y, x, z)
+        is Vec3s -> Vec3s(y, x, z)
+        is Vec3l -> Vec3l(y, x, z)
+        is Vec3ub -> Vec3ub(y, x, z)
+        is Vec3ui -> Vec3ui(y, x, z)
+        is Vec3us -> Vec3us(y, x, z)
+        is Vec3ul -> Vec3ul(y, x, z)
+        else -> throw IllegalStateException()
+    }
+        @JvmName("yxz") set(value) {
+            y = value.x as T
+            x = value.y as T
+            z = value.z as T
+        }
+    val yyx @JvmName("yyx") get() = when (this) {
+        is Vec3 -> Vec3(y, y, x)
+        is Vec3d -> Vec3d(y, y, x)
+        is Vec3b -> Vec3b(y, y, x)
+        is Vec3i -> Vec3i(y, y, x)
+        is Vec3s -> Vec3s(y, y, x)
+        is Vec3l -> Vec3l(y, y, x)
+        is Vec3ub -> Vec3ub(y, y, x)
+        is Vec3ui -> Vec3ui(y, y, x)
+        is Vec3us -> Vec3us(y, y, x)
+        is Vec3ul -> Vec3ul(y, y, x)
+        else -> throw IllegalStateException()
+    }
+    val yyy @JvmName("yyy") get() = when (this) {
+        is Vec3 -> Vec3(y, y, y)
+        is Vec3d -> Vec3d(y, y, y)
+        is Vec3b -> Vec3b(y, y, y)
+        is Vec3i -> Vec3i(y, y, y)
+        is Vec3s -> Vec3s(y, y, y)
+        is Vec3l -> Vec3l(y, y, y)
+        is Vec3ub -> Vec3ub(y, y, y)
+        is Vec3ui -> Vec3ui(y, y, y)
+        is Vec3us -> Vec3us(y, y, y)
+        is Vec3ul -> Vec3ul(y, y, y)
+        else -> throw IllegalStateException()
+    }
+    val yyz @JvmName("yyz") get() = when (this) {
+        is Vec3 -> Vec3(y, y, z)
+        is Vec3d -> Vec3d(y, y, z)
+        is Vec3b -> Vec3b(y, y, z)
+        is Vec3i -> Vec3i(y, y, z)
+        is Vec3s -> Vec3s(y, y, z)
+        is Vec3l -> Vec3l(y, y, z)
+        is Vec3ub -> Vec3ub(y, y, z)
+        is Vec3ui -> Vec3ui(y, y, z)
+        is Vec3us -> Vec3us(y, y, z)
+        is Vec3ul -> Vec3ul(y, y, z)
+        else -> throw IllegalStateException()
+    }
+    var yzx @JvmName("yzx") get() = when (this) {
+        is Vec3 -> Vec3(y, z, x)
+        is Vec3d -> Vec3d(y, z, x)
+        is Vec3b -> Vec3b(y, z, x)
+        is Vec3i -> Vec3i(y, z, x)
+        is Vec3s -> Vec3s(y, z, x)
+        is Vec3l -> Vec3l(y, z, x)
+        is Vec3ub -> Vec3ub(y, z, x)
+        is Vec3ui -> Vec3ui(y, z, x)
+        is Vec3us -> Vec3us(y, z, x)
+        is Vec3ul -> Vec3ul(y, z, x)
+        else -> throw IllegalStateException()
+    }
+        @JvmName("xzx") set(value) {
+            y = value.x as T
+            z = value.y as T
+            x = value.z as T
+        }
+    val yzy @JvmName("yzy") get() = when (this) {
+        is Vec3 -> Vec3(y, z, y)
+        is Vec3d -> Vec3d(y, z, y)
+        is Vec3b -> Vec3b(y, z, y)
+        is Vec3i -> Vec3i(y, z, y)
+        is Vec3s -> Vec3s(y, z, y)
+        is Vec3l -> Vec3l(y, z, y)
+        is Vec3ub -> Vec3ub(y, z, y)
+        is Vec3ui -> Vec3ui(y, z, y)
+        is Vec3us -> Vec3us(y, z, y)
+        is Vec3ul -> Vec3ul(y, z, y)
+        else -> throw IllegalStateException()
+    }
+    val yzz @JvmName("yzz") get() = when (this) {
+        is Vec3 -> Vec3(y, z, z)
+        is Vec3d -> Vec3d(y, z, z)
+        is Vec3b -> Vec3b(y, z, z)
+        is Vec3i -> Vec3i(y, z, z)
+        is Vec3s -> Vec3s(y, z, z)
+        is Vec3l -> Vec3l(y, z, z)
+        is Vec3ub -> Vec3ub(y, z, z)
+        is Vec3ui -> Vec3ui(y, z, z)
+        is Vec3us -> Vec3us(y, z, z)
+        is Vec3ul -> Vec3ul(y, z, z)
+        else -> throw IllegalStateException()
+    }
+    val zxx @JvmName("zxx") get() = when (this) {
+        is Vec3 -> Vec3(z, x, x)
+        is Vec3d -> Vec3d(z, x, x)
+        is Vec3b -> Vec3b(z, x, x)
+        is Vec3i -> Vec3i(z, x, x)
+        is Vec3s -> Vec3s(z, x, x)
+        is Vec3l -> Vec3l(z, x, x)
+        is Vec3ub -> Vec3ub(z, x, x)
+        is Vec3ui -> Vec3ui(z, x, x)
+        is Vec3us -> Vec3us(z, x, x)
+        is Vec3ul -> Vec3ul(z, x, x)
+        else -> throw IllegalStateException()
+    }
+    var zxy @JvmName("zxy") get() = when (this) {
+        is Vec3 -> Vec3(z, x, y)
+        is Vec3d -> Vec3d(z, x, y)
+        is Vec3b -> Vec3b(z, x, y)
+        is Vec3i -> Vec3i(z, x, y)
+        is Vec3s -> Vec3s(z, x, y)
+        is Vec3l -> Vec3l(z, x, y)
+        is Vec3ub -> Vec3ub(z, x, y)
+        is Vec3ui -> Vec3ui(z, x, y)
+        is Vec3us -> Vec3us(z, x, y)
+        is Vec3ul -> Vec3ul(z, x, y)
+        else -> throw IllegalStateException()
+    }
+        @JvmName("zxy") set(value) {
+            z = value.x as T
+            x = value.y as T
+            y = value.z as T
+        }
+    val zxz @JvmName("zxz") get() = when (this) {
+        is Vec3 -> Vec3(z, x, z)
+        is Vec3d -> Vec3d(z, x, z)
+        is Vec3b -> Vec3b(z, x, z)
+        is Vec3i -> Vec3i(z, x, z)
+        is Vec3s -> Vec3s(z, x, z)
+        is Vec3l -> Vec3l(z, x, z)
+        is Vec3ub -> Vec3ub(z, x, z)
+        is Vec3ui -> Vec3ui(z, x, z)
+        is Vec3us -> Vec3us(z, x, z)
+        is Vec3ul -> Vec3ul(z, x, z)
+        else -> throw IllegalStateException()
+    }
+    var zyx @JvmName("zyx") get() = when (this) {
+        is Vec3 -> Vec3(z, y, x)
+        is Vec3d -> Vec3d(z, y, x)
+        is Vec3b -> Vec3b(z, y, x)
+        is Vec3i -> Vec3i(z, y, x)
+        is Vec3s -> Vec3s(z, y, x)
+        is Vec3l -> Vec3l(z, y, x)
+        is Vec3ub -> Vec3ub(z, y, x)
+        is Vec3ui -> Vec3ui(z, y, x)
+        is Vec3us -> Vec3us(z, y, x)
+        is Vec3ul -> Vec3ul(z, y, x)
+        else -> throw IllegalStateException()
+    }
+        @JvmName("zyx") set(value) {
+            z = value.x as T
+            y = value.y as T
+            x = value.z as T
+        }
+    val zyy @JvmName("zyy") get() = when (this) {
+        is Vec3 -> Vec3(z, y, y)
+        is Vec3d -> Vec3d(z, y, y)
+        is Vec3b -> Vec3b(z, y, y)
+        is Vec3i -> Vec3i(z, y, y)
+        is Vec3s -> Vec3s(z, y, y)
+        is Vec3l -> Vec3l(z, y, y)
+        is Vec3ub -> Vec3ub(z, y, y)
+        is Vec3ui -> Vec3ui(z, y, y)
+        is Vec3us -> Vec3us(z, y, y)
+        is Vec3ul -> Vec3ul(z, y, y)
+        else -> throw IllegalStateException()
+    }
+    val zyz @JvmName("zyz") get() = when (this) {
+        is Vec3 -> Vec3(z, y, z)
+        is Vec3d -> Vec3d(z, y, z)
+        is Vec3b -> Vec3b(z, y, z)
+        is Vec3i -> Vec3i(z, y, z)
+        is Vec3s -> Vec3s(z, y, z)
+        is Vec3l -> Vec3l(z, y, z)
+        is Vec3ub -> Vec3ub(z, y, z)
+        is Vec3ui -> Vec3ui(z, y, z)
+        is Vec3us -> Vec3us(z, y, z)
+        is Vec3ul -> Vec3ul(z, y, z)
+        else -> throw IllegalStateException()
+    }
+    val zzx @JvmName("zzx") get() = when (this) {
+        is Vec3 -> Vec3(z, z, x)
+        is Vec3d -> Vec3d(z, z, x)
+        is Vec3b -> Vec3b(z, z, x)
+        is Vec3i -> Vec3i(z, z, x)
+        is Vec3s -> Vec3s(z, z, x)
+        is Vec3l -> Vec3l(z, z, x)
+        is Vec3ub -> Vec3ub(z, z, x)
+        is Vec3ui -> Vec3ui(z, z, x)
+        is Vec3us -> Vec3us(z, z, x)
+        is Vec3ul -> Vec3ul(z, z, x)
+        else -> throw IllegalStateException()
+    }
+    val zzy @JvmName("zzy") get() = when (this) {
+        is Vec3 -> Vec3(z, z, y)
+        is Vec3d -> Vec3d(z, z, y)
+        is Vec3b -> Vec3b(z, z, y)
+        is Vec3i -> Vec3i(z, z, y)
+        is Vec3s -> Vec3s(z, z, y)
+        is Vec3l -> Vec3l(z, z, y)
+        is Vec3ub -> Vec3ub(z, z, y)
+        is Vec3ui -> Vec3ui(z, z, y)
+        is Vec3us -> Vec3us(z, z, y)
+        is Vec3ul -> Vec3ul(z, z, y)
+        else -> throw IllegalStateException()
+    }
+    val zzz @JvmName("zzz") get() = when (this) {
+        is Vec3 -> Vec3(z, z, z)
+        is Vec3d -> Vec3d(z, z, z)
+        is Vec3b -> Vec3b(z, z, z)
+        is Vec3i -> Vec3i(z, z, z)
+        is Vec3s -> Vec3s(z, z, z)
+        is Vec3l -> Vec3l(z, z, z)
+        is Vec3ub -> Vec3ub(z, z, z)
+        is Vec3ui -> Vec3ui(z, z, z)
+        is Vec3us -> Vec3us(z, z, z)
+        is Vec3ul -> Vec3ul(z, z, z)
+        else -> throw IllegalStateException()
+    }
 }
