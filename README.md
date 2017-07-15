@@ -32,6 +32,25 @@ fun camera(translate: Float, rotate: Vec2): Mat4 {
 }
 ```
 
+### Gradle:
+
+- Add it in your root build.gradle at the end of repositories:
+
+	    allprojects {
+		    repositories {
+			        ...
+			        maven { url 'https://jitpack.io' }
+		    }
+	    }
+    
+- Add the dependency
+
+	    dependencies {
+	        compile 'com.github.kotlin-graphics:glm:0.01'
+	    }
+
+
 [Gradle, Maven, Sbt, Leiningen](https://jitpack.io/#kotlin-graphics/glm/0.01)
+
 
 
