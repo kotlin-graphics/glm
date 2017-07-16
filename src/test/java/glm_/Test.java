@@ -22,6 +22,7 @@ public class Test {
         Vec2 v = new Vec2(3, 4);
 
         Vec2 a = (Vec2) v.xx();
+        a.xy(v.xy());
 
 //        Vec2 b = (Vec2) v.aa();
     }

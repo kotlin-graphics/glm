@@ -43,9 +43,13 @@ object glm :
 
         componentWise,
 
-        round_,
+        round,
 
-        func_integer {
+        func_integer,
+
+        bitfield,
+
+        colorSpace {
 
     @JvmField val detail = Detail
 
@@ -94,7 +98,7 @@ class Java {
 
             componentWise,
 
-            round_,
+            round,
 
             func_integer {
 

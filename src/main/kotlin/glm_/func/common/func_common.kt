@@ -101,7 +101,7 @@ interface func_common {
     fun mix(a: Float, b: Float, interp: Float) = a + interp * (b - a)
     fun mix(a: Double, b: Double, interp: Double) = a + interp * (b - a)
 
-    fun mix(a: Float, b: Float, interp: Boolean) = if (interp) a else b
+    fun mix(a: Float, b: Float, interp: Boolean) = if (interp) a else b     // TODO invert
     fun mix(a: Double, b: Double, interp: Boolean) = if (interp) a else b
 
 
