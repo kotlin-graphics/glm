@@ -49,7 +49,9 @@ object glm :
 
         bitfield,
 
-        colorSpace {
+        colorSpace,
+
+        gauss {
 
     @JvmField val detail = Detail
 
