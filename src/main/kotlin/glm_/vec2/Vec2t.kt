@@ -2,8 +2,7 @@
 
 package glm_.vec2
 
-import glm_.b
-import glm_.glm
+import glm_.*
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
@@ -77,12 +76,22 @@ abstract class Vec2t<T : Number>(_x: T, _y: T) {
     fun put(a: Array<Boolean>, index: Int) = put(a[index].b, a[index + 1].b)
 
     fun put(list: List<Any>, index: Int) {
-        val x = list[index]
-        val y = list[index + 1]
+        val a = list[index]
+        val b = list[index + 1]
         when {
-            x is Number && y is Number -> put(x, y)
-            x is Char && y is Char -> put(x.b, y.b)
-            x is Boolean && y is Boolean -> put(x.b, y.b)
+            a is Number && b is Number -> put(a, b)
+            a is Char && b is Char -> put(a.b, b.b)
+            a is Boolean && b is Boolean -> put(a.b, b.b)
+            a is String && b is String ->
+                when {
+                    x is Byte && y is Byte -> put(a.b, b.b)
+                    x is Short && y is Short -> put(a.s, b.s)
+                    x is Int && y is Int -> put(a.i, b.i)
+                    x is Long && y is Long -> put(a.L, b.L)
+                    x is Float && y is Float -> put(a.f, b.f)
+                    x is Double && y is Double -> put(a.d, b.d)
+                    else -> throw ArithmeticException("incompatible type")
+                }
             else -> throw ArithmeticException("incompatible type")
         }
     }

@@ -1,5 +1,6 @@
 package glm_
 
+import glm_.vec2.Vec2
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import io.kotlintest.matchers.shouldBe
@@ -38,6 +39,10 @@ class colorSpace_ : StringSpec() {
                 val colorRGB = glm.convertSRGBToLinear(colorSRGB, 2.8f)
                 glm.all(glm.epsilonEqual(colorSourceRGBA, colorRGB, 0.00001f)) shouldBe true
             }
+
+            val a = Vec2()
+            a put listOf("516", "139")
+            println(a)
         }
     }
 }

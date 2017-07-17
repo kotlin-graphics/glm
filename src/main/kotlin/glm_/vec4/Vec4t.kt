@@ -2,8 +2,7 @@
 
 package glm_.vec4
 
-import glm_.b
-import glm_.glm
+import glm_.*
 import glm_.vec2.*
 import glm_.vec3.*
 import java.nio.*
@@ -106,14 +105,26 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
     fun put(a: Array<Boolean>, index: Int) = put(a[index].b, a[index + 1].b, a[index + 2].b, a[index + 3].b)
 
     fun put(list: List<Any>, index: Int) {
-        val x = list[index]
-        val y = list[index + 1]
-        val z = list[index + 2]
-        val w = list[index + 3]
-        if (x is Number && y is Number && z is Number && w is Number) put(x, y, z, w)
-        else if (x is Char && y is Char && z is Char && w is Char) put(x.b, y.b, z.b, w.b)
-        else if (x is Boolean && y is Boolean && z is Boolean && w is Boolean) put(x.b, y.b, z.b, w.b)
-        else throw ArithmeticException("incompatible this type")
+        val a = list[index]
+        val b = list[index + 1]
+        val c = list[index + 2]
+        val d = list[index + 3]
+        when {
+            a is Number && b is Number && c is Number && d is Number -> put(a, b, c, d)
+            a is Char && b is Char && c is Char && d is Char -> put(a.b, b.b, c.b, d.b)
+            a is Boolean && b is Boolean && c is Boolean && d is Boolean -> put(a.b, b.b, c.b, d.b)
+            a is String && b is String && c is String && d is String ->
+                when {
+                    x is Byte && y is Byte && z is Byte && w is Byte -> put(a.b, b.b, c.b, d.b)
+                    x is Short && y is Short && z is Short && w is Short -> put(a.s, b.s, c.s, d.s)
+                    x is Int && y is Int && z is Int && w is Int -> put(a.i, b.i, c.i, d.i)
+                    x is Long && y is Long && z is Long && w is Long -> put(a.L, b.L, c.L, d.L)
+                    x is Float && y is Float && z is Float && w is Float -> put(a.f, b.f, c.f, d.f)
+                    x is Double && y is Double && z is Double && w is Double -> put(a.d, b.d, c.d, d.d)
+                    else -> throw ArithmeticException("incompatible type")  //TODO uns
+                }
+            else -> throw ArithmeticException("incompatible type")
+        }
     }
 
     fun put(bytes: ByteBuffer, index: Int) = put(bytes[index], bytes[index + 1], bytes[index + 2], bytes[index + 3])

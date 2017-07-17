@@ -2,9 +2,7 @@
 
 package glm_.vec3
 
-import glm_.b
-import glm_.d
-import glm_.glm
+import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.*
 import glm_.vec4.Vec4bool
@@ -76,14 +74,25 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
     fun put(a: Array<Boolean>, index: Int) = put(a[index].b, a[index + 1].b, a[index + 2].b)
 
     fun put(list: List<Any>, index: Int) {
-        val x = list[index]
-        val y = list[index + 1]
-        val z = list[index + 2]
-        if (x is Number && y is Number && z is Number) put(x, y, z)
-        else if (x is String && y is String && z is String) put(x.d, y.d, z.d)
-        else if (x is Char && y is Char && z is Char) put(x.b, y.b, z.b)
-        else if (x is Boolean && y is Boolean && z is Boolean) put(x.b, y.b, z.b)
-        else throw ArithmeticException("incompatible this type")
+        val a = list[index]
+        val b = list[index + 1]
+        val c = list[index + 2]
+        when {
+            a is Number && b is Number && c is Number -> put(a, b, c)
+            a is Char && b is Char && c is Char -> put(a.b, b.b, c.b)
+            a is Boolean && b is Boolean && c is Boolean -> put(a.b, b.b, c.b)
+            a is String && b is String && c is String ->
+                when {
+                    x is Byte && y is Byte && z is Byte -> put(a.b, b.b, c.b)
+                    x is Short && y is Short && z is Short -> put(a.s, b.s, c.s)
+                    x is Int && y is Int && z is Int -> put(a.i, b.i, c.i)
+                    x is Long && y is Long && z is Long -> put(a.L, b.L, c.L)
+                    x is Float && y is Float && z is Float -> put(a.f, b.f, c.f)
+                    x is Double && y is Double && z is Double -> put(a.d, b.d, c.d)
+                    else -> throw ArithmeticException("incompatible type")  //TODO uns
+                }
+            else -> throw ArithmeticException("incompatible type")
+        }
     }
 
     fun put(bytes: ByteBuffer, index: Int) = put(bytes[index], bytes[index + 1], bytes[index + 2])
