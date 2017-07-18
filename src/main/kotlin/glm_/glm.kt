@@ -64,7 +64,9 @@ object glm :
     @JvmField val epsilonD = 2.2204460492503131e-16
 }
 
-object Detail : noise
+object Detail :
+        noise,
+        typeHalf
 
 
 class Java {
