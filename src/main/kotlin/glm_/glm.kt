@@ -51,7 +51,9 @@ object glm :
 
         colorSpace,
 
-        gauss {
+        gauss,
+
+        noise {
 
     @JvmField val detail = Detail
 
