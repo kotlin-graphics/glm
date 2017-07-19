@@ -3,6 +3,7 @@ package glm_.vec2
 import glm_.BYTES
 import glm_.getInt
 import glm_.i
+import glm_.set
 import glm_.vec2.operators.vec2i_operators
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
@@ -106,6 +107,29 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
+    // TODO others
+    infix fun to(ints: IntArray) = to(ints, 0)
+
+    fun to(ints: IntArray, index: Int): IntArray {
+        ints[index] = x
+        ints[index + 1] = y
+        return ints
+    }
+
+    infix fun to(ints: IntBuffer) = to(ints, 0)
+
+    fun to(ints: IntBuffer, index: Int): IntBuffer {
+        ints[index] = x
+        ints[index + 1] = y
+        return ints
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+
+    fun to(bytes: ByteBuffer, offset: Int) {
+        bytes.putInt(offset, x)
+        bytes.putInt(offset + Int.BYTES, y)
+    }
 
     // TODO
     fun comptimes() = x * y
@@ -114,15 +138,6 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     companion object : vec2i_operators {
         @JvmField val length = 2
         @JvmField val size = length * Int.BYTES
-    }
-
-    // TODO others + ints
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
-        bytes.putInt(offset, x)
-        bytes.putInt(offset + Int.BYTES, y)
-        return bytes
     }
 
 
