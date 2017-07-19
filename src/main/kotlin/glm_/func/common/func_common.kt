@@ -127,9 +127,9 @@ interface func_common {
     fun isInf(a: Double) = java.lang.Double.isInfinite(a)
 
 
-    fun floatBitsToInt(a: Float) = java.lang.Float.floatToIntBits(a)
+    fun floatBitsToInt(a: Float) = java.lang.Float.floatToRawIntBits(a)
 
-    fun floatBitsToUint(a: Float) = Uint(java.lang.Float.floatToIntBits(a))
+    fun floatBitsToUint(a: Float) = Uint(java.lang.Float.floatToRawIntBits(a))
 
     fun intBitsToFloat(a: Int) = java.lang.Float.intBitsToFloat(a)
 
