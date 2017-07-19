@@ -94,4 +94,58 @@ interface packing {
     }
 
     fun half2float(h: Int) = ((h and 0x8000) shl 16) or (((h and 0x7c00) + 0x1C000) shl 13) or ((h and 0x03FF) shl 13)
+
+    fun floatTo11bit(x: Float): Int {
+
+        if (x == 0f)
+            return 0
+        else if (glm.isNan(x))
+            return 0.inv()
+        else if (glm.isInf(x))
+            return 0x1F shl 6
+
+        val pack = glm.floatBitsToInt(x)
+        return float2packed11(pack)
+    }
+
+    fun packed11bitToFloat(x: Int): Float {
+
+        if (x == 0)
+            return 0f
+        else if (x == ((1 shl 11) - 1))
+            return 0.inv().f  //NaN
+        else if (x == (0x1f shl 6))
+            return 0.inv().f   //Inf
+
+        val result = packed11ToFloat(x)
+
+        return glm.intBitsToFloat(result)
+    }
+
+    fun floatTo10bit(x: Float): Int {
+
+        if (x == 0f)
+            return 0
+        else if (glm.isNan(x))
+            return 0.inv()
+        else if (glm.isInf(x))
+            return 0x1F shl 5
+
+        val pack = glm.floatBitsToInt(x)
+        return float2packed10(pack)
+    }
+
+    fun packed10bitToFloat(x: Int): Float {
+
+        if (x == 0)
+            return 0f
+        else if (x == ((1 shl 10) - 1))
+            return 0.inv().f    //NaN
+        else if (x == (0x1f shl 5))
+        return 0.inv().f   //Inf
+
+        val result = packed10ToFloat (x)
+
+        return glm.intBitsToFloat(result)
+    }
 }
