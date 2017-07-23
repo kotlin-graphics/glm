@@ -53,8 +53,8 @@ interface func_common {
     fun trunc(a: Double) = if (a < 0) -floor(-a) else floor(a)
 
 
-    fun round(a: Float) = if (a < 0) -floor(-a) else floor(a)
-    fun round(a: Double) = if (a < 0) -floor(-a) else floor(a)
+    fun round(a: Float) = Math.round(a).f//if (a < 0) -floor(-a) else floor(a)
+    fun round(a: Double) = Math.round(a).d//if (a < 0) -floor(-a) else floor(a)
 
 
     // TODO roundEven

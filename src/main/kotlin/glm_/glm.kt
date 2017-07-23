@@ -53,7 +53,9 @@ object glm :
 
         gauss,
 
-        noise {
+        noise,
+
+        packing {
 
     @JvmField val detail = Detail
 
@@ -66,7 +68,8 @@ object glm :
 
 object Detail :
         noise,
-        typeHalf
+        typeHalf,
+        packing_detail
 
 
 class Java {
