@@ -7,7 +7,6 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4_operators
-import java.io.DataInputStream
 import java.io.InputStream
 import java.nio.*
 
@@ -119,6 +118,10 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     companion object : vec4_operators {
         @JvmField val length = 4
         @JvmField val size = length * Float.BYTES
+        fun fromColor(r: Float, g: Float, b: Float, a: Float = 255f): Vec4 {
+            val sc = 1f / 255f
+            return Vec4(r * sc, g * sc, b * sc, a * sc)
+        }
     }
 
     override fun instanceSize() = size
