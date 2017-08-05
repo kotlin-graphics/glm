@@ -20,6 +20,8 @@ import glm_.glm.max
 import glm_.glm.detail
 import glm_.glm.floor
 import glm_.glm.log2
+import glm_.vec2.Vec2b
+import glm_.vec2.Vec2i
 
 interface packing_detail {
 
@@ -184,8 +186,8 @@ interface packing {
     }
 
     fun unpackUnorm2x8(p: Short, res: Vec2 = Vec2()): Vec2 {
-        res.x = (p ushr 8).b.f
-        res.y = p.b.f
+        res.x = (p ushr 8).toUInt().f
+        res.y = (p and 0xff).toUInt().f
         return res times_ 0.0039215686274509803921568627451f // 1 / 255
     }
 
@@ -195,22 +197,30 @@ interface packing {
             -1f, 1f)
 
     fun packSnorm2x8(v: Vec2): Short {
+
         val x = round(clamp(v.x, -1f, 1f) * 127f)
         val y = round(clamp(v.y, -1f, 1f) * 127f)
-        return (x.s shl 8) or y.s
+
+        val a = x.s shl 8
+        val b = y.s and 0xff
+
+        return a or b
     }
 
     fun unpackSnorm2x8(p: Short, res: Vec2 = Vec2()): Vec2 {
-        res.x = clamp((p ushr 8).b.f * 0.00787401574803149606299212598425f, // 1.0f / 127.0f
+
+        val a = (p shr 8).f
+        val b = p.b.f
+        res.x = clamp(a * 0.00787401574803149606299212598425f, // 1.0f / 127.0f
                 -1f, 1f)
-        res.y = clamp(p.b.f * 0.00787401574803149606299212598425f, // 1.0f / 127.0f
+        res.y = clamp(b * 0.00787401574803149606299212598425f, // 1.0f / 127.0f
                 -1f, 1f)
         return res
     }
 
     fun packUnorm1x16(s: Float) = round(clamp(s, 0f, 1f) * 65535f).s
 
-    fun unpackUnorm1x16(p: Short) = p.f * 1.5259021896696421759365224689097e-5f // 1.0 / 65535.0
+    fun unpackUnorm1x16(p: Short) = p.toUInt().f * 1.5259021896696421759365224689097e-5f // 1.0 / 65535.0
 
     fun packUnorm4x16(v: Vec4): Long {
         val x = round(clamp(v.x, 0f, 1f) * 65535f)
@@ -225,10 +235,10 @@ interface packing {
     }
 
     fun unpackUnorm4x16(p: Long, res: Vec4 = Vec4()): Vec4 {
-        res.x = (p ushr 48).s.f * 1.5259021896696421759365224689097e-5f // 1.0 / 65535.0
-        res.y = ((p ushr 32) and 0xffff).s.f * 1.5259021896696421759365224689097e-5f // 1.0 / 65535.0
-        res.z = ((p ushr 16) and 0xffff).s.f * 1.5259021896696421759365224689097e-5f // 1.0 / 65535.0
-        res.w = (p and 0xffff).s.f * 1.5259021896696421759365224689097e-5f // 1.0 / 65535.0
+        res.x = (p ushr 48).s.toUInt().f * 1.5259021896696421759365224689097e-5f // 1.0 / 65535.0
+        res.y = ((p ushr 32) and 0xffff).s.toUInt().f * 1.5259021896696421759365224689097e-5f // 1.0 / 65535.0
+        res.z = ((p ushr 16) and 0xffff).s.toUInt().f * 1.5259021896696421759365224689097e-5f // 1.0 / 65535.0
+        res.w = (p and 0xffff).s.toUInt().f * 1.5259021896696421759365224689097e-5f // 1.0 / 65535.0
         return res
     }
 
@@ -250,9 +260,9 @@ interface packing {
     }
 
     fun unpackSnorm4x16(p: Long, res: Vec4 = Vec4()): Vec4 {
-        val x = (p ushr 48).s
-        val y = ((p ushr 32) and 0xffff).s
-        val z = ((p ushr 16) and 0xffff).s
+        val x = (p shr 48).s
+        val y = ((p shr 32) and 0xffff).s
+        val z = ((p shr 16) and 0xffff).s
         val w = (p and 0xffff).s
         res.x = clamp(x * 3.0518509475997192297128208258309e-5f, //1.0f / 32767.0f,
                 -1f, 1f)
@@ -298,9 +308,9 @@ interface packing {
     }
 
     fun unpackI3x10_1x2(v: Int, res: Vec4i = Vec4i()): Vec4i {
-        res.x = v ushr 22
-        res.y = (v ushr 12) and 0b11_1111_1111
-        res.z = (v ushr 2) and 0b11_1111_1111
+        res.x = v shr 22
+        res.y = (v shr 12) and 0b11_1111_1111
+        res.z = (v shr 2) and 0b11_1111_1111
         res.w = v and 0b11
         return res
     }
@@ -334,9 +344,9 @@ interface packing {
     }
 
     fun unpackSnorm3x10_1x2(v: Int, res: Vec4 = Vec4()): Vec4 {
-        res.x = (v ushr 22).f
-        res.y = ((v ushr 12) and 0b11_1111_1111).f
-        res.z = ((v ushr 2) and 0b11_1111_1111).f
+        res.x = (v shr 22).f
+        res.y = ((v shr 12) and 0b11_1111_1111).f
+        res.z = ((v shr 2) and 0b11_1111_1111).f
         res.z = (v and 0b11).f
         val tmp = 1f / 511f
         res.x = clamp(res.x * tmp, -1f, 1f)
@@ -409,4 +419,154 @@ interface packing {
 
         return res
     }
+
+    /** Based on Brian Karis http://graphicrants.blogspot.fr/2009/04/rgbm-color-encoding.html   */
+    fun packRGBM(rgb: Vec3, res: Vec4 = Vec4()): Vec4 {
+        val tmp = 1f / 6f
+        val colorX = rgb.r * tmp
+        val colorY = rgb.g * tmp
+        val colorZ = rgb.b * tmp
+        var alpha = glm.clamp(glm.max(glm.max(colorX, colorY), glm.max(colorZ, 1e-6f)), 0f, 1f);
+        alpha = glm.ceil(alpha * 255f) / 255f
+        res.r = colorX / alpha
+        res.g = colorY / alpha
+        res.b = colorZ / alpha
+        res.a = alpha
+        return res
+    }
+
+    fun unpackRGBM(rgbm: Vec4, res: Vec3 = Vec3()): Vec3 {
+        res.x = rgbm.x * rgbm.w * 6f
+        res.y = rgbm.y * rgbm.w * 6f
+        res.z = rgbm.z * rgbm.w * 6f
+        return res
+    }
+
+    fun packUnorm2x4(v: Vec2): Byte {
+        val x = glm.round(glm.clamp(v.x, 0f, 1f) * 15f).b
+        val y = glm.round(glm.clamp(v.y, 0f, 1f) * 15f).b
+        val a = x shl 4
+        val b = y and 0xf
+        return a or b
+    }
+
+    fun unpackUnorm2x4(v: Byte, res: Vec2 = Vec2()): Vec2 {
+        val scaleFactor = 1f / 15f
+        res.x = (v ushr 4).i * scaleFactor
+        res.y = (v and 0xf).i * scaleFactor
+        return res
+    }
+
+    fun packUnorm4x4(v: Vec4): Short {
+        val x = glm.round(glm.clamp(v.x, 0f, 1f) * 15f).s
+        val y = glm.round(glm.clamp(v.y, 0f, 1f) * 15f).s
+        val z = glm.round(glm.clamp(v.z, 0f, 1f) * 15f).s
+        val w = glm.round(glm.clamp(v.w, 0f, 1f) * 15f).s
+        return (x shl 12) or (y shl 8) or (z shl 4) or w
+    }
+
+    fun unpackUnorm4x4(v: Short, res: Vec4 = Vec4()): Vec4 {
+        val scaleFactor = 1f / 15f
+        val x = v ushr 12
+        val y = (v ushr 8) and 0xf
+        val z = (v ushr 4) and 0xf
+        val w = v and 0xf
+        res.x = x * scaleFactor
+        res.y = y * scaleFactor
+        res.z = z * scaleFactor
+        res.w = w * scaleFactor
+        return res
+    }
+
+    fun packUnorm1x5_1x6_1x5(v: Vec3): Short {
+
+        val x = glm.round(glm.clamp(v.x, 0f, 1f) * 31f).s
+        val y = glm.round(glm.clamp(v.y, 0f, 1f) * 63f).s
+        val z = glm.round(glm.clamp(v.z, 0f, 1f) * 31f).s
+        val a = x shl 11
+        val b = (y and 0b11_1111) shl 5
+        val c = z and 0b1_1111
+        return a or b or c
+    }
+
+    fun unpackUnorm1x5_1x6_1x5(v: Short, res: Vec3 = Vec3()): Vec3 {
+
+        val scaleFactor = 1f / 31f
+        val x = v ushr 11
+        val y = (v ushr 5) and 0b11_1111
+        val z = v and 0b1_1111
+        res.x = x * scaleFactor
+        res.y = y * 1 / 63f
+        res.z = z * scaleFactor
+        return res
+    }
+
+    fun packUnorm3x5_1x1(v: Vec4): Short {
+
+        val x = glm.round(glm.clamp(v.x, 0f, 1f) * 31f).s
+        val y = glm.round(glm.clamp(v.y, 0f, 1f) * 31f).s
+        val z = glm.round(glm.clamp(v.z, 0f, 1f) * 31f).s
+        val w = glm.round(glm.clamp(v.w, 0f, 1f)).s
+        return (x shl 11) or (y shl 6) or (z shl 1) or (w and 0b0001)
+    }
+
+    fun unpackUnorm3x5_1x1(v: Short, res: Vec4 = Vec4()): Vec4 {
+
+        val scaleFactor = 1f / 31f
+        val x = v ushr 11
+        val y = (v ushr 6) and 0b0001_1111
+        val z = (v ushr 1) and 0b0001_1111
+        val w = v and 0b0001
+        res.x = x * scaleFactor
+        res.y = y * scaleFactor
+        res.z = z * scaleFactor
+        res.w = w.f
+        return res
+    }
+
+    fun packUnorm2x3_1x2(v: Vec3): Byte {
+
+        val x = glm.round(glm.clamp(v.x, 0f, 1f) * 7f).b
+        val y = glm.round(glm.clamp(v.y, 0f, 1f) * 7f).b
+        val z = glm.round(glm.clamp(v.z, 0f, 1f) * 3f).b
+        return (x shl 5) or (y shl 2) or z
+    }
+
+    fun unpackUnorm2x3_1x2(v: Byte, res: Vec3 = Vec3()): Vec3 {
+
+        val scaleFactor = 1f / 7f
+        val x = v ushr 5
+        val y = (v ushr 2) and 0b111
+        val z = v and 0b11
+        res.x = x * scaleFactor
+        res.y = y * scaleFactor
+        res.z = z * (1f / 3f)
+        return res
+    }
+
+    fun packInt2x8(v: Vec2b): Short {
+        val x = v.x.s shl 8
+        val y = v.y.s and 0xff
+        return x or y
+    }
+
+    fun unpackInt2x8(p:Short, res: Vec2b=Vec2b()):Vec2b    {
+        res.x = (p shr 8).b
+        res.y = (p and 0xff).b
+        return res
+    }
+
+//    GLM_FUNC_QUALIFIER uint16 packUint2x8(u8vec2 const & v)
+//    {
+//        uint16 Pack = 0;
+//        memcpy(& Pack, &v, sizeof(Pack));
+//        return Pack;
+//    }
+//
+//    GLM_FUNC_QUALIFIER u8vec2 unpackUint2x8(uint16 p)
+//    {
+//        u8vec2 Unpack (uninitialize);
+//        memcpy(& Unpack, &p, sizeof(Unpack));
+//        return Unpack;
+//    }
 }

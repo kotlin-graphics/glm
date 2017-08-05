@@ -3,6 +3,7 @@ package glm_.vec4
 import glm_.BYTES
 import glm_.d
 import glm_.getDouble
+import glm_.glm
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -267,6 +268,7 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     infix fun rem_(b: Number) = rem(this, this, b.d, b.d, b.d, b.d)
     infix fun rem_(b: Vec4t<out Number>) = rem(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
 
+    fun length() = glm.length(this)
 
     override fun equals(other: Any?) =
             if (other is Vec4d)

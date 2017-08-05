@@ -55,7 +55,10 @@ object glm :
 
         noise,
 
-        packing {
+        packing,
+        func_packing,
+
+        random {
 
     @JvmField val detail = Detail
 

@@ -1,5 +1,6 @@
 package glm_
 
+import glm_.vec1.Vec1
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2b
 import glm_.vec2.Vec2s
@@ -177,7 +178,7 @@ class packing_ : StringSpec() {
                         glm.epsilonEqual(
                                 glm.unpackSnorm2x8(shorts[it]),
                                 res[it],
-                                0.000001f)) shouldBe true
+                                1f / 127f)) shouldBe true
             }
         }
 
@@ -330,7 +331,7 @@ class packing_ : StringSpec() {
                 val v0 = glm.unpackI3x10_1x2(p0)
                 val p1 = glm.packI3x10_1x2(v0)
                 val v1 = glm.unpackI3x10_1x2(p1)
-              v0 shouldBe v1
+                v0 shouldBe v1
             }
         }
 
@@ -403,6 +404,248 @@ class packing_ : StringSpec() {
                 val p1 = glm.packF3x9_E1x5(v0)
                 val v1 = glm.unpackF3x9_E1x5(p1)
                 glm.all(glm.epsilonEqual(v0, v1, 0.01f)) shouldBe true
+            }
+        }
+
+        "test_RGBM" {
+
+            repeat(1024) {
+                val color = Vec3(it)
+                val rgbm = glm.packRGBM(color)
+                val result = glm.unpackRGBM(rgbm)
+
+                glm.all(glm.epsilonEqual(color, result, 0.01f)) shouldBe true
+            }
+        }
+
+        "test_packUnorm1x16" {
+
+            val A = listOf(Vec1(1f), Vec1(0.5f), Vec1(0.1f), Vec1(0.0f))
+
+            for (a in A) {
+                val b = Vec1(a)
+                val c = glm.packUnorm1x16(b.x)
+                val d = Vec1(glm.unpackUnorm1x16(c))
+                glm.epsilonEqual(b.x, d.x, 1f / 65535f) shouldBe true
+            }
+        }
+
+        "test_packSnorm1x16" {
+
+            val A = listOf(Vec1(1f), Vec1(0.0f), Vec1(-0.5f), Vec1(-0.1f))
+
+            for (a in A) {
+                val b = Vec1(a)
+                val c = glm.packSnorm1x16(b.x)
+                val d = Vec1(glm.unpackSnorm1x16(c))
+                glm.epsilonEqual(b.x, d.x, 1f / 65535f * 2f) shouldBe true
+            }
+        }
+
+        "test_packUnorm2x16" {
+
+            val A = listOf(Vec2(1f, 0f), Vec2(0.5f, 0.7f), Vec2(0.1f, 0.2f))
+
+            for (a in A) {
+                val b = Vec2(a)
+                val c = glm.packUnorm2x16(b)
+                val d = glm.unpackUnorm2x16(c)
+                glm.all(glm.epsilonEqual(b, d, 1f / 65535f)) shouldBe true
+            }
+        }
+
+        "test_packSnorm2x16" {
+
+            val A = listOf(Vec2(1f, 0f), Vec2(-0.5f, -0.7f), Vec2(-0.1f, 0.1f))
+
+            for (a in A) {
+                val b = Vec2(a)
+                val c = glm.packSnorm2x16(b)
+                val d = Vec2(glm.unpackSnorm2x16(c))
+                glm.all(glm.epsilonEqual(b, d, 1f / 32767f * 2f)) shouldBe true
+            }
+        }
+
+        "test_packUnorm4x16" {
+
+            val A = listOf(Vec4(1f), Vec4(0.5f), Vec4(0.1f), Vec4(0f))
+
+            for (a in A) {
+                val b = Vec4(a)
+                val c = glm.packUnorm4x16(b)
+                val d = glm.unpackUnorm4x16(c)
+                glm.all(glm.epsilonEqual(b, d, 1f / 65535f)) shouldBe true
+            }
+        }
+
+        "test_packSnorm4x16" {
+
+            val A = listOf(
+                    Vec4(+1.0f, +0.0f, -0.5f, +0.5f),
+                    Vec4(-0.3f, -0.7f, +0.3f, +0.7f),
+                    Vec4(-0.1f, +0.1f, -0.2f, +0.2f))
+
+            for (a in A) {
+                val b = Vec4(a)
+                val c = glm.packSnorm4x16(b)
+                val d = Vec4(glm.unpackSnorm4x16(c))
+                glm.all(glm.epsilonEqual(b, d, 1f / 32767f * 2f)) shouldBe true
+            }
+        }
+
+        "test_packUnorm1x8" {
+
+            val A = listOf(Vec1(1f), Vec1(0.5f), Vec1(0f))
+
+            for (a in A) {
+                val b = Vec1(a)
+                val c = glm.packUnorm1x8(b.x)
+                val d = glm.unpackUnorm1x8(c)
+                glm.epsilonEqual(b.x, d, 1f / 255f) shouldBe true
+            }
+        }
+
+        "test_packSnorm1x8" {
+
+            val A = listOf(Vec1(1f), Vec1(-0.7f), Vec1(-1f))
+
+            for (a in A) {
+                val b = Vec1(a)
+                val c = glm.packSnorm1x8(b.x)
+                val d = glm.unpackSnorm1x8(c)
+                glm.epsilonEqual(b.x, d, 1f / 127f) shouldBe true
+            }
+        }
+
+        "test_packUnorm2x8" {
+
+            val A = listOf(Vec2(1f, 0.7f), Vec2(0.5f, 0.1f))
+
+            for (a in A) {
+                val b = Vec2(a)
+                val c = glm.packUnorm2x8(b)
+                val d = glm.unpackUnorm2x8(c)
+                glm.all(glm.epsilonEqual(b, d, 1f / 255f)) shouldBe true
+            }
+        }
+
+        "test_packSnorm2x8" {
+
+            val A = listOf(Vec2(1f, 0f), Vec2(-0.7f, -0.1f))
+
+            for (a in A) {
+                val b = Vec2(a)
+                val c = glm.packSnorm2x8(b)
+                val d = glm.unpackSnorm2x8(c)
+                glm.all(glm.epsilonEqual(b, d, 1f / 127f)) shouldBe true
+            }
+        }
+
+        "test_packUnorm4x8" {
+
+            val A = listOf(Vec4(1f, 0.7f, 0.3f, 0f), Vec4(0.5f, 0.1f, 0.2f, 0.3f))
+
+            for (a in A) {
+                val b = Vec4(a)
+                val c = glm.packUnorm4x8(b)
+                val d = glm.unpackUnorm4x8(c)
+                glm.all(glm.epsilonEqual(b, d, 1f / 255f)) shouldBe true
+            }
+        }
+
+        "test_packSnorm4x8" {
+
+            val A = listOf(Vec4(1f, 0f, -0.5f, -0.1f), Vec4(-0.7f, -0.1f, 0.1f, 0.7f))
+
+            for (a in A) {
+                val b = Vec4(a)
+                val c = glm.packSnorm4x8(b)
+                val d = glm.unpackSnorm4x8(c)
+                glm.all(glm.epsilonEqual(b, d, 1f / 127f)) shouldBe true
+            }
+        }
+
+        "test_packUnorm" {
+
+//            val A = listOf(Vec2(1f, 0.7f), Vec2(0.5f, 0.1f))
+//TODO
+//            for (a in A) {
+//                val b = Vec2(a)
+//                val c = glm.packUnorm4x8(b)
+//                val d = glm.unpackUnorm4x8(c)
+//                glm.all(glm.epsilonEqual(b, d, 1f / 255f)) shouldBe true
+//            }
+        }
+
+        "test_packSnorm4x8" {
+
+//            val A = listOf(Vec4(1f, 0f, -0.5f, -0.1f), Vec4(-0.7f, -0.1f, 0.1f, 0.7f))
+//TODO
+//            for (a in A) {
+//                val b = Vec4(a)
+//                val c = glm.packSnorm4x8(b)
+//                val d = glm.unpackSnorm4x8(c)
+//                glm.all(glm.epsilonEqual(b, d, 1f / 127f)) shouldBe true
+//            }
+        }
+
+        "test_packUnorm2x4" {
+
+            val A = listOf(Vec2(1f, 0.7f), Vec2(0.5f, 0f))
+
+            for (a in A) {
+                val b = Vec2(a)
+                val c = glm.packUnorm2x4(b)
+                val d = glm.unpackUnorm2x4(c)
+                glm.all(glm.epsilonEqual(b, d, 1f / 15f)) shouldBe true
+            }
+        }
+
+        "test_packUnorm4x4" {
+
+            val A = listOf(Vec4(1f, 0.7f, 0.5f, 0f), Vec4(0.5f, 0.1f, 0f, 1f))
+
+            for (a in A) {
+                val b = Vec4(a)
+                val c = glm.packUnorm4x4(b)
+                val d = glm.unpackUnorm4x4(c)
+                glm.all(glm.epsilonEqual(b, d, 1f / 15f)) shouldBe true
+            }
+        }
+
+        "test_packUnorm3x5_1x1" {
+
+            val A = listOf(Vec4(1f, 0.7f, 0.5f, 0f), Vec4(0.5f, 0.1f, 0f, 1f))
+
+            for (a in A) {
+                val b = Vec4(a)
+                val c = glm.packUnorm3x5_1x1(b)
+                val d = glm.unpackUnorm3x5_1x1(c)
+                glm.all(glm.epsilonEqual(b, d, 1f / 15f)) shouldBe true
+            }
+        }
+
+        "test_packUnorm1x5_1x6_1x5" {
+
+            val A = listOf(Vec3(1f, 0.7f, 0.5f), Vec3(0.5f, 0.1f, 0f))
+
+            for (a in A) {
+                val b = Vec3(a)
+                val c = glm.packUnorm1x5_1x6_1x5(b)
+                val d = glm.unpackUnorm1x5_1x6_1x5(c)
+                glm.all(glm.epsilonEqual(b, d, 1f / 15f)) shouldBe true
+            }
+        }
+
+        "test_packUnorm2x3_1x2" {
+
+            val A = listOf(Vec3(1f, 0.7f, 0.5f), Vec3(0.5f, 0.1f, 0f))
+
+            for (a in A) {
+                val b = Vec3(a)
+                val c = glm.packUnorm2x3_1x2(b)
+                val d = glm.unpackUnorm2x3_1x2(c)
+                glm.all(glm.epsilonEqual(b, d, 1f / 3f)) shouldBe true
             }
         }
     }
