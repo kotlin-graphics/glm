@@ -1,6 +1,5 @@
 package glm_
 
-import glm_.glm.abs
 import glm_.glm.greaterThan
 import glm_.glm.lessThan
 import glm_.quat.Quat
@@ -8,6 +7,7 @@ import glm_.quat.QuatD
 import glm_.vec2.*
 import glm_.vec3.*
 import glm_.vec4.*
+import glm_.glm.abs
 
 /**
  * Created by GBarbieri on 11.11.2016.
@@ -16,19 +16,19 @@ import glm_.vec4.*
 
 interface epsilon {
 
-    fun epsilonEqual(x: Float, y: Float, epsilon: Float) = Math.abs(x - y) < epsilon
-    fun epsilonEqual(x: Byte, y: Byte, epsilon: Byte) = Math.abs(x - y) < epsilon
-    fun epsilonEqual(x: Double, y: Double, epsilon: Double) = Math.abs(x - y) < epsilon
-    fun epsilonEqual(x: Int, y: Int, epsilon: Int) = Math.abs(x - y) < epsilon
-    fun epsilonEqual(x: Long, y: Long, epsilon: Long) = Math.abs(x - y) < epsilon
-    fun epsilonEqual(x: Short, y: Short, epsilon: Short) = Math.abs(x - y) < epsilon
+    fun epsilonEqual(x: Float, y: Float, epsilon: Float) = abs(x - y) < epsilon
+    fun epsilonEqual(x: Byte, y: Byte, epsilon: Byte) = abs(x - y) < epsilon
+    fun epsilonEqual(x: Double, y: Double, epsilon: Double) = abs(x - y) < epsilon
+    fun epsilonEqual(x: Int, y: Int, epsilon: Int) = abs(x - y) < epsilon
+    fun epsilonEqual(x: Long, y: Long, epsilon: Long) = abs(x - y) < epsilon
+    fun epsilonEqual(x: Short, y: Short, epsilon: Short) = abs(x - y) < epsilon
 
-    fun epsilonNotEqual(x: Float, y: Float, epsilon: Float) = Math.abs(x - y) >= epsilon
-    fun epsilonNotEqual(x: Byte, y: Byte, epsilon: Byte) = Math.abs(x - y) >= epsilon
-    fun epsilonNotEqual(x: Double, y: Double, epsilon: Double) = Math.abs(x - y) >= epsilon
-    fun epsilonNotEqual(x: Int, y: Int, epsilon: Int) = Math.abs(x - y) >= epsilon
-    fun epsilonNotEqual(x: Long, y: Long, epsilon: Long) = Math.abs(x - y) >= epsilon
-    fun epsilonNotEqual(x: Short, y: Short, epsilon: Short) = Math.abs(x - y) >= epsilon
+    fun epsilonNotEqual(x: Float, y: Float, epsilon: Float) = abs(x - y) >= epsilon
+    fun epsilonNotEqual(x: Byte, y: Byte, epsilon: Byte) = abs(x - y) >= epsilon
+    fun epsilonNotEqual(x: Double, y: Double, epsilon: Double) = abs(x - y) >= epsilon
+    fun epsilonNotEqual(x: Int, y: Int, epsilon: Int) = abs(x - y) >= epsilon
+    fun epsilonNotEqual(x: Long, y: Long, epsilon: Long) = abs(x - y) >= epsilon
+    fun epsilonNotEqual(x: Short, y: Short, epsilon: Short) = abs(x - y) >= epsilon
 
 
     fun epsilonEqual(a: Vec2, b: Vec2, epsilon: Float, res: Vec2bool = Vec2bool()) = lessThan(abs(a - b), Vec2(epsilon), res)

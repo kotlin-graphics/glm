@@ -7,7 +7,7 @@ import glm_.glm.asin
 import glm_.glm.atan
 import glm_.glm.clamp
 import glm_.glm.cos
-import glm_.glm.epsilonD
+import glm_.glm.epsilon
 import glm_.glm.epsilonF
 import glm_.glm.mix
 import glm_.glm.sin
@@ -103,7 +103,7 @@ interface quat_func {
         val cosTheta = dot(a, b)
 
         // Perform a linear interpolation when cosTheta is close to 1 to avoid side effect of sin(angle) becoming a zero denominator
-        if (cosTheta > 1.0 - epsilonD) {
+        if (cosTheta > 1.0 - epsilon) {
             // Linear interpolation
             res.w = mix(a.w, b.w, interp)
             res.x = mix(a.x, b.x, interp)
@@ -227,7 +227,7 @@ interface quat_func {
         }
 
         // Perform a linear interpolation when cosTheta is close to 1 to avoid side effect of sin(angle) becoming a zero denominator
-        if (cosTheta > 1.0 - epsilonD) {
+        if (cosTheta > 1.0 - epsilon) {
             // Linear interpolation
             res.w = mix(a.w, zW, interp)
             res.x = mix(a.x, zX, interp)

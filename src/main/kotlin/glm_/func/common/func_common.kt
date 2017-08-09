@@ -1,7 +1,6 @@
 package glm_.func.common
 
 import glm_.*
-import glm_.glm.abs
 import glm_.glm.ceil
 import glm_.glm.clamp
 import glm_.glm.floatBitsToInt
@@ -21,47 +20,55 @@ import glm_.glm.step
 import glm_.glm.trunc
 import glm_.glm.uintBitsToFloat
 import unsigned.Uint
+import unsigned.Ulong
+import kotlin.math.absoluteValue
+import kotlin.math.sign
+import kotlin.math.floor as _floor
+import kotlin.math.max as _max
+import kotlin.math.min as _min
+import kotlin.math.round as _round
+import kotlin.math.ceil as _ceil
 
 
 /**
  * Created by elect on 11/11/16.
  */
-
 interface func_common {
 
-    fun abs(a: Float) = Math.abs(a)
-    fun abs(a: Double) = Math.abs(a)
-    fun abs(a: Byte) = Math.abs(a.i).b
-    fun abs(a: Int) = Math.abs(a)
-    fun abs(a: Long) = Math.abs(a)
-    fun abs(a: Short) = Math.abs(a.i).s
+    fun abs(a: Float) = a.absoluteValue
+    fun abs(a: Double) = a.absoluteValue
+    fun abs(a: Byte) = a.i.absoluteValue.b
+    fun abs(a: Int) = a.absoluteValue
+    fun abs(a: Long) = a.absoluteValue
+    fun abs(a: Short) = a.i.absoluteValue.s
 
 
-    fun sign(a: Float) = Math.signum(a)
-    fun sign(a: Double) = Math.signum(a)
-    fun sign(a: Byte) = Math.signum(a.f).b
-    fun sign(a: Int) = Math.signum(a.f).i
-    fun sign(a: Long) = Math.signum(a.d).L
-    fun sign(a: Short) = Math.signum(a.f).s
+    fun sign(a: Float) = a.sign
+    fun sign(a: Double) = a.sign
+    fun sign(a: Byte) = a.i.sign.b
+    fun sign(a: Int) = a.sign
+    fun sign(a: Long) = a.sign.L
+    fun sign(a: Short) = a.i.sign.s
 
 
-    fun floor(a: Float) = Math.floor(a.d).f
-    fun floor(a: Double) = Math.floor(a)
+    fun floor(a: Float) = _floor(a)
+    fun floor(a: Double) = _floor(a)
 
 
     fun trunc(a: Float) = if (a < 0) -floor(-a) else floor(a)
     fun trunc(a: Double) = if (a < 0) -floor(-a) else floor(a)
 
 
-    fun round(a: Float) = Math.round(a).f//if (a < 0) -floor(-a) else floor(a)
+    fun round(a: Float) = Math.round(a).f   //if (a < 0) -floor(-a) else floor(a)
     fun round(a: Double) = Math.round(a).d//if (a < 0) -floor(-a) else floor(a)
 
 
-    // TODO roundEven
+    fun roundEven(a: Float) = _round(a)
+    fun roundEven(a: Double) = _round(a)
 
 
-    fun ceil(a: Float) = Math.ceil(a.d).f
-    fun ceil(a: Double) = Math.ceil(a)
+    fun ceil(a: Float) = _ceil(a)
+    fun ceil(a: Double) = _ceil(a)
 
 
     fun fract(a: Float) = a - floor(a)
@@ -75,19 +82,19 @@ interface func_common {
     // TODO modf
 
 
-    fun min(a: Float, b: Float) = Math.min(a, b)
-    fun min(a: Double, b: Double) = Math.min(a, b)
-    fun min(a: Byte, b: Byte) = Math.min(a.i, b.i).b
-    fun min(a: Int, b: Int) = Math.min(a.i, b.i)
-    fun min(a: Long, b: Long) = Math.min(a, b)
-    fun min(a: Short, b: Short) = Math.min(a.i, b.i).s
+    fun min(a: Float, b: Float) = _min(a, b)
+    fun min(a: Double, b: Double) = _min(a, b)
+    fun min(a: Byte, b: Byte) = _min(a.i, b.i).b
+    fun min(a: Int, b: Int) = _min(a, b)
+    fun min(a: Long, b: Long) = _min(a, b)
+    fun min(a: Short, b: Short) = _min(a.i, b.i).s
 
-    fun max(a: Float, b: Float) = Math.max(a, b)
-    fun max(a: Double, b: Double) = Math.max(a, b)
-    fun max(a: Byte, b: Byte) = Math.max(a.i, b.i).b
-    fun max(a: Int, b: Int) = Math.max(a.i, b.i)
-    fun max(a: Long, b: Long) = Math.max(a, b)
-    fun max(a: Short, b: Short) = Math.max(a.i, b.i).s
+    fun max(a: Float, b: Float) = _max(a, b)
+    fun max(a: Double, b: Double) = _max(a, b)
+    fun max(a: Byte, b: Byte) = _max(a.i, b.i).b
+    fun max(a: Int, b: Int) = _max(a, b)
+    fun max(a: Long, b: Long) = _max(a, b)
+    fun max(a: Short, b: Short) = _max(a.i, b.i).s
 
 
     fun clamp(a: Float, min: Float, max: Float) = min(max(a, min), max)
@@ -120,20 +127,23 @@ interface func_common {
     }
 
 
-    fun isNan(a: Float) = java.lang.Float.isNaN(a)
-    fun isNan(a: Double) = java.lang.Double.isNaN(a)
+    fun isNan(a: Float) = a.isNaN()
+    fun isNan(a: Double) = a.isNaN()
 
-    fun isInf(a: Float) = java.lang.Float.isInfinite(a)
-    fun isInf(a: Double) = java.lang.Double.isInfinite(a)
+    fun isInf(a: Float) = a.isInfinite()
+    fun isInf(a: Double) = a.isInfinite()
 
 
-    fun floatBitsToInt(a: Float) = java.lang.Float.floatToRawIntBits(a)
+    fun floatBitsToInt(a: Float) = a.toRawBits()
+    fun floatBitsToUint(a: Float) = Uint(a.toRawBits())
+    fun intBitsToFloat(a: Int) = Float.fromBits(a)
+    fun uintBitsToFloat(a: Uint) = Float.fromBits(a.v)
 
-    fun floatBitsToUint(a: Float) = Uint(java.lang.Float.floatToRawIntBits(a))
 
-    fun intBitsToFloat(a: Int) = java.lang.Float.intBitsToFloat(a)
-
-    fun uintBitsToFloat(a: Uint) = java.lang.Float.intBitsToFloat(a.v)
+    fun doubleBitsToLong(a: Double) = a.toRawBits()
+    fun doubleBitsToUlong(a: Double) = Ulong(a.toRawBits())
+    fun intBitsToDouble(a: Long) = Double.fromBits(a)
+    fun ulongBitsToFloat(a: Ulong) = Double.fromBits(a.v)
 
 
     fun fma(a: Float, b: Float, c: Float) = a * b + c
@@ -144,36 +154,32 @@ interface func_common {
 }
 
 
-fun Float.abs() = abs(this)
-fun Double.abs() = abs(this)
-fun Byte.abs() = abs(this)
-fun Int.abs() = abs(this)
-fun Long.abs() = abs(this)
-fun Short.abs() = abs(this)
+val Float.abs get() = this.absoluteValue
+val Double.abs get() = this.absoluteValue
+val Byte.abs get() = i.absoluteValue.b
+val Int.abs get () = this.absoluteValue
+val Long.abs get () = this.absoluteValue
+val Short.abs get () = i.absoluteValue.s
 
 
-fun Float.sign() = sign(this)
-fun Double.sign() = sign(this)
-fun Byte.sign() = sign(this)
-fun Int.sign() = sign(this)
-fun Long.sign() = sign(this)
-fun Short.sign() = sign(this)
+val Byte.sign get() = sign(this)
+val Short.sign get() = sign(this)
 
 
-fun Float.floor() = floor(this)
-fun Double.floor() = floor(this)
+val Float.floor get() = floor(this)
+val Double.floor get() = floor(this)
 
 
-fun Float.trunc() = trunc(this)
-fun Double.trunc() = trunc(this)
+val Float.trunc get() = trunc(this)
+val Double.trunc get() = trunc(this)
 
 
-fun Float.ceil() = ceil(this)
-fun Double.ceil() = ceil(this)
+val Float.ceil get() = ceil(this)
+val Double.ceil get() = ceil(this)
 
 
-fun Float.fract() = fract(this)
-fun Double.fract() = fract(this)
+val Float.fract get() = fract(this)
+val Double.fract get() = fract(this)
 
 
 infix fun Float.min(b: Float) = min(this, b)
@@ -213,20 +219,20 @@ fun Float.smoothstep(edge0: Float, edge1: Float) = smoothStep(edge0, edge1, this
 fun Double.smoothstep(edge0: Double, edge1: Double) = smoothStep(edge0, edge1, this)
 
 
-fun Float.isnan() = isNan(this)
-fun Double.isnan() = isNan(this)
+val Float.isNan get () = isNan(this)
+val Double.isNan get() = isNan(this)
 
-fun Float.isinf() = isInf(this)
-fun Double.isinf() = isInf(this)
+val Float.isInf get() = isInf(this)
+val Double.isInf get() = isInf(this)
 
 
-fun Float.floatBitsToInt() = floatBitsToInt(this)
-
-fun Float.floatBitsToUint() = floatBitsToUint(this)
-
-fun Int.intBitsToFloat() = intBitsToFloat(this)
-
-fun Uint.uintBitsToFloat() = uintBitsToFloat(this)
+//fun Float.floatBitsToInt() = floatBitsToInt(this) TODO?
+//
+//fun Float.floatBitsToUint() = floatBitsToUint(this)
+//
+//fun Int.intBitsToFloat() = intBitsToFloat(this)
+//
+//fun Uint.uintBitsToFloat() = uintBitsToFloat(this)
 
 
 fun Float.fma(b: Float, c: Float) = fma(this, b, c)

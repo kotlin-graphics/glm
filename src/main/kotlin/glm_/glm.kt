@@ -62,11 +62,11 @@ object glm :
 
     @JvmField val detail = Detail
 
-    @JvmField val PI = Math.PI
-    @JvmField val PIf = Math.PI.f
+    @JvmField val PI = kotlin.math.PI
+    @JvmField val PIf = kotlin.math.PI.f
 
     @JvmField val epsilonF = 1.1920928955078125e-7f
-    @JvmField val epsilonD = 2.2204460492503131e-16
+    @JvmField val epsilon = 2.2204460492503131e-16
 }
 
 object Detail :
@@ -112,14 +112,27 @@ class Java {
 
             round,
 
-            func_integer {
+            func_integer,
+
+            bitfield,
+
+            colorSpace,
+
+            gauss,
+
+            noise,
+
+            packing,
+            func_packing,
+
+            random {
 
         @JvmField val detail = Detail
 
-        @JvmField val PI = Math.PI
-        @JvmField val PIf = Math.PI.f
+        @JvmField val PI = kotlin.math.PI
+        @JvmField val PIf = kotlin.math.PI.f
 
         @JvmField val epsilonF = 1.1920928955078125e-7f
-        @JvmField val epsilonD = 2.2204460492503131e-16
+        @JvmField val epsilon = 2.2204460492503131e-16
     }
 }

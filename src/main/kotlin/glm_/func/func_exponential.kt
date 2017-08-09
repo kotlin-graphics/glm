@@ -8,6 +8,11 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4d
+import kotlin.math.ln
+import kotlin.math.pow
+import kotlin.math.exp as _exp
+import kotlin.math.log2 as _log2
+import kotlin.math.sqrt as _sqrt
 
 /**
  * Created by GBarbieri on 12.12.2016.
@@ -15,8 +20,8 @@ import glm_.vec4.Vec4d
 
 interface func_exponential {
 
-    fun pow(base: Double, exponent: Double) = Math.pow(base, exponent)
-    fun pow(base: Float, exponent: Float) = Math.pow(base.d, exponent.d).f
+    fun pow(base: Double, exponent: Double) = base.pow(exponent)
+    fun pow(base: Float, exponent: Float) = base.pow(exponent)
 
     fun pow(base: Vec2, exponent: Float, res: Vec2 = Vec2()) {
         res.x = pow(base.x, exponent)
@@ -90,8 +95,8 @@ interface func_exponential {
         res.w = pow(base.w, exponent.w)
     }
 
-    fun exp(a: Double) = Math.exp(a)
-    fun exp(a: Float) = Math.exp(a.d).f
+    fun exp(a: Double) = _exp(a)
+    fun exp(a: Float) = _exp(a)
 
     fun exp(a: Vec2, res: Vec2 = Vec2()) {
         res.x = exp(a.x)
@@ -129,8 +134,8 @@ interface func_exponential {
     }
 
 
-    fun log(a: Double) = Math.log(a)
-    fun log(a: Float) = Math.log(a.d).f
+    fun log(a: Double) = ln(a)
+    fun log(a: Float) = ln(a)
 
     fun log(a: Vec2, res: Vec2 = Vec2()) {
         res.x = log(a.x)
@@ -168,8 +173,8 @@ interface func_exponential {
     }
 
 
-    fun exp2(a: Double) = Math.pow(2.d, a)
-    fun exp2(a: Float) = Math.pow(2.d, a.d).f
+    fun exp2(a: Double) = 2.0.pow(a)
+    fun exp2(a: Float) = 2f.pow(a)
 
     fun exp2(a: Vec2, res: Vec2 = Vec2()) {
         res.x = exp2(a.x)
@@ -207,8 +212,8 @@ interface func_exponential {
     }
 
 
-    fun log2(a: Double) = Math.log(a) / Math.log(2.d)
-    fun log2(a: Float) = (Math.log(a.d) / Math.log(2.d)).f
+    fun log2(a: Double) = _log2(a)
+    fun log2(a: Float) = _log2(a)
 
     fun log2(a: Vec2, res: Vec2 = Vec2()) {
         res.x = log2(a.x)
@@ -246,8 +251,8 @@ interface func_exponential {
     }
 
 
-    fun sqrt(a: Double) = Math.sqrt(a)
-    fun sqrt(a: Float) = Math.sqrt(a.d).f
+    fun sqrt(a: Double) = _sqrt(a)
+    fun sqrt(a: Float) = _sqrt(a)
 
     fun sqrt(a: Vec2, res: Vec2 = Vec2()) {
         res.x = sqrt(a.x)
@@ -285,8 +290,8 @@ interface func_exponential {
     }
 
 
-    fun inverseSqrt(a: Double) = 1.0 / Math.sqrt(a)
-    fun inverseSqrt(a: Float) = (1.0 / Math.sqrt(a.d)).f
+    fun inverseSqrt(a: Double) = 1.0 / _sqrt(a)
+    fun inverseSqrt(a: Float) = 1f / _sqrt(a)
 
     fun inverseSqrt(a: Vec2, res: Vec2 = Vec2()) {
         res.x = inverseSqrt(a.x)

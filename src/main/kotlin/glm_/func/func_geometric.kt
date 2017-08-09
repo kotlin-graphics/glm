@@ -3,7 +3,6 @@ package glm_.func
 import glm_.d
 import glm_.f
 import glm_.glm.inverseSqrt
-import glm_.glm.sqrt
 import glm_.quat.Quat
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2d
@@ -11,6 +10,7 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4d
+import kotlin.math.sqrt
 
 /**
  * Created by GBarbieri on 12.12.2016.
@@ -29,14 +29,14 @@ interface func_geometric {
     fun length(a: Vec4d) = sqrt(dot(a, a))
 
 
-    fun distance(a: Vec2, b: Vec2) = Math.sqrt(((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)).d).f
-    fun distance(a: Vec2d, b: Vec2d) = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y))
+    fun distance(a: Vec2, b: Vec2) = sqrt(((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)).d).f
+    fun distance(a: Vec2d, b: Vec2d) = sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y))
 
-    fun distance(a: Vec3, b: Vec3) = Math.sqrt(((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z)).d).f
-    fun distance(a: Vec3d, b: Vec3d) = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z))
+    fun distance(a: Vec3, b: Vec3) = sqrt(((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z)).d).f
+    fun distance(a: Vec3d, b: Vec3d) = sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z))
 
-    fun distance(a: Vec4, b: Vec4) = Math.sqrt(((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z) + (a.w - b.w) * (a.w - b.w)).d).f
-    fun distance(a: Vec4d, b: Vec4d) = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z) + (a.w - b.w) * (a.w - b.w))
+    fun distance(a: Vec4, b: Vec4) = sqrt(((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z) + (a.w - b.w) * (a.w - b.w)).d).f
+    fun distance(a: Vec4d, b: Vec4d) = sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z) + (a.w - b.w) * (a.w - b.w))
 
 
     fun dot(a: Float, b: Float) = a * b

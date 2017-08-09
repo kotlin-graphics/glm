@@ -8,6 +8,13 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4d
+import kotlin.math.cos as _cos
+import kotlin.math.sin as _sin
+import kotlin.math.tan as _tan
+import kotlin.math.acos as _acos
+import kotlin.math.asin as _asin
+import kotlin.math.atan as _atan
+import kotlin.math.atan2
 
 /**
  * Created by GBarbieri on 12.12.2016.
@@ -15,27 +22,27 @@ import glm_.vec4.Vec4d
 
 interface func_trigonometric {
 
-    fun cos(angle: Double) = Math.cos(angle)
-    fun cos(angle: Float) = Math.cos(angle.d).f
+    fun cos(angle: Double) = _cos(angle)
+    fun cos(angle: Float) = _cos(angle.d).f
 
-    fun sin(angle: Double) = Math.sin(angle)
-    fun sin(angle: Float) = Math.sin(angle.d).f
+    fun sin(angle: Double) = _sin(angle)
+    fun sin(angle: Float) = _sin(angle.d).f
 
-    fun tan(angle: Double) = Math.tan(angle)
-    fun tan(angle: Float) = Math.tan(angle.d).f
+    fun tan(angle: Double) = _tan(angle)
+    fun tan(angle: Float) = _tan(angle.d).f
 
 
-    fun acos(angle: Double) = Math.acos(angle)
-    fun acos(angle: Float) = Math.acos(angle.d).f
+    fun acos(angle: Double) = _acos(angle)
+    fun acos(angle: Float) = _acos(angle.d).f
 
-    fun asin(angle: Double) = Math.asin(angle)
-    fun asin(angle: Float) = Math.asin(angle.d).f
+    fun asin(angle: Double) = _asin(angle)
+    fun asin(angle: Float) = _asin(angle.d).f
 
-    fun atan(angle: Double) = Math.atan(angle)
-    fun atan(angle: Float) = Math.atan(angle.d).f
+    fun atan(angle: Double) = _atan(angle)
+    fun atan(angle: Float) = _atan(angle.d).f
 
-    fun atan(y: Double, x: Double) = Math.atan2(y, x)
-    fun atan(y: Float, x: Float) = Math.atan2(y.d, x.d).f
+    fun atan(y: Double, x: Double) = atan2(y, x)
+    fun atan(y: Float, x: Float) = atan2(y.d, x.d).f
 
 
     fun degrees(rad: Float) = Math.toDegrees(rad.d).f
@@ -138,3 +145,13 @@ interface func_trigonometric {
         return res
     }
 }
+
+val Float.deg get() = Math.toDegrees(this.d).f
+val Double.deg get() = Math.toDegrees(this)
+val Float.rad get() = Math.toRadians(this.d).f
+val Double.rad get() = Math.toRadians(this)
+
+val Float.cos get() = _cos(this)
+val Double.cos get() = _cos(this)
+val Float.sin get() = _sin(this)
+val Double.sin get() = _sin(this)

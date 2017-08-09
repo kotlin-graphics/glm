@@ -169,15 +169,7 @@ val String.ul get() = Ulong(this)
 val String.us get() = Ushort(this)
 val String.bi get() = if (startsWith("0x")) BigInteger(substring(2), 16) else BigInteger(this)
 
-val Float.deg get() = Math.toDegrees(this.d).f
-val Double.deg get() = Math.toDegrees(this)
-val Float.rad get() = Math.toRadians(this.d).f
-val Double.rad get() = Math.toRadians(this)
 
-val Float.cos get() = Math.cos(this.d).f
-val Double.cos get() = Math.cos(this)
-val Float.sin get() = Math.sin(this.d).f
-val Double.sin get() = Math.sin(this)
 
 
 fun InputStream.int(bigEndianess: Boolean = true): Int {

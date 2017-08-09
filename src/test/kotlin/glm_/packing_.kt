@@ -2,16 +2,11 @@ package glm_
 
 import glm_.vec1.Vec1
 import glm_.vec2.Vec2
-import glm_.vec2.Vec2b
-import glm_.vec2.Vec2s
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
-import glm_.vec4.Vec4b
 import glm_.vec4.Vec4i
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
-import kotlin.coroutines.experimental.EmptyCoroutineContext.plus
-import kotlin.system.measureNanoTime
 
 class packing_ : StringSpec() {
 
