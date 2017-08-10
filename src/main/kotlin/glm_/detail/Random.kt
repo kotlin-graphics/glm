@@ -65,4 +65,11 @@ object Random {
         res.w = this[min.w, max.w]
         return res
     }
+
+    val float get() = ThreadLocalRandom.current().nextFloat()
+    val bool get() = ThreadLocalRandom.current().nextBoolean()
+    val double get() = ThreadLocalRandom.current().nextDouble()
+    val gauss get() = ThreadLocalRandom.current().nextGaussian()
+    val int get() = ThreadLocalRandom.current().nextInt()
+    val long get() = ThreadLocalRandom.current().nextLong()
 }
