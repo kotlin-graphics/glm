@@ -299,7 +299,11 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     override operator fun get(i: Int) = value[i]
     override operator fun get(c: Int, r: Int) = value[c][r]
 
+    operator fun set(c: Int, r: Int, s: Float) {
+        value[c][r] = s
+    }
     operator fun set(i: Int, v: Vec4) = value[i] put v
+
 
     fun set(i: Int, v: Vec3, s: Float) = value[i].put(v, s) // TODO other cases
 
