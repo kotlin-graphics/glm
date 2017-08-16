@@ -104,8 +104,10 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
 
 
     companion object : vec2_operators {
-        @JvmField val length = 2
-        @JvmField val size = length * Float.BYTES
+        @JvmField
+        val length = 2
+        @JvmField
+        val size = length * Float.BYTES
     }
 
 
@@ -156,7 +158,9 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix operator fun plus(b: Float) = plus(Vec2(), this, b, b)
     infix operator fun plus(b: Vec2) = plus(Vec2(), this, b.x, b.y)
 
-    @JvmOverloads fun plus(bX: Float, bY: Float, res: Vec2 = Vec2()) = plus(res, this, bX, bY)
+    @JvmOverloads
+    fun plus(bX: Float, bY: Float, res: Vec2 = Vec2()) = plus(res, this, bX, bY)
+
     fun plus(b: Float, res: Vec2) = plus(res, this, b, b)
     fun plus(b: Vec2, res: Vec2) = plus(res, this, b.x, b.y)
 
@@ -168,7 +172,9 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix operator fun minus(b: Float) = minus(Vec2(), this, b, b)
     infix operator fun minus(b: Vec2) = minus(Vec2(), this, b.x, b.y)
 
-    @JvmOverloads fun minus(bX: Float, bY: Float, res: Vec2 = Vec2()) = minus(res, this, bX, bY)
+    @JvmOverloads
+    fun minus(bX: Float, bY: Float, res: Vec2 = Vec2()) = minus(res, this, bX, bY)
+
     fun minus(b: Float, res: Vec2) = minus(res, this, b, b)
     fun minus(b: Vec2, res: Vec2) = minus(res, this, b.x, b.y)
 
@@ -180,7 +186,9 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix operator fun times(b: Float) = times(Vec2(), this, b, b)
     infix operator fun times(b: Vec2) = times(Vec2(), this, b.x, b.y)
 
-    @JvmOverloads fun times(bX: Float, bY: Float, res: Vec2 = Vec2()) = times(res, this, bX, bY)
+    @JvmOverloads
+    fun times(bX: Float, bY: Float, res: Vec2 = Vec2()) = times(res, this, bX, bY)
+
     fun times(b: Float, res: Vec2) = times(res, this, b, b)
     fun times(b: Vec2, res: Vec2) = times(res, this, b.x, b.y)
 
@@ -192,7 +200,9 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix operator fun div(b: Float) = div(Vec2(), this, b, b)
     infix operator fun div(b: Vec2) = div(Vec2(), this, b.x, b.y)
 
-    @JvmOverloads fun div(bX: Float, bY: Float, res: Vec2 = Vec2()) = div(res, this, bX, bY)
+    @JvmOverloads
+    fun div(bX: Float, bY: Float, res: Vec2 = Vec2()) = div(res, this, bX, bY)
+
     fun div(b: Float, res: Vec2) = div(res, this, b, b)
     fun div(b: Vec2, res: Vec2) = div(res, this, b.x, b.y)
 
@@ -204,7 +214,9 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix operator fun rem(b: Float) = rem(Vec2(), this, b, b)
     infix operator fun rem(b: Vec2) = rem(Vec2(), this, b.x, b.y)
 
-    @JvmOverloads fun rem(bX: Float, bY: Float, res: Vec2 = Vec2()) = rem(res, this, bX, bY)
+    @JvmOverloads
+    fun rem(bX: Float, bY: Float, res: Vec2 = Vec2()) = rem(res, this, bX, bY)
+
     fun rem(b: Float, res: Vec2) = rem(res, this, b, b)
     fun rem(b: Vec2, res: Vec2) = rem(res, this, b.x, b.y)
 
@@ -218,7 +230,9 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix operator fun plus(b: Number) = plus(Vec2(), this, b.f, b.f)
     infix operator fun plus(b: Vec2t<out Number>) = plus(Vec2(), this, b.x.f, b.y.f)
 
-    @JvmOverloads fun plus(bX: Number, bY: Number, res: Vec2 = Vec2()) = plus(res, this, bX.f, bY.f)
+    @JvmOverloads
+    fun plus(bX: Number, bY: Number, res: Vec2 = Vec2()) = plus(res, this, bX.f, bY.f)
+
     fun plus(b: Number, res: Vec2) = plus(res, this, b.f, b.f)
     fun plus(b: Vec2t<out Number>, res: Vec2) = plus(res, this, b.x.f, b.y.f)
 
@@ -230,7 +244,9 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix operator fun minus(b: Number) = minus(Vec2(), this, b.f, b.f)
     infix operator fun minus(b: Vec2t<out Number>) = minus(Vec2(), this, b.x.f, b.y.f)
 
-    @JvmOverloads fun minus(bX: Number, bY: Number, res: Vec2 = Vec2()) = minus(res, this, bX.f, bY.f)
+    @JvmOverloads
+    fun minus(bX: Number, bY: Number, res: Vec2 = Vec2()) = minus(res, this, bX.f, bY.f)
+
     fun minus(b: Number, res: Vec2) = minus(res, this, b.f, b.f)
     fun minus(b: Vec2t<out Number>, res: Vec2) = minus(res, this, b.x.f, b.y.f)
 
@@ -242,7 +258,9 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix operator fun times(b: Number) = times(Vec2(), this, b.f, b.f)
     infix operator fun times(b: Vec2t<out Number>) = times(Vec2(), this, b.x.f, b.y.f)
 
-    @JvmOverloads fun times(bX: Number, bY: Number, res: Vec2 = Vec2()) = times(res, this, bX.f, bY.f)
+    @JvmOverloads
+    fun times(bX: Number, bY: Number, res: Vec2 = Vec2()) = times(res, this, bX.f, bY.f)
+
     fun times(b: Number, res: Vec2) = times(res, this, b.f, b.f)
     fun times(b: Vec2t<out Number>, res: Vec2) = times(res, this, b.x.f, b.y.f)
 
@@ -254,7 +272,9 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix operator fun div(b: Number) = div(Vec2(), this, b.f, b.f)
     infix operator fun div(b: Vec2t<out Number>) = div(Vec2(), this, b.x.f, b.y.f)
 
-    @JvmOverloads fun div(bX: Number, bY: Number, res: Vec2 = Vec2()) = div(res, this, bX.f, bY.f)
+    @JvmOverloads
+    fun div(bX: Number, bY: Number, res: Vec2 = Vec2()) = div(res, this, bX.f, bY.f)
+
     fun div(b: Number, res: Vec2) = div(res, this, b.f, b.f)
     fun div(b: Vec2t<out Number>, res: Vec2) = div(res, this, b.x.f, b.y.f)
 
@@ -266,7 +286,9 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix operator fun rem(b: Number) = rem(Vec2(), this, b.f, b.f)
     infix operator fun rem(b: Vec2t<out Number>) = rem(Vec2(), this, b.x.f, b.y.f)
 
-    @JvmOverloads fun rem(bX: Number, bY: Number, res: Vec2 = Vec2()) = rem(res, this, bX.f, bY.f)
+    @JvmOverloads
+    fun rem(bX: Number, bY: Number, res: Vec2 = Vec2()) = rem(res, this, bX.f, bY.f)
+
     fun rem(b: Number, res: Vec2) = rem(res, this, b.f, b.f)
     fun rem(b: Vec2t<out Number>, res: Vec2) = rem(res, this, b.x.f, b.y.f)
 
@@ -278,6 +300,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
 
     // TODO others
     infix fun max(b: Vec2) = glm.max(this, b, Vec2())
+
     infix fun max_(b: Vec2) {
         x = glm.max(x, b.x)
         y = glm.max(y, b.y)
@@ -297,10 +320,13 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
 
     fun length() = glm.length(this)
 
-    @JvmOverloads fun normalize(res: Vec2 = Vec2()) = glm.normalize(this, res) // TODO others
+    @JvmOverloads
+    fun normalize(res: Vec2 = Vec2()) = glm.normalize(this, res) // TODO others
+
     fun normalize_() = glm.normalize(this, this)
 
-    @JvmOverloads fun negate(res: Vec2 = Vec2()): Vec2 {
+    @JvmOverloads
+    fun negate(res: Vec2 = Vec2()): Vec2 {
         res.x = -x
         res.y = -y
         return res
@@ -308,11 +334,5 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
 
     fun negate_() = negate(this)
 
-
-    override fun equals(other: Any?) =
-            if (other is Vec2)
-                this[0] == other[0] && this[1] == other[1]
-            else false
-
-
+    override fun equals(other: Any?) = if (other is Vec2) this[0] == other[0] && this[1] == other[1] else false
 }
