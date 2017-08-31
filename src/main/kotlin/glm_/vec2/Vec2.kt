@@ -318,6 +318,12 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
         y = glm.max(y, b.y.f)
     }
 
+    infix fun lessThan(f: Float) = x < f && y < f
+    infix fun lessThanEqual(f: Float) = x <= f && y <= f
+    infix fun equal(f: Float) = x == f && y == f
+    infix fun greaterThan(f: Float) = x > f && y > f
+    infix fun greaterThanEqual(f: Float) = x >= f && y >= f
+
     infix fun dot(b: Vec2) = x * b.x + y * b.y
 
     fun length() = glm.length(this)
