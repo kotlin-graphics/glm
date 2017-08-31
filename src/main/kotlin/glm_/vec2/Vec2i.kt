@@ -449,6 +449,7 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     infix fun lessThan(i: Int) = x < i && y < i
     infix fun lessThanEqual(i: Int) = x <= i && y <= i
     infix fun equal(i: Int) = x == i && y == i
+    infix fun notEqual(i: Int) = x != i && y != i
     infix fun greaterThan(i: Int) = x > i && y > i
     infix fun greaterThanEqual(i: Int) = x >= i && y >= i
 

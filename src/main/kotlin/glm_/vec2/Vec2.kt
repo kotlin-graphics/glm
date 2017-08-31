@@ -321,6 +321,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix fun lessThan(f: Float) = x < f && y < f
     infix fun lessThanEqual(f: Float) = x <= f && y <= f
     infix fun equal(f: Float) = x == f && y == f
+    infix fun notEqual(f: Float) = x != f && y != f
     infix fun greaterThan(f: Float) = x > f && y > f
     infix fun greaterThanEqual(f: Float) = x >= f && y >= f
 
