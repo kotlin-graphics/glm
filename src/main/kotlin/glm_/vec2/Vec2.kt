@@ -318,6 +318,25 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
         y = glm.max(y, b.y.f)
     }
 
+    infix fun max(b: Float) = glm.max(this, b, Vec2())
+
+    infix fun max_(b: Float) {
+        x = glm.max(x, b)
+        y = glm.max(y, b)
+    }
+
+    infix fun max(b: Number): Vec2 {
+        val res = Vec2()
+        res.x = glm.max(x, b.f)
+        res.y = glm.max(y, b.f)
+        return res
+    }
+
+    infix fun max_(b: Number) {
+        x = glm.max(x, b.f)
+        y = glm.max(y, b.f)
+    }
+
     infix fun lessThan(f: Float) = x < f && y < f
     infix fun lessThanEqual(f: Float) = x <= f && y <= f
     infix fun equal(f: Float) = x == f && y == f
