@@ -19,19 +19,19 @@ class noise_ : StringSpec() {
         "classic perlin" {
 
             run {
-                val pos = Vec2(0/255f, 63f/255)
+                val pos = Vec2(0 / 255f, 63f / 255)
                 val res = glm.perlin(pos)
                 ((res - 0.342978686f) < 0.000001f) shouldBe true
             }
 
             run {
-                val pos = Vec3(0/255f, 63f/255, 127f/255)
+                val pos = Vec3(0 / 255f, 63f / 255, 127f / 255)
                 val res = glm.perlin(pos)
                 ((res - -0.268357933f) < 0.000001f) shouldBe true
             }
 
             run {
-                val pos = Vec4(0f, 63f/255, 127f/255, 1f)
+                val pos = Vec4(0f, 63f / 255, 127f / 255, 1f)
                 val res = glm.perlin(pos)
                 ((res - -0.430175841f) < 0.000001f) shouldBe true
             }
@@ -40,19 +40,19 @@ class noise_ : StringSpec() {
         "periodic perlin" {
 
             run {
-                val pos = Vec2(0/255f, 63f/255)
+                val pos = Vec2(0 / 255f, 63f / 255)
                 val res = glm.perlin(pos, Vec2(2f))
                 ((res - 0.342978686f) < 0.000001f) shouldBe true
             }
 
             run {
-                val pos = Vec3(0/255f, 63f/255, 127f/255)
+                val pos = Vec3(0 / 255f, 63f / 255, 127f / 255)
                 val res = glm.perlin(pos, Vec3(2f))
                 ((res - -0.268357933f) < 0.000001f) shouldBe true
             }
 
             run {
-                val pos = Vec4(0f, 63f/255, 127f/255, 1f)
+                val pos = Vec4(0f, 63f / 255, 127f / 255, 1f)
                 val res = glm.perlin(pos, Vec4(2f))
                 ((res - -0.430175841f) < 0.000001f) shouldBe true
             }
@@ -61,19 +61,19 @@ class noise_ : StringSpec() {
         "simplex" {
 
             run {
-                val pos = Vec2(0/255f, 63f/255)
+                val pos = Vec2(0 / 255f, 63f / 255)
                 val res = glm.simplex(pos)
                 ((res - 0.963419318f) < 0.000001f) shouldBe true
             }
 
             run {
-                val pos = Vec3(0/255f, 63f/255, 127f/255)
+                val pos = Vec3(0 / 255f, 63f / 255, 127f / 255)
                 val res = glm.simplex(pos)
                 ((res - -0.297128230f) < 0.000001f) shouldBe true
             }
 
             run {
-                val pos = Vec4(0f, 63f/255, 127f/255, 1f)
+                val pos = Vec4(0f, 63f / 255, 127f / 255, 1f)
                 val res = glm.simplex(pos)
                 ((res - 0.200833604f) < 0.000001f) shouldBe true
             }

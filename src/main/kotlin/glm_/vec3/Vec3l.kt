@@ -104,8 +104,10 @@ class Vec3l(x: Long, y: Long, z: Long) : Vec3t<Long>(x, y, z) {
 
 
     companion object : vec3l_operators {
-        @JvmField val length = 3
-        @JvmField val size = length * Long.BYTES
+        @JvmField
+        val length = 3
+        @JvmField
+        val size = length * Long.BYTES
     }
 
 

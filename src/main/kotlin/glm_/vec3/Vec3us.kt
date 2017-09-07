@@ -103,8 +103,10 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
 
 
     companion object : vec3us_operators {
-        @JvmField val length = 3
-        @JvmField val size = length * Ushort.BYTES
+        @JvmField
+        val length = 3
+        @JvmField
+        val size = length * Ushort.BYTES
     }
 
 

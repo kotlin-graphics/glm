@@ -322,7 +322,7 @@ interface bitfield {
         res.w = bitfieldFillOne(in_.w, firstBit, bitCount)
         return res
     }
-    
+
     fun bitfieldFillZero(value: Int, firstBit: Int, bitCount: Int) = value and (mask(bitCount) shl firstBit).inv()
 
     fun bitfieldFillZero(in_: Vec1i, firstBit: Int, bitCount: Int, res: Vec1i = Vec1i()): Vec1i {

@@ -103,8 +103,10 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
 
 
     companion object : vec3ul_operators {
-        @JvmField val length = 3
-        @JvmField val size = length * Ulong.BYTES
+        @JvmField
+        val length = 3
+        @JvmField
+        val size = length * Ulong.BYTES
     }
 
 

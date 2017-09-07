@@ -2,7 +2,6 @@ package glm_
 
 import glm_.mat4x4.Mat4
 import unsigned.*
-import java.io.DataInputStream
 import java.io.InputStream
 import java.math.BigInteger
 import kotlin.experimental.or
@@ -154,13 +153,14 @@ val String.f get() = toFloat()
 val String.b get() = toByte()
 val String.d get() = toDouble()
 val String.i get() = if (startsWith("0x")) java.lang.Integer.parseInt(substring(2), 16) else toInt()
-val String.L get() = try {
-    if (startsWith("0x"))
-        java.lang.Long.parseLong(substring(2), 16)
-    else toLong()
-} catch (ex: NumberFormatException) {
-    bi.L
-}
+val String.L
+    get() = try {
+        if (startsWith("0x"))
+            java.lang.Long.parseLong(substring(2), 16)
+        else toLong()
+    } catch (ex: NumberFormatException) {
+        bi.L
+    }
 val String.s get() = toShort()
 // TODO unsigned String extensions
 val String.ub get() = Ubyte(this)
@@ -168,8 +168,6 @@ val String.ui get() = Uint(this)
 val String.ul get() = Ulong(this)
 val String.us get() = Ushort(this)
 val String.bi get() = if (startsWith("0x")) BigInteger(substring(2), 16) else BigInteger(this)
-
-
 
 
 fun InputStream.int(bigEndianess: Boolean = true): Int {
@@ -209,50 +207,56 @@ fun InputStream.mat4(bigEndianess: Boolean = true) = Mat4(
         float(bigEndianess), float(bigEndianess), float(bigEndianess), float(bigEndianess),
         float(bigEndianess), float(bigEndianess), float(bigEndianess), float(bigEndianess))
 
-val Any.f get() = when (this) {
-    is Number -> this.f
-    is Char -> this.f
-    is Boolean -> this.f
-    is String -> this.f
-    else -> throw ArithmeticException("incompatible type")
-}
+val Any.f
+    get() = when (this) {
+        is Number -> this.f
+        is Char -> this.f
+        is Boolean -> this.f
+        is String -> this.f
+        else -> throw ArithmeticException("incompatible type")
+    }
 
-val Any.b get() = when (this) {
-    is Number -> this.b
-    is Char -> this.b
-    is Boolean -> this.b
-    is String -> this.b
-    else -> throw ArithmeticException("incompatible type")
-}
+val Any.b
+    get() = when (this) {
+        is Number -> this.b
+        is Char -> this.b
+        is Boolean -> this.b
+        is String -> this.b
+        else -> throw ArithmeticException("incompatible type")
+    }
 
-val Any.d get() = when (this) {
-    is Number -> this.d
-    is Char -> this.d
-    is Boolean -> this.d
-    is String -> this.d
-    else -> throw ArithmeticException("incompatible type")
-}
+val Any.d
+    get() = when (this) {
+        is Number -> this.d
+        is Char -> this.d
+        is Boolean -> this.d
+        is String -> this.d
+        else -> throw ArithmeticException("incompatible type")
+    }
 
-val Any.i get() = when (this) {
-    is Number -> this.d
-    is Char -> this.d
-    is Boolean -> this.d
-    is String -> this.d
-    else -> throw ArithmeticException("incompatible type")
-}
+val Any.i
+    get() = when (this) {
+        is Number -> this.d
+        is Char -> this.d
+        is Boolean -> this.d
+        is String -> this.d
+        else -> throw ArithmeticException("incompatible type")
+    }
 
-val Any.L get() = when (this) {
-    is Number -> this.L
-    is Char -> this.L
-    is Boolean -> this.L
-    is String -> this.L
-    else -> throw ArithmeticException("incompatible type")
-}
+val Any.L
+    get() = when (this) {
+        is Number -> this.L
+        is Char -> this.L
+        is Boolean -> this.L
+        is String -> this.L
+        else -> throw ArithmeticException("incompatible type")
+    }
 
-val Any.s get() = when (this) {
-    is Number -> this.s
-    is Char -> this.s
-    is Boolean -> this.s
-    is String -> this.s
-    else -> throw ArithmeticException("incompatible type")
-}
+val Any.s
+    get() = when (this) {
+        is Number -> this.s
+        is Char -> this.s
+        is Boolean -> this.s
+        is String -> this.s
+        else -> throw ArithmeticException("incompatible type")
+    }

@@ -1,8 +1,6 @@
 package glm_
 
-import glm_.vec2.Vec2b
 import glm_.vec2.Vec2ub
-import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
 
 class random_ : StringSpec() {
@@ -19,7 +17,7 @@ class random_ : StringSpec() {
                 var aMin = Vec2ub(255)
                 var aMax = Vec2ub(0)
                 run {
-//                    for(i in 0 until testSamples)                    {
+                    //                    for(i in 0 until testSamples)                    {
 //
 //                        val a = glm.linearRand(Vec2b(min), Vec2b(max))
 //                        aMin = glm.min(aMin, a)

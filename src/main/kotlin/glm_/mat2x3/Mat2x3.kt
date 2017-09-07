@@ -29,7 +29,8 @@ data class Mat2x3(override var value: MutableList<Vec3>) : Mat2x3t<Vec3>(value) 
     }
 
     companion object {
-        @JvmField val size = 2 * 3 * Float.BYTES
+        @JvmField
+        val size = 2 * 3 * Float.BYTES
     }
 
     override fun toString() = super.toString()

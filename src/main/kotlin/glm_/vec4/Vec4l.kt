@@ -112,8 +112,10 @@ class Vec4l(x: Long, y: Long, z: Long, w: Long) : Vec4t<Long>(x, y, z, w) {
 
 
     companion object : vec4l_operators {
-        @JvmField val length = 4
-        @JvmField val size = length * Long.BYTES
+        @JvmField
+        val length = 4
+        @JvmField
+        val size = length * Long.BYTES
     }
 
     override fun instanceSize() = Vec4l.size

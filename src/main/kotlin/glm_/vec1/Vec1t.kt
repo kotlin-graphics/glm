@@ -15,7 +15,8 @@ import java.nio.*
 
 abstract class Vec1t<T : Number>(_x: T) {
 
-    @JvmField var x = _x
+    @JvmField
+    var x = _x
 
     // -- infix Generic Constructors --
 
@@ -112,7 +113,8 @@ abstract class Vec1t<T : Number>(_x: T) {
 
         // -- functions --
 
-        @JvmField val length = 2
+        @JvmField
+        val length = 2
     }
 
 

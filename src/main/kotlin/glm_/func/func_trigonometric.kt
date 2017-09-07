@@ -8,13 +8,13 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4d
-import kotlin.math.cos as _cos
-import kotlin.math.sin as _sin
-import kotlin.math.tan as _tan
+import kotlin.math.atan2
 import kotlin.math.acos as _acos
 import kotlin.math.asin as _asin
 import kotlin.math.atan as _atan
-import kotlin.math.atan2
+import kotlin.math.cos as _cos
+import kotlin.math.sin as _sin
+import kotlin.math.tan as _tan
 
 /**
  * Created by GBarbieri on 12.12.2016.

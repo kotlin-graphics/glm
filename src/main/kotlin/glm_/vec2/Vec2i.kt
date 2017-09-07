@@ -445,7 +445,6 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     fun shr_(bX: Number, bY: Number) = shr(this, this, bX.i, bY.i)
 
 
-
     infix fun lessThan(i: Int) = x < i && y < i
     infix fun lessThanEqual(i: Int) = x <= i && y <= i
     infix fun equal(i: Int) = x == i && y == i

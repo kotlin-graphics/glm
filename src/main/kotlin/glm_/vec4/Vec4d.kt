@@ -113,8 +113,10 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
 
 
     companion object : vec4d_operators {
-        @JvmField val length = 4
-        @JvmField val size = length * Double.BYTES
+        @JvmField
+        val length = 4
+        @JvmField
+        val size = length * Double.BYTES
     }
 
     override fun instanceSize() = size

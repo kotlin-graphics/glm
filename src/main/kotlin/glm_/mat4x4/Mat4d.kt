@@ -293,8 +293,10 @@ data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d>(value)
     fun set(i: Int, v: Vec3d, s: Double) = value[i].put(v, s) // TODO other cases
 
     companion object : mat4d_operators {
-        @JvmField val length = 4    // TODO others
-        @JvmField val size = length * Vec4d.size
+        @JvmField
+        val length = 4    // TODO others
+        @JvmField
+        val size = length * Vec4d.size
     }
 
 
@@ -371,27 +373,40 @@ data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d>(value)
 
     fun det() = determinant(this)
 
-    @JvmOverloads fun inverse(res: Mat4d = Mat4d()) = glm.inverse(res, this)
+    @JvmOverloads
+    fun inverse(res: Mat4d = Mat4d()) = glm.inverse(res, this)
+
     fun inverse_() = inverse(this, this)
 
-    @JvmOverloads fun transpose(res: Mat4d = Mat4d()) = glm.transpose(res, this)
+    @JvmOverloads
+    fun transpose(res: Mat4d = Mat4d()) = glm.transpose(res, this)
+
     fun transpose_() = transpose(this, this)
 
 
     // TODO others
-    @JvmOverloads fun scale(scale: Vec3d, res: Mat4d = Mat4d()) = scale(scale.x, scale.y, scale.z, res)
+    @JvmOverloads
+    fun scale(scale: Vec3d, res: Mat4d = Mat4d()) = scale(scale.x, scale.y, scale.z, res)
 
-    @JvmOverloads fun scale(scale: Double, res: Mat4d = Mat4d()) = scale(scale, scale, scale, res)
-    @JvmOverloads fun scale(scaleX: Double, scaleY: Double, scaleZ: Double, res: Mat4d = Mat4d()) = glm.scale(res, this, scaleX, scaleY, scaleZ)
+    @JvmOverloads
+    fun scale(scale: Double, res: Mat4d = Mat4d()) = scale(scale, scale, scale, res)
+
+    @JvmOverloads
+    fun scale(scaleX: Double, scaleY: Double, scaleZ: Double, res: Mat4d = Mat4d()) = glm.scale(res, this, scaleX, scaleY, scaleZ)
 
     infix fun scale_(scale: Vec3d) = scale_(scale.x, scale.y, scale.z)
     infix fun scale_(scale: Double) = scale_(scale, scale, scale)
     fun scale_(scaleX: Double, scaleY: Double, scaleZ: Double) = glm.scale(this, this, scaleX, scaleY, scaleZ)
 
 
-    @JvmOverloads fun translate(translate: Vec3d, res: Mat4d = Mat4d()) = translate(translate.x, translate.y, translate.z, res)
-    @JvmOverloads fun translate(translate: Double, res: Mat4d = Mat4d()) = translate(translate, translate, translate, res)
-    @JvmOverloads fun translate(translateX: Double, translateY: Double, translateZ: Double, res: Mat4d = Mat4d()) =
+    @JvmOverloads
+    fun translate(translate: Vec3d, res: Mat4d = Mat4d()) = translate(translate.x, translate.y, translate.z, res)
+
+    @JvmOverloads
+    fun translate(translate: Double, res: Mat4d = Mat4d()) = translate(translate, translate, translate, res)
+
+    @JvmOverloads
+    fun translate(translateX: Double, translateY: Double, translateZ: Double, res: Mat4d = Mat4d()) =
             glm.translate(res, this, translateX, translateY, translateZ)
 
     infix fun translate_(translate: Vec3d) = translate_(translate.x, translate.y, translate.z)
@@ -406,8 +421,12 @@ data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d>(value)
                 && this[3].isEqual(b[3]))
     }
 
-    @JvmOverloads fun rotate(angle: Double, vX: Double, vY: Double, vZ: Double, res: Mat4d = Mat4d()) = glm.rotate(res, this, angle, vX, vY, vZ)
-    @JvmOverloads fun rotate(angle: Double, v: Vec3d, res: Mat4d = Mat4d()) = glm.rotate(res, this, angle, v)
+    @JvmOverloads
+    fun rotate(angle: Double, vX: Double, vY: Double, vZ: Double, res: Mat4d = Mat4d()) = glm.rotate(res, this, angle, vX, vY, vZ)
+
+    @JvmOverloads
+    fun rotate(angle: Double, v: Vec3d, res: Mat4d = Mat4d()) = glm.rotate(res, this, angle, v)
+
     fun rotate_(angle: Double, vX: Double, vY: Double, vZ: Double) = glm.rotate(this, this, angle, vX, vY, vZ)
     fun rotate_(angle: Double, v: Vec3d) = glm.rotate(this, this, angle, v)
 

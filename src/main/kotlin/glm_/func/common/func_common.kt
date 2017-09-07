@@ -3,12 +3,9 @@ package glm_.func.common
 import glm_.*
 import glm_.glm.ceil
 import glm_.glm.clamp
-import glm_.glm.floatBitsToInt
-import glm_.glm.floatBitsToUint
 import glm_.glm.floor
 import glm_.glm.fma
 import glm_.glm.fract
-import glm_.glm.intBitsToFloat
 import glm_.glm.isInf
 import glm_.glm.isNan
 import glm_.glm.max
@@ -18,16 +15,15 @@ import glm_.glm.sign
 import glm_.glm.smoothStep
 import glm_.glm.step
 import glm_.glm.trunc
-import glm_.glm.uintBitsToFloat
 import unsigned.Uint
 import unsigned.Ulong
 import kotlin.math.absoluteValue
 import kotlin.math.sign
+import kotlin.math.ceil as _ceil
 import kotlin.math.floor as _floor
 import kotlin.math.max as _max
 import kotlin.math.min as _min
 import kotlin.math.round as _round
-import kotlin.math.ceil as _ceil
 
 
 /**

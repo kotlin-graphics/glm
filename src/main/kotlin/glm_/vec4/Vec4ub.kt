@@ -86,8 +86,10 @@ class Vec4ub(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : Vec4t<Ubyte>(x, y, z, w) 
 
 
     companion object : vec4ub_operators {
-        @JvmField val length = 4
-        @JvmField val size = length * Ubyte.BYTES
+        @JvmField
+        val length = 4
+        @JvmField
+        val size = length * Ubyte.BYTES
     }
 
     override fun instanceSize() = size

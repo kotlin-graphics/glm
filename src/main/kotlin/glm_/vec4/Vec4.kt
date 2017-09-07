@@ -116,8 +116,11 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
 
 
     companion object : vec4_operators {
-        @JvmField val length = 4
-        @JvmField val size = length * Float.BYTES
+        @JvmField
+        val length = 4
+        @JvmField
+        val size = length * Float.BYTES
+
         fun fromColor(r: Number, g: Number, b: Number, a: Number = 255f): Vec4 { // TODO constructor(Color)
             val sc = 1f / 255f
             return Vec4(r.f * sc, g.f * sc, b.f * sc, a.f * sc)
@@ -299,10 +302,13 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
 
     fun length() = glm.length(this)
 
-    @JvmOverloads fun normalize(res: Vec4 = Vec4()) = glm.normalize(this, res) // TODO others
+    @JvmOverloads
+    fun normalize(res: Vec4 = Vec4()) = glm.normalize(this, res) // TODO others
+
     fun normalize_() = glm.normalize(this, this)
 
-    @JvmOverloads fun negate(res: Vec4 = Vec4()): Vec4 {
+    @JvmOverloads
+    fun negate(res: Vec4 = Vec4()): Vec4 {
         res.x = -x
         res.y = -y
         res.z = -z

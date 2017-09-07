@@ -104,8 +104,10 @@ class Vec3i(x: Int, y: Int, z: Int) : Vec3t<Int>(x, y, z) {
 
 
     companion object : vec3i_operators {
-        @JvmField val length = 3
-        @JvmField val size = Vec3i.Companion.length * Int.BYTES
+        @JvmField
+        val length = 3
+        @JvmField
+        val size = Vec3i.Companion.length * Int.BYTES
     }
 
 

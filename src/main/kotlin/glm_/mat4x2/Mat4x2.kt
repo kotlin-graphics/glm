@@ -31,7 +31,8 @@ data class Mat4x2(override var value: MutableList<Vec2>) : Mat4x2t<Vec2>(value) 
     }
 
     companion object {
-        @JvmField val size = 4 * 2 * Float.BYTES
+        @JvmField
+        val size = 4 * 2 * Float.BYTES
     }
 
     override fun toString() = super.toString()

@@ -94,8 +94,10 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
 
 
     companion object : vec2ul_operators {
-        @JvmField val length = 2
-        @JvmField val size = length * Ulong.BYTES
+        @JvmField
+        val length = 2
+        @JvmField
+        val size = length * Ulong.BYTES
     }
 
 
@@ -121,8 +123,12 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun plus(b: Long) = plus(Vec2ul(), this, b, b)
     infix operator fun plus(b: Vec2ul) = plus(Vec2ul(), this, b.x, b.y)
 
-    @JvmOverloads fun plus(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = plus(res, this, bX, bY)
-    @JvmOverloads fun plus(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = plus(res, this, bX, bY)
+    @JvmOverloads
+    fun plus(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = plus(res, this, bX, bY)
+
+    @JvmOverloads
+    fun plus(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = plus(res, this, bX, bY)
+
     fun plus(b: Ulong, res: Vec2ul) = plus(res, this, b, b)
     fun plus(b: Long, res: Vec2ul) = plus(res, this, b, b)
     fun plus(b: Vec2ul, res: Vec2ul) = plus(res, this, b.x, b.y)
@@ -138,8 +144,12 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun minus(b: Long) = minus(Vec2ul(), this, b, b)
     infix operator fun minus(b: Vec2ul) = minus(Vec2ul(), this, b.x, b.y)
 
-    @JvmOverloads fun minus(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = minus(res, this, bX, bY)
-    @JvmOverloads fun minus(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = minus(res, this, bX, bY)
+    @JvmOverloads
+    fun minus(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = minus(res, this, bX, bY)
+
+    @JvmOverloads
+    fun minus(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = minus(res, this, bX, bY)
+
     fun minus(b: Ulong, res: Vec2ul) = minus(res, this, b, b)
     fun minus(b: Long, res: Vec2ul) = minus(res, this, b, b)
     fun minus(b: Vec2ul, res: Vec2ul) = minus(res, this, b.x, b.y)
@@ -155,8 +165,12 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun times(b: Long) = times(Vec2ul(), this, b, b)
     infix operator fun times(b: Vec2ul) = times(Vec2ul(), this, b.x, b.y)
 
-    @JvmOverloads fun times(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = times(res, this, bX, bY)
-    @JvmOverloads fun times(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = times(res, this, bX, bY)
+    @JvmOverloads
+    fun times(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = times(res, this, bX, bY)
+
+    @JvmOverloads
+    fun times(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = times(res, this, bX, bY)
+
     fun times(b: Ulong, res: Vec2ul) = times(res, this, b, b)
     fun times(b: Long, res: Vec2ul) = times(res, this, b, b)
     fun times(b: Vec2ul, res: Vec2ul) = times(res, this, b.x, b.y)
@@ -172,8 +186,12 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun div(b: Long) = div(Vec2ul(), this, b, b)
     infix operator fun div(b: Vec2ul) = div(Vec2ul(), this, b.x, b.y)
 
-    @JvmOverloads fun div(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = div(res, this, bX, bY)
-    @JvmOverloads fun div(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = div(res, this, bX, bY)
+    @JvmOverloads
+    fun div(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = div(res, this, bX, bY)
+
+    @JvmOverloads
+    fun div(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = div(res, this, bX, bY)
+
     fun div(b: Ulong, res: Vec2ul) = div(res, this, b, b)
     fun div(b: Long, res: Vec2ul) = div(res, this, b, b)
     fun div(b: Vec2ul, res: Vec2ul) = div(res, this, b.x, b.y)
@@ -189,8 +207,12 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun rem(b: Long) = rem(Vec2ul(), this, b, b)
     infix operator fun rem(b: Vec2ul) = rem(Vec2ul(), this, b.x, b.y)
 
-    @JvmOverloads fun rem(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = rem(res, this, bX, bY)
-    @JvmOverloads fun rem(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = rem(res, this, bX, bY)
+    @JvmOverloads
+    fun rem(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = rem(res, this, bX, bY)
+
+    @JvmOverloads
+    fun rem(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = rem(res, this, bX, bY)
+
     fun rem(b: Ulong, res: Vec2ul) = rem(res, this, b, b)
     fun rem(b: Long, res: Vec2ul) = rem(res, this, b, b)
     fun rem(b: Vec2ul, res: Vec2ul) = rem(res, this, b.x, b.y)
@@ -207,7 +229,9 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun plus(b: Number) = plus(Vec2ul(), this, b.L, b.L)
     infix operator fun plus(b: Vec2t<out Number>) = plus(Vec2ul(), this, b.x.L, b.y.L)
 
-    @JvmOverloads fun plus(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = plus(res, this, bX.L, bY.L)
+    @JvmOverloads
+    fun plus(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = plus(res, this, bX.L, bY.L)
+
     fun plus(b: Number, res: Vec2ul) = plus(res, this, b.L, b.L)
     fun plus(b: Vec2t<out Number>, res: Vec2ul) = plus(res, this, b.x.L, b.y.L)
 
@@ -219,7 +243,9 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun minus(b: Number) = minus(Vec2ul(), this, b.L, b.L)
     infix operator fun minus(b: Vec2t<out Number>) = minus(Vec2ul(), this, b.x.L, b.y.L)
 
-    @JvmOverloads fun minus(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = minus(res, this, bX.L, bY.L)
+    @JvmOverloads
+    fun minus(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = minus(res, this, bX.L, bY.L)
+
     fun minus(b: Number, res: Vec2ul) = minus(res, this, b.L, b.L)
     fun minus(b: Vec2t<out Number>, res: Vec2ul) = minus(res, this, b.x.L, b.y.L)
 
@@ -231,7 +257,9 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun times(b: Number) = times(Vec2ul(), this, b.L, b.L)
     infix operator fun times(b: Vec2t<out Number>) = times(Vec2ul(), this, b.x.L, b.y.L)
 
-    @JvmOverloads fun times(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = times(res, this, bX.L, bY.L)
+    @JvmOverloads
+    fun times(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = times(res, this, bX.L, bY.L)
+
     fun times(b: Number, res: Vec2ul) = times(res, this, b.L, b.L)
     fun times(b: Vec2t<out Number>, res: Vec2ul) = times(res, this, b.x.L, b.y.L)
 
@@ -243,7 +271,9 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun div(b: Number) = div(Vec2ul(), this, b.L, b.L)
     infix operator fun div(b: Vec2t<out Number>) = div(Vec2ul(), this, b.x.L, b.y.L)
 
-    @JvmOverloads fun div(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = div(res, this, bX.L, bY.L)
+    @JvmOverloads
+    fun div(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = div(res, this, bX.L, bY.L)
+
     fun div(b: Number, res: Vec2ul) = div(res, this, b.L, b.L)
     fun div(b: Vec2t<out Number>, res: Vec2ul) = div(res, this, b.x.L, b.y.L)
 
@@ -255,7 +285,9 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun rem(b: Number) = rem(Vec2ul(), this, b.L, b.L)
     infix operator fun rem(b: Vec2t<out Number>) = rem(Vec2ul(), this, b.x.L, b.y.L)
 
-    @JvmOverloads fun rem(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = rem(res, this, bX.L, bY.L)
+    @JvmOverloads
+    fun rem(bX: Number, bY: Number, res: Vec2ul = Vec2ul()) = rem(res, this, bX.L, bY.L)
+
     fun rem(b: Number, res: Vec2ul) = rem(res, this, b.L, b.L)
     fun rem(b: Vec2t<out Number>, res: Vec2ul) = rem(res, this, b.x.L, b.y.L)
 
@@ -273,8 +305,11 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     fun and(b: Ulong, res: Vec2ul) = and(res, this, b, b)
     fun and(b: Long, res: Vec2ul) = and(res, this, b, b)
     fun and(b: Vec2ul, res: Vec2ul) = and(res, this, b.x, b.y)
-    @JvmOverloads fun and(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = and(res, this, bX, bY)
-    @JvmOverloads fun and(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = and(res, this, bX, bY)
+    @JvmOverloads
+    fun and(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = and(res, this, bX, bY)
+
+    @JvmOverloads
+    fun and(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = and(res, this, bX, bY)
 
     infix fun and_(b: Ulong) = and(this, this, b, b)
     infix fun and_(b: Long) = and(this, this, b, b)
@@ -290,8 +325,11 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     fun or(b: Ulong, res: Vec2ul) = or(res, this, b, b)
     fun or(b: Long, res: Vec2ul) = or(res, this, b, b)
     fun or(b: Vec2ul, res: Vec2ul) = or(res, this, b.x, b.y)
-    @JvmOverloads fun or(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = or(res, this, bX, bY)
-    @JvmOverloads fun or(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = or(res, this, bX, bY)
+    @JvmOverloads
+    fun or(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = or(res, this, bX, bY)
+
+    @JvmOverloads
+    fun or(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = or(res, this, bX, bY)
 
     infix fun or_(b: Ulong) = or(this, this, b, b)
     infix fun or_(b: Long) = or(this, this, b, b)
@@ -307,8 +345,11 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     fun xor(b: Ulong, res: Vec2ul) = xor(res, this, b, b)
     fun xor(b: Long, res: Vec2ul) = xor(res, this, b, b)
     fun xor(b: Vec2ul, res: Vec2ul) = xor(res, this, b.x, b.y)
-    @JvmOverloads fun xor(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = xor(res, this, bX, bY)
-    @JvmOverloads fun xor(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = xor(res, this, bX, bY)
+    @JvmOverloads
+    fun xor(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = xor(res, this, bX, bY)
+
+    @JvmOverloads
+    fun xor(bX: Long, bY: Long, res: Vec2ul = Vec2ul()) = xor(res, this, bX, bY)
 
     infix fun xor_(b: Ulong) = xor(this, this, b, b)
     infix fun xor_(b: Long) = xor(this, this, b, b)
@@ -320,7 +361,8 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix fun shl(b: Int) = shl(Vec2ul(), this, b, b)
 
     fun shl(b: Int, res: Vec2ul) = shl(res, this, b, b)
-    @JvmOverloads fun shl(bX: Int, bY: Int, res: Vec2ul = Vec2ul()) = shl(res, this, bX, bY)
+    @JvmOverloads
+    fun shl(bX: Int, bY: Int, res: Vec2ul = Vec2ul()) = shl(res, this, bX, bY)
 
     infix fun shl_(b: Int) = shl(this, this, b, b)
     fun shl_(bX: Int, bY: Int) = shl(this, this, bX, bY)
@@ -329,13 +371,16 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix fun shr(b: Int) = shr(Vec2ul(), this, b, b)
 
     fun shr(b: Int, res: Vec2ul) = shr(res, this, b, b)
-    @JvmOverloads fun shr(bX: Int, bY: Int, res: Vec2ul = Vec2ul()) = shr(res, this, bX, bY)
+    @JvmOverloads
+    fun shr(bX: Int, bY: Int, res: Vec2ul = Vec2ul()) = shr(res, this, bX, bY)
 
     infix fun shr_(b: Int) = shr(this, this, b, b)
     fun shr_(bX: Int, bY: Int) = shr(this, this, bX, bY)
 
 
-    @JvmOverloads fun inv(res: Vec2ul = Vec2ul()) = inv(res, this)
+    @JvmOverloads
+    fun inv(res: Vec2ul = Vec2ul()) = inv(res, this)
+
     fun inv_() = inv(this, this)
 
 

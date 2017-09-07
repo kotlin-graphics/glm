@@ -562,7 +562,7 @@ class packing_ : StringSpec() {
 
         "test_packUnorm" {
 
-//            val A = listOf(Vec2(1f, 0.7f), Vec2(0.5f, 0.1f))
+            //            val A = listOf(Vec2(1f, 0.7f), Vec2(0.5f, 0.1f))
 //TODO
 //            for (a in A) {
 //                val b = Vec2(a)
@@ -574,7 +574,7 @@ class packing_ : StringSpec() {
 
         "test_packSnorm4x8" {
 
-//            val A = listOf(Vec4(1f, 0f, -0.5f, -0.1f), Vec4(-0.7f, -0.1f, 0.1f, 0.7f))
+            //            val A = listOf(Vec4(1f, 0f, -0.5f, -0.1f), Vec4(-0.7f, -0.1f, 0.1f, 0.7f))
 //TODO
 //            for (a in A) {
 //                val b = Vec4(a)

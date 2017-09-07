@@ -1,27 +1,24 @@
 package glm_
 
+import glm_.glm.clamp
+import glm_.glm.detail
+import glm_.glm.floatBitsToInt
+import glm_.glm.floor
+import glm_.glm.intBitsToFloat
+import glm_.glm.isInf
+import glm_.glm.isNan
+import glm_.glm.log2
+import glm_.glm.max
+import glm_.glm.pow
+import glm_.glm.round
 import glm_.vec2.Vec2
+import glm_.vec2.Vec2b
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4i
 import unsigned.toUInt
-import unsigned.toUShort
 import unsigned.ushr
-import java.math.BigInteger
 import kotlin.experimental.or
-import glm_.glm.isNan
-import glm_.glm.isInf
-import glm_.glm.floatBitsToInt
-import glm_.glm.intBitsToFloat
-import glm_.glm.clamp
-import glm_.glm.round
-import glm_.glm.pow
-import glm_.glm.max
-import glm_.glm.detail
-import glm_.glm.floor
-import glm_.glm.log2
-import glm_.vec2.Vec2b
-import glm_.vec2.Vec2i
 
 interface packing_detail {
 
@@ -550,7 +547,7 @@ interface packing {
         return x or y
     }
 
-    fun unpackInt2x8(p:Short, res: Vec2b=Vec2b()):Vec2b    {
+    fun unpackInt2x8(p: Short, res: Vec2b = Vec2b()): Vec2b {
         res.x = (p shr 8).b
         res.y = (p and 0xff).b
         return res

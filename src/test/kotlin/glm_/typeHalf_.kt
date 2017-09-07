@@ -1,12 +1,7 @@
 package glm_
 
-import glm_.vec2.Vec2b
-import glm_.vec2.Vec2s
-import glm_.vec4.Vec4b
-import glm_.vec4.Vec4i
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
-import kotlin.system.measureNanoTime
 
 class typeHalf_ : StringSpec() {
 

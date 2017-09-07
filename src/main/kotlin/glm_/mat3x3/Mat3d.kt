@@ -150,10 +150,14 @@ data class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d>(value)
             value[1][0] * (value[0][1] * value[2][2] - value[2][1] * value[0][2]) +
             value[2][0] * (value[0][1] * value[1][2] - value[1][1] * value[0][2])
 
-    @JvmOverloads fun inverse(res: Mat3d = Mat3d()) = inverse(res, this)
+    @JvmOverloads
+    fun inverse(res: Mat3d = Mat3d()) = inverse(res, this)
+
     fun inverse_() = inverse(this, this)
 
-    @JvmOverloads fun transpose(res: Mat3d = Mat3d()) = transpose(res, this)
+    @JvmOverloads
+    fun transpose(res: Mat3d = Mat3d()) = transpose(res, this)
+
     fun transpose_() = transpose(this, this)
 
 
@@ -226,7 +230,8 @@ data class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d>(value)
 
 
     companion object : mat3d_operators {
-        @JvmField val size = 3 * 3 * Double.BYTES
+        @JvmField
+        val size = 3 * 3 * Double.BYTES
     }
 
 

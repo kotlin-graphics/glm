@@ -6,7 +6,6 @@ import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import java.io.DataInputStream
 import java.io.InputStream
 import java.nio.*
 
@@ -121,8 +120,10 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
 
 
     companion object : vec3_operators {
-        @JvmField val length = 3
-        @JvmField val size = length * Float.BYTES
+        @JvmField
+        val length = 3
+        @JvmField
+        val size = length * Float.BYTES
     }
 
 
@@ -171,7 +172,9 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix operator fun plus(b: Float) = plus(Vec3(), this, b, b, b)
     infix operator fun plus(b: Vec3) = plus(Vec3(), this, b.x, b.y, b.z)
 
-    @JvmOverloads fun plus(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = plus(res, this, bX, bY, bZ)
+    @JvmOverloads
+    fun plus(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = plus(res, this, bX, bY, bZ)
+
     fun plus(b: Float, res: Vec3 = Vec3()) = plus(res, this, b, b, b)
     fun plus(b: Vec3, res: Vec3 = Vec3()) = plus(res, this, b.x, b.y, b.z)
 
@@ -183,7 +186,9 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix operator fun minus(b: Float) = minus(Vec3(), this, b, b, b)
     infix operator fun minus(b: Vec3) = minus(Vec3(), this, b.x, b.y, b.z)
 
-    @JvmOverloads fun minus(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = minus(res, this, bX, bY, bZ)
+    @JvmOverloads
+    fun minus(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = minus(res, this, bX, bY, bZ)
+
     fun minus(b: Float, res: Vec3 = Vec3()) = minus(res, this, b, b, b)
     fun minus(b: Vec3, res: Vec3 = Vec3()) = minus(res, this, b.x, b.y, b.z) // TODO overload others
 
@@ -195,7 +200,9 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix operator fun times(b: Float) = times(Vec3(), this, b, b, b)
     infix operator fun times(b: Vec3) = times(Vec3(), this, b.x, b.y, b.z)
 
-    @JvmOverloads fun times(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = times(res, this, bX, bY, bZ)
+    @JvmOverloads
+    fun times(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = times(res, this, bX, bY, bZ)
+
     fun times(b: Float, res: Vec3 = Vec3()) = times(res, this, b, b, b)
     fun times(b: Vec3, res: Vec3 = Vec3()) = times(res, this, b.x, b.y, b.z)
 
@@ -207,7 +214,9 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     operator fun div(b: Float) = div(Vec3(), this, b, b, b)
     operator fun div(b: Vec3) = div(Vec3(), this, b.x, b.y, b.z)
 
-    @JvmOverloads fun div(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = div(res, this, bX, bY, bZ)
+    @JvmOverloads
+    fun div(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = div(res, this, bX, bY, bZ)
+
     fun div(b: Float, res: Vec3 = Vec3()) = div(res, this, b, b, b)
     fun div(b: Vec3, res: Vec3 = Vec3()) = div(res, this, b.x, b.y, b.z)
 
@@ -219,7 +228,9 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix operator fun rem(b: Float) = rem(Vec3(), this, b, b, b)
     infix operator fun rem(b: Vec3) = rem(Vec3(), this, b.x, b.y, b.z)
 
-    @JvmOverloads fun rem(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = rem(res, this, bX, bY, bZ)
+    @JvmOverloads
+    fun rem(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = rem(res, this, bX, bY, bZ)
+
     fun rem(b: Float, res: Vec3 = Vec3()) = rem(res, this, b, b, b)
     fun rem(b: Vec3, res: Vec3 = Vec3()) = rem(res, this, b.x, b.y, b.z)
 
@@ -233,7 +244,9 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix operator fun plus(b: Number) = plus(Vec3(), this, b.f, b.f, b.f)
     infix operator fun plus(b: Vec3t<out Number>) = plus(Vec3(), this, b.x.f, b.y.f, b.z.f)
 
-    @JvmOverloads fun plus(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = plus(res, this, bX.f, bY.f, bZ.f)
+    @JvmOverloads
+    fun plus(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = plus(res, this, bX.f, bY.f, bZ.f)
+
     fun plus(b: Number, res: Vec3) = plus(res, this, b.f, b.f, b.f)
     fun plus(b: Vec3t<out Number>, res: Vec3 = Vec3()) = plus(res, this, b.x.f, b.y.f, b.z.f)
 
@@ -294,7 +307,9 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
 
     fun length() = glm.length(this)
 
-    @JvmOverloads fun normalize(res: Vec3 = Vec3()) = glm.normalize(this, res) // TODO others
+    @JvmOverloads
+    fun normalize(res: Vec3 = Vec3()) = glm.normalize(this, res) // TODO others
+
     fun normalize_() = glm.normalize(this, this)
 
     infix fun cross(b: Vec3) = glm.cross(this, b, Vec3())
@@ -302,7 +317,8 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
 
     infix fun dot(b: Vec3) = glm.dot(this, b)   // TODO others
 
-    @JvmOverloads fun negate(res: Vec3 = Vec3()): Vec3 {
+    @JvmOverloads
+    fun negate(res: Vec3 = Vec3()): Vec3 {
         res.x = -x
         res.y = -y
         res.z = -z

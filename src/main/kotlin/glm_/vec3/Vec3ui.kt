@@ -103,8 +103,10 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
 
 
     companion object : vec3ui_operators {
-        @JvmField val length = 3
-        @JvmField val size = length * Uint.BYTES
+        @JvmField
+        val length = 3
+        @JvmField
+        val size = length * Uint.BYTES
     }
 
 

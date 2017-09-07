@@ -113,8 +113,10 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
 
 
     companion object : vec4ul_operators {
-        @JvmField val length = 4
-        @JvmField val size = length * Ulong.BYTES
+        @JvmField
+        val length = 4
+        @JvmField
+        val size = length * Ulong.BYTES
     }
 
     override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())

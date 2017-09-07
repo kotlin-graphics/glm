@@ -1,5 +1,6 @@
 package glm_
 
+import glm_.glm.abs
 import glm_.glm.greaterThan
 import glm_.glm.lessThan
 import glm_.quat.Quat
@@ -7,7 +8,6 @@ import glm_.quat.QuatD
 import glm_.vec2.*
 import glm_.vec3.*
 import glm_.vec4.*
-import glm_.glm.abs
 
 /**
  * Created by GBarbieri on 11.11.2016.

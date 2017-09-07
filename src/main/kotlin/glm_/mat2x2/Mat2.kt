@@ -131,7 +131,8 @@ data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2>(value) {
 
 
     companion object : mat2x2_operators {
-        @JvmField val size = 2 * 2 * Float.BYTES
+        @JvmField
+        val size = 2 * 2 * Float.BYTES
     }
 
 
@@ -158,8 +159,8 @@ data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2>(value) {
 
 
     infix operator fun times(b: Mat2) = times(Mat2(), this, b)
-    infix operator fun times(b: Mat3x2):Nothing = TODO()//times(TODO(), this, b)
-    infix operator fun times(b: Mat4x2):Nothing = TODO()//times(TODO(), this, b)
+    infix operator fun times(b: Mat3x2): Nothing = TODO()//times(TODO(), this, b)
+    infix operator fun times(b: Mat4x2): Nothing = TODO()//times(TODO(), this, b)
 
     operator fun times(b: Vec2) = times(Vec2(), this, b)
     infix operator fun times(b: Float) = times(Mat2(), this, b)

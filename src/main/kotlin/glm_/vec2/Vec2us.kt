@@ -94,8 +94,10 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
 
 
     companion object : vec2us_operators {
-        @JvmField val length = 2
-        @JvmField val size = length * Ushort.BYTES
+        @JvmField
+        val length = 2
+        @JvmField
+        val size = length * Ushort.BYTES
     }
 
 

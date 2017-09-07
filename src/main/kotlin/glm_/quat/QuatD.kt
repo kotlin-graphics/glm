@@ -99,7 +99,8 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
 
     companion object : quatD_operators, quat_func {
 
-        @JvmField val size = 4 * Float.BYTES
+        @JvmField
+        val size = 4 * Float.BYTES
     }
 
 
@@ -145,25 +146,36 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
 
     fun length() = glm.length(this)
 
-    @JvmOverloads fun normalize(res: QuatD = QuatD()) = glm.normalize(this, res)
+    @JvmOverloads
+    fun normalize(res: QuatD = QuatD()) = glm.normalize(this, res)
+
     fun normalize_() = glm.normalize(this, this)
 
     infix fun dot(b: QuatD) = glm.dot(this, b)
 
-    @JvmOverloads fun angleAxis(angle: Double, axis: Vec3d, res: QuatD = QuatD()) = glm.angleAxis(angle, axis, res)
+    @JvmOverloads
+    fun angleAxis(angle: Double, axis: Vec3d, res: QuatD = QuatD()) = glm.angleAxis(angle, axis, res)
+
     fun angleAxis_(angle: Double, axis: Vec3d) = glm.angleAxis(angle, axis, this)
 
-    @JvmOverloads fun conjugate(res: QuatD = QuatD()) = glm.conjugate(this, res)
+    @JvmOverloads
+    fun conjugate(res: QuatD = QuatD()) = glm.conjugate(this, res)
+
     fun conjugate_() = glm.conjugate(this, this)
 
-    @JvmOverloads fun inverse(res: QuatD = QuatD()) = glm.inverse(this, res)
+    @JvmOverloads
+    fun inverse(res: QuatD = QuatD()) = glm.inverse(this, res)
+
     fun inverse_() = glm.inverse(this, this)
 
     fun angle() = glm.angle(this)
 
-    @JvmOverloads fun eulerAngles(res: Vec3d = Vec3d()) = glm.eulerAngles(this, res)
+    @JvmOverloads
+    fun eulerAngles(res: Vec3d = Vec3d()) = glm.eulerAngles(this, res)
 
-    @JvmOverloads fun slerp(b: QuatD, interp: Double, res: QuatD = QuatD()) = glm.slerp(this, b, interp, res)
+    @JvmOverloads
+    fun slerp(b: QuatD, interp: Double, res: QuatD = QuatD()) = glm.slerp(this, b, interp, res)
+
     fun slerp_(b: QuatD, interp: Double) = glm.slerp(this, b, interp, this)
 
 
@@ -174,5 +186,6 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
                 this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
             else false
 
-    @JvmOverloads fun vectorize(res: Vec4d = Vec4d()) = res.put(x, y, z, w)
+    @JvmOverloads
+    fun vectorize(res: Vec4d = Vec4d()) = res.put(x, y, z, w)
 }

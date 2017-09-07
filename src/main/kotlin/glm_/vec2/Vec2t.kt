@@ -15,8 +15,10 @@ import java.nio.*
 
 abstract class Vec2t<T : Number>(_x: T, _y: T) {
 
-    @JvmField var x = _x
-    @JvmField var y = _y
+    @JvmField
+    var x = _x
+    @JvmField
+    var y = _y
 
     open operator fun get(i: Int) = when (i) {
         0 -> x
@@ -127,7 +129,8 @@ abstract class Vec2t<T : Number>(_x: T, _y: T) {
 
 
     companion object {
-        @JvmField val length = 2
+        @JvmField
+        val length = 2
     }
 
 
@@ -162,64 +165,68 @@ abstract class Vec2t<T : Number>(_x: T, _y: T) {
         }
 
     // swizzling
-    val xx @JvmName("xx") get() = when (this) {
-        is Vec2 -> Vec2(x, x)
-        is Vec2d -> Vec2d(x, x)
-        is Vec2b -> Vec2b(x, x)
-        is Vec2i -> Vec2i(x, x)
-        is Vec2s -> Vec2s(x, x)
-        is Vec2l -> Vec2l(x, x)
-        is Vec2ub -> Vec2ub(x, x)
-        is Vec2ui -> Vec2ui(x, x)
-        is Vec2us -> Vec2us(x, x)
-        is Vec2ul -> Vec2ul(x, x)
-        else -> throw IllegalStateException()
-    }
-    var xy @JvmName("xy") get() = when (this) {
-        is Vec2 -> Vec2(this)
-        is Vec2d -> Vec2d(this)
-        is Vec2b -> Vec2b(this)
-        is Vec2i -> Vec2i(this)
-        is Vec2s -> Vec2s(this)
-        is Vec2l -> Vec2l(this)
-        is Vec2ub -> Vec2ub(this)
-        is Vec2ui -> Vec2ui(this)
-        is Vec2us -> Vec2us(this)
-        is Vec2ul -> Vec2ul(this)
-        else -> throw IllegalStateException()
-    }
+    val xx
+        @JvmName("xx") get() = when (this) {
+            is Vec2 -> Vec2(x, x)
+            is Vec2d -> Vec2d(x, x)
+            is Vec2b -> Vec2b(x, x)
+            is Vec2i -> Vec2i(x, x)
+            is Vec2s -> Vec2s(x, x)
+            is Vec2l -> Vec2l(x, x)
+            is Vec2ub -> Vec2ub(x, x)
+            is Vec2ui -> Vec2ui(x, x)
+            is Vec2us -> Vec2us(x, x)
+            is Vec2ul -> Vec2ul(x, x)
+            else -> throw IllegalStateException()
+        }
+    var xy
+        @JvmName("xy") get() = when (this) {
+            is Vec2 -> Vec2(this)
+            is Vec2d -> Vec2d(this)
+            is Vec2b -> Vec2b(this)
+            is Vec2i -> Vec2i(this)
+            is Vec2s -> Vec2s(this)
+            is Vec2l -> Vec2l(this)
+            is Vec2ub -> Vec2ub(this)
+            is Vec2ui -> Vec2ui(this)
+            is Vec2us -> Vec2us(this)
+            is Vec2ul -> Vec2ul(this)
+            else -> throw IllegalStateException()
+        }
         @JvmName("xy") set(value) {
             x = value.x as T
             y = value.y as T
         }
-    var yx @JvmName("yx") get() = when (this) {
-        is Vec2 -> Vec2(y, x)
-        is Vec2d -> Vec2d(y, x)
-        is Vec2b -> Vec2b(y, x)
-        is Vec2i -> Vec2i(y, x)
-        is Vec2s -> Vec2s(y, x)
-        is Vec2l -> Vec2l(y, x)
-        is Vec2ub -> Vec2ub(y, x)
-        is Vec2ui -> Vec2ui(y, x)
-        is Vec2us -> Vec2us(y, x)
-        is Vec2ul -> Vec2ul(y, x)
-        else -> throw IllegalStateException()
-    }
+    var yx
+        @JvmName("yx") get() = when (this) {
+            is Vec2 -> Vec2(y, x)
+            is Vec2d -> Vec2d(y, x)
+            is Vec2b -> Vec2b(y, x)
+            is Vec2i -> Vec2i(y, x)
+            is Vec2s -> Vec2s(y, x)
+            is Vec2l -> Vec2l(y, x)
+            is Vec2ub -> Vec2ub(y, x)
+            is Vec2ui -> Vec2ui(y, x)
+            is Vec2us -> Vec2us(y, x)
+            is Vec2ul -> Vec2ul(y, x)
+            else -> throw IllegalStateException()
+        }
         @JvmName("yx") set(value) {
             y = value.x as T
             x = value.y as T
         }
-    val yy @JvmName("yy") get() = when (this) {
-        is Vec2 -> Vec2(y, y)
-        is Vec2d -> Vec2d(y, y)
-        is Vec2b -> Vec2b(y, y)
-        is Vec2i -> Vec2i(y, y)
-        is Vec2s -> Vec2s(y, y)
-        is Vec2l -> Vec2l(y, y)
-        is Vec2ub -> Vec2ub(y, y)
-        is Vec2ui -> Vec2ui(y, y)
-        is Vec2us -> Vec2us(y, y)
-        is Vec2ul -> Vec2ul(y, y)
-        else -> throw IllegalStateException()
-    }
+    val yy
+        @JvmName("yy") get() = when (this) {
+            is Vec2 -> Vec2(y, y)
+            is Vec2d -> Vec2d(y, y)
+            is Vec2b -> Vec2b(y, y)
+            is Vec2i -> Vec2i(y, y)
+            is Vec2s -> Vec2s(y, y)
+            is Vec2l -> Vec2l(y, y)
+            is Vec2ub -> Vec2ub(y, y)
+            is Vec2ui -> Vec2ui(y, y)
+            is Vec2us -> Vec2us(y, y)
+            is Vec2ul -> Vec2ul(y, y)
+            else -> throw IllegalStateException()
+        }
 }

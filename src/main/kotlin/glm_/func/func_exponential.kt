@@ -1,7 +1,5 @@
 package glm_.func
 
-import glm_.d
-import glm_.f
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2d
 import glm_.vec3.Vec3

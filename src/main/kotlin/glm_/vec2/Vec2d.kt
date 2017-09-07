@@ -108,8 +108,10 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
 
 
     companion object : vec2d_operators {
-        @JvmField val length = 2
-        @JvmField val size = length * Double.BYTES
+        @JvmField
+        val length = 2
+        @JvmField
+        val size = length * Double.BYTES
     }
 
 
@@ -136,7 +138,9 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     infix operator fun plus(b: Double) = plus(Vec2d(), this, b, b)
     infix operator fun plus(b: Vec2d) = plus(Vec2d(), this, b.x, b.y)
 
-    @JvmOverloads fun plus(bX: Double, bY: Double, res: Vec2d = Vec2d()) = plus(res, this, bX, bY)
+    @JvmOverloads
+    fun plus(bX: Double, bY: Double, res: Vec2d = Vec2d()) = plus(res, this, bX, bY)
+
     fun plus(b: Double, res: Vec2d) = plus(res, this, b, b)
     fun plus(b: Vec2d, res: Vec2d) = plus(res, this, b.x, b.y)
 
@@ -148,7 +152,9 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     infix operator fun minus(b: Double) = minus(Vec2d(), this, b, b)
     infix operator fun minus(b: Vec2d) = minus(Vec2d(), this, b.x, b.y)
 
-    @JvmOverloads fun minus(bX: Double, bY: Double, res: Vec2d = Vec2d()) = minus(res, this, bX, bY)
+    @JvmOverloads
+    fun minus(bX: Double, bY: Double, res: Vec2d = Vec2d()) = minus(res, this, bX, bY)
+
     fun minus(b: Double, res: Vec2d) = minus(res, this, b, b)
     fun minus(b: Vec2d, res: Vec2d) = minus(res, this, b.x, b.y)
 
@@ -160,7 +166,9 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     infix operator fun times(b: Double) = times(Vec2d(), this, b, b)
     infix operator fun times(b: Vec2d) = times(Vec2d(), this, b.x, b.y)
 
-    @JvmOverloads fun times(bX: Double, bY: Double, res: Vec2d = Vec2d()) = times(res, this, bX, bY)
+    @JvmOverloads
+    fun times(bX: Double, bY: Double, res: Vec2d = Vec2d()) = times(res, this, bX, bY)
+
     fun times(b: Double, res: Vec2d) = times(res, this, b, b)
     fun times(b: Vec2d, res: Vec2d) = times(res, this, b.x, b.y)
 
@@ -172,7 +180,9 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     infix operator fun div(b: Double) = div(Vec2d(), this, b, b)
     infix operator fun div(b: Vec2d) = div(Vec2d(), this, b.x, b.y)
 
-    @JvmOverloads fun div(bX: Double, bY: Double, res: Vec2d = Vec2d()) = div(res, this, bX, bY)
+    @JvmOverloads
+    fun div(bX: Double, bY: Double, res: Vec2d = Vec2d()) = div(res, this, bX, bY)
+
     fun div(b: Double, res: Vec2d) = div(res, this, b, b)
     fun div(b: Vec2d, res: Vec2d) = div(res, this, b.x, b.y)
 
@@ -184,7 +194,9 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     infix operator fun rem(b: Double) = rem(Vec2d(), this, b, b)
     infix operator fun rem(b: Vec2d) = rem(Vec2d(), this, b.x, b.y)
 
-    @JvmOverloads fun rem(bX: Double, bY: Double, res: Vec2d = Vec2d()) = rem(res, this, bX, bY)
+    @JvmOverloads
+    fun rem(bX: Double, bY: Double, res: Vec2d = Vec2d()) = rem(res, this, bX, bY)
+
     fun rem(b: Double, res: Vec2d) = rem(res, this, b, b)
     fun rem(b: Vec2d, res: Vec2d) = rem(res, this, b.x, b.y)
 
@@ -198,7 +210,9 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     infix operator fun plus(b: Number) = plus(Vec2d(), this, b.d, b.d)
     infix operator fun plus(b: Vec2t<out Number>) = plus(Vec2d(), this, b.x.d, b.y.d)
 
-    @JvmOverloads fun plus(bX: Number, bY: Number, res: Vec2d = Vec2d()) = plus(res, this, bX.d, bY.d)
+    @JvmOverloads
+    fun plus(bX: Number, bY: Number, res: Vec2d = Vec2d()) = plus(res, this, bX.d, bY.d)
+
     fun plus(b: Number, res: Vec2d) = plus(res, this, b.d, b.d)
     fun plus(b: Vec2t<out Number>, res: Vec2d) = plus(res, this, b.x.d, b.y.d)
 
@@ -210,7 +224,9 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     infix operator fun minus(b: Number) = minus(Vec2d(), this, b.d, b.d)
     infix operator fun minus(b: Vec2t<out Number>) = minus(Vec2d(), this, b.x.d, b.y.d)
 
-    @JvmOverloads fun minus(bX: Number, bY: Number, res: Vec2d = Vec2d()) = minus(res, this, bX.d, bY.d)
+    @JvmOverloads
+    fun minus(bX: Number, bY: Number, res: Vec2d = Vec2d()) = minus(res, this, bX.d, bY.d)
+
     fun minus(b: Number, res: Vec2d) = minus(res, this, b.d, b.d)
     fun minus(b: Vec2t<out Number>, res: Vec2d) = minus(res, this, b.x.d, b.y.d)
 
@@ -222,7 +238,9 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     infix operator fun times(b: Number) = times(Vec2d(), this, b.d, b.d)
     infix operator fun times(b: Vec2t<out Number>) = times(Vec2d(), this, b.x.d, b.y.d)
 
-    @JvmOverloads fun times(bX: Number, bY: Number, res: Vec2d = Vec2d()) = times(res, this, bX.d, bY.d)
+    @JvmOverloads
+    fun times(bX: Number, bY: Number, res: Vec2d = Vec2d()) = times(res, this, bX.d, bY.d)
+
     fun times(b: Number, res: Vec2d) = times(res, this, b.d, b.d)
     fun times(b: Vec2t<out Number>, res: Vec2d) = times(res, this, b.x.d, b.y.d)
 
@@ -234,7 +252,9 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     infix operator fun div(b: Number) = div(Vec2d(), this, b.d, b.d)
     infix operator fun div(b: Vec2t<out Number>) = div(Vec2d(), this, b.x.d, b.y.d)
 
-    @JvmOverloads fun div(bX: Number, bY: Number, res: Vec2d = Vec2d()) = div(res, this, bX.d, bY.d)
+    @JvmOverloads
+    fun div(bX: Number, bY: Number, res: Vec2d = Vec2d()) = div(res, this, bX.d, bY.d)
+
     fun div(b: Number, res: Vec2d) = div(res, this, b.d, b.d)
     fun div(b: Vec2t<out Number>, res: Vec2d) = div(res, this, b.x.d, b.y.d)
 
@@ -246,7 +266,9 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     infix operator fun rem(b: Number) = rem(Vec2d(), this, b.d, b.d)
     infix operator fun rem(b: Vec2t<out Number>) = rem(Vec2d(), this, b.x.d, b.y.d)
 
-    @JvmOverloads fun rem(bX: Number, bY: Number, res: Vec2d = Vec2d()) = rem(res, this, bX.d, bY.d)
+    @JvmOverloads
+    fun rem(bX: Number, bY: Number, res: Vec2d = Vec2d()) = rem(res, this, bX.d, bY.d)
+
     fun rem(b: Number, res: Vec2d) = rem(res, this, b.d, b.d)
     fun rem(b: Vec2t<out Number>, res: Vec2d) = rem(res, this, b.x.d, b.y.d)
 
@@ -259,10 +281,13 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
 
     fun length() = glm.length(this)
 
-    @JvmOverloads fun normalize(res: Vec2d = Vec2d()) = glm.normalize(this, res) // TODO others
+    @JvmOverloads
+    fun normalize(res: Vec2d = Vec2d()) = glm.normalize(this, res) // TODO others
+
     fun normalize_() = glm.normalize(this, this)
 
-    @JvmOverloads fun negate(res: Vec2d = Vec2d()): Vec2d {
+    @JvmOverloads
+    fun negate(res: Vec2d = Vec2d()): Vec2d {
         res.x = -x
         res.y = -y
         return res

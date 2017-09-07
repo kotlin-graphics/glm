@@ -105,8 +105,10 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
 
 
     companion object : vec3d_operators {
-        @JvmField val length = 3
-        @JvmField val size = length * Double.BYTES
+        @JvmField
+        val length = 3
+        @JvmField
+        val size = length * Double.BYTES
     }
 
 
@@ -254,13 +256,16 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
 
     fun length() = glm.length(this)
 
-    @JvmOverloads fun normalize(res: Vec3d = Vec3d()) = glm.normalize(this, res) // TODO others
+    @JvmOverloads
+    fun normalize(res: Vec3d = Vec3d()) = glm.normalize(this, res) // TODO others
+
     fun normalize_() = glm.normalize(this, this)
 
     infix fun cross(b: Vec3d) = glm.cross(this, b)
     fun cross_(b: Vec3d) = glm.cross(this, b, this)
 
-    @JvmOverloads fun negate(res: Vec3d = Vec3d()): Vec3d {
+    @JvmOverloads
+    fun negate(res: Vec3d = Vec3d()): Vec3d {
         res.x = -x
         res.y = -y
         res.z = -z

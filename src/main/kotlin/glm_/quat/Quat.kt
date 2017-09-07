@@ -12,7 +12,6 @@ import glm_.mat4x4.Mat4
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
-import java.io.DataInputStream
 import java.io.InputStream
 
 /**
@@ -107,7 +106,8 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
     companion object : quat_operators, quat_func {
 
-        @JvmField val size = 4 * Float.BYTES
+        @JvmField
+        val size = 4 * Float.BYTES
     }
 
 
@@ -152,25 +152,36 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
     fun length() = glm.length(this)
 
-    @JvmOverloads fun normalize(res: Quat = Quat()) = glm.normalize(this, res)
+    @JvmOverloads
+    fun normalize(res: Quat = Quat()) = glm.normalize(this, res)
+
     fun normalize_() = glm.normalize(this, this)
 
     infix fun dot(b: Quat) = glm.dot(this, b)
 
-    @JvmOverloads fun angleAxis(angle: Float, axis: Vec3, res: Quat = Quat()) = glm.angleAxis(angle, axis, res)
+    @JvmOverloads
+    fun angleAxis(angle: Float, axis: Vec3, res: Quat = Quat()) = glm.angleAxis(angle, axis, res)
+
     fun angleAxis_(angle: Float, axis: Vec3) = glm.angleAxis(angle, axis, this)
 
-    @JvmOverloads fun conjugate(res: Quat = Quat()) = glm.conjugate(this, res)
+    @JvmOverloads
+    fun conjugate(res: Quat = Quat()) = glm.conjugate(this, res)
+
     fun conjugate_() = glm.conjugate(this, this)
 
-    @JvmOverloads fun inverse(res: Quat = Quat()) = glm.inverse(this, res)
+    @JvmOverloads
+    fun inverse(res: Quat = Quat()) = glm.inverse(this, res)
+
     fun inverse_() = glm.inverse(this, this)
 
     fun angle() = glm.angle(this)
 
-    @JvmOverloads fun eulerAngles(res: Vec3 = Vec3()) = glm.eulerAngles(this, res)
+    @JvmOverloads
+    fun eulerAngles(res: Vec3 = Vec3()) = glm.eulerAngles(this, res)
 
-    @JvmOverloads fun slerp(b: Quat, interp: Float, res: Quat = Quat()) = glm.slerp(this, b, interp, res)
+    @JvmOverloads
+    fun slerp(b: Quat, interp: Float, res: Quat = Quat()) = glm.slerp(this, b, interp, res)
+
     fun slerp_(b: Quat, interp: Float) = glm.slerp(this, b, interp, this)
 
 
@@ -181,5 +192,6 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
                 this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
             else false
 
-    @JvmOverloads fun vectorize(res: Vec4 = Vec4()) = res.put(x, y, z, w)
+    @JvmOverloads
+    fun vectorize(res: Vec4 = Vec4()) = res.put(x, y, z, w)
 }

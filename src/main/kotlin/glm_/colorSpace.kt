@@ -20,7 +20,7 @@ interface colorSpace {
 
         return res
     }
-    
+
     fun convertLinearToSRGB(colorLinear: Vec4, res: Vec4 = Vec4()) = compute_rgbToSrgb(colorLinear, 0.41666f, res)
     fun convertLinearToSRGB(colorLinear: Vec4, gamma: Float, res: Vec4 = Vec4()) = compute_rgbToSrgb(colorLinear, 1 / gamma, res)
 
@@ -58,7 +58,7 @@ interface colorSpace {
 
         return res
     }
-    
+
     fun convertSRGBToLinear(colorSRGB: Vec4, res: Vec4 = Vec4()) = compute_srgbToRgb(colorSRGB, 2.4f, res)
     fun convertSRGBToLinear(colorLinear: Vec4, gamma: Float, res: Vec4 = Vec4()) = compute_srgbToRgb(colorLinear, gamma, res)
 

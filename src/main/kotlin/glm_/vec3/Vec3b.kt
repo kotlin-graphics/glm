@@ -83,8 +83,10 @@ class Vec3b(x: Byte, y: Byte, z: Byte) : Vec3t<Byte>(x, y, z) {
 
 
     companion object : vec3b_operators {
-        @JvmField val length = 3
-        @JvmField val size = length * Byte.BYTES
+        @JvmField
+        val length = 3
+        @JvmField
+        val size = length * Byte.BYTES
     }
 
 

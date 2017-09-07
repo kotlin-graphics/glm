@@ -60,13 +60,18 @@ object glm :
 
         random {
 
-    @JvmField val detail = Detail
+    @JvmField
+    val detail = Detail
 
-    @JvmField val PI = kotlin.math.PI
-    @JvmField val PIf = kotlin.math.PI.f
+    @JvmField
+    val PI = kotlin.math.PI
+    @JvmField
+    val PIf = kotlin.math.PI.f
 
-    @JvmField val epsilonF = 1.1920928955078125e-7f
-    @JvmField val epsilon = 2.2204460492503131e-16
+    @JvmField
+    val epsilonF = 1.1920928955078125e-7f
+    @JvmField
+    val epsilon = 2.2204460492503131e-16
 }
 
 object Detail :
@@ -78,7 +83,8 @@ object Detail :
 class Java {
 
     companion object {
-        @JvmField val glm = Glm
+        @JvmField
+        val glm = Glm
     }
 
     object Glm :
@@ -127,12 +133,17 @@ class Java {
 
             random {
 
-        @JvmField val detail = Detail
+        @JvmField
+        val detail = Detail
 
-        @JvmField val PI = kotlin.math.PI
-        @JvmField val PIf = kotlin.math.PI.f
+        @JvmField
+        val PI = kotlin.math.PI
+        @JvmField
+        val PIf = kotlin.math.PI.f
 
-        @JvmField val epsilonF = 1.1920928955078125e-7f
-        @JvmField val epsilon = 2.2204460492503131e-16
+        @JvmField
+        val epsilonF = 1.1920928955078125e-7f
+        @JvmField
+        val epsilon = 2.2204460492503131e-16
     }
 }

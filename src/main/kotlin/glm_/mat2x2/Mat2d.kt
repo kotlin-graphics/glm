@@ -131,7 +131,8 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value)
 
 
     companion object : mat2d_operators {
-        @JvmField val size = 2 * 2 * Double.BYTES
+        @JvmField
+        val size = 2 * 2 * Double.BYTES
     }
 
 
