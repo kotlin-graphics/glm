@@ -23,7 +23,7 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
-    compile 'com.github.kotlin-graphics:kotlin-unsigned:5a9169dccb840a92a38259557d78d5af3b70a73d'
+    compile 'com.github.kotlin-graphics:kotlin-unsigned:2f996d45ec42c5972b597ce6a6469afce777424a'
 
     testCompile 'com.github.elect86:kotlintest:43281b7e1b'
 }
