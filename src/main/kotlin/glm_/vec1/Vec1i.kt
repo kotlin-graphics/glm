@@ -1,5 +1,6 @@
 package glm_.vec1
 
+import glm_.BYTES
 import glm_.getInt
 import glm_.i
 import glm_.vec2.Vec2bool
@@ -97,5 +98,12 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     operator fun set(i: Int, s: Number) = when (i) {
         0 -> x = s.i
         else -> throw ArrayIndexOutOfBoundsException()
+    }
+
+    companion object {//TODO : vec2b_operators {
+    @JvmField
+    val length = 1
+        @JvmField
+        val size = length * Int.BYTES
     }
 }

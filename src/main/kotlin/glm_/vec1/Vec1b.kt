@@ -78,4 +78,11 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
         0 -> x = s.b
         else -> throw ArrayIndexOutOfBoundsException()
     }
+
+    companion object {//TODO : vec2b_operators {
+    @JvmField
+    val length = 1
+        @JvmField
+        val size = length * Byte.BYTES
+    }
 }
