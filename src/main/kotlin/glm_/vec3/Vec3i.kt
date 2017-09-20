@@ -403,8 +403,5 @@ class Vec3i(x: Int, y: Int, z: Int) : Vec3t<Int>(x, y, z) {
     fun shr_(bX: Number, bY: Number, bZ: Number) = shr(this, this, bX.i, bY.i, bZ.i)
 
 
-    override fun equals(other: Any?) =
-            if (other is Vec3i)
-                this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
-            else false
+    override fun equals(other: Any?) = if (other is Vec3i) this[0] == other[0] && this[1] == other[1] && this[2] == other[2] else false
 }

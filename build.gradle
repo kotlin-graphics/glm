@@ -5,16 +5,20 @@ apply plugin: 'java'
 apply plugin: 'maven'
 group = 'com.github.kotlin-graphics'
 
+apply plugin: 'com.github.johnrengelman.shadow'
+
 buildscript {
 
     ext.kotlinVersion = '1.2-M2'
 
     repositories {
+        jcenter()   // shadow
         mavenCentral()
         maven { url "https://dl.bintray.com/kotlin/kotlin-dev" }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
     }
 }
 
