@@ -83,6 +83,28 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     }
 
 
+    infix fun to(doubles: DoubleArray) = to(doubles, 0)
+    fun to(doubles: DoubleArray, index: Int): DoubleArray {
+        doubles[index] = x
+        doubles[index + 1] = y
+        return doubles
+    }
+
+    infix fun to(doubles: DoubleBuffer) = to(doubles, 0)
+    fun to(doubles: DoubleBuffer, index: Int): DoubleBuffer {
+        doubles[index] = x
+        doubles[index + 1] = y
+        return doubles
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+        bytes.putDouble(offset, x)
+        bytes.putDouble(offset + Double.BYTES, y)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {

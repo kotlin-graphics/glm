@@ -111,9 +111,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     }
 
 
-    // TODO others
     infix fun to(floats: FloatArray) = to(floats, 0)
-
     fun to(floats: FloatArray, index: Int): FloatArray {
         floats[index] = x
         floats[index + 1] = y
@@ -121,7 +119,6 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     }
 
     infix fun to(floats: FloatBuffer) = to(floats, 0)
-
     fun to(floats: FloatBuffer, index: Int): FloatBuffer {
         floats[index] = x
         floats[index + 1] = y
@@ -129,10 +126,10 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     }
 
     infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-
-    fun to(bytes: ByteBuffer, offset: Int) {
+    fun to(bytes: ByteBuffer, offset: Int):ByteBuffer {
         bytes.putFloat(offset, x)
         bytes.putFloat(offset + Float.BYTES, y)
+        return bytes
     }
 
 

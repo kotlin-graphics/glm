@@ -78,6 +78,28 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
     }
 
 
+    infix fun to(shorts: ShortArray) = to(shorts, 0)
+    fun to(shorts: ShortArray, index: Int): ShortArray {
+        shorts[index] = x.v
+        shorts[index + 1] = y.v
+        return shorts
+    }
+
+    infix fun to(floats: ShortBuffer) = to(floats, 0)
+    fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
+        shorts[index] = x.v
+        shorts[index + 1] = y.v
+        return shorts
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+        bytes.putShort(offset, x.v)
+        bytes.putShort(offset + Short.BYTES, y.v)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {

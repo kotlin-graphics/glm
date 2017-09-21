@@ -1,9 +1,6 @@
 package glm_.vec4
 
-import glm_.BYTES
-import glm_.L
-import glm_.toLong
-import glm_.getLong
+import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -93,6 +90,34 @@ class Vec4l(x: Long, y: Long, z: Long, w: Long) : Vec4t<Long>(x, y, z, w) {
     }
 
 
+    infix fun to(longs: LongArray) = to(longs, 0)
+    fun to(longs: LongArray, index: Int): LongArray {
+        longs[index] = x
+        longs[index + 1] = y
+        longs[index + 2] = z
+        longs[index + 3] = w
+        return longs
+    }
+
+    infix fun to(longs: LongBuffer) = to(longs, 0)
+    fun to(longs: LongBuffer, index: Int): LongBuffer {
+        longs[index] = x
+        longs[index + 1] = y
+        longs[index + 2] = z
+        longs[index + 3] = w
+        return longs
+    }
+
+    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putLong(index, x)
+        bytes.putLong(index + Long.BYTES, y)
+        bytes.putLong(index + Long.BYTES * 2, z)
+        bytes.putLong(index + Long.BYTES * 3, w)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {
@@ -120,16 +145,6 @@ class Vec4l(x: Long, y: Long, z: Long, w: Long) : Vec4t<Long>(x, y, z, w) {
     }
 
     override fun instanceSize() = Vec4l.size
-
-    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.putLong(index, x)
-        bytes.putLong(index + Long.BYTES, y)
-        bytes.putLong(index + Long.BYTES * 2, z)
-        bytes.putLong(index + Long.BYTES * 3, w)
-        return bytes
-    }
 
 
     // -- Unary arithmetic operators --

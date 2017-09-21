@@ -1,9 +1,6 @@
 package glm_.vec3
 
-import glm_.BYTES
-import glm_.L
-import glm_.toLong
-import glm_.getLong
+import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3l_operators
@@ -84,6 +81,31 @@ class Vec3l(x: Long, y: Long, z: Long) : Vec3t<Long>(x, y, z) {
         this.y = y.L
         this.z = z.L
         return this
+    }
+
+
+    infix fun to(longs: LongArray) = to(longs, 0)
+    fun to(longs: LongArray, index: Int): LongArray {
+        longs[index] = x
+        longs[index + 1] = y
+        longs[index + 2] = z
+        return longs
+    }
+
+    infix fun to(longs: LongBuffer) = to(longs, 0)
+    fun to(longs: LongBuffer, index: Int): LongBuffer {
+        longs[index] = x
+        longs[index + 1] = y
+        longs[index + 2] = z
+        return longs
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+        bytes.putLong(offset, x)
+        bytes.putLong(offset + Long.BYTES, y)
+        bytes.putLong(offset + Long.BYTES * 2, z)
+        return bytes
     }
 
 

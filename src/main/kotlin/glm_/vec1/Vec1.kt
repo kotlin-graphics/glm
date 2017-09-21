@@ -84,14 +84,12 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
     }
 
     infix fun to(floats: FloatArray) = to(floats, 0)
-
     fun to(floats: FloatArray, index: Int): FloatArray {
         floats[index] = x
         return floats
     }
 
     infix fun to(floats: FloatBuffer) = to(floats, floats.position())
-
     fun to(floats: FloatBuffer, index: Int): FloatBuffer {
         floats[index] = x
         return floats

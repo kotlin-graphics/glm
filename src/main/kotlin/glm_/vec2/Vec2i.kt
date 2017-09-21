@@ -84,6 +84,28 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     }
 
 
+    infix fun to(ints: IntArray) = to(ints, 0)
+    fun to(ints: IntArray, index: Int): IntArray {
+        ints[index] = x
+        ints[index + 1] = y
+        return ints
+    }
+
+    infix fun to(ints: IntBuffer) = to(ints, 0)
+    fun to(ints: IntBuffer, index: Int): IntBuffer {
+        ints[index] = x
+        ints[index + 1] = y
+        return ints
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+        bytes.putInt(offset, x)
+        bytes.putInt(offset + Int.BYTES, y)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {
@@ -102,30 +124,6 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
         0 -> x = s.i
         1 -> y = s.i
         else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    // TODO others
-    infix fun to(ints: IntArray) = to(ints, 0)
-
-    fun to(ints: IntArray, index: Int): IntArray {
-        ints[index] = x
-        ints[index + 1] = y
-        return ints
-    }
-
-    infix fun to(ints: IntBuffer) = to(ints, 0)
-
-    fun to(ints: IntBuffer, index: Int): IntBuffer {
-        ints[index] = x
-        ints[index + 1] = y
-        return ints
-    }
-
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-
-    fun to(bytes: ByteBuffer, offset: Int) {
-        bytes.putInt(offset, x)
-        bytes.putInt(offset + Int.BYTES, y)
     }
 
     // TODO

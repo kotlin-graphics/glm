@@ -91,6 +91,35 @@ class Vec4ui(x: Uint, y: Uint, z: Uint, w: Uint) : Vec4t<Uint>(x, y, z, w) {
     }
 
 
+    infix fun to(ints: IntArray) = to(ints, 0)
+    fun to(ints: IntArray, index: Int): IntArray {
+        ints[index] = x.v
+        ints[index + 1] = y.v
+        ints[index + 2] = z.v
+        ints[index + 3] = w.v
+        return ints
+    }
+
+    infix fun to(ints: IntBuffer) = to(ints, 0)
+    fun to(ints: IntBuffer, index: Int): IntBuffer {
+        ints[index] = x.v
+        ints[index + 1] = y.v
+        ints[index + 2] = z.v
+        ints[index + 3] = w.v
+        return ints
+    }
+
+
+    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putInt(index, x.v)
+        bytes.putInt(index + Int.BYTES, y.v)
+        bytes.putInt(index + Int.BYTES * 2, z.v)
+        bytes.putInt(index + Int.BYTES * 3, w.v)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {
@@ -118,16 +147,6 @@ class Vec4ui(x: Uint, y: Uint, z: Uint, w: Uint) : Vec4t<Uint>(x, y, z, w) {
     }
 
     override fun instanceSize() = size
-
-    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.putInt(index, x.v)
-        bytes.putInt(index + Int.BYTES, y.v)
-        bytes.putInt(index + Int.BYTES * 2, z.v)
-        bytes.putInt(index + Int.BYTES * 3, w.v)
-        return bytes
-    }
 
 
     // -- Unary arithmetic operators --

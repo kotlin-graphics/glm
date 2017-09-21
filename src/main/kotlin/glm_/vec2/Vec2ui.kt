@@ -78,6 +78,28 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     }
 
 
+    infix fun to(ints: IntArray) = to(ints, 0)
+    fun to(ints: IntArray, index: Int): IntArray {
+        ints[index] = x.v
+        ints[index + 1] = y.v
+        return ints
+    }
+
+    infix fun to(ints: IntBuffer) = to(ints, 0)
+    fun to(ints: IntBuffer, index: Int): IntBuffer {
+        ints[index] = x.v
+        ints[index + 1] = y.v
+        return ints
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+        bytes.putInt(offset, x.v)
+        bytes.putInt(offset + Int.BYTES, y.v)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {

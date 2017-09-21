@@ -90,6 +90,34 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     }
 
 
+    infix fun to(doubles: DoubleArray) = to(doubles, 0)
+    fun to(doubles: DoubleArray, index: Int): DoubleArray {
+        doubles[index] = x
+        doubles[index + 1] = y
+        doubles[index + 2] = z
+        doubles[index + 3] = w
+        return doubles
+    }
+
+    infix fun to(doubles: DoubleBuffer) = to(doubles, 0)
+    fun to(doubles: DoubleBuffer, index: Int): DoubleBuffer {
+        doubles[index] = x
+        doubles[index + 1] = y
+        doubles[index + 2] = z
+        doubles[index + 3] = w
+        return doubles
+    }
+
+    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putDouble(index, x)
+        bytes.putDouble(index + Double.BYTES, y)
+        bytes.putDouble(index + Double.BYTES * 2, z)
+        bytes.putDouble(index + Double.BYTES * 3, w)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {
@@ -118,15 +146,7 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
 
     override fun instanceSize() = size
 
-    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
 
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.putDouble(index, x)
-        bytes.putDouble(index + Double.BYTES, y)
-        bytes.putDouble(index + Double.BYTES * 2, z)
-        bytes.putDouble(index + Double.BYTES * 3, w)
-        return bytes
-    }
 
     // -- Unary arithmetic operators --
 

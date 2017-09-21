@@ -91,6 +91,34 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     }
 
 
+    infix fun to(longs: LongArray) = to(longs, 0)
+    fun to(longs: LongArray, index: Int): LongArray {
+        longs[index] = x.v
+        longs[index + 1] = y.v
+        longs[index + 2] = z.v
+        longs[index + 3] = w.v
+        return longs
+    }
+
+    infix fun to(longs: LongBuffer) = to(longs, 0)
+    fun to(longs: LongBuffer, index: Int): LongBuffer {
+        longs[index] = x.v
+        longs[index + 1] = y.v
+        longs[index + 2] = z.v
+        longs[index + 3] = w.v
+        return longs
+    }
+
+    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putLong(index, x.v)
+        bytes.putLong(index + Long.BYTES, y.v)
+        bytes.putLong(index + Long.BYTES * 2, z.v)
+        bytes.putLong(index + Long.BYTES * 3, w.v)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {
@@ -117,16 +145,6 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
         val length = 4
         @JvmField
         val size = length * Ulong.BYTES
-    }
-
-    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.putLong(index, x.v)
-        bytes.putLong(index + Long.BYTES, y.v)
-        bytes.putLong(index + Long.BYTES * 2, z.v)
-        bytes.putLong(index + Long.BYTES * 3, w.v)
-        return bytes
     }
 
 

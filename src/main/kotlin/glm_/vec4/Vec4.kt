@@ -96,6 +96,34 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     }
 
 
+    infix fun to(floats: FloatArray) = to(floats, 0)
+    fun to(floats: FloatArray, index: Int): FloatArray {
+        floats[index] = x
+        floats[index + 1] = y
+        floats[index + 2] = z
+        floats[index + 3] = w
+        return floats
+    }
+
+    infix fun to(floats: FloatBuffer) = to(floats, floats.position())
+    fun to(floats: FloatBuffer, index: Int): FloatBuffer {
+        floats[index] = x
+        floats[index + 1] = y
+        floats[index + 2] = z
+        floats[index + 3] = w
+        return floats
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+        bytes.putFloat(offset, x)
+        bytes.putFloat(offset + Float.BYTES, y)
+        bytes.putFloat(offset + Float.BYTES * 2, z)
+        bytes.putFloat(offset + Float.BYTES * 3, w)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {
@@ -129,31 +157,6 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
 
     override fun instanceSize() = size
 
-    // TODO others
-    infix fun to(floats: FloatArray) = to(floats, 0)
-
-    fun to(floats: FloatArray, index: Int): FloatArray {
-        floats[index] = x
-        floats[index + 1] = y
-        floats[index + 2] = z
-        floats[index + 3] = w
-        return floats
-    }
-
-    infix fun to(floats: FloatBuffer) = to(floats, floats.position())
-
-    fun to(floats: FloatBuffer, index: Int): FloatBuffer {
-        floats[index] = x
-        floats[index + 1] = y
-        floats[index + 2] = z
-        floats[index + 3] = w
-        return floats
-    }
-
-    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer = bytes.putFloat(index, x).putFloat(index + Float.BYTES, y)
-            .putFloat(index + Float.BYTES * 2, z).putFloat(index + Float.BYTES * 3, w)
 
     fun toVec3() = Vec3(this)
     fun to(res: Vec3) = res put this

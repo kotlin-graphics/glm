@@ -1,9 +1,6 @@
 package glm_.vec3
 
-import glm_.BYTES
-import glm_.getShort
-import glm_.s
-import glm_.toShort
+import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3s_operators
@@ -84,6 +81,31 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
         this.y = y.s
         this.z = z.s
         return this
+    }
+
+
+    infix fun to(shorts: ShortArray) = to(shorts, 0)
+    fun to(shorts: ShortArray, index: Int): ShortArray {
+        shorts[index] = x
+        shorts[index + 1] = y
+        shorts[index + 2] = z
+        return shorts
+    }
+
+    infix fun to(floats: ShortBuffer) = to(floats, 0)
+    fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
+        shorts[index] = x
+        shorts[index + 1] = y
+        shorts[index + 2] = z
+        return shorts
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+        bytes.putShort(offset, x)
+        bytes.putShort(offset + Short.BYTES, y)
+        bytes.putShort(offset + Short.BYTES * 2, z)
+        return bytes
     }
 
 

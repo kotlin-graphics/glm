@@ -91,6 +91,34 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
     }
 
 
+    infix fun to(shorts: ShortArray) = to(shorts, 0)
+    fun to(shorts: ShortArray, index: Int): ShortArray {
+        shorts[index] = x.v
+        shorts[index + 1] = y.v
+        shorts[index + 2] = z.v
+        shorts[index + 3] = w.v
+        return shorts
+    }
+
+    infix fun to(floats: ShortBuffer) = to(floats, 0)
+    fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
+        shorts[index] = x.v
+        shorts[index + 1] = y.v
+        shorts[index + 2] = z.v
+        shorts[index + 3] = w.v
+        return shorts
+    }
+
+    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putShort(index, x.v)
+        bytes.putShort(index + Short.BYTES, y.v)
+        bytes.putShort(index + Short.BYTES * 2, z.v)
+        bytes.putShort(index + Short.BYTES * 3, w.v)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {
@@ -117,16 +145,6 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
         val length = 4
         @JvmField
         val size = length * Ushort.BYTES
-    }
-
-    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.putShort(index, x.v)
-        bytes.putShort(index + Short.BYTES, y.v)
-        bytes.putShort(index + Short.BYTES * 2, z.v)
-        bytes.putShort(index + Short.BYTES * 3, w.v)
-        return bytes
     }
 
 

@@ -85,6 +85,31 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
     }
 
 
+    infix fun to(ints: IntArray) = to(ints, 0)
+    fun to(ints: IntArray, index: Int): IntArray {
+        ints[index] = x.v
+        ints[index + 1] = y.v
+        ints[index + 2] = z.v
+        return ints
+    }
+
+    infix fun to(ints: IntBuffer) = to(ints, 0)
+    fun to(ints: IntBuffer, index: Int): IntBuffer {
+        ints[index] = x.v
+        ints[index + 1] = y.v
+        ints[index + 2] = z.v
+        return ints
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+        bytes.putInt(offset, x.v)
+        bytes.putInt(offset + Int.BYTES, y.v)
+        bytes.putInt(offset + Int.BYTES * 2, z.v)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {

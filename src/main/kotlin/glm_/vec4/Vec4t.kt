@@ -90,6 +90,7 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
     infix fun put(s: Number) = put(s, s, s, s)
     abstract fun put(x: Number, y: Number, z: Number, w: Number): Vec4t<T>
 
+    // TODO check if leave or others
     infix abstract fun to(bytes: ByteBuffer): ByteBuffer
     abstract fun to(bytes: ByteBuffer, index: Int): ByteBuffer
 

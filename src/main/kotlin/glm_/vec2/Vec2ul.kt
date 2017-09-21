@@ -78,6 +78,28 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     }
 
 
+    infix fun to(longs: LongArray) = to(longs, 0)
+    fun to(longs: LongArray, index: Int): LongArray {
+        longs[index] = x.v
+        longs[index + 1] = y.v
+        return longs
+    }
+
+    infix fun to(longs: LongBuffer) = to(longs, 0)
+    fun to(longs: LongBuffer, index: Int): LongBuffer {
+        longs[index] = x.v
+        longs[index + 1] = y.v
+        return longs
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+        bytes.putLong(offset, x.v)
+        bytes.putLong(offset + Long.BYTES, y.v)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {

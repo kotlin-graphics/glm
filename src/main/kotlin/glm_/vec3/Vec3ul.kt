@@ -85,6 +85,31 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
     }
 
 
+    infix fun to(longs: LongArray) = to(longs, 0)
+    fun to(longs: LongArray, index: Int): LongArray {
+        longs[index] = x.v
+        longs[index + 1] = y.v
+        longs[index + 2] = z.v
+        return longs
+    }
+
+    infix fun to(longs: LongBuffer) = to(longs, 0)
+    fun to(longs: LongBuffer, index: Int): LongBuffer {
+        longs[index] = x.v
+        longs[index + 1] = y.v
+        longs[index + 2] = z.v
+        return longs
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+        bytes.putLong(offset, x.v)
+        bytes.putLong(offset + Long.BYTES, y.v)
+        bytes.putLong(offset + Long.BYTES * 2, z.v)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {

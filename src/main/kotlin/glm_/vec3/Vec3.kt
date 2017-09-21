@@ -102,6 +102,31 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     }
 
 
+    infix fun to(floats: FloatArray) = to(floats, 0)
+    fun to(floats: FloatArray, index: Int): FloatArray {
+        floats[index] = x
+        floats[index + 1] = y
+        floats[index + 2] = z
+        return floats
+    }
+
+    infix fun to(floats: FloatBuffer) = to(floats, floats.position())
+    fun to(floats: FloatBuffer, index: Int): FloatBuffer {
+        floats[index] = x
+        floats[index + 1] = y
+        floats[index + 2] = z
+        return floats
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+        bytes.putFloat(offset, x)
+        bytes.putFloat(offset + Float.BYTES, y)
+        bytes.putFloat(offset + Float.BYTES * 2, z)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {
@@ -111,44 +136,21 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
+
     operator fun set(i: Int, s: Number) = when (i) {
         0 -> x = s.f
         1 -> y = s.f
         2 -> z = s.f
         else -> throw ArrayIndexOutOfBoundsException()
     }
-
-
     companion object : vec3_operators {
         @JvmField
         val length = 3
         @JvmField
         val size = length * Float.BYTES
+
+
     }
-
-
-    // TODO others
-    infix fun to(floats: FloatArray) = to(floats, 0)
-
-    fun to(floats: FloatArray, index: Int): FloatArray {
-        floats[index] = x
-        floats[index + 1] = y
-        floats[index + 2] = z
-        return floats
-    }
-
-    infix fun to(floats: FloatBuffer) = to(floats, floats.position())
-
-    fun to(floats: FloatBuffer, index: Int): FloatBuffer {
-        floats[index] = x
-        floats[index + 1] = y
-        floats[index + 2] = z
-        return floats
-    }
-
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer = bytes.putFloat(offset, x).putFloat(offset + Float.BYTES, y).putFloat(offset + Float.BYTES * 2, z)
 
 
     // -- Unary arithmetic operators --

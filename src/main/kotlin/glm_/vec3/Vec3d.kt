@@ -84,6 +84,31 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     }
 
 
+    infix fun to(doubles: DoubleArray) = to(doubles, 0)
+    fun to(doubles: DoubleArray, index: Int): DoubleArray {
+        doubles[index] = x
+        doubles[index + 1] = y
+        doubles[index + 2] = z
+        return doubles
+    }
+
+    infix fun to(doubles: DoubleBuffer) = to(doubles, 0)
+    fun to(doubles: DoubleBuffer, index: Int): DoubleBuffer {
+        doubles[index] = x
+        doubles[index + 1] = y
+        doubles[index + 2] = z
+        return doubles
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+        bytes.putDouble(offset, x)
+        bytes.putDouble(offset + Double.BYTES, y)
+        bytes.putDouble(offset + Double.BYTES * 2, z)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {

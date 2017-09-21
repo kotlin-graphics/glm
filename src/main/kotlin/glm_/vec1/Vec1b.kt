@@ -2,7 +2,6 @@ package glm_.vec1
 
 import glm_.BYTES
 import glm_.b
-import glm_.set
 import glm_.toByte
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
@@ -60,6 +59,12 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
     override fun put(x: Number): Vec1b {
         this.x = x.b
         return this
+    }
+
+    infix fun to(bytes: ByteArray) = to(bytes, 0)
+    fun to(bytes: ByteArray, index: Int): ByteArray {
+        bytes[index] = x
+        return bytes
     }
 
     infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())

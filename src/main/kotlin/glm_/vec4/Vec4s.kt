@@ -1,9 +1,6 @@
 package glm_.vec4
 
-import glm_.BYTES
-import glm_.getShort
-import glm_.s
-import glm_.toShort
+import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -93,6 +90,35 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
     }
 
 
+    infix fun to(shorts: ShortArray) = to(shorts, 0)
+    fun to(shorts: ShortArray, index: Int): ShortArray {
+        shorts[index] = x
+        shorts[index + 1] = y
+        shorts[index + 2] = z
+        shorts[index + 3] = w
+        return shorts
+    }
+
+    infix fun to(floats: ShortBuffer) = to(floats, 0)
+    fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
+        shorts[index] = x
+        shorts[index + 1] = y
+        shorts[index + 2] = z
+        shorts[index + 3] = w
+        return shorts
+    }
+
+    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    override fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+        bytes.putShort(offset, x)
+        bytes.putShort(offset + Short.BYTES, y)
+        bytes.putShort(offset + Short.BYTES * 2, z)
+        bytes.putShort(offset + Short.BYTES * 3, w)
+        return bytes
+    }
+
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {
@@ -121,15 +147,6 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
 
     override fun instanceSize() = size
 
-    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.putShort(index, x)
-        bytes.putShort(index + Short.BYTES, y)
-        bytes.putShort(index + Short.BYTES * 2, z)
-        bytes.putShort(index + Short.BYTES * 3, w)
-        return bytes
-    }
 
 
     // -- Unary arithmetic operators --

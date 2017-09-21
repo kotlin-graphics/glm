@@ -66,6 +66,23 @@ class Vec3b(x: Byte, y: Byte, z: Byte) : Vec3t<Byte>(x, y, z) {
     }
 
 
+    infix fun to(bytes: ByteArray) = to(bytes, 0)
+    fun to(bytes: ByteArray, index: Int): ByteArray {
+        bytes[index] = x
+        bytes[index + 1] = y
+        bytes[index + 2] = z
+        return bytes
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+        bytes.put(offset, x)
+        bytes.put(offset + Byte.BYTES, y)
+        bytes.put(offset + Byte.BYTES * 2, z)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {

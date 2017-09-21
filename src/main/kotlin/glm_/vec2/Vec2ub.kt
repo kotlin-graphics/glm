@@ -61,6 +61,21 @@ class Vec2ub(x: Ubyte, y: Ubyte) : Vec2t<Ubyte>(x, y) {
     }
 
 
+    infix fun to(bytes: ByteArray) = to(bytes, 0)
+    fun to(bytes: ByteArray, index: Int): ByteArray {
+        bytes[index] = x.v
+        bytes[index + 1] = y.v
+        return bytes
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+        bytes.put(offset, x.v)
+        bytes.put(offset + Byte.BYTES, y.v)
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {

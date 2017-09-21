@@ -66,6 +66,25 @@ class Vec4ub(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : Vec4t<Ubyte>(x, y, z, w) 
     }
 
 
+    infix fun to(bytes: ByteArray) = to(bytes, 0)
+    fun to(bytes: ByteArray, index: Int): ByteArray {
+        bytes[index] = x.v
+        bytes[index + 1] = y.v
+        bytes[index + 2] = z.v
+        bytes[index + 3] = w.v
+        return bytes
+    }
+
+    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes[index] = x.v
+        bytes[index + 1] = y.v
+        bytes[index + 2] = z.v
+        bytes[index + 3] = w.v
+        return bytes
+    }
+
+
     // -- Component accesses --
 
     override operator fun get(i: Int) = when (i) {
@@ -94,15 +113,7 @@ class Vec4ub(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : Vec4t<Ubyte>(x, y, z, w) 
 
     override fun instanceSize() = size
 
-    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
 
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes[index] = x.v
-        bytes[index + 1] = y.v
-        bytes[index + 2] = z.v
-        bytes[index + 3] = w.v
-        return bytes
-    }
 
 
     // -- Unary arithmetic operators --
