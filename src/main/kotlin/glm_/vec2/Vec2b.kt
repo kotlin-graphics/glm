@@ -3,6 +3,7 @@ package glm_.vec2
 import glm_.BYTES
 import glm_.b
 import glm_.i
+import glm_.toByte
 import glm_.vec2.operators.vec2b_operators
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
@@ -41,7 +42,7 @@ class Vec2b(x: Byte, y: Byte) : Vec2t<Byte>(x, y) {
     constructor(chars: Array<Char>, index: Int = 0) : this(chars[index].b, chars[index + 1].b)
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].b, booleans[index + 1].b)
 
-    constructor(list: List<Any>, index: Int = 0) : this(list[index].b, list[index + 1].b)
+    constructor(list: List<Any>, index: Int = 0) : this(list[index].toByte, list[index + 1].toByte)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position()) : this(bytes[index], bytes[index + 1])
     constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].b, chars[index + 1].b)

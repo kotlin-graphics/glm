@@ -2,7 +2,8 @@ package glm_.vec1
 
 import glm_.BYTES
 import glm_.b
-import glm_.i
+import glm_.set
+import glm_.toByte
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -38,7 +39,7 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
     constructor(chars: Array<Char>, index: Int = 0) : this(chars[index].b)
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].b)
 
-    constructor(list: List<Any>, index: Int = 0) : this(list[index].b)
+    constructor(list: List<Any>, index: Int = 0) : this(list[index].toByte)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position()) : this(bytes[index])
     constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].b)
@@ -51,7 +52,7 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
     constructor(x: Number) : this(x.b)
 
 
-    fun put(x: Byte, y: Byte): Vec1b {
+    fun put(x: Byte): Vec1b {
         this.x = x
         return this
     }
@@ -61,6 +62,8 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
         return this
     }
 
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, index: Int): ByteBuffer = bytes.put(index, x)
 
     // -- Component accesses --
 

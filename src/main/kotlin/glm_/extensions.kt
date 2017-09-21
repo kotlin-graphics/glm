@@ -207,7 +207,7 @@ fun InputStream.mat4(bigEndianess: Boolean = true) = Mat4(
         float(bigEndianess), float(bigEndianess), float(bigEndianess), float(bigEndianess),
         float(bigEndianess), float(bigEndianess), float(bigEndianess), float(bigEndianess))
 
-val Any.f
+val Any.toFloat: Float
     get() = when (this) {
         is Number -> this.f
         is Char -> this.f
@@ -216,7 +216,7 @@ val Any.f
         else -> throw ArithmeticException("incompatible type")
     }
 
-val Any.b
+val Any.toByte: Byte
     get() = when (this) {
         is Number -> this.b
         is Char -> this.b
@@ -225,7 +225,7 @@ val Any.b
         else -> throw ArithmeticException("incompatible type")
     }
 
-val Any.d
+val Any.toDouble: Double
     get() = when (this) {
         is Number -> this.d
         is Char -> this.d
@@ -234,16 +234,16 @@ val Any.d
         else -> throw ArithmeticException("incompatible type")
     }
 
-val Any.i
+val Any.toInt: Int
     get() = when (this) {
-        is Number -> this.d
-        is Char -> this.d
-        is Boolean -> this.d
-        is String -> this.d
+        is Number -> this.i
+        is Char -> this.i
+        is Boolean -> this.i
+        is String -> this.i
         else -> throw ArithmeticException("incompatible type")
     }
 
-val Any.L
+val Any.toLong: Long
     get() = when (this) {
         is Number -> this.L
         is Char -> this.L
@@ -252,7 +252,7 @@ val Any.L
         else -> throw ArithmeticException("incompatible type")
     }
 
-val Any.s
+val Any.toShort: Short
     get() = when (this) {
         is Number -> this.s
         is Char -> this.s

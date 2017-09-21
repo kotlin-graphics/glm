@@ -1,7 +1,7 @@
 package glm_.mat2x2
 
 import glm_.BYTES
-import glm_.f
+import glm_.d
 import glm_.glm
 import glm_.mat2x2.operators.mat2d_operators
 import glm_.mat2x3.Mat2x3t
@@ -80,14 +80,14 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value)
 
     fun to(scalar: Number) {
         value = mutableListOf(
-                Vec2d(scalar.f, 0),
-                Vec2d(0, scalar.f))
+                Vec2d(scalar.d, 0),
+                Vec2d(0, scalar.d))
     }
 
     fun to(x0: Number, x1: Number, y0: Number, y1: Number) {
         value = mutableListOf(
-                Vec2d(x0.f, y0.f),
-                Vec2d(x1.f, y1.f))
+                Vec2d(x0.d, y0.d),
+                Vec2d(x1.d, y1.d))
     }
 
     fun to(v0: Vec2t<*>, v1: Vec2t<*>) {

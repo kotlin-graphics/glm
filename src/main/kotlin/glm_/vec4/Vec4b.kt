@@ -1,9 +1,6 @@
 package glm_.vec4
 
-import glm_.BYTES
-import glm_.b
-import glm_.i
-import glm_.set
+import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -46,7 +43,7 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     constructor(chars: Array<Char>, index: Int = 0) : this(chars[index].b, chars[index + 1].b, chars[index + 2].b, chars[index + 3].b)
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].b, booleans[index + 1].b, booleans[index + 2].b, booleans[index + 3].b)
 
-    constructor(list: List<Any>, index: Int = 0) : this(list[index].b, list[index + 1].b, list[index + 2].b, list[index + 3].b)
+    constructor(list: List<Any>, index: Int = 0) : this(list[index].toByte, list[index + 1].toByte, list[index + 2].toByte, list[index + 3].toByte)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position()) : this(bytes[index], bytes[index + 1], bytes[index + 2], bytes[index + 3])
     constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].b, chars[index + 1].b, chars[index + 2].b, chars[index + 3].b)

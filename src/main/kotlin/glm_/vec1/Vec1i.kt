@@ -3,6 +3,7 @@ package glm_.vec1
 import glm_.BYTES
 import glm_.getInt
 import glm_.i
+import glm_.set
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -82,6 +83,22 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
         return this
     }
 
+    infix fun to(ints: IntArray) = to(ints, 0)
+
+    fun to(ints: IntArray, index: Int): IntArray {
+        ints[index] = x
+        return ints
+    }
+
+    infix fun to(ints: IntBuffer) = to(ints, ints.position())
+
+    fun to(ints: IntBuffer, index: Int): IntBuffer {
+        ints[index] = x
+        return ints
+    }
+
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    fun to(bytes: ByteBuffer, index: Int): ByteBuffer = bytes.putInt(index, x)
 
     // -- Component accesses --
 

@@ -128,8 +128,8 @@ abstract class Vec1t<T : Number>(_x: T) {
 
 
     var s
-        @JvmName("s") get() = x
-        @JvmName("s") set(value) {
+        @JvmName("toShort") get() = x
+        @JvmName("toShort") set(value) {
             x = value
         }
 }

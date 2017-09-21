@@ -155,15 +155,15 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
             y = field
         }
     var b = z
-        @JvmName("b") get() = z
-        @JvmName("b") set(value) {
+        @JvmName("toByte") get() = z
+        @JvmName("toByte") set(value) {
             field = value
             z = field
         }
 
     var s = x
-        @JvmName("s") get() = x
-        @JvmName("s") set(value) {
+        @JvmName("toShort") get() = x
+        @JvmName("toShort") set(value) {
             field = value
             x = field
         }

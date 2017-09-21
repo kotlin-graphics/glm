@@ -23,7 +23,7 @@ import glm.glm
 
 fun camera(translate: Float, rotate: Vec2): Mat4 {
 
-    val projection = glm.perspective(glm.PIf * 0.25f, 4.0f / 3.0f, 0.1f, 100.f)
+    val projection = glm.perspective(glm.PIf * 0.25f, 4.0f / 3.0f, 0.1f, 100.`toFloat()`)
     var view = glm.translate(Mat4(1.0f), Vec3(0.0f, 0.0f, -translate))
     view = glm.rotate(view, rotate.y, Vec3(-1.0f, 0.0f, 0.0f))
     view = glm.rotate(view, rotate.x, Vec3(0.0f, 1.0f, 0.0f))

@@ -1,9 +1,6 @@
 package glm_.vec3
 
-import glm_.BYTES
-import glm_.d
-import glm_.getDouble
-import glm_.glm
+import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3d_operators
@@ -48,7 +45,7 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     constructor(chars: Array<Char>, index: Int = 0) : this(chars[index].d, chars[index + 1].d, chars[index + 2].d)
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].d, booleans[index + 1].d, booleans[index + 2].d)
 
-    constructor(list: List<Any>, index: Int = 0) : this(list[index].d, list[index + 1].d, list[index + 2].d)
+    constructor(list: List<Any>, index: Int = 0) : this(list[index].toDouble, list[index + 1].toDouble, list[index + 2].toDouble)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneDouble: Boolean = true) : this(
             if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index),

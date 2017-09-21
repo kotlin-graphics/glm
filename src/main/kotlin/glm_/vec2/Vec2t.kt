@@ -153,8 +153,8 @@ abstract class Vec2t<T : Number>(_x: T, _y: T) {
             y = value
         }
     var s
-        @JvmName("s") get() = x
-        @JvmName("s") set(value) {
+        @JvmName("toShort") get() = x
+        @JvmName("toShort") set(value) {
             x = value
         }
 
