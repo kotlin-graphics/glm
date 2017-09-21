@@ -79,6 +79,7 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
         bytes.put(offset, x)
         bytes.put(offset + Byte.BYTES, y)
         bytes.put(offset + Byte.BYTES * 2, z)
+        bytes.put(offset + Byte.BYTES * 3, w)
         return bytes
     }
 
