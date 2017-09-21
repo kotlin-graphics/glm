@@ -114,8 +114,8 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
         return floats
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
+    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    override fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
         bytes.putFloat(offset, x)
         bytes.putFloat(offset + Float.BYTES, y)
         bytes.putFloat(offset + Float.BYTES * 2, z)
