@@ -358,4 +358,9 @@ data class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d>(value)
 
 
     override fun toString() = super.toString()
+
+    override fun equals(other: Any?) = other is Mat3d &&
+            this[0, 0] == other[0, 0] && this[0, 1] == other[0, 1] && this[0, 2] == other[0, 2] &&
+            this[1, 0] == other[1, 0] && this[1, 1] == other[1, 1] && this[1, 2] == other[1, 2] &&
+            this[2, 0] == other[2, 0] && this[2, 1] == other[2, 1] && this[2, 2] == other[2, 2]
 }

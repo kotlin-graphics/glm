@@ -469,8 +469,5 @@ class Vec2b(x: Byte, y: Byte) : Vec2t<Byte>(x, y) {
     fun shr_(bX: Number, bY: Number) = shr(this, this, bX.b, bY.b)
 
 
-    override fun equals(other: Any?) =
-            if (other is Vec2b)
-                this[0] == other[0] && this[1] == other[1]
-            else false
+    override fun equals(other: Any?) = other is Vec2b && this[0] == other[0] && this[1] == other[1]
 }

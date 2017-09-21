@@ -489,8 +489,5 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
     fun shr(b: Vec2t<out Number>, res: Vec2us) = shr(res, this, b.x.i, b.y.i)
 
 
-    override fun equals(other: Any?) =
-            if (other is Vec2us)
-                this[0] == other[0] && this[1] == other[1]
-            else false
+    override fun equals(other: Any?) = other is Vec2us && this[0] == other[0] && this[1] == other[1]
 }

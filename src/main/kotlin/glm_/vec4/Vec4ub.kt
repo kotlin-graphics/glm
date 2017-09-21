@@ -493,8 +493,5 @@ class Vec4ub(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : Vec4t<Ubyte>(x, y, z, w) 
     fun shr_(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(this, this, bX.i, bY.i, bZ.i, bW.i)
 
 
-    override fun equals(other: Any?) =
-            if (other is Vec4ub)
-                this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
-            else false
+    override fun equals(other: Any?) = other is Vec4ub && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
 }

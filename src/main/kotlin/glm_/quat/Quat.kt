@@ -187,10 +187,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
     override fun toString() = "($w | $x, $y, $z)"
 
-    override fun equals(other: Any?) =
-            if (other is Quat)
-                this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
-            else false
+    override fun equals(other: Any?) = other is Quat && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
 
     @JvmOverloads
     fun vectorize(res: Vec4 = Vec4()) = res.put(x, y, z, w)

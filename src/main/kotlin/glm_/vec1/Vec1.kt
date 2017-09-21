@@ -124,4 +124,6 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
         @JvmField
         val size = length * Float.BYTES
     }
+
+    override fun equals(other: Any?) = other is Vec1 && this[0] == other[0]
 }

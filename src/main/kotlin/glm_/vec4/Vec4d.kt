@@ -272,8 +272,5 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
 
     fun length() = glm.length(this)
 
-    override fun equals(other: Any?) =
-            if (other is Vec4d)
-                this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
-            else false
+    override fun equals(other: Any?) = other is Vec4d && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
 }

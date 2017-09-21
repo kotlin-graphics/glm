@@ -215,4 +215,8 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value)
 
 
     override fun toString() = super.toString()
+
+    override fun equals(other: Any?) = other is Mat2 &&
+            this[0, 0] == other[0, 0] && this[0, 1] == other[0, 1] &&
+            this[1, 0] == other[1, 0] && this[1, 1] == other[1, 1]
 }

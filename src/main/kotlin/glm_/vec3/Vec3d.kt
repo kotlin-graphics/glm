@@ -275,8 +275,5 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     fun negate_() = negate(this)
 
 
-    override fun equals(other: Any?) =
-            if (other is Vec3d)
-                this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
-            else false
+    override fun equals(other: Any?) = other is Vec3d && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
 }

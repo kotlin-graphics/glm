@@ -328,10 +328,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     fun negate_() = negate(this)
 
 
-    override fun equals(other: Any?) =
-            if (other is Vec3)
-                this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
-            else false
+    override fun equals(other: Any?) = other is Vec3 && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
 }
 
 

@@ -452,5 +452,5 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     infix fun greaterThan(i: Int) = x > i && y > i
     infix fun greaterThanEqual(i: Int) = x >= i && y >= i
 
-    override fun equals(other: Any?) = if (other is Vec2i) this[0] == other[0] && this[1] == other[1] else false
+    override fun equals(other: Any?) = other is Vec2i && this[0] == other[0] && this[1] == other[1]
 }

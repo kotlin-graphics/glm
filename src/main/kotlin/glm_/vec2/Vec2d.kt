@@ -296,8 +296,5 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     fun negate_() = negate(this)
 
 
-    override fun equals(other: Any?) =
-            if (other is Vec2d)
-                this[0] == other[0] && this[1] == other[1]
-            else false
+    override fun equals(other: Any?) = other is Vec2d && this[0] == other[0] && this[1] == other[1]
 }

@@ -445,8 +445,5 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     fun shr_(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(this, this, bX.b, bY.b, bZ.b, bW.b)
 
 
-    override fun equals(other: Any?) =
-            if (other is Vec4b)
-                this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
-            else false
+    override fun equals(other: Any?) = other is Vec4b && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
 }

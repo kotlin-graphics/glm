@@ -362,5 +362,5 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
 
     fun negate_() = negate(this)
 
-    override fun equals(other: Any?) = if (other is Vec2) this[0] == other[0] && this[1] == other[1] else false
+    override fun equals(other: Any?) = other is Vec2 && this[0] == other[0] && this[1] == other[1]
 }

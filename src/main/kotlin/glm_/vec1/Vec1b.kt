@@ -85,4 +85,6 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
         @JvmField
         val size = length * Byte.BYTES
     }
+
+    override fun equals(other: Any?) = other is Vec1b && this[0] == other[0]
 }

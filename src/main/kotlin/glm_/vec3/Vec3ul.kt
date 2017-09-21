@@ -419,8 +419,5 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
     fun shr(bX: Number, bY: Number, bZ: Number, res: Vec3ul) = shr(res, this, bX.L, bY.L, bZ.L)
 
 
-    override fun equals(other: Any?) =
-            if (other is Vec3ul)
-                this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
-            else false
+    override fun equals(other: Any?) = other is Vec3ul && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
 }
