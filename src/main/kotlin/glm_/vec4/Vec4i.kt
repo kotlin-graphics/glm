@@ -29,11 +29,11 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     constructor(v: Vec3bool) : this(v.x.i, v.y.i, v.z.i, 1)
     constructor(v: Vec4bool) : this(v.x.i, v.y.i, v.z.i, v.w.i)
 
-    constructor(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = true, bigEndianess: Boolean = true) : this(
-            if (oneByteOneInt) bytes[index].i else bytes.getInt(index, bigEndianess),
-            if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES, bigEndianess),
-            if (oneByteOneInt) bytes[index + 2].i else bytes.getInt(index + Int.BYTES * 2, bigEndianess),
-            if (oneByteOneInt) bytes[index + 3].i else bytes.getInt(index + Int.BYTES * 3, bigEndianess))
+    constructor(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = false, bigEndian: Boolean = true) : this(
+            if (oneByteOneInt) bytes[index].i else bytes.getInt(index, bigEndian),
+            if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES, bigEndian),
+            if (oneByteOneInt) bytes[index + 2].i else bytes.getInt(index + Int.BYTES * 2, bigEndian),
+            if (oneByteOneInt) bytes[index + 3].i else bytes.getInt(index + Int.BYTES * 3, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].i, chars[index + 1].i, chars[index + 2].i, chars[index + 3].i)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1], shorts[index + 2], shorts[index + 3])
@@ -49,7 +49,7 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
 
     constructor(list: List<Any>, index: Int = 0) : this(list[index].toInt, list[index + 1].toInt, list[index + 2].toInt, list[index + 3].toInt)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneInt: Boolean = true) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneInt: Boolean = false) : this(
             if (oneByteOneInt) bytes[index].i else bytes.getInt(index),
             if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES),
             if (oneByteOneInt) bytes[index + 2].i else bytes.getInt(index + Int.BYTES * 2),
@@ -66,14 +66,14 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     constructor(x: Number, y: Number, z: Number, w: Number) : this(x.i, y.i, z.i, w.i)
 
 
-    fun set(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = true, bigEndianess: Boolean = true) {
-        x = if (oneByteOneInt) bytes[index].i else bytes.getInt(index, bigEndianess)
-        y = if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES, bigEndianess)
-        z = if (oneByteOneInt) bytes[index + 2].i else bytes.getInt(index + Int.BYTES * 2, bigEndianess)
-        w = if (oneByteOneInt) bytes[index + 3].i else bytes.getInt(index + Int.BYTES * 3, bigEndianess)
+    fun set(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = false, bigEndian: Boolean = true) {
+        x = if (oneByteOneInt) bytes[index].i else bytes.getInt(index, bigEndian)
+        y = if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES, bigEndian)
+        z = if (oneByteOneInt) bytes[index + 2].i else bytes.getInt(index + Int.BYTES * 2, bigEndian)
+        w = if (oneByteOneInt) bytes[index + 3].i else bytes.getInt(index + Int.BYTES * 3, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneInt: Boolean = true) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneInt: Boolean = false) {
         x = if (oneByteOneInt) bytes[index].i else bytes.getInt(index)
         y = if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES)
         z = if (oneByteOneInt) bytes[index + 2].i else bytes.getInt(index + Int.BYTES * 2)
@@ -436,4 +436,5 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
 
 
     override fun equals(other: Any?) = other is Vec4i && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
+    override fun hashCode() = 31 * (31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()) + w.hashCode()
 }

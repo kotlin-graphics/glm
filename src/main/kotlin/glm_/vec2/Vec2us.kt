@@ -27,9 +27,9 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
     constructor(v: Vec3bool) : this(v.x.us, v.y.us)
     constructor(v: Vec4bool) : this(v.x.us, v.y.us)
 
-    constructor(bytes: ByteArray, index: Int = 0, oneByteOneUshort: Boolean = true, bigEndianess: Boolean = true) : this(
-            if (oneByteOneUshort) bytes[index].us else bytes.getUshort(index, bigEndianess),
-            if (oneByteOneUshort) bytes[index + 1].us else bytes.getUshort(index + Ushort.BYTES, bigEndianess))
+    constructor(bytes: ByteArray, index: Int = 0, oneByteOneUshort: Boolean = false, bigEndian: Boolean = true) : this(
+            if (oneByteOneUshort) bytes[index].us else bytes.getUshort(index, bigEndian),
+            if (oneByteOneUshort) bytes[index + 1].us else bytes.getUshort(index + Ushort.BYTES, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].us, chars[index + 1].us)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1])
@@ -45,7 +45,7 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
 
     constructor(list: List<Any>, index: Int = 0) : this(list[index].toShort, list[index + 1].toShort)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUshort: Boolean = true) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUshort: Boolean = false) : this(
             if (oneByteOneUshort) bytes[index].us else bytes.getShort(index).us,
             if (oneByteOneUshort) bytes[index + 1].us else bytes.getShort(index + Ushort.BYTES).us)
 
@@ -60,12 +60,12 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
     constructor(x: Number, y: Number) : this(x.us, y.us)
 
 
-    fun set(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = true, bigEndianess: Boolean = true) {
-        x.v = if (oneByteOneShort) bytes[index].s else bytes.getShort(index, bigEndianess)
-        y.v = if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Ushort.BYTES, bigEndianess)
+    fun set(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = false, bigEndian: Boolean = true) {
+        x.v = if (oneByteOneShort) bytes[index].s else bytes.getShort(index, bigEndian)
+        y.v = if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Ushort.BYTES, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneShort: Boolean = true) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneShort: Boolean = false) {
         x.v = if (oneByteOneShort) bytes[index].s else bytes.getShort(index)
         y.v = if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Ushort.BYTES)
     }
@@ -512,4 +512,5 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
 
 
     override fun equals(other: Any?) = other is Vec2us && this[0] == other[0] && this[1] == other[1]
+    override fun hashCode() = 31 * x.v.hashCode() + y.v.hashCode()
 }

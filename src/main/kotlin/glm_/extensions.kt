@@ -57,8 +57,8 @@ infix fun Int.xor(b: Char) = this xor b.i
 
 val Int.uc get() = (this % 256).c // TODO others
 
-fun ByteArray.getFloat(index: Int, bigEndianess: Boolean = true) = Float.intBitsToFloat(
-        if (bigEndianess) this[index].i and 0xFF or
+fun ByteArray.getFloat(index: Int, bigEndian: Boolean = true) = Float.intBitsToFloat(
+        if (bigEndian) this[index].i and 0xFF or
                 (this[index + 1].i and 0xFF shl 8) or
                 (this[index + 2].i and 0xFF shl 16) or
                 (this[index + 3].i and 0xFF shl 24)
@@ -68,8 +68,8 @@ fun ByteArray.getFloat(index: Int, bigEndianess: Boolean = true) = Float.intBits
                 (this[index].i and 0xFF shl 24)
 )
 
-fun ByteArray.getDouble(index: Int, bigEndianess: Boolean = true) = Double.longBitsToDouble(
-        if (bigEndianess) this[index].L and 0xFF or
+fun ByteArray.getDouble(index: Int, bigEndian: Boolean = true) = Double.longBitsToDouble(
+        if (bigEndian) this[index].L and 0xFF or
                 (this[index + 1].L and 0xFF shl 8) or
                 (this[index + 2].L and 0xFF shl 16) or
                 (this[index + 3].L and 0xFF shl 24) or
@@ -86,8 +86,8 @@ fun ByteArray.getDouble(index: Int, bigEndianess: Boolean = true) = Double.longB
                 (this[index + 1].L and 0xFF shl 48) or
                 (this[index].L and 0xFF shl 56))
 
-fun ByteArray.getInt(index: Int, bigEndianess: Boolean = true) =
-        if (bigEndianess) this[index].i and 0xFF or
+fun ByteArray.getInt(index: Int, bigEndian: Boolean = true) =
+        if (bigEndian) this[index].i and 0xFF or
                 (this[index + 1].i and 0xFF shl 8) or
                 (this[index + 2].i and 0xFF shl 16) or
                 (this[index + 3].i and 0xFF shl 24)
@@ -96,8 +96,8 @@ fun ByteArray.getInt(index: Int, bigEndianess: Boolean = true) =
                 (this[index + 1].i and 0xFF shl 16) or
                 (this[index].i and 0xFF shl 24)
 
-fun ByteArray.getLong(index: Int, bigEndianess: Boolean = true) =
-        if (bigEndianess) this[index].L and 0xFF or
+fun ByteArray.getLong(index: Int, bigEndian: Boolean = true) =
+        if (bigEndian) this[index].L and 0xFF or
                 (this[index + 1].L and 0xFF shl 8) or
                 (this[index + 2].L and 0xFF shl 16) or
                 (this[index + 3].L and 0xFF shl 24) or
@@ -114,17 +114,17 @@ fun ByteArray.getLong(index: Int, bigEndianess: Boolean = true) =
                 (this[index + 1].L and 0xFF shl 48) or
                 (this[index].L and 0xFF shl 56)
 
-fun ByteArray.getShort(index: Int, bigEndianess: Boolean = true) =
-        if (bigEndianess)
+fun ByteArray.getShort(index: Int, bigEndian: Boolean = true) =
+        if (bigEndian)
             this[index].s and 0xFF or (this[index + 1].s and 0xFF shl 8)
         else
             this[index + 1].s and 0xFF or (this[index].s and 0xFF shl 56)
 
 // skipping getUbyte, since it'main.getS a simply .main.getUb
-fun ByteArray.getUint(index: Int, bigEndianess: Boolean = true) = getInt(index, bigEndianess).ui
+fun ByteArray.getUint(index: Int, bigEndian: Boolean = true) = getInt(index, bigEndian).ui
 
-fun ByteArray.getUlong(index: Int, bigEndianess: Boolean = true) = getLong(index, bigEndianess).ul
-fun ByteArray.getUshort(index: Int, bigEndianess: Boolean = true) = getShort(index, bigEndianess).us
+fun ByteArray.getUlong(index: Int, bigEndian: Boolean = true) = getLong(index, bigEndian).ul
+fun ByteArray.getUshort(index: Int, bigEndian: Boolean = true) = getShort(index, bigEndian).us
 
 
 infix fun Byte.shl(other: Byte) = (i shl other.i).b
@@ -170,21 +170,21 @@ val String.us get() = Ushort(this)
 val String.bi get() = if (startsWith("0x")) BigInteger(substring(2), 16) else BigInteger(this)
 
 
-fun InputStream.int(bigEndianess: Boolean = true): Int {
+fun InputStream.int(bigEndian: Boolean = true): Int {
     val a = read()
     val b = read()
     val c = read()
     val d = read()
-    if (bigEndianess)
+    if (bigEndian)
         return (a shl 24) + (b shl 16) + (c shl 8) + d
     else
         return (d shl 24) + (c shl 16) + (b shl 8) + a
 }
 
-fun InputStream.short(bigEndianess: Boolean = true): Int {
+fun InputStream.short(bigEndian: Boolean = true): Int {
     val a = read()
     val b = read()
-    if (bigEndianess)
+    if (bigEndian)
         return (a shl 8) + b
     else
         return (b shl 8) + a
@@ -192,20 +192,20 @@ fun InputStream.short(bigEndianess: Boolean = true): Int {
 
 fun InputStream.byte() = read().b
 
-fun InputStream.float(bigEndianess: Boolean = true) = Float.intBitsToFloat(int(bigEndianess))
-fun InputStream.double(bigEndianess: Boolean = true) = Double.longBitsToDouble(long(bigEndianess))
+fun InputStream.float(bigEndian: Boolean = true) = Float.intBitsToFloat(int(bigEndian))
+fun InputStream.double(bigEndian: Boolean = true) = Double.longBitsToDouble(long(bigEndian))
 
-fun InputStream.long(bigEndianess: Boolean = true): Long {
-    val a = int(bigEndianess)
-    val b = int(bigEndianess)
+fun InputStream.long(bigEndian: Boolean = true): Long {
+    val a = int(bigEndian)
+    val b = int(bigEndian)
     return (b.L shl 32) + a
 }
 
-fun InputStream.mat4(bigEndianess: Boolean = true) = Mat4(
-        float(bigEndianess), float(bigEndianess), float(bigEndianess), float(bigEndianess),
-        float(bigEndianess), float(bigEndianess), float(bigEndianess), float(bigEndianess),
-        float(bigEndianess), float(bigEndianess), float(bigEndianess), float(bigEndianess),
-        float(bigEndianess), float(bigEndianess), float(bigEndianess), float(bigEndianess))
+fun InputStream.mat4(bigEndian: Boolean = true) = Mat4(
+        float(bigEndian), float(bigEndian), float(bigEndian), float(bigEndian),
+        float(bigEndian), float(bigEndian), float(bigEndian), float(bigEndian),
+        float(bigEndian), float(bigEndian), float(bigEndian), float(bigEndian),
+        float(bigEndian), float(bigEndian), float(bigEndian), float(bigEndian))
 
 val Any.toFloat: Float
     get() = when (this) {

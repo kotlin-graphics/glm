@@ -27,9 +27,9 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     constructor(v: Vec3bool) : this(v.x.ul, v.y.ul)
     constructor(v: Vec4bool) : this(v.x.ul, v.y.ul)
 
-    constructor(bytes: ByteArray, index: Int = 0, oneByteOneUlong: Boolean = true, bigEndianess: Boolean = true) : this(
-            if (oneByteOneUlong) bytes[index].ul else bytes.getUlong(index, bigEndianess),
-            if (oneByteOneUlong) bytes[index + 1].ul else bytes.getUlong(index + Ulong.BYTES, bigEndianess))
+    constructor(bytes: ByteArray, index: Int = 0, oneByteOneUlong: Boolean = false, bigEndian: Boolean = true) : this(
+            if (oneByteOneUlong) bytes[index].ul else bytes.getUlong(index, bigEndian),
+            if (oneByteOneUlong) bytes[index + 1].ul else bytes.getUlong(index + Ulong.BYTES, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].ul, chars[index + 1].ul)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1])
@@ -45,7 +45,7 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
 
     constructor(list: List<Any>, index: Int = 0) : this(list[index].toLong, list[index + 1].toLong)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUlong: Boolean = true) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUlong: Boolean = false) : this(
             if (oneByteOneUlong) bytes[index].ul else bytes.getLong(index).ul,
             if (oneByteOneUlong) bytes[index + 1].ul else bytes.getLong(index + Ulong.BYTES).ul)
 
@@ -60,12 +60,12 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     constructor(x: Number, y: Number) : this(x.ul, y.ul)
 
 
-    fun set(bytes: ByteArray, index: Int = 0, oneByteOneUlong: Boolean = true, bigEndianess: Boolean = true) {
-        x.v = if (oneByteOneUlong) bytes[index].L else bytes.getLong(index, bigEndianess)
-        y.v = if (oneByteOneUlong) bytes[index + 1].L else bytes.getLong(index + Ulong.BYTES, bigEndianess)
+    fun set(bytes: ByteArray, index: Int = 0, oneByteOneUlong: Boolean = false, bigEndian: Boolean = true) {
+        x.v = if (oneByteOneUlong) bytes[index].L else bytes.getLong(index, bigEndian)
+        y.v = if (oneByteOneUlong) bytes[index + 1].L else bytes.getLong(index + Ulong.BYTES, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUlong: Boolean = true) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUlong: Boolean = false) {
         x.v = if (oneByteOneUlong) bytes[index].L else bytes.getLong(index)
         y.v = if (oneByteOneUlong) bytes[index + 1].L else bytes.getLong(index + Ulong.BYTES)
     }
@@ -468,4 +468,5 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
 
 
     override fun equals(other: Any?) = other is Vec2ul && this[0] == other[0] && this[1] == other[1]
+    override fun hashCode() = 31 * x.v.hashCode() + y.v.hashCode()
 }

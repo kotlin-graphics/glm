@@ -59,8 +59,8 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 //        quat_cast(m, this)
 //    }
 
-    constructor(inputStream: InputStream, bigEndianess: Boolean = true) :
-            this(inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess))
+    constructor(inputStream: InputStream, bigEndian: Boolean = true) :
+            this(inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian))
 
     infix fun to(res: Mat3) = glm.mat3_cast(this, res)
     fun toMat3() = glm.mat3_cast(this, Mat3())
@@ -188,6 +188,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     override fun toString() = "($w | $x, $y, $z)"
 
     override fun equals(other: Any?) = other is Quat && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
+    override fun hashCode() = 31 * (31 * (31 * w.hashCode() + x.hashCode()) + y.hashCode()) + z.hashCode()
 
     @JvmOverloads
     fun vectorize(res: Vec4 = Vec4()) = res.put(x, y, z, w)

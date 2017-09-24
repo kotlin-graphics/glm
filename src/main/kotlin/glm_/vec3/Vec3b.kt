@@ -447,4 +447,5 @@ class Vec3b(x: Byte, y: Byte, z: Byte) : Vec3t<Byte>(x, y, z) {
 
 
     override fun equals(other: Any?) = other is Vec3b && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
+    override fun hashCode() = 31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()
 }

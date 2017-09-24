@@ -26,9 +26,9 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     constructor(v: Vec3bool) : this(v.x.i, v.y.i)
     constructor(v: Vec4bool) : this(v.x.i, v.y.i)
 
-    constructor(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = true, bigEndianess: Boolean = true) : this(
-            if (oneByteOneInt) bytes[index].i else bytes.getInt(index, bigEndianess),
-            if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES, bigEndianess))
+    constructor(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = false, bigEndian: Boolean = true) : this(
+            if (oneByteOneInt) bytes[index].i else bytes.getInt(index, bigEndian),
+            if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].i, chars[index + 1].i)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1])
@@ -44,7 +44,7 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
 
     constructor(list: List<Any>, index: Int = 0) : this(list[index].toInt, list[index + 1].toInt)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneInt: Boolean = true) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneInt: Boolean = false) : this(
             if (oneByteOneInt) bytes[index].i else bytes.getInt(index),
             if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES))
 
@@ -60,12 +60,12 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     constructor(x: IntBuffer, y: IntBuffer) : this(x[0], y[0]) // TODO others
 
 
-    fun set(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = true, bigEndianess: Boolean = true) {
-        x = if (oneByteOneInt) bytes[index].i else bytes.getInt(index, bigEndianess)
-        y = if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES, bigEndianess)
+    fun set(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = false, bigEndian: Boolean = true) {
+        x = if (oneByteOneInt) bytes[index].i else bytes.getInt(index, bigEndian)
+        y = if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneInt: Boolean = true) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneInt: Boolean = false) {
         x = if (oneByteOneInt) bytes[index].i else bytes.getInt(index)
         y = if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES)
     }
@@ -448,4 +448,5 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     infix fun greaterThanEqual(i: Int) = x >= i && y >= i
 
     override fun equals(other: Any?) = other is Vec2i && this[0] == other[0] && this[1] == other[1]
+    override fun hashCode() = 31 * x.hashCode() + y.hashCode()
 }

@@ -29,10 +29,10 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
     constructor(v: Vec3bool) : this(v.x.ui, v.y.ui, v.z.ui)
     constructor(v: Vec4bool) : this(v.x.ui, v.y.ui, v.z.ui)
 
-    constructor(bytes: ByteArray, index: Int = 0, oneByteOneUint: Boolean = true, bigEndianess: Boolean = true) : this(
-            if (oneByteOneUint) bytes[index].ui else bytes.getUint(index, bigEndianess),
-            if (oneByteOneUint) bytes[index + 1].ui else bytes.getUint(index + Uint.BYTES, bigEndianess),
-            if (oneByteOneUint) bytes[index + 2].ui else bytes.getUint(index + Uint.BYTES * 2, bigEndianess))
+    constructor(bytes: ByteArray, index: Int = 0, oneByteOneUint: Boolean = false, bigEndian: Boolean = true) : this(
+            if (oneByteOneUint) bytes[index].ui else bytes.getUint(index, bigEndian),
+            if (oneByteOneUint) bytes[index + 1].ui else bytes.getUint(index + Uint.BYTES, bigEndian),
+            if (oneByteOneUint) bytes[index + 2].ui else bytes.getUint(index + Uint.BYTES * 2, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].ui, chars[index + 1].ui, chars[index + 2].ui)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1], shorts[index + 2])
@@ -48,7 +48,7 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
 
     constructor(list: List<Any>, index: Int = 0) : this(list[index].toInt, list[index + 1].toInt, list[index + 2].toInt)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUint: Boolean = true) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUint: Boolean = false) : this(
             if (oneByteOneUint) bytes[index].ui else bytes.getInt(index).ui,
             if (oneByteOneUint) bytes[index + 1].ui else bytes.getInt(index + Uint.BYTES).ui,
             if (oneByteOneUint) bytes[index + 2].ui else bytes.getInt(index + Uint.BYTES * 2).ui)
@@ -64,13 +64,13 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
     constructor(x: Number, y: Number, z: Number) : this(x.ui, y.ui, z.ui)
 
 
-    fun set(bytes: ByteArray, index: Int = 0, oneByteOneUint: Boolean = true, bigEndianess: Boolean = true) {
-        x.v = if (oneByteOneUint) bytes[index].i else bytes.getInt(index, bigEndianess)
-        y.v = if (oneByteOneUint) bytes[index + 1].i else bytes.getInt(index + Uint.BYTES, bigEndianess)
-        z.v = if (oneByteOneUint) bytes[index + 2].i else bytes.getInt(index + Uint.BYTES * 2, bigEndianess)
+    fun set(bytes: ByteArray, index: Int = 0, oneByteOneUint: Boolean = false, bigEndian: Boolean = true) {
+        x.v = if (oneByteOneUint) bytes[index].i else bytes.getInt(index, bigEndian)
+        y.v = if (oneByteOneUint) bytes[index + 1].i else bytes.getInt(index + Uint.BYTES, bigEndian)
+        z.v = if (oneByteOneUint) bytes[index + 2].i else bytes.getInt(index + Uint.BYTES * 2, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUint: Boolean = true) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUint: Boolean = false) {
         x.v = if (oneByteOneUint) bytes[index].i else bytes.getInt(index)
         y.v = if (oneByteOneUint) bytes[index + 1].i else bytes.getInt(index + Uint.BYTES)
         z.v = if (oneByteOneUint) bytes[index + 2].i else bytes.getInt(index + Uint.BYTES * 2)
@@ -474,4 +474,5 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
 
 
     override fun equals(other: Any?) = other is Vec3ui && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
+    override fun hashCode() = 31 * (31 * x.v.hashCode() + y.v.hashCode()) + z.v.hashCode()
 }

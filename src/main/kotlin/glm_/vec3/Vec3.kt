@@ -30,10 +30,10 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     constructor(v: Vec3bool) : this(v.x.f, v.y.f, v.z.f)
     constructor(v: Vec4bool) : this(v.x.f, v.y.f, v.z.f)
 
-    constructor(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndianess: Boolean = true) : this(
-            if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndianess),
-            if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES, bigEndianess),
-            if (oneByteOneFloat) bytes[index + 2].f else bytes.getFloat(index + Float.BYTES * 2, bigEndianess))
+    constructor(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndian: Boolean = true) : this(
+            if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndian),
+            if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES, bigEndian),
+            if (oneByteOneFloat) bytes[index + 2].f else bytes.getFloat(index + Float.BYTES * 2, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].f, chars[index + 1].f, chars[index + 2].f)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1], shorts[index + 2])
@@ -65,14 +65,14 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     constructor(x: Number, y: Number, z: Number) : this(x.f, y.f, z.f)
 
 
-    constructor(inputStream: InputStream, bigEndianess: Boolean = true) :
-            this(inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess))
+    constructor(inputStream: InputStream, bigEndian: Boolean = true) :
+            this(inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian))
 
 
-    fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndianess: Boolean = true) {
-        x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndianess)
-        y = if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES, bigEndianess)
-        z = if (oneByteOneFloat) bytes[index + 2].f else bytes.getFloat(index + Float.BYTES * 2, bigEndianess)
+    fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndian: Boolean = true) {
+        x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndian)
+        y = if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES, bigEndian)
+        z = if (oneByteOneFloat) bytes[index + 2].f else bytes.getFloat(index + Float.BYTES * 2, bigEndian)
     }
 
     fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = false) {
@@ -143,6 +143,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
         2 -> z = s.f
         else -> throw ArrayIndexOutOfBoundsException()
     }
+
     companion object : vec3_operators {
         @JvmField
         val length = 3
@@ -331,6 +332,5 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
 
 
     override fun equals(other: Any?) = other is Vec3 && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
+    override fun hashCode() = 31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()
 }
-
-

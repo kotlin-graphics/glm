@@ -498,4 +498,5 @@ class Vec3ub(x: Ubyte, y: Ubyte, z: Ubyte) : Vec3t<Ubyte>(x, y, z) {
 
 
     override fun equals(other: Any?) = other is Vec3ub && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
+    override fun hashCode() = 31 * (31 * x.v.hashCode() + y.v.hashCode()) + z.v.hashCode()
 }

@@ -137,11 +137,11 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
                     Vec4(floats, 12)))
 
     // TODO others
-    constructor(inputStream: InputStream, bigEndianess: Boolean = true) : this(
-            inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess),
-            inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess),
-            inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess),
-            inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess), inputStream.float(bigEndianess))
+    constructor(inputStream: InputStream, bigEndian: Boolean = true) : this(
+            inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian),
+            inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian),
+            inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian),
+            inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian))
 
     fun put(v0: Vec4, v1: Vec4, v2: Vec4, v3: Vec4) {
         value[0] to v0
@@ -546,5 +546,5 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
             this[1, 0] == other[1, 0] && this[1, 1] == other[1, 1] && this[1, 2] == other[1, 2] && this[1, 3] == other[1, 3] &&
             this[2, 0] == other[2, 0] && this[2, 1] == other[2, 1] && this[2, 2] == other[2, 2] && this[2, 3] == other[2, 3] &&
             this[3, 0] == other[3, 0] && this[3, 1] == other[3, 1] && this[3, 2] == other[3, 2] && this[3, 3] == other[3, 3]
+    override fun hashCode() = 31 * (31 * (31 * value[0].hashCode() + value[1].hashCode()) + value[2].hashCode()) + value[3].hashCode()
 }
-

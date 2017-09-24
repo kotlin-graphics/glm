@@ -28,10 +28,10 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     constructor(v: Vec3bool) : this(v.x.s, v.y.s, v.z.s)
     constructor(v: Vec4bool) : this(v.x.s, v.y.s, v.z.s)
 
-    constructor(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = true, bigEndianess: Boolean = true) : this(
-            if (oneByteOneShort) bytes[index].s else bytes.getShort(index, bigEndianess),
-            if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Int.BYTES, bigEndianess),
-            if (oneByteOneShort) bytes[index + 2].s else bytes.getShort(index + Int.BYTES * 2, bigEndianess))
+    constructor(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = false, bigEndian: Boolean = true) : this(
+            if (oneByteOneShort) bytes[index].s else bytes.getShort(index, bigEndian),
+            if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Int.BYTES, bigEndian),
+            if (oneByteOneShort) bytes[index + 2].s else bytes.getShort(index + Int.BYTES * 2, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].s, chars[index + 1].s, chars[index + 2].s)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1], shorts[index + 2])
@@ -47,7 +47,7 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
 
     constructor(list: List<Any>, index: Int = 0) : this(list[index].toShort, list[index + 1].toShort, list[index + 2].toShort)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneShort: Boolean = true) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneShort: Boolean = false) : this(
             if (oneByteOneShort) bytes[index].s else bytes.getShort(index),
             if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Int.BYTES),
             if (oneByteOneShort) bytes[index + 2].s else bytes.getShort(index + Int.BYTES * 2))
@@ -63,13 +63,13 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     constructor(x: Number, y: Number, z: Number) : this(x.s, y.s, z.s)
 
 
-    fun set(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = true, bigEndianess: Boolean = true) {
-        x = if (oneByteOneShort) bytes[index].s else bytes.getShort(index, bigEndianess)
-        y = if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Short.BYTES, bigEndianess)
-        z = if (oneByteOneShort) bytes[index + 2].s else bytes.getShort(index + Short.BYTES * 2, bigEndianess)
+    fun set(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = false, bigEndian: Boolean = true) {
+        x = if (oneByteOneShort) bytes[index].s else bytes.getShort(index, bigEndian)
+        y = if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Short.BYTES, bigEndian)
+        z = if (oneByteOneShort) bytes[index + 2].s else bytes.getShort(index + Short.BYTES * 2, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneShort: Boolean = true) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneShort: Boolean = false) {
         x = if (oneByteOneShort) bytes[index].s else bytes.getShort(index)
         y = if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Short.BYTES)
         z = if (oneByteOneShort) bytes[index + 2].s else bytes.getShort(index + Short.BYTES * 2)
@@ -474,4 +474,5 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
 
 
     override fun equals(other: Any?) = other is Vec3s && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
+    override fun hashCode() = 31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()
 }

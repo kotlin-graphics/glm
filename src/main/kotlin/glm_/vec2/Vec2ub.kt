@@ -542,4 +542,5 @@ class Vec2ub(x: Ubyte, y: Ubyte) : Vec2t<Ubyte>(x, y) {
 
 
     override fun equals(other: Any?) = other is Vec2ub && this[0] == other[0] && this[1] == other[1]
+    override fun hashCode() = 31 * x.v.hashCode() + y.v.hashCode()
 }

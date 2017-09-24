@@ -32,8 +32,8 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
     constructor(v: Vec3bool) : this(v.x.f)
     constructor(v: Vec4bool) : this(v.x.f)
 
-    constructor(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = true, bigEndianess: Boolean = true)
-            : this(if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndianess))
+    constructor(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndian: Boolean = true)
+            : this(if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].f)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index])
@@ -51,7 +51,7 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
         put(list, index)
     }
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = true)
+    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = false)
             : this(if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index))
 
     constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].f)
@@ -64,11 +64,11 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
     constructor(s: Number) : this(s.f)
 
 
-    fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = true, bigEndianess: Boolean = true) {
-        x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndianess)
+    fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndian: Boolean = true) {
+        x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = true) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = false) {
         x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index)
     }
 
@@ -124,4 +124,5 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
     }
 
     override fun equals(other: Any?) = other is Vec1 && this[0] == other[0]
+    override fun hashCode() = x.hashCode()
 }

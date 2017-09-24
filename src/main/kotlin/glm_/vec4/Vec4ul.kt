@@ -30,11 +30,11 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     constructor(v: Vec3bool) : this(v.x.ul, v.y.ul, v.z.ul, 1)
     constructor(v: Vec4bool) : this(v.x.ul, v.y.ul, v.z.ul, v.w.ul)
 
-    constructor(bytes: ByteArray, index: Int = 0, oneByteOneUlong: Boolean = true, bigEndianess: Boolean = true) : this(
-            if (oneByteOneUlong) bytes[index].ul else bytes.getUlong(index, bigEndianess),
-            if (oneByteOneUlong) bytes[index + 1].ul else bytes.getUlong(index + Ulong.BYTES, bigEndianess),
-            if (oneByteOneUlong) bytes[index + 2].ul else bytes.getUlong(index + Ulong.BYTES * 2, bigEndianess),
-            if (oneByteOneUlong) bytes[index + 3].ul else bytes.getUlong(index + Ulong.BYTES * 3, bigEndianess))
+    constructor(bytes: ByteArray, index: Int = 0, oneByteOneUlong: Boolean = false, bigEndian: Boolean = true) : this(
+            if (oneByteOneUlong) bytes[index].ul else bytes.getUlong(index, bigEndian),
+            if (oneByteOneUlong) bytes[index + 1].ul else bytes.getUlong(index + Ulong.BYTES, bigEndian),
+            if (oneByteOneUlong) bytes[index + 2].ul else bytes.getUlong(index + Ulong.BYTES * 2, bigEndian),
+            if (oneByteOneUlong) bytes[index + 3].ul else bytes.getUlong(index + Ulong.BYTES * 3, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].ul, chars[index + 1].ul, chars[index + 2].ul, chars[index + 3].ul)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1], shorts[index + 2], shorts[index + 3])
@@ -50,7 +50,7 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
 
     constructor(list: List<Any>, index: Int = 0) : this(list[index].toLong, list[index + 1].toLong, list[index + 2].toLong, list[index + 3].toLong)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUlong: Boolean = true) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUlong: Boolean = false) : this(
             if (oneByteOneUlong) bytes[index].ul else bytes.getLong(index).ul,
             if (oneByteOneUlong) bytes[index + 1].ul else bytes.getLong(index + Ulong.BYTES).ul,
             if (oneByteOneUlong) bytes[index + 2].ul else bytes.getLong(index + Ulong.BYTES * 2).ul,
@@ -67,14 +67,14 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     constructor(x: Number, y: Number, z: Number, w: Number) : this(x.ul, y.ul, z.ul, w.ul)
 
 
-    fun set(bytes: ByteArray, index: Int = 0, oneByteOneUlong: Boolean = true, bigEndianess: Boolean = true) {
-        x.v = if (oneByteOneUlong) bytes[index].L else bytes.getLong(index, bigEndianess)
-        y.v = if (oneByteOneUlong) bytes[index + 1].L else bytes.getLong(index + Ulong.BYTES, bigEndianess)
-        z.v = if (oneByteOneUlong) bytes[index + 2].L else bytes.getLong(index + Ulong.BYTES * 2, bigEndianess)
-        w.v = if (oneByteOneUlong) bytes[index + 3].L else bytes.getLong(index + Ulong.BYTES * 3, bigEndianess)
+    fun set(bytes: ByteArray, index: Int = 0, oneByteOneUlong: Boolean = false, bigEndian: Boolean = true) {
+        x.v = if (oneByteOneUlong) bytes[index].L else bytes.getLong(index, bigEndian)
+        y.v = if (oneByteOneUlong) bytes[index + 1].L else bytes.getLong(index + Ulong.BYTES, bigEndian)
+        z.v = if (oneByteOneUlong) bytes[index + 2].L else bytes.getLong(index + Ulong.BYTES * 2, bigEndian)
+        w.v = if (oneByteOneUlong) bytes[index + 3].L else bytes.getLong(index + Ulong.BYTES * 3, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUlong: Boolean = true) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUlong: Boolean = false) {
         x.v = if (oneByteOneUlong) bytes[index].L else bytes.getLong(index)
         y.v = if (oneByteOneUlong) bytes[index + 1].L else bytes.getLong(index + Ulong.BYTES)
         z.v = if (oneByteOneUlong) bytes[index + 2].L else bytes.getLong(index + Ulong.BYTES * 2)
@@ -458,4 +458,5 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
 
 
     override fun equals(other: Any?) = other is Vec4ul && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
+    override fun hashCode() = 31 * (31 * (31 * x.v.hashCode() + y.v.hashCode()) + z.v.hashCode()) + w.v.hashCode()
 }

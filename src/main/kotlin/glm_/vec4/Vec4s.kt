@@ -29,11 +29,11 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
     constructor(v: Vec3bool) : this(v.x.s, v.y.s, v.z.s, 1)
     constructor(v: Vec4bool) : this(v.x.s, v.y.s, v.z.s, v.w.s)
 
-    constructor(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = true, bigEndianess: Boolean = true) : this(
-            if (oneByteOneShort) bytes[index].s else bytes.getShort(index, bigEndianess),
-            if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Short.BYTES, bigEndianess),
-            if (oneByteOneShort) bytes[index + 2].s else bytes.getShort(index + Short.BYTES * 2, bigEndianess),
-            if (oneByteOneShort) bytes[index + 3].s else bytes.getShort(index + Short.BYTES * 3, bigEndianess))
+    constructor(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = false, bigEndian: Boolean = true) : this(
+            if (oneByteOneShort) bytes[index].s else bytes.getShort(index, bigEndian),
+            if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Short.BYTES, bigEndian),
+            if (oneByteOneShort) bytes[index + 2].s else bytes.getShort(index + Short.BYTES * 2, bigEndian),
+            if (oneByteOneShort) bytes[index + 3].s else bytes.getShort(index + Short.BYTES * 3, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].s, chars[index + 1].s, chars[index + 2].s, chars[index + 3].s)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1], shorts[index + 2], shorts[index + 3])
@@ -49,7 +49,7 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
 
     constructor(list: List<Any>, index: Int = 0) : this(list[index].toShort, list[index + 1].toShort, list[index + 2].toShort, list[index + 3].toShort)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneShort: Boolean = true) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneShort: Boolean = false) : this(
             if (oneByteOneShort) bytes[index].s else bytes.getShort(index),
             if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Short.BYTES),
             if (oneByteOneShort) bytes[index + 2].s else bytes.getShort(index + Short.BYTES * 2),
@@ -66,14 +66,14 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
     constructor(x: Number, y: Number, z: Number, w: Number) : this(x.s, y.s, z.s, w.s)
 
 
-    fun set(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = true, bigEndianess: Boolean = true) {
-        x = if (oneByteOneShort) bytes[index].s else bytes.getShort(index, bigEndianess)
-        y = if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Short.BYTES, bigEndianess)
-        z = if (oneByteOneShort) bytes[index + 2].s else bytes.getShort(index + Short.BYTES * 2, bigEndianess)
-        w = if (oneByteOneShort) bytes[index + 3].s else bytes.getShort(index + Short.BYTES * 3, bigEndianess)
+    fun set(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = false, bigEndian: Boolean = true) {
+        x = if (oneByteOneShort) bytes[index].s else bytes.getShort(index, bigEndian)
+        y = if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Short.BYTES, bigEndian)
+        z = if (oneByteOneShort) bytes[index + 2].s else bytes.getShort(index + Short.BYTES * 2, bigEndian)
+        w = if (oneByteOneShort) bytes[index + 3].s else bytes.getShort(index + Short.BYTES * 3, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneShort: Boolean = true) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneShort: Boolean = false) {
         x = if (oneByteOneShort) bytes[index].s else bytes.getShort(index)
         y = if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Short.BYTES)
         z = if (oneByteOneShort) bytes[index + 2].s else bytes.getShort(index + Short.BYTES * 2)
@@ -489,4 +489,5 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
 
 
     override fun equals(other: Any?) = other is Vec4s && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
+    override fun hashCode() = 31 * (31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()) + w.hashCode()
 }

@@ -26,9 +26,9 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     constructor(v: Vec3bool) : this(v.x.f, v.y.f)
     constructor(v: Vec4bool) : this(v.x.f, v.y.f)
 
-    constructor(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndianess: Boolean = true) : this(
-            if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndianess),
-            if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES, bigEndianess))
+    constructor(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndian: Boolean = true) : this(
+            if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndian),
+            if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].f, chars[index + 1].f)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1])
@@ -59,14 +59,24 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     constructor(x: Number, y: Number) : this(x.f, y.f)
 
 
-    fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndianess: Boolean = true) {
-        x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndianess)
-        y = if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES, bigEndianess)
+    fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndian: Boolean = true) {
+        if (oneByteOneFloat) {
+            x = bytes[index].f
+            y = bytes[index + 1].f
+        }else {
+            x = bytes.getFloat(index, bigEndian)
+            y = bytes.getFloat(index + Float.BYTES, bigEndian)
+        }
     }
 
     fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = false) {
-        x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index)
-        y = if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES)
+        if (oneByteOneFloat) {
+            x = bytes[index].f
+            y = bytes[index + 1].f
+        }else {
+            x = bytes.getFloat(index)
+            y = bytes.getFloat(index + Float.BYTES)
+        }
     }
 
 
@@ -360,4 +370,5 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     fun negate_() = negate(this)
 
     override fun equals(other: Any?) = other is Vec2 && this[0] == other[0] && this[1] == other[1]
+    override fun hashCode() = 31 * x.hashCode() + y.hashCode()
 }

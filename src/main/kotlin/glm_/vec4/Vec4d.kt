@@ -29,11 +29,11 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     constructor(v: Vec3bool) : this(v.x.d, v.y.d, v.z.d, 1)
     constructor(v: Vec4bool) : this(v.x.d, v.y.d, v.z.d, v.w.d)
 
-    constructor(bytes: ByteArray, index: Int = 0, oneByteOneDouble: Boolean = true, bigEndianess: Boolean = true) : this(
-            if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index, bigEndianess),
-            if (oneByteOneDouble) bytes[index + 1].d else bytes.getDouble(index + Double.BYTES, bigEndianess),
-            if (oneByteOneDouble) bytes[index + 2].d else bytes.getDouble(index + Double.BYTES * 2, bigEndianess),
-            if (oneByteOneDouble) bytes[index + 3].d else bytes.getDouble(index + Double.BYTES * 3, bigEndianess))
+    constructor(bytes: ByteArray, index: Int = 0, oneByteOneDouble: Boolean = false, bigEndian: Boolean = true) : this(
+            if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index, bigEndian),
+            if (oneByteOneDouble) bytes[index + 1].d else bytes.getDouble(index + Double.BYTES, bigEndian),
+            if (oneByteOneDouble) bytes[index + 2].d else bytes.getDouble(index + Double.BYTES * 2, bigEndian),
+            if (oneByteOneDouble) bytes[index + 3].d else bytes.getDouble(index + Double.BYTES * 3, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].d, chars[index + 1].d, chars[index + 2].d, chars[index + 3].d)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1], shorts[index + 2], shorts[index + 3])
@@ -49,7 +49,7 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
 
     constructor(list: List<Any>, index: Int = 0) : this(list[index].toDouble, list[index + 1].toDouble, list[index + 2].toDouble, list[index + 3].toDouble)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneDouble: Boolean = true) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneDouble: Boolean = false) : this(
             if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index),
             if (oneByteOneDouble) bytes[index + 1].d else bytes.getDouble(index + Double.BYTES),
             if (oneByteOneDouble) bytes[index + 2].d else bytes.getDouble(index + Double.BYTES * 2),
@@ -66,14 +66,14 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     constructor(x: Number, y: Number, z: Number, w: Number) : this(x.d, y.d, z.d, w.d)
 
 
-    fun set(bytes: ByteArray, index: Int = 0, oneByteOneDouble: Boolean = true, bigEndianess: Boolean = true) {
-        x = if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index, bigEndianess)
-        y = if (oneByteOneDouble) bytes[index + 1].d else bytes.getDouble(index + Double.BYTES, bigEndianess)
-        z = if (oneByteOneDouble) bytes[index + 2].d else bytes.getDouble(index + Double.BYTES * 2, bigEndianess)
-        w = if (oneByteOneDouble) bytes[index + 3].d else bytes.getDouble(index + Double.BYTES * 3, bigEndianess)
+    fun set(bytes: ByteArray, index: Int = 0, oneByteOneDouble: Boolean = false, bigEndian: Boolean = true) {
+        x = if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index, bigEndian)
+        y = if (oneByteOneDouble) bytes[index + 1].d else bytes.getDouble(index + Double.BYTES, bigEndian)
+        z = if (oneByteOneDouble) bytes[index + 2].d else bytes.getDouble(index + Double.BYTES * 2, bigEndian)
+        w = if (oneByteOneDouble) bytes[index + 3].d else bytes.getDouble(index + Double.BYTES * 3, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneDouble: Boolean = true) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneDouble: Boolean = false) {
         x = if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index)
         y = if (oneByteOneDouble) bytes[index + 1].d else bytes.getDouble(index + Double.BYTES)
         z = if (oneByteOneDouble) bytes[index + 2].d else bytes.getDouble(index + Double.BYTES * 2)
@@ -290,4 +290,5 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     fun length() = glm.length(this)
 
     override fun equals(other: Any?) = other is Vec4d && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
+    override fun hashCode() = 31 * (31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()) + w.hashCode()
 }
