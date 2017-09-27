@@ -88,7 +88,7 @@ class Vec1ub(x: Ubyte) : Vec1t<Ubyte>(x) {
 
     companion object : vec2ub_operators {
         @JvmField
-        val length = 2
+        val length = 1
         @JvmField
         val size = length * Ubyte.BYTES
     }
