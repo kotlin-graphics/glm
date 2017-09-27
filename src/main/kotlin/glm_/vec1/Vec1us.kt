@@ -60,7 +60,7 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = false, bigEndian: Boolean = true) {
-        x.v = if (oneByteOneShort) bytes[index].s else bytes.getShort(index, bigEndian))
+        x.v = if (oneByteOneShort) bytes[index].s else bytes.getShort(index, bigEndian)
     }
 
     fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneShort: Boolean = false) {
