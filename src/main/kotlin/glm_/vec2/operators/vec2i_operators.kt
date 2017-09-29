@@ -91,6 +91,13 @@ interface vec2i_operators {
         return res
     }
 
+    // TODO others
+    fun ushr(res: Vec2i, a: Vec2i, bX: Int, bY: Int): Vec2i {
+        res.x = a.x ushr bX
+        res.y = a.y ushr bY
+        return res
+    }
+
     fun inv(res: Vec2i, a: Vec2i): Vec2i {
         res.x = a.x.inv()
         res.y = a.y.inv()
