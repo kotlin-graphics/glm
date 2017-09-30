@@ -123,6 +123,10 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
         val size = length * Int.BYTES
     }
 
+
+    fun div(b: Vec1i, res: Vec1i) = div(res, this, b.x)
+
+
     override fun equals(other: Any?) = other is Vec1i && this[0] == other[0]
     override fun hashCode() = x.hashCode()
 }
