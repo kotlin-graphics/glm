@@ -367,6 +367,10 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     fun shr_(bX: Int, bY: Int) = shr(this, this, bX, bY)
 
 
+    // TODO fill & others
+    infix fun ushr(b: Int) = ushr(Vec2i(), this, b, b)
+
+
     @JvmOverloads
     fun inv(res: Vec2i = Vec2i()) = inv(res, this)
 

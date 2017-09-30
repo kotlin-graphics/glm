@@ -8,6 +8,13 @@ import glm_.vec3.Vec3i
 
 interface round {
 
+    fun floorMultiple(source: Int, multiple: Int) = when {
+        source > 0 -> source - source % multiple
+        else -> {
+            val tmp = source + 1
+            tmp - tmp % multiple - multiple
+        }
+    }
 
     fun ceilMultiple(source: Float, multiple: Float) =
             if (source > 0) source + (multiple - source % multiple)

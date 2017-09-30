@@ -58,7 +58,11 @@ object glm :
         packing,
         func_packing,
 
-        random {
+        random,
+
+        optimumPow,
+
+        gradientPaint {
 
     @JvmField
     val detail = Detail

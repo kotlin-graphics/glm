@@ -1,5 +1,7 @@
 package glm_.func
 
+import glm_.d
+import glm_.i
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2d
 import glm_.vec3.Vec3
@@ -212,6 +214,7 @@ interface func_exponential {
 
     fun log2(a: Double) = _log2(a)
     fun log2(a: Float) = _log2(a)
+    fun log2(a: Int) = _log2(a.d).i
 
     fun log2(a: Vec2, res: Vec2 = Vec2()) {
         res.x = log2(a.x)
