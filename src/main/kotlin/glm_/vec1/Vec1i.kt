@@ -4,6 +4,7 @@ import glm_.BYTES
 import glm_.getInt
 import glm_.i
 import glm_.set
+import glm_.vec1.operators.vec1i_operators
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -115,7 +116,7 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
-    companion object {//TODO : vec2b_operators {
+    companion object : vec1i_operators {
     @JvmField
     val length = 1
         @JvmField

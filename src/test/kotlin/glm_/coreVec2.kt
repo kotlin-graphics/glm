@@ -6,10 +6,10 @@ package glm_
 
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2i
-import glm_.vec2.operators.div
-import glm_.vec2.operators.minus
-import glm_.vec2.operators.plus
-import glm_.vec2.operators.times
+import glm_.vec1.operators.div
+import glm_.vec1.operators.minus
+import glm_.vec1.operators.plus
+import glm_.vec1.operators.times
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
 

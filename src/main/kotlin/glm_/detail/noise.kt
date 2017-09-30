@@ -4,8 +4,7 @@ import glm_.glm.floor
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
-import glm_.vec2.operators.minus
-import glm_.vec2.operators.times
+import glm_.vec1.operators.times
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
