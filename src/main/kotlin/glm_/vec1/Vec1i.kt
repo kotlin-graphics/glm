@@ -124,7 +124,56 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     }
 
 
+    // -- Specific binary arithmetic operators --
+
+    infix operator fun plus(b: Int) = plus(Vec1i(), this, b)
+    infix operator fun plus(b: Vec1i) = plus(Vec1i(), this, b.x)
+
+    fun plus(b: Int, res: Vec1i) = plus(res, this, b)
+    fun plus(b: Vec1i, res: Vec1i) = plus(res, this, b.x)
+
+    infix fun plus_(b: Int) = plus(this, this, b)
+    infix fun plus_(b: Vec1i) = plus(this, this, b.x)
+
+
+    infix operator fun minus(b: Int) = minus(Vec1i(), this, b)
+    infix operator fun minus(b: Vec1i) = minus(Vec1i(), this, b.x)
+
+    fun minus(b: Int, res: Vec1i) = minus(res, this, b)
+    fun minus(b: Vec1i, res: Vec1i) = minus(res, this, b.x)
+
+    infix fun minus_(b: Int) = minus(this, this, b)
+    infix fun minus_(b: Vec1i) = minus(this, this, b.x)
+
+
+    infix operator fun times(b: Int) = times(Vec1i(), this, b)
+    infix operator fun times(b: Vec1i) = times(Vec1i(), this, b.x)
+
+    fun times(b: Int, res: Vec1i) = times(res, this, b)
+    fun times(b: Vec1i, res: Vec1i) = times(res, this, b.x)
+
+    infix fun times_(b: Int) = times(this, this, b)
+    infix fun times_(b: Vec1i) = times(this, this, b.x)
+
+
+    infix operator fun div(b: Int) = div(Vec1i(), this, b)
+    infix operator fun div(b: Vec1i) = div(Vec1i(), this, b.x)
+
+    fun div(b: Int, res: Vec1i) = div(res, this, b)
     fun div(b: Vec1i, res: Vec1i) = div(res, this, b.x)
+
+    infix fun div_(b: Int) = div(this, this, b)
+    infix fun div_(b: Vec1i) = div(this, this, b.x)
+
+
+    infix operator fun rem(b: Int) = rem(Vec1i(), this, b)
+    infix operator fun rem(b: Vec1i) = rem(Vec1i(), this, b.x)
+
+    fun rem(b: Int, res: Vec1i) = rem(res, this, b)
+    fun rem(b: Vec1i, res: Vec1i) = rem(res, this, b.x)
+
+    infix fun rem_(b: Int) = rem(this, this, b)
+    infix fun rem_(b: Vec1i) = rem(this, this, b.x)
 
 
     override fun equals(other: Any?) = other is Vec1i && this[0] == other[0]
