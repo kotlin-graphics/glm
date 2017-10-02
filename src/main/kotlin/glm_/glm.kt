@@ -88,66 +88,6 @@ class Java {
 
     companion object {
         @JvmField
-        val glm = Glm
-    }
-
-    object Glm :
-            mat2x2_operators,
-            mat3x3_operators,
-            mat4x4_operators,
-
-            func_common,
-            func_vector2_common,
-            func_vector3_common,
-            func_vector4_common,
-
-            func_vector1_relational,
-            func_vector2_relational,
-            func_vector3_relational,
-            func_vector4_relational,
-            func_vectorBoolean_relational,
-
-            func_matrix,
-
-            func_exponential,
-            func_geometric,
-            func_trigonometric,
-
-            matrix_transform,
-            quat_func,
-
-            epsilon,
-
-            componentWise,
-
-            round,
-
-            func_integer,
-
-            bitfield,
-
-            colorSpace,
-
-            gauss,
-
-            noise,
-
-            packing,
-            func_packing,
-
-            random {
-
-        @JvmField
-        val detail = Detail
-
-        @JvmField
-        val PI = kotlin.math.PI
-        @JvmField
-        val PIf = kotlin.math.PI.f
-
-        @JvmField
-        val epsilonF = 1.1920928955078125e-7f
-        @JvmField
-        val epsilon = 2.2204460492503131e-16
+        val glm = glm_.glm
     }
 }

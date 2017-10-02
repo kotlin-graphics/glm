@@ -1,22 +1,23 @@
 package glm_;
 
-import glm_.Java.Glm;
 import glm_.mat4x4.Mat4;
 import glm_.vec2.Vec2;
 import glm_.vec3.Vec3;
 
-//import static glm.Java.glm;
+//import static glm_.glm;
+
+import static glm_.Java.glm;
 
 /**
  * Created by GBarbieri on 08.02.2017.
  */
 public class Test {
 
-    final static Glm glm = Glm.INSTANCE;
+//    final static Glm glm = Glm.INSTANCE;
 
     public static void main(String[] argvs) {
         glm.normalize(3.4);
-        Glm.detail.mod289(new Vec2());
+        glm.detail.mod289(new Vec2());
 
         Vec2 v = new Vec2(3, 4);
 
