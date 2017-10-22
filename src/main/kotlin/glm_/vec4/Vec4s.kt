@@ -109,11 +109,11 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
     }
 
     override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    override fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
-        bytes.putShort(offset, x)
-        bytes.putShort(offset + Short.BYTES, y)
-        bytes.putShort(offset + Short.BYTES * 2, z)
-        bytes.putShort(offset + Short.BYTES * 3, w)
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putShort(index, x)
+        bytes.putShort(index + Short.BYTES, y)
+        bytes.putShort(index + Short.BYTES * 2, z)
+        bytes.putShort(index + Short.BYTES * 3, w)
         return bytes
     }
 
