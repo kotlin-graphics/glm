@@ -28,7 +28,7 @@ class coreVec2 : StringSpec() {
                 (a != b) shouldBe false
             }
             run {
-                var a = Vec2(1f)
+                val a = Vec2(1f)
                 val c = a + 1f
                 a += 1f
 
@@ -36,7 +36,7 @@ class coreVec2 : StringSpec() {
                 a shouldBe c
             }
             run {
-                var a = Vec2(1f)
+                val a = Vec2(1f)
                 val b = Vec2(2f, -1f)
                 val c = a + b
                 a += b
@@ -45,7 +45,7 @@ class coreVec2 : StringSpec() {
                 a shouldBe c
             }
             run {
-                var a = Vec2(1f)
+                val a = Vec2(1f)
                 val c = a - 1f
                 a -= 1f
 
@@ -53,7 +53,7 @@ class coreVec2 : StringSpec() {
                 a shouldBe c
             }
             run {
-                var a = Vec2(1f)
+                val a = Vec2(1f)
                 val b = Vec2(2f, -1f)
                 val c = a - b
                 a -= b
@@ -61,7 +61,7 @@ class coreVec2 : StringSpec() {
                 a shouldBe c
             }
             run {
-                var a = Vec2(1f)
+                val a = Vec2(1f)
                 val c = a * 2f
                 a *= 2f
 
@@ -69,7 +69,7 @@ class coreVec2 : StringSpec() {
                 a shouldBe c
             }
             run {
-                var a = Vec2(2f)
+                val a = Vec2(2f)
                 val b = Vec2(2f)
                 val c = a / b
                 a /= b
@@ -117,7 +117,7 @@ class coreVec2 : StringSpec() {
                 n shouldBe Vec2(.5f, 2f / 5f)
             }
             run {
-                var a = Vec2(1f, 2f)
+                val a = Vec2(1f, 2f)
                 val b = Vec2(4f, 5f)
 
                 a += b
@@ -128,7 +128,7 @@ class coreVec2 : StringSpec() {
             }
             run {
                 val a = Vec2(1f, 2f)
-                var b = Vec2(4f, 5f)
+                val b = Vec2(4f, 5f)
 
                 b -= a
                 b shouldBe Vec2(3f)
@@ -137,7 +137,7 @@ class coreVec2 : StringSpec() {
                 b shouldBe Vec2(2f)
             }
             run {
-                var a = Vec2(1f, 2f)
+                val a = Vec2(1f, 2f)
                 val b = Vec2(4f, 5f)
 
                 a *= b
@@ -148,7 +148,7 @@ class coreVec2 : StringSpec() {
             }
             run {
                 val a = Vec2(1f, 2f)
-                var b = Vec2(4f, 5f)
+                val b = Vec2(4f, 5f)
 
                 b /= a
                 b shouldBe Vec2(4f, 2.5f)
@@ -157,7 +157,7 @@ class coreVec2 : StringSpec() {
                 b shouldBe Vec2(2f, 1.25f)
             }
             run {
-                var b = Vec2(2f)
+                val b = Vec2(2f)
 
                 b /= b.y
                 b shouldBe Vec2(1f)
@@ -197,14 +197,14 @@ class coreVec2 : StringSpec() {
             // custom
             run {
                 val a = Vec2(1f, 2f)
-                a plus_ 1f
+                a += 1f
 
                 a shouldBe Vec2(2f, 3f)
             }
             run {
                 val a = Vec2(1f, 2f)
                 val b = Vec2(3f, 4f)
-                a plus_ b
+                a += b
 
                 a shouldBe Vec2(4f, 6f)
             }
@@ -213,7 +213,7 @@ class coreVec2 : StringSpec() {
         "operatorsGeneric" {
 
             run {
-                var a = Vec2(1f)
+                val a = Vec2(1f)
                 val c = a + 1
                 a += 1L
 
@@ -221,7 +221,7 @@ class coreVec2 : StringSpec() {
                 a shouldBe c
             }
             run {
-                var a = Vec2(1f)
+                val a = Vec2(1f)
                 val b = Vec2(2f, -1f)
                 val c = a + b
                 a += b
@@ -230,7 +230,7 @@ class coreVec2 : StringSpec() {
                 a shouldBe c
             }
             run {
-                var a = Vec2(1f)
+                val a = Vec2(1f)
                 val c = a - 1f
                 a -= 1f
 
@@ -238,7 +238,7 @@ class coreVec2 : StringSpec() {
                 a shouldBe c
             }
             run {
-                var a = Vec2(1f)
+                val a = Vec2(1f)
                 val b = Vec2(2f, -1f)
                 val c = a - b
                 a -= b
@@ -246,7 +246,7 @@ class coreVec2 : StringSpec() {
                 a shouldBe c
             }
             run {
-                var a = Vec2(1f)
+                val a = Vec2(1f)
                 val c = a * 2f
                 a *= 2f
 
@@ -254,7 +254,7 @@ class coreVec2 : StringSpec() {
                 a shouldBe c
             }
             run {
-                var a = Vec2(2f)
+                val a = Vec2(2f)
                 val b = Vec2(2f)
                 val c = a / b
                 a /= b
@@ -302,7 +302,7 @@ class coreVec2 : StringSpec() {
                 n shouldBe Vec2(.5f, 2f / 5f)
             }
             run {
-                var a = Vec2(1f, 2f)
+                val a = Vec2(1f, 2f)
                 val b = Vec2(4f, 5f)
 
                 a += b
@@ -313,7 +313,7 @@ class coreVec2 : StringSpec() {
             }
             run {
                 val a = Vec2(1f, 2f)
-                var b = Vec2(4f, 5f)
+                val b = Vec2(4f, 5f)
 
                 b -= a
                 b shouldBe Vec2(3f)
@@ -322,7 +322,7 @@ class coreVec2 : StringSpec() {
                 b shouldBe Vec2(2f)
             }
             run {
-                var a = Vec2(1f, 2f)
+                val a = Vec2(1f, 2f)
                 val b = Vec2(4f, 5f)
 
                 a *= b
@@ -333,7 +333,7 @@ class coreVec2 : StringSpec() {
             }
             run {
                 val a = Vec2(1f, 2f)
-                var b = Vec2(4f, 5f)
+                val b = Vec2(4f, 5f)
 
                 b /= a
                 b shouldBe Vec2(4f, 2.5f)
@@ -342,7 +342,7 @@ class coreVec2 : StringSpec() {
                 b shouldBe Vec2(2f, 1.25f)
             }
             run {
-                var b = Vec2(2f)
+                val b = Vec2(2f)
 
                 b /= b.y
                 b shouldBe Vec2(1f)
@@ -382,14 +382,14 @@ class coreVec2 : StringSpec() {
             // custom
             run {
                 val a = Vec2(1f, 2f)
-                a plus_ 1f
+                a += 1f
 
                 a shouldBe Vec2(2f, 3f)
             }
             run {
                 val a = Vec2(1f, 2f)
                 val b = Vec2(3f, 4f)
-                a plus_ b
+                a += b
 
                 a shouldBe Vec2(4f, 6f)
             }
@@ -457,4 +457,11 @@ class coreVec2 : StringSpec() {
             a shouldBe Vec2(1, 2)
         }
     }
+}
+
+fun main(args: Array<String>) {
+    val a = Vec2(0)
+    val b = Vec2( 1)
+    val c = Vec2( 2)
+    a += b * c
 }

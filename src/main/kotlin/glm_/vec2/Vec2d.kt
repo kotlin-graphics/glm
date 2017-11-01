@@ -1,7 +1,7 @@
 package glm_.vec2
 
 import glm_.*
-import glm_.vec2.operators.vec2d_operators
+import glm_.vec2.operators.opVec2d
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
@@ -126,7 +126,7 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     }
 
 
-    companion object : vec2d_operators {
+    companion object : opVec2d() {
         @JvmField
         val length = 2
         @JvmField
@@ -144,12 +144,12 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
 
     operator fun inc() = plus(Vec2d(), this, 1.0, 1.0)
     infix fun inc(res: Vec2d) = plus(res, this, 1.0, 1.0)
-    fun inc_() = plus(this, this, 1.0, 1.0)
+    fun incAssign() = plus(this, this, 1.0, 1.0)
 
 
     operator fun dec() = minus(Vec2d(), this, 1.0, 1.0)
     infix fun dec(res: Vec2d) = minus(res, this, 1.0, 1.0)
-    fun dec_() = minus(this, this, 1.0, 1.0)
+    fun decAssign() = minus(this, this, 1.0, 1.0)
 
 
     // -- Specific binary arithmetic operators --
@@ -163,9 +163,14 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     fun plus(b: Double, res: Vec2d) = plus(res, this, b, b)
     fun plus(b: Vec2d, res: Vec2d) = plus(res, this, b.x, b.y)
 
-    fun plus_(bX: Double, bY: Double) = plus(this, this, bX, bY)
-    infix fun plus_(b: Double) = plus(this, this, b, b)
-    infix fun plus_(b: Vec2d) = plus(this, this, b.x, b.y)
+    fun plusAssign(bX: Double, bY: Double) = plus(this, this, bX, bY)
+    infix operator fun plusAssign(b: Double) {
+        plus(this, this, b, b)
+    }
+
+    infix operator fun plusAssign(b: Vec2d) {
+        plus(this, this, b.x, b.y)
+    }
 
 
     infix operator fun minus(b: Double) = minus(Vec2d(), this, b, b)
@@ -177,9 +182,14 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     fun minus(b: Double, res: Vec2d) = minus(res, this, b, b)
     fun minus(b: Vec2d, res: Vec2d) = minus(res, this, b.x, b.y)
 
-    fun minus_(bX: Double, bY: Double) = minus(this, this, bX, bY)
-    infix fun minus_(b: Double) = minus(this, this, b, b)
-    infix fun minus_(b: Vec2d) = minus(this, this, b.x, b.y)
+    fun minusAssign(bX: Double, bY: Double) = minus(this, this, bX, bY)
+    infix operator fun minusAssign(b: Double) {
+        minus(this, this, b, b)
+    }
+
+    infix operator fun minusAssign(b: Vec2d) {
+        minus(this, this, b.x, b.y)
+    }
 
 
     infix operator fun times(b: Double) = times(Vec2d(), this, b, b)
@@ -191,9 +201,14 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     fun times(b: Double, res: Vec2d) = times(res, this, b, b)
     fun times(b: Vec2d, res: Vec2d) = times(res, this, b.x, b.y)
 
-    fun times_(bX: Double, bY: Double) = times(this, this, bX, bY)
-    infix fun times_(b: Double) = times(this, this, b, b)
-    infix fun times_(b: Vec2d) = times(this, this, b.x, b.y)
+    fun timesAssign(bX: Double, bY: Double) = times(this, this, bX, bY)
+    infix operator fun timesAssign(b: Double) {
+        times(this, this, b, b)
+    }
+
+    infix operator fun timesAssign(b: Vec2d) {
+        times(this, this, b.x, b.y)
+    }
 
 
     infix operator fun div(b: Double) = div(Vec2d(), this, b, b)
@@ -205,9 +220,14 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     fun div(b: Double, res: Vec2d) = div(res, this, b, b)
     fun div(b: Vec2d, res: Vec2d) = div(res, this, b.x, b.y)
 
-    fun div_(bX: Double, bY: Double) = div(this, this, bX, bY)
-    infix fun div_(b: Double) = div(this, this, b, b)
-    infix fun div_(b: Vec2d) = div(this, this, b.x, b.y)
+    fun divAssign(bX: Double, bY: Double) = div(this, this, bX, bY)
+    infix operator fun divAssign(b: Double) {
+        div(this, this, b, b)
+    }
+
+    infix operator fun divAssign(b: Vec2d) {
+        div(this, this, b.x, b.y)
+    }
 
 
     infix operator fun rem(b: Double) = rem(Vec2d(), this, b, b)
@@ -219,9 +239,14 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     fun rem(b: Double, res: Vec2d) = rem(res, this, b, b)
     fun rem(b: Vec2d, res: Vec2d) = rem(res, this, b.x, b.y)
 
-    fun rem_(bX: Double, bY: Double) = rem(this, this, bX, bY)
-    infix fun rem_(b: Double) = rem(this, this, b, b)
-    infix fun rem_(b: Vec2d) = rem(this, this, b.x, b.y)
+    fun remAssign(bX: Double, bY: Double) = rem(this, this, bX, bY)
+    infix operator fun remAssign(b: Double) {
+        rem(this, this, b, b)
+    }
+
+    infix operator fun remAssign(b: Vec2d) {
+        rem(this, this, b.x, b.y)
+    }
 
 
     // -- Generic binary arithmetic operators --
@@ -235,9 +260,14 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     fun plus(b: Number, res: Vec2d) = plus(res, this, b.d, b.d)
     fun plus(b: Vec2t<out Number>, res: Vec2d) = plus(res, this, b.x.d, b.y.d)
 
-    fun plus_(bX: Number, bY: Number) = plus(this, this, bX.d, bY.d)
-    infix fun plus_(b: Number) = plus(this, this, b.d, b.d)
-    infix fun plus_(b: Vec2t<out Number>) = plus(this, this, b.x.d, b.y.d)
+    fun plusAssign(bX: Number, bY: Number) = plus(this, this, bX.d, bY.d)
+    infix operator fun plusAssign(b: Number) {
+        plus(this, this, b.d, b.d)
+    }
+
+    infix operator fun plusAssign(b: Vec2t<out Number>) {
+        plus(this, this, b.x.d, b.y.d)
+    }
 
 
     infix operator fun minus(b: Number) = minus(Vec2d(), this, b.d, b.d)
@@ -249,9 +279,14 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     fun minus(b: Number, res: Vec2d) = minus(res, this, b.d, b.d)
     fun minus(b: Vec2t<out Number>, res: Vec2d) = minus(res, this, b.x.d, b.y.d)
 
-    fun minus_(bX: Number, bY: Number) = minus(this, this, bX.d, bY.d)
-    infix fun minus_(b: Number) = minus(this, this, b.d, b.d)
-    infix fun minus_(b: Vec2t<out Number>) = minus(this, this, b.x.d, b.y.d)
+    fun minusAssign(bX: Number, bY: Number) = minus(this, this, bX.d, bY.d)
+    infix operator fun minusAssign(b: Number) {
+        minus(this, this, b.d, b.d)
+    }
+
+    infix operator fun minusAssign(b: Vec2t<out Number>) {
+        minus(this, this, b.x.d, b.y.d)
+    }
 
 
     infix operator fun times(b: Number) = times(Vec2d(), this, b.d, b.d)
@@ -263,9 +298,14 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     fun times(b: Number, res: Vec2d) = times(res, this, b.d, b.d)
     fun times(b: Vec2t<out Number>, res: Vec2d) = times(res, this, b.x.d, b.y.d)
 
-    fun times_(bX: Number, bY: Number) = times(this, this, bX.d, bY.d)
-    infix fun times_(b: Number) = times(this, this, b.d, b.d)
-    infix fun times_(b: Vec2t<out Number>) = times(this, this, b.x.d, b.y.d)
+    fun timesAssign(bX: Number, bY: Number) = times(this, this, bX.d, bY.d)
+    infix operator fun timesAssign(b: Number) {
+        times(this, this, b.d, b.d)
+    }
+
+    infix operator fun timesAssign(b: Vec2t<out Number>) {
+        times(this, this, b.x.d, b.y.d)
+    }
 
 
     infix operator fun div(b: Number) = div(Vec2d(), this, b.d, b.d)
@@ -277,9 +317,14 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     fun div(b: Number, res: Vec2d) = div(res, this, b.d, b.d)
     fun div(b: Vec2t<out Number>, res: Vec2d) = div(res, this, b.x.d, b.y.d)
 
-    fun div_(bX: Number, bY: Number) = div(this, this, bX.d, bY.d)
-    infix fun div_(b: Number) = div(this, this, b.d, b.d)
-    infix fun div_(b: Vec2t<out Number>) = div(this, this, b.x.d, b.y.d)
+    fun divAssign(bX: Number, bY: Number) = div(this, this, bX.d, bY.d)
+    infix operator fun divAssign(b: Number) {
+        div(this, this, b.d, b.d)
+    }
+
+    infix operator fun divAssign(b: Vec2t<out Number>) {
+        div(this, this, b.x.d, b.y.d)
+    }
 
 
     infix operator fun rem(b: Number) = rem(Vec2d(), this, b.d, b.d)
@@ -291,9 +336,14 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     fun rem(b: Number, res: Vec2d) = rem(res, this, b.d, b.d)
     fun rem(b: Vec2t<out Number>, res: Vec2d) = rem(res, this, b.x.d, b.y.d)
 
-    fun rem_(bX: Number, bY: Number) = rem(this, this, bX.d, bY.d)
-    infix fun rem_(b: Number) = rem(this, this, b.d, b.d)
-    infix fun rem_(b: Vec2t<out Number>) = rem(this, this, b.x.d, b.y.d)
+    fun remAssign(bX: Number, bY: Number) = rem(this, this, bX.d, bY.d)
+    infix operator fun remAssign(b: Number) {
+        rem(this, this, b.d, b.d)
+    }
+
+    infix operator fun remAssign(b: Vec2t<out Number>) {
+        rem(this, this, b.x.d, b.y.d)
+    }
 
 
     // -- functions --
@@ -303,7 +353,7 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     @JvmOverloads
     fun normalize(res: Vec2d = Vec2d()) = glm.normalize(this, res) // TODO others
 
-    fun normalize_() = glm.normalize(this, this)
+    fun normalizeAssign() = glm.normalize(this, this)
 
     @JvmOverloads
     fun negate(res: Vec2d = Vec2d()): Vec2d {
@@ -312,7 +362,7 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
         return res
     }
 
-    fun negate_() = negate(this)
+    fun negateAssign() = negate(this)
 
 
     override fun equals(other: Any?) = other is Vec2d && this[0] == other[0] && this[1] == other[1]
