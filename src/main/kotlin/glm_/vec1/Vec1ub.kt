@@ -5,7 +5,7 @@ import glm_.toByte
 import glm_.ub
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
-import glm_.vec2.operators.vec2ub_operators
+import glm_.vec2.operators.opVec2ub
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
@@ -86,7 +86,7 @@ class Vec1ub(x: Ubyte) : Vec1t<Ubyte>(x) {
     }
 
 
-    companion object : vec2ub_operators {
+    companion object /*: opVec2ub*/ {
         @JvmField
         val length = 1
         @JvmField

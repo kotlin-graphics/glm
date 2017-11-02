@@ -126,7 +126,7 @@ class Vec2l(x: Long, y: Long) : Vec2t<Long>(x, y) {
     }
 
 
-    companion object : opVec2l {
+    companion object : opVec2l() {
         @JvmField
         val length = 2
         @JvmField
