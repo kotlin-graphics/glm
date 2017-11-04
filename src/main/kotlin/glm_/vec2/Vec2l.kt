@@ -1,7 +1,7 @@
 package glm_.vec2
 
 import glm_.*
-import glm_.vec2.operators.vec2l_operators
+import glm_.vec2.operators.opVec2l
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
@@ -126,7 +126,7 @@ class Vec2l(x: Long, y: Long) : Vec2t<Long>(x, y) {
     }
 
 
-    companion object : vec2l_operators {
+    companion object : opVec2l() {
         @JvmField
         val length = 2
         @JvmField

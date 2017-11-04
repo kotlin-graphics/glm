@@ -42,8 +42,8 @@ class coreVec2i : StringSpec() {
             run {
                 val v1 = Vec2i(1, 1)
                 val v2 = Vec2i(2, 2)
-                var v3 = Vec2i(3, 2)
-                var v4 = Vec2i(3, -2)
+                val v3 = Vec2i(3, 2)
+                val v4 = Vec2i(3, -2)
                 val r2 = Vec2i(4, 6)
                 v3 += 1
                 v4 += v1
@@ -59,7 +59,7 @@ class coreVec2i : StringSpec() {
             run {
                 val v1 = Vec2i(1, 0)
                 val v2 = Vec2i(2, 3)
-                var v3 = Vec2i(0, 0)
+                val v3 = Vec2i(0, 0)
                 v3 -= v2
 
                 v1 minus v2 shouldBe Vec2i(-1, -3)
@@ -72,7 +72,7 @@ class coreVec2i : StringSpec() {
             run {
                 val v1 = Vec2i(1, 0)
                 val v2 = Vec2i(2, 3)
-                var v3 = Vec2i(2, 2)
+                val v3 = Vec2i(2, 2)
 
                 v3 *= v2
 
@@ -85,7 +85,7 @@ class coreVec2i : StringSpec() {
             run {
                 val v1 = Vec2i(1, 10)
                 val v2 = Vec2i(2, 3)
-                var v3 = Vec2i(2, 4)
+                val v3 = Vec2i(2, 4)
 
                 v3 /= v2
 
@@ -98,7 +98,7 @@ class coreVec2i : StringSpec() {
             run {
                 val v1 = Vec2i(1, 10)
                 val v2 = Vec2i(2, 3)
-                var v3 = Vec2i(3, 5)
+                val v3 = Vec2i(3, 5)
 
                 v3 %= v2
 

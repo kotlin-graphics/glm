@@ -3,7 +3,7 @@ package glm_.vec1
 import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
-import glm_.vec2.operators.vec2ui_operators
+import glm_.vec2.operators.opVec2ui
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
@@ -101,7 +101,7 @@ class Vec1ui(x: Uint) : Vec1t<Uint>(x) {
     }
 
 
-    companion object : vec2ui_operators {
+    companion object /*: opVec2ui */ {
         @JvmField
         val length = 1
         @JvmField

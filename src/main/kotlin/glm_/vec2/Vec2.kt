@@ -1,7 +1,7 @@
 package glm_.vec2
 
 import glm_.*
-import glm_.vec2.operators.vec2_operators
+import glm_.vec2.operators.opVec2
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
@@ -63,7 +63,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
         if (oneByteOneFloat) {
             x = bytes[index].f
             y = bytes[index + 1].f
-        }else {
+        } else {
             x = bytes.getFloat(index, bigEndian)
             y = bytes.getFloat(index + Float.BYTES, bigEndian)
         }
@@ -73,7 +73,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
         if (oneByteOneFloat) {
             x = bytes[index].f
             y = bytes[index + 1].f
-        }else {
+        } else {
             x = bytes.getFloat(index)
             y = bytes.getFloat(index + Float.BYTES)
         }
@@ -113,7 +113,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     }
 
 
-    companion object : vec2_operators {
+    companion object : opVec2() {
         @JvmField
         val length = 2
         @JvmField
@@ -136,7 +136,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     }
 
     infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int):ByteBuffer {
+    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
         bytes.putFloat(offset, x)
         bytes.putFloat(offset + Float.BYTES, y)
         return bytes
@@ -152,13 +152,14 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     // -- Increment main.and decrement operators --
 
     operator fun inc() = plus(Vec2(), this, 1f, 1f)
+
     infix fun inc(res: Vec2) = plus(res, this, 1f, 1f)
-    fun inc_() = plus(this, this, 1f, 1f)
+    fun incAssign() = plus(this, this, 1f, 1f)
 
 
     operator fun dec() = minus(Vec2(), this, 1f, 1f)
     infix fun dec(res: Vec2) = minus(res, this, 1f, 1f)
-    fun dec_() = minus(this, this, 1f, 1f)
+    fun decAssign() = minus(this, this, 1f, 1f)
 
     // -- Specific binary arithmetic operators --
 
@@ -171,9 +172,14 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     fun plus(b: Float, res: Vec2) = plus(res, this, b, b)
     fun plus(b: Vec2, res: Vec2) = plus(res, this, b.x, b.y)
 
-    fun plus_(bX: Float, bY: Float) = plus(this, this, bX, bY)
-    infix fun plus_(b: Float) = plus(this, this, b, b)
-    infix fun plus_(b: Vec2) = plus(this, this, b.x, b.y)
+    fun plusAssign(bX: Float, bY: Float) = plus(this, this, bX, bY)
+    infix operator fun plusAssign(b: Float) {
+        plus(this, this, b, b)
+    }
+
+    infix operator fun plusAssign(b: Vec2) {
+        plus(this, this, b.x, b.y)
+    }
 
 
     infix operator fun minus(b: Float) = minus(Vec2(), this, b, b)
@@ -185,9 +191,14 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     fun minus(b: Float, res: Vec2) = minus(res, this, b, b)
     fun minus(b: Vec2, res: Vec2) = minus(res, this, b.x, b.y)
 
-    fun minus_(bX: Float, bY: Float) = minus(this, this, bX, bY)
-    infix fun minus_(b: Float) = minus(this, this, b, b)
-    infix fun minus_(b: Vec2) = minus(this, this, b.x, b.y)
+    fun minusAssign(bX: Float, bY: Float) = minus(this, this, bX, bY)
+    infix operator fun minusAssign(b: Float) {
+        minus(this, this, b, b)
+    }
+
+    infix operator fun minusAssign(b: Vec2) {
+        minus(this, this, b.x, b.y)
+    }
 
 
     infix operator fun times(b: Float) = times(Vec2(), this, b, b)
@@ -199,9 +210,13 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     fun times(b: Float, res: Vec2) = times(res, this, b, b)
     fun times(b: Vec2, res: Vec2) = times(res, this, b.x, b.y)
 
-    fun times_(bX: Float, bY: Float) = times(this, this, bX, bY)
-    infix fun times_(b: Float) = times(this, this, b, b)
-    infix fun times_(b: Vec2) = times(this, this, b.x, b.y)
+    fun timesAssign(bX: Float, bY: Float) = times(this, this, bX, bY)
+    infix operator fun timesAssign(b: Float) {
+        times(this, this, b, b)
+    }
+    infix operator fun timesAssign(b: Vec2) {
+        times(this, this, b.x, b.y)
+    }
 
 
     infix operator fun div(b: Float) = div(Vec2(), this, b, b)
@@ -213,9 +228,14 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     fun div(b: Float, res: Vec2) = div(res, this, b, b)
     fun div(b: Vec2, res: Vec2) = div(res, this, b.x, b.y)
 
-    fun div_(bX: Float, bY: Float) = div(this, this, bX, bY)
-    infix fun div_(b: Float) = div(this, this, b, b)
-    infix fun div_(b: Vec2) = div(this, this, b.x, b.y)
+    fun divAssign(bX: Float, bY: Float) = div(this, this, bX, bY)
+    infix operator fun divAssign(b: Float) {
+        div(this, this, b, b)
+    }
+
+    infix operator fun divAssign(b: Vec2) {
+        div(this, this, b.x, b.y)
+    }
 
 
     infix operator fun rem(b: Float) = rem(Vec2(), this, b, b)
@@ -227,9 +247,14 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     fun rem(b: Float, res: Vec2) = rem(res, this, b, b)
     fun rem(b: Vec2, res: Vec2) = rem(res, this, b.x, b.y)
 
-    fun rem_(bX: Float, bY: Float) = rem(this, this, bX, bY)
-    infix fun rem_(b: Float) = rem(this, this, b, b)
-    infix fun rem_(b: Vec2) = rem(this, this, b.x, b.y)
+    fun remAssign(bX: Float, bY: Float) = rem(this, this, bX, bY)
+    infix operator fun remAssign(b: Float) {
+        rem(this, this, b, b)
+    }
+
+    infix operator fun remAssign(b: Vec2) {
+        rem(this, this, b.x, b.y)
+    }
 
 
     // -- Generic binary arithmetic operators --
@@ -243,9 +268,14 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     fun plus(b: Number, res: Vec2) = plus(res, this, b.f, b.f)
     fun plus(b: Vec2t<out Number>, res: Vec2) = plus(res, this, b.x.f, b.y.f)
 
-    fun plus_(bX: Number, bY: Number) = plus(this, this, bX.f, bY.f)
-    infix fun plus_(b: Number) = plus(this, this, b.f, b.f)
-    infix fun plus_(b: Vec2t<out Number>) = plus(this, this, b.x.f, b.y.f)
+    fun plusAssign(bX: Number, bY: Number) = plus(this, this, bX.f, bY.f)
+    infix operator fun plusAssign(b: Number) {
+        plus(this, this, b.f, b.f)
+    }
+
+    infix operator fun plusAssign(b: Vec2t<out Number>) {
+        plus(this, this, b.x.f, b.y.f)
+    }
 
 
     infix operator fun minus(b: Number) = minus(Vec2(), this, b.f, b.f)
@@ -257,9 +287,14 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     fun minus(b: Number, res: Vec2) = minus(res, this, b.f, b.f)
     fun minus(b: Vec2t<out Number>, res: Vec2) = minus(res, this, b.x.f, b.y.f)
 
-    fun minus_(bX: Number, bY: Number) = minus(this, this, bX.f, bY.f)
-    infix fun minus_(b: Number) = minus(this, this, b.f, b.f)
-    infix fun minus_(b: Vec2t<out Number>) = minus(this, this, b.x.f, b.y.f)
+    fun minusAssign(bX: Number, bY: Number) = minus(this, this, bX.f, bY.f)
+    infix operator fun minusAssign(b: Number) {
+        minus(this, this, b.f, b.f)
+    }
+
+    infix operator fun minusAssign(b: Vec2t<out Number>) {
+        minus(this, this, b.x.f, b.y.f)
+    }
 
 
     infix operator fun times(b: Number) = times(Vec2(), this, b.f, b.f)
