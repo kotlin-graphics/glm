@@ -3,7 +3,7 @@ package glm_.vec1
 import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
-import glm_.vec2.operators.vec2us_operators
+import glm_.vec2.operators.opVec2us
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
@@ -100,7 +100,7 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
     }
 
 
-    companion object : vec2us_operators {
+    companion object /*: opVec2us*/ {
         @JvmField
         val length = 1
         @JvmField
