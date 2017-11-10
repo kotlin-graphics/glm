@@ -51,6 +51,8 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     constructor(v: Vec2t<*>, z: Number, w: Number) : this(v.x, v.y, z, w)
     constructor(v: Vec3t<*>) : this(v.x, v.y, v.z, 1)
     constructor(v: Vec3t<*>, w: Number) : this(v.x, v.y, v.z, w)
+    constructor(a: Vec3t<*>, aW: Number, b: Vec3t<*>, bW: Number, c: Vec3t<*>, cW: Number, d: Vec3t<*>, dW: Number) : this(
+            a.x, a.y, a.z, aW, b.x, b.y, b.z, bW, c.x, c.y, c.z, cW, d.x, d.y, d.z, dW)
     constructor(v: Vec4t<*>) : this(v.x, v.y, v.z, v.w)
 
     constructor(x0: Number, y0: Number, z0: Number, w0: Number,
