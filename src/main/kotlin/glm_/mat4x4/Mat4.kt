@@ -37,6 +37,7 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
 
     constructor(s: Number) : this(s, s, s, s)
 
+    constructor(x: Number, y: Number, z: Number) : this(x, y, z, 1f)    // TODO others
     constructor(x: Number, y: Number, z: Number, w: Number) : this(mutableListOf(
             Vec4(x, 0, 0, 0),
             Vec4(0, y, 0, 0),
