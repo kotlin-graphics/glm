@@ -306,9 +306,13 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     fun times(b: Number, res: Vec2) = times(res, this, b.f, b.f)
     fun times(b: Vec2t<out Number>, res: Vec2) = times(res, this, b.x.f, b.y.f)
 
-    fun times_(bX: Number, bY: Number) = times(this, this, bX.f, bY.f)
-    infix fun times_(b: Number) = times(this, this, b.f, b.f)
-    infix fun times_(b: Vec2t<out Number>) = times(this, this, b.x.f, b.y.f)
+    fun timesAssign(bX: Number, bY: Number) = times(this, this, bX.f, bY.f)
+    infix operator fun timesAssign(b: Number) {
+        times(this, this, b.f, b.f)
+    }
+    infix operator fun timesAssign(b: Vec2t<out Number>) {
+        times(this, this, b.x.f, b.y.f)
+    }
 
 
     infix operator fun div(b: Number) = div(Vec2(), this, b.f, b.f)
@@ -320,9 +324,13 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     fun div(b: Number, res: Vec2) = div(res, this, b.f, b.f)
     fun div(b: Vec2t<out Number>, res: Vec2) = div(res, this, b.x.f, b.y.f)
 
-    fun div_(bX: Number, bY: Number) = div(this, this, bX.f, bY.f)
-    infix fun div_(b: Number) = div(this, this, b.f, b.f)
-    infix fun div_(b: Vec2t<out Number>) = div(this, this, b.x.f, b.y.f)
+    fun divAssign(bX: Number, bY: Number) = div(this, this, bX.f, bY.f)
+    infix operator fun divAssign(b: Number) {
+        div(this, this, b.f, b.f)
+    }
+    infix operator fun divAssign(b: Vec2t<out Number>) {
+        div(this, this, b.x.f, b.y.f)
+    }
 
 
     infix operator fun rem(b: Number) = rem(Vec2(), this, b.f, b.f)
@@ -334,16 +342,20 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     fun rem(b: Number, res: Vec2) = rem(res, this, b.f, b.f)
     fun rem(b: Vec2t<out Number>, res: Vec2) = rem(res, this, b.x.f, b.y.f)
 
-    fun rem_(bX: Number, bY: Number) = rem(this, this, bX.f, bY.f)
-    infix fun rem_(b: Number) = rem(this, this, b.f, b.f)
-    infix fun rem_(b: Vec2t<out Number>) = rem(this, this, b.x.f, b.y.f)
+    fun remAssign(bX: Number, bY: Number) = rem(this, this, bX.f, bY.f)
+    infix operator fun remAssign(b: Number) {
+        rem(this, this, b.f, b.f)
+    }
+    infix operator fun remAssign(b: Vec2t<out Number>) {
+        rem(this, this, b.x.f, b.y.f)
+    }
 
     // -- functions --
 
     // TODO others
     infix fun max(b: Vec2) = glm.max(this, b, Vec2())
 
-    infix fun max_(b: Vec2) {
+    infix fun maxAssign(b: Vec2) {
         x = glm.max(x, b.x)
         y = glm.max(y, b.y)
     }
@@ -355,14 +367,14 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
         return res
     }
 
-    infix fun max_(b: Vec2t<*>) {
+    infix fun maxAssign(b: Vec2t<*>) {
         x = glm.max(x, b.x.f)
         y = glm.max(y, b.y.f)
     }
 
     infix fun max(b: Float) = glm.max(this, b, Vec2())
 
-    infix fun max_(b: Float) {
+    infix fun maxAssign(b: Float) {
         x = glm.max(x, b)
         y = glm.max(y, b)
     }
@@ -374,7 +386,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
         return res
     }
 
-    infix fun max_(b: Number) {
+    infix fun maxAssign(b: Number) {
         x = glm.max(x, b.f)
         y = glm.max(y, b.f)
     }
@@ -393,7 +405,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     @JvmOverloads
     fun normalize(res: Vec2 = Vec2()) = glm.normalize(this, res) // TODO others
 
-    fun normalize_() = glm.normalize(this, this)
+    fun normalizeAssign() = glm.normalize(this, this)
 
     @JvmOverloads
     fun negate(res: Vec2 = Vec2()): Vec2 {
@@ -402,7 +414,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
         return res
     }
 
-    fun negate_() = negate(this)
+    fun negateAssign() = negate(this)
 
     override fun equals(other: Any?) = other is Vec2 && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
