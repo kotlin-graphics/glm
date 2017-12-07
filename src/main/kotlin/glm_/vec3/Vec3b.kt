@@ -54,6 +54,8 @@ class Vec3b(x: Byte, y: Byte, z: Byte) : Vec3t<Byte>(x, y, z) {
     constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1], floats[index + 2])
     constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
+    constructor(block: (Int) -> Byte) : this(block(0), block(1), block(2))
+
     constructor(s: Number) : this(s, s, s)
     constructor(x: Number, y: Number, z: Number) : this(x.b, y.b, z.b)
 

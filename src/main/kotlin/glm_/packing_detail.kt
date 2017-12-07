@@ -185,7 +185,8 @@ interface packing {
     fun unpackUnorm2x8(p: Short, res: Vec2 = Vec2()): Vec2 {
         res.x = (p ushr 8).toUInt().f
         res.y = (p and 0xff).toUInt().f
-        return res times_ 0.0039215686274509803921568627451f // 1 / 255
+        res *= 0.0039215686274509803921568627451f // 1 / 255
+        return res
     }
 
     fun packSnorm1x8(v: Float) = round(clamp(v, -1f, 1f) * 127f).b

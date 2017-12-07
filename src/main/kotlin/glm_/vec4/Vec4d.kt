@@ -62,6 +62,8 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1], floats[index + 2], floats[index + 3])
     constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
+    constructor(block: (Int) -> Double) : this(block(0), block(1), block(2), block(3))
+
     constructor(s: Number) : this(s, s, s, s)
     constructor(x: Number, y: Number, z: Number, w: Number) : this(x.d, y.d, z.d, w.d)
 
@@ -137,7 +139,7 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     }
 
 
-    companion object : vec4d_operators {
+    companion object : vec4d_operators() {
         @JvmField
         val length = 4
         @JvmField
@@ -157,11 +159,11 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     // -- Increment main.and decrement operators --
 
     operator fun inc(res: Vec4d = Vec4d()) = plus(res, this, 1.0, 1.0, 1.0, 1.0)
-    fun inc_() = plus(this, this, 1.0, 1.0, 1.0, 1.0)
+    fun incAssign() = plus(this, this, 1.0, 1.0, 1.0, 1.0)
 
 
     operator fun dec(res: Vec4d = Vec4d()) = minus(res, this, 1.0, 1.0, 1.0, 1.0)
-    fun dec_() = minus(this, this, 1.0, 1.0, 1.0, 1.0)
+    fun decAssign() = minus(this, this, 1.0, 1.0, 1.0, 1.0)
 
 
     // -- Specific binary arithmetic operators --
@@ -173,9 +175,13 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     fun plus(b: Double, res: Vec4d = Vec4d()) = plus(res, this, b, b, b, b)
     fun plus(b: Vec4d, res: Vec4d = Vec4d()) = plus(res, this, b.x, b.y, b.z, b.w)
 
-    fun plus_(bX: Double, bY: Double, bZ: Double, bW: Double) = plus(this, this, bX, bY, bZ, bW)
-    infix fun plus_(b: Double) = plus(this, this, b, b, b, b)
-    infix fun plus_(b: Vec4d) = plus(this, this, b.x, b.y, b.z, b.w)
+    fun plusAssign(bX: Double, bY: Double, bZ: Double, bW: Double) = plus(this, this, bX, bY, bZ, bW)
+    infix operator fun plusAssign(b: Double) {
+        plus(this, this, b, b, b, b)
+    }
+    infix operator fun plusAssign(b: Vec4d) {
+        plus(this, this, b.x, b.y, b.z, b.w)
+    }
 
 
     operator fun minus(b: Double) = minus(Vec4d(), this, b, b, b, b)
@@ -185,9 +191,13 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     fun minus(b: Double, res: Vec4d = Vec4d()) = minus(res, this, b, b, b, b)
     fun minus(b: Vec4d, res: Vec4d = Vec4d()) = minus(res, this, b.x, b.y, b.z, b.w)
 
-    fun minus_(bX: Double, bY: Double, bZ: Double, bW: Double) = minus(this, this, bX, bY, bZ, bW)
-    infix fun minus_(b: Double) = minus(this, this, b, b, b, b)
-    infix fun minus_(b: Vec4d) = minus(this, this, b.x, b.y, b.z, b.w)
+    fun minusAssign(bX: Double, bY: Double, bZ: Double, bW: Double) = minus(this, this, bX, bY, bZ, bW)
+    infix operator fun minusAssign(b: Double) {
+        minus(this, this, b, b, b, b)
+    }
+    infix operator fun minusAssign(b: Vec4d) {
+        minus(this, this, b.x, b.y, b.z, b.w)
+    }
 
 
     operator fun times(b: Double) = times(Vec4d(), this, b, b, b, b)
@@ -197,9 +207,13 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     fun times(b: Double, res: Vec4d = Vec4d()) = times(res, this, b, b, b, b)
     fun times(b: Vec4d, res: Vec4d = Vec4d()) = times(res, this, b.x, b.y, b.z, b.w)
 
-    fun times_(bX: Double, bY: Double, bZ: Double, bW: Double) = times(this, this, bX, bY, bZ, bW)
-    infix fun times_(b: Double) = times(this, this, b, b, b, b)
-    infix fun times_(b: Vec4d) = times(this, this, b.x, b.y, b.z, b.w)
+    fun timesAssign(bX: Double, bY: Double, bZ: Double, bW: Double) = times(this, this, bX, bY, bZ, bW)
+    infix operator fun timesAssign(b: Double) {
+        times(this, this, b, b, b, b)
+    }
+    infix operator fun timesAssign(b: Vec4d) {
+        times(this, this, b.x, b.y, b.z, b.w)
+    }
 
 
     operator fun div(b: Double) = div(Vec4d(), this, b, b, b, b)
@@ -209,9 +223,13 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     fun div(b: Double, res: Vec4d = Vec4d()) = div(res, this, b, b, b, b)
     fun div(b: Vec4d, res: Vec4d = Vec4d()) = div(res, this, b.x, b.y, b.z, b.w)
 
-    fun div_(bX: Double, bY: Double, bZ: Double, bW: Double) = div(this, this, bX, bY, bZ, bW)
-    infix fun div_(b: Double) = div(this, this, b, b, b, b)
-    infix fun div_(b: Vec4d) = div(this, this, b.x, b.y, b.z, b.w)
+    fun divAssign(bX: Double, bY: Double, bZ: Double, bW: Double) = div(this, this, bX, bY, bZ, bW)
+    infix operator fun divAssign(b: Double) {
+        div(this, this, b, b, b, b)
+    }
+    infix operator fun divAssign(b: Vec4d) {
+        div(this, this, b.x, b.y, b.z, b.w)
+    }
 
 
     operator fun rem(b: Double) = rem(Vec4d(), this, b, b, b, b)
@@ -221,9 +239,13 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     fun rem(b: Double, res: Vec4d = Vec4d()) = rem(res, this, b, b, b, b)
     fun rem(b: Vec4d, res: Vec4d = Vec4d()) = rem(res, this, b.x, b.y, b.z, b.w)
 
-    fun rem_(bX: Double, bY: Double, bZ: Double, bW: Double) = rem(this, this, bX, bY, bZ, bW)
-    infix fun rem_(b: Double) = rem(this, this, b, b, b, b)
-    infix fun rem_(b: Vec4d) = rem(this, this, b.x, b.y, b.z, b.w)
+    fun remAssign(bX: Double, bY: Double, bZ: Double, bW: Double) = rem(this, this, bX, bY, bZ, bW)
+    infix operator fun remAssign(b: Double) {
+        rem(this, this, b, b, b, b)
+    }
+    infix operator fun remAssign(b: Vec4d) {
+        rem(this, this, b.x, b.y, b.z, b.w)
+    }
 
 
     // -- Generic binary arithmetic operators --
@@ -235,9 +257,13 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     fun plus(b: Number, res: Vec4d = Vec4d()) = plus(res, this, b.d, b.d, b.d, b.d)
     fun plus(b: Vec4t<out Number>, res: Vec4d = Vec4d()) = plus(res, this, b.x.d, b.y.d, b.z.d, b.w.d)
 
-    fun plus_(bX: Number, bY: Number, bZ: Number, bW: Number) = plus(this, this, bX.d, bY.d, bZ.d, bW.d)
-    infix fun plus_(b: Number) = plus(this, this, b.d, b.d, b.d, b.d)
-    infix fun plus_(b: Vec4t<out Number>) = plus(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
+    fun plusAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = plus(this, this, bX.d, bY.d, bZ.d, bW.d)
+    infix operator fun plusAssign(b: Number) {
+        plus(this, this, b.d, b.d, b.d, b.d)
+    }
+    infix operator fun plusAssign(b: Vec4t<out Number>) {
+        plus(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
+    }
 
 
     operator fun minus(b: Number) = minus(Vec4d(), this, b.d, b.d, b.d, b.d)
@@ -247,9 +273,13 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     fun minus(b: Number, res: Vec4d = Vec4d()) = minus(res, this, b.d, b.d, b.d, b.d)
     fun minus(b: Vec4t<out Number>, res: Vec4d = Vec4d()) = minus(res, this, b.x.d, b.y.d, b.z.d, b.w.d)
 
-    fun minus_(bX: Number, bY: Number, bZ: Number, bW: Number) = minus(this, this, bX.d, bY.d, bZ.d, bW.d)
-    infix fun minus_(b: Number) = minus(this, this, b.d, b.d, b.d, b.d)
-    infix fun minus_(b: Vec4t<out Number>) = minus(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
+    fun minusAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = minus(this, this, bX.d, bY.d, bZ.d, bW.d)
+    infix operator fun minusAssign(b: Number) {
+        minus(this, this, b.d, b.d, b.d, b.d)
+    }
+    infix operator fun minusAssign(b: Vec4t<out Number>) {
+        minus(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
+    }
 
 
     operator fun times(b: Number) = times(Vec4d(), this, b.d, b.d, b.d, b.d)
@@ -259,9 +289,13 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     fun times(b: Number, res: Vec4d = Vec4d()) = times(res, this, b.d, b.d, b.d, b.d)
     fun times(b: Vec4t<out Number>, res: Vec4d = Vec4d()) = times(res, this, b.x.d, b.y.d, b.z.d, b.w.d)
 
-    fun times_(bX: Number, bY: Number, bZ: Number, bW: Number) = times(this, this, bX.d, bY.d, bZ.d, bW.d)
-    infix fun times_(b: Number) = times(this, this, b.d, b.d, b.d, b.d)
-    infix fun times_(b: Vec4t<out Number>) = times(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
+    fun timesAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = times(this, this, bX.d, bY.d, bZ.d, bW.d)
+    infix operator fun timesAssign(b: Number) {
+        times(this, this, b.d, b.d, b.d, b.d)
+    }
+    infix operator fun timesAssign(b: Vec4t<out Number>) {
+        times(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
+    }
 
 
     operator fun div(b: Number) = div(Vec4d(), this, b.d, b.d, b.d, b.d)
@@ -271,9 +305,13 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     fun div(b: Number, res: Vec4d = Vec4d()) = div(res, this, b.d, b.d, b.d, b.d)
     fun div(b: Vec4t<out Number>, res: Vec4d = Vec4d()) = div(res, this, b.x.d, b.y.d, b.z.d, b.w.d)
 
-    fun div_(bX: Number, bY: Number, bZ: Number, bW: Number) = div(this, this, bX.d, bY.d, bZ.d, bW.d)
-    infix fun div_(b: Number) = div(this, this, b.d, b.d, b.d, b.d)
-    infix fun div_(b: Vec4t<out Number>) = div(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
+    fun divAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = div(this, this, bX.d, bY.d, bZ.d, bW.d)
+    infix operator fun divAssign(b: Number) {
+        div(this, this, b.d, b.d, b.d, b.d)
+    }
+    infix operator fun divAssign(b: Vec4t<out Number>) {
+        div(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
+    }
 
 
     operator fun rem(b: Number) = rem(Vec4d(), this, b.d, b.d, b.d, b.d)
@@ -283,9 +321,13 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     fun rem(b: Number, res: Vec4d = Vec4d()) = rem(res, this, b.d, b.d, b.d, b.d)
     fun rem(b: Vec4t<out Number>, res: Vec4d = Vec4d()) = rem(res, this, b.x.d, b.y.d, b.z.d, b.w.d)
 
-    fun rem_(bX: Number, bY: Number, bZ: Number, bW: Number) = rem(this, this, bX.d, bY.d, bZ.d, bW.d)
-    infix fun rem_(b: Number) = rem(this, this, b.d, b.d, b.d, b.d)
-    infix fun rem_(b: Vec4t<out Number>) = rem(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
+    fun remAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = rem(this, this, bX.d, bY.d, bZ.d, bW.d)
+    infix operator fun remAssign(b: Number) {
+        rem(this, this, b.d, b.d, b.d, b.d)
+    }
+    infix operator fun remAssign(b: Vec4t<out Number>) {
+        rem(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
+    }
 
     fun length() = glm.length(this)
 

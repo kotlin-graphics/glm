@@ -53,6 +53,7 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     constructor(v: Vec3t<*>, w: Number) : this(v.x, v.y, v.z, w)
     constructor(a: Vec3t<*>, aW: Number, b: Vec3t<*>, bW: Number, c: Vec3t<*>, cW: Number, d: Vec3t<*>, dW: Number) : this(
             a.x, a.y, a.z, aW, b.x, b.y, b.z, bW, c.x, c.y, c.z, cW, d.x, d.y, d.z, dW)
+
     constructor(v: Vec4t<*>) : this(v.x, v.y, v.z, v.w)
 
     constructor(x0: Number, y0: Number, z0: Number, w0: Number,
@@ -69,6 +70,10 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
             Vec4(v1),
             Vec4(v2),
             Vec4(v3)))
+
+    constructor(block: (Int) -> Float) : this(block(0), block(1), block(2), block(3), block(4),
+            block(5), block(6), block(7), block(8), block(9), block(10), block(11), block(12),
+            block(13), block(14), block(15))
 
     // -- Matrix conversions --
 
@@ -549,5 +554,6 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
             this[1, 0] == other[1, 0] && this[1, 1] == other[1, 1] && this[1, 2] == other[1, 2] && this[1, 3] == other[1, 3] &&
             this[2, 0] == other[2, 0] && this[2, 1] == other[2, 1] && this[2, 2] == other[2, 2] && this[2, 3] == other[2, 3] &&
             this[3, 0] == other[3, 0] && this[3, 1] == other[3, 1] && this[3, 2] == other[3, 2] && this[3, 3] == other[3, 3]
+
     override fun hashCode() = 31 * (31 * (31 * value[0].hashCode() + value[1].hashCode()) + value[2].hashCode()) + value[3].hashCode()
 }

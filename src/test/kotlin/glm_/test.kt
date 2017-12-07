@@ -11,8 +11,10 @@ class mix : StringSpec() {
         "test" {
 
             val a = Vec2(3, 4)
-
-            println()
+            val b = Vec2(1)
+            val c = Vec2(2)
+            a plusAssign b * c
+            println(a)
         }
     }
 }

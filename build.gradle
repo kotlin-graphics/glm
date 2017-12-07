@@ -9,7 +9,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 
 buildscript {
 
-    ext.kotlinVersion = '1.2.0-rc-39'
+    ext.kotlinVersion = '1.2.0'
 
     repositories {
         jcenter()   // shadow
@@ -27,7 +27,7 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
-    compile 'com.github.kotlin-graphics:kotlin-unsigned:f15b79c3ac751e4dea3ebee52117801943cbe5cd'
+    compile 'com.github.kotlin-graphics:kotlin-unsigned:545b8f2fcb'
 
     testCompile 'io.kotlintest:kotlintest:2.0.7'
 }

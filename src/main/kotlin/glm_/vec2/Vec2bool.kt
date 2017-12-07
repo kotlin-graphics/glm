@@ -61,7 +61,7 @@ data class Vec2bool(var x: Boolean = false, var y: Boolean = false) {
 
     operator fun not(): Vec2bool = Vec2bool(x = !x, y = !y)
 
-    fun notAss(): Vec2bool {
+    fun notAssign(): Vec2bool {
         x = !x
         y = !y
         return this
@@ -74,7 +74,7 @@ data class Vec2bool(var x: Boolean = false, var y: Boolean = false) {
     // -- relational --
 
     infix fun equal(b: Vec2bool) = glm.equal(this, b)
-    infix fun equal_(b: Vec2bool) = glm.equal(this, this, b)
+    infix fun equalAssign(b: Vec2bool) = glm.equal(this, this, b)
     fun equal(b: Vec2bool, res: Vec2bool) = glm.equal(res, this, b)
 
     infix fun notEqual(b: Vec2bool) = glm.notEqual(this, b)

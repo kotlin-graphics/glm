@@ -21,6 +21,11 @@ class coreVec2 : StringSpec() {
         "operators specific" {
 
             run {
+                val a = Vec2({ it + 1f })
+                a shouldBe Vec2(1, 2)
+            }
+
+            run {
                 val a = Vec2(1f)
                 val b = Vec2(1f)
 
@@ -457,11 +462,4 @@ class coreVec2 : StringSpec() {
             a shouldBe Vec2(1, 2)
         }
     }
-}
-
-fun main(args: Array<String>) {
-    val a = Vec2(0)
-    val b = Vec2( 1)
-    val c = Vec2( 2)
-    a += b * c
 }

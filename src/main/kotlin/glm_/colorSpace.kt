@@ -1,5 +1,6 @@
 package glm_
 
+import glm_.vec2.Vec2
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 

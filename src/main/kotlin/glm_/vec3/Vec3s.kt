@@ -59,6 +59,8 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1], floats[index + 2])
     constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
+    constructor(block: (Int) -> Short) : this(block(0), block(1), block(2))
+
     constructor(s: Number) : this(s, s, s)
     constructor(x: Number, y: Number, z: Number) : this(x.s, y.s, z.s)
 
@@ -126,7 +128,7 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     }
 
 
-    companion object : vec3s_operators {
+    companion object : vec3s_operators() {
         @JvmField
         val length = 3
         @JvmField
@@ -144,11 +146,11 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     // -- Increment main.and decrement operators --
 
     operator fun inc(res: Vec3s = Vec3s()) = plus(res, this, 1, 1, 1)
-    fun inc_() = plus(this, this, 1, 1, 1)
+    fun incAssign() = plus(this, this, 1, 1, 1)
 
 
     operator fun dec(res: Vec3s = Vec3s()) = minus(res, this, 1, 1, 1)
-    fun dec_() = minus(this, this, 1, 1, 1)
+    fun decAssign() = minus(this, this, 1, 1, 1)
 
 
     // -- Specific binary arithmetic operators --
@@ -163,11 +165,11 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     fun plus(b: Int, res: Vec3s = Vec3s()) = plus(res, this, b, b, b)
     fun plus(b: Vec3s, res: Vec3s = Vec3s()) = plus(res, this, b.x, b.y, b.z)
 
-    fun plus_(bX: Short, bY: Short, bZ: Short) = plus(this, this, bX, bY, bZ)
-    fun plus_(bX: Int, bY: Int, bZ: Int) = plus(this, this, bX, bY, bZ)
-    infix fun plus_(b: Short) = plus(this, this, b, b, b)
-    infix fun plus_(b: Int) = plus(this, this, b, b, b)
-    infix fun plus_(b: Vec3s) = plus(this, this, b.x, b.y, b.z)
+    fun plusAssign(bX: Short, bY: Short, bZ: Short) = plus(this, this, bX, bY, bZ)
+    fun plusAssign(bX: Int, bY: Int, bZ: Int) = plus(this, this, bX, bY, bZ)
+    infix fun plusAssign(b: Short) = plus(this, this, b, b, b)
+    infix fun plusAssign(b: Int) = plus(this, this, b, b, b)
+    infix fun plusAssign(b: Vec3s) = plus(this, this, b.x, b.y, b.z)
 
 
     operator fun minus(b: Short) = minus(Vec3s(), this, b, b, b)
@@ -180,11 +182,11 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     fun minus(b: Int, res: Vec3s = Vec3s()) = minus(res, this, b, b, b)
     fun minus(b: Vec3s, res: Vec3s = Vec3s()) = minus(res, this, b.x, b.y, b.z)
 
-    fun minus_(bX: Short, bY: Short, bZ: Short) = minus(this, this, bX, bY, bZ)
-    fun minus_(bX: Int, bY: Int, bZ: Int) = minus(this, this, bX, bY, bZ)
-    infix fun minus_(b: Short) = minus(this, this, b, b, b)
-    infix fun minus_(b: Int) = minus(this, this, b, b, b)
-    infix fun minus_(b: Vec3s) = minus(this, this, b.x, b.y, b.z)
+    fun minusAssign(bX: Short, bY: Short, bZ: Short) = minus(this, this, bX, bY, bZ)
+    fun minusAssign(bX: Int, bY: Int, bZ: Int) = minus(this, this, bX, bY, bZ)
+    infix fun minusAssign(b: Short) = minus(this, this, b, b, b)
+    infix fun minusAssign(b: Int) = minus(this, this, b, b, b)
+    infix fun minusAssign(b: Vec3s) = minus(this, this, b.x, b.y, b.z)
 
 
     operator fun times(b: Short) = times(Vec3s(), this, b, b, b)
@@ -197,11 +199,11 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     fun times(b: Int, res: Vec3s = Vec3s()) = times(res, this, b, b, b)
     fun times(b: Vec3s, res: Vec3s = Vec3s()) = times(res, this, b.x, b.y, b.z)
 
-    fun times_(bX: Short, bY: Short, bZ: Short) = times(this, this, bX, bY, bZ)
-    fun times_(bX: Int, bY: Int, bZ: Int) = times(this, this, bX, bY, bZ)
-    infix fun times_(b: Short) = times(this, this, b, b, b)
-    infix fun times_(b: Int) = times(this, this, b, b, b)
-    infix fun times_(b: Vec3s) = times(this, this, b.x, b.y, b.z)
+    fun timesAssign(bX: Short, bY: Short, bZ: Short) = times(this, this, bX, bY, bZ)
+    fun timesAssign(bX: Int, bY: Int, bZ: Int) = times(this, this, bX, bY, bZ)
+    infix fun timesAssign(b: Short) = times(this, this, b, b, b)
+    infix fun timesAssign(b: Int) = times(this, this, b, b, b)
+    infix fun timesAssign(b: Vec3s) = times(this, this, b.x, b.y, b.z)
 
 
     operator fun div(b: Short) = div(Vec3s(), this, b, b, b)
@@ -214,11 +216,11 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     fun div(b: Int, res: Vec3s) = div(res, this, b, b, b)
     fun div(b: Vec3s, res: Vec3s) = div(res, this, b.x, b.y, b.z)
 
-    fun div_(bX: Short, bY: Short, bZ: Short) = div(this, this, bX, bY, bZ)
-    fun div_(bX: Int, bY: Int, bZ: Int) = div(this, this, bX, bY, bZ)
-    infix fun div_(b: Short) = div(this, this, b, b, b)
-    infix fun div_(b: Int) = div(this, this, b, b, b)
-    infix fun div_(b: Vec3s) = div(this, this, b.x, b.y, b.z)
+    fun divAssign(bX: Short, bY: Short, bZ: Short) = div(this, this, bX, bY, bZ)
+    fun divAssign(bX: Int, bY: Int, bZ: Int) = div(this, this, bX, bY, bZ)
+    infix fun divAssign(b: Short) = div(this, this, b, b, b)
+    infix fun divAssign(b: Int) = div(this, this, b, b, b)
+    infix fun divAssign(b: Vec3s) = div(this, this, b.x, b.y, b.z)
 
 
     operator fun rem(b: Short) = rem(Vec3s(), this, b, b, b)
@@ -231,11 +233,11 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     fun rem(b: Int, res: Vec3s) = rem(res, this, b, b, b)
     fun rem(b: Vec3s, res: Vec3s) = rem(res, this, b.x, b.y, b.z)
 
-    fun rem_(bX: Short, bY: Short, bZ: Short) = rem(this, this, bX, bY, bZ)
-    fun rem_(bX: Int, bY: Int, bZ: Int) = rem(this, this, bX, bY, bZ)
-    infix fun rem_(b: Short) = rem(this, this, b, b, b)
-    infix fun rem_(b: Int) = rem(this, this, b, b, b)
-    infix fun rem_(b: Vec3s) = rem(this, this, b.x, b.y, b.z)
+    fun remAssign(bX: Short, bY: Short, bZ: Short) = rem(this, this, bX, bY, bZ)
+    fun remAssign(bX: Int, bY: Int, bZ: Int) = rem(this, this, bX, bY, bZ)
+    infix fun remAssign(b: Short) = rem(this, this, b, b, b)
+    infix fun remAssign(b: Int) = rem(this, this, b, b, b)
+    infix fun remAssign(b: Vec3s) = rem(this, this, b.x, b.y, b.z)
 
 
     // -- Generic binary arithmetic operators --
@@ -247,9 +249,9 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     fun plus(b: Number, res: Vec3s = Vec3s()) = plus(res, this, b.s, b.s, b.s)
     fun plus(b: Vec3t<out Number>, res: Vec3s = Vec3s()) = plus(res, this, b.x.s, b.y.s, b.z.s)
 
-    fun plus_(bX: Number, bY: Number, bZ: Number) = plus(this, this, bX.s, bY.s, bZ.s)
-    infix fun plus_(b: Number) = plus(this, this, b.s, b.s, b.s)
-    infix fun plus_(b: Vec3t<out Number>) = plus(this, this, b.x.s, b.y.s, b.z.s)
+    fun plusAssign(bX: Number, bY: Number, bZ: Number) = plus(this, this, bX.s, bY.s, bZ.s)
+    infix fun plusAssign(b: Number) = plus(this, this, b.s, b.s, b.s)
+    infix fun plusAssign(b: Vec3t<out Number>) = plus(this, this, b.x.s, b.y.s, b.z.s)
 
 
     operator fun minus(b: Number) = minus(Vec3s(), this, b.s, b.s, b.s)
@@ -259,9 +261,9 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     fun minus(b: Number, res: Vec3s = Vec3s()) = minus(res, this, b.s, b.s, b.s)
     fun minus(b: Vec3t<out Number>, res: Vec3s = Vec3s()) = minus(res, this, b.x.s, b.y.s, b.z.s)
 
-    fun minus_(bX: Number, bY: Number, bZ: Number) = minus(this, this, bX.s, bY.s, bZ.s)
-    infix fun minus_(b: Number) = minus(this, this, b.s, b.s, b.s)
-    infix fun minus_(b: Vec3t<out Number>) = minus(this, this, b.x.s, b.y.s, b.z.s)
+    fun minusAssign(bX: Number, bY: Number, bZ: Number) = minus(this, this, bX.s, bY.s, bZ.s)
+    infix fun minusAssign(b: Number) = minus(this, this, b.s, b.s, b.s)
+    infix fun minusAssign(b: Vec3t<out Number>) = minus(this, this, b.x.s, b.y.s, b.z.s)
 
 
     operator fun times(b: Number) = times(Vec3s(), this, b.s, b.s, b.s)
@@ -271,9 +273,9 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     fun times(b: Number, res: Vec3s = Vec3s()) = times(res, this, b.s, b.s, b.s)
     fun times(b: Vec3t<out Number>, res: Vec3s = Vec3s()) = times(res, this, b.x.s, b.y.s, b.z.s)
 
-    fun times_(bX: Number, bY: Number, bZ: Number) = times(this, this, bX.s, bY.s, bZ.s)
-    infix fun times_(b: Number) = times(this, this, b.s, b.s, b.s)
-    infix fun times_(b: Vec3t<out Number>) = times(this, this, b.x.s, b.y.s, b.z.s)
+    fun timesAssign(bX: Number, bY: Number, bZ: Number) = times(this, this, bX.s, bY.s, bZ.s)
+    infix fun timesAssign(b: Number) = times(this, this, b.s, b.s, b.s)
+    infix fun timesAssign(b: Vec3t<out Number>) = times(this, this, b.x.s, b.y.s, b.z.s)
 
 
     operator fun div(b: Number) = div(Vec3s(), this, b.s, b.s, b.s)
@@ -283,9 +285,9 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     fun div(b: Number, res: Vec3s) = div(res, this, b.s, b.s, b.s)
     fun div(b: Vec3t<out Number>, res: Vec3s) = div(res, this, b.x.s, b.y.s, b.z.s)
 
-    fun div_(bX: Number, bY: Number, bZ: Number) = div(this, this, bX.s, bY.s, bZ.s)
-    infix fun div_(b: Number) = div(this, this, b.s, b.s, b.s)
-    infix fun div_(b: Vec3t<out Number>) = div(this, this, b.x.s, b.y.s, b.z.s)
+    fun divAssign(bX: Number, bY: Number, bZ: Number) = div(this, this, bX.s, bY.s, bZ.s)
+    infix fun divAssign(b: Number) = div(this, this, b.s, b.s, b.s)
+    infix fun divAssign(b: Vec3t<out Number>) = div(this, this, b.x.s, b.y.s, b.z.s)
 
 
     operator fun rem(b: Number) = rem(Vec3s(), this, b.s, b.s, b.s)
@@ -295,9 +297,9 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     fun rem(b: Number, res: Vec3s) = rem(res, this, b.s, b.s, b.s)
     fun rem(b: Vec3t<out Number>, res: Vec3s) = rem(res, this, b.x.s, b.y.s, b.z.s)
 
-    fun rem_(bX: Number, bY: Number, bZ: Number) = rem(this, this, bX.s, bY.s, bZ.s)
-    infix fun rem_(b: Number) = rem(this, this, b.s, b.s, b.s)
-    infix fun rem_(b: Vec3t<out Number>) = rem(this, this, b.x.s, b.y.s, b.z.s)
+    fun remAssign(bX: Number, bY: Number, bZ: Number) = rem(this, this, bX.s, bY.s, bZ.s)
+    infix fun remAssign(b: Number) = rem(this, this, b.s, b.s, b.s)
+    infix fun remAssign(b: Vec3t<out Number>) = rem(this, this, b.x.s, b.y.s, b.z.s)
 
 
     // -- Specific bitwise operators --
@@ -306,9 +308,9 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     infix fun and(b: Int) = and(Vec3s(), this, b, b, b)
     infix fun and(b: Vec3s) = and(Vec3s(), this, b.x, b.y, b.z)
 
-    infix fun and_(b: Short) = and(this, this, b, b, b)
-    infix fun and_(b: Int) = and(this, this, b, b, b)
-    infix fun and_(b: Vec3s) = and(this, this, b.x, b.y, b.z)
+    infix fun andAssign(b: Short) = and(this, this, b, b, b)
+    infix fun andAssign(b: Int) = and(this, this, b, b, b)
+    infix fun andAssign(b: Vec3s) = and(this, this, b.x, b.y, b.z)
 
     fun and(b: Short, res: Vec3s) = and(res, this, b, b, b)
     fun and(b: Int, res: Vec3s) = and(res, this, b, b, b)
@@ -317,17 +319,17 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     fun and(bX: Short, bY: Short, bZ: Short, res: Vec3s = Vec3s()) = and(res, this, bX, bY, bZ)
     fun and(bX: Int, bY: Int, bZ: Int, res: Vec3s = Vec3s()) = and(res, this, bX, bY, bZ)
 
-    fun and_(bX: Short, bY: Short, bZ: Short) = and(this, this, bX, bY, bZ)
-    fun and_(bX: Int, bY: Int, bZ: Int) = and(this, this, bX, bY, bZ)
+    fun andAssign(bX: Short, bY: Short, bZ: Short) = and(this, this, bX, bY, bZ)
+    fun andAssign(bX: Int, bY: Int, bZ: Int) = and(this, this, bX, bY, bZ)
 
 
     infix fun or(b: Short) = or(Vec3s(), this, b, b, b)
     infix fun or(b: Int) = or(Vec3s(), this, b, b, b)
     infix fun or(b: Vec3s) = or(Vec3s(), this, b.x, b.y, b.z)
 
-    infix fun or_(b: Short) = or(this, this, b, b, b)
-    infix fun or_(b: Int) = or(this, this, b, b, b)
-    infix fun or_(b: Vec3s) = or(this, this, b.x, b.y, b.z)
+    infix fun orAssign(b: Short) = or(this, this, b, b, b)
+    infix fun orAssign(b: Int) = or(this, this, b, b, b)
+    infix fun orAssign(b: Vec3s) = or(this, this, b.x, b.y, b.z)
 
     fun or(b: Short, res: Vec3s) = or(res, this, b, b, b)
     fun or(b: Int, res: Vec3s) = or(res, this, b, b, b)
@@ -336,17 +338,17 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     fun or(bX: Short, bY: Short, bZ: Short, res: Vec3s = Vec3s()) = or(res, this, bX, bY, bZ)
     fun or(bX: Int, bY: Int, bZ: Int, res: Vec3s = Vec3s()) = or(res, this, bX, bY, bZ)
 
-    fun or_(bX: Short, bY: Short, bZ: Short) = or(this, this, bX, bY, bZ)
-    fun or_(bX: Int, bY: Int, bZ: Int) = or(this, this, bX, bY, bZ)
+    fun orAssign(bX: Short, bY: Short, bZ: Short) = or(this, this, bX, bY, bZ)
+    fun orAssign(bX: Int, bY: Int, bZ: Int) = or(this, this, bX, bY, bZ)
 
 
     infix fun xor(b: Short) = xor(Vec3s(), this, b, b, b)
     infix fun xor(b: Int) = xor(Vec3s(), this, b, b, b)
     infix fun xor(b: Vec3s) = xor(Vec3s(), this, b.x, b.y, b.z)
 
-    infix fun xor_(b: Short) = xor(this, this, b, b, b)
-    infix fun xor_(b: Int) = xor(this, this, b, b, b)
-    infix fun xor_(b: Vec3s) = xor(this, this, b.x, b.y, b.z)
+    infix fun xorAssign(b: Short) = xor(this, this, b, b, b)
+    infix fun xorAssign(b: Int) = xor(this, this, b, b, b)
+    infix fun xorAssign(b: Vec3s) = xor(this, this, b.x, b.y, b.z)
 
     fun xor(b: Short, res: Vec3s) = xor(res, this, b, b, b)
     fun xor(b: Int, res: Vec3s) = xor(res, this, b, b, b)
@@ -355,17 +357,17 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     fun xor(bX: Short, bY: Short, bZ: Short, res: Vec3s = Vec3s()) = xor(res, this, bX, bY, bZ)
     fun xor(bX: Int, bY: Int, bZ: Int, res: Vec3s = Vec3s()) = xor(res, this, bX, bY, bZ)
 
-    fun xor_(bX: Short, bY: Short, bZ: Short) = xor(this, this, bX, bY, bZ)
-    fun xor_(bX: Int, bY: Int, bZ: Int) = xor(this, this, bX, bY, bZ)
+    fun xorAssign(bX: Short, bY: Short, bZ: Short) = xor(this, this, bX, bY, bZ)
+    fun xorAssign(bX: Int, bY: Int, bZ: Int) = xor(this, this, bX, bY, bZ)
 
 
     infix fun shl(b: Short) = shl(Vec3s(), this, b, b, b)
     infix fun shl(b: Int) = shl(Vec3s(), this, b, b, b)
     infix fun shl(b: Vec3s) = shl(Vec3s(), this, b.x, b.y, b.z)
 
-    infix fun shl_(b: Short) = shl(this, this, b, b, b)
-    infix fun shl_(b: Int) = shl(this, this, b, b, b)
-    infix fun shl_(b: Vec3s) = shl(this, this, b.x, b.y, b.z)
+    infix fun shlAssign(b: Short) = shl(this, this, b, b, b)
+    infix fun shlAssign(b: Int) = shl(this, this, b, b, b)
+    infix fun shlAssign(b: Vec3s) = shl(this, this, b.x, b.y, b.z)
 
     fun shl(b: Short, res: Vec3s) = shl(res, this, b, b, b)
     fun shl(b: Int, res: Vec3s) = shl(res, this, b, b, b)
@@ -374,17 +376,17 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     fun shl(bX: Short, bY: Short, bZ: Short, res: Vec3s = Vec3s()) = shl(res, this, bX, bY, bZ)
     fun shl(bX: Int, bY: Int, bZ: Int, res: Vec3s = Vec3s()) = shl(res, this, bX, bY, bZ)
 
-    fun shl_(bX: Short, bY: Short, bZ: Short) = shl(this, this, bX, bY, bZ)
-    fun shl_(bX: Int, bY: Int, bZ: Int) = shl(this, this, bX, bY, bZ)
+    fun shlAssign(bX: Short, bY: Short, bZ: Short) = shl(this, this, bX, bY, bZ)
+    fun shlAssign(bX: Int, bY: Int, bZ: Int) = shl(this, this, bX, bY, bZ)
 
 
     infix fun shr(b: Short) = shr(Vec3s(), this, b, b, b)
     infix fun shr(b: Int) = shr(Vec3s(), this, b, b, b)
     infix fun shr(b: Vec3s) = shr(Vec3s(), this, b.x, b.y, b.z)
 
-    infix fun shr_(b: Short) = shr(this, this, b, b, b)
-    infix fun shr_(b: Int) = shr(this, this, b, b, b)
-    infix fun shr_(b: Vec3s) = shr(this, this, b.x, b.y, b.z)
+    infix fun shrAssign(b: Short) = shr(this, this, b, b, b)
+    infix fun shrAssign(b: Int) = shr(this, this, b, b, b)
+    infix fun shrAssign(b: Vec3s) = shr(this, this, b.x, b.y, b.z)
 
     fun shr(b: Short, res: Vec3s) = shr(res, this, b, b, b)
     fun shr(b: Int, res: Vec3s) = shr(res, this, b, b, b)
@@ -393,12 +395,12 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     fun shr(bX: Short, bY: Short, bZ: Short, res: Vec3s = Vec3s()) = shr(res, this, bX, bY, bZ)
     fun shr(bX: Int, bY: Int, bZ: Int, res: Vec3s = Vec3s()) = shr(res, this, bX, bY, bZ)
 
-    fun shr_(bX: Short, bY: Short, bZ: Short) = shr(this, this, bX, bY, bZ)
-    fun shr_(bX: Int, bY: Int, bZ: Int) = shr(this, this, bX, bY, bZ)
+    fun shrAssign(bX: Short, bY: Short, bZ: Short) = shr(this, this, bX, bY, bZ)
+    fun shrAssign(bX: Int, bY: Int, bZ: Int) = shr(this, this, bX, bY, bZ)
 
 
     fun inv(res: Vec3s = Vec3s()) = inv(res, this)
-    fun inv_() = inv(this, this)
+    fun invAssign() = inv(this, this)
 
 
     // -- Generic bitwise operators --
@@ -406,71 +408,71 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     infix fun and(b: Number) = and(Vec3s(), this, b.s, b.s, b.s)
     infix fun and(b: Vec3t<out Number>) = and(Vec3s(), this, b.x.s, b.y.s, b.z.s)
 
-    infix fun and_(b: Number) = and(this, this, b.s, b.s, b.s)
-    infix fun and_(b: Vec3t<out Number>) = and(this, this, b.x.s, b.y.s, b.z.s)
+    infix fun andAssign(b: Number) = and(this, this, b.s, b.s, b.s)
+    infix fun andAssign(b: Vec3t<out Number>) = and(this, this, b.x.s, b.y.s, b.z.s)
 
     fun and(b: Number, res: Vec3s) = and(res, this, b.s, b.s, b.s)
     fun and(b: Vec3t<out Number>, res: Vec3s) = and(res, this, b.x.s, b.y.s, b.z.s)
 
     fun and(bX: Number, bY: Number, bZ: Number, res: Vec3s = Vec3s()) = and(res, this, bX.s, bY.s, bZ.s)
 
-    fun and_(bX: Number, bY: Number, bZ: Number) = and(this, this, bX.s, bY.s, bZ.s)
+    fun andAssign(bX: Number, bY: Number, bZ: Number) = and(this, this, bX.s, bY.s, bZ.s)
 
 
     infix fun or(b: Number) = or(Vec3s(), this, b.s, b.s, b.s)
     infix fun or(b: Vec3t<out Number>) = or(Vec3s(), this, b.x.s, b.y.s, b.z.s)
 
-    infix fun or_(b: Number) = or(this, this, b.s, b.s, b.s)
-    infix fun or_(b: Vec3t<out Number>) = or(this, this, b.x.s, b.y.s, b.z.s)
+    infix fun orAssign(b: Number) = or(this, this, b.s, b.s, b.s)
+    infix fun orAssign(b: Vec3t<out Number>) = or(this, this, b.x.s, b.y.s, b.z.s)
 
     fun or(b: Number, res: Vec3s) = or(res, this, b.s, b.s, b.s)
     fun or(b: Vec3t<out Number>, res: Vec3s) = or(res, this, b.x.s, b.y.s, b.z.s)
 
     fun or(bX: Number, bY: Number, bZ: Number, res: Vec3s = Vec3s()) = or(res, this, bX.s, bY.s, bZ.s)
 
-    fun or_(bX: Number, bY: Number, bZ: Number) = or(this, this, bX.s, bY.s, bZ.s)
+    fun orAssign(bX: Number, bY: Number, bZ: Number) = or(this, this, bX.s, bY.s, bZ.s)
 
 
     infix fun xor(b: Number) = xor(Vec3s(), this, b.s, b.s, b.s)
     infix fun xor(b: Vec3t<out Number>) = xor(Vec3s(), this, b.x.s, b.y.s, b.z.s)
 
-    infix fun xor_(b: Number) = xor(this, this, b.s, b.s, b.s)
-    infix fun xor_(b: Vec3t<out Number>) = xor(this, this, b.x.s, b.y.s, b.z.s)
+    infix fun xorAssign(b: Number) = xor(this, this, b.s, b.s, b.s)
+    infix fun xorAssign(b: Vec3t<out Number>) = xor(this, this, b.x.s, b.y.s, b.z.s)
 
     fun xor(b: Number, res: Vec3s) = xor(res, this, b.s, b.s, b.s)
     fun xor(b: Vec3t<out Number>, res: Vec3s) = xor(res, this, b.x.s, b.y.s, b.z.s)
 
     fun xor(bX: Number, bY: Number, bZ: Number, res: Vec3s = Vec3s()) = xor(res, this, bX.s, bY.s, bZ.s)
 
-    fun xor_(bX: Number, bY: Number, bZ: Number) = xor(this, this, bX.s, bY.s, bZ.s)
+    fun xorAssign(bX: Number, bY: Number, bZ: Number) = xor(this, this, bX.s, bY.s, bZ.s)
 
 
     infix fun shl(b: Number) = shl(Vec3s(), this, b.s, b.s, b.s)
     infix fun shl(b: Vec3t<out Number>) = shl(Vec3s(), this, b.x.s, b.y.s, b.z.s)
 
-    infix fun shl_(b: Number) = shl(this, this, b.s, b.s, b.s)
-    infix fun shl_(b: Vec3t<out Number>) = shl(this, this, b.x.s, b.y.s, b.z.s)
+    infix fun shlAssign(b: Number) = shl(this, this, b.s, b.s, b.s)
+    infix fun shlAssign(b: Vec3t<out Number>) = shl(this, this, b.x.s, b.y.s, b.z.s)
 
     fun shl(b: Number, res: Vec3s) = shl(res, this, b.s, b.s, b.s)
     fun shl(b: Vec3t<out Number>, res: Vec3s) = shl(res, this, b.x.s, b.y.s, b.z.s)
 
     fun shl(bX: Number, bY: Number, bZ: Number, res: Vec3s = Vec3s()) = shl(res, this, bX.s, bY.s, bZ.s)
 
-    fun shl_(bX: Number, bY: Number, bZ: Number) = shl(this, this, bX.s, bY.s, bZ.s)
+    fun shlAssign(bX: Number, bY: Number, bZ: Number) = shl(this, this, bX.s, bY.s, bZ.s)
 
 
     infix fun shr(b: Number) = shr(Vec3s(), this, b.s, b.s, b.s)
     infix fun shr(b: Vec3t<out Number>) = shr(Vec3s(), this, b.x.s, b.y.s, b.z.s)
 
-    infix fun shr_(b: Number) = shr(this, this, b.s, b.s, b.s)
-    infix fun shr_(b: Vec3t<out Number>) = shr(this, this, b.x.s, b.y.s, b.z.s)
+    infix fun shrAssign(b: Number) = shr(this, this, b.s, b.s, b.s)
+    infix fun shrAssign(b: Vec3t<out Number>) = shr(this, this, b.x.s, b.y.s, b.z.s)
 
     fun shr(b: Number, res: Vec3s) = shr(res, this, b.s, b.s, b.s)
     fun shr(b: Vec3t<out Number>, res: Vec3s) = shr(res, this, b.x.s, b.y.s, b.z.s)
 
     fun shr(bX: Number, bY: Number, bZ: Number, res: Vec3s = Vec3s()) = shr(res, this, bX.s, bY.s, bZ.s)
 
-    fun shr_(bX: Number, bY: Number, bZ: Number) = shr(this, this, bX.s, bY.s, bZ.s)
+    fun shrAssign(bX: Number, bY: Number, bZ: Number) = shr(this, this, bX.s, bY.s, bZ.s)
 
 
     override fun equals(other: Any?) = other is Vec3s && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]

@@ -11,9 +11,9 @@ import glm_.vec4.Vec4d.Companion.times
 /**
  * Created by GBarbieri on 08.11.2016.
  */
-interface vec4d_operators {
+open class vec4d_operators {
 
-    fun plus(res: Vec4d, a: Vec4d, bX: Double, bY: Double, bZ: Double, bW: Double): Vec4d {
+    inline fun plus(res: Vec4d, a: Vec4d, bX: Double, bY: Double, bZ: Double, bW: Double): Vec4d {
         res.x = a.x + bX
         res.y = a.y + bY
         res.z = a.z + bZ
@@ -21,7 +21,7 @@ interface vec4d_operators {
         return res
     }
 
-    fun minus(res: Vec4d, a: Vec4d, bX: Double, bY: Double, bZ: Double, bW: Double): Vec4d {
+    inline fun minus(res: Vec4d, a: Vec4d, bX: Double, bY: Double, bZ: Double, bW: Double): Vec4d {
         res.x = a.x - bX
         res.y = a.y - bY
         res.z = a.z - bZ
@@ -29,7 +29,7 @@ interface vec4d_operators {
         return res
     }
 
-    fun minus(res: Vec4d, aX: Double, aY: Double, aZ: Double, aW: Double, b: Vec4d): Vec4d {
+    inline fun minus(res: Vec4d, aX: Double, aY: Double, aZ: Double, aW: Double, b: Vec4d): Vec4d {
         res.x = aX - b.x
         res.y = aY - b.y
         res.z = aZ - b.z
@@ -37,7 +37,7 @@ interface vec4d_operators {
         return res
     }
 
-    fun times(res: Vec4d, a: Vec4d, bX: Double, bY: Double, bZ: Double, bW: Double): Vec4d {
+    inline fun times(res: Vec4d, a: Vec4d, bX: Double, bY: Double, bZ: Double, bW: Double): Vec4d {
         res.x = a.x * bX
         res.y = a.y * bY
         res.z = a.z * bZ
@@ -45,7 +45,7 @@ interface vec4d_operators {
         return res
     }
 
-    fun div(res: Vec4d, a: Vec4d, bX: Double, bY: Double, bZ: Double, bW: Double): Vec4d {
+    inline fun div(res: Vec4d, a: Vec4d, bX: Double, bY: Double, bZ: Double, bW: Double): Vec4d {
         res.x = a.x / bX
         res.y = a.y / bY
         res.z = a.z / bZ
@@ -53,7 +53,7 @@ interface vec4d_operators {
         return res
     }
 
-    fun div(res: Vec4d, aX: Double, aY: Double, aZ: Double, aW: Double, b: Vec4d): Vec4d {
+    inline fun div(res: Vec4d, aX: Double, aY: Double, aZ: Double, aW: Double, b: Vec4d): Vec4d {
         res.x = aX / b.x
         res.y = aY / b.y
         res.z = aZ / b.z
@@ -61,7 +61,7 @@ interface vec4d_operators {
         return res
     }
 
-    fun rem(res: Vec4d, a: Vec4d, bX: Double, bY: Double, bZ: Double, bW: Double): Vec4d {
+    inline fun rem(res: Vec4d, a: Vec4d, bX: Double, bY: Double, bZ: Double, bW: Double): Vec4d {
         res.x = a.x % bX
         res.y = a.y % bY
         res.z = a.z % bZ
@@ -69,7 +69,7 @@ interface vec4d_operators {
         return res
     }
 
-    fun rem(res: Vec4d, aX: Double, aY: Double, aZ: Double, aW: Double, b: Vec4d): Vec4d {
+    inline fun rem(res: Vec4d, aX: Double, aY: Double, aZ: Double, aW: Double, b: Vec4d): Vec4d {
         res.x = aX % b.x
         res.y = aY % b.y
         res.z = aZ % b.z

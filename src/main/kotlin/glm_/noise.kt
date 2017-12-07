@@ -67,7 +67,7 @@ interface noise {
 
 
     fun grad4(j: Float, ip: Vec4): Vec4 = with(glm) {
-        var pXYZ = floor(fract(Vec3(j) * Vec3(ip)) * 7f) * ip[2] - 1f
+        val pXYZ = floor(fract(Vec3(j) * Vec3(ip)) * 7f) * ip[2] - 1f
         val pW = 1.5f - dot(abs(pXYZ), Vec3(1))
         val s = Vec4(lessThan(Vec4(pXYZ, pW), Vec4(0.0f)))
         pXYZ += (Vec3(s) * 2f - 1f) * s.w
@@ -89,7 +89,7 @@ interface noise {
         val gx = 2f * fract(i / 41f) - 1f
         val gy = abs(gx) - 0.5f
         val tx = floor(gx + 0.5f)
-        gx minus_ tx
+        gx -= tx
 
         val g00 = Vec2(gx.x, gy.x)
         val g10 = Vec2(gx.y, gy.y)
@@ -97,10 +97,10 @@ interface noise {
         val g11 = Vec2(gx.w, gy.w)
 
         val norm = detail.taylorInvSqrt(Vec4(dot(g00, g00), dot(g01, g01), dot(g10, g10), dot(g11, g11)))
-        g00 times_ norm.x
-        g01 times_ norm.y
-        g10 times_ norm.z
-        g11 times_ norm.w
+        g00 *= norm.x
+        g01 *= norm.y
+        g10 *= norm.z
+        g11 *= norm.w
 
         val n00 = dot(g00, Vec2(fx.x, fy.x))
         val n10 = dot(g10, Vec2(fx.y, fy.y))
@@ -135,16 +135,16 @@ interface noise {
         gx0 = fract(gx0)
         val gz0 = Vec4(0.5f) - abs(gx0) - abs(gy0)
         val sz0 = step(gz0, Vec4(0f))
-        gx0 -= sz0 * (step(0f, gx0) - 0.5f)
-        gy0 -= sz0 * (step(0f, gy0) - 0.5f)
+        gx0 minusAssign sz0 * (step(0f, gx0) - 0.5f)
+        gy0 minusAssign sz0 * (step(0f, gy0) - 0.5f)
 
         var gx1 = ixy1 * (1f / 7f)
         var gy1 = fract(floor(gx1) * (1f / 7f)) - 0.5f
         gx1 = fract(gx1)
         val gz1 = Vec4(0.5f) - abs(gx1) - abs(gy1)
         val sz1 = step(gz1, Vec4(0f))
-        gx1 -= sz1 * (step(0f, gx1) - 0.5f)
-        gy1 -= sz1 * (step(0f, gy1) - 0.5f)
+        gx1 minusAssign sz1 * (step(0f, gx1) - 0.5f)
+        gy1 minusAssign sz1 * (step(0f, gy1) - 0.5f)
 
         val g000 = Vec3(gx0.x, gy0.x, gz0.x)
         val g100 = Vec3(gx0.y, gy0.y, gz0.y)
@@ -156,15 +156,15 @@ interface noise {
         val g111 = Vec3(gx1.w, gy1.w, gz1.w)
 
         val norm0 = detail.taylorInvSqrt(Vec4(dot(g000, g000), dot(g010, g010), dot(g100, g100), dot(g110, g110)))
-        g000 times_ norm0.x
-        g010 times_ norm0.y
-        g100 times_ norm0.z
-        g110 times_ norm0.w
+        g000 *= norm0.x
+        g010 *= norm0.y
+        g100 *= norm0.z
+        g110 *= norm0.w
         val norm1 = detail.taylorInvSqrt(Vec4(dot(g001, g001), dot(g011, g011), dot(g101, g101), dot(g111, g111)))
-        g001 times_ norm1.x
-        g011 times_ norm1.y
-        g101 times_ norm1.z
-        g111 times_ norm1.w
+        g001 *= norm1.x
+        g011 *= norm1.y
+        g101 *= norm1.z
+        g111 *= norm1.w
 
         val n000 = dot(g000, Pf0)
         val n100 = dot(g100, Vec3(Pf1.x, Pf0.y, Pf0.z))
@@ -212,8 +212,8 @@ interface noise {
         gz00 = fract(gz00) - 0.5f
         val gw00 = Vec4(0.75f) - abs(gx00) - abs(gy00) - abs(gz00)
         val sw00 = step(gw00, Vec4(0f))
-        gx00 -= sw00 * (step(0f, gx00) - 0.5f)
-        gy00 -= sw00 * (step(0f, gy00) - 0.5f)
+        gx00 minusAssign sw00 * (step(0f, gx00) - 0.5f)
+        gy00 minusAssign sw00 * (step(0f, gy00) - 0.5f)
 
         var gx01 = ixy01 / 7f
         var gy01 = floor(gx01) / 7f
@@ -223,8 +223,8 @@ interface noise {
         gz01 = fract(gz01) - 0.5f
         val gw01 = Vec4(0.75f) - abs(gx01) - abs(gy01) - abs(gz01)
         val sw01 = step(gw01, Vec4(0f))
-        gx01 -= sw01 * (step(0f, gx01) - 0.5f)
-        gy01 -= sw01 * (step(0f, gy01) - 0.5f)
+        gx01 minusAssign sw01 * (step(0f, gx01) - 0.5f)
+        gy01 minusAssign sw01 * (step(0f, gy01) - 0.5f)
 
         var gx10 = ixy10 / 7f
         var gy10 = floor(gx10) / 7f
@@ -234,8 +234,8 @@ interface noise {
         gz10 = fract(gz10) - 0.5f
         val gw10 = Vec4(0.75f) - abs(gx10) - abs(gy10) - abs(gz10)
         val sw10 = step(gw10, Vec4(0f))
-        gx10 -= sw10 * (step(0f, gx10) - 0.5f)
-        gy10 -= sw10 * (step(0f, gy10) - 0.5f)
+        gx10 minusAssign sw10 * (step(0f, gx10) - 0.5f)
+        gy10 minusAssign sw10 * (step(0f, gy10) - 0.5f)
 
         var gx11 = ixy11 / 7f
         var gy11 = floor(gx11) / 7f
@@ -245,8 +245,8 @@ interface noise {
         gz11 = fract(gz11) - 0.5f
         val gw11 = Vec4(0.75f) - abs(gx11) - abs(gy11) - abs(gz11)
         val sw11 = step(gw11, Vec4(0f))
-        gx11 -= sw11 * (step(0f, gx11) - 0.5f)
-        gy11 -= sw11 * (step(0f, gy11) - 0.5f)
+        gx11 minusAssign sw11 * (step(0f, gx11) - 0.5f)
+        gy11 minusAssign sw11 * (step(0f, gy11) - 0.5f)
 
         val g0000 = Vec4(gx00.x, gy00.x, gz00.x, gw00.x)
         val g1000 = Vec4(gx00.y, gy00.y, gz00.y, gw00.y)
@@ -266,28 +266,28 @@ interface noise {
         val g1111 = Vec4(gx11.w, gy11.w, gz11.w, gw11.w)
 
         val norm00 = detail.taylorInvSqrt(Vec4(dot(g0000, g0000), dot(g0100, g0100), dot(g1000, g1000), dot(g1100, g1100)))
-        g0000 times_ norm00.x
-        g0100 times_ norm00.y
-        g1000 times_ norm00.z
-        g1100 times_ norm00.w
+        g0000 *= norm00.x
+        g0100 *= norm00.y
+        g1000 *= norm00.z
+        g1100 *= norm00.w
 
         val norm01 = detail.taylorInvSqrt(Vec4(dot(g0001, g0001), dot(g0101, g0101), dot(g1001, g1001), dot(g1101, g1101)))
-        g0001 times_ norm01.x
-        g0101 times_ norm01.y
-        g1001 times_ norm01.z
-        g1101 times_ norm01.w
+        g0001 *= norm01.x
+        g0101 *= norm01.y
+        g1001 *= norm01.z
+        g1101 *= norm01.w
 
         val norm10 = detail.taylorInvSqrt(Vec4(dot(g0010, g0010), dot(g0110, g0110), dot(g1010, g1010), dot(g1110, g1110)))
-        g0010 times_ norm10.x
-        g0110 times_ norm10.y
-        g1010 times_ norm10.z
-        g1110 times_ norm10.w
+        g0010 *= norm10.x
+        g0110 *= norm10.y
+        g1010 *= norm10.z
+        g1110 *= norm10.w
 
         val norm11 = detail.taylorInvSqrt(Vec4(dot(g0011, g0011), dot(g0111, g0111), dot(g1011, g1011), dot(g1111, g1111)))
-        g0011 times_ norm11.x
-        g0111 times_ norm11.y
-        g1011 times_ norm11.z
-        g1111 times_ norm11.w
+        g0011 *= norm11.x
+        g0111 *= norm11.y
+        g1011 *= norm11.z
+        g1111 *= norm11.w
 
         val n0000 = dot(g0000, Pf0)
         val n1000 = dot(g1000, Vec4(Pf1.x, Pf0.y, Pf0.z, Pf0.w))
@@ -331,7 +331,7 @@ interface noise {
         val gx = 2f * fract(i / 41f) - 1f
         val gy = abs(gx) - 0.5f
         val tx = floor(gx + 0.5f)
-        gx minus_ tx
+        gx -= tx
 
         val g00 = Vec2(gx.x, gy.x)
         val g10 = Vec2(gx.y, gy.y)
@@ -339,10 +339,10 @@ interface noise {
         val g11 = Vec2(gx.w, gy.w)
 
         val norm = detail.taylorInvSqrt(Vec4(dot(g00, g00), dot(g01, g01), dot(g10, g10), dot(g11, g11)))
-        g00 times_ norm.x
-        g01 times_ norm.y
-        g10 times_ norm.z
-        g11 times_ norm.w
+        g00 *= norm.x
+        g01 *= norm.y
+        g10 *= norm.z
+        g11 *= norm.w
 
         val n00 = dot(g00, Vec2(fx.x, fy.x))
         val n10 = dot(g10, Vec2(fx.y, fy.y))
@@ -377,25 +377,25 @@ interface noise {
         gx0 = fract(gx0)
         val gz0 = Vec4(0.5f) - abs(gx0) - abs(gy0)
         val sz0 = step(gz0, Vec4(0f))
-        gx0 -= sz0 * (step(0f, gx0) - 0.5f)
-        gy0 -= sz0 * (step(0f, gy0) - 0.5f)
+        gx0 minusAssign sz0 * (step(0f, gx0) - 0.5f)
+        gy0 minusAssign sz0 * (step(0f, gy0) - 0.5f)
 
         var gx1 = ixy1 / 7f
         var gy1 = fract(floor(gx1) / 7f) - 0.5f
         gx1 = fract(gx1)
         val gz1 = Vec4(0.5f) - abs(gx1) - abs(gy1)
         val sz1 = step(gz1, Vec4(0f))
-        gx1 -= sz1 * (step(0f, gx1) - 0.5f)
-        gy1 -= sz1 * (step(0f, gy1) - 0.5f)
+        gx1 minusAssign  sz1 * (step(0f, gx1) - 0.5f)
+        gy1 minusAssign sz1 * (step(0f, gy1) - 0.5f)
 
-        var g000 = Vec3(gx0.x, gy0.x, gz0.x)
-        var g100 = Vec3(gx0.y, gy0.y, gz0.y)
-        var g010 = Vec3(gx0.z, gy0.z, gz0.z)
-        var g110 = Vec3(gx0.w, gy0.w, gz0.w)
-        var g001 = Vec3(gx1.x, gy1.x, gz1.x)
-        var g101 = Vec3(gx1.y, gy1.y, gz1.y)
-        var g011 = Vec3(gx1.z, gy1.z, gz1.z)
-        var g111 = Vec3(gx1.w, gy1.w, gz1.w)
+        val g000 = Vec3(gx0.x, gy0.x, gz0.x)
+        val g100 = Vec3(gx0.y, gy0.y, gz0.y)
+        val g010 = Vec3(gx0.z, gy0.z, gz0.z)
+        val g110 = Vec3(gx0.w, gy0.w, gz0.w)
+        val g001 = Vec3(gx1.x, gy1.x, gz1.x)
+        val g101 = Vec3(gx1.y, gy1.y, gz1.y)
+        val g011 = Vec3(gx1.z, gy1.z, gz1.z)
+        val g111 = Vec3(gx1.w, gy1.w, gz1.w)
 
         val norm0 = detail.taylorInvSqrt(Vec4(dot(g000, g000), dot(g010, g010), dot(g100, g100), dot(g110, g110)))
         g000 *= norm0.x
@@ -453,8 +453,8 @@ interface noise {
         gz00 = fract(gz00) - 0.5f
         val gw00 = Vec4(0.75f) - abs(gx00) - abs(gy00) - abs(gz00)
         val sw00 = step(gw00, Vec4(0f))
-        gx00 -= sw00 * (step(0f, gx00) - 0.5f)
-        gy00 -= sw00 * (step(0f, gy00) - 0.5f)
+        gx00 minusAssign sw00 * (step(0f, gx00) - 0.5f)
+        gy00 minusAssign sw00 * (step(0f, gy00) - 0.5f)
 
         var gx01 = ixy01 / 7f
         var gy01 = floor(gx01) / 7f
@@ -464,8 +464,8 @@ interface noise {
         gz01 = fract(gz01) - 0.5f
         val gw01 = Vec4(0.75f) - abs(gx01) - abs(gy01) - abs(gz01)
         val sw01 = step(gw01, Vec4(0f))
-        gx01 -= sw01 * (step(0f, gx01) - 0.5f)
-        gy01 -= sw01 * (step(0f, gy01) - 0.5f)
+        gx01 minusAssign sw01 * (step(0f, gx01) - 0.5f)
+        gy01 minusAssign sw01 * (step(0f, gy01) - 0.5f)
 
         var gx10 = ixy10 / 7f
         var gy10 = floor(gx10) / 7f
@@ -475,8 +475,8 @@ interface noise {
         gz10 = fract(gz10) - 0.5f
         val gw10 = Vec4(0.75f) - abs(gx10) - abs(gy10) - abs(gz10)
         val sw10 = step(gw10, Vec4(0f))
-        gx10 -= sw10 * (step(0f, gx10) - 0.5f)
-        gy10 -= sw10 * (step(0f, gy10) - 0.5f)
+        gx10 minusAssign sw10 * (step(0f, gx10) - 0.5f)
+        gy10 minusAssign sw10 * (step(0f, gy10) - 0.5f)
 
         var gx11 = ixy11 / 7f
         var gy11 = floor(gx11) / 7f
@@ -486,25 +486,25 @@ interface noise {
         gz11 = fract(gz11) - 0.5f
         val gw11 = Vec4(0.75f) - abs(gx11) - abs(gy11) - abs(gz11)
         val sw11 = step(gw11, Vec4(0f))
-        gx11 -= sw11 * (step(0f, gx11) - 0.5f)
-        gy11 -= sw11 * (step(0f, gy11) - 0.5f)
+        gx11 minusAssign sw11 * (step(0f, gx11) - 0.5f)
+        gy11 minusAssign sw11 * (step(0f, gy11) - 0.5f)
 
-        var g0000 = Vec4(gx00.x, gy00.x, gz00.x, gw00.x)
-        var g1000 = Vec4(gx00.y, gy00.y, gz00.y, gw00.y)
-        var g0100 = Vec4(gx00.z, gy00.z, gz00.z, gw00.z)
-        var g1100 = Vec4(gx00.w, gy00.w, gz00.w, gw00.w)
-        var g0010 = Vec4(gx10.x, gy10.x, gz10.x, gw10.x)
-        var g1010 = Vec4(gx10.y, gy10.y, gz10.y, gw10.y)
-        var g0110 = Vec4(gx10.z, gy10.z, gz10.z, gw10.z)
-        var g1110 = Vec4(gx10.w, gy10.w, gz10.w, gw10.w)
-        var g0001 = Vec4(gx01.x, gy01.x, gz01.x, gw01.x)
-        var g1001 = Vec4(gx01.y, gy01.y, gz01.y, gw01.y)
-        var g0101 = Vec4(gx01.z, gy01.z, gz01.z, gw01.z)
-        var g1101 = Vec4(gx01.w, gy01.w, gz01.w, gw01.w)
-        var g0011 = Vec4(gx11.x, gy11.x, gz11.x, gw11.x)
-        var g1011 = Vec4(gx11.y, gy11.y, gz11.y, gw11.y)
-        var g0111 = Vec4(gx11.z, gy11.z, gz11.z, gw11.z)
-        var g1111 = Vec4(gx11.w, gy11.w, gz11.w, gw11.w)
+        val g0000 = Vec4(gx00.x, gy00.x, gz00.x, gw00.x)
+        val g1000 = Vec4(gx00.y, gy00.y, gz00.y, gw00.y)
+        val g0100 = Vec4(gx00.z, gy00.z, gz00.z, gw00.z)
+        val g1100 = Vec4(gx00.w, gy00.w, gz00.w, gw00.w)
+        val g0010 = Vec4(gx10.x, gy10.x, gz10.x, gw10.x)
+        val g1010 = Vec4(gx10.y, gy10.y, gz10.y, gw10.y)
+        val g0110 = Vec4(gx10.z, gy10.z, gz10.z, gw10.z)
+        val g1110 = Vec4(gx10.w, gy10.w, gz10.w, gw10.w)
+        val g0001 = Vec4(gx01.x, gy01.x, gz01.x, gw01.x)
+        val g1001 = Vec4(gx01.y, gy01.y, gz01.y, gw01.y)
+        val g0101 = Vec4(gx01.z, gy01.z, gz01.z, gw01.z)
+        val g1101 = Vec4(gx01.w, gy01.w, gz01.w, gw01.w)
+        val g0011 = Vec4(gx11.x, gy11.x, gz11.x, gw11.x)
+        val g1011 = Vec4(gx11.y, gy11.y, gz11.y, gw11.y)
+        val g0111 = Vec4(gx11.z, gy11.z, gz11.z, gw11.z)
+        val g1111 = Vec4(gx11.w, gy11.w, gz11.w, gw11.w)
 
         val norm00 = detail.taylorInvSqrt(Vec4(dot(g0000, g0000), dot(g0100, g0100), dot(g1000, g1000), dot(g1100, g1100)))
         g0000 *= norm00.x
@@ -584,7 +584,7 @@ interface noise {
                 detail.permute(i.y + Vec3(0f, i1.y, 1f))
                         + i.x + Vec3(0f, i1.x, 1f))
 
-        var m = max(Vec3(0.5f) - Vec3(
+        val m = max(Vec3(0.5f) - Vec3(
                 dot(x0, x0),
                 dot(Vec2(x12.x, x12.y), Vec2(x12.x, x12.y)),
                 dot(Vec2(x12.z, x12.w), Vec2(x12.z, x12.w))), Vec3(0f))
@@ -675,14 +675,14 @@ interface noise {
 
         // Normalise gradients
         val norm = detail.taylorInvSqrt(Vec4(dot(p0, p0), dot(p1, p1), dot(p2, p2), dot(p3, p3)))
-        p0 times_ norm.x
-        p1 times_ norm.y
-        p2 times_ norm.z
-        p3 times_ norm.w
+        p0 *= norm.x
+        p1 *= norm.y
+        p2 *= norm.z
+        p3 *= norm.w
 
         // Mix final noise value
         val m = max(0.6f - Vec4(dot(x0, x0), dot(x1, x1), dot(x2, x2), dot(x3, x3)), Vec4(0f))
-        m times_ m
+        m += m
         return 42f * dot(m * m, Vec4(dot(p0, x0), dot(p1, x1), dot(p2, x2), dot(p3, x3)))
     }
 
@@ -754,17 +754,17 @@ interface noise {
 
         // Normalise gradients
         val norm = detail.taylorInvSqrt(Vec4(dot(p0, p0), dot(p1, p1), dot(p2, p2), dot(p3, p3)))
-        p0 times_ norm.x
-        p1 times_ norm.y
-        p2 times_ norm.z
-        p3 times_ norm.w
-        p4 times_ detail.taylorInvSqrt(dot(p4, p4))
+        p0 *= norm.x
+        p1 *= norm.y
+        p2 *= norm.z
+        p3 *= norm.w
+        p4 *= detail.taylorInvSqrt(dot(p4, p4))
 
         // Mix contributions from the five corners
         val m0 = max(0.6f - Vec3(dot(x0, x0), dot(x1, x1), dot(x2, x2)), Vec3(0f))
         val m1 = max(0.6f - Vec2(dot(x3, x3), dot(x4, x4)), Vec2(0f))
-        m0 times_ m0
-        m1 times_ m1
+        m0 *= m0
+        m1 *= m1
         return 49f *
                 (dot(m0 * m0, Vec3(dot(p0, x0), dot(p1, x1), dot(p2, x2))) +
                         dot(m1 * m1, Vec2(dot(p3, x3), dot(p4, x4))))

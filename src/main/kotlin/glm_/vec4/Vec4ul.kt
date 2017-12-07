@@ -63,6 +63,8 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1], floats[index + 2], floats[index + 3])
     constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
+    constructor(block: (Int) -> Ulong) : this(block(0), block(1), block(2), block(3))
+
     constructor(s: Number) : this(s, s, s, s)
     constructor(x: Number, y: Number, z: Number, w: Number) : this(x.ul, y.ul, z.ul, w.ul)
 
@@ -140,7 +142,7 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     override fun instanceSize() = size
 
 
-    companion object : vec4ul_operators {
+    companion object : vec4ul_operators() {
         @JvmField
         val length = 4
         @JvmField
@@ -157,11 +159,11 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     // -- Increment main.and decrement operators --
 
     operator fun inc(res: Vec4ul = Vec4ul()) = plus(res, this, 1, 1, 1, 1)
-    fun inc_() = plus(this, this, 1, 1, 1, 1)
+    fun incAssign() = plus(this, this, 1, 1, 1, 1)
 
 
     operator fun dec(res: Vec4ul = Vec4ul()) = minus(res, this, 1, 1, 1, 1)
-    fun dec_() = minus(this, this, 1, 1, 1, 1)
+    fun decAssign() = minus(this, this, 1, 1, 1, 1)
 
 
     // -- Specific binary arithmetic operators --
@@ -176,11 +178,17 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     fun plus(b: Long, res: Vec4ul = Vec4ul()) = plus(res, this, b, b, b, b)
     fun plus(b: Vec4ul, res: Vec4ul = Vec4ul()) = plus(res, this, b.x, b.y, b.z, b.w)
 
-    fun plus_(bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong) = plus(this, this, bX, bY, bZ, bW)
-    fun plus_(bX: Long, bY: Long, bZ: Long, bW: Long) = plus(this, this, bX, bY, bZ, bW)
-    infix fun plus_(b: Ulong) = plus(this, this, b, b, b, b)
-    infix fun plus_(b: Long) = plus(this, this, b, b, b, b)
-    infix fun plus_(b: Vec4ul) = plus(this, this, b.x, b.y, b.z, b.w)
+    fun plusAssign(bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong) = plus(this, this, bX, bY, bZ, bW)
+    fun plusAssign(bX: Long, bY: Long, bZ: Long, bW: Long) = plus(this, this, bX, bY, bZ, bW)
+    infix operator fun plusAssign(b: Ulong) {
+        plus(this, this, b, b, b, b)
+    }
+    infix operator fun plusAssign(b: Long) {
+        plus(this, this, b, b, b, b)
+    }
+    infix operator fun plusAssign(b: Vec4ul) {
+        plus(this, this, b.x, b.y, b.z, b.w)
+    }
 
 
     operator fun minus(b: Ulong) = minus(Vec4ul(), this, b, b, b, b)
@@ -193,11 +201,17 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     fun minus(b: Long, res: Vec4ul = Vec4ul()) = minus(res, this, b, b, b, b)
     fun minus(b: Vec4ul, res: Vec4ul = Vec4ul()) = minus(res, this, b.x, b.y, b.z, b.w)
 
-    fun minus_(bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong) = minus(this, this, bX, bY, bZ, bW)
-    fun minus_(bX: Long, bY: Long, bZ: Long, bW: Long) = minus(this, this, bX, bY, bZ, bW)
-    infix fun minus_(b: Ulong) = minus(this, this, b, b, b, b)
-    infix fun minus_(b: Long) = minus(this, this, b, b, b, b)
-    infix fun minus_(b: Vec4ul) = minus(this, this, b.x, b.y, b.z, b.w)
+    fun minusAssign(bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong) = minus(this, this, bX, bY, bZ, bW)
+    fun minusAssign(bX: Long, bY: Long, bZ: Long, bW: Long) = minus(this, this, bX, bY, bZ, bW)
+    infix operator fun minusAssign(b: Ulong) {
+        minus(this, this, b, b, b, b)
+    }
+    infix operator fun minusAssign(b: Long) {
+        minus(this, this, b, b, b, b)
+    }
+    infix operator fun minusAssign(b: Vec4ul) {
+        minus(this, this, b.x, b.y, b.z, b.w)
+    }
 
 
     operator fun times(b: Ulong) = times(Vec4ul(), this, b, b, b, b)
@@ -210,11 +224,17 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     fun times(b: Long, res: Vec4ul = Vec4ul()) = times(res, this, b, b, b, b)
     fun times(b: Vec4ul, res: Vec4ul = Vec4ul()) = times(res, this, b.x, b.y, b.z, b.w)
 
-    fun times_(bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong) = times(this, this, bX, bY, bZ, bW)
-    fun times_(bX: Long, bY: Long, bZ: Long, bW: Long) = times(this, this, bX, bY, bZ, bW)
-    infix fun times_(b: Ulong) = times(this, this, b, b, b, b)
-    infix fun times_(b: Long) = times(this, this, b, b, b, b)
-    infix fun times_(b: Vec4ul) = times(this, this, b.x, b.y, b.z, b.w)
+    fun timesAssign(bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong) = times(this, this, bX, bY, bZ, bW)
+    fun timesAssign(bX: Long, bY: Long, bZ: Long, bW: Long) = times(this, this, bX, bY, bZ, bW)
+    infix operator fun timesAssign(b: Ulong) {
+        times(this, this, b, b, b, b)
+    }
+    infix operator fun timesAssign(b: Long) {
+        times(this, this, b, b, b, b)
+    }
+    infix operator fun timesAssign(b: Vec4ul) {
+        times(this, this, b.x, b.y, b.z, b.w)
+    }
 
 
     operator fun div(b: Ulong) = div(Vec4ul(), this, b, b, b, b)
@@ -227,11 +247,17 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     fun div(b: Long, res: Vec4ul = Vec4ul()) = div(res, this, b, b, b, b)
     fun div(b: Vec4ul, res: Vec4ul = Vec4ul()) = div(res, this, b.x, b.y, b.z, b.w)
 
-    fun div_(bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong) = div(this, this, bX, bY, bZ, bW)
-    fun div_(bX: Long, bY: Long, bZ: Long, bW: Long) = div(this, this, bX, bY, bZ, bW)
-    infix fun div_(b: Ulong) = div(this, this, b, b, b, b)
-    infix fun div_(b: Long) = div(this, this, b, b, b, b)
-    infix fun div_(b: Vec4ul) = div(this, this, b.x, b.y, b.z, b.w)
+    fun divAssign(bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong) = div(this, this, bX, bY, bZ, bW)
+    fun divAssign(bX: Long, bY: Long, bZ: Long, bW: Long) = div(this, this, bX, bY, bZ, bW)
+    infix operator fun divAssign(b: Ulong) {
+        div(this, this, b, b, b, b)
+    }
+    infix operator fun divAssign(b: Long) {
+        div(this, this, b, b, b, b)
+    }
+    infix operator fun divAssign(b: Vec4ul) {
+        div(this, this, b.x, b.y, b.z, b.w)
+    }
 
 
     operator fun rem(b: Ulong) = rem(Vec4ul(), this, b, b, b, b)
@@ -244,11 +270,17 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     fun rem(b: Long, res: Vec4ul = Vec4ul()) = rem(res, this, b, b, b, b)
     fun rem(b: Vec4ul, res: Vec4ul = Vec4ul()) = rem(res, this, b.x, b.y, b.z, b.w)
 
-    fun rem_(bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong) = rem(this, this, bX, bY, bZ, bW)
-    fun rem_(bX: Long, bY: Long, bZ: Long, bW: Long) = rem(this, this, bX, bY, bZ, bW)
-    infix fun rem_(b: Ulong) = rem(this, this, b, b, b, b)
-    infix fun rem_(b: Long) = rem(this, this, b, b, b, b)
-    infix fun rem_(b: Vec4ul) = rem(this, this, b.x, b.y, b.z, b.w)
+    fun remAssign(bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong) = rem(this, this, bX, bY, bZ, bW)
+    fun remAssign(bX: Long, bY: Long, bZ: Long, bW: Long) = rem(this, this, bX, bY, bZ, bW)
+    infix operator fun remAssign(b: Ulong) {
+        rem(this, this, b, b, b, b)
+    }
+    infix operator fun remAssign(b: Long) {
+        rem(this, this, b, b, b, b)
+    }
+    infix operator fun remAssign(b: Vec4ul) {
+        rem(this, this, b.x, b.y, b.z, b.w)
+    }
 
 
     // -- Generic binary arithmetic operators --
@@ -260,9 +292,13 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     fun plus(b: Number, res: Vec4ul = Vec4ul()) = plus(res, this, b.L, b.L, b.L, b.L)
     fun plus(b: Vec4t<out Number>, res: Vec4ul = Vec4ul()) = plus(res, this, b.x.L, b.y.L, b.z.L, b.w.L)
 
-    fun plus_(bX: Number, bY: Number, bZ: Number, bW: Number) = plus(this, this, bX.L, bY.L, bZ.L, bW.L)
-    infix fun plus_(b: Number) = plus(this, this, b.L, b.L, b.L, b.L)
-    infix fun plus_(b: Vec4t<out Number>) = plus(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
+    fun plusAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = plus(this, this, bX.L, bY.L, bZ.L, bW.L)
+    infix operator fun plusAssign(b: Number) {
+        plus(this, this, b.L, b.L, b.L, b.L)
+    }
+    infix operator fun plusAssign(b: Vec4t<out Number>) {
+        plus(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
+    }
 
 
     operator fun minus(b: Number) = minus(Vec4ul(), this, b.L, b.L, b.L, b.L)
@@ -272,9 +308,13 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     fun minus(b: Number, res: Vec4ul = Vec4ul()) = minus(res, this, b.L, b.L, b.L, b.L)
     fun minus(b: Vec4t<out Number>, res: Vec4ul = Vec4ul()) = minus(res, this, b.x.L, b.y.L, b.z.L, b.w.L)
 
-    fun minus_(bX: Number, bY: Number, bZ: Number, bW: Number) = minus(this, this, bX.L, bY.L, bZ.L, bW.L)
-    infix fun minus_(b: Number) = minus(this, this, b.L, b.L, b.L, b.L)
-    infix fun minus_(b: Vec4t<out Number>) = minus(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
+    fun minusAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = minus(this, this, bX.L, bY.L, bZ.L, bW.L)
+    infix operator fun minusAssign(b: Number) {
+        minus(this, this, b.L, b.L, b.L, b.L)
+    }
+    infix operator fun minusAssign(b: Vec4t<out Number>) {
+        minus(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
+    }
 
 
     operator fun times(b: Number) = times(Vec4ul(), this, b.L, b.L, b.L, b.L)
@@ -284,9 +324,13 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     fun times(b: Number, res: Vec4ul = Vec4ul()) = times(res, this, b.L, b.L, b.L, b.L)
     fun times(b: Vec4t<out Number>, res: Vec4ul = Vec4ul()) = times(res, this, b.x.L, b.y.L, b.z.L, b.w.L)
 
-    fun times_(bX: Number, bY: Number, bZ: Number, bW: Number) = times(this, this, bX.L, bY.L, bZ.L, bW.L)
-    infix fun times_(b: Number) = times(this, this, b.L, b.L, b.L, b.L)
-    infix fun times_(b: Vec4t<out Number>) = times(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
+    fun timesAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = times(this, this, bX.L, bY.L, bZ.L, bW.L)
+    infix operator fun timesAssign(b: Number) {
+        times(this, this, b.L, b.L, b.L, b.L)
+    }
+    infix operator fun timesAssign(b: Vec4t<out Number>) {
+        times(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
+    }
 
 
     operator fun div(b: Number) = div(Vec4ul(), this, b.L, b.L, b.L, b.L)
@@ -296,9 +340,13 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     fun div(b: Number, res: Vec4ul = Vec4ul()) = div(res, this, b.L, b.L, b.L, b.L)
     fun div(b: Vec4t<out Number>, res: Vec4ul = Vec4ul()) = div(res, this, b.x.L, b.y.L, b.z.L, b.w.L)
 
-    fun div_(bX: Number, bY: Number, bZ: Number, bW: Number) = div(this, this, bX.L, bY.L, bZ.L, bW.L)
-    infix fun div_(b: Number) = div(this, this, b.L, b.L, b.L, b.L)
-    infix fun div_(b: Vec4t<out Number>) = div(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
+    fun divAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = div(this, this, bX.L, bY.L, bZ.L, bW.L)
+    infix operator fun divAssign(b: Number) {
+        div(this, this, b.L, b.L, b.L, b.L)
+    }
+    infix operator fun divAssign(b: Vec4t<out Number>) {
+        div(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
+    }
 
 
     operator fun rem(b: Number) = rem(Vec4ul(), this, b.L, b.L, b.L, b.L)
@@ -308,9 +356,13 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     fun rem(b: Number, res: Vec4ul = Vec4ul()) = rem(res, this, b.L, b.L, b.L, b.L)
     fun rem(b: Vec4t<out Number>, res: Vec4ul = Vec4ul()) = rem(res, this, b.x.L, b.y.L, b.z.L, b.w.L)
 
-    fun rem_(bX: Number, bY: Number, bZ: Number, bW: Number) = rem(this, this, bX.L, bY.L, bZ.L, bW.L)
-    infix fun rem_(b: Number) = rem(this, this, b.L, b.L, b.L, b.L)
-    infix fun rem_(b: Vec4t<out Number>) = rem(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
+    fun remAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = rem(this, this, bX.L, bY.L, bZ.L, bW.L)
+    infix operator fun remAssign(b: Number) {
+        rem(this, this, b.L, b.L, b.L, b.L)
+    }
+    infix operator fun remAssign(b: Vec4t<out Number>) {
+        rem(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
+    }
 
 
     // -- Specific bitwise operators --
@@ -321,11 +373,11 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     fun and(bX: Long, bY: Long, bZ: Long, bW: Long) = and(Vec4ul(), this, bX, bY, bZ, bW)
     fun and(b: Vec4ul) = and(Vec4ul(), this, b.x, b.y, b.z, b.w)
 
-    infix fun and_(b: Ulong) = and(this, this, b, b, b, b)
-    infix fun and_(b: Long) = and(this, this, b, b, b, b)
-    fun and_(bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong) = and(this, this, bX, bY, bZ, bW)
-    fun and_(bX: Long, bY: Long, bZ: Long, bW: Long) = and(this, this, bX, bY, bZ, bW)
-    infix fun and_(b: Vec4ul) = and(this, this, b.x, b.y, b.z, b.w)
+    infix fun andAssign(b: Ulong) = and(this, this, b, b, b, b)
+    infix fun andAssign(b: Long) = and(this, this, b, b, b, b)
+    fun andAssign(bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong) = and(this, this, bX, bY, bZ, bW)
+    fun andAssign(bX: Long, bY: Long, bZ: Long, bW: Long) = and(this, this, bX, bY, bZ, bW)
+    infix fun andAssign(b: Vec4ul) = and(this, this, b.x, b.y, b.z, b.w)
 
     fun and(b: Ulong, res: Vec4ul) = and(res, this, b, b, b, b)
     fun and(b: Long, res: Vec4ul) = and(res, this, b, b, b, b)
@@ -340,11 +392,11 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     fun or(bX: Long, bY: Long, bZ: Long, bW: Long) = or(Vec4ul(), this, bX, bY, bZ, bW)
     fun or(b: Vec4ul) = or(Vec4ul(), this, b.x, b.y, b.z, b.w)
 
-    infix fun or_(b: Ulong) = or(this, this, b, b, b, b)
-    infix fun or_(b: Long) = or(this, this, b, b, b, b)
-    fun or_(bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong) = or(this, this, bX, bY, bZ, bW)
-    fun or_(bX: Long, bY: Long, bZ: Long, bW: Long) = or(this, this, bX, bY, bZ, bW)
-    infix fun or_(b: Vec4ul) = or(this, this, b.x, b.y, b.z, b.w)
+    infix fun orAssign(b: Ulong) = or(this, this, b, b, b, b)
+    infix fun orAssign(b: Long) = or(this, this, b, b, b, b)
+    fun orAssign(bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong) = or(this, this, bX, bY, bZ, bW)
+    fun orAssign(bX: Long, bY: Long, bZ: Long, bW: Long) = or(this, this, bX, bY, bZ, bW)
+    infix fun orAssign(b: Vec4ul) = or(this, this, b.x, b.y, b.z, b.w)
 
     fun or(b: Ulong, res: Vec4ul) = or(res, this, b, b, b, b)
     fun or(b: Long, res: Vec4ul) = or(res, this, b, b, b, b)
@@ -359,11 +411,11 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     fun xor(bX: Long, bY: Long, bZ: Long, bW: Long) = xor(Vec4ul(), this, bX, bY, bZ, bW)
     fun xor(b: Vec4ul) = xor(Vec4ul(), this, b.x, b.y, b.z, b.w)
 
-    infix fun xor_(b: Ulong) = xor(this, this, b, b, b, b)
-    infix fun xor_(b: Long) = xor(this, this, b, b, b, b)
-    fun xor_(bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong) = xor(this, this, bX, bY, bZ, bW)
-    fun xor_(bX: Long, bY: Long, bZ: Long, bW: Long) = xor(this, this, bX, bY, bZ, bW)
-    infix fun xor_(b: Vec4ul) = xor(this, this, b.x, b.y, b.z, b.w)
+    infix fun xorAssign(b: Ulong) = xor(this, this, b, b, b, b)
+    infix fun xorAssign(b: Long) = xor(this, this, b, b, b, b)
+    fun xorAssign(bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong) = xor(this, this, bX, bY, bZ, bW)
+    fun xorAssign(bX: Long, bY: Long, bZ: Long, bW: Long) = xor(this, this, bX, bY, bZ, bW)
+    infix fun xorAssign(b: Vec4ul) = xor(this, this, b.x, b.y, b.z, b.w)
 
     fun xor(b: Ulong, res: Vec4ul) = xor(res, this, b, b, b, b)
     fun xor(b: Long, res: Vec4ul) = xor(res, this, b, b, b, b)
@@ -375,8 +427,8 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     infix fun shl(b: Int) = shl(Vec4ul(), this, b, b, b, b)
     fun shl(bX: Int, bY: Int, bZ: Int, bW: Int) = shl(Vec4ul(), this, bX, bY, bZ, bW)
 
-    infix fun shl_(b: Int) = shl(this, this, b, b, b, b)
-    fun shl_(bX: Int, bY: Int, bZ: Int, bW: Int) = shl(this, this, bX, bY, bZ, bW)
+    infix fun shlAssign(b: Int) = shl(this, this, b, b, b, b)
+    fun shlAssign(bX: Int, bY: Int, bZ: Int, bW: Int) = shl(this, this, bX, bY, bZ, bW)
 
     fun shl(b: Int, res: Vec4ul) = shl(res, this, b, b, b, b)
     fun shl(bX: Int, bY: Int, bZ: Int, bW: Int, res: Vec4ul) = shl(res, this, bX, bY, bZ, bW)
@@ -385,15 +437,15 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     infix fun shr(b: Int) = shr(Vec4ul(), this, b, b, b, b)
     fun shr(bX: Int, bY: Int, bZ: Int, bW: Int) = shr(Vec4ul(), this, bX, bY, bZ, bW)
 
-    infix fun shr_(b: Int) = shr(this, this, b, b, b, b)
-    fun shr_(bX: Int, bY: Int, bZ: Int, bW: Int) = shr(this, this, bX, bY, bZ, bW)
+    infix fun shrAssign(b: Int) = shr(this, this, b, b, b, b)
+    fun shrAssign(bX: Int, bY: Int, bZ: Int, bW: Int) = shr(this, this, bX, bY, bZ, bW)
 
     fun shr(b: Int, res: Vec4ul) = shr(res, this, b, b, b, b)
     fun shr(bX: Int, bY: Int, bZ: Int, bW: Int, res: Vec4ul) = shr(res, this, bX, bY, bZ, bW)
 
 
     fun inv(res: Vec4ul = Vec4ul()) = inv(res, this)
-    fun inv_() = inv(this, this)
+    fun invAssign() = inv(this, this)
 
 
     // -- Generic bitwise operators --
@@ -402,9 +454,9 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     fun and(bX: Number, bY: Number, bZ: Number, bW: Number) = and(Vec4ul(), this, bX.L, bY.L, bZ.L, bW.L)
     fun and(b: Vec4t<out Number>) = and(Vec4ul(), this, b.x.L, b.y.L, b.z.L, b.w.L)
 
-    infix fun and_(b: Number) = and(this, this, b.L, b.L, b.L, b.L)
-    fun and_(bX: Number, bY: Number, bZ: Number, bW: Number) = and(this, this, bX.L, bY.L, bZ.L, bW.L)
-    infix fun and_(b: Vec4t<out Number>) = and(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
+    infix fun andAssign(b: Number) = and(this, this, b.L, b.L, b.L, b.L)
+    fun andAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = and(this, this, bX.L, bY.L, bZ.L, bW.L)
+    infix fun andAssign(b: Vec4t<out Number>) = and(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
 
     fun and(b: Number, res: Vec4ul) = and(res, this, b.L, b.L, b.L, b.L)
     fun and(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4ul) = and(res, this, bX.L, bY.L, bZ.L, bW.L)
@@ -415,9 +467,9 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     fun or(bX: Number, bY: Number, bZ: Number, bW: Number) = or(Vec4ul(), this, bX.L, bY.L, bZ.L, bW.L)
     fun or(b: Vec4t<out Number>) = or(Vec4ul(), this, b.x.L, b.y.L, b.z.L, b.w.L)
 
-    infix fun or_(b: Number) = or(this, this, b.L, b.L, b.L, b.L)
-    fun or_(bX: Number, bY: Number, bZ: Number, bW: Number) = or(this, this, bX.L, bY.L, bZ.L, bW.L)
-    infix fun or_(b: Vec4t<out Number>) = or(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
+    infix fun orAssign(b: Number) = or(this, this, b.L, b.L, b.L, b.L)
+    fun orAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = or(this, this, bX.L, bY.L, bZ.L, bW.L)
+    infix fun orAssign(b: Vec4t<out Number>) = or(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
 
     fun or(b: Number, res: Vec4ul) = or(res, this, b.L, b.L, b.L, b.L)
     fun or(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4ul) = or(res, this, bX.L, bY.L, bZ.L, bW.L)
@@ -428,9 +480,9 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     fun xor(bX: Number, bY: Number, bZ: Number, bW: Number) = xor(Vec4ul(), this, bX.L, bY.L, bZ.L, bW.L)
     fun xor(b: Vec4t<out Number>) = xor(Vec4ul(), this, b.x.L, b.y.L, b.z.L, b.w.L)
 
-    infix fun xor_(b: Number) = xor(this, this, b.L, b.L, b.L, b.L)
-    fun xor_(bX: Number, bY: Number, bZ: Number, bW: Number) = xor(this, this, bX.L, bY.L, bZ.L, bW.L)
-    infix fun xor_(b: Vec4t<out Number>) = xor(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
+    infix fun xorAssign(b: Number) = xor(this, this, b.L, b.L, b.L, b.L)
+    fun xorAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = xor(this, this, bX.L, bY.L, bZ.L, bW.L)
+    infix fun xorAssign(b: Vec4t<out Number>) = xor(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
 
     fun xor(b: Number, res: Vec4ul) = xor(res, this, b.L, b.L, b.L, b.L)
     fun xor(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4ul) = xor(res, this, bX.L, bY.L, bZ.L, bW.L)
@@ -440,8 +492,8 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     infix fun shl(b: Number) = shl(Vec4ul(), this, b.L, b.L, b.L, b.L)
     fun shl(bX: Number, bY: Number, bZ: Number, bW: Number) = shl(Vec4ul(), this, bX.L, bY.L, bZ.L, bW.L)
 
-    infix fun shl_(b: Number) = shl(this, this, b.L, b.L, b.L, b.L)
-    fun shl_(bX: Number, bY: Number, bZ: Number, bW: Number) = shl(this, this, bX.L, bY.L, bZ.L, bW.L)
+    infix fun shlAssign(b: Number) = shl(this, this, b.L, b.L, b.L, b.L)
+    fun shlAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = shl(this, this, bX.L, bY.L, bZ.L, bW.L)
 
     fun shl(b: Number, res: Vec4ul) = shl(res, this, b.L, b.L, b.L, b.L)
     fun shl(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4ul) = shl(res, this, bX.L, bY.L, bZ.L, bW.L)
@@ -450,8 +502,8 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
     infix fun shr(b: Number) = shr(Vec4ul(), this, b.L, b.L, b.L, b.L)
     fun shr(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(Vec4ul(), this, bX.L, bY.L, bZ.L, bW.L)
 
-    infix fun shr_(b: Number) = shr(this, this, b.L, b.L, b.L, b.L)
-    fun shr_(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(this, this, bX.L, bY.L, bZ.L, bW.L)
+    infix fun shrAssign(b: Number) = shr(this, this, b.L, b.L, b.L, b.L)
+    fun shrAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(this, this, bX.L, bY.L, bZ.L, bW.L)
 
     fun shr(b: Number, res: Vec4ul) = shr(res, this, b.L, b.L, b.L, b.L)
     fun shr(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4ul) = shr(res, this, bX.L, bY.L, bZ.L, bW.L)

@@ -785,7 +785,7 @@ interface matrix_transform {
         res.z = proj[0][2] * tmpX + proj[1][2] * tmpY + proj[2][2] * tmpZ + proj[3][2] * tmpW
         //val tmpW = proj[0][3] * tmpX + proj[1][3] * tmpY + proj[2][3] * tmpZ + proj[3][3] * tmpW
 
-        res div_ tmpW
+        res /= tmpW
 
         res.x = res.x * 0.5f + 0.5f
         res.y = res.y * 0.5f + 0.5f
@@ -920,7 +920,9 @@ interface matrix_transform {
 
         res.put(objX, objY, objZ)
 
-        return res div_ objW
+        res /= objW
+
+        return res
     }
 
     fun unProject(win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i) = unProject(Vec3(), win, model, proj, viewport)

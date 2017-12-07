@@ -55,6 +55,8 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
     constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1])
     constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1])
 
+    constructor(block: (Int) -> Short) : this(block(0), block(1))
+
     constructor(s: Number) : this(s, s)
     constructor(x: Number, y: Number) : this(x.s, y.s)
 

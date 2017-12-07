@@ -61,6 +61,8 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1], floats[index + 2])
     constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
+    constructor(block: (Int) -> Float) : this(block(0), block(1), block(2))
+
     constructor(s: Number) : this(s, s, s)
     constructor(x: Number, y: Number, z: Number) : this(x.f, y.f, z.f)
 
@@ -161,11 +163,11 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     // -- Increment main.and decrement operators --
 
     operator fun inc(res: Vec3 = Vec3()) = plus(res, this, 1f, 1f, 1f)
-    fun inc_() = plus(this, this, 1f, 1f, 1f)
+    fun incAssign() = plus(this, this, 1f, 1f, 1f)
 
 
     operator fun dec(res: Vec3 = Vec3()) = minus(res, this, 1f, 1f, 1f)
-    fun dec_() = minus(this, this, 1f, 1f, 1f)
+    fun decAssign() = minus(this, this, 1f, 1f, 1f)
 
 
     // -- Specific binary arithmetic operators --
@@ -180,8 +182,12 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     fun plus(b: Vec3, res: Vec3 = Vec3()) = plus(res, this, b.x, b.y, b.z)
 
     fun plusAssign(bX: Float, bY: Float, bZ: Float) = plus(this, this, bX, bY, bZ)
-    infix fun plusAssign(b: Float) = plus(this, this, b, b, b)
-    infix fun plusAssign(b: Vec3) = plus(this, this, b.x, b.y, b.z)
+    infix operator fun plusAssign(b: Float) {
+        plus(this, this, b, b, b)
+    }
+    infix operator fun plusAssign(b: Vec3) {
+        plus(this, this, b.x, b.y, b.z)
+    }
 
 
     infix operator fun minus(b: Float) = minus(Vec3(), this, b, b, b)
@@ -194,8 +200,12 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     fun minus(b: Vec3, res: Vec3 = Vec3()) = minus(res, this, b.x, b.y, b.z) // TODO overload others
 
     fun minusAssign(bX: Float, bY: Float, bZ: Float) = minus(this, this, bX, bY, bZ)
-    infix fun minusAssign(b: Float) = minus(this, this, b, b, b)
-    infix fun minusAssign(b: Vec3) = minus(this, this, b.x, b.y, b.z)
+    infix operator fun minusAssign(b: Float) {
+        minus(this, this, b, b, b)
+    }
+    infix operator fun minusAssign(b: Vec3) {
+        minus(this, this, b.x, b.y, b.z)
+    }
 
 
     infix operator fun times(b: Float) = times(Vec3(), this, b, b, b)
@@ -208,8 +218,12 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     fun times(b: Vec3, res: Vec3 = Vec3()) = times(res, this, b.x, b.y, b.z)
 
     fun timesAssign(bX: Float, bY: Float, bZ: Float) = times(this, this, bX, bY, bZ)
-    infix fun timesAssign(b: Float) = times(this, this, b, b, b)
-    infix fun timesAssign(b: Vec3) = times(this, this, b.x, b.y, b.z)
+    infix operator fun timesAssign(b: Float) {
+        times(this, this, b, b, b)
+    }
+    infix operator fun timesAssign(b: Vec3) {
+        times(this, this, b.x, b.y, b.z)
+    }
 
 
     operator fun div(b: Float) = div(Vec3(), this, b, b, b)
@@ -222,8 +236,12 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     fun div(b: Vec3, res: Vec3 = Vec3()) = div(res, this, b.x, b.y, b.z)
 
     fun divAssign(bX: Float, bY: Float, bZ: Float) = div(this, this, bX, bY, bZ)
-    infix fun divAssign(b: Float) = div(this, this, b, b, b)
-    infix fun divAssign(b: Vec3) = div(this, this, b.x, b.y, b.z)
+    infix operator fun divAssign(b: Float) {
+        div(this, this, b, b, b)
+    }
+    infix operator fun divAssign(b: Vec3) {
+        div(this, this, b.x, b.y, b.z)
+    }
 
 
     infix operator fun rem(b: Float) = rem(Vec3(), this, b, b, b)
@@ -236,8 +254,12 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     fun rem(b: Vec3, res: Vec3 = Vec3()) = rem(res, this, b.x, b.y, b.z)
 
     fun remAssign(bX: Float, bY: Float, bZ: Float) = rem(this, this, bX, bY, bZ)
-    infix fun remAssign(b: Float) = rem(this, this, b, b, b)
-    infix fun remAssign(b: Vec3) = rem(this, this, b.x, b.y, b.z)
+    infix operator fun remAssign(b: Float) {
+        rem(this, this, b, b, b)
+    }
+    infix operator fun remAssign(b: Vec3) {
+        rem(this, this, b.x, b.y, b.z)
+    }
 
 
     // -- Generic binary arithmetic operators --
@@ -252,8 +274,12 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     fun plus(b: Vec3t<out Number>, res: Vec3 = Vec3()) = plus(res, this, b.x.f, b.y.f, b.z.f)
 
     fun plusAssign(bX: Number, bY: Number, bZ: Number) = plus(this, this, bX.f, bY.f, bZ.f)
-    infix fun plusAssign(b: Number) = plus(this, this, b.f, b.f, b.f)
-    infix fun plusAssign(b: Vec3t<out Number>) = plus(this, this, b.x.f, b.y.f, b.z.f)
+    infix operator fun plusAssign(b: Number) {
+        plus(this, this, b.f, b.f, b.f)
+    }
+    infix operator fun plusAssign(b: Vec3t<out Number>) {
+        plus(this, this, b.x.f, b.y.f, b.z.f)
+    }
 
 
     infix operator fun minus(b: Number) = minus(Vec3(), this, b.f, b.f, b.f)
@@ -264,8 +290,12 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     fun minus(b: Vec3t<out Number>, res: Vec3 = Vec3()) = minus(res, this, b.x.f, b.y.f, b.z.f)
 
     fun minusAssign(bX: Number, bY: Number, bZ: Number) = minus(this, this, bX.f, bY.f, bZ.f)
-    infix fun minusAssign(b: Number) = minus(this, this, b.f, b.f, b.f)
-    infix fun minusAssign(b: Vec3t<out Number>) = minus(this, this, b.x.f, b.y.f, b.z.f)
+    infix operator fun minusAssign(b: Number) {
+        minus(this, this, b.f, b.f, b.f)
+    }
+    infix operator fun minusAssign(b: Vec3t<out Number>) {
+        minus(this, this, b.x.f, b.y.f, b.z.f)
+    }
 
 
     infix operator fun times(b: Number) = times(Vec3(), this, b.f, b.f, b.f)
@@ -276,8 +306,12 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     fun times(b: Vec3t<out Number>, res: Vec3 = Vec3()) = times(res, this, b.x.f, b.y.f, b.z.f)
 
     fun timesAssign(bX: Number, bY: Number, bZ: Number) = times(this, this, bX.f, bY.f, bZ.f)
-    infix fun timesAssign(b: Number) = times(this, this, b.f, b.f, b.f)
-    infix fun timesAssign(b: Vec3t<out Number>) = times(this, this, b.x.f, b.y.f, b.z.f)
+    infix operator  fun timesAssign(b: Number) {
+        times(this, this, b.f, b.f, b.f)
+    }
+    infix operator fun timesAssign(b: Vec3t<out Number>) {
+        times(this, this, b.x.f, b.y.f, b.z.f)
+    }
 
 
     infix operator fun div(b: Number) = div(Vec3(), this, b.f, b.f, b.f)
@@ -288,8 +322,12 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     fun div(b: Vec3t<out Number>, res: Vec3 = Vec3()) = div(res, this, b.x.f, b.y.f, b.z.f)
 
     fun divAssign(bX: Number, bY: Number, bZ: Number) = div(this, this, bX.f, bY.f, bZ.f)
-    infix fun divAssign(b: Number) = div(this, this, b.f, b.f, b.f)
-    infix fun divAssign(b: Vec3t<out Number>) = div(this, this, b.x.f, b.y.f, b.z.f)
+    infix operator fun divAssign(b: Number) {
+        div(this, this, b.f, b.f, b.f)
+    }
+    infix operator fun divAssign(b: Vec3t<out Number>) {
+        div(this, this, b.x.f, b.y.f, b.z.f)
+    }
 
 
     infix operator fun rem(b: Number) = rem(Vec3(), this, b.f, b.f, b.f)
@@ -300,8 +338,12 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     fun rem(b: Vec3t<out Number>, res: Vec3 = Vec3()) = rem(res, this, b.x.f, b.y.f, b.z.f)
 
     fun remAssign(bX: Number, bY: Number, bZ: Number) = rem(this, this, bX.f, bY.f, bZ.f)
-    infix fun remAssign(b: Number) = rem(this, this, b.f, b.f, b.f)
-    infix fun remAssign(b: Vec3t<out Number>) = rem(this, this, b.x.f, b.y.f, b.z.f)
+    infix operator fun remAssign(b: Number) {
+        rem(this, this, b.f, b.f, b.f)
+    }
+    infix operator fun remAssign(b: Vec3t<out Number>) {
+        rem(this, this, b.x.f, b.y.f, b.z.f)
+    }
 
 
     // -- functions --

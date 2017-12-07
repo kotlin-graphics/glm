@@ -11,9 +11,9 @@ import glm_.vec4.Vec4i.Companion.times
 /**
  * Created by GBarbieri on 08.11.2016.
  */
-interface vec4i_operators {
+open class vec4i_operators {
 
-    fun plus(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
+    inline fun plus(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
         res.x = a.x + bX
         res.y = a.y + bY
         res.z = a.z + bZ
@@ -21,7 +21,7 @@ interface vec4i_operators {
         return res
     }
 
-    fun minus(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
+    inline fun minus(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
         res.x = a.x - bX
         res.y = a.y - bY
         res.z = a.z - bZ
@@ -29,7 +29,7 @@ interface vec4i_operators {
         return res
     }
 
-    fun minus(res: Vec4i, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4i): Vec4i {
+    inline fun minus(res: Vec4i, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4i): Vec4i {
         res.x = aX - b.x
         res.y = aY - b.y
         res.z = aZ - b.z
@@ -37,7 +37,7 @@ interface vec4i_operators {
         return res
     }
 
-    fun times(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
+    inline fun times(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
         res.x = a.x * bX
         res.y = a.y * bY
         res.z = a.z * bZ
@@ -45,7 +45,7 @@ interface vec4i_operators {
         return res
     }
 
-    fun div(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
+    inline fun div(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
         res.x = a.x / bX
         res.y = a.y / bY
         res.z = a.z / bZ
@@ -53,7 +53,7 @@ interface vec4i_operators {
         return res
     }
 
-    fun div(res: Vec4i, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4i): Vec4i {
+    inline fun div(res: Vec4i, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4i): Vec4i {
         res.x = aX / b.x
         res.y = aY / b.y
         res.z = aZ / b.z
@@ -61,7 +61,7 @@ interface vec4i_operators {
         return res
     }
 
-    fun rem(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
+    inline fun rem(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
         res.x = a.x % bX
         res.y = a.y % bY
         res.z = a.z % bZ
@@ -69,7 +69,7 @@ interface vec4i_operators {
         return res
     }
 
-    fun rem(res: Vec4i, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4i): Vec4i {
+    inline fun rem(res: Vec4i, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4i): Vec4i {
         res.x = aX % b.x
         res.y = aY % b.y
         res.z = aZ % b.z
@@ -77,7 +77,7 @@ interface vec4i_operators {
         return res
     }
 
-    fun and(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
+    inline fun and(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
         res.x = a.x and bX
         res.y = a.y and bY
         res.z = a.z and bZ
@@ -85,7 +85,7 @@ interface vec4i_operators {
         return res
     }
 
-    fun or(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
+    inline fun or(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
         res.x = a.x or bX
         res.y = a.y or bY
         res.z = a.z or bZ
@@ -93,7 +93,7 @@ interface vec4i_operators {
         return res
     }
 
-    fun xor(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
+    inline fun xor(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
         res.x = a.x xor bX
         res.y = a.y xor bY
         res.z = a.z xor bZ
@@ -101,7 +101,7 @@ interface vec4i_operators {
         return res
     }
 
-    fun shl(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
+    inline fun shl(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
         res.x = a.x shl bX
         res.y = a.y shl bY
         res.z = a.z shl bZ
@@ -109,7 +109,7 @@ interface vec4i_operators {
         return res
     }
 
-    fun shr(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
+    inline fun shr(res: Vec4i, a: Vec4i, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4i {
         res.x = a.x shr bX
         res.y = a.y shr bY
         res.z = a.z shr bZ
@@ -117,7 +117,7 @@ interface vec4i_operators {
         return res
     }
 
-    fun inv(res: Vec4i, a: Vec4i): Vec4i {
+    inline fun inv(res: Vec4i, a: Vec4i): Vec4i {
         res.x = a.x.inv()
         res.y = a.y.inv()
         res.z = a.z.inv()

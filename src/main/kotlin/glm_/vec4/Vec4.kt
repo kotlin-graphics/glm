@@ -66,11 +66,14 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1], floats[index + 2], floats[index + 3])
     constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
+    constructor(block: (Int) -> Float) : this(block(0), block(1), block(2), block(3))
+
     constructor(s: Number) : this(s, s, s, s)
     constructor(x: Number, y: Number, z: Number, w: Number) : this(x.f, y.f, z.f, w.f)
 
     constructor(inputStream: InputStream, bigEndian: Boolean = true) :
             this(inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian))
+
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndian: Boolean = true) {
         x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndian)
@@ -143,7 +146,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     }
 
 
-    companion object : vec4_operators {
+    companion object : vec4_operators() {
         @JvmField
         val length = 4
         @JvmField
@@ -170,11 +173,11 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     // -- Increment main.and decrement operators --
 
     operator fun inc(res: Vec4 = Vec4()) = plus(res, this, 1f, 1f, 1f, 1f)
-    fun inc_() = plus(this, this, 1f, 1f, 1f, 1f)
+    fun incAssign() = plus(this, this, 1f, 1f, 1f, 1f)
 
 
     operator fun dec(res: Vec4 = Vec4()) = minus(res, this, 1f, 1f, 1f, 1f)
-    fun dec_() = minus(this, this, 1f, 1f, 1f, 1f)
+    fun decAssign() = minus(this, this, 1f, 1f, 1f, 1f)
 
 
     // -- Specific binary arithmetic operators --
@@ -186,9 +189,13 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     fun plus(b: Float, res: Vec4 = Vec4()) = plus(res, this, b, b, b, b)
     fun plus(b: Vec4, res: Vec4 = Vec4()) = plus(res, this, b.x, b.y, b.z, b.w)
 
-    fun plus_(bX: Float, bY: Float, bZ: Float, bW: Float) = plus(this, this, bX, bY, bZ, bW)
-    infix fun plus_(b: Float) = plus(this, this, b, b, b, b)
-    infix fun plus_(b: Vec4) = plus(this, this, b.x, b.y, b.z, b.w)
+    fun plusAssign(bX: Float, bY: Float, bZ: Float, bW: Float) = plus(this, this, bX, bY, bZ, bW)
+    infix operator fun plusAssign(b: Float) {
+        plus(this, this, b, b, b, b)
+    }
+    infix operator fun plusAssign(b: Vec4) {
+        plus(this, this, b.x, b.y, b.z, b.w)
+    }
 
 
     operator fun minus(b: Float) = minus(Vec4(), this, b, b, b, b)
@@ -198,9 +205,13 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     fun minus(b: Float, res: Vec4 = Vec4()) = minus(res, this, b, b, b, b)
     fun minus(b: Vec4, res: Vec4 = Vec4()) = minus(res, this, b.x, b.y, b.z, b.w)
 
-    fun minus_(bX: Float, bY: Float, bZ: Float, bW: Float) = minus(this, this, bX, bY, bZ, bW)
-    infix fun minus_(b: Float) = minus(this, this, b, b, b, b)
-    infix fun minus_(b: Vec4) = minus(this, this, b.x, b.y, b.z, b.w)
+    fun minusAssign(bX: Float, bY: Float, bZ: Float, bW: Float) = minus(this, this, bX, bY, bZ, bW)
+    infix operator fun minusAssign(b: Float) {
+        minus(this, this, b, b, b, b)
+    }
+    infix operator fun minusAssign(b: Vec4) {
+        minus(this, this, b.x, b.y, b.z, b.w)
+    }
 
 
     operator fun times(b: Float) = times(Vec4(), this, b, b, b, b)
@@ -210,9 +221,13 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     fun times(b: Float, res: Vec4 = Vec4()) = times(res, this, b, b, b, b)
     fun times(b: Vec4, res: Vec4 = Vec4()) = times(res, this, b.x, b.y, b.z, b.w)
 
-    fun times_(bX: Float, bY: Float, bZ: Float, bW: Float) = times(this, this, bX, bY, bZ, bW)
-    infix fun times_(b: Float) = times(this, this, b, b, b, b)
-    infix fun times_(b: Vec4) = times(this, this, b.x, b.y, b.z, b.w)
+    fun timesAssign(bX: Float, bY: Float, bZ: Float, bW: Float) = times(this, this, bX, bY, bZ, bW)
+    infix operator fun timesAssign(b: Float) {
+        times(this, this, b, b, b, b)
+    }
+    infix operator fun timesAssign(b: Vec4) {
+        times(this, this, b.x, b.y, b.z, b.w)
+    }
 
 
     operator fun div(b: Float) = div(Vec4(), this, b, b, b, b)
@@ -222,9 +237,13 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     fun div(b: Float, res: Vec4 = Vec4()) = div(res, this, b, b, b, b)
     fun div(b: Vec4, res: Vec4 = Vec4()) = div(res, this, b.x, b.y, b.z, b.w)
 
-    fun div_(bX: Float, bY: Float, bZ: Float, bW: Float) = div(this, this, bX, bY, bZ, bW)
-    infix fun div_(b: Float) = div(this, this, b, b, b, b)
-    infix fun div_(b: Vec4) = div(this, this, b.x, b.y, b.z, b.w)
+    fun divAssign(bX: Float, bY: Float, bZ: Float, bW: Float) = div(this, this, bX, bY, bZ, bW)
+    infix operator fun divAssign(b: Float) {
+        div(this, this, b, b, b, b)
+    }
+    infix operator fun divAssign(b: Vec4) {
+        div(this, this, b.x, b.y, b.z, b.w)
+    }
 
 
     operator fun rem(b: Float) = rem(Vec4(), this, b, b, b, b)
@@ -234,9 +253,13 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     fun rem(b: Float, res: Vec4 = Vec4()) = rem(res, this, b, b, b, b)
     fun rem(b: Vec4, res: Vec4 = Vec4()) = rem(res, this, b.x, b.y, b.z, b.w)
 
-    fun rem_(bX: Float, bY: Float, bZ: Float, bW: Float) = rem(this, this, bX, bY, bZ, bW)
-    infix fun rem_(b: Float) = rem(this, this, b, b, b, b)
-    infix fun rem_(b: Vec4) = rem(this, this, b.x, b.y, b.z, b.w)
+    fun remAssign(bX: Float, bY: Float, bZ: Float, bW: Float) = rem(this, this, bX, bY, bZ, bW)
+    infix operator fun remAssign(b: Float) {
+        rem(this, this, b, b, b, b)
+    }
+    infix operator fun remAssign(b: Vec4) {
+        rem(this, this, b.x, b.y, b.z, b.w)
+    }
 
 
     // -- Generic binary arithmetic operators --
@@ -248,9 +271,13 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     fun plus(b: Number, res: Vec4 = Vec4()) = plus(res, this, b.f, b.f, b.f, b.f)
     fun plus(b: Vec4t<out Number>, res: Vec4 = Vec4()) = plus(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
 
-    fun plus_(bX: Number, bY: Number, bZ: Number, bW: Number) = plus(this, this, bX.f, bY.f, bZ.f, bW.f)
-    infix fun plus_(b: Number) = plus(this, this, b.f, b.f, b.f, b.f)
-    infix fun plus_(b: Vec4t<out Number>) = plus(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    fun plusAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = plus(this, this, bX.f, bY.f, bZ.f, bW.f)
+    infix operator fun plusAssign(b: Number) {
+        plus(this, this, b.f, b.f, b.f, b.f)
+    }
+    infix operator fun plusAssign(b: Vec4t<out Number>) {
+        plus(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    }
 
 
     operator fun minus(b: Number) = minus(Vec4(), this, b.f, b.f, b.f, b.f)
@@ -260,9 +287,13 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     fun minus(b: Number, res: Vec4 = Vec4()) = minus(res, this, b.f, b.f, b.f, b.f)
     fun minus(b: Vec4t<out Number>, res: Vec4 = Vec4()) = minus(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
 
-    fun minus_(bX: Number, bY: Number, bZ: Number, bW: Number) = minus(this, this, bX.f, bY.f, bZ.f, bW.f)
-    infix fun minus_(b: Number) = minus(this, this, b.f, b.f, b.f, b.f)
-    infix fun minus_(b: Vec4t<out Number>) = minus(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    fun minusAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = minus(this, this, bX.f, bY.f, bZ.f, bW.f)
+    infix operator fun minusAssign(b: Number) {
+        minus(this, this, b.f, b.f, b.f, b.f)
+    }
+    infix operator fun minusAssign(b: Vec4t<out Number>) {
+        minus(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    }
 
 
     operator fun times(b: Number) = times(Vec4(), this, b.f, b.f, b.f, b.f)
@@ -272,9 +303,13 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     fun times(b: Number, res: Vec4 = Vec4()) = times(res, this, b.f, b.f, b.f, b.f)
     fun times(b: Vec4t<out Number>, res: Vec4 = Vec4()) = times(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
 
-    fun times_(bX: Number, bY: Number, bZ: Number, bW: Number) = times(this, this, bX.f, bY.f, bZ.f, bW.f)
-    infix fun times_(b: Number) = times(this, this, b.f, b.f, b.f, b.f)
-    infix fun times_(b: Vec4t<out Number>) = times(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    fun timesAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = times(this, this, bX.f, bY.f, bZ.f, bW.f)
+    infix operator fun timesAssign(b: Number) {
+        times(this, this, b.f, b.f, b.f, b.f)
+    }
+    infix operator fun timesAssign(b: Vec4t<out Number>) {
+        times(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    }
 
 
     operator fun div(b: Number) = div(Vec4(), this, b.f, b.f, b.f, b.f)
@@ -284,9 +319,13 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     fun div(b: Number, res: Vec4 = Vec4()) = div(res, this, b.f, b.f, b.f, b.f)
     fun div(b: Vec4t<out Number>, res: Vec4 = Vec4()) = div(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
 
-    fun div_(bX: Number, bY: Number, bZ: Number, bW: Number) = div(this, this, bX.f, bY.f, bZ.f, bW.f)
-    infix fun div_(b: Number) = div(this, this, b.f, b.f, b.f, b.f)
-    infix fun div_(b: Vec4t<out Number>) = div(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    fun divAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = div(this, this, bX.f, bY.f, bZ.f, bW.f)
+    infix operator fun divAssign(b: Number) {
+        div(this, this, b.f, b.f, b.f, b.f)
+    }
+    infix operator fun divAssign(b: Vec4t<out Number>) {
+        div(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    }
 
 
     operator fun rem(b: Number) = rem(Vec4(), this, b.f, b.f, b.f, b.f)
@@ -296,9 +335,13 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     fun rem(b: Number, res: Vec4 = Vec4()) = rem(res, this, b.f, b.f, b.f, b.f)
     fun rem(b: Vec4t<out Number>, res: Vec4 = Vec4()) = rem(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
 
-    fun rem_(bX: Number, bY: Number, bZ: Number, bW: Number) = rem(this, this, bX.f, bY.f, bZ.f, bW.f)
-    infix fun rem_(b: Number) = rem(this, this, b.f, b.f, b.f, b.f)
-    infix fun rem_(b: Vec4t<out Number>) = rem(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    fun remAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = rem(this, this, bX.f, bY.f, bZ.f, bW.f)
+    infix operator fun remAssign(b: Number) {
+        rem(this, this, b.f, b.f, b.f, b.f)
+    }
+    infix operator fun remAssign(b: Vec4t<out Number>) {
+        rem(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    }
 
 
     // -- functions --
@@ -308,7 +351,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     @JvmOverloads
     fun normalize(res: Vec4 = Vec4()) = glm.normalize(this, res) // TODO others
 
-    fun normalize_() = glm.normalize(this, this)
+    fun normalizeAssign() = glm.normalize(this, this)
 
     @JvmOverloads
     fun negate(res: Vec4 = Vec4()): Vec4 {
@@ -319,7 +362,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
         return res
     }
 
-    fun negate_() = negate(this)
+    fun negateAssign() = negate(this)
 
 
     override fun equals(other: Any?) = other is Vec4 && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]

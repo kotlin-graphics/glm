@@ -59,6 +59,8 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1], floats[index + 2])
     constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
+    constructor(block: (Int) -> Double) : this(block(0), block(1), block(2))
+
     constructor(s: Number) : this(s, s, s)
     constructor(x: Number, y: Number, z: Number) : this(x.d, y.d, z.d)
 
@@ -126,7 +128,7 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     }
 
 
-    companion object : vec3d_operators {
+    companion object : vec3d_operators() {
         @JvmField
         val length = 3
         @JvmField
@@ -143,11 +145,11 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     // -- Increment main.and decrement operators --
 
     operator fun inc(res: Vec3d = Vec3d()) = plus(res, this, 1.0, 1.0, 1.0)
-    fun inc_() = plus(this, this, 1.0, 1.0, 1.0)
+    fun incAssign() = plus(this, this, 1.0, 1.0, 1.0)
 
 
     operator fun dec(res: Vec3d = Vec3d()) = minus(res, this, 1.0, 1.0, 1.0)
-    fun dec_() = minus(this, this, 1.0, 1.0, 1.0)
+    fun decAssign() = minus(this, this, 1.0, 1.0, 1.0)
 
 
     // -- Specific binary arithmetic operators --
@@ -159,9 +161,13 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     fun plus(b: Double, res: Vec3d = Vec3d()) = plus(res, this, b, b, b)
     fun plus(b: Vec3d, res: Vec3d = Vec3d()) = plus(res, this, b.x, b.y, b.z)
 
-    fun plus_(bX: Double, bY: Double, bZ: Double) = plus(this, this, bX, bY, bZ)
-    infix fun plus_(b: Double) = plus(this, this, b, b, b)
-    infix fun plus_(b: Vec3d) = plus(this, this, b.x, b.y, b.z)
+    fun plusAssign(bX: Double, bY: Double, bZ: Double) = plus(this, this, bX, bY, bZ)
+    infix operator fun plusAssign(b: Double) {
+        plus(this, this, b, b, b)
+    }
+    infix operator fun plusAssign(b: Vec3d) {
+        plus(this, this, b.x, b.y, b.z)
+    }
 
 
     operator fun minus(b: Double) = minus(Vec3d(), this, b, b, b)
@@ -171,9 +177,13 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     fun minus(b: Double, res: Vec3d = Vec3d()) = minus(res, this, b, b, b)
     fun minus(b: Vec3d, res: Vec3d = Vec3d()) = minus(res, this, b.x, b.y, b.z)
 
-    fun minus_(bX: Double, bY: Double, bZ: Double) = minus(this, this, bX, bY, bZ)
-    infix fun minus_(b: Double) = minus(this, this, b, b, b)
-    infix fun minus_(b: Vec3d) = minus(this, this, b.x, b.y, b.z)
+    fun minusAssign(bX: Double, bY: Double, bZ: Double) = minus(this, this, bX, bY, bZ)
+    infix operator fun minusAssign(b: Double) {
+        minus(this, this, b, b, b)
+    }
+    infix operator fun minusAssign(b: Vec3d) {
+        minus(this, this, b.x, b.y, b.z)
+    }
 
 
     operator fun times(b: Double) = times(Vec3d(), this, b, b, b)
@@ -183,9 +193,13 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     fun times(b: Double, res: Vec3d = Vec3d()) = times(res, this, b, b, b)
     fun times(b: Vec3d, res: Vec3d = Vec3d()) = times(res, this, b.x, b.y, b.z)
 
-    fun times_(bX: Double, bY: Double, bZ: Double) = times(this, this, bX, bY, bZ)
-    infix fun times_(b: Double) = times(this, this, b, b, b)
-    infix fun times_(b: Vec3d) = times(this, this, b.x, b.y, b.z)
+    fun timesAssign(bX: Double, bY: Double, bZ: Double) = times(this, this, bX, bY, bZ)
+    infix operator fun timesAssign(b: Double) {
+        times(this, this, b, b, b)
+    }
+    infix operator fun timesAssign(b: Vec3d) {
+        times(this, this, b.x, b.y, b.z)
+    }
 
 
     operator fun div(b: Double) = div(Vec3d(), this, b, b, b)
@@ -195,9 +209,13 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     fun div(b: Double, res: Vec3d = Vec3d()) = div(res, this, b, b, b)
     fun div(b: Vec3d, res: Vec3d = Vec3d()) = div(res, this, b.x, b.y, b.z)
 
-    fun div_(bX: Double, bY: Double, bZ: Double) = div(this, this, bX, bY, bZ)
-    infix fun div_(b: Double) = div(this, this, b, b, b)
-    infix fun div_(b: Vec3d) = div(this, this, b.x, b.y, b.z)
+    fun divAssign(bX: Double, bY: Double, bZ: Double) = div(this, this, bX, bY, bZ)
+    infix operator fun divAssign(b: Double) {
+        div(this, this, b, b, b)
+    }
+    infix operator fun divAssign(b: Vec3d) {
+        div(this, this, b.x, b.y, b.z)
+    }
 
 
     operator fun rem(b: Double) = rem(Vec3d(), this, b, b, b)
@@ -207,9 +225,13 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     fun rem(b: Double, res: Vec3d = Vec3d()) = rem(res, this, b, b, b)
     fun rem(b: Vec3d, res: Vec3d = Vec3d()) = rem(res, this, b.x, b.y, b.z)
 
-    fun rem_(bX: Double, bY: Double, bZ: Double) = rem(this, this, bX, bY, bZ)
-    infix fun rem_(b: Double) = rem(this, this, b, b, b)
-    infix fun rem_(b: Vec3d) = rem(this, this, b.x, b.y, b.z)
+    fun remAssign(bX: Double, bY: Double, bZ: Double) = rem(this, this, bX, bY, bZ)
+    infix operator fun remAssign(b: Double) {
+        rem(this, this, b, b, b)
+    }
+    infix operator fun remAssign(b: Vec3d) {
+        rem(this, this, b.x, b.y, b.z)
+    }
 
 
     // -- Generic binary arithmetic operators --
@@ -221,9 +243,13 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     fun plus(b: Number, res: Vec3d = Vec3d()) = plus(res, this, b.d, b.d, b.d)
     fun plus(b: Vec3t<out Number>, res: Vec3d = Vec3d()) = plus(res, this, b.x.d, b.y.d, b.z.d)
 
-    fun plus_(bX: Number, bY: Number, bZ: Number) = plus(this, this, bX.d, bY.d, bZ.d)
-    infix fun plus_(b: Number) = plus(this, this, b.d, b.d, b.d)
-    infix fun plus_(b: Vec3t<out Number>) = plus(this, this, b.x.d, b.y.d, b.z.d)
+    fun plusAssign(bX: Number, bY: Number, bZ: Number) = plus(this, this, bX.d, bY.d, bZ.d)
+    infix operator fun plusAssign(b: Number) {
+        plus(this, this, b.d, b.d, b.d)
+    }
+    infix operator fun plusAssign(b: Vec3t<out Number>) {
+        plus(this, this, b.x.d, b.y.d, b.z.d)
+    }
 
 
     operator fun minus(b: Number) = minus(Vec3d(), this, b.d, b.d, b.d)
@@ -233,9 +259,13 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     fun minus(b: Number, res: Vec3d = Vec3d()) = minus(res, this, b.d, b.d, b.d)
     fun minus(b: Vec3t<out Number>, res: Vec3d = Vec3d()) = minus(res, this, b.x.d, b.y.d, b.z.d)
 
-    fun minus_(bX: Number, bY: Number, bZ: Number) = minus(this, this, bX.d, bY.d, bZ.d)
-    infix fun minus_(b: Number) = minus(this, this, b.d, b.d, b.d)
-    infix fun minus_(b: Vec3t<out Number>) = minus(this, this, b.x.d, b.y.d, b.z.d)
+    fun minusAssign(bX: Number, bY: Number, bZ: Number) = minus(this, this, bX.d, bY.d, bZ.d)
+    infix operator fun minusAssign(b: Number) {
+        minus(this, this, b.d, b.d, b.d)
+    }
+    infix operator fun minusAssign(b: Vec3t<out Number>) {
+        minus(this, this, b.x.d, b.y.d, b.z.d)
+    }
 
 
     operator fun times(b: Number) = times(Vec3d(), this, b.d, b.d, b.d)
@@ -245,9 +275,13 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     fun times(b: Number, res: Vec3d = Vec3d()) = times(res, this, b.d, b.d, b.d)
     fun times(b: Vec3t<out Number>, res: Vec3d = Vec3d()) = times(res, this, b.x.d, b.y.d, b.z.d)
 
-    fun times_(bX: Number, bY: Number, bZ: Number) = times(this, this, bX.d, bY.d, bZ.d)
-    infix fun times_(b: Number) = times(this, this, b.d, b.d, b.d)
-    infix fun times_(b: Vec3t<out Number>) = times(this, this, b.x.d, b.y.d, b.z.d)
+    fun timesAssign(bX: Number, bY: Number, bZ: Number) = times(this, this, bX.d, bY.d, bZ.d)
+    infix operator fun timesAssign(b: Number) {
+        times(this, this, b.d, b.d, b.d)
+    }
+    infix operator fun timesAssign(b: Vec3t<out Number>) {
+        times(this, this, b.x.d, b.y.d, b.z.d)
+    }
 
 
     operator fun div(b: Number) = div(Vec3d(), this, b.d, b.d, b.d)
@@ -257,9 +291,13 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     fun div(b: Number, res: Vec3d = Vec3d()) = div(res, this, b.d, b.d, b.d)
     fun div(b: Vec3t<out Number>, res: Vec3d = Vec3d()) = div(res, this, b.x.d, b.y.d, b.z.d)
 
-    fun div_(bX: Number, bY: Number, bZ: Number) = div(this, this, bX.d, bY.d, bZ.d)
-    infix fun div_(b: Number) = div(this, this, b.d, b.d, b.d)
-    infix fun div_(b: Vec3t<out Number>) = div(this, this, b.x.d, b.y.d, b.z.d)
+    fun divAssign(bX: Number, bY: Number, bZ: Number) = div(this, this, bX.d, bY.d, bZ.d)
+    infix operator fun divAssign(b: Number) {
+        div(this, this, b.d, b.d, b.d)
+    }
+    infix operator fun divAssign(b: Vec3t<out Number>) {
+        div(this, this, b.x.d, b.y.d, b.z.d)
+    }
 
 
     operator fun rem(b: Number) = rem(Vec3d(), this, b.d, b.d, b.d)
@@ -269,9 +307,13 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     fun rem(b: Number, res: Vec3d = Vec3d()) = rem(res, this, b.d, b.d, b.d)
     fun rem(b: Vec3t<out Number>, res: Vec3d = Vec3d()) = rem(res, this, b.x.d, b.y.d, b.z.d)
 
-    fun rem_(bX: Number, bY: Number, bZ: Number) = rem(this, this, bX.d, bY.d, bZ.d)
-    infix fun rem_(b: Number) = rem(this, this, b.d, b.d, b.d)
-    infix fun rem_(b: Vec3t<out Number>) = rem(this, this, b.x.d, b.y.d, b.z.d)
+    fun remAssign(bX: Number, bY: Number, bZ: Number) = rem(this, this, bX.d, bY.d, bZ.d)
+    infix operator fun remAssign(b: Number) {
+        rem(this, this, b.d, b.d, b.d)
+    }
+    infix operator fun remAssign(b: Vec3t<out Number>) {
+        rem(this, this, b.x.d, b.y.d, b.z.d)
+    }
 
 
     // -- functions --
@@ -281,10 +323,10 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     @JvmOverloads
     fun normalize(res: Vec3d = Vec3d()) = glm.normalize(this, res) // TODO others
 
-    fun normalize_() = glm.normalize(this, this)
+    fun normalizeAssign() = glm.normalize(this, this)
 
     infix fun cross(b: Vec3d) = glm.cross(this, b)
-    fun cross_(b: Vec3d) = glm.cross(this, b, this)
+    fun crossAssign(b: Vec3d) = glm.cross(this, b, this)
 
     @JvmOverloads
     fun negate(res: Vec3d = Vec3d()): Vec3d {
@@ -294,7 +336,7 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
         return res
     }
 
-    fun negate_() = negate(this)
+    fun negateAssign() = negate(this)
 
 
     override fun equals(other: Any?) = other is Vec3d && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]

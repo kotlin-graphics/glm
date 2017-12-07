@@ -56,6 +56,9 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
             Vec3(v1),
             Vec3(v2)))
 
+    constructor(block: (Int) -> Float): this(block(0), block(1), block(2), block(3), block(4),
+            block(5), block(6), block(7), block(8))
+
     // -- Matrix conversions --
 
     constructor(mat2x2: Mat2x2t<*>) : this(mutableListOf(
