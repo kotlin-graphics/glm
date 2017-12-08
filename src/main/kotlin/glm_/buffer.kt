@@ -24,13 +24,17 @@ val CharBuffer.size
 
 
 operator fun ByteBuffer.set(index: Int, byte: Byte): ByteBuffer = put(index, byte)
+operator fun ByteBuffer.set(index: Int, int: Int): ByteBuffer = put(index, int.b)
 operator fun ShortBuffer.set(index: Int, short: Short): ShortBuffer = put(index, short)
+operator fun ShortBuffer.set(index: Int, int: Int): ShortBuffer = put(index, int.s)
 operator fun IntBuffer.set(index: Int, int: Int): IntBuffer = put(index, int)
 operator fun LongBuffer.set(index: Int, long: Long): LongBuffer = put(index, long)
+operator fun LongBuffer.set(index: Int, int: Int): LongBuffer = put(index, int.L)
 
 operator fun FloatBuffer.set(index: Int, float: Float): FloatBuffer = put(index, float)
 operator fun DoubleBuffer.set(index: Int, double: Double): DoubleBuffer = put(index, double)
 
 operator fun CharBuffer.set(index: Int, char: Char): CharBuffer = put(index, char)
+operator fun CharBuffer.set(index: Int, int: Int): CharBuffer = put(index, int.c)
 
 operator fun ByteBuffer.set(index: Int, vec4: Vec4t<*>) = vec4.to(this, vec4.instanceSize() * index)
