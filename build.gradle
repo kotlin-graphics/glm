@@ -22,7 +22,6 @@ buildscript {
     }
 }
 
-
 dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
