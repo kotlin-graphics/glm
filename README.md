@@ -1,5 +1,7 @@
 ![glm](/src/main/resources/logo-mini.png)
 
+[![Build Status](https://travis-ci.org/kotlin-graphics/glm.svg?branch=master)](https://travis-ci.org/kotlin-graphics/glm) [![license](https://img.shields.io/badge/License-MIT-orange.svg)](https://github.com/kotlin-graphics/glm/wiki/0.-Licenses) ![](https://reposs.herokuapp.com/?path=kotlin-graphics/glm&color=yellow) [![Release](https://jitpack.io/v/kotlin-graphics/glm.svg)](https://jitpack.io/#kotlin-graphics/glm) [![Packagist](http://cranlogs.r-pkg.org/badges/pingr)](https://github.com/kotlin-graphics/glm) [![Slack Status](http://slack.kotlinlang.org/badge.svg)](http://slack.kotlinlang.org/) (#graphic)
+
 This is the Kotlin port of [OpenGL Mathematics](http://glm.g-truc.net/) (*GLM*), written by [g-truc](https://github.com/Groovounet) ([repository](https://github.com/g-truc/glm)), a header only C++ mathematics library for graphics software based on the [OpenGL Shading Language (GLSL) specifications](https://www.opengl.org/registry/doc/GLSLangSpec.4.50.diff.pdf).
 
 *GLM* provides classes and functions designed and implemented with the same naming conventions and functionality than *GLSL* so that anyone who knows *GLSL*, can use *GLM* as well in Kotlin and Java.
