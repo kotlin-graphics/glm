@@ -45,7 +45,8 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     constructor(chars: Array<Char>, index: Int = 0) : this(chars[index].s, chars[index + 1].s, chars[index + 2].s)
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].s, booleans[index + 1].s, booleans[index + 2].s)
 
-    constructor(list: List<Any>, index: Int = 0) : this(list[index].toShort, list[index + 1].toShort, list[index + 2].toShort)
+    constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toShort, list.elementAt(index + 1)!!.toShort,
+            list.elementAt(index + 2)!!.toShort)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneShort: Boolean = false) : this(
             if (oneByteOneShort) bytes[index].s else bytes.getShort(index),

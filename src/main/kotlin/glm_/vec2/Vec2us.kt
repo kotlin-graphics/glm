@@ -43,7 +43,7 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
     constructor(chars: Array<Char>, index: Int = 0) : this(chars[index].us, chars[index + 1].us)
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].us, booleans[index + 1].us)
 
-    constructor(list: List<Any>, index: Int = 0) : this(list[index].toShort, list[index + 1].toShort)
+    constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toShort, list.elementAt(index + 1)!!.toShort)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUshort: Boolean = false) : this(
             if (oneByteOneUshort) bytes[index].us else bytes.getShort(index).us,

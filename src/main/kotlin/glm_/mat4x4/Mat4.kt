@@ -1,8 +1,6 @@
 package  glm_.mat4x4
 
-import glm_.BYTES
-import glm_.float
-import glm_.glm
+import glm_.*
 import glm_.glm.determinant
 import glm_.glm.inverse
 import glm_.glm.transpose
@@ -16,7 +14,6 @@ import glm_.mat4x2.Mat4x2t
 import glm_.mat4x3.Mat4x3t
 import glm_.mat4x4.operators.mat4x4_operators
 import glm_.quat.Quat
-import glm_.set
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
@@ -71,9 +68,16 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
             Vec4(v2),
             Vec4(v3)))
 
-    constructor(block: (Int) -> Float) : this(block(0), block(1), block(2), block(3), block(4),
-            block(5), block(6), block(7), block(8), block(9), block(10), block(11), block(12),
-            block(13), block(14), block(15))
+    constructor(block: (Int) -> Number) : this(block(0).f, block(1).f, block(2).f, block(3).f, block(4).f,
+            block(5).f, block(6).f, block(7).f, block(8).f, block(9).f, block(10).f, block(11).f, block(12).f,
+            block(13).f, block(14).f, block(15).f)
+
+    constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toFloat, list.elementAt(index + 1)!!.toFloat,
+            list.elementAt(index + 2)!!.toFloat, list.elementAt(index + 3)!!.toFloat, list.elementAt(index + 4)!!.toFloat,
+            list.elementAt(index + 5)!!.toFloat, list.elementAt(index + 6)!!.toFloat, list.elementAt(index + 7)!!.toFloat,
+            list.elementAt(index + 8)!!.toFloat, list.elementAt(index + 9)!!.toFloat, list.elementAt(index + 10)!!.toFloat,
+            list.elementAt(index + 11)!!.toFloat, list.elementAt(index + 12)!!.toFloat, list.elementAt(index + 13)!!.toFloat,
+            list.elementAt(index + 14)!!.toFloat, list.elementAt(index + 15)!!.toFloat)
 
     // -- Matrix conversions --
 

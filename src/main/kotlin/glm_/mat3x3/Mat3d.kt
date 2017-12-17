@@ -1,7 +1,6 @@
 package  glm_.mat3x3
 
-import glm_.BYTES
-import glm_.glm
+import glm_.*
 import glm_.glm.inverse
 import glm_.glm.transpose
 import glm_.mat2x2.Mat2x2t
@@ -15,7 +14,6 @@ import glm_.mat4x3.Mat4x3t
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.quat.QuatD
-import glm_.set
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
@@ -55,6 +53,14 @@ data class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d>(value)
             Vec3d(v0),
             Vec3d(v1),
             Vec3d(v2)))
+
+    constructor(block: (Int) -> Number): this(block(0).d, block(1).d, block(2).d, block(3).d, block(4).d,
+            block(5).d, block(6).d, block(7).d, block(8).d)
+
+    constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toDouble, list.elementAt(index + 1)!!.toDouble,
+            list.elementAt(index + 2)!!.toDouble, list.elementAt(index + 3)!!.toDouble, list.elementAt(index + 4)!!.toDouble,
+            list.elementAt(index + 5)!!.toDouble, list.elementAt(index + 6)!!.toDouble, list.elementAt(index + 7)!!.toDouble,
+            list.elementAt(index + 8)!!.toDouble)
 
     // -- Matrix conversions --
 

@@ -1,8 +1,6 @@
 package glm_.mat2x2
 
-import glm_.BYTES
-import glm_.f
-import glm_.glm
+import glm_.*
 import glm_.mat2x2.operators.mat2x2_operators
 import glm_.mat2x3.Mat2x3t
 import glm_.mat2x4.Mat2x4t
@@ -12,7 +10,6 @@ import glm_.mat3x3.Mat3
 import glm_.mat4x2.Mat4x2
 import glm_.mat4x2.Mat4x2t
 import glm_.mat4x4.Mat4
-import glm_.set
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2t
 import java.nio.FloatBuffer
@@ -40,6 +37,11 @@ data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2>(value) {
     constructor(v0: Vec2t<out Number>, v1: Vec2t<out Number>) : this(mutableListOf(
             Vec2(v0),
             Vec2(v1)))
+
+    constructor(block: (Int) -> Number) : this(block(0).f, block(1).f, block(2).f, block(3).f)
+
+    constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toFloat, list.elementAt(index + 1)!!.toFloat,
+            list.elementAt(index + 2)!!.toFloat, list.elementAt(index + 3)!!.toFloat)
 
     // -- Matrix conversions --
 
@@ -218,5 +220,6 @@ data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2>(value) {
     override fun equals(other: Any?) = other is Mat2 &&
             this[0, 0] == other[0, 0] && this[0, 1] == other[0, 1] &&
             this[1, 0] == other[1, 0] && this[1, 1] == other[1, 1]
+
     override fun hashCode() = 31 * value[0].hashCode() + value[1].hashCode()
 }

@@ -42,7 +42,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     constructor(chars: Array<Char>, index: Int = 0) : this(chars[index].f, chars[index + 1].f)
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].f, booleans[index + 1].f)
 
-    constructor(list: List<Any>, index: Int = 0) : this(list[index].toFloat, list[index + 1].toFloat)
+    constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toFloat, list.elementAt(index + 1)!!.toFloat)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = false) : this(
             if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index),

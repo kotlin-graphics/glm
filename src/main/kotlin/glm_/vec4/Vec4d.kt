@@ -47,7 +47,8 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     constructor(chars: Array<Char>, index: Int = 0) : this(chars[index].d, chars[index + 1].d, chars[index + 2].d, chars[index + 3].d)
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].d, booleans[index + 1].d, booleans[index + 2].d, booleans[index + 3].d)
 
-    constructor(list: List<Any>, index: Int = 0) : this(list[index].toDouble, list[index + 1].toDouble, list[index + 2].toDouble, list[index + 3].toDouble)
+    constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toDouble, list.elementAt(index + 1)!!.toDouble,
+            list.elementAt(index + 2)!!.toDouble, list.elementAt(index + 3)!!.toDouble)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneDouble: Boolean = false) : this(
             if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index),

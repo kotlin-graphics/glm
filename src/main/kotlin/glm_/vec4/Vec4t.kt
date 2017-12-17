@@ -109,11 +109,11 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
     fun put(a: Array<Char>, index: Int) = put(a[index].b, a[index + 1].b, a[index + 2].b, a[index + 3].b)
     fun put(a: Array<Boolean>, index: Int) = put(a[index].b, a[index + 1].b, a[index + 2].b, a[index + 3].b)
 
-    fun put(list: List<Any>, index: Int) {
-        val a = list[index]
-        val b = list[index + 1]
-        val c = list[index + 2]
-        val d = list[index + 3]
+    fun put(list: Iterable<*>, index: Int) {
+        val a = list.elementAt(index)!!
+        val b = list.elementAt(index + 1)!!
+        val c = list.elementAt(index + 2)!!
+        val d = list.elementAt(index + 3)!!
         when {
             a is Number && b is Number && c is Number && d is Number -> put(a, b, c, d)
             a is Char && b is Char && c is Char && d is Char -> put(a.b, b.b, c.b, d.b)

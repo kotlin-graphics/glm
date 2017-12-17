@@ -50,5 +50,12 @@ class coreMat2 : StringSpec() {
             }
         }
 
+
+        "constructor" {
+
+            Mat2({ it }) shouldBe Mat2(0, 1, 2, 3)
+            Mat2(arrayListOf(0f, 1f, 2f, 3f)) shouldBe Mat2(0, 1, 2, 3)
+
+        }
     }
 }

@@ -77,9 +77,9 @@ abstract class Vec2t<T : Number>(_x: T, _y: T) {
     fun put(a: Array<Char>, index: Int) = put(a[index].b, a[index + 1].b)
     fun put(a: Array<Boolean>, index: Int) = put(a[index].b, a[index + 1].b)
 
-    fun put(list: List<Any>, index: Int) {
-        val a = list[index]
-        val b = list[index + 1]
+    fun put(list: Iterable<*>, index: Int) {
+        val a = list.elementAt(index)!!
+        val b = list.elementAt(index + 1)!!
         when {
             a is Number && b is Number -> put(a, b)
             a is Char && b is Char -> put(a.b, b.b)

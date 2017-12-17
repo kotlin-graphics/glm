@@ -43,7 +43,8 @@ class Vec4ub(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : Vec4t<Ubyte>(x, y, z, w) 
     constructor(chars: Array<Char>, index: Int = 0) : this(chars[index].ub, chars[index + 1].ub, chars[index + 2].ub, chars[index + 3].ub)
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].ub, booleans[index + 1].ub, booleans[index + 2].ub, booleans[index + 3].ub)
 
-    constructor(list: List<Any>, index: Int = 0) : this(list[index].toByte, list[index + 1].toByte, list[index + 2].toByte, list[index + 3].toByte)
+    constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toByte, list.elementAt(index + 1)!!.toByte,
+            list.elementAt(index + 2)!!.toByte, list.elementAt(index + 3)!!.toByte)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position()) : this(bytes[index], bytes[index + 1], bytes[index + 2], bytes[index + 3])
     constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].ub, chars[index + 1].ub, chars[index + 2].ub, chars[index + 3].ub)

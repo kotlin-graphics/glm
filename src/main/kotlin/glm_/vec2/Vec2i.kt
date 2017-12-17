@@ -42,7 +42,7 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     constructor(chars: Array<Char>, index: Int = 0) : this(chars[index].i, chars[index + 1].i)
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].i, booleans[index + 1].i)
 
-    constructor(list: List<Any>, index: Int = 0) : this(list[index].toInt, list[index + 1].toInt)
+    constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toInt, list.elementAt(index + 1)!!.toInt)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneInt: Boolean = false) : this(
             if (oneByteOneInt) bytes[index].i else bytes.getInt(index),

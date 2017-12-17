@@ -1,8 +1,6 @@
 package glm_.mat2x2
 
-import glm_.BYTES
-import glm_.d
-import glm_.glm
+import glm_.*
 import glm_.mat2x2.operators.mat2d_operators
 import glm_.mat2x3.Mat2x3t
 import glm_.mat2x4.Mat2x4t
@@ -12,7 +10,6 @@ import glm_.mat3x3.Mat3
 import glm_.mat4x2.Mat4x2d
 import glm_.mat4x2.Mat4x2t
 import glm_.mat4x4.Mat4
-import glm_.set
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import java.nio.DoubleBuffer
@@ -40,6 +37,11 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value)
     constructor(v0: Vec2t<out Number>, v1: Vec2t<out Number>) : this(mutableListOf(
             Vec2d(v0),
             Vec2d(v1)))
+
+    constructor(block: (Int) -> Number): this(block(0).d, block(1).d, block(2).d, block(3).d)
+
+    constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toDouble, list.elementAt(index + 1)!!.toDouble,
+            list.elementAt(index + 2)!!.toDouble, list.elementAt(index + 3)!!.toDouble)
 
     // -- Matrix conversions --
 
