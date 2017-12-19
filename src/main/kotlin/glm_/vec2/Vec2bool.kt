@@ -80,7 +80,7 @@ data class Vec2bool(var x: Boolean = false, var y: Boolean = false) {
     infix fun notEqual(b: Vec2bool) = glm.notEqual(this, b)
     fun notEqual(b: Vec2bool, res: Vec2bool) = glm.notEqual(res, this, b)
 
-    fun any(res: Vec2bool = Vec2bool()) = glm.any(res)
+    fun any() = glm.any(this)
 
-    fun all(res: Vec2bool = Vec2bool()) = glm.all(res)
+    fun all() = glm.all(this)
 }

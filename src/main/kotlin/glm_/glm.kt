@@ -64,7 +64,9 @@ object glm :
 
         optimumPow,
 
-        gradientPaint {
+        gradientPaint,
+
+        gtxIntersect {
 
     @JvmField
     val detail = Detail

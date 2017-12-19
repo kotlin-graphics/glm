@@ -1,5 +1,6 @@
 package glm_
 
+import glm_.glm.epsilonF
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2ub
 import io.kotlintest.matchers.shouldBe
@@ -35,6 +36,19 @@ class coreFunCommon : StringSpec() {
                 val f = a lessThan b
                 val e = c.lessThan(d)
             }
+        }
+
+        "step scalar"{
+            val edge = 2f
+
+            val A = glm.step(edge, 1f)
+            glm.epsilonEqual(A, 0f, epsilonF) shouldBe true
+
+            val B = glm.step(edge, 3f)
+            glm.epsilonEqual(B, 1f, epsilonF) shouldBe true
+
+            val C = glm.step(edge, 2f)
+            glm.epsilonEqual(C, 1f, epsilonF) shouldBe true
         }
     }
 }
