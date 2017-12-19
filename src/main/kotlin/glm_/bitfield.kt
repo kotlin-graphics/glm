@@ -77,21 +77,21 @@ interface bitfield {
         var reg2 = y.toUInt()
         var reg3 = z.toUInt()
 
-        reg1 = ((reg1 shl 16) or reg1) and "0x00FF0000FF0000FF".i
-        reg2 = ((reg2 shl 16) or reg2) and "0x00FF0000FF0000FF".i
-        reg3 = ((reg3 shl 16) or reg3) and "0x00FF0000FF0000FF".i
+        reg1 = ((reg1 shl 16) or reg1) and 0xFF0000FF.i
+        reg2 = ((reg2 shl 16) or reg2) and 0xFF0000FF.i
+        reg3 = ((reg3 shl 16) or reg3) and 0xFF0000FF.i
 
-        reg1 = ((reg1 shl 8) or reg1) and "0xF00F00F00F00F00F".bi.i
-        reg2 = ((reg2 shl 8) or reg2) and "0xF00F00F00F00F00F".bi.i
-        reg3 = ((reg3 shl 8) or reg3) and "0xF00F00F00F00F00F".bi.i
+        reg1 = ((reg1 shl 8) or reg1) and 0x0F00F00F.i
+        reg2 = ((reg2 shl 8) or reg2) and 0x0F00F00F.i
+        reg3 = ((reg3 shl 8) or reg3) and 0x0F00F00F.i
 
-        reg1 = ((reg1 shl 4) or reg1) and "0x30C30C30C30C30C3".i
-        reg2 = ((reg2 shl 4) or reg2) and "0x30C30C30C30C30C3".i
-        reg3 = ((reg3 shl 4) or reg3) and "0x30C30C30C30C30C3".i
+        reg1 = ((reg1 shl 4) or reg1) and 0xC30C30C3.i
+        reg2 = ((reg2 shl 4) or reg2) and 0xC30C30C3.i
+        reg3 = ((reg3 shl 4) or reg3) and 0xC30C30C3.i
 
-        reg1 = ((reg1 shl 2) or reg1) and "0x9249249249249249".bi.i
-        reg2 = ((reg2 shl 2) or reg2) and "0x9249249249249249".bi.i
-        reg3 = ((reg3 shl 2) or reg3) and "0x9249249249249249".bi.i
+        reg1 = ((reg1 shl 2) or reg1) and 0x49249249.i
+        reg2 = ((reg2 shl 2) or reg2) and 0x49249249.i
+        reg3 = ((reg3 shl 2) or reg3) and 0x49249249.i
 
         return reg1 or (reg2 shl 1) or (reg3 shl 2)
     }
