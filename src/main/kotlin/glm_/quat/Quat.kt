@@ -13,6 +13,8 @@ import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
 import java.io.InputStream
+import kotlin.math.abs
+import kotlin.math.sqrt
 
 /**
  * Created by GBarbieri on 15.11.2016.
@@ -25,13 +27,21 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     constructor() : this(1f, 0f, 0f, 0f)
     constructor(q: Quat) : this(q.w, q.x, q.y, q.z)
     constructor(s: Float, v: Vec3) : this(s, v.x, v.y, v.z)
-    constructor(a: Vec3, b: Vec3) : this() {
-        val cX = a.y * b.z - b.y * a.z
-        val cY = a.z * b.x - b.z * a.x
-        val cZ = a.x * b.y - b.x * a.y
-        val dot = glm.dot(a, b)
-        put(1f + dot, cX, cY, cZ)
-        normalize(this, this)
+    constructor(u: Vec3, v: Vec3) : this() {
+        val normUnormV = sqrt((u dot u) * (v dot v))
+        var realPart = normUnormV + (u dot v)
+        val w : Vec3
+
+        if(realPart < 1e-6f * normUnormV)        {
+            /*  If u and v are exactly opposite, rotate 180 degrees around an arbitrary orthogonal axis.
+                Axis normalisation can happen later, when we normalise the quaternion. */
+            realPart = 0f
+            w = if(abs(u.x) > abs(u.z)) Vec3(-u.y, u.x, 0f) else Vec3(0f, -u.z, u.y)
+        }
+        else // Otherwise, build quaternion the standard way.
+            w = u cross v
+
+        put(Quat(realPart, w.x, w.y, w.z).normalize_())
     }
 
     constructor(eulerAngle: Vec3) : this() {

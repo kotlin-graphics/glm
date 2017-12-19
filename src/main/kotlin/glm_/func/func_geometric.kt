@@ -28,6 +28,15 @@ interface func_geometric {
     fun length(a: Vec4) = sqrt(dot(a, a))
     fun length(a: Vec4d) = sqrt(dot(a, a))
 
+    fun length2(a: Vec2) = a dot a
+//    fun length2(a: Vec2d) = a dot a TODO
+
+    fun length2(a: Vec3) = a dot a
+//    fun length2(a: Vec3d) = a dot a
+
+//    fun length2(a: Vec4) = a dot a
+//    fun length2(a: Vec4d) = a dot a
+
 
     fun distance(a: Vec2, b: Vec2) = sqrt(((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)).d).f
     fun distance(a: Vec2d, b: Vec2d) = sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y))
