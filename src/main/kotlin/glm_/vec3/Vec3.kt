@@ -97,7 +97,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix fun put(s: Float) = put(s, s, s)
 
     infix fun put(v: Vec3) = put(v.x, v.y, v.z)
-    fun put(x: Float, y: Float, z: Float): Vec3 {
+    fun put(x: Float, y: Float, z: Float): Vec3 { // TODO inline
         this.x = x
         this.y = y
         this.z = z

@@ -39,6 +39,8 @@ object glm :
         matrix_transform,
         quat_func,
 
+        matrix_interpolation,
+
         epsilon,
 
         componentWise,
