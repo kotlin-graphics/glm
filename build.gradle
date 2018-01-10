@@ -26,7 +26,7 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
-    compile 'com.github.kotlin-graphics:kotlin-unsigned:f51c2a5cca312c75aa35c4243ffa49002e727ae6'
+    compile 'com.github.kotlin-graphics:kotlin-unsigned:22bba94de0'
 
     testCompile 'io.kotlintest:kotlintest:2.0.7'
 }
@@ -42,9 +42,19 @@ allprojects {
     targetCompatibility = 1.7
 }
 
-task packageSources(type: Jar, dependsOn: 'classes') {
-    from sourceSets.main.allSource
+
+
+task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
+    from sourceSets.main.allSource
 }
 
-artifacts { archives packageSources }
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
