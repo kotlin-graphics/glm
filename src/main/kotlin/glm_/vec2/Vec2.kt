@@ -392,6 +392,44 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
         x = glm.max(x, b.f)
         y = glm.max(y, b.f)
     }
+    
+    infix fun min(b: Vec2) = glm.min(this, b, Vec2())
+
+    infix fun minAssign(b: Vec2) {
+        x = glm.min(x, b.x)
+        y = glm.min(y, b.y)
+    }
+
+    infix fun min(b: Vec2t<*>): Vec2 {
+        val res = Vec2()
+        res.x = glm.min(x, b.x.f)
+        res.y = glm.min(y, b.y.f)
+        return res
+    }
+
+    infix fun minAssign(b: Vec2t<*>) {
+        x = glm.min(x, b.x.f)
+        y = glm.min(y, b.y.f)
+    }
+
+    infix fun min(b: Float) = glm.min(this, b, Vec2())
+
+    infix fun minAssign(b: Float) {
+        x = glm.min(x, b)
+        y = glm.min(y, b)
+    }
+
+    infix fun min(b: Number): Vec2 {
+        val res = Vec2()
+        res.x = glm.min(x, b.f)
+        res.y = glm.min(y, b.f)
+        return res
+    }
+
+    infix fun minAssign(b: Number) {
+        x = glm.min(x, b.f)
+        y = glm.min(y, b.f)
+    }
 
     infix fun lessThan(f: Float) = x < f && y < f
     infix fun lessThanEqual(f: Float) = x <= f && y <= f
