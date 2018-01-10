@@ -14,10 +14,10 @@ class gtx_intersect : StringSpec() {
 
             val orig = Vec3(0, 0, 2)
             val dir = Vec3(0, 0, -1)
-            val vert0=Vec3()
-            val vert1=Vec3(-1, -1, 0)
+            val vert0 = Vec3()
+            val vert1 = Vec3(-1, -1, 0)
             val vert2 = Vec3(1, -1, 0)
-            val baryPosition =Vec2()
+            val baryPosition = Vec2()
 
             val (result, distance) = glm.intersectRayTriangle(orig, dir, vert0, vert1, vert2, baryPosition)
 
