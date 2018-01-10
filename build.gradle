@@ -26,7 +26,7 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
-    compile 'com.github.kotlin-graphics:kotlin-unsigned:22bba94de0'
+    compile 'com.github.kotlin-graphics:kotlin-unsigned:dbfc274f23fabf7e880347d84616a809f805afaf'
 
     testCompile 'io.kotlintest:kotlintest:2.0.7'
 }
@@ -44,17 +44,17 @@ allprojects {
 
 
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
+//task sourcesJar(type: Jar, dependsOn: classes) {
+//    classifier = 'sources'
+//    from sourceSets.main.allSource
+//}
+//
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
+//
+//artifacts {
+//    archives sourcesJar
+//    archives javadocJar
+//}
