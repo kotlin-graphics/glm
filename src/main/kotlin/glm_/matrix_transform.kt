@@ -948,8 +948,8 @@ interface matrix_transform {
         val tempZ = 0f
 
         // Translate main.and scale the picked region to the entire window
-        res.translate_(tempX, tempY, tempZ)
-        return res.scale_(viewport[2] / delta.x, viewport[3] / delta.y, 1f)
+        res.translateAssign(tempX, tempY, tempZ)
+        return res.scaleAssign(viewport[2] / delta.x, viewport[3] / delta.y, 1f)
     }
 
     fun pickMatrix(center: Vec2, delta: Vec2, viewport: Vec4i) = pickMatrix(Mat4(), center, delta, viewport)

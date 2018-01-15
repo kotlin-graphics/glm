@@ -107,10 +107,10 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value)
     fun det() = value[0][0] * value[1][1] - value[1][0] * value[0][1]
 
     fun inverse(res: Mat2d = Mat2d()) = glm.inverse(res, this)
-    fun inverse_() = glm.inverse(this, this)
+    fun inverseAssign() = glm.inverse(this, this)
 
     fun transpose(res: Mat2d = Mat2d()) = glm.transpose(res, this)
-    fun transpose_() = glm.transpose(this, this)
+    fun transposeAssign() = glm.transpose(this, this)
 
     // TODO inc
 
@@ -146,8 +146,12 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value)
     fun plus(b: Mat2d, res: Mat2d) = plus(res, this, b)
     fun plus(b: Double, res: Mat2d) = plus(res, this, b)
 
-    fun plus_(b: Mat2d) = plus(this, this, b)
-    fun plus_(b: Double) = plus(this, this, b)
+    infix operator fun plusAssign(b: Mat2d) {
+        plus(this, this, b)
+    }
+    infix operator fun plusAssign(b: Double) {
+        plus(this, this, b)
+    }
 
 
     infix operator fun minus(b: Mat2d) = minus(Mat2d(), this, b)
@@ -156,15 +160,19 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value)
     fun minus(b: Mat2d, res: Mat2d) = minus(res, this, b)
     fun minus(b: Double, res: Mat2d) = minus(res, this, b)
 
-    fun minus_(b: Mat2d) = minus(this, this, b)
-    fun minus_(b: Double) = minus(this, this, b)
+    infix operator fun minusAssign(b: Mat2d) {
+        minus(this, this, b)
+    }
+    infix operator fun minusAssign(b: Double) {
+        minus(this, this, b)
+    }
 
 
     infix operator fun times(b: Mat2d) = times(Mat2d(), this, b)
     infix operator fun times(b: Mat3x2d) = times(TODO(), this, b)
     infix operator fun times(b: Mat4x2d) = times(TODO(), this, b)
 
-    operator fun times(b: Vec2d) = times(Vec2d(), this, b)
+    infix operator fun times(b: Vec2d) = times(Vec2d(), this, b)
     infix operator fun times(b: Double) = times(Mat2d(), this, b)
 
     fun times(b: Mat2d, res: Mat2d) = times(res, this, b)
@@ -173,11 +181,17 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value)
 
     fun times(b: Vec2d, res: Vec2d = Vec2d()) = times(res, this, b)
 
-    infix fun times_(b: Mat2d) = times(this, this, b) // TODO
-    fun times_(b: Double) = times(this, this, b)
+    infix operator fun timesAssign(b: Mat2d) {
+        times(this, this, b)
+    } // TODO
+    infix operator fun timesAssign(b: Double) {
+        times(this, this, b)
+    }
 
 
-    infix fun times_(b: Vec2d) = times(b, this, b)
+    infix operator fun timesAssign(b: Vec2d) {
+        times(b, this, b)
+    }
 
     infix operator fun div(b: Mat2d) = div(Mat2d(), this, b)
     infix operator fun div(b: Double) = div(Mat2d(), this, b)
@@ -185,8 +199,15 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value)
     fun div(b: Mat2d, res: Mat2d) = div(res, this, b)
     fun div(b: Double, res: Mat2d) = div(res, this, b)
 
-    fun div_(b: Mat2d) = div(this, this, b)
-    fun div_(b: Double) = div(this, this, b)
+    infix operator fun divAssign(b: Mat2d) {
+        div(this, this, b)
+    }
+    infix operator fun divAssign(b: Double) {
+        div(this, this, b)
+    }
+
+
+    infix fun isEqual(b: Mat2d) = this[0].isEqual(b[0]) && this[1].isEqual(b[1])
 
 
     // TODO others
@@ -213,7 +234,7 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value)
         }
 
 
-    fun isIdentity() = this[0][0] == 1.0 && this[1][0] == 0.0 && this[0][1] == 0.0 && this[1][1] == 1.0
+    val isIdentity get() = this[0][0] == 1.0 && this[1][0] == 0.0 && this[0][1] == 0.0 && this[1][1] == 1.0
 
 
     override fun toString() = super.toString()

@@ -338,10 +338,10 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     // -- Increment main.and decrement operators --
 
     operator fun inc(res: Mat4 = Mat4()): Mat4 = plus(res, this, 1f)
-    fun inc_() = plus(this, this, 1f)
+    fun incAssign() = plus(this, this, 1f)
 
     operator fun dec(res: Mat4 = Mat4()): Mat4 = minus(res, this, 1f)
-    fun dec_() = minus(this, this, 1f)
+    fun decAssign() = minus(this, this, 1f)
 
 
     // -- Specific binary arithmetic operators --
@@ -352,8 +352,12 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     fun plus(b: Float, res: Mat4) = plus(res, this, b)
     fun plus(b: Mat4, res: Mat4) = plus(res, this, b)
 
-    infix fun plus_(b: Float) = plus(this, this, b)
-    infix fun plus_(b: Mat4) = plus(this, this, b)
+    infix operator fun plusAssign(b: Float) {
+        plus(this, this, b)
+    }
+    infix operator fun plusAssign(b: Mat4) {
+        plus(this, this, b)
+    }
 
 
     infix operator fun minus(b: Float) = minus(Mat4(), this, b)
@@ -362,8 +366,12 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     fun minus(b: Float, res: Mat4) = minus(res, this, b)
     fun minus(b: Mat4, res: Mat4) = minus(res, this, b)
 
-    infix fun minus_(b: Float) = minus(this, this, b)
-    infix fun minus_(b: Mat4) = minus(this, this, b)
+    infix operator fun minusAssign(b: Float) {
+        minus(this, this, b)
+    }
+    infix operator fun minusAssign(b: Mat4) {
+        minus(this, this, b)
+    }
 
 
     /**
@@ -382,9 +390,15 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     fun times(b: Vec4, res: Vec4) = times(res, this, b)
     fun times(b: Mat4, res: Mat4) = times(res, this, b)
 
-    infix fun times_(b: Float) = times(this, this, b)
-    infix fun times_(b: Vec4) = times(b, this, b)
-    infix fun times_(b: Mat4) = times(this, this, b)
+    infix operator fun timesAssign(b: Float) {
+        times(this, this, b)
+    }
+    infix operator fun timesAssign(b: Vec4) {
+        times(b, this, b)
+    }
+    infix operator fun timesAssign(b: Mat4) {
+        times(this, this, b)
+    }
 
 
     infix operator fun div(b: Float) = div(Mat4(), this, b)
@@ -393,8 +407,12 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     fun div(b: Float, res: Mat4) = div(res, this, b)
     fun div(b: Mat4, res: Mat4) = div(res, this, b)
 
-    infix fun div_(b: Float) = div(this, this, b)
-    infix fun div_(b: Mat4) = div(this, this, b)
+    infix operator fun divAssign(b: Float) {
+        div(this, this, b)
+    }
+    infix operator fun divAssign(b: Mat4) {
+        div(this, this, b)
+    }
 
 
     // -- Matrix functions --
@@ -404,12 +422,12 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     @JvmOverloads
     fun inverse(res: Mat4 = Mat4()) = inverse(res, this)
 
-    fun inverse_() = inverse(this, this)
+    fun inverseAssign() = inverse(this, this)
 
     @JvmOverloads
     fun transpose(res: Mat4 = Mat4()) = transpose(res, this)
 
-    fun transpose_() = transpose(this, this)
+    fun transposeAssign() = transpose(this, this)
 
 
     // TODO others
@@ -422,9 +440,9 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     @JvmOverloads
     fun scale(scaleX: Float, scaleY: Float, scaleZ: Float, res: Mat4 = Mat4()) = glm.scale(res, this, scaleX, scaleY, scaleZ)
 
-    infix fun scale_(scale: Vec3) = scale_(scale.x, scale.y, scale.z)
-    infix fun scale_(scale: Float) = scale_(scale, scale, scale)
-    fun scale_(scaleX: Float, scaleY: Float, scaleZ: Float) = glm.scale(this, this, scaleX, scaleY, scaleZ)
+    infix fun scaleAssign(scale: Vec3) = scaleAssign(scale.x, scale.y, scale.z)
+    infix fun scaleAssign(scale: Float) = scaleAssign(scale, scale, scale)
+    fun scaleAssign(scaleX: Float, scaleY: Float, scaleZ: Float) = glm.scale(this, this, scaleX, scaleY, scaleZ)
 
 
     @JvmOverloads
@@ -437,17 +455,12 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     fun translate(translateX: Float, translateY: Float, translateZ: Float, res: Mat4 = Mat4()) =
             glm.translate(res, this, translateX, translateY, translateZ)
 
-    infix fun translate_(translate: Vec3) = translate_(translate.x, translate.y, translate.z)
-    infix fun translate_(translate: Float) = translate_(translate, translate, translate)
-    fun translate_(translateX: Float, translateY: Float, translateZ: Float) = glm.translate(this, this, translateX, translateY, translateZ)
+    infix fun translateAssign(translate: Vec3) = translateAssign(translate.x, translate.y, translate.z)
+    infix fun translateAssign(translate: Float) = translateAssign(translate, translate, translate)
+    fun translateAssign(translateX: Float, translateY: Float, translateZ: Float) = glm.translate(this, this, translateX, translateY, translateZ)
 
 
-    infix fun isEqual(b: Mat4): Boolean {
-        return (this[0].isEqual(b[0])
-                && this[1].isEqual(b[1])
-                && this[2].isEqual(b[2])
-                && this[3].isEqual(b[3]))
-    }
+    infix fun isEqual(b: Mat4) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2]) && this[3].isEqual(b[3])
 
     @JvmOverloads
     fun rotate(angle: Float, vX: Float, vY: Float, vZ: Float, res: Mat4 = Mat4()) = glm.rotate(res, this, angle, vX, vY, vZ)
@@ -455,8 +468,8 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     @JvmOverloads
     fun rotate(angle: Float, v: Vec3, res: Mat4 = Mat4()) = glm.rotate(res, this, angle, v)
 
-    fun rotate_(angle: Float, vX: Float, vY: Float, vZ: Float) = glm.rotate(this, this, angle, vX, vY, vZ)
-    fun rotate_(angle: Float, v: Vec3) = glm.rotate(this, this, angle, v)
+    fun rotateAssign(angle: Float, vX: Float, vY: Float, vZ: Float) = glm.rotate(this, this, angle, vX, vY, vZ)
+    fun rotateAssign(angle: Float, v: Vec3) = glm.rotate(this, this, angle, v)
 
 
     // TODO others
@@ -545,7 +558,7 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
         }
 
 
-    fun isIdentity() = this[0][0] == 1f && this[1][0] == 0f && this[2][0] == 0f && this[3][0] == 0f &&
+    val isIdentity get() = this[0][0] == 1f && this[1][0] == 0f && this[2][0] == 0f && this[3][0] == 0f &&
             this[0][1] == 0f && this[1][1] == 1f && this[2][1] == 0f && this[3][1] == 0f &&
             this[0][2] == 0f && this[1][2] == 0f && this[2][2] == 1f && this[3][2] == 0f &&
             this[0][3] == 0f && this[1][3] == 0f && this[2][3] == 0f && this[3][3] == 1f

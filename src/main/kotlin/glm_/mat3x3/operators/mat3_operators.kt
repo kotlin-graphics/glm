@@ -193,7 +193,10 @@ interface mat3x3_operators {
         return res
     }
 
-    fun div(res: Mat3, a: Mat3, b: Mat3) = b.inverse(res) times_ a
+    fun div(res: Mat3, a: Mat3, b: Mat3): Mat3 {
+        b.inverse(res) *= a
+        return res
+    }
 }
 
 

@@ -77,7 +77,7 @@ class coreFuncMatrix : StringSpec() {
                         0, 1)
                 val b = a.inverse()
                 val i = a * b
-                i.isIdentity() shouldBe true
+                i.isIdentity shouldBe true
             }
             run {
                 val a = Mat3(
@@ -86,7 +86,7 @@ class coreFuncMatrix : StringSpec() {
                         0, 0, 1)
                 val b = a.inverse()
                 val i = a * b
-                i.isIdentity() shouldBe true
+                i.isIdentity shouldBe true
             }
             run {
                 val a = Mat4(
@@ -96,7 +96,7 @@ class coreFuncMatrix : StringSpec() {
                         0, 0, 0, 1)
                 val b = a.inverse()
                 val i = a * b
-                i.isIdentity() shouldBe true
+                i.isIdentity shouldBe true
             }
         }
 

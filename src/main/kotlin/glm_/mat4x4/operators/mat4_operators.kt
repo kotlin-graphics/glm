@@ -352,7 +352,10 @@ interface mat4x4_operators {
         return res
     }
 
-    fun div(res: Mat4, a: Mat4, b: Mat4) = b.inverse(res) times_ a
+    fun div(res: Mat4, a: Mat4, b: Mat4): Mat4 {
+        b.inverse(res) *= a
+        return res
+    }
 }
 
 

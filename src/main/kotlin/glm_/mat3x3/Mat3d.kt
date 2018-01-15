@@ -159,12 +159,12 @@ data class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d>(value)
     @JvmOverloads
     fun inverse(res: Mat3d = Mat3d()) = inverse(res, this)
 
-    fun inverse_() = inverse(this, this)
+    fun inverseAssign() = inverse(this, this)
 
     @JvmOverloads
     fun transpose(res: Mat3d = Mat3d()) = transpose(res, this)
 
-    fun transpose_() = transpose(this, this)
+    fun transposeAssign() = transpose(this, this)
 
 
     infix fun put(s: Double) = put(s, s, s)
@@ -251,10 +251,10 @@ data class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d>(value)
 // -- Increment main.and decrement operators --
 
     operator fun inc(res: Mat3d = Mat3d()): Mat3d = plus(res, this, 1.0)
-    fun inc_() = plus(this, this, 1.0)
+    fun incAssign() = plus(this, this, 1.0)
 
     operator fun dec(res: Mat3d = Mat3d()): Mat3d = minus(res, this, 1.0)
-    fun dec_() = minus(this, this, 1.0)
+    fun decAssign() = minus(this, this, 1.0)
 
 
 // -- Specific binary arithmetic operators --
@@ -265,8 +265,12 @@ data class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d>(value)
     fun plus(b: Double, res: Mat3d) = plus(res, this, b)
     fun plus(b: Mat3d, res: Mat3d) = plus(res, this, b)
 
-    infix fun plus_(b: Double) = plus(this, this, b)
-    infix fun plus_(b: Mat3d) = plus(this, this, b)
+    infix operator fun plusAssign(b: Double) {
+        plus(this, this, b)
+    }
+    infix operator fun plusAssign(b: Mat3d) {
+        plus(this, this, b)
+    }
 
 
     infix operator fun minus(b: Double) = minus(Mat3d(), this, b)
@@ -275,8 +279,12 @@ data class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d>(value)
     fun minus(b: Double, res: Mat3d) = minus(res, this, b)
     fun minus(b: Mat3d, res: Mat3d) = minus(res, this, b)
 
-    infix fun minus_(b: Double) = minus(this, this, b)
-    infix fun minus_(b: Mat3d) = minus(this, this, b)
+    infix operator fun minusAssign(b: Double) {
+        minus(this, this, b)
+    }
+    infix operator fun minusAssign(b: Mat3d) {
+        minus(this, this, b)
+    }
 
 
     infix operator fun times(b: Double) = times(Mat3d(), this, b)
@@ -287,9 +295,15 @@ data class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d>(value)
     fun times(b: Vec3d, res: Vec3d) = times(res, this, b)
     fun times(b: Mat3d, res: Mat3d) = times(res, this, b)
 
-    infix fun times_(b: Double) = times(this, this, b)
-    infix fun times_(b: Vec3d) = times(b, this, b)
-    infix fun times_(b: Mat3d) = times(this, this, b)
+    infix operator fun timesAssign(b: Double) {
+        times(this, this, b)
+    }
+    infix operator fun timesAssign(b: Vec3d) {
+        times(b, this, b)
+    }
+    infix operator fun timesAssign(b: Mat3d) {
+        times(this, this, b)
+    }
 
 
     infix operator fun div(b: Double) = div(Mat3d(), this, b)
@@ -298,15 +312,15 @@ data class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d>(value)
     fun div(b: Double, res: Mat3d) = div(res, this, b)
     fun div(b: Mat3d, res: Mat3d) = div(res, this, b)
 
-    infix fun div_(b: Double) = div(this, this, b)
-    infix fun div_(b: Mat3d) = div(this, this, b)
-
-
-    infix fun isEqual(b: Mat3d): Boolean {
-        return (this[0].isEqual(b[0])
-                && this[1].isEqual(b[1])
-                && this[2].isEqual(b[2]))
+    infix operator fun divAssign(b: Double) {
+        div(this, this, b)
     }
+    infix operator fun divAssign(b: Mat3d) {
+        div(this, this, b)
+    }
+
+
+    infix fun isEqual(b: Mat3d) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2])
 
     // TODO others
     var a0: Double
@@ -358,7 +372,7 @@ data class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d>(value)
         }
 
 
-    fun isIdentity() = this[0][0] == 1.0 && this[1][0] == 0.0 && this[2][0] == 0.0 &&
+    val isIdentity get() = this[0][0] == 1.0 && this[1][0] == 0.0 && this[2][0] == 0.0 &&
             this[0][1] == 0.0 && this[1][1] == 1.0 && this[2][1] == 0.0 &&
             this[0][2] == 0.0 && this[1][2] == 0.0 && this[2][2] == 1.0
 

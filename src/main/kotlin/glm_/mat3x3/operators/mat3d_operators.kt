@@ -193,7 +193,10 @@ interface mat3d_operators {
         return res
     }
 
-    fun div(res: Mat3d, a: Mat3d, b: Mat3d) = b.inverse(res) times_ a
+    fun div(res: Mat3d, a: Mat3d, b: Mat3d): Mat3d {
+        b.inverse(res) *= a
+        return res
+    }
 }
 
 

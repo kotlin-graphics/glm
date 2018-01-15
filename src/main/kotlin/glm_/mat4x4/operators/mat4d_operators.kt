@@ -344,7 +344,10 @@ interface mat4d_operators {
         return res
     }
 
-    fun div(res: Mat4d, a: Mat4d, b: Mat4d) = b.inverse(res) times_ a
+    fun div(res: Mat4d, a: Mat4d, b: Mat4d): Mat4d {
+        b.inverse(res) *= a
+        return res
+    }
 }
 
 

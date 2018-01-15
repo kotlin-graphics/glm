@@ -319,10 +319,10 @@ data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d>(value)
     // -- Increment main.and decrement operators --
 
     operator fun inc(res: Mat4d = Mat4d()): Mat4d = plus(res, this, 1.0)
-    fun inc_() = plus(this, this, 1.0)
+    fun incAssign() = plus(this, this, 1.0)
 
     operator fun dec(res: Mat4d = Mat4d()): Mat4d = minus(res, this, 1.0)
-    fun dec_() = minus(this, this, 1.0)
+    fun decAssign() = minus(this, this, 1.0)
 
 
     // -- Specific binary arithmetic operators --
@@ -333,8 +333,12 @@ data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d>(value)
     fun plus(b: Double, res: Mat4d) = plus(res, this, b)
     fun plus(b: Mat4d, res: Mat4d) = plus(res, this, b)
 
-    infix fun plus_(b: Double) = plus(this, this, b)
-    infix fun plus_(b: Mat4d) = plus(this, this, b)
+    infix operator fun plusAssign(b: Double) {
+        plus(this, this, b)
+    }
+    infix operator fun plusAssign(b: Mat4d) {
+        plus(this, this, b)
+    }
 
 
     infix operator fun minus(b: Double) = minus(Mat4d(), this, b)
@@ -343,8 +347,12 @@ data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d>(value)
     fun minus(b: Double, res: Mat4d) = minus(res, this, b)
     fun minus(b: Mat4d, res: Mat4d) = minus(res, this, b)
 
-    infix fun minus_(b: Double) = minus(this, this, b)
-    infix fun minus_(b: Mat4d) = minus(this, this, b)
+    infix operator fun minusAssign(b: Double) {
+        minus(this, this, b)
+    }
+    infix operator fun minusAssign(b: Mat4d) {
+        minus(this, this, b)
+    }
 
 
     /**
@@ -363,9 +371,15 @@ data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d>(value)
     fun times(b: Vec4d, res: Vec4d) = times(res, this, b)
     fun times(b: Mat4d, res: Mat4d) = times(res, this, b)
 
-    infix fun times_(b: Double) = times(this, this, b)
-    infix fun times_(b: Vec4d) = times(b, this, b)
-    infix fun times_(b: Mat4d) = times(this, this, b)
+    infix operator fun timesAssign(b: Double) {
+        times(this, this, b)
+    }
+    infix operator fun timesAssign(b: Vec4d) {
+        times(b, this, b)
+    }
+    infix operator fun timesAssign(b: Mat4d) {
+        times(this, this, b)
+    }
 
 
     infix operator fun div(b: Double) = div(Mat4d(), this, b)
@@ -374,8 +388,12 @@ data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d>(value)
     fun div(b: Double, res: Mat4d) = div(res, this, b)
     fun div(b: Mat4d, res: Mat4d) = div(res, this, b)
 
-    infix fun div_(b: Double) = div(this, this, b)
-    infix fun div_(b: Mat4d) = div(this, this, b)
+    infix operator fun divAssign(b: Double) {
+        div(this, this, b)
+    }
+    infix operator fun divAssign(b: Mat4d) {
+        div(this, this, b)
+    }
 
 
     // -- Matrix functions --
@@ -385,12 +403,12 @@ data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d>(value)
     @JvmOverloads
     fun inverse(res: Mat4d = Mat4d()) = glm.inverse(res, this)
 
-    fun inverse_() = inverse(this, this)
+    fun inverseAssign() = inverse(this, this)
 
     @JvmOverloads
     fun transpose(res: Mat4d = Mat4d()) = glm.transpose(res, this)
 
-    fun transpose_() = transpose(this, this)
+    fun transposeAssign() = transpose(this, this)
 
 
     // TODO others
@@ -403,9 +421,9 @@ data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d>(value)
     @JvmOverloads
     fun scale(scaleX: Double, scaleY: Double, scaleZ: Double, res: Mat4d = Mat4d()) = glm.scale(res, this, scaleX, scaleY, scaleZ)
 
-    infix fun scale_(scale: Vec3d) = scale_(scale.x, scale.y, scale.z)
-    infix fun scale_(scale: Double) = scale_(scale, scale, scale)
-    fun scale_(scaleX: Double, scaleY: Double, scaleZ: Double) = glm.scale(this, this, scaleX, scaleY, scaleZ)
+    infix fun scaleAssign(scale: Vec3d) = scaleAssign(scale.x, scale.y, scale.z)
+    infix fun scaleAssign(scale: Double) = scaleAssign(scale, scale, scale)
+    fun scaleAssign(scaleX: Double, scaleY: Double, scaleZ: Double) = glm.scale(this, this, scaleX, scaleY, scaleZ)
 
 
     @JvmOverloads
@@ -418,17 +436,12 @@ data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d>(value)
     fun translate(translateX: Double, translateY: Double, translateZ: Double, res: Mat4d = Mat4d()) =
             glm.translate(res, this, translateX, translateY, translateZ)
 
-    infix fun translate_(translate: Vec3d) = translate_(translate.x, translate.y, translate.z)
-    infix fun translate_(translate: Double) = translate_(translate, translate, translate)
-    fun translate_(translateX: Double, translateY: Double, translateZ: Double) = glm.translate(this, this, translateX, translateY, translateZ)
+    infix fun translateAssign(translate: Vec3d) = translateAssign(translate.x, translate.y, translate.z)
+    infix fun translateAssign(translate: Double) = translateAssign(translate, translate, translate)
+    fun translateAssign(translateX: Double, translateY: Double, translateZ: Double) = glm.translate(this, this, translateX, translateY, translateZ)
 
 
-    infix fun isEqual(b: Mat4d): Boolean {
-        return (this[0].isEqual(b[0])
-                && this[1].isEqual(b[1])
-                && this[2].isEqual(b[2])
-                && this[3].isEqual(b[3]))
-    }
+    infix fun isEqual(b: Mat4d) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2]) && this[3].isEqual(b[3])
 
     @JvmOverloads
     fun rotate(angle: Double, vX: Double, vY: Double, vZ: Double, res: Mat4d = Mat4d()) = glm.rotate(res, this, angle, vX, vY, vZ)
@@ -436,8 +449,8 @@ data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d>(value)
     @JvmOverloads
     fun rotate(angle: Double, v: Vec3d, res: Mat4d = Mat4d()) = glm.rotate(res, this, angle, v)
 
-    fun rotate_(angle: Double, vX: Double, vY: Double, vZ: Double) = glm.rotate(this, this, angle, vX, vY, vZ)
-    fun rotate_(angle: Double, v: Vec3d) = glm.rotate(this, this, angle, v)
+    fun rotateAssign(angle: Double, vX: Double, vY: Double, vZ: Double) = glm.rotate(this, this, angle, vX, vY, vZ)
+    fun rotateAssign(angle: Double, v: Vec3d) = glm.rotate(this, this, angle, v)
 
 
     // TODO others
@@ -526,7 +539,7 @@ data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d>(value)
         }
 
 
-    fun isIdentity() = this[0][0] == 1.0 && this[1][0] == 0.0 && this[2][0] == 0.0 && this[3][0] == 0.0 &&
+    val isIdentity get() = this[0][0] == 1.0 && this[1][0] == 0.0 && this[2][0] == 0.0 && this[3][0] == 0.0 &&
             this[0][1] == 0.0 && this[1][1] == 1.0 && this[2][1] == 0.0 && this[3][1] == 0.0 &&
             this[0][2] == 0.0 && this[1][2] == 0.0 && this[2][2] == 1.0 && this[3][2] == 0.0 &&
             this[0][3] == 0.0 && this[1][3] == 0.0 && this[2][3] == 0.0 && this[3][3] == 1.0

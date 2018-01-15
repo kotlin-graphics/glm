@@ -151,7 +151,10 @@ interface mat2x2_operators {
         return res
     }
 
-    fun div(res: Mat2, a: Mat2, b: Mat2) = b.inverse(res) times_ a
+    fun div(res: Mat2, a: Mat2, b: Mat2): Mat2 {
+        b.inverse(res) *= a
+        return res
+    }
 }
 
 
