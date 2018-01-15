@@ -54,6 +54,7 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
     infix fun put(v: Vec2t<out Number>) = put(v.x, v.y, 0, 1)
     fun put(v: Vec2t<out Number>, z: Number) = put(v.x, v.y, z, 1)
     fun put(v: Vec2t<out Number>, z: Number, w: Number) = put(v.x, v.y, z, w)
+    fun put(x: Number, y: Number, v: Vec2t<out Number>) = put(x, y, v.x, v.y)
 
     infix fun put(v: Vec3t<out Number>) = put(v.x, v.y, v.z, 1)
     fun put(v: Vec3t<out Number>, w: Number) = put(v.x, v.y, v.z, w)
