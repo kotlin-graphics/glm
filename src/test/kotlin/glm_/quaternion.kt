@@ -1,5 +1,6 @@
 package glm_
 
+import glm_.mat4x4.Mat4
 import glm_.quat.Quat
 import glm_.quat.times
 import glm_.vec3.Vec3
@@ -198,6 +199,95 @@ class quaternion : StringSpec() {
                 val temp2 = Quat(.5f, Vec3(1, 0, 0)).normalize()
 
                 val transformed0 = temp1 * Vec3(0, 1, 0) * temp1.inverse()
+            }
+
+            /**
+             *  gtx_quaternion
+             */
+
+            "quat fastMix" {
+
+                val A = angleAxis(0f, Vec3(0, 0, 1))
+                val B = angleAxis(PIf * 0.5f, Vec3(0, 0, 1))
+                val C = fastMix(A, B, 0.5f)
+                val D = angleAxis(PIf * 0.25f, Vec3(0, 0, 1))
+
+                epsilonEqual(C.x, D.x, 0.01f) shouldBe true
+                epsilonEqual(C.y, D.y, 0.01f) shouldBe true
+                epsilonEqual(C.z, D.z, 0.01f) shouldBe true
+                epsilonEqual(C.w, D.w, 0.01f) shouldBe true
+            }
+
+            "quat shortMix" {
+
+                val A = angleAxis(0f, Vec3(0, 0, 1))
+                val B = angleAxis(PIf * 0.5f, Vec3(0, 0, 1))
+                val C = shortMix(A, B, 0.5f)
+                val D = angleAxis(PIf * 0.25f, Vec3(0, 0, 1))
+
+                epsilonEqual(C.x, D.x, 0.01f) shouldBe true
+                epsilonEqual(C.y, D.y, 0.01f) shouldBe true
+                epsilonEqual(C.z, D.z, 0.01f) shouldBe true
+                epsilonEqual(C.w, D.w, 0.01f) shouldBe true
+            }
+
+            "orientation" {
+
+                run {
+                    val q = Quat(1f, 0f, 0f, 1f)
+                    val p = roll(q)
+                    epsilonEqual(p, PIf * 0.5f, 0.0001f) shouldBe true
+                }
+
+                run {
+                    val q = Quat(1f, 0f, 0f, 1f)
+                    val p = pitch(q)
+                    epsilonEqual(p, 0f, 0.0001f) shouldBe true
+                }
+
+                run {
+                    val q = Quat(1f, 0f, 0f, 1f)
+                    val p = yaw(q)
+                    epsilonEqual(p, 0f, 0.0001f) shouldBe true
+                }
+            }
+
+            "rotation" {
+
+                val v = Vec3(1, 0, 0)
+                val u = Vec3(0, 1, 0)
+
+                val rotation = rotation(v, u)
+
+                val angle = angle(rotation)
+
+                (abs(angle - PIf * 0.5f) < epsilonF) shouldBe true
+            }
+
+            "log" {
+
+                val q = Quat()
+                val p = log(q)
+                val r = exp(p)
+            }
+
+            "quat lookAt" {
+
+                val eye = Vec3(0f)
+                val center = Vec3(1.1f, -2f, 3.1416f)
+                val up = Vec3(-0.17f, 7.23f, -1.744f)
+
+                // Test left-handed implementation
+                val testQuatLH = quatLookAtLH(normalize(center - eye), up)
+                val testMatLH = conjugate(quat_cast(lookAtLH(Mat4(), eye, center, up)))
+                (abs(length(testQuatLH) - 1f) > epsilonF) shouldBe false
+                (min(length(testQuatLH - testMatLH), length(testQuatLH + testMatLH)) > epsilonF) shouldBe false
+
+                // Test right-handed implementation
+                val testQuatRH = quatLookAtRH(normalize(center - eye), up)
+                val testMatRH = conjugate(quat_cast(lookAtRH(Mat4(), eye, center, up)))
+                (abs(length(testQuatRH) - 1f) > epsilonF) shouldBe false
+                (min(length(testQuatRH - testMatRH), length(testQuatRH + testMatRH)) > epsilonF) shouldBe false
             }
         }
     }

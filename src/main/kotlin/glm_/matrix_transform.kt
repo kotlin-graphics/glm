@@ -959,7 +959,7 @@ interface matrix_transform {
      *
      * @param eye Position of the camera
      * @param center Position where the camera is looking at
-     * @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     * @param up Normalized up vector, how the camera is oriented. Typically (0, 1, 0)
      * @see gtc_matrix_transform
      * @see - frustum(left, right, bottom, top, nearVal, farVal) frustum(left, right, bottom, top, nearVal, farVal) */
     fun lookAt(res: Mat4, eye: Vec3, center: Vec3, up: Vec3) =
@@ -1024,7 +1024,7 @@ interface matrix_transform {
      *
      * @param eye Position of the camera
      * @param center Position where the camera is looking at
-     * @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     * @param up Normalized up vector, how the camera is oriented. Typically (0, 1, 0)
      * @see gtc_matrix_transform
      * @see - frustum(left, right, bottom, top, nearVal, farVal) frustum(left, right, bottom, top, nearVal, farVal) */
     fun lookAtLH(res: Mat4, eye: Vec3, center: Vec3, up: Vec3): Mat4 {

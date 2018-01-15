@@ -30,18 +30,17 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     constructor(u: Vec3, v: Vec3) : this() {
         val normUnormV = sqrt((u dot u) * (v dot v))
         var realPart = normUnormV + (u dot v)
-        val w : Vec3
+        val w: Vec3
 
-        if(realPart < 1e-6f * normUnormV)        {
+        if (realPart < 1e-6f * normUnormV) {
             /*  If u and v are exactly opposite, rotate 180 degrees around an arbitrary orthogonal axis.
                 Axis normalisation can happen later, when we normalise the quaternion. */
             realPart = 0f
-            w = if(abs(u.x) > abs(u.z)) Vec3(-u.y, u.x, 0f) else Vec3(0f, -u.z, u.y)
-        }
-        else // Otherwise, build quaternion the standard way.
+            w = if (abs(u.x) > abs(u.z)) Vec3(-u.y, u.x, 0f) else Vec3(0f, -u.z, u.y)
+        } else // Otherwise, build quaternion the standard way.
             w = u cross v
 
-        put(Quat(realPart, w.x, w.y, w.z).normalize_())
+        put(Quat(realPart, w.x, w.y, w.z).normalizeAssign())
     }
 
     constructor(eulerAngle: Vec3) : this() {
@@ -114,7 +113,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     }
 
 
-    companion object : quat_operators, quat_func {
+    companion object : quat_operators(), quat_func {
 
         @JvmField
         val size = 4 * Float.BYTES
@@ -132,11 +131,15 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
     infix operator fun plus(b: Quat) = plus(Quat(), this, b)
     fun plus(b: Quat, res: Quat) = plus(res, this, b)
-    infix fun plus_(b: Quat) = plus(this, this, b)
+    infix operator fun plusAssign(b: Quat) {
+        plus(this, this, b)
+    }
 
     infix operator fun minus(b: Quat) = minus(Quat(), this, b)
     fun minus(b: Quat, res: Quat) = minus(res, this, b)
-    infix fun minus_(b: Quat) = minus(this, this, b)
+    infix operator fun minusAssign(b: Quat) {
+        minus(this, this, b)
+    }
 
 
     infix operator fun times(b: Quat) = times(Quat(), this, b)
@@ -147,15 +150,28 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     fun times(b: Float, res: Quat) = times(res, this, b)
     fun times(b: Vec3, res: Vec3) = times(res, this, b)
     fun times(b: Vec4, res: Quat) = times(res, this, b)
-    infix fun times_(b: Quat) = times(this, this, b)
-    infix fun times_(b: Float) = times(this, this, b)
-    infix fun times_(b: Vec3) = times(b, this, b)
-    infix fun times_(b: Vec4) = times(this, this, b)
+    infix operator fun timesAssign(b: Quat) {
+        times(this, this, b)
+    }
+
+    infix operator fun timesAssign(b: Float) {
+        times(this, this, b)
+    }
+
+    infix operator fun timesAssign(b: Vec3) {
+        times(b, this, b)
+    }
+
+    infix operator fun timesAssign(b: Vec4) {
+        times(this, this, b)
+    }
 
 
     infix operator fun div(b: Float) = div(Quat(), this, b)
     fun div(b: Float, res: Quat) = div(res, this, b)
-    infix fun div_(b: Float) = div(this, this, b)
+    infix operator fun divAssign(b: Float) {
+        div(this, this, b)
+    }
 
 
     // -- Quat func --
@@ -165,24 +181,24 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     @JvmOverloads
     fun normalize(res: Quat = Quat()) = glm.normalize(this, res)
 
-    fun normalize_() = glm.normalize(this, this)
+    fun normalizeAssign() = glm.normalize(this, this)
 
     infix fun dot(b: Quat) = glm.dot(this, b)
 
     @JvmOverloads
     fun angleAxis(angle: Float, axis: Vec3, res: Quat = Quat()) = glm.angleAxis(angle, axis, res)
 
-    fun angleAxis_(angle: Float, axis: Vec3) = glm.angleAxis(angle, axis, this)
+    fun angleAxisAssign(angle: Float, axis: Vec3) = glm.angleAxis(angle, axis, this)
 
     @JvmOverloads
     fun conjugate(res: Quat = Quat()) = glm.conjugate(this, res)
 
-    fun conjugate_() = glm.conjugate(this, this)
+    fun conjugateAssign() = glm.conjugate(this, this)
 
     @JvmOverloads
     fun inverse(res: Quat = Quat()) = glm.inverse(this, res)
 
-    fun inverse_() = glm.inverse(this, this)
+    fun inverseAssign() = glm.inverse(this, this)
 
     fun angle() = glm.angle(this)
 
@@ -192,14 +208,15 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     @JvmOverloads
     fun slerp(b: Quat, interp: Float, res: Quat = Quat()) = glm.slerp(this, b, interp, res)
 
-    fun slerp_(b: Quat, interp: Float) = glm.slerp(this, b, interp, this)
+    fun slerpAssign(b: Quat, interp: Float) = glm.slerp(this, b, interp, this)
 
-
-    override fun toString() = "($w | $x, $y, $z)"
-
-    override fun equals(other: Any?) = other is Quat && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
-    override fun hashCode() = 31 * (31 * (31 * w.hashCode() + x.hashCode()) + y.hashCode()) + z.hashCode()
 
     @JvmOverloads
     fun vectorize(res: Vec4 = Vec4()) = res.put(x, y, z, w)
+
+
+    override fun toString() = "($w | $x, $y, $z)"
+    override fun equals(other: Any?) = other is Quat && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
+
+    override fun hashCode() = 31 * (31 * (31 * w.hashCode() + x.hashCode()) + y.hashCode()) + z.hashCode()
 }

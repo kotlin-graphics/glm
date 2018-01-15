@@ -9,9 +9,9 @@ import glm_.vec4.Vec4
  * Created by GBarbieri on 13.12.2016.
  */
 
-interface quat_operators {
+open class quat_operators {
 
-    fun plus(res: Quat, a: Quat, b: Quat): Quat {
+    inline fun plus(res: Quat, a: Quat, b: Quat): Quat {
         res.w = a.w + b.w
         res.x = a.x + b.x
         res.y = a.y + b.y
@@ -20,7 +20,7 @@ interface quat_operators {
     }
 
 
-    fun minus(res: Quat, a: Quat, b: Quat): Quat {
+    inline fun minus(res: Quat, a: Quat, b: Quat): Quat {
         res.w = a.w - b.w
         res.x = a.x - b.x
         res.y = a.y - b.y
@@ -29,7 +29,7 @@ interface quat_operators {
     }
 
 
-    fun times(res: Quat, a: Quat, b: Quat): Quat {
+    inline fun times(res: Quat, a: Quat, b: Quat): Quat {
         val resW = a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z
         val resX = a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y
         val resY = a.w * b.y + a.y * b.w + a.z * b.x - a.x * b.z
@@ -37,7 +37,7 @@ interface quat_operators {
         return res.put(resW, resX, resY, resZ)
     }
 
-    fun times(res: Quat, a: Quat, b: Float): Quat {
+    inline fun times(res: Quat, a: Quat, b: Float): Quat {
         res.w = a.w * b
         res.x = a.x * b
         res.y = a.y * b
@@ -45,7 +45,7 @@ interface quat_operators {
         return res
     }
 
-    fun times(res: Vec3, a: Quat, b: Vec3): Vec3 {
+    inline fun times(res: Vec3, a: Quat, b: Vec3): Vec3 {
         val uvX = a.y * b.z - b.y * a.z
         val uvY = a.z * b.x - b.z * a.x
         val uvZ = a.x * b.y - b.x * a.y
@@ -58,7 +58,7 @@ interface quat_operators {
         return res
     }
 
-    fun times(res: Vec3, a: Vec3, b: Quat): Vec3 {
+    inline fun times(res: Vec3, a: Vec3, b: Quat): Vec3 {
         val dot = dot(a, a)
         val iW = b.w / dot
         val iX = -b.x / dot
@@ -76,7 +76,7 @@ interface quat_operators {
         return res
     }
 
-    fun times(res: Quat, a: Quat, b: Vec4): Quat {
+    inline fun times(res: Quat, a: Quat, b: Vec4): Quat {
         res.w = a.w
         res.x = a.x * b.x
         res.y = a.y * b.y
@@ -84,7 +84,7 @@ interface quat_operators {
         return res
     }
 
-    fun div(res: Quat, a: Quat, b: Float): Quat {
+    inline fun div(res: Quat, a: Quat, b: Float): Quat {
         res.w = a.w / b
         res.x = a.x / b
         res.y = a.y / b

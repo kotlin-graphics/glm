@@ -12,6 +12,7 @@ import glm_.func.common.func_vector4_common
 import glm_.mat2x2.operators.mat2x2_operators
 import glm_.mat3x3.operators.mat3x3_operators
 import glm_.mat4x4.operators.mat4x4_operators
+import glm_.quat.gtxQuaternion
 import glm_.quat.quat_func
 
 object glm :
@@ -66,7 +67,8 @@ object glm :
 
         gradientPaint,
 
-        gtxIntersect {
+        gtxIntersect,
+        gtxQuaternion {
 
     @JvmField
     val detail = Detail

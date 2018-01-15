@@ -96,7 +96,7 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
     }
 
 
-    companion object : quatD_operators, quat_func {
+    companion object : quatD_operators(), quat_func {
 
         @JvmField
         val size = 4 * Float.BYTES
@@ -114,12 +114,16 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
 
     infix operator fun plus(b: QuatD) = plus(QuatD(), this, b)
     fun plus(b: QuatD, res: QuatD) = plus(res, this, b)
-    infix fun plus_(b: QuatD) = plus(this, this, b)
+    infix operator fun plusAssign(b: QuatD) {
+        plus(this, this, b)
+    }
 
 
     operator fun minus(b: QuatD) = minus(QuatD(), this, b)
     fun minus(b: QuatD, res: QuatD) = minus(res, this, b)
-    infix fun minus_(b: QuatD) = minus(this, this, b)
+    infix operator fun minusAssign(b: QuatD) {
+        minus(this, this, b)
+    }
 
 
     infix operator fun times(b: QuatD) = times(QuatD(), this, b)
@@ -130,15 +134,17 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
     fun times(b: Double, res: QuatD) = times(res, this, b)
     fun times(b: Vec3d, res: Vec3d) = times(res, this, b)
     fun times(b: Vec4d, res: QuatD) = times(res, this, b)
-    infix fun times_(b: QuatD) = times(this, this, b)
-    infix fun times_(b: Double) = times(this, this, b)
-    infix fun times_(b: Vec3d) = times(b, this, b)
-    infix fun times_(b: Vec4d) = times(this, this, b)
+    infix fun timesAssign(b: QuatD) = times(this, this, b)
+    infix fun timesAssign(b: Double) = times(this, this, b)
+    infix fun timesAssign(b: Vec3d) = times(b, this, b)
+    infix fun timesAssign(b: Vec4d) = times(this, this, b)
 
 
     infix operator fun div(b: Double) = div(QuatD(), this, b)
     fun div(b: Double, res: QuatD) = div(res, this, b)
-    infix fun div_(b: Double) = div(this, this, b)
+    infix operator fun divAssign(b: Double) {
+        div(this, this, b)
+    }
 
 
     // -- Quat func --
@@ -148,24 +154,24 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
     @JvmOverloads
     fun normalize(res: QuatD = QuatD()) = glm.normalize(this, res)
 
-    fun normalize_() = glm.normalize(this, this)
+    fun normalizeAssign() = glm.normalize(this, this)
 
     infix fun dot(b: QuatD) = glm.dot(this, b)
 
     @JvmOverloads
     fun angleAxis(angle: Double, axis: Vec3d, res: QuatD = QuatD()) = glm.angleAxis(angle, axis, res)
 
-    fun angleAxis_(angle: Double, axis: Vec3d) = glm.angleAxis(angle, axis, this)
+    fun angleAxisAssign(angle: Double, axis: Vec3d) = glm.angleAxis(angle, axis, this)
 
     @JvmOverloads
     fun conjugate(res: QuatD = QuatD()) = glm.conjugate(this, res)
 
-    fun conjugate_() = glm.conjugate(this, this)
+    fun conjugateAssign() = glm.conjugate(this, this)
 
     @JvmOverloads
     fun inverse(res: QuatD = QuatD()) = glm.inverse(this, res)
 
-    fun inverse_() = glm.inverse(this, this)
+    fun inverseAssign() = glm.inverse(this, this)
 
     fun angle() = glm.angle(this)
 
@@ -175,7 +181,7 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
     @JvmOverloads
     fun slerp(b: QuatD, interp: Double, res: QuatD = QuatD()) = glm.slerp(this, b, interp, res)
 
-    fun slerp_(b: QuatD, interp: Double) = glm.slerp(this, b, interp, this)
+    fun slerpAssign(b: QuatD, interp: Double) = glm.slerp(this, b, interp, this)
 
 
     override fun toString() = "($x, $y, $z), $w"
