@@ -349,8 +349,10 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
 
     // -- functions --
 
-    fun length() = glm.length(this)
-    fun length2() = glm.length2(this)
+    infix fun dot(b: Vec3) = glm.dot(this, b)   // TODO others
+
+    val length get() = glm.length(this)
+    val length2 get() = glm.length2(this)
 
     @JvmOverloads
     fun normalize(res: Vec3 = Vec3()) = glm.normalize(this, res) // TODO others
@@ -359,8 +361,6 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
 
     infix fun cross(b: Vec3) = glm.cross(this, b, Vec3())
     infix fun crossAssign(b: Vec3) = glm.cross(this, b, this)
-
-    infix fun dot(b: Vec3) = glm.dot(this, b)   // TODO others
 
     @JvmOverloads
     fun negate(res: Vec3 = Vec3()): Vec3 {

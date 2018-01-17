@@ -319,7 +319,10 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
 
     // -- functions --
 
-    fun length() = glm.length(this)
+    infix fun dot(b: Vec3d) = glm.dot(this, b)   // TODO others
+
+    val length get() = glm.length(this)
+    val length2 get() = glm.length2(this)
 
     @JvmOverloads
     fun normalize(res: Vec3d = Vec3d()) = glm.normalize(this, res) // TODO others

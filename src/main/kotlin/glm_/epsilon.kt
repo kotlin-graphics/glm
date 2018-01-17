@@ -1,6 +1,7 @@
 package glm_
 
 import glm_.glm.abs
+import glm_.glm.epsilonF
 import glm_.glm.greaterThan
 import glm_.glm.lessThan
 import glm_.quat.Quat
@@ -188,4 +189,7 @@ interface epsilon {
         res.w = abs(a.w - b.w) >= epsilon
         return res
     }
+
+    // convenience
+    infix fun Float.epsilonEqual(b: Float) = epsilonEqual(this, b, epsilonF)
 }

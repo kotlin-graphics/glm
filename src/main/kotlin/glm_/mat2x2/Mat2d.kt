@@ -101,10 +101,11 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value)
     // -- Accesses --
 
     operator fun set(i: Int, v: Vec2d) = value[i] put v
+    operator fun get(c: Int, r: Int) = value[c][r]
 
     // -- Matrix functions --
 
-    fun det() = value[0][0] * value[1][1] - value[1][0] * value[0][1]
+    val det get() = glm.determinant(this)
 
     fun inverse(res: Mat2d = Mat2d()) = glm.inverse(res, this)
     fun inverseAssign() = glm.inverse(this, this)
@@ -239,7 +240,7 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value)
 
     override fun toString() = super.toString()
 
-    override fun equals(other: Any?) = other is Mat2 &&
+    override fun equals(other: Any?) = other is Mat2d &&
             this[0, 0] == other[0, 0] && this[0, 1] == other[0, 1] &&
             this[1, 0] == other[1, 0] && this[1, 1] == other[1, 1]
     override fun hashCode() = 31 * value[0].hashCode() + value[1].hashCode()

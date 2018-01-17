@@ -309,7 +309,7 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     // -- Accesses --
 
     override operator fun get(i: Int) = value[i]
-    override operator fun get(c: Int, r: Int) = value[c][r]
+    operator fun get(c: Int, r: Int) = value[c][r]
 
     operator fun set(c: Int, r: Int, s: Float) {
         value[c][r] = s
@@ -417,7 +417,7 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
 
     // -- Matrix functions --
 
-    fun det() = determinant(this)
+    val det get() = glm.determinant(this)
 
     @JvmOverloads
     fun inverse(res: Mat4 = Mat4()) = inverse(res, this)

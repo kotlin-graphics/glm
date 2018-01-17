@@ -206,16 +206,16 @@ interface func_matrix {
     }
 
 
-    fun determinant(m: Mat2) = m[0][0] * m[1][1] - m[1][0] * m[0][1]
-    fun determinant(m: Mat2d) = m[0][0] * m[1][1] - m[1][0] * m[0][1]
+    fun determinant(m: Mat2) = m[0, 0] * m[1, 1] - m[1, 0] * m[0, 1]
+    fun determinant(m: Mat2d) = m[0, 0] * m[1, 1] - m[1, 0] * m[0, 1]
 
-    fun determinant(m: Mat3) = m[0][0] * (m[1][1] * m[2][2] - m[2][1] * m[1][2]) -
-            m[1][0] * (m[0][1] * m[2][2] - m[2][1] * m[0][2]) +
-            m[2][0] * (m[0][1] * m[1][2] - m[1][1] * m[0][2])
+    fun determinant(m: Mat3) = m[0, 0] * (m[1, 1] * m[2, 2] - m[2, 1] * m[1, 2]) -
+            m[1, 0] * (m[0, 1] * m[2, 2] - m[2, 1] * m[0, 2]) +
+            m[2, 0] * (m[0, 1] * m[1, 2] - m[1, 1] * m[0, 2])
 
-    fun determinant(m: Mat3d) = m[0][0] * (m[1][1] * m[2][2] - m[2][1] * m[1][2]) -
-            m[1][0] * (m[0][1] * m[2][2] - m[2][1] * m[0][2]) +
-            m[2][0] * (m[0][1] * m[1][2] - m[1][1] * m[0][2])
+    fun determinant(m: Mat3d) = m[0, 0] * (m[1, 1] * m[2, 2] - m[2, 1] * m[1, 2]) -
+            m[1, 0] * (m[0, 1] * m[2, 2] - m[2, 1] * m[0, 2]) +
+            m[2, 0] * (m[0, 1] * m[1, 2] - m[1, 1] * m[0, 2])
 
     fun determinant(m: Mat4): Float {
 
@@ -255,7 +255,7 @@ interface func_matrix {
     fun inverse(m: Mat2) = inverse(Mat2(), m)
     fun inverse(res: Mat2, m: Mat2): Mat2 {
 
-        val oneOverDet = 1 / m.det()
+        val oneOverDet = 1 / m.det
 
         val res00 = +m[1][1] * oneOverDet
         val res01 = -m[0][1] * oneOverDet
@@ -274,7 +274,7 @@ interface func_matrix {
     fun inverse(m: Mat2d) = inverse(Mat2d(), m)
     fun inverse(res: Mat2d, m: Mat2d): Mat2d {
 
-        val oneOverDet = 1 / m.det()
+        val oneOverDet = 1 / m.det
 
         val res00 = +m[1][1] * oneOverDet
         val res01 = -m[0][1] * oneOverDet
@@ -293,7 +293,7 @@ interface func_matrix {
     fun inverse(m: Mat3) = inverse(Mat3(), m)
     fun inverse(res: Mat3, m: Mat3): Mat3 {
 
-        val oneOverDet = 1 / m.det()
+        val oneOverDet = 1 / m.det
 
         val res00 = +(m[1][1] * m[2][2] - m[2][1] * m[1][2]) * oneOverDet
         val res10 = -(m[1][0] * m[2][2] - m[2][0] * m[1][2]) * oneOverDet
@@ -323,7 +323,7 @@ interface func_matrix {
     fun inverse(m: Mat3d) = inverse(Mat3d(), m)
     fun inverse(res: Mat3d, m: Mat3d): Mat3d {
 
-        val oneOverDet = 1 / m.det()
+        val oneOverDet = 1 / m.det
 
         val res00 = +(m[1][1] * m[2][2] - m[2][1] * m[1][2]) * oneOverDet
         val res10 = -(m[1][0] * m[2][2] - m[2][0] * m[1][2]) * oneOverDet

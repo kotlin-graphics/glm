@@ -95,7 +95,7 @@ interface gtxQuaternion {
      *  @see gtx_quaternion */
     fun exp(q: Quat): Quat {
         val u = Vec3(q.x, q.y, q.z)
-        val angle = u.length()
+        val angle = u.length
         if (angle < epsilonF) return Quat()
         val v = u / angle
         return Quat(angle.cos, angle.sin * v)
@@ -105,7 +105,7 @@ interface gtxQuaternion {
      *  @see gtx_quaternion */
     fun log(q: Quat): Quat {
         val u = Vec3(q.x, q.y, q.z)
-        val vec3Len = u.length()
+        val vec3Len = u.length
 
         return when {
             vec3Len < epsilonF -> when {
@@ -237,7 +237,7 @@ interface gtxQuaternion {
                 So guess one; any will do as long as it's perpendicular to start
                 This implementation favors a rotation around the Up axis (Y), since it's often what you want to do. */
             var rotationAxis = Vec3(0, 0, 1) cross orig
-            if (rotationAxis.length2() < epsilonF) // bad luck, they were parallel, try again!
+            if (rotationAxis.length2 < epsilonF) // bad luck, they were parallel, try again!
                 rotationAxis = Vec3(1, 0, 0) cross orig
 
             rotationAxis = rotationAxis.normalize()

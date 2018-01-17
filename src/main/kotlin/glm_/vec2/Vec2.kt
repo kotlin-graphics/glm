@@ -438,9 +438,10 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix fun greaterThan(f: Float) = x > f && y > f
     infix fun greaterThanEqual(f: Float) = x >= f && y >= f
 
-    infix fun dot(b: Vec2) = x * b.x + y * b.y
+    infix fun dot(b: Vec2) = glm.dot(this, b)
 
-    fun length() = glm.length(this)
+    val length get() = glm.length(this)
+    val length2 get() = glm.length2(this)
 
     @JvmOverloads
     fun normalize(res: Vec2 = Vec2()) = glm.normalize(this, res) // TODO others

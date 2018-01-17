@@ -102,9 +102,9 @@ class coreFuncMatrix : StringSpec() {
 
         "determinant" {
 
-            Mat2(0, 1, 2, 3).det() shouldBe -2f
-            Mat3(0, 1, 2, 3, 4, 5, 6, 7, 8).det() shouldBe 0f
-            Mat4(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15).det() shouldBe 0f
+            Mat2(0, 1, 2, 3).det shouldBe -2f
+            Mat3(0, 1, 2, 3, 4, 5, 6, 7, 8).det shouldBe 0f
+            Mat4(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15).det shouldBe 0f
         }
 
         "outerProduct" {

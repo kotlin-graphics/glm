@@ -330,7 +330,12 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
         rem(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
     }
 
-    fun length() = glm.length(this)
+
+    infix fun dot(b: Vec4d) = glm.dot(this, b)   // TODO others
+
+    val length get() = glm.length(this)
+    val length2 get() = glm.length2(this)
+
 
     override fun equals(other: Any?) = other is Vec4d && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
     override fun hashCode() = 31 * (31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()) + w.hashCode()

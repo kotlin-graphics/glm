@@ -146,15 +146,12 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
 
     // -- Accesses --
 
-    operator fun set(i: Int, v: Vec3) {
-        value[i] = v
-    }
+    operator fun set(i: Int, v: Vec3) = value[i] put v
+    operator fun get(c: Int, r: Int) = value[c][r]
 
     // -- Matrix functions --
 
-    fun det() = +value[0][0] * (value[1][1] * value[2][2] - value[2][1] * value[1][2]) -
-            value[1][0] * (value[0][1] * value[2][2] - value[2][1] * value[0][2]) +
-            value[2][0] * (value[0][1] * value[1][2] - value[1][1] * value[0][2])
+    val det get() = glm.determinant(this)
 
     @JvmOverloads
     fun inverse(res: Mat3 = Mat3()) = inverse(res, this)

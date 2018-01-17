@@ -350,7 +350,10 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
 
     // -- functions --
 
-    fun length() = glm.length(this)
+    infix fun dot(b: Vec2d) = glm.dot(this, b)
+
+    val length get() = glm.length(this)
+    val length2 get() = glm.length2(this)
 
     @JvmOverloads
     fun normalize(res: Vec2d = Vec2d()) = glm.normalize(this, res) // TODO others
@@ -365,6 +368,8 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     }
 
     fun negateAssign() = negate(this)
+
+
 
 
     override fun equals(other: Any?) = other is Vec2d && this[0] == other[0] && this[1] == other[1]

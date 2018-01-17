@@ -130,7 +130,7 @@ interface mat2x2_operators {
     }
 
     fun div(res: Vec2, a: Mat2, b: Vec2): Vec2 {
-        val oneOverDeterminant = 1 / a.det()
+        val oneOverDeterminant = 1 / a.det
         val i00 = +a[1][1] * oneOverDeterminant
         val i01 = -a[0][1] * oneOverDeterminant
         val i10 = -a[1][0] * oneOverDeterminant
@@ -141,7 +141,7 @@ interface mat2x2_operators {
     }
 
     fun div(res: Vec2, a: Vec2, b: Mat2): Vec2 {
-        val oneOverDeterminant = 1 / b.det()
+        val oneOverDeterminant = 1 / b.det
         val i00 = +b[1][1] * oneOverDeterminant
         val i01 = -b[0][1] * oneOverDeterminant
         val i10 = -b[1][0] * oneOverDeterminant

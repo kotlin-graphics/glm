@@ -101,10 +101,12 @@ data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2>(value) {
     // -- Accesses --
 
     operator fun set(i: Int, v: Vec2) = value[i] put v
+    operator fun get(c: Int, r: Int) = value[c][r]
+
 
     // -- Matrix functions --
 
-    fun det() = value[0][0] * value[1][1] - value[1][0] * value[0][1]
+    val det get() = glm.determinant(this)
 
     fun inverse(res: Mat2 = Mat2()) = glm.inverse(res, this)
     fun inverseAssign() = glm.inverse(this, this)

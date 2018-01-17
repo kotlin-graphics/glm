@@ -347,7 +347,10 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
 
     // -- functions --
 
-    fun length() = glm.length(this)
+    infix fun dot(b: Vec4) = glm.dot(this, b)   // TODO others
+
+    val length get() = glm.length(this)
+    val length2 get() = glm.length2(this)
 
     @JvmOverloads
     fun normalize(res: Vec4 = Vec4()) = glm.normalize(this, res) // TODO others

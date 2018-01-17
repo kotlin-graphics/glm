@@ -160,7 +160,7 @@ interface mat3d_operators {
     }
 
     fun div(res: Vec3d, a: Mat3d, b: Vec3d): Vec3d {
-        val oneOverDet = 1 / a.det()
+        val oneOverDet = 1 / a.det
         val i00 = +(a[1][1] * a[2][2] - a[2][1] * a[1][2]) * oneOverDet
         val i01 = -(a[1][0] * a[2][2] - a[2][0] * a[1][2]) * oneOverDet
         val i02 = +(a[1][0] * a[2][1] - a[2][0] * a[1][1]) * oneOverDet
@@ -177,7 +177,7 @@ interface mat3d_operators {
     }
 
     fun div(res: Vec3d, a: Vec3d, b: Mat3d): Vec3d {
-        val oneOverDet = 1 / b.det()
+        val oneOverDet = 1 / b.det
         val i00 = +(b[1][1] * b[2][2] - b[2][1] * b[1][2]) * oneOverDet
         val i01 = -(b[1][0] * b[2][2] - b[2][0] * b[1][2]) * oneOverDet
         val i02 = +(b[1][0] * b[2][1] - b[2][0] * b[1][1]) * oneOverDet
