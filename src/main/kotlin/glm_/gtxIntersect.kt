@@ -29,11 +29,11 @@ interface gtxIntersect {
 
     /** Compute the intersection of a ray and a triangle.
      *  Based om Tomas Möller implementation http://fileadmin.cs.lth.se/cs/Personal/Tomas_Akenine-Moller/raytri/
-     *  From GLM_GTX_intersect extension. */
-    fun intersectRayTriangle(orig: Vec3, dir: Vec3, v0: Vec3, v1: Vec3, v2: Vec3, baryPosition: Vec2): Pair<Boolean, Float> {
+     *  @return Boolean to Distance, if false, distance is invalid (-1f)  */
+    fun intersectRayTriangle(orig: Vec3, dir: Vec3, vert0: Vec3, vert1: Vec3, vert2: Vec3, baryPosition: Vec2): Pair<Boolean, Float> {
         // find vectors for two edges sharing vert0
-        val edge1 = v1 - v0
-        val edge2 = v2 - v0
+        val edge1 = vert1 - vert0
+        val edge2 = vert2 - vert0
 
         // begin calculating determinant - also used to calculate U parameter
         val p = dir cross edge2
@@ -46,12 +46,12 @@ interface gtxIntersect {
         when {
             det > epsilonF -> {
                 // calculate distance from vert0 to ray origin
-                val tVec = orig - v0
+                val tVec = orig - vert0
 
                 // calculate U parameter and test bounds
                 baryPosition.x = tVec dot p
                 if (baryPosition.x < 0 || baryPosition.x > det)
-                    return false to 0f
+                    return false to -1f
 
                 // prepare to test V parameter
                 qVec = tVec cross edge1
@@ -59,16 +59,16 @@ interface gtxIntersect {
                 // calculate V parameter and test bounds
                 baryPosition.y = dir dot qVec
                 if (baryPosition.y < 0 || (baryPosition.x + baryPosition.y) > det)
-                    return false to 0f
+                    return false to -1f
             }
             det < -epsilonF -> {
                 // calculate distance from vert0 to ray origin
-                val tVec = orig-v0
+                val tVec = orig- vert0
 
                 // calculate U parameter and test bounds
                 baryPosition.x = tVec dot p
                 if (baryPosition.x > 0 || baryPosition.x < det)
-                    return false to 0f
+                    return false to -1f
 
                 // prepare to test V parameter
                 qVec = tVec cross edge1
@@ -76,9 +76,9 @@ interface gtxIntersect {
                 // calculate V parameter and test bounds
                 baryPosition.y = dir dot qVec
                 if (baryPosition.y > 0 || baryPosition.x + baryPosition.y < det)
-                    return false to 0f
+                    return false to -1f
             }
-            else -> return false to 0f // ray is parallel to the plane of the triangle
+            else -> return false to -1f // ray is parallel to the plane of the triangle
         }
 
         val invDet = 1 / det
