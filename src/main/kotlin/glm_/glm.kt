@@ -5,10 +5,8 @@
 package glm_
 
 import glm_.func.*
-import glm_.func.common.func_common
-import glm_.func.common.func_vector2_common
-import glm_.func.common.func_vector3_common
-import glm_.func.common.func_vector4_common
+import glm_.func.common.*
+import glm_.gtx.*
 import glm_.mat2x2.operators.mat2x2_operators
 import glm_.mat3x3.operators.mat3x3_operators
 import glm_.mat4x4.operators.mat4x4_operators
@@ -21,6 +19,7 @@ object glm :
         mat4x4_operators,
 
         func_common,
+        func_vector1_common,
         func_vector2_common,
         func_vector3_common,
         func_vector4_common,
@@ -68,15 +67,31 @@ object glm :
         gradientPaint,
 
         gtxIntersect,
-        gtxQuaternion {
+        gtxQuaternion,
+        gtxMatrixDecompose,
+        gtxInteger,
+        gtxFastTrigonometry {
 
     @JvmField
     val detail = Detail
 
     @JvmField
+    val HPI = kotlin.math.PI / 2
+    @JvmField
+    val HPIf = kotlin.math.PI.f / 2
+
+    @JvmField
     val PI = kotlin.math.PI
     @JvmField
     val PIf = kotlin.math.PI.f
+
+    @JvmField
+    val PI2 = kotlin.math.PI * 2
+    @JvmField
+    val PI2f = kotlin.math.PI.f * 2
+
+    @JvmField
+    val threeOverTwoPIf = kotlin.math.PI.f * 1.5f
 
     @JvmField
     val epsilonF = 1.1920928955078125e-7f
@@ -87,7 +102,9 @@ object glm :
 object Detail :
         noise,
         typeHalf,
-        packing_detail
+        packing_detail,
+        detail_matrixDecompose,
+        detail_fastTrigonometry
 
 
 class Java {

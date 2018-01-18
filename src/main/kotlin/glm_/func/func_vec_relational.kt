@@ -1,6 +1,7 @@
 package glm_.func
 
 import glm_.*
+import glm_.vec1.Vec1
 import glm_.vec1.Vec1bool
 import glm_.vec1.Vec1i
 import glm_.vec1.Vec1t
@@ -17,7 +18,7 @@ interface func_vector1_relational {
     fun lessThan(a: Vec1t<out Number>, b: Vec1t<out Number>, res: Vec1bool = Vec1bool()): Vec1bool {
         val A = a
         when (A) {
-//            is Vec1 -> res.x = A.x < b.x.f
+            is Vec1 -> res.x = A.x < b.x.f
 //            is Vec1b -> res.x = A.x < b.x.i
 //            is Vec1d -> res.x = A.x < b.x.d
             is Vec1i -> res.x = A.x < b.x.i
@@ -31,10 +32,27 @@ interface func_vector1_relational {
         return res
     }
 
+    fun lessThanEqual(a: Vec1t<out Number>, b: Number, res: Vec1bool = Vec1bool()): Vec1bool {
+        val A = a
+        when (A) {
+            is Vec1 -> res.x = A.x <= b.f
+//            is Vec1b -> res.x = A.x <= b.x.i
+//            is Vec1d -> res.x = A.x <= b.x.d
+            is Vec1i -> res.x = A.x <= b.i
+//            is Vec1l -> res.x = A.x <= b.x.L
+//            is Vec1s -> res.x = A.x <= b.x.i
+//            is Vec1ub -> res.x = A.x <= b.x.i
+//            is Vec1ui -> res.x = A.x <= b.x.i
+//            is Vec1ul -> res.x = A.x <= b.x.L
+//            is Vec1us -> res.x = A.x <= b.x.i
+        }
+        return res
+    }
+
     fun lessThanEqual(a: Vec1t<out Number>, b: Vec1t<out Number>, res: Vec1bool = Vec1bool()): Vec1bool {
         val A = a
         when (A) {
-//            is Vec1 -> res.x = A.x <= b.x.f
+            is Vec1 -> res.x = A.x <= b.x.f
 //            is Vec1b -> res.x = A.x <= b.x.i
 //            is Vec1d -> res.x = A.x <= b.x.d
             is Vec1i -> res.x = A.x <= b.x.i
@@ -51,7 +69,7 @@ interface func_vector1_relational {
     fun greaterThan(a: Vec1t<out Number>, b: Vec1t<out Number>, res: Vec1bool = Vec1bool()): Vec1bool {
         val A = a
         when (A) {
-//            is Vec1 -> res.x = A.x > b.x.f
+            is Vec1 -> res.x = A.x > b.x.f
 //            is Vec1b -> res.x = A.x > b.x.i
 //            is Vec1d -> res.x = A.x > b.x.d
             is Vec1i -> res.x = A.x > b.x.i
@@ -68,7 +86,7 @@ interface func_vector1_relational {
     fun greaterThanEqual(a: Vec1t<out Number>, b: Vec1t<out Number>, res: Vec1bool = Vec1bool()): Vec1bool {
         val A = a
         when (A) {
-//            is Vec1 -> res.x = A.x >= b.x.f
+            is Vec1 -> res.x = A.x >= b.x.f
 //            is Vec1b -> res.x = A.x >= b.x.i
 //            is Vec1d -> res.x = A.x >= b.x.d
             is Vec1i -> res.x = A.x >= b.x.i
@@ -85,7 +103,7 @@ interface func_vector1_relational {
     fun equal(a: Vec1t<out Number>, b: Vec1t<out Number>, res: Vec1bool = Vec1bool()): Vec1bool {
         val A = a
         when (A) {
-//            is Vec1 -> res.x = A.x == b.x.f
+            is Vec1 -> res.x = A.x == b.x.f
 //            is Vec1b -> res.x = A.x == b.x.b
 //            is Vec1d -> res.x = A.x == b.x.d
             is Vec1i -> res.x = A.x == b.x.i
@@ -102,7 +120,7 @@ interface func_vector1_relational {
     fun notEqual(a: Vec1t<out Number>, b: Vec1t<out Number>, res: Vec1bool = Vec1bool()): Vec1bool {
         val A = a
         when (A) {
-//            is Vec1 -> res.x = A.x != b.x.f
+            is Vec1 -> res.x = A.x != b.x.f
 //            is Vec1b -> res.x = A.x != b.x.b
 //            is Vec1d -> res.x = A.x != b.x.d
             is Vec1i -> res.x = A.x != b.x.i
@@ -119,7 +137,7 @@ interface func_vector1_relational {
     fun isEqual(a: Vec1t<out Number>, b: Vec1t<out Number>): Boolean {
         val A = a
         return when (A) {
-//            is Vec1 -> A.x == b.x.f
+            is Vec1 -> A.x == b.x.f
 //            is Vec1b -> A.x == b.x.b
 //            is Vec1d -> A.x == b.x.d
             is Vec1i -> A.x == b.x.i

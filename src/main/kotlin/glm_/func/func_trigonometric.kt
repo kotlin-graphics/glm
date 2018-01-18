@@ -22,6 +22,9 @@ import kotlin.math.tan as _tan
 
 interface func_trigonometric {
 
+    // TODO others
+    fun cos(angle: Vec4) = Vec4(cos(angle.x), cos(angle.y), cos(angle.z), cos(angle.w))
+
     fun cos(angle: Double) = _cos(angle)
     fun cos(angle: Float) = _cos(angle.d).f
 
