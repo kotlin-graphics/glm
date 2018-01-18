@@ -10,7 +10,7 @@ import glm_.glm.floatBitsToInt
 import glm_.glm.intBitsToFloat
 import glm_.glm.lessThanEqual
 import glm_.glm.mix
-import glm_.glm.threeOverTwoPIf
+import glm_.glm.PI3over2f
 import glm_.glm.trunc
 import glm_.vec1.Vec1
 import glm_.vec1.operators.minus
@@ -119,7 +119,7 @@ object taylor2 {
 
 object taylorCos {
 
-    val angleShift = Vec4(0f, HPIf, PIf, threeOverTwoPIf)
+    val angleShift = Vec4(0f, HPIf, PIf, PI3over2f)
 
         fun taylorSeriesNewCos(x: Vec4): Vec4 {
         val powed2 = x * x

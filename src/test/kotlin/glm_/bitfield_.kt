@@ -67,7 +67,8 @@ class bitfield_ : StringSpec() {
             }
         }
 
-        /*"bitfieldInterleave3" {
+        /*"bitfieldInterleave3" { TODO jvm fix https://github.com/g-truc/glm/commit/cad2c545f6123a77af0a583861ae6c91d5330e75
+        check also all the rest
 
             fun refBitfieldInterleave(x: Short, y: Short, z: Short): Long {
 

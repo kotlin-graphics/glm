@@ -6,6 +6,8 @@ import glm_.glm.greaterThan
 import glm_.glm.lessThan
 import glm_.quat.Quat
 import glm_.quat.QuatD
+import glm_.vec1.Vec1
+import glm_.vec1.Vec1bool
 import glm_.vec2.*
 import glm_.vec3.*
 import glm_.vec4.*
@@ -31,6 +33,9 @@ interface epsilon {
     fun epsilonNotEqual(x: Long, y: Long, epsilon: Long) = abs(x - y) >= epsilon
     fun epsilonNotEqual(x: Short, y: Short, epsilon: Short) = abs(x - y) >= epsilon
 
+
+    fun epsilonEqual(a: Vec1, b: Vec1, epsilon: Float, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), Vec1(epsilon), res)
+    fun epsilonEqual(a: Vec1, b: Vec1, epsilon: Vec1, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), epsilon)
 
     fun epsilonEqual(a: Vec2, b: Vec2, epsilon: Float, res: Vec2bool = Vec2bool()) = lessThan(abs(a - b), Vec2(epsilon), res)
     fun epsilonEqual(a: Vec2, b: Vec2, epsilon: Vec2, res: Vec2bool = Vec2bool()) = lessThan(abs(a - b), epsilon)

@@ -152,9 +152,9 @@ interface func_vector1_relational {
     }
 
 
-    fun any(a: Vec1bool) = a[0] || a[1]
+    fun any(a: Vec1bool) = a[0]
 
-    fun all(a: Vec1bool) = a[0] && a[1]
+    fun all(a: Vec1bool) = a[0]
 
     fun not(a: Vec1bool, res: Vec1bool = Vec1bool()): Vec1bool {
         res[0] = !a[0]

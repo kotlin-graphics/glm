@@ -91,12 +91,17 @@ object glm :
     val PI2f = kotlin.math.PI.f * 2
 
     @JvmField
-    val threeOverTwoPIf = kotlin.math.PI.f * 1.5f
+    val PI3over2f = kotlin.math.PI.f * 1.5f
 
     @JvmField
     val epsilonF = 1.1920928955078125e-7f
     @JvmField
     val epsilon = 2.2204460492503131e-16
+
+    @JvmField
+    val Ef = 2.71828182845904523536f
+
+    val π = 0
 }
 
 object Detail :
@@ -104,7 +109,8 @@ object Detail :
         typeHalf,
         packing_detail,
         detail_matrixDecompose,
-        detail_fastTrigonometry
+        detail_fastTrigonometry,
+        detail_integer
 
 
 class Java {
@@ -114,3 +120,7 @@ class Java {
         val glm = glm_.glm
     }
 }
+
+typealias uint = Int
+
+val Int.msb get() = 31 - java.lang.Integer.numberOfLeadingZeros(this)
