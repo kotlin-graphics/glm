@@ -448,6 +448,8 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
 
     fun normalizeAssign() = glm.normalize(this, this)
 
+    infix fun cross(b: Vec2) = glm.cross(this, b)
+
     @JvmOverloads
     fun negate(res: Vec2 = Vec2()): Vec2 {
         res.x = -x

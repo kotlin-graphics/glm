@@ -360,6 +360,8 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
 
     fun normalizeAssign() = glm.normalize(this, this)
 
+    infix fun cross(b: Vec2d) = glm.cross(this, b)
+
     @JvmOverloads
     fun negate(res: Vec2d = Vec2d()): Vec2d {
         res.x = -x
