@@ -406,7 +406,16 @@ interface quat_func {
 
 
     /** Returns pitch value of euler angles expressed in radians.   */
-    fun pitch(q: Quat) = atan(2f * (q.y * q.z + q.w * q.x), q.w * q.w - q.x * q.x - q.y * q.y + q.z * q.z)
+    fun pitch(q: Quat): Float {
+        //atan(2f * (q.y * q.z + q.w * q.x), q.w * q.w - q.x * q.x - q.y * q.y + q.z * q.z)
+        val y = 2f * (q.y * q.z + q.w * q.x)
+        val x = q.w * q.w - q.x * q.x - q.y * q.y + q.z * q.z
+        return when {
+        //avoid atan2(0,0) - handle singularity - Matiis
+            y == 0f && x == 0f -> 2f * atan(q.x, q.w)
+            else -> atan(y, x)
+        }
+    }
 
     /** Returns pitch value of euler angles expressed in radians.   */
     fun pitch(q: QuatD) = atan(2.0 * (q.y * q.z + q.w * q.x), q.w * q.w - q.x * q.x - q.y * q.y + q.z * q.z)
