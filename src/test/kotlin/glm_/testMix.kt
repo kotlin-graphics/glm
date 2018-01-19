@@ -4,7 +4,7 @@ import glm_.vec2.Vec2
 import io.kotlintest.specs.StringSpec
 
 
-class mix_ : StringSpec() {
+class testMix : StringSpec() {
 
     init {
 

@@ -10,7 +10,7 @@ import io.kotlintest.specs.StringSpec
  * Created by elect on 11/11/16.
  */
 
-class coreFunCommon : StringSpec() {
+class testCoreFunCommon : StringSpec() {
 
     init {
 

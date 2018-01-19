@@ -1,12 +1,13 @@
-package glm_
+package glm_.gtx
 
+import glm_.glm
 import glm_.glm.epsilonF
 import glm_.vec2.Vec2
 import glm_.vec3.Vec3
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
 
-class gtx_intersect : StringSpec() {
+class testGtxIntersect : StringSpec() {
 
     init {
 

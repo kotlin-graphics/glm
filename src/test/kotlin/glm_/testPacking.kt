@@ -8,7 +8,7 @@ import glm_.vec4.Vec4i
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
 
-class packing_ : StringSpec() {
+class testPacking : StringSpec() {
 
     init {
 

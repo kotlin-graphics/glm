@@ -3,7 +3,7 @@ package glm_
 import glm_.vec2.Vec2
 import io.kotlintest.specs.StringSpec
 
-class gauss_ : StringSpec() {
+class testGauss : StringSpec() {
 
     init {
 

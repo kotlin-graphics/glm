@@ -21,6 +21,8 @@ import kotlin.math.absoluteValue
 import kotlin.math.sign
 import kotlin.math.ceil as _ceil
 import kotlin.math.floor as _floor
+import kotlin.math.max as _max
+import kotlin.math.min as _min
 import kotlin.math.round as _round
 
 
@@ -76,19 +78,19 @@ interface func_common {
     // TODO modf
 
 
-    fun min(a: Float, b: Float) = if(b < a) b else a
-    fun min(a: Double, b: Double) = if(b < a) b else a
-    fun min(a: Byte, b: Byte) = if(b < a) b else a
-    fun min(a: Int, b: Int) = if(b < a) b else a
-    fun min(a: Long, b: Long) = if(b < a) b else a
-    fun min(a: Short, b: Short) = if(b < a) b else a
+    fun min(a: Float, b: Float) = _min(a, b)
+    fun min(a: Double, b: Double) = _min(a, b)
+    fun min(a: Byte, b: Byte) = _min(a.i, b.i).b
+    fun min(a: Int, b: Int) = _min(a, b)
+    fun min(a: Long, b: Long) = _min(a, b)
+    fun min(a: Short, b: Short) = _min(a.i, b.i).s
 
-    fun max(a: Float, b: Float) = if(a < b) b else a
-    fun max(a: Double, b: Double) = if(a < b) b else a
-    fun max(a: Byte, b: Byte) = if(a < b) b else a
-    fun max(a: Int, b: Int) = if(a < b) b else a
-    fun max(a: Long, b: Long) = if(a < b) b else a
-    fun max(a: Short, b: Short) = if(a < b) b else a
+    fun max(a: Float, b: Float) = _max(a, b)
+    fun max(a: Double, b: Double) = _max(a, b)
+    fun max(a: Byte, b: Byte) = _max(a.i, b.i).b
+    fun max(a: Int, b: Int) = _max(a, b)
+    fun max(a: Long, b: Long) = _max(a, b)
+    fun max(a: Short, b: Short) = _max(a.i, b.i).s
 
 
     fun clamp(a: Float, min: Float, max: Float) = min(max(a, min), max)

@@ -70,7 +70,8 @@ object glm :
         gtxQuaternion,
         gtxMatrixDecompose,
         gtxInteger,
-        gtxFastTrigonometry {
+        gtxFastTrigonometry,
+        gtxTexture {
 
     @JvmField
     val detail = Detail

@@ -11,7 +11,7 @@ import io.kotlintest.specs.StringSpec
  * Created by elect on 04/03/2017.
  */
 
-class quaternion : StringSpec() {
+class testQuaternion : StringSpec() {
 
     init {
 

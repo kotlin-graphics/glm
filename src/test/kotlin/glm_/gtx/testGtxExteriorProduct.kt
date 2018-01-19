@@ -1,10 +1,11 @@
-package glm_
+package glm_.gtx
 
+import glm_.glm
 import glm_.vec2.Vec2
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
 
-class gtxExteriorProduct : StringSpec() {
+class testGtxExteriorProduct : StringSpec() {
 
     init {
         "cross" {

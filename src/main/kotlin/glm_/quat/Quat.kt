@@ -32,13 +32,13 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
         var realPart = normUnormV + (u dot v)
         val w: Vec3
 
-        if (realPart < 1e-6f * normUnormV) {
+        w = if (realPart < 1e-6f * normUnormV) {
             /*  If u and v are exactly opposite, rotate 180 degrees around an arbitrary orthogonal axis.
                 Axis normalisation can happen later, when we normalise the quaternion. */
             realPart = 0f
-            w = if (abs(u.x) > abs(u.z)) Vec3(-u.y, u.x, 0f) else Vec3(0f, -u.z, u.y)
+            if (abs(u.x) > abs(u.z)) Vec3(-u.y, u.x, 0f) else Vec3(0f, -u.z, u.y)
         } else // Otherwise, build quaternion the standard way.
-            w = u cross v
+            u cross v
 
         put(Quat(realPart, w.x, w.y, w.z).normalizeAssign())
     }

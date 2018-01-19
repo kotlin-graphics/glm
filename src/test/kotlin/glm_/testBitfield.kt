@@ -11,7 +11,7 @@ import unsigned.toUInt
 import unsigned.toULong
 import kotlin.system.measureNanoTime
 
-class bitfield_ : StringSpec() {
+class testBitfield : StringSpec() {
 
     init {
 

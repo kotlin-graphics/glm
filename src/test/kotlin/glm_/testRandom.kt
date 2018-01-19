@@ -3,7 +3,7 @@ package glm_
 import glm_.vec2.Vec2ub
 import io.kotlintest.specs.StringSpec
 
-class random_ : StringSpec() {
+class testRandom : StringSpec() {
 
     val testSamples = 10_000
 

@@ -8,7 +8,7 @@ import io.kotlintest.specs.StringSpec
  * Created by GBarbieri on 08.03.2017.
  */
 
-class coreMatrixTransform : StringSpec() {
+class testCoreMatrixTransform : StringSpec() {
 
     init {
 

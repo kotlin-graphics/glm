@@ -1,6 +1,7 @@
-package glm_
+package glm_.gtx
 
 import glm_.func.rad
+import glm_.glm
 import glm_.glm.HPIf
 import glm_.glm.PI2f
 import glm_.glm.PIf
@@ -21,7 +22,7 @@ import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
 import kotlin.system.measureNanoTime
 
-class gtxFastTrigonometry : StringSpec() {
+class testGtxFastTrigonometry : StringSpec() {
 
     init {
 
@@ -204,7 +205,7 @@ object taylorCos {
 
         val time = measureNanoTime {
             for(i in 0 until samples)
-                results[i] = taylorCos.fastCosDeterminisctic(angleShift + Vec4(begin + steps * i))
+                results[i] = fastCosDeterminisctic(angleShift + Vec4(begin + steps * i))
         }
 
         println("fastCosDeterminisctic $time ns")
@@ -261,7 +262,7 @@ object taylorCos {
 
         val time = measureNanoTime {
             for (i in 0 until samples)
-                results[i] = taylorCos.fastRefCos(angleShift + Vec4(begin + steps * i))
+                results[i] = fastRefCos(angleShift + Vec4(begin + steps * i))
         }
 
         println("fastCosRef $time ns")
@@ -327,7 +328,7 @@ object taylorCos {
             val radAngle = modAngle.rad
             val cos0 = cos(radAngle)
 
-            val cos1 = taylorCos.fastRefCos(Vec1(radAngle)).x
+            val cos1 = fastRefCos(Vec1(radAngle)).x
             (glm.abs(cos1 - cos0) < 0.1f) shouldBe true
 
             //float const Cos2 = taylorCos::fastCosNew(glm::fvec1(radAngle)).x;

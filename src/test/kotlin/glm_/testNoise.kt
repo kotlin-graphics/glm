@@ -6,7 +6,7 @@ import glm_.vec4.Vec4
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
 
-class noise_ : StringSpec() {
+class testNoise : StringSpec() {
 
     init {
 

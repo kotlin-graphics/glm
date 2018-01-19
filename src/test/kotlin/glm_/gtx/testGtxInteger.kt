@@ -1,9 +1,13 @@
-package glm_
+package glm_.gtx
 
+import glm_.d
+import glm_.glm
+import glm_.i
+import glm_.msb
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
 
-class gtxInteger : StringSpec() {
+class testGtxInteger : StringSpec() {
 
     init {
         "nlz" {

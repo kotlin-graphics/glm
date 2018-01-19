@@ -14,7 +14,7 @@ import io.kotlintest.specs.StringSpec
  * Created by GBarbieri on 07.03.2017.
  */
 
-class coreFuncMatrix : StringSpec() {
+class testCoreFuncMatrix : StringSpec() {
 
     init {
 

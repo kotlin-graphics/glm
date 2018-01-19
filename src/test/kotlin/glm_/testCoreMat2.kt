@@ -10,7 +10,7 @@ import io.kotlintest.specs.StringSpec
  * Created by GBarbieri on 11.11.2016.
  */
 
-class coreMat2 : StringSpec() {
+class testCoreMat2 : StringSpec() {
 
     init {
 

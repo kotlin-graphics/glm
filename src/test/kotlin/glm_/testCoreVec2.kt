@@ -14,7 +14,7 @@ import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
 
 
-class coreVec2 : StringSpec() {
+class testCoreVec2 : StringSpec() {
 
     init {
 
