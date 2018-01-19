@@ -12,5 +12,5 @@ interface gtxTexture {
     fun levels(extent: Vec2i) = glm.log2(compMax(extent)) + 1
     fun levels(extent: Vec3i) = glm.log2(compMax(extent)) + 1
 
-    fun levels(extent: Int) = Vec1i(extent).x
+    fun levels(extent: Int) = glm.log2(extent) + 1
 }

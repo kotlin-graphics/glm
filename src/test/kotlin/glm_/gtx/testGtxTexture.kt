@@ -10,8 +10,12 @@ class testGtxTexture : StringSpec() {
     init {
         "levels" {
 
-            val levels = glm.levels(Vec2i(3, 2))
-            levels shouldBe 2
+            run {
+                val levels = glm.levels(Vec2i(3, 2))
+                levels shouldBe 2
+            }
+
+            run { glm.levels(32) shouldBe 6 }
         }
     }
 }
