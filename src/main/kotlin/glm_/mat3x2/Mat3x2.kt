@@ -7,6 +7,8 @@ import java.nio.FloatBuffer
 
 /**
  * Created by GBarbieri on 09.12.2016.
+ *
+ * GLSL, column major, 3 columns, 2 rows
  */
 
 data class Mat3x2(override var value: MutableList<Vec2>) : Mat3x2t<Vec2>(value) {
@@ -14,6 +16,11 @@ data class Mat3x2(override var value: MutableList<Vec2>) : Mat3x2t<Vec2>(value) 
     // -- Accesses --
 
     operator fun set(i: Int, v: Vec2) = value[i] put v
+    operator fun set(c: Int, r: Int, v: Float) {
+        value[c][r] = v
+    }
+    operator fun get(c: Int, r: Int) = value[c][r]
+
 
     infix fun to(dfb: FloatBuffer) = to(dfb, 0)
 

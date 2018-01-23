@@ -101,6 +101,9 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value)
     // -- Accesses --
 
     operator fun set(i: Int, v: Vec2d) = value[i] put v
+    operator fun set(c: Int, r: Int, v: Double) {
+        value[c][r] = v
+    }
     operator fun get(c: Int, r: Int) = value[c][r]
 
     // -- Matrix functions --
@@ -133,7 +136,7 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value)
     }
 
 
-    companion object : mat2d_operators {
+    companion object : mat2d_operators() {
         @JvmField
         val size = 2 * 2 * Double.BYTES
     }

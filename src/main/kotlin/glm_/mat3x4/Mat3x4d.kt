@@ -13,7 +13,15 @@ data class Mat3x4d(override var value: MutableList<Vec4d>) : Mat3x4t<Vec4d>(valu
 
     // -- Accesses --
 
+    override operator fun get(i: Int) = value[i]
+    operator fun get(c: Int, r: Int) = value[c][r]
+
+    operator fun set(c: Int, r: Int, s: Double) {
+        value[c][r] = s
+    }
+
     operator fun set(i: Int, v: Vec4d) = value[i] put v
+
 
     infix fun to(dfb: DoubleBuffer) = to(dfb, 0)
 

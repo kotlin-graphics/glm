@@ -297,12 +297,18 @@ data class Mat4d(override var value: MutableList<Vec4d>) : Mat4x4t<Vec4d>(value)
 
     // -- Accesses --
 
-    operator fun set(i: Int, v: Vec4d) = value[i] put v
+    override operator fun get(i: Int) = value[i]
     operator fun get(c: Int, r: Int) = value[c][r]
 
-    fun set(i: Int, v: Vec3d, s: Double) = value[i].put(v, s) // TODO other cases
+    operator fun set(c: Int, r: Int, s: Double) {
+        value[c][r] = s
+    }
 
-    companion object : mat4d_operators {
+    operator fun set(i: Int, v: Vec4d) = value[i] put v
+
+    operator fun set(i: Int, v: Vec3d, s: Double) = value[i].put(v, s) // TODO other cases
+
+    companion object : mat4d_operators() {
         @JvmField
         val length = 4    // TODO others
         @JvmField

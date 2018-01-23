@@ -320,7 +320,7 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
 
     fun set(i: Int, v: Vec3, s: Float) = value[i].put(v, s) // TODO other cases
 
-    companion object : mat4x4_operators {
+    companion object : mat4x4_operators() {
         @JvmField
         val length = 4    // TODO others
         @JvmField

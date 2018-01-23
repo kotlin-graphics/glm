@@ -1,7 +1,7 @@
 package glm_.mat2x2
 
 import glm_.*
-import glm_.mat2x2.operators.mat2x2_operators
+import glm_.mat2x2.operators.mat2_operators
 import glm_.mat2x3.Mat2x3t
 import glm_.mat2x4.Mat2x4t
 import glm_.mat3x2.Mat3x2
@@ -16,6 +16,8 @@ import java.nio.FloatBuffer
 
 /**
  * Created by GBarbieri on 10.11.2016.
+ *
+ * GLSL, column major
  */
 data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2>(value) {
 
@@ -101,6 +103,9 @@ data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2>(value) {
     // -- Accesses --
 
     operator fun set(i: Int, v: Vec2) = value[i] put v
+    operator fun set(c: Int, r: Int, v: Float) {
+        value[c][r] = v
+    }
     operator fun get(c: Int, r: Int) = value[c][r]
 
 
@@ -134,7 +139,7 @@ data class Mat2(override var value: MutableList<Vec2>) : Mat2x2t<Vec2>(value) {
     }
 
 
-    companion object : mat2x2_operators {
+    companion object : mat2_operators() {
         @JvmField
         val size = 2 * 2 * Float.BYTES
     }

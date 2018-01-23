@@ -147,6 +147,9 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
     // -- Accesses --
 
     operator fun set(i: Int, v: Vec3) = value[i] put v
+    operator fun set(c: Int, r: Int, v: Float) {
+        value[c][r] = v
+    }
     operator fun get(c: Int, r: Int) = value[c][r]
 
     // -- Matrix functions --
@@ -248,7 +251,7 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
     }
 
 
-    companion object : mat3x3_operators {
+    companion object : mat3x3_operators() {
         @JvmField
         val size = 3 * 3 * Float.BYTES
     }

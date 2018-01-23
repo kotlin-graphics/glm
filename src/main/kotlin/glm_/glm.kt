@@ -7,16 +7,14 @@ package glm_
 import glm_.func.*
 import glm_.func.common.*
 import glm_.gtx.*
-import glm_.mat2x2.operators.mat2x2_operators
+import glm_.mat2x2.operators.mat2_operators
+import glm_.mat2x2.operators.mat2d_operators
 import glm_.mat3x3.operators.mat3x3_operators
 import glm_.mat4x4.operators.mat4x4_operators
 import glm_.quat.gtxQuaternion
 import glm_.quat.quat_func
 
 object glm :
-        mat2x2_operators,
-        mat3x3_operators,
-        mat4x4_operators,
 
         func_common,
         func_vector1_common,
@@ -71,7 +69,9 @@ object glm :
         gtxMatrixDecompose,
         gtxInteger,
         gtxFastTrigonometry,
-        gtxTexture {
+        gtxTexture,
+
+        closestPointToLines {
 
     @JvmField
     val detail = Detail

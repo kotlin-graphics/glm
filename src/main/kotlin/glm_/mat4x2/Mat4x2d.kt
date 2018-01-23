@@ -14,7 +14,10 @@ data class Mat4x2d(override var value: MutableList<Vec2d>) : Mat4x2t<Vec2d>(valu
     // -- Accesses --
 
     operator fun set(i: Int, v: Vec2d) = value[i] put v
-
+    operator fun set(c: Int, r: Int, v: Double) {
+        value[c][r] = v
+    }
+    operator fun get(c: Int, r: Int) = value[c][r]
 
     infix fun to(dfb: DoubleBuffer) = to(dfb, 0)
 

@@ -147,6 +147,9 @@ data class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d>(value)
     // -- Accesses --
 
     operator fun set(i: Int, v: Vec3d) = value[i] put v
+    operator fun set(c: Int, r: Int, v: Double) {
+        value[c][r] = v
+    }
     operator fun get(c: Int, r: Int) = value[c][r]
 
     // -- Matrix functions --
@@ -232,7 +235,7 @@ data class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d>(value)
     }
 
 
-    companion object : mat3d_operators {
+    companion object : mat3d_operators() {
         @JvmField
         val size = 3 * 3 * Double.BYTES
     }

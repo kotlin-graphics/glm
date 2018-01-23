@@ -15,6 +15,11 @@ data class Mat2x3d(override var value: MutableList<Vec3d>) : Mat2x3t<Vec3d>(valu
     // -- Accesses --
 
     operator fun set(i: Int, v: Vec3d) = value[i] put v
+    operator fun set(c: Int, r: Int, v: Double) {
+        value[c][r] = v
+    }
+    operator fun get(c: Int, r: Int) = value[c][r]
+
 
     infix fun to(dfb: DoubleBuffer) = to(dfb, 0)
 
