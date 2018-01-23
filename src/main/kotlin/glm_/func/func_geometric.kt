@@ -10,6 +10,7 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4d
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 /**
@@ -46,6 +47,10 @@ interface func_geometric {
 
     fun distance(a: Vec4, b: Vec4) = sqrt(((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z) + (a.w - b.w) * (a.w - b.w)).d).f
     fun distance(a: Vec4d, b: Vec4d) = sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z) + (a.w - b.w) * (a.w - b.w))
+
+
+    /** Shortest distance between Point and Line    */
+    fun distance(point: Vec3, lineA: Vec3, lineB: Vec3) = abs(((point - lineA) cross (point - lineB)).length) / abs((lineB - lineA).length)
 
 
     fun dot(a: Float, b: Float) = a * b
