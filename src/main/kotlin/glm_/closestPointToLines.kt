@@ -12,8 +12,8 @@ interface closestPointToLines {
 
         for (line in lines) {
 
-            val a = Vec3(line, 3)
-            val b = Vec3(line)
+            val a = Vec3(line, 3) // direction
+            val b = Vec3(line)          // position
             m[0, 0] += a.y * a.y + a.z * a.z
             m[1, 1] += a.z * a.z + a.x * a.x
             m[2, 2] += a.x * a.x + a.y * a.y
@@ -24,6 +24,9 @@ interface closestPointToLines {
             v.y += a.x * (a.x * b.y - a.y * b.x) - a.z * (a.y * b.z - a.z * b.y)
             v.z += a.y * (a.y * b.z - a.z * b.y) - a.x * (a.z * b.x - a.x * b.z)
         }
+        m[1, 0] = m[0, 1]
+        m[2, 0] = m[0, 2]
+        m[2, 1] = m[1, 2]
 
         m.inverseAssign()
 
