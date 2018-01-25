@@ -4,6 +4,7 @@ import glm_.d
 import glm_.f
 import glm_.glm.inverseSqrt
 import glm_.quat.Quat
+import glm_.vec1.Vec1
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2d
 import glm_.vec3.Vec3
@@ -19,6 +20,9 @@ import kotlin.math.sqrt
 
 interface func_geometric {
 
+
+    fun length(a: Vec1) = sqrt(dot(a, a))
+//    fun length(a: Vec1d) = sqrt(dot(a, a)) TODO
 
     fun length(a: Vec2) = sqrt(dot(a, a))
     fun length(a: Vec2d) = sqrt(dot(a, a))
@@ -39,13 +43,16 @@ interface func_geometric {
     fun length2(a: Vec4d) = a dot a
 
 
-    fun distance(a: Vec2, b: Vec2) = sqrt(((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)).d).f
+    fun distance(a: Vec1, b: Vec1) = sqrt((a.x - b.x) * (a.x - b.x))
+//    fun distance(a: Vec1d, b: Vec1d) = sqrt((a.x - b.x) * (a.x - b.x)) TODO
+
+    fun distance(a: Vec2, b: Vec2) = sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y))
     fun distance(a: Vec2d, b: Vec2d) = sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y))
 
-    fun distance(a: Vec3, b: Vec3) = sqrt(((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z)).d).f
+    fun distance(a: Vec3, b: Vec3) = sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z))
     fun distance(a: Vec3d, b: Vec3d) = sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z))
 
-    fun distance(a: Vec4, b: Vec4) = sqrt(((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z) + (a.w - b.w) * (a.w - b.w)).d).f
+    fun distance(a: Vec4, b: Vec4) = sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z) + (a.w - b.w) * (a.w - b.w))
     fun distance(a: Vec4d, b: Vec4d) = sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z) + (a.w - b.w) * (a.w - b.w))
 
 
@@ -55,6 +62,9 @@ interface func_geometric {
 
     fun dot(a: Float, b: Float) = a * b
     fun dot(a: Double, b: Double) = a * b
+
+    fun dot(a: Vec1, b: Vec1) = a.x * b.x
+//    fun dot(a: Vec1d, b: Vec1d) = a.x * b.x TODO
 
     fun dot(a: Vec2, b: Vec2) = a.x * b.x + a.y * b.y
     fun dot(a: Vec2d, b: Vec2d) = a.x * b.x + a.y * b.y
