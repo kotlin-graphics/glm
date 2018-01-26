@@ -1,5 +1,7 @@
 package glm_.vec4
 
+import glm_.vec4.operators.vec4bool_operators
+
 /**
  * Created by elect on 09/10/16.
  */
@@ -85,4 +87,16 @@ data class Vec4bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
         res.w = !w
         return this
     }
+
+    companion object : vec4bool_operators() {
+
+    }
+
+    // TODO others
+    infix fun and(b: Vec4bool) = and(Vec4bool(), this, b.x, b.y, b.z, b.w)
+    infix fun or(b: Vec4bool) = or(Vec4bool(), this, b.x, b.y, b.z, b.w)
+    infix fun xor(b: Vec4bool) = xor(Vec4bool(), this, b.x, b.y, b.z, b.w)
+
+    override fun equals(other: Any?) = other is Vec4bool && x == other.x && y == other.y && z == other.z && w == other.w
+    override fun hashCode() = 31 * (31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()) + w.hashCode()
 }
