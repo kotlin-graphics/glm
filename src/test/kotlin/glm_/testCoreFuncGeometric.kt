@@ -37,6 +37,16 @@ class testCoreFuncGeometric : StringSpec() {
             (glm.abs(distance4) < Float.MIN_VALUE) shouldBe true
         }
 
+        "distance point line" {
+
+            val point = Vec3(0, 1, 0)
+            val lineA = Vec3()
+            val lineB = Vec3(0, 0, 1)
+            val distance = glm.distance(point, lineA, lineB)
+
+            distance shouldBe 1f
+        }
+
         "dot" {
 
             val dot1 = glm.dot(Vec1(1), Vec1(1))
