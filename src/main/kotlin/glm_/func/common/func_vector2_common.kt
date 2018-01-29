@@ -12,6 +12,7 @@ import glm_.glm.frexp
 import glm_.glm.intBitsToFloat
 import glm_.glm.isInf
 import glm_.glm.isNan
+import glm_.glm.ldexp
 import glm_.glm.max
 import glm_.glm.min
 import glm_.glm.mix
@@ -585,7 +586,20 @@ interface func_vector2_common {
     }
 
 
-    // TODO ldexp
+    fun ldexp(a: Vec2, exp: Vec2i) = ldexp(a, exp, Vec2())
+    fun ldexp(a: Vec2, exp: Vec2i, res: Vec2): Vec2 {
+        res.x = ldexp(a.x, exp.x)
+        res.y = ldexp(a.y, exp.y)
+        return res
+    }
+
+    fun ldexp(a: Vec2d, exp: Vec2i) = ldexp(a, exp, Vec2d())
+    fun ldexp(a: Vec2d, exp: Vec2i, res: Vec2d): Vec2d {
+        res.x = ldexp(a.x, exp.x)
+        res.y = ldexp(a.y, exp.y)
+        return res
+    }
+
 
     companion object {
         var _i = 0  // TODO mention potential multithread issues

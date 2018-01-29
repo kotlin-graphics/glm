@@ -731,6 +731,37 @@ class testCoreFunCommon : StringSpec() {
                 glm.all(glm.equal(exp, Vec4i(10, -2, 0, 1))) shouldBe true
             }
         }
+        
+        "ldexp" {
+
+            run {
+                val a = Vec1(1)
+                val exp = Vec1i(10)
+                val x = glm.ldexp(a, exp)
+                glm.all(glm.epsilonEqual(x, Vec1(1024),0.00001f)) shouldBe true
+            }
+
+            run {
+                val a = Vec2(1, 0.96)
+                val exp = Vec2i(10, -2)
+                val x = glm.ldexp(a, exp)
+                glm.all(glm.epsilonEqual(x, Vec2(1024, .24),0.00001f)) shouldBe true
+            }
+
+            run {
+                val a = Vec3(1, 0.96, 0.0)
+                val exp = Vec3i(10, -2, 0)
+                val x = glm.ldexp(a, exp)
+                glm.all(glm.epsilonEqual(x, Vec3(1024, .24, 0),0.00001f)) shouldBe true
+            }
+
+            run {
+                val a = Vec4(1, 0.96, 0.0, -0.665)
+                val exp = Vec4i(10, -2, 0, 1)
+                val x = glm.ldexp(a, exp)
+                glm.all(glm.epsilonEqual(x, Vec4(1024, .24, 0, -1.33),0.00001f)) shouldBe true
+            }
+        }
     }
 
     companion object {

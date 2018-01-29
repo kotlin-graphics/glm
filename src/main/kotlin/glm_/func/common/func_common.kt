@@ -18,6 +18,7 @@ import glm_.glm.trunc
 import unsigned.Uint
 import unsigned.Ulong
 import kotlin.math.absoluteValue
+import kotlin.math.pow
 import kotlin.math.sign
 import kotlin.reflect.KMutableProperty0
 import kotlin.math.ceil as _ceil
@@ -256,7 +257,8 @@ interface func_common {
     }
 
 
-    // TODO ldexp
+    fun ldexp(a: Float, exp: Int) = a * 2f.pow(exp)
+    fun ldexp(a: Double, exp: Int) = a * 2.0.pow(exp)
 }
 
 
