@@ -123,5 +123,3 @@ class Java {
 }
 
 typealias uint = Int
-
-val Int.msb get() = 31 - java.lang.Integer.numberOfLeadingZeros(this)

@@ -1,10 +1,7 @@
 package glm_.func
 
 import glm_.*
-import glm_.vec1.Vec1
-import glm_.vec1.Vec1bool
-import glm_.vec1.Vec1i
-import glm_.vec1.Vec1t
+import glm_.vec1.*
 import glm_.vec2.*
 import glm_.vec3.*
 import glm_.vec4.*
@@ -20,7 +17,7 @@ interface func_vector1_relational {
         when (A) {
             is Vec1 -> res.x = A.x < b.x.f
 //            is Vec1b -> res.x = A.x < b.x.i
-//            is Vec1d -> res.x = A.x < b.x.d
+            is Vec1d -> res.x = A.x < b.x.d
             is Vec1i -> res.x = A.x < b.x.i
 //            is Vec1l -> res.x = A.x < b.x.L
 //            is Vec1s -> res.x = A.x < b.x.i
@@ -32,19 +29,20 @@ interface func_vector1_relational {
         return res
     }
 
+    // TODO others plain Number
     fun lessThanEqual(a: Vec1t<out Number>, b: Number, res: Vec1bool = Vec1bool()): Vec1bool {
         val A = a
         when (A) {
             is Vec1 -> res.x = A.x <= b.f
-//            is Vec1b -> res.x = A.x <= b.x.i
-//            is Vec1d -> res.x = A.x <= b.x.d
+//            is Vec1b -> res.x = A.x <= b.i
+            is Vec1d -> res.x = A.x <= b.d
             is Vec1i -> res.x = A.x <= b.i
-//            is Vec1l -> res.x = A.x <= b.x.L
-//            is Vec1s -> res.x = A.x <= b.x.i
-//            is Vec1ub -> res.x = A.x <= b.x.i
-//            is Vec1ui -> res.x = A.x <= b.x.i
-//            is Vec1ul -> res.x = A.x <= b.x.L
-//            is Vec1us -> res.x = A.x <= b.x.i
+//            is Vec1l -> res.x = A.x <= b.L
+//            is Vec1s -> res.x = A.x <= b.i
+//            is Vec1ub -> res.x = A.x <= b.i
+//            is Vec1ui -> res.x = A.x <= b.i
+//            is Vec1ul -> res.x = A.x <= b.L
+//            is Vec1us -> res.x = A.x <= b.i
         }
         return res
     }
@@ -54,7 +52,7 @@ interface func_vector1_relational {
         when (A) {
             is Vec1 -> res.x = A.x <= b.x.f
 //            is Vec1b -> res.x = A.x <= b.x.i
-//            is Vec1d -> res.x = A.x <= b.x.d
+            is Vec1d -> res.x = A.x <= b.x.d
             is Vec1i -> res.x = A.x <= b.x.i
 //            is Vec1l -> res.x = A.x <= b.x.L
 //            is Vec1s -> res.x = A.x <= b.x.i
@@ -71,7 +69,7 @@ interface func_vector1_relational {
         when (A) {
             is Vec1 -> res.x = A.x > b.x.f
 //            is Vec1b -> res.x = A.x > b.x.i
-//            is Vec1d -> res.x = A.x > b.x.d
+            is Vec1d -> res.x = A.x > b.x.d
             is Vec1i -> res.x = A.x > b.x.i
 //            is Vec1l -> res.x = A.x > b.x.L
 //            is Vec1s -> res.x = A.x > b.x.i
@@ -88,7 +86,7 @@ interface func_vector1_relational {
         when (A) {
             is Vec1 -> res.x = A.x >= b.x.f
 //            is Vec1b -> res.x = A.x >= b.x.i
-//            is Vec1d -> res.x = A.x >= b.x.d
+            is Vec1d -> res.x = A.x >= b.x.d
             is Vec1i -> res.x = A.x >= b.x.i
 //            is Vec1l -> res.x = A.x >= b.x.L
 //            is Vec1s -> res.x = A.x >= b.x.i
@@ -105,7 +103,7 @@ interface func_vector1_relational {
         when (A) {
             is Vec1 -> res.x = A.x == b.x.f
 //            is Vec1b -> res.x = A.x == b.x.b
-//            is Vec1d -> res.x = A.x == b.x.d
+            is Vec1d -> res.x = A.x == b.x.d
             is Vec1i -> res.x = A.x == b.x.i
 //            is Vec1l -> res.x = A.x == b.x.L
 //            is Vec1s -> res.x = A.x == b.x.s
@@ -122,7 +120,7 @@ interface func_vector1_relational {
         when (A) {
             is Vec1 -> res.x = A.x != b.x.f
 //            is Vec1b -> res.x = A.x != b.x.b
-//            is Vec1d -> res.x = A.x != b.x.d
+            is Vec1d -> res.x = A.x != b.x.d
             is Vec1i -> res.x = A.x != b.x.i
 //            is Vec1l -> res.x = A.x != b.x.L
 //            is Vec1s -> res.x = A.x != b.x.s
@@ -139,7 +137,7 @@ interface func_vector1_relational {
         return when (A) {
             is Vec1 -> A.x == b.x.f
 //            is Vec1b -> A.x == b.x.b
-//            is Vec1d -> A.x == b.x.d
+            is Vec1d -> A.x == b.x.d
             is Vec1i -> A.x == b.x.i
 //            is Vec1l -> A.x == b.x.L
 //            is Vec1s -> A.x == b.x.s

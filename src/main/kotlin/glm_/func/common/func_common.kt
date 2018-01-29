@@ -19,6 +19,7 @@ import unsigned.Uint
 import unsigned.Ulong
 import kotlin.math.absoluteValue
 import kotlin.math.sign
+import kotlin.reflect.KMutableProperty0
 import kotlin.math.ceil as _ceil
 import kotlin.math.floor as _floor
 import kotlin.math.max as _max
@@ -55,8 +56,23 @@ interface func_common {
     fun trunc(a: Double) = if (a < 0) -floor(-a) else floor(a)
 
 
-    fun round(a: Float) = Math.round(a).f   //if (a < 0) -floor(-a) else floor(a)
-    fun round(a: Double) = Math.round(a).d//if (a < 0) -floor(-a) else floor(a)
+    fun round(a: Float) = when {
+        a >= 0 -> Math.round(a).f
+        else -> {
+            val i = floor(a) // integer portion
+            val f = a - i // fractional portion
+            if (f <= 0.5f) i else i + 1f // round integer portion based on fractional portion
+        }
+    }
+
+    fun round(a: Double) = when {
+        a >= 0 -> Math.round(a).d
+        else -> {
+            val i = floor(a) // integer portion
+            val f = a - i // fractional portion
+            if (f <= 0.5) i else i + 1.0 // round integer portion based on fractional portion
+        }
+    }
 
 
     fun roundEven(a: Float) = _round(a)
@@ -71,11 +87,20 @@ interface func_common {
     fun fract(a: Double) = a - floor(a)
 
 
-    fun mod(a: Float, b: Float) = a % b
-    fun mod(a: Double, b: Double) = a % b
+    fun mod(a: Float, b: Float) = a - b * floor(a / b)
+    fun mod(a: Double, b: Double) = a - b * floor(a / b)
 
+    fun modf(a: Float, b: KMutableProperty0<Float>): Float {
+        val res = a % 1f
+        b.set(a - res)
+        return res
+    }
 
-    // TODO modf
+    fun modf(a: Double, b: KMutableProperty0<Double>): Double {
+        val res = a % 1.0
+        b.set(a - res)
+        return res
+    }
 
 
     fun min(a: Float, b: Float) = _min(a, b)
@@ -146,7 +171,92 @@ interface func_common {
     fun fma(a: Double, b: Double, c: Double) = a * b + c
 
 
-    // TODO frexp, ldexp
+    fun frexp(a: Float, exp: KMutableProperty0<Int>): Float {
+
+        val bits = a.toIntBits
+        var realMant = 1f
+
+        // Test for NaN, infinity, and zero.
+        return when {
+            a.isNaN || a + a == a || a.isInfinite -> {
+                exp.set(0)
+                a
+            }
+            else -> {
+                val neg = bits < 0
+                var exponent = (bits ushr 23) and 0xff
+                var mantissa = bits and 0xffffff
+
+                if (exponent == 0)
+                    exponent++
+                else
+                    mantissa = mantissa or (1 shl 23)
+
+                /*  bias the exponent - actually biased by 127.
+                    we are treating the mantissa as m.0 instead of 0.m so subtract another 23.  */
+                exponent -= 150
+                realMant = mantissa.f
+
+                // normalize
+                while (realMant > 1f) {
+                    mantissa = mantissa ushr 1
+                    realMant /= 2f
+                    exponent++
+                }
+
+                if (neg)
+                    realMant *= -1
+
+                exp.set(exponent)
+                realMant
+            }
+        }
+    }
+
+    fun frexp(a: Double, exp: KMutableProperty0<Int>): Double {
+
+        val bits = a.toLongBits
+        var realMant = 1.0
+
+        // Test for NaN, infinity, and zero.
+        return when {
+            a.isNaN || a + a == a || a.isInfinite -> {
+                exp.set(0)
+                a
+            }
+            else -> {
+                val neg = bits < 0
+                var exponent = ((bits ushr 52) and 0x7ffL).i
+                var mantissa = bits and 0xfffffffffffffL
+
+                if (exponent == 0)
+                    exponent++
+                else
+                    mantissa = mantissa or (1L shl 52)
+
+                /*  bias the exponent - actually biased by 1023.
+                    we are treating the mantissa as m.0 instead of 0.m so subtract another 52.  */
+                exponent -= 1075
+                realMant = mantissa.d
+
+                // normalize
+                while (realMant > 1.0) {
+                    mantissa = mantissa ushr 1
+                    realMant /= 2.0
+                    exponent++
+                }
+
+                if (neg)
+                    realMant *= -1
+
+                exp.set(exponent)
+                realMant
+            }
+        }
+    }
+
+
+    // TODO ldexp
 }
 
 

@@ -8,6 +8,7 @@ import glm_.glm.floatBitsToUint
 import glm_.glm.floor
 import glm_.glm.fma
 import glm_.glm.fract
+import glm_.glm.frexp
 import glm_.glm.intBitsToFloat
 import glm_.glm.isInf
 import glm_.glm.isNan
@@ -565,5 +566,28 @@ interface func_vector2_common {
     }
 
 
-    // TODO frexp, ldexp
+    fun frexp(a: Vec2, exp: Vec2i) = frexp(a, exp, Vec2())
+    fun frexp(a: Vec2, exp: Vec2i, res: Vec2): Vec2 {
+        res.x = frexp(a.x, ::_i)
+        exp.x = _i
+        res.y = frexp(a.y, ::_i)
+        exp.y = _i
+        return res
+    }
+
+    fun frexp(a: Vec2d, exp: Vec2i) = frexp(a, exp, Vec2d())
+    fun frexp(a: Vec2d, exp: Vec2i, res: Vec2d): Vec2d {
+        res.x = frexp(a.x, ::_i)
+        exp.x = _i
+        res.y = frexp(a.y, ::_i)
+        exp.y = _i
+        return res
+    }
+
+
+    // TODO ldexp
+
+    companion object {
+        var _i = 0  // TODO mention potential multithread issues
+    }
 }

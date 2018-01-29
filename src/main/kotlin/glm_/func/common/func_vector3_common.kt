@@ -1,5 +1,6 @@
 package glm_.func.common
 
+import glm_.glm
 import glm_.glm.abs
 import glm_.glm.ceil
 import glm_.glm.clamp
@@ -601,5 +602,32 @@ interface func_vector3_common {
     }
 
 
-    // TODO frexp, ldexp
+    fun frexp(a: Vec3, exp: Vec3i) = frexp(a, exp, Vec3())
+    fun frexp(a: Vec3, exp: Vec3i, res: Vec3): Vec3 {
+        res.x = glm.frexp(a.x, ::_i)
+        exp.x = _i
+        res.y = glm.frexp(a.y, ::_i)
+        exp.y = _i
+        res.z = glm.frexp(a.z, ::_i)
+        exp.z = _i
+        return res
+    }
+
+    fun frexp(a: Vec3d, exp: Vec3i) = frexp(a, exp, Vec3d())
+    fun frexp(a: Vec3d, exp: Vec3i, res: Vec3d): Vec3d {
+        res.x = glm.frexp(a.x, ::_i)
+        exp.x = _i
+        res.y = glm.frexp(a.y, ::_i)
+        exp.y = _i
+        res.z = glm.frexp(a.z, ::_i)
+        exp.z = _i
+        return res
+    }
+
+
+    // TODO ldexp
+
+    companion object {
+        var _i = 0  // TODO mention potential multithread issues
+    }
 }

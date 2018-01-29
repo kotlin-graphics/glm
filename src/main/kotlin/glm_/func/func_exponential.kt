@@ -3,6 +3,7 @@ package glm_.func
 import glm_.d
 import glm_.i
 import glm_.vec1.Vec1
+import glm_.vec1.Vec1d
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2d
 import glm_.vec3.Vec3
@@ -35,15 +36,15 @@ interface func_exponential {
         return res
     }
 
-//    fun pow(base: Vec1d, exponent: Double, res: Vec1d = Vec1d()): Vec1d { TODO
-//        res.x = pow(base.x, exponent)
-//        return res
-//    }
-//
-//    fun pow(base: Vec1d, exponent: Vec1d, res: Vec1d = Vec1d()): Vec1d {
-//        res.x = pow(base.x, exponent.x)
-//        return res
-//    }
+    fun pow(base: Vec1d, exponent: Double, res: Vec1d = Vec1d()): Vec1d {
+        res.x = pow(base.x, exponent)
+        return res
+    }
+
+    fun pow(base: Vec1d, exponent: Vec1d, res: Vec1d = Vec1d()): Vec1d {
+        res.x = pow(base.x, exponent.x)
+        return res
+    }
 
 
     fun pow(base: Vec2, exponent: Float, res: Vec2 = Vec2()): Vec2 {
@@ -140,10 +141,10 @@ interface func_exponential {
         return res
     }
 
-//    fun exp(a: Vec1d, res: Vec1d = Vec1d()): Vec1d { TODO
-//        res.x = exp(a.x)
-//        return res
-//    }
+    fun exp(a: Vec1d, res: Vec1d = Vec1d()): Vec1d {
+        res.x = exp(a.x)
+        return res
+    }
     
     fun exp(a: Vec2, res: Vec2 = Vec2()): Vec2 {
         res.x = exp(a.x)
@@ -196,10 +197,10 @@ interface func_exponential {
         return res
     }
 
-//    fun log(a: Vec1d, res: Vec1d = Vec1d()): Vec1d { TODO
-//        res.x = log(a.x)
-//        return res
-//    }
+    fun log(a: Vec1d, res: Vec1d = Vec1d()): Vec1d {
+        res.x = log(a.x)
+        return res
+    }
     
     fun log(a: Vec2, res: Vec2 = Vec2()): Vec2 {
         res.x = log(a.x)
@@ -252,10 +253,10 @@ interface func_exponential {
         return res
     }
 
-//    fun exp2(a: Vec1d, res: Vec1d = Vec1d()): Vec1d {
-//        res.x = exp2(a.x)
-//        return res
-//    }
+    fun exp2(a: Vec1d, res: Vec1d = Vec1d()): Vec1d {
+        res.x = exp2(a.x)
+        return res
+    }
     
     fun exp2(a: Vec2, res: Vec2 = Vec2()): Vec2 {
         res.x = exp2(a.x)
@@ -309,10 +310,10 @@ interface func_exponential {
         return res
     }
 
-//    fun log2(a: Vec1d, res: Vec1d = Vec1d()): Vec1d {
-//        res.x = log2(a.x)
-//        return res
-//    }
+    fun log2(a: Vec1d, res: Vec1d = Vec1d()): Vec1d {
+        res.x = log2(a.x)
+        return res
+    }
     
     fun log2(a: Vec2, res: Vec2 = Vec2()): Vec2 {
         res.x = log2(a.x)
@@ -365,10 +366,10 @@ interface func_exponential {
         return res
     }
 
-//    fun sqrt(a: Vec1d, res: Vec1d = Vec1d()): Vec1d {
-//        res.x = sqrt(a.x)
-//        return res
-//    }
+    fun sqrt(a: Vec1d, res: Vec1d = Vec1d()): Vec1d {
+        res.x = sqrt(a.x)
+        return res
+    }
     
     fun sqrt(a: Vec2, res: Vec2 = Vec2()): Vec2 {
         res.x = sqrt(a.x)
@@ -421,10 +422,10 @@ interface func_exponential {
         return res
     }
 
-//    fun inverseSqrt(a: Vec1d, res: Vec1d = Vec1d()): Vec1d {
-//        res.x = inverseSqrt(a.x)
-//        return res
-//    }
+    fun inverseSqrt(a: Vec1d, res: Vec1d = Vec1d()): Vec1d {
+        res.x = inverseSqrt(a.x)
+        return res
+    }
     
     fun inverseSqrt(a: Vec2, res: Vec2 = Vec2()): Vec2 {
         res.x = inverseSqrt(a.x)

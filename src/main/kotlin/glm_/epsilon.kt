@@ -8,6 +8,7 @@ import glm_.quat.Quat
 import glm_.quat.QuatD
 import glm_.vec1.Vec1
 import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1d
 import glm_.vec2.*
 import glm_.vec3.*
 import glm_.vec4.*
@@ -36,6 +37,24 @@ interface epsilon {
 
     fun epsilonEqual(a: Vec1, b: Vec1, epsilon: Float, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), Vec1(epsilon), res)
     fun epsilonEqual(a: Vec1, b: Vec1, epsilon: Vec1, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), epsilon)
+// TODO
+//    fun epsilonEqual(a: Vec1b, b: Vec1b, epsilon: Byte, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), Vec1b(epsilon), res)
+//    fun epsilonEqual(a: Vec1b, b: Vec1b, epsilon: Int, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), Vec1b(epsilon), res)
+//    fun epsilonEqual(a: Vec1b, b: Vec1b, epsilon: Vec1b, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), epsilon)
+
+    fun epsilonEqual(a: Vec1d, b: Vec1d, epsilon: Double, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), Vec1d(epsilon), res)
+    fun epsilonEqual(a: Vec1d, b: Vec1d, epsilon: Vec1d, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), epsilon)
+
+//    fun epsilonEqual(a: Vec1i, b: Vec1i, epsilon: Int, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), Vec1i(epsilon), res)
+//    fun epsilonEqual(a: Vec1i, b: Vec1i, epsilon: Vec1i, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), epsilon)
+//
+//    fun epsilonEqual(a: Vec1l, b: Vec1l, epsilon: Long, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), Vec1l(epsilon), res)
+//    fun epsilonEqual(a: Vec1l, b: Vec1l, epsilon: Vec1l, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), epsilon)
+//
+//    fun epsilonEqual(a: Vec1s, b: Vec1s, epsilon: Short, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), Vec1s(epsilon), res)
+//    fun epsilonEqual(a: Vec1s, b: Vec1s, epsilon: Int, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), Vec1s(epsilon), res)
+//    fun epsilonEqual(a: Vec1s, b: Vec1s, epsilon: Vec1s, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), epsilon)
+    
 
     fun epsilonEqual(a: Vec2, b: Vec2, epsilon: Float, res: Vec2bool = Vec2bool()) = lessThan(abs(a - b), Vec2(epsilon), res)
     fun epsilonEqual(a: Vec2, b: Vec2, epsilon: Vec2, res: Vec2bool = Vec2bool()) = lessThan(abs(a - b), epsilon)
@@ -100,6 +119,27 @@ interface epsilon {
     fun epsilonEqual(a: Vec4s, b: Vec4s, epsilon: Vec4s, res: Vec4bool = Vec4bool()) = lessThan(abs(a - b), epsilon)
 
 
+    fun epsilonNotEqual(a: Vec1, b: Vec1, epsilon: Float, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), Vec1(epsilon), res)
+    fun epsilonNotEqual(a: Vec1, b: Vec1, epsilon: Vec1, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), epsilon)
+
+//    fun epsilonNotEqual(a: Vec1b, b: Vec1b, epsilon: Byte, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), Vec1b(epsilon), res)
+//    fun epsilonNotEqual(a: Vec1b, b: Vec1b, epsilon: Int, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), Vec1b(epsilon), res)
+//    fun epsilonNotEqual(a: Vec1b, b: Vec1b, epsilon: Vec1b, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), epsilon)
+
+    fun epsilonNotEqual(a: Vec1d, b: Vec1d, epsilon: Double, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), Vec1d(epsilon), res)
+    fun epsilonNotEqual(a: Vec1d, b: Vec1d, epsilon: Vec1d, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), epsilon)
+
+//    fun epsilonNotEqual(a: Vec1i, b: Vec1i, epsilon: Int, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), Vec1i(epsilon), res)
+//    fun epsilonNotEqual(a: Vec1i, b: Vec1i, epsilon: Vec1i, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), epsilon)
+//
+//    fun epsilonNotEqual(a: Vec1l, b: Vec1l, epsilon: Long, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), Vec1l(epsilon), res)
+//    fun epsilonNotEqual(a: Vec1l, b: Vec1l, epsilon: Vec1l, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), epsilon)
+//
+//    fun epsilonNotEqual(a: Vec1s, b: Vec1s, epsilon: Short, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), Vec1s(epsilon), res)
+//    fun epsilonNotEqual(a: Vec1s, b: Vec1s, epsilon: Int, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), Vec1s(epsilon), res)
+//    fun epsilonNotEqual(a: Vec1s, b: Vec1s, epsilon: Vec1s, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), epsilon)
+
+    
     fun epsilonNotEqual(a: Vec2, b: Vec2, epsilon: Float, res: Vec2bool = Vec2bool()) = greaterThan(abs(a - b), Vec2(epsilon), res)
     fun epsilonNotEqual(a: Vec2, b: Vec2, epsilon: Vec2, res: Vec2bool = Vec2bool()) = greaterThan(abs(a - b), epsilon)
 

@@ -1,5 +1,6 @@
 package glm_.func.common
 
+import glm_.glm
 import glm_.glm.abs
 import glm_.glm.ceil
 import glm_.glm.clamp
@@ -22,6 +23,7 @@ import glm_.glm.step
 import glm_.glm.trunc
 import glm_.glm.uintBitsToFloat
 import glm_.vec4.*
+import kotlin.reflect.KMutableProperty0
 
 /**
  * Created by GBarbieri on 11.11.2016.
@@ -274,7 +276,34 @@ interface func_vector4_common {
     }
 
 
-    // TODO modf
+    fun modf(a: Vec4, b: Vec4) = modf(a, b, Vec4())
+    fun modf(a: Vec4, b: Vec4, res: Vec4): Vec4 {
+        res.x = a.x % 1f
+        res.y = a.y % 1f
+        res.z = a.z % 1f
+        res.w = a.w % 1f
+        b.x = a.x - res.x
+        b.y = a.y - res.y
+        b.z = a.z - res.z
+        b.w = a.w - res.w
+        return res
+    }
+
+    fun modf(a: Vec4d, b: Vec4d) = modf(a, b, Vec4d())
+    fun modf(a: Vec4d, b: Vec4d, res: Vec4d): Vec4d {
+        res.x = a.x % 1.0
+        res.y = a.y % 1.0
+        res.z = a.z % 1.0
+        res.w = a.w % 1.0
+        b.x = a.x - res.x
+        b.y = a.y - res.y
+        b.z = a.z - res.z
+        b.w = a.w - res.w
+        return res
+    }
+
+
+
 
 
     fun min(a: Vec4, b: Float) = min(a, b, Vec4())
@@ -670,5 +699,36 @@ interface func_vector4_common {
     }
 
 
-    // TODO frexp, ldexp
+    fun frexp(a: Vec4, exp: Vec4i) = frexp(a, exp, Vec4())
+    fun frexp(a: Vec4, exp: Vec4i, res: Vec4): Vec4 {
+        res.x = glm.frexp(a.x, ::_i)
+        exp.x = _i
+        res.y = glm.frexp(a.y, ::_i)
+        exp.y = _i
+        res.z = glm.frexp(a.z, ::_i)
+        exp.z = _i
+        res.w = glm.frexp(a.w, ::_i)
+        exp.w = _i
+        return res
+    }
+
+    fun frexp(a: Vec4d, exp: Vec4i) = frexp(a, exp, Vec4d())
+    fun frexp(a: Vec4d, exp: Vec4i, res: Vec4d): Vec4d {
+        res.x = glm.frexp(a.x, ::_i)
+        exp.x = _i
+        res.y = glm.frexp(a.y, ::_i)
+        exp.y = _i
+        res.z = glm.frexp(a.z, ::_i)
+        exp.z = _i
+        res.w = glm.frexp(a.w, ::_i)
+        exp.w = _i
+        return res
+    }
+
+
+    // TODO ldexp
+
+    companion object {
+        var _i = 0  // TODO mention potential multithread issues
+    }
 }
