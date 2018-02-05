@@ -2,7 +2,7 @@ package glm_
 
 
 infix fun Byte.compare(other: Byte) = java.lang.Byte.compare(this, other)
-val String.decondeByte get () = java.lang.Byte.decode(this)
+val String.decodeByte get () = java.lang.Byte.decode(this)
 val Byte.hashCode get() = java.lang.Byte.hashCode(this)
 val String.parseByte get() = java.lang.Byte.parseByte(this)
 fun String.parseByte(radix: Int) = java.lang.Byte.parseByte(this, radix)
@@ -15,7 +15,7 @@ fun String.byteValue(radix: Int) = java.lang.Byte.valueOf(this, radix)
 
 
 infix fun Short.compare(other: Short) = java.lang.Short.compare(this, other)
-val String.decondeShort get () = java.lang.Short.decode(this)
+val String.decodeShort get () = java.lang.Short.decode(this)
 val Short.hashCode get() = java.lang.Short.hashCode(this)
 val String.parseShort get() = java.lang.Short.parseShort(this)
 fun String.parseShort(radix: Int) = java.lang.Short.parseShort(this, radix)
@@ -65,12 +65,17 @@ fun String.intValue(radix: Int) = java.lang.Integer.valueOf(this, radix)
 
 // bonus
 val Int.msb get() = 31 - java.lang.Integer.numberOfLeadingZeros(this)
+val Int.lsb: Int
+    get() {
+        val res = java.lang.Integer.numberOfTrailingZeros(this)
+        return if(res == 32) -1 else res
+    }
 
 
 infix fun Long.compare(other: Long) = java.lang.Long.compare(this, other)
 infix fun Long.compareUnsigned(other: Long) = java.lang.Long.compareUnsigned(this, other)
 val Long.bitCount get() = java.lang.Long.bitCount(this)
-val String.decondeLong get () = java.lang.Long.decode(this)
+val String.decodeLong get () = java.lang.Long.decode(this)
 infix fun Long.divideUnsigned(divisor: Long) = java.lang.Long.divideUnsigned(this, divisor)
 val String.long get () = java.lang.Long.getLong(this)
 fun String.long(value: Long) = java.lang.Long.getLong(this, value)
@@ -84,6 +89,7 @@ val Long.numberOfTrailingZeros get() = java.lang.Long.numberOfTrailingZeros(this
 val String.parseLong get() = java.lang.Long.parseLong(this)
 fun String.parseLong(radix: Int) = java.lang.Long.parseLong(this, radix)
 val String.parseUnsignedLong get() = java.lang.Long.parseUnsignedLong(this)
+
 fun String.parseUnsignedLong(radix: Int) = java.lang.Long.parseUnsignedLong(this, radix)
 infix fun Long.remainderUnsigned(divisor: Long) = java.lang.Long.remainderUnsigned(this, divisor)
 val Long.reverse get() = java.lang.Long.reverse(this)

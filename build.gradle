@@ -57,9 +57,3 @@ artifacts {
     archives sourcesJar
     archives javadocJar
 }
-
-task gradleVersion {
-    doLast {
-        println("ciao")
-    }
-}

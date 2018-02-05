@@ -20,13 +20,12 @@ class testGtxIntersect : StringSpec() {
             val vert2 = Vec3(1, -1, 0)
             val baryPosition = Vec2()
 
-            val (result, distance) = glm.intersectRayTriangle(orig, dir, vert0, vert1, vert2, baryPosition)
+            val distance = glm.intersectRayTriangle(orig, dir, vert0, vert1, vert2, baryPosition)!!
 
             val a = glm.epsilonEqual(baryPosition, Vec2(), epsilonF)
             val b = a.all()
             glm.epsilonEqual(baryPosition, Vec2(), epsilonF).all() shouldBe true
             (glm.abs(distance - 2f) <= epsilonF) shouldBe true
-            result shouldBe true
         }
     }
 }

@@ -102,10 +102,10 @@ class testCoreFunCommon : StringSpec() {
 
             run {
                 val x = 1.5f
-                _i = 0f
-                val a = glm.modf(x, ::_i)
+                _bF = 0f
+                val a = glm.modf(x, ::_bF)
 
-                _i shouldBe 1f
+                _bF shouldBe 1f
                 a shouldBe 0.5f
             }
 
@@ -129,10 +129,10 @@ class testCoreFunCommon : StringSpec() {
 
             run {
                 val x = 1.5
-                _i_ = 0.0
-                val a = glm.modf(x, ::_i_)
+                bD = 0.0
+                val a = glm.modf(x, ::bD)
 
-                _i_ shouldBe 1.0
+                bD shouldBe 1.0
                 a shouldBe 0.5
             }
         }
@@ -765,7 +765,7 @@ class testCoreFunCommon : StringSpec() {
     }
 
     companion object {
-        var _i = 0f
-        var _i_ = 0.0
+        var _bF = 0f
+        var bD = 0.0
     }
 }
