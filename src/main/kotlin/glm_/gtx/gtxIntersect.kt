@@ -85,11 +85,10 @@ interface gtxIntersect {
 
         val invDet = 1 / det
 
-        // calculate distance, ray intersects triangle
-        val distance = (edge2 dot qVec) * invDet
         baryPosition *= invDet
 
-        return distance
+        // return distance, ray intersects triangle
+        return (edge2 dot qVec) * invDet
     }
 
     /** Compute the intersection of a line and a triangle.
