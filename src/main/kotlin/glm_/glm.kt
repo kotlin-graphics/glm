@@ -60,12 +60,14 @@ object glm :
 
         gradientPaint,
 
-        gtxIntersect,
-        gtxQuaternion,
-        gtxMatrixDecompose,
-        gtxInteger,
         gtxFastTrigonometry,
+        gtxInteger,
+        gtxIntersect,
+        gtxMatrixDecompose,
+        gtxQuaternion,
+        gtxRotateVector,
         gtxTexture,
+        gtxVectorAngle,
 
         closestPointToLines {
 

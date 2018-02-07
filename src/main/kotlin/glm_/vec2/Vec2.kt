@@ -440,6 +440,8 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
 
     infix fun dot(b: Vec2) = glm.dot(this, b)
 
+    infix fun rotate(angle: Float) = glm.rotate(Vec2(), this, angle)
+
     val length get() = glm.length(this)
     val length2 get() = glm.length2(this)
 
