@@ -1,5 +1,6 @@
-package glm_
+package glm_.gtx
 
+import glm_.glm
 import glm_.glm.epsilonF
 import glm_.vec2.Vec2
 import glm_.vec3.Vec3
@@ -22,7 +23,7 @@ interface gtxIntersect {
     /** Compute the intersection of a ray and a plane.
      *  Ray direction and plane normal must be unit length.
      *  From GLM_GTX_intersect extension.
-     *  @return intersection distance   */
+     *  @return intersection distance if intersected, null otherwise   */
     fun intersectRayPlane(orig: Vec3, dir: Vec3, planeOrig: Vec3, planeNormal: Vec3): Float? {
         val d = dir dot planeNormal
         return if (d < -epsilonF) glm.dot(planeOrig - orig, planeNormal) / d else null
@@ -30,7 +31,7 @@ interface gtxIntersect {
 
     /** Compute the intersection of a ray and a triangle.
      *  Based om Tomas Möller implementation http://fileadmin.cs.lth.se/cs/Personal/Tomas_Akenine-Moller/raytri/
-     *  @return Boolean to Distance, if false, distance is invalid (-1f)  */
+     *  @return distance if intersected, null otherwise  */
     fun intersectRayTriangle(orig: Vec3, dir: Vec3, vert0: Vec3, vert1: Vec3, vert2: Vec3, baryPosition: Vec2): Float? {
         // find vectors for two edges sharing vert0
         val edge1 = vert1 - vert0
@@ -123,7 +124,7 @@ interface gtxIntersect {
     /** Compute the intersection distance of a ray and a sphere.
      *  The ray direction vector is unit length.
      *  From GLM_GTX_intersect extension.
-     *  @return intersection distance   */
+     *  @return intersection distance if intersected, null otherwise   */
     fun intersectRaySphere(rayStarting: Vec3, rayNormalizedDirection: Vec3, sphereCenter: Vec3, sphereRadiusSquered: Float): Float? {
         val diff = sphereCenter - rayStarting
         val t0 = diff dot rayNormalizedDirection
@@ -136,7 +137,7 @@ interface gtxIntersect {
 
     /** Compute the intersection of a ray and a sphere.
      *  From GLM_GTX_intersect extension.
-     *  @return intersection distance   */
+     *  @return intersection   */
     fun intersectRaySphere(rayStarting: Vec3, rayNormalizedDirection: Vec3, sphereCenter: Vec3, sphereRadius: Float,
                            intersectionPosition: Vec3, intersectionNormal: Vec3): Boolean {
 

@@ -1,5 +1,5 @@
 apply plugin: 'kotlin'
-apply plugin: 'java'
+//apply plugin: 'java'
 
 // jitpack
 apply plugin: 'maven'
@@ -14,7 +14,7 @@ buildscript {
     repositories {
         jcenter()   // shadow
         mavenCentral()
-        maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
+        maven { setUrl("https://dl.bintray.com/kotlin/kotlin-eap") }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
@@ -33,8 +33,8 @@ dependencies {
 
 repositories {
     mavenCentral()
-    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
-    maven { url "https://jitpack.io" }
+    maven { setUrl("https://dl.bintray.com/kotlin/kotlin-eap") }
+    maven { setUrl("https://jitpack.io") }
 }
 
 allprojects {
