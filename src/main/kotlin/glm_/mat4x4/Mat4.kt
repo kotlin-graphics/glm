@@ -431,11 +431,11 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
 
 
     // TODO others
-    @JvmOverloads
-    fun scale(scale: Vec3, res: Mat4 = Mat4()) = scale(scale.x, scale.y, scale.z, res)
+    infix fun scale(scale: Vec3) = scale(scale.x, scale.y, scale.z, Mat4())
+    fun scale(scale: Vec3, res: Mat4) = scale(scale.x, scale.y, scale.z, res)
 
-    @JvmOverloads
-    fun scale(scale: Float, res: Mat4 = Mat4()) = scale(scale, scale, scale, res)
+    infix fun scale(scale: Float) = scale(scale, scale, scale, Mat4())
+    fun scale(scale: Float, res: Mat4) = scale(scale, scale, scale, res)
 
     @JvmOverloads
     fun scale(scaleX: Float, scaleY: Float, scaleZ: Float, res: Mat4 = Mat4()) = glm.scale(res, this, scaleX, scaleY, scaleZ)
@@ -445,11 +445,11 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     fun scaleAssign(scaleX: Float, scaleY: Float, scaleZ: Float) = glm.scale(this, this, scaleX, scaleY, scaleZ)
 
 
-    @JvmOverloads
-    fun translate(translate: Vec3, res: Mat4 = Mat4()) = translate(translate.x, translate.y, translate.z, res)
+    infix fun translate(translate: Vec3) = translate(translate.x, translate.y, translate.z, Mat4())
+    fun translate(translate: Vec3, res: Mat4) = translate(translate.x, translate.y, translate.z, res)
 
-    @JvmOverloads
-    fun translate(translate: Float, res: Mat4 = Mat4()) = translate(translate, translate, translate, res)
+    infix fun translate(translate: Float) = translate(translate, translate, translate, Mat4())
+    fun translate(translate: Float, res: Mat4) = translate(translate, translate, translate, res)
 
     @JvmOverloads
     fun translate(translateX: Float, translateY: Float, translateZ: Float, res: Mat4 = Mat4()) =
