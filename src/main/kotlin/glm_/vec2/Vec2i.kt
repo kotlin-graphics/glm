@@ -496,4 +496,5 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
 
     override fun equals(other: Any?) = other is Vec2i && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
+    override fun toString() = "($x, $y)"
 }
