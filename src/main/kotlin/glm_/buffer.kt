@@ -25,9 +25,13 @@ val CharBuffer.size
 
 operator fun ByteBuffer.set(index: Int, byte: Byte): ByteBuffer = put(index, byte)
 operator fun ByteBuffer.set(index: Int, int: Int): ByteBuffer = put(index, int.b)
+operator fun ByteBuffer.set(index: Int, short: Short): ByteBuffer = put(index, short.b)
+
 operator fun ShortBuffer.set(index: Int, short: Short): ShortBuffer = put(index, short)
 operator fun ShortBuffer.set(index: Int, int: Int): ShortBuffer = put(index, int.s)
+
 operator fun IntBuffer.set(index: Int, int: Int): IntBuffer = put(index, int)
+
 operator fun LongBuffer.set(index: Int, long: Long): LongBuffer = put(index, long)
 operator fun LongBuffer.set(index: Int, int: Int): LongBuffer = put(index, int.L)
 
