@@ -123,3 +123,20 @@ class Java {
 
 typealias uint = Int
 typealias ulong = Long
+
+
+interface Vector1Component<out T> {
+    fun component1(): T
+}
+
+interface Vector2Component<out T> : Vector1Component<T> {
+    fun component2(): T
+}
+
+interface Vector3Component<out T> : Vector2Component<T> {
+    fun component3(): T
+}
+
+interface Vector4Component<out T> : Vector3Component<T> {
+    fun component4(): T
+}

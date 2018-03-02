@@ -8,7 +8,7 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import java.nio.*
 
-abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
+abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) : Vector3Component<T> {
 
     @JvmField
     var x = _x
@@ -135,9 +135,9 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
         val length = 3
     }
 
-    operator fun component1() = x
-    operator fun component2() = y
-    operator fun component3() = z
+    override operator fun component1() = x
+    override operator fun component2() = y
+    override operator fun component3() = z
 
     override fun toString() = "($x, $y, $z)"
 

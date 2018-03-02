@@ -13,7 +13,7 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-abstract class Vec2t<T : Number>(_x: T, _y: T) {
+abstract class Vec2t<T : Number>(_x: T, _y: T) : Vector2Component<T> {
 
     @JvmField
     var x = _x
@@ -134,8 +134,8 @@ abstract class Vec2t<T : Number>(_x: T, _y: T) {
     }
 
 
-    operator fun component1() = x
-    operator fun component2() = y
+    override operator fun component1() = x
+    override operator fun component2() = y
 
     override fun toString() = "($x, $y)"
 

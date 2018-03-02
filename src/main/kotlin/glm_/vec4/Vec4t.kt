@@ -8,7 +8,7 @@ import glm_.vec3.*
 import java.nio.*
 
 // TODO other
-abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
+abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) : Vector4Component<T> {
 
     @JvmField
     var x = _x
@@ -164,10 +164,10 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
 
     abstract fun instanceSize(): Int // TODO check
 
-    operator fun component1() = x
-    operator fun component2() = y
-    operator fun component3() = z
-    operator fun component4() = w
+    override operator fun component1() = x
+    override operator fun component2() = y
+    override operator fun component3() = z
+    override operator fun component4() = w
 
     override fun toString() = "($x, $y, $z, $w)"
 
