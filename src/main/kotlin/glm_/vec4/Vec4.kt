@@ -102,6 +102,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     }
 
 
+    fun toFloatArray() = to(FloatArray(4), 0)   // TODO others
     infix fun to(floats: FloatArray) = to(floats, 0)
     fun to(floats: FloatArray, index: Int): FloatArray {
         floats[index] = x
