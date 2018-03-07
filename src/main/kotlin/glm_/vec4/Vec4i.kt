@@ -93,6 +93,7 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     }
 
 
+    fun toIntArray() = to(IntArray(4))
     infix fun to(ints: IntArray) = to(ints, 0)
     fun to(ints: IntArray, index: Int): IntArray {
         ints[index] = x
@@ -179,6 +180,7 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     infix operator fun plusAssign(b: Int) {
         plus(this, this, b, b, b, b)
     }
+
     infix operator fun plusAssign(b: Vec4i) {
         plus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -195,6 +197,7 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     infix operator fun minusAssign(b: Int) {
         minus(this, this, b, b, b, b)
     }
+
     infix operator fun minusAssign(b: Vec4i) {
         minus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -211,6 +214,7 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     infix operator fun timesAssign(b: Int) {
         times(this, this, b, b, b, b)
     }
+
     infix operator fun timesAssign(b: Vec4i) {
         times(this, this, b.x, b.y, b.z, b.w)
     }
@@ -227,6 +231,7 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     infix operator fun divAssign(b: Int) {
         div(this, this, b, b, b, b)
     }
+
     infix operator fun divAssign(b: Vec4i) {
         div(this, this, b.x, b.y, b.z, b.w)
     }
@@ -243,6 +248,7 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     infix operator fun remAssign(b: Int) {
         rem(this, this, b, b, b, b)
     }
+
     infix operator fun remAssign(b: Vec4i) {
         rem(this, this, b.x, b.y, b.z, b.w)
     }
@@ -261,6 +267,7 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun plusAssign(b: Vec4t<out Number>) {
         plus(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -277,6 +284,7 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun minusAssign(b: Vec4t<out Number>) {
         minus(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -293,6 +301,7 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun timesAssign(b: Vec4t<out Number>) {
         times(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -309,6 +318,7 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun divAssign(b: Vec4t<out Number>) {
         div(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -325,6 +335,7 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun remAssign(b: Vec4t<out Number>) {
         rem(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
