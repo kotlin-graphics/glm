@@ -1,5 +1,6 @@
 package glm_
 
+import glm_.vec2.Vec2
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
 

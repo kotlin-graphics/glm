@@ -493,6 +493,10 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     infix fun greaterThan(i: Int) = x > i && y > i
     infix fun greaterThanEqual(i: Int) = x >= i && y >= i
 
+    infix fun clamp(int: Int) {
+        if(x < int) x = int
+        if(y < int) y = int
+    }
 
     override fun equals(other: Any?) = other is Vec2i && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
