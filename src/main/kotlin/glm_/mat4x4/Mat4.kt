@@ -419,8 +419,8 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
 
     val det get() = glm.determinant(this)
 
-    @JvmOverloads
-    fun inverse(res: Mat4 = Mat4()) = inverse(res, this)
+    inline fun inverse() = inverse(Mat4())  // TODO check style: inline + overload
+    inline infix fun inverse(res: Mat4) = inverse(res, this)
 
     fun inverseAssign() = inverse(this, this)
 
