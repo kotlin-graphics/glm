@@ -273,7 +273,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     // -- Generic binary arithmetic operators --
 
     infix operator fun plus(b: Number) = plus(Vec3(), this, b.f, b.f, b.f)
-    infix operator fun plus(b: Vec3t<out Number>) = plus(Vec3(), this, b.x.f, b.y.f, b.z.f)
+    infix operator fun plus(b: Vector3Component<Number>) = plus(Vec3(), this, b.component1().f, b.component2().f, b.component3().f)
 
     @JvmOverloads
     fun plus(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = plus(res, this, bX.f, bY.f, bZ.f)
