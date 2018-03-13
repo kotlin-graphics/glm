@@ -13,7 +13,7 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
+class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3Component<Float> {
 
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
@@ -382,4 +382,8 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
 
     override fun equals(other: Any?) = other is Vec3 && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()
+
+    override fun component1() = x
+    override fun component2() = y
+    override fun component3() = z
 }
