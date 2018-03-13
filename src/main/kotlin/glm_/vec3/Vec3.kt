@@ -13,7 +13,7 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3Component<Float> {
+class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3<Float> {
 
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
@@ -26,11 +26,11 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3Compone
     constructor(v: Vec3t<out Number>) : this(v.x, v.y, v.z)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z)
     // TODO others
-    constructor(v: Vector2Component<Number>) : this(v.component1(), v.component2(), 0)
-    constructor(v: Vector2Component<Number>, z: Number) : this(v.component1(), v.component2(), z)
-    constructor(x: Number, v: Vector2Component<Number>) : this(x, v.component1().f, v.component2().f)
-    constructor(v: Vector3Component<Number>) : this(v.component1(), v.component2(), v.component3())
-    constructor(v: Vector4Component<Number>) : this(v.component1(), v.component2(), v.component3())
+    constructor(v: Vector2<Number>) : this(v.component1(), v.component2(), 0)
+    constructor(v: Vector2<Number>, z: Number) : this(v.component1(), v.component2(), z)
+    constructor(x: Number, v: Vector2<Number>) : this(x, v.component1().f, v.component2().f)
+    constructor(v: Vector3<Number>) : this(v.component1(), v.component2(), v.component3())
+    constructor(v: Vector4<Number>) : this(v.component1(), v.component2(), v.component3())
 
     constructor(v: Vec2bool) : this(v.x.f, v.y.f, 0)
     constructor(v: Vec3bool) : this(v.x.f, v.y.f, v.z.f)
@@ -91,7 +91,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3Compone
     }
 
 
-    infix fun put(s: Vector3Component<Number>) = put(s.component1(), s.component2(), s.component3())    // TODO others
+    infix fun put(s: Vector3<Number>) = put(s.component1(), s.component2(), s.component3())    // TODO others
     override infix fun put(s: Number) = put(s, s, s)
     override fun put(x: Number, y: Number, z: Number): Vec3 {
         this.x = x.f
@@ -273,7 +273,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3Compone
     // -- Generic binary arithmetic operators --
 
     infix operator fun plus(b: Number) = plus(Vec3(), this, b.f, b.f, b.f)
-    infix operator fun plus(b: Vector3Component<Number>) = plus(Vec3(), this, b.component1().f, b.component2().f, b.component3().f)
+    infix operator fun plus(b: Vector3<Number>) = plus(Vec3(), this, b.component1().f, b.component2().f, b.component3().f)
 
     @JvmOverloads
     fun plus(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = plus(res, this, bX.f, bY.f, bZ.f)
@@ -291,7 +291,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3Compone
 
 
     infix operator fun minus(b: Number) = minus(Vec3(), this, b.f, b.f, b.f)
-    infix operator fun minus(b: Vector3Component<Number>) = minus(Vec3(), this, b.component1().f, b.component2().f, b.component3().f)
+    infix operator fun minus(b: Vector3<Number>) = minus(Vec3(), this, b.component1().f, b.component2().f, b.component3().f)
 
     fun minus(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = minus(res, this, bX.f, bY.f, bZ.f)
     fun minus(b: Number, res: Vec3 = Vec3()) = minus(res, this, b.f, b.f, b.f)

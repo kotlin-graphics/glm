@@ -12,7 +12,7 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
+class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z), Vector3<Double> {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -345,4 +345,8 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
 
     override fun equals(other: Any?) = other is Vec3d && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()
+
+    override fun component1() = x
+    override fun component2() = y
+    override fun component3() = z
 }

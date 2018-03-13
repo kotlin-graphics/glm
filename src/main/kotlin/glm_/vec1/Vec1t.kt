@@ -1,6 +1,6 @@
 package glm_.vec1
 
-import glm_.Vector1Component
+import glm_.Vector1
 import glm_.b
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
@@ -14,7 +14,7 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-abstract class Vec1t<T : Number>(_x: T) : Vector1Component<T> {
+abstract class Vec1t<T : Number>(_x: T) : Vector1<T> {
 
     @JvmField
     var x = _x

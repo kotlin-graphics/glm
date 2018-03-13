@@ -1,9 +1,9 @@
 package glm_.quat
 
 import glm_.BYTES
+import glm_.Quaternion
 import glm_.d
 import glm_.glm
-import glm_.mat.QuatT
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d
@@ -13,7 +13,7 @@ import glm_.vec4.Vec4t
 /**
  * Created by GBarbieri on 15.11.2016.
  */
-class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y, z) {
+class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y, z), Quaternion<Double> {
 
     // -- Implicit basic constructors --
 
@@ -191,4 +191,9 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
 
     @JvmOverloads
     fun vectorize(res: Vec4d = Vec4d()) = res.put(x, y, z, w)
+
+    override fun component1() = x
+    override fun component2() = y
+    override fun component3() = z
+    override fun component4() = w
 }

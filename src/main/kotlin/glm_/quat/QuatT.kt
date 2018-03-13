@@ -1,4 +1,4 @@
-package glm_.mat
+package glm_.quat
 
 /**
  * Created by GBarbieri on 08.11.2016.

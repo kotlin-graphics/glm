@@ -13,7 +13,7 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-abstract class Vec2t<T : Number>(_x: T, _y: T) : Vector2Component<T> {
+abstract class Vec2t<T : Number>(_x: T, _y: T) : Vector2<T> {
 
     @JvmField
     var x = _x

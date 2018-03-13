@@ -8,7 +8,7 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import java.nio.*
 
-abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) : Vector3Component<T> {
+abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) : Vector3<T> {
 
     @JvmField
     var x = _x

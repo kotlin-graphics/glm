@@ -1,12 +1,8 @@
 package glm_.quat
 
-import glm_.BYTES
-import glm_.f
-import glm_.float
-import glm_.glm
+import glm_.*
 import glm_.glm.cos
 import glm_.glm.sin
-import glm_.mat.QuatT
 import glm_.mat3x3.Mat3
 import glm_.mat4x4.Mat4
 import glm_.vec3.Vec3
@@ -19,7 +15,7 @@ import kotlin.math.sqrt
 /**
  * Created by GBarbieri on 15.11.2016.
  */
-class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
+class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z), Quaternion<Float> {
 
 
     // -- Implicit basic constructors --
@@ -219,4 +215,9 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     override fun equals(other: Any?) = other is Quat && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
 
     override fun hashCode() = 31 * (31 * (31 * w.hashCode() + x.hashCode()) + y.hashCode()) + z.hashCode()
+
+    override fun component1() = x
+    override fun component2() = y
+    override fun component3() = z
+    override fun component4() = w
 }
