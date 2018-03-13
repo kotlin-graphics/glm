@@ -291,7 +291,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
 
 
     infix operator fun minus(b: Number) = minus(Vec3(), this, b.f, b.f, b.f)
-    infix operator fun minus(b: Vec3t<out Number>) = minus(Vec3(), this, b.x.f, b.y.f, b.z.f)
+    infix operator fun minus(b: Vector3Component<Number>) = minus(Vec3(), this, b.component1().f, b.component2().f, b.component3().f)
 
     fun minus(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = minus(res, this, bX.f, bY.f, bZ.f)
     fun minus(b: Number, res: Vec3 = Vec3()) = minus(res, this, b.f, b.f, b.f)
