@@ -19,11 +19,11 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) : Vector4<T> {
     @JvmField
     var w = _w
 
-    open operator fun get(i: Int) = when (i) {
+    override operator fun get(index: Int) = when (index) {
         0 -> x
         1 -> y
         2 -> z
-        3 -> 2
+        3 -> w
         else -> throw IndexOutOfBoundsException()
     }
 

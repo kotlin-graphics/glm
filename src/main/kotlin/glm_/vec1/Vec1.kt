@@ -269,7 +269,7 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
 
     // -- Component accesses --
 
-    infix operator fun get(i: Int) = when (i) {
+    override infix operator fun get(index: Int) = when (index) {
         0 -> x
         else -> throw ArrayIndexOutOfBoundsException()
     }

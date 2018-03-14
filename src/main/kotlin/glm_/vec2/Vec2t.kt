@@ -20,7 +20,7 @@ abstract class Vec2t<T : Number>(_x: T, _y: T) : Vector2<T> {
     @JvmField
     var y = _y
 
-    open operator fun get(i: Int) = when (i) {
+    override operator fun get(index: Int) = when (index) {
         0 -> x
         1 -> y
         else -> throw IndexOutOfBoundsException()

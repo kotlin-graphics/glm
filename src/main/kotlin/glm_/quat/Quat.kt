@@ -92,7 +92,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z), Q
 
     // -- Component accesses --
 
-    operator fun get(i: Int) = when (i) {
+    override operator fun get(index: Int) = when (index) {
         0 -> x
         1 -> y
         2 -> z

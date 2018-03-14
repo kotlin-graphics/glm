@@ -1,7 +1,6 @@
 package glm_.vec1
 
 import glm_.*
-import glm_.vec1.operators.vec1_operators
 import glm_.vec1.operators.vec1d_operators
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
@@ -267,7 +266,7 @@ class Vec1d(x: Double) : Vec1t<Double>(x) {
 
     // -- Component accesses --
 
-    infix operator fun get(i: Int) = when (i) {
+    override infix operator fun get(index: Int) = when (index) {
         0 -> x
         else -> throw ArrayIndexOutOfBoundsException()
     }

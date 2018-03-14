@@ -3,7 +3,6 @@ package glm_.vec1
 import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
-import glm_.vec2.operators.opVec2ui
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
@@ -90,7 +89,7 @@ class Vec1ui(x: Uint) : Vec1t<Uint>(x) {
     // -- Component accesses --
 
     /**override TODO*/
-    operator fun get(i: Int) = when (i) {
+    override operator fun get(index: Int) = when (index) {
         0 -> x
         else -> throw ArrayIndexOutOfBoundsException()
     }

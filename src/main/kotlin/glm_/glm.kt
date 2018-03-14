@@ -127,18 +127,22 @@ typealias ulong = Long
 
 interface Vector1<out T> {
     fun component1(): T
+    operator fun get(index: Int): T
 }
 
 interface Vector2<out T> : Vector1<T> {
     fun component2(): T
+    override operator fun get(index: Int): T
 }
 
 interface Vector3<out T> : Vector2<T> {
     fun component3(): T
+    override operator fun get(index: Int): T
 }
 
 interface Vector4<out T> : Vector3<T> {
     fun component4(): T
+    override operator fun get(index: Int): T
 }
 
 interface Quaternion<out T> {
@@ -146,4 +150,5 @@ interface Quaternion<out T> {
     fun component2(): T
     fun component3(): T
     fun component4(): T
+    operator fun get(index: Int): T
 }

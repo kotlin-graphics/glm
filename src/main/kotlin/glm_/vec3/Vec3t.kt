@@ -17,7 +17,7 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) : Vector3<T> {
     @JvmField
     var z = _z
 
-    open operator fun get(i: Int) = when (i) {
+    override operator fun get(index: Int) = when (index) {
         0 -> x
         1 -> y
         2 -> z

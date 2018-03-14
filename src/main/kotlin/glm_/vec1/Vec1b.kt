@@ -72,7 +72,7 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
 
     // -- Component accesses --
 
-    operator fun get(i: Int) = when (i) {
+    override operator fun get(index: Int) = when (index) {
         0 -> x
         else -> throw ArrayIndexOutOfBoundsException()
     }
