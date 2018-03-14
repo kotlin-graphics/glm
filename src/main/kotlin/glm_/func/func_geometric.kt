@@ -74,8 +74,8 @@ interface func_geometric {
     fun dot(a: Vec3, b: Vec3) = a.x * b.x + a.y * b.y + a.z * b.z
     fun dot(a: Vec3d, b: Vec3d) = a.x * b.x + a.y * b.y + a.z * b.z
 
-    fun dot(a: Vector3<Float>, b: Vector3<Float>) = a.component1() * b.component1() + a.component2() * b.component2() + a.component3() * b.component3()
-    fun dotD(a: Vector3<Double>, b: Vector3<Double>) = a.component1() * b.component1() + a.component2() * b.component2() + a.component3() * b.component3()
+    fun dot(a: Vec3, b: Vector3<Number>) = a.x * b.component1().f + a.y * b.component2().f + a.z * b.component3().f
+    fun dot(a: Vec3d, b: Vector3<Number>) = a.x * b.component1().d + a.y * b.component2().d + a.z * b.component3().d
 
     fun dot(a: Vec4, b: Vec4) = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
     fun dot(a: Vec4d, b: Vec4d) = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
