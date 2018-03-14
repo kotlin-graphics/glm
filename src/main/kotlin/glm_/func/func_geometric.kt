@@ -1,5 +1,6 @@
 package glm_.func
 
+import glm_.Vector3
 import glm_.d
 import glm_.f
 import glm_.glm.inverseSqrt
@@ -72,6 +73,9 @@ interface func_geometric {
 
     fun dot(a: Vec3, b: Vec3) = a.x * b.x + a.y * b.y + a.z * b.z
     fun dot(a: Vec3d, b: Vec3d) = a.x * b.x + a.y * b.y + a.z * b.z
+
+    fun dot(a: Vector3<Float>, b: Vector3<Float>) = a.component1() * b.component1() + a.component2() * b.component2() + a.component3() * b.component3()
+    fun dotD(a: Vector3<Double>, b: Vector3<Double>) = a.component1() * b.component1() + a.component2() * b.component2() + a.component3() * b.component3()
 
     fun dot(a: Vec4, b: Vec4) = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
     fun dot(a: Vec4d, b: Vec4d) = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w

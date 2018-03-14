@@ -288,6 +288,9 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3<Float>
     infix operator fun plusAssign(b: Vec3t<out Number>) {
         plus(this, this, b.x.f, b.y.f, b.z.f)
     }
+    infix operator fun plusAssign(b: Vector3<Number>) {
+        plus(this, this, b.component1().f, b.component2().f, b.component3().f)
+    }
 
 
     infix operator fun minus(b: Number) = minus(Vec3(), this, b.f, b.f, b.f)
