@@ -106,6 +106,87 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) : Vector3<T> {
     fun put(doubles: DoubleBuffer, index: Int) = put(doubles[index], doubles[index + 1], doubles[index + 2])
 
 
+    // -- Same, but with () operator --
+
+    infix operator fun invoke(v: Vec2t<out Number>) = put(v.x, v.y, 0)
+    infix operator fun invoke(v: Vec3t<out Number>) = put(v.x, v.y, v.z)
+    infix operator fun invoke(v: Vec4t<out Number>) = put(v.x, v.y, v.z)
+
+    infix operator fun invoke(v: Vec2bool) = put(v.x.b, v.y.b, 0)
+    infix operator fun invoke(v: Vec3bool) = put(v.x.b, v.y.b, v.z.b)
+    infix operator fun invoke(v: Vec4bool) = put(v.x.b, v.y.b, v.z.b)
+
+    infix operator fun invoke(bytes: ByteArray) = put(bytes, 0)
+    infix operator fun invoke(chars: CharArray) = put(chars, 0)
+    infix operator fun invoke(shorts: ShortArray) = put(shorts, 0)
+    infix operator fun invoke(ints: IntArray) = put(ints, 0)
+    infix operator fun invoke(longs: LongArray) = put(longs, 0)
+    infix operator fun invoke(floats: FloatArray) = put(floats, 0)
+    infix operator fun invoke(doubles: DoubleArray) = put(doubles, 0)
+    infix operator fun invoke(booleans: BooleanArray) = put(booleans, 0)
+
+    infix operator fun invoke(numbers: Array<out Number>) = put(numbers, 0)
+    infix operator fun invoke(chars: Array<Char>) = put(chars, 0)
+    infix operator fun invoke(a: Array<Boolean>) = put(a, 0)
+
+    infix operator fun invoke(list: List<Any>) = put(list, 0)
+
+    infix operator fun invoke(bytes: ByteBuffer) = put(bytes, 0)
+    infix operator fun invoke(chars: CharBuffer) = put(chars, 0)
+    infix operator fun invoke(shorts: ShortBuffer) = put(shorts, 0)
+    infix operator fun invoke(ints: IntBuffer) = put(ints, 0)
+    infix operator fun invoke(longs: LongBuffer) = put(longs, 0)
+    infix operator fun invoke(floats: FloatBuffer) = put(floats, 0)
+    infix operator fun invoke(doubles: DoubleBuffer) = put(doubles, 0)
+
+    open infix operator fun invoke(s: Number) = put(s, s, s)
+
+    // -- indexed Generic Constructors --
+
+    operator fun invoke(bytes: ByteArray, index: Int) = put(bytes[index], bytes[index + 1], bytes[index + 2])
+    operator fun invoke(chars: CharArray, index: Int) = put(chars[index].b, chars[index + 1].b, chars[index + 2].b)
+    operator fun invoke(shorts: ShortArray, index: Int) = put(shorts[index], shorts[index + 1], shorts[index + 2])
+    operator fun invoke(ints: IntArray, index: Int) = put(ints[index], ints[index + 1], ints[index + 2])
+    operator fun invoke(longs: LongArray, index: Int) = put(longs[index], longs[index + 1], longs[index + 2])
+    operator fun invoke(floats: FloatArray, index: Int) = put(floats[index], floats[index + 1], floats[index + 2])
+    operator fun invoke(doubles: DoubleArray, index: Int) = put(doubles[index], doubles[index + 1], doubles[index + 2])
+    operator fun invoke(booleans: BooleanArray, index: Int) = put(booleans[index].b, booleans[index + 1].b, booleans[index + 2].b)
+
+    operator fun invoke(a: Array<out Number>, index: Int) = put(a[index], a[index + 1], a[index + 2])
+    operator fun invoke(a: Array<Char>, index: Int) = put(a[index].b, a[index + 1].b, a[index + 2].b)
+    operator fun invoke(a: Array<Boolean>, index: Int) = put(a[index].b, a[index + 1].b, a[index + 2].b)
+
+    operator fun invoke(list: Iterable<*>, index: Int) {
+        val a = list.elementAt(index)!!
+        val b = list.elementAt(index + 1)!!
+        val c = list.elementAt(index + 2)!!
+        when {
+            a is Number && b is Number && c is Number -> put(a, b, c)
+            a is Char && b is Char && c is Char -> put(a.b, b.b, c.b)
+            a is Boolean && b is Boolean && c is Boolean -> put(a.b, b.b, c.b)
+            a is String && b is String && c is String ->
+                when {
+                    x is Byte && y is Byte && z is Byte -> put(a.b, b.b, c.b)
+                    x is Short && y is Short && z is Short -> put(a.s, b.s, c.s)
+                    x is Int && y is Int && z is Int -> put(a.i, b.i, c.i)
+                    x is Long && y is Long && z is Long -> put(a.L, b.L, c.L)
+                    x is Float && y is Float && z is Float -> put(a.f, b.f, c.f)
+                    x is Double && y is Double && z is Double -> put(a.d, b.d, c.d)
+                    else -> throw ArithmeticException("incompatible type")  //TODO uns
+                }
+            else -> throw ArithmeticException("incompatible type")
+        }
+    }
+
+    operator fun invoke(bytes: ByteBuffer, index: Int) = put(bytes[index], bytes[index + 1], bytes[index + 2])
+    operator fun invoke(chars: CharBuffer, index: Int) = put(chars[index].b, chars[index + 1].b, chars[index + 2].b)
+    operator fun invoke(shorts: ShortBuffer, index: Int) = put(shorts[index], shorts[index + 1], shorts[index + 2])
+    operator fun invoke(ints: IntBuffer, index: Int) = put(ints[index], ints[index + 1], ints[index + 2])
+    operator fun invoke(longs: LongBuffer, index: Int) = put(longs[index], longs[index + 1], longs[index + 2])
+    operator fun invoke(floats: FloatBuffer, index: Int) = put(floats[index], floats[index + 1], floats[index + 2])
+    operator fun invoke(doubles: DoubleBuffer, index: Int) = put(doubles[index], doubles[index + 1], doubles[index + 2])
+
+
     infix fun lessThan(b: Vec3t<out Number>) = glm.lessThan(this, b, Vec3bool())
     fun lessThan(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.lessThan(this, b, res)
 
