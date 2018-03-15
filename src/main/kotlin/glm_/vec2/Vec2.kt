@@ -96,21 +96,9 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
 
     // -- Component accesses --
 
-    override operator fun get(i: Int) = when (i) {
-        0 -> x
-        1 -> y
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Float) = when (i) {
-        0 -> x = s
-        1 -> y = s
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Number) = when (i) {
-        0 -> x = s.f
-        1 -> y = s.f
+    override operator fun set(index: Int, value: Number) = when (index) {
+        0 -> x = value.f
+        1 -> y = value.f
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
@@ -453,14 +441,14 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
 
     infix fun cross(b: Vec2) = glm.cross(this, b)
 
+    fun negateAssign() = negate(this)
+
     @JvmOverloads
     fun negate(res: Vec2 = Vec2()): Vec2 {
         res.x = -x
         res.y = -y
         return res
     }
-
-    fun negateAssign() = negate(this)
 
     override fun equals(other: Any?) = other is Vec2 && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()

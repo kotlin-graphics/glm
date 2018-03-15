@@ -88,13 +88,8 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
 
     // -- Component accesses --
 
-    override operator fun get(index: Int) = when (index) {
-        0 -> x
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Number) = when (i) {
-        0 -> x = s.us
+    override operator fun set(index: Int, value: Number) = when (index) {
+        0 -> x = value.us
         else -> throw ArrayIndexOutOfBoundsException()
     }
 

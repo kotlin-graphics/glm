@@ -13,7 +13,7 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3<Float> {
+class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
 
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
@@ -25,12 +25,6 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3<Float>
     constructor(x: Number, v: Vec2t<out Number>) : this(x, v.x, v.y)
     constructor(v: Vec3t<out Number>) : this(v.x, v.y, v.z)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z)
-    // TODO others
-    constructor(v: Vector2<Number>) : this(v.component1(), v.component2(), 0)
-    constructor(v: Vector2<Number>, z: Number) : this(v.component1(), v.component2(), z)
-    constructor(x: Number, v: Vector2<Number>) : this(x, v.component1().f, v.component2().f)
-    constructor(v: Vector3<Number>) : this(v.component1(), v.component2(), v.component3())
-    constructor(v: Vector4<Number>) : this(v.component1(), v.component2(), v.component3())
 
     constructor(v: Vec2bool) : this(v.x.f, v.y.f, 0)
     constructor(v: Vec3bool) : this(v.x.f, v.y.f, v.z.f)
@@ -91,7 +85,6 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3<Float>
     }
 
 
-    infix fun put(s: Vector3<Number>) = put(s.component1(), s.component2(), s.component3())    // TODO others
     override infix fun put(s: Number) = put(s, s, s)
     override fun put(x: Number, y: Number, z: Number): Vec3 {
         this.x = x.f
@@ -139,18 +132,11 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3<Float>
 
     // -- Component accesses --
 
-    override operator fun get(i: Int) = when (i) {
-        0 -> x
-        1 -> y
-        2 -> z
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
 
-
-    operator fun set(i: Int, s: Number) = when (i) {
-        0 -> x = s.f
-        1 -> y = s.f
-        2 -> z = s.f
+    override operator fun set(index: Int, value: Number) = when (index) {
+        0 -> x = value.f
+        1 -> y = value.f
+        2 -> z = value.f
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
@@ -274,7 +260,6 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3<Float>
     // -- Generic binary arithmetic operators --
 
     infix operator fun plus(b: Number) = plus(Vec3(), this, b.f, b.f, b.f)
-    infix operator fun plus(b: Vector3<Number>) = plus(Vec3(), this, b.component1().f, b.component2().f, b.component3().f)
 
     @JvmOverloads
     fun plus(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = plus(res, this, bX.f, bY.f, bZ.f)
@@ -289,13 +274,9 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3<Float>
     infix operator fun plusAssign(b: Vec3t<out Number>) {
         plus(this, this, b.x.f, b.y.f, b.z.f)
     }
-    infix operator fun plusAssign(b: Vector3<Number>) {
-        plus(this, this, b.component1().f, b.component2().f, b.component3().f)
-    }
 
 
     infix operator fun minus(b: Number) = minus(Vec3(), this, b.f, b.f, b.f)
-    infix operator fun minus(b: Vector3<Number>) = minus(Vec3(), this, b.component1().f, b.component2().f, b.component3().f)
 
     fun minus(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = minus(res, this, bX.f, bY.f, bZ.f)
     fun minus(b: Number, res: Vec3 = Vec3()) = minus(res, this, b.f, b.f, b.f)
@@ -361,7 +342,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3<Float>
     // -- functions --
 
     infix fun dot(b: Vec3) = glm.dot(this, b)   // TODO others
-    infix fun dot(b: Vector3<Number>) = glm.dot(this, b)   // TODO others
+    infix fun dot(b: Vec3t<Number>) = glm.dot(this, b)   // TODO others
 
     val length get() = glm.length(this)
     val length2 get() = glm.length2(this)
@@ -387,8 +368,4 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3<Float>
 
     override fun equals(other: Any?) = other is Vec3 && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()
-
-    override fun component1() = x
-    override fun component2() = y
-    override fun component3() = z
 }

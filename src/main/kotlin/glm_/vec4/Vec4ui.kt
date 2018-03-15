@@ -125,19 +125,11 @@ class Vec4ui(x: Uint, y: Uint, z: Uint, w: Uint) : Vec4t<Uint>(x, y, z, w) {
 
     // -- Component accesses --
 
-    override operator fun get(i: Int) = when (i) {
-        0 -> x
-        1 -> y
-        2 -> z
-        3 -> w
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Number) = when (i) {
-        0 -> x = s.ui
-        1 -> y = s.ui
-        2 -> z = s.ui
-        3 -> w = s.ui
+    override operator fun set(index: Int, value: Number) = when (index) {
+        0 -> x = value.ui
+        1 -> y = value.ui
+        2 -> z = value.ui
+        3 -> w = value.ui
         else -> throw ArrayIndexOutOfBoundsException()
     }
 

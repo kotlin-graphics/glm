@@ -89,19 +89,11 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
 
     // -- Component accesses --
 
-    override operator fun get(i: Int) = when (i) {
-        0 -> x
-        1 -> y
-        2 -> z
-        3 -> w
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Number) = when (i) {
-        0 -> x = s.b
-        1 -> y = s.b
-        2 -> z = s.b
-        3 -> w = s.b
+    override operator fun set(index: Int, value: Number) = when (index) {
+        0 -> x = value.b
+        1 -> y = value.b
+        2 -> z = value.b
+        3 -> w = value.b
         else -> throw ArrayIndexOutOfBoundsException()
     }
 

@@ -8,7 +8,7 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import java.nio.*
 
-abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) : Vector3<T> {
+abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
 
     @JvmField
     var x = _x
@@ -17,12 +17,18 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) : Vector3<T> {
     @JvmField
     var z = _z
 
-    override operator fun get(index: Int) = when (index) {
+    operator fun component1() = x
+    operator fun component2() = y
+    operator fun component3() = z
+
+    operator fun get(index: Int) = when (index) {
         0 -> x
         1 -> y
         2 -> z
         else -> throw IndexOutOfBoundsException()
     }
+
+    abstract operator fun set(index: Int, value: Number)
 
     // -- infix Generic Constructors --
 
@@ -218,9 +224,7 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) : Vector3<T> {
 
     abstract fun size(): Int
 
-    override operator fun component1() = x
-    override operator fun component2() = y
-    override operator fun component3() = z
+
 
     override fun toString() = "($x, $y, $z)"
 

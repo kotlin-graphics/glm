@@ -15,14 +15,13 @@ import kotlin.math.sqrt
 /**
  * Created by GBarbieri on 15.11.2016.
  */
-class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z), Quaternion<Float> {
+class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
 
     // -- Implicit basic constructors --
 
     constructor() : this(1f, 0f, 0f, 0f)
     constructor(q: Quat) : this(q.w, q.x, q.y, q.z)
-    constructor(q: Quaternion<Number>) : this(q[3], q[0], q[1], q[2])
     constructor(s: Float, v: Vec3) : this(s, v.x, v.y, v.z)
     constructor(u: Vec3, v: Vec3) : this() {
         val normUnormV = sqrt((u dot u) * (v dot v))
@@ -93,19 +92,11 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z), Q
 
     // -- Component accesses --
 
-    override operator fun get(index: Int) = when (index) {
-        0 -> x
-        1 -> y
-        2 -> z
-        3 -> w
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Float) = when (i) {
-        0 -> x = s
-        1 -> y = s
-        2 -> z = s
-        3 -> w = s
+    override operator fun set(index: Int, value: Number) = when (index) {
+        0 -> x = value.f
+        1 -> y = value.f
+        2 -> z = value.f
+        3 -> w = value.f
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
@@ -216,9 +207,4 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z), Q
     override fun equals(other: Any?) = other is Quat && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
 
     override fun hashCode() = 31 * (31 * (31 * w.hashCode() + x.hashCode()) + y.hashCode()) + z.hashCode()
-
-    override fun component1() = x
-    override fun component2() = y
-    override fun component3() = z
-    override fun component4() = w
 }

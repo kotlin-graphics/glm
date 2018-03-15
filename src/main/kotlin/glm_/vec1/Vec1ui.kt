@@ -88,14 +88,8 @@ class Vec1ui(x: Uint) : Vec1t<Uint>(x) {
 
     // -- Component accesses --
 
-    /**override TODO*/
-    override operator fun get(index: Int) = when (index) {
-        0 -> x
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Number) = when (i) {
-        0 -> x = s.ui
+    override operator fun set(index: Int, value: Number) = when (index) {
+        0 -> x = value.ui
         else -> throw ArrayIndexOutOfBoundsException()
     }
 

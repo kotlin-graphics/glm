@@ -88,17 +88,10 @@ class Vec3b(x: Byte, y: Byte, z: Byte) : Vec3t<Byte>(x, y, z) {
 
     // -- Component accesses --
 
-    override operator fun get(i: Int) = when (i) {
-        0 -> x
-        1 -> y
-        2 -> z
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Number) = when (i) {
-        0 -> x = s.b
-        1 -> y = s.b
-        2 -> z = s.b
+    override operator fun set(index: Int, value: Number) = when (index) {
+        0 -> x = value.b
+        1 -> y = value.b
+        2 -> z = value.b
         else -> throw ArrayIndexOutOfBoundsException()
     }
 

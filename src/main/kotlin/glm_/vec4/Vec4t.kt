@@ -8,7 +8,7 @@ import glm_.vec3.*
 import java.nio.*
 
 // TODO other
-abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) : Vector4<T> {
+abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
 
     @JvmField
     var x = _x
@@ -19,7 +19,12 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) : Vector4<T> {
     @JvmField
     var w = _w
 
-    override operator fun get(index: Int) = when (index) {
+    operator fun component1() = x
+    operator fun component2() = y
+    operator fun component3() = z
+    operator fun component4() = w
+
+    operator fun get(index: Int) = when (index) {
         0 -> x
         1 -> y
         2 -> z
@@ -27,26 +32,7 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) : Vector4<T> {
         else -> throw IndexOutOfBoundsException()
     }
 
-    fun x(x: T) {
-        this.x = x
-    }
-
-    fun y(y: T) {
-        this.y = y
-    }
-
-    fun z(z: T) {
-        this.z = z
-    }
-
-    fun w(w: T) {
-        this.w = w
-    }
-
-    fun x() = x
-    fun y() = y
-    fun z() = z
-    fun w() = w
+    abstract operator fun set(index: Int, value: Number)
 
 
     // -- infix Generic Constructors --
@@ -252,10 +238,7 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) : Vector4<T> {
 
     abstract fun size(): Int
 
-    override operator fun component1() = x
-    override operator fun component2() = y
-    override operator fun component3() = z
-    override operator fun component4() = w
+
 
     override fun toString() = "($x, $y, $z, $w)"
 

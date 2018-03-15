@@ -101,18 +101,8 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
 
     // -- Component accesses --
 
-    override infix operator fun get(index: Int) = when (index) {
-        0 -> x
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Int) = when (i) {
-        0 -> x = s
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Number) = when (i) {
-        0 -> x = s.i
+    override operator fun set(index: Int, value: Number) = when (index) {
+        0 -> x = value.i
         else -> throw ArrayIndexOutOfBoundsException()
     }
 

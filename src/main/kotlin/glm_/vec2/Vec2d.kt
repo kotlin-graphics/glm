@@ -109,21 +109,9 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
 
     // -- Component accesses --
 
-    override operator fun get(i: Int) = when (i) {
-        0 -> x
-        1 -> y
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Double) = when (i) {
-        0 -> x = s
-        1 -> y = s
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Number) = when (i) {
-        0 -> x = s.d
-        1 -> y = s.d
+    override operator fun set(index: Int, value: Number) = when (index) {
+        0 -> x = value.d
+        1 -> y = value.d
         else -> throw ArrayIndexOutOfBoundsException()
     }
 

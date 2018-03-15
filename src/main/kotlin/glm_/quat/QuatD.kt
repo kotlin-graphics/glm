@@ -1,7 +1,6 @@
 package glm_.quat
 
 import glm_.BYTES
-import glm_.Quaternion
 import glm_.d
 import glm_.glm
 import glm_.vec3.Vec3
@@ -13,7 +12,7 @@ import glm_.vec4.Vec4t
 /**
  * Created by GBarbieri on 15.11.2016.
  */
-class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y, z), Quaternion<Double> {
+class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y, z) {
 
     // -- Implicit basic constructors --
 
@@ -79,19 +78,11 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
 
     // -- Component accesses --
 
-    override operator fun get(index: Int) = when (index) {
-        0 -> x
-        1 -> y
-        2 -> z
-        3 -> w
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Double) = when (i) {
-        0 -> x = s
-        1 -> y = s
-        2 -> z = s
-        3 -> w = s
+    override operator fun set(index: Int, value: Number) = when (index) {
+        0 -> x = value.d
+        1 -> y = value.d
+        2 -> z = value.d
+        3 -> w = value.d
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
@@ -191,9 +182,4 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
 
     @JvmOverloads
     fun vectorize(res: Vec4d = Vec4d()) = res.put(x, y, z, w)
-
-    override fun component1() = x
-    override fun component2() = y
-    override fun component3() = z
-    override fun component4() = w
 }

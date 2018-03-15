@@ -115,17 +115,10 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
 
     // -- Component accesses --
 
-    override operator fun get(i: Int) = when (i) {
-        0 -> x
-        1 -> y
-        2 -> z
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Number) = when (i) {
-        0 -> x = s.us
-        1 -> y = s.us
-        2 -> z = s.us
+    override operator fun set(index: Int, value: Number) = when (index) {
+        0 -> x = value.us
+        1 -> y = value.us
+        2 -> z = value.us
         else -> throw ArrayIndexOutOfBoundsException()
     }
 

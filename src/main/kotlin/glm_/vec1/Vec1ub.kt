@@ -74,13 +74,8 @@ class Vec1ub(x: Ubyte) : Vec1t<Ubyte>(x) {
 
     // -- Component accesses --
 
-    override operator fun get(index: Int) = when (index) {
-        0 -> x
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Number) = when (i) {
-        0 -> x = s.ub
+    override operator fun set(index: Int, value: Number) = when (index) {
+        0 -> x = value.ub
         else -> throw ArrayIndexOutOfBoundsException()
     }
 

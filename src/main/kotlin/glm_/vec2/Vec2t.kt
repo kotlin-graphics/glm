@@ -13,18 +13,23 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-abstract class Vec2t<T : Number>(_x: T, _y: T) : Vector2<T> {
+abstract class Vec2t<T : Number>(_x: T, _y: T) {
 
     @JvmField
     var x = _x
     @JvmField
     var y = _y
 
-    override operator fun get(index: Int) = when (index) {
+    operator fun component1() = x
+    operator fun component2() = y
+
+    operator fun get(index: Int) = when (index) {
         0 -> x
         1 -> y
         else -> throw IndexOutOfBoundsException()
     }
+
+    abstract fun set(index: Int, value: Number)
 
     // -- infix Generic Constructors --
 
@@ -215,9 +220,6 @@ abstract class Vec2t<T : Number>(_x: T, _y: T) : Vector2<T> {
 
     abstract fun size(): Int
 
-
-    override operator fun component1() = x
-    override operator fun component2() = y
 
     override fun toString() = "($x, $y)"
 

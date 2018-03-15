@@ -133,19 +133,11 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
 
     // -- Component accesses --
 
-    override operator fun get(i: Int) = when (i) {
-        0 -> x
-        1 -> y
-        2 -> z
-        3 -> w
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Number) = when (i) {
-        0 -> x = s.f
-        1 -> y = s.f
-        2 -> z = s.f
-        3 -> w = s.f
+    override operator fun set(index: Int, value: Number) = when (index) {
+        0 -> x = value.f
+        1 -> y = value.f
+        2 -> z = value.f
+        3 -> w = value.f
         else -> throw ArrayIndexOutOfBoundsException()
     }
 

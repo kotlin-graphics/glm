@@ -72,18 +72,8 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
 
     // -- Component accesses --
 
-    override operator fun get(index: Int) = when (index) {
-        0 -> x
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Byte) = when (i) {
-        0 -> x = s
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    operator fun set(i: Int, s: Number) = when (i) {
-        0 -> x = s.b
+    override operator fun set(index: Int, value: Number) = when (index) {
+        0 -> x = value.b
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
