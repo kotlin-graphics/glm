@@ -173,6 +173,7 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     infix operator fun plusAssign(b: Int) {
         plus(this, this, b, b)
     }
+
     infix operator fun plusAssign(b: Vec2i) {
         plus(this, this, b.x, b.y)
     }
@@ -191,6 +192,7 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     infix operator fun minusAssign(b: Int) {
         minus(this, this, b, b)
     }
+
     infix operator fun minusAssign(b: Vec2i) {
         minus(this, this, b.x, b.y)
     }
@@ -209,6 +211,7 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     infix operator fun timesAssign(b: Int) {
         times(this, this, b, b)
     }
+
     infix operator fun timesAssign(b: Vec2i) {
         times(this, this, b.x, b.y)
     }
@@ -227,6 +230,7 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     infix operator fun divAssign(b: Int) {
         div(this, this, b, b)
     }
+
     infix operator fun divAssign(b: Vec2i) {
         div(this, this, b.x, b.y)
     }
@@ -245,6 +249,7 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     infix operator fun remAssign(b: Int) {
         rem(this, this, b, b)
     }
+
     infix operator fun remAssign(b: Vec2i) {
         rem(this, this, b.x, b.y)
     }
@@ -265,6 +270,7 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.i, b.i)
     }
+
     infix operator fun plusAssign(b: Vec2t<out Number>) {
         plus(this, this, b.x.i, b.y.i)
     }
@@ -283,6 +289,7 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.i, b.i)
     }
+
     infix operator fun minusAssign(b: Vec2t<out Number>) {
         minus(this, this, b.x.i, b.y.i)
     }
@@ -301,6 +308,7 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.i, b.i)
     }
+
     infix operator fun timesAssign(b: Vec2t<out Number>) {
         times(this, this, b.x.i, b.y.i)
     }
@@ -319,6 +327,7 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.i, b.i)
     }
+
     infix operator fun divAssign(b: Vec2t<out Number>) {
         div(this, this, b.x.i, b.y.i)
     }
@@ -337,6 +346,7 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.i, b.i)
     }
+
     infix operator fun remAssign(b: Vec2t<out Number>) {
         rem(this, this, b.x.i, b.y.i)
     }
@@ -494,9 +504,11 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     infix fun greaterThanEqual(i: Int) = x >= i && y >= i
 
     infix fun clamp(int: Int) {
-        if(x < int) x = int
-        if(y < int) y = int
+        if (x < int) x = int
+        if (y < int) y = int
     }
+
+    val aspect get() = x.f / y
 
     override fun equals(other: Any?) = other is Vec2i && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
