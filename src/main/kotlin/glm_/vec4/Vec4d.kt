@@ -147,7 +147,7 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
         val size = length * Double.BYTES
     }
 
-    override fun instanceSize() = size
+    override fun size() = size
 
 
 

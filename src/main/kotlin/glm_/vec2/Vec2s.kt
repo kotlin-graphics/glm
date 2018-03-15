@@ -135,6 +135,7 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
         val size = length * Short.BYTES
     }
 
+    override fun size() = size
 
     // -- Unary arithmetic operators --
 

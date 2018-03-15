@@ -161,6 +161,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z), Vector3<Float>
         val size = length * Float.BYTES
     }
 
+    override fun size() = size
 
     // -- Unary arithmetic operators --
 

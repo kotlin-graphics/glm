@@ -106,6 +106,7 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
         val size = length * Ushort.BYTES
     }
 
+    override fun size() = size
 
     // -- Unary arithmetic operators --
 

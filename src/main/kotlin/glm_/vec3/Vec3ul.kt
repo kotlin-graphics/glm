@@ -137,6 +137,7 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
         val size = length * Ulong.BYTES
     }
 
+    override fun size() = size
 
     // -- Unary arithmetic operators --
 

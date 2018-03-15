@@ -100,6 +100,7 @@ class Vec2ub(x: Ubyte, y: Ubyte) : Vec2t<Ubyte>(x, y) {
         val size = length * Ubyte.BYTES
     }
 
+    override fun size() = size
 
     // -- Unary arithmetic operators --
 

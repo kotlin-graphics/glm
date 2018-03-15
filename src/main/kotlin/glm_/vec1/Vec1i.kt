@@ -123,6 +123,8 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
         val size = length * Int.BYTES
     }
 
+    override fun size() = size
+
 
     // -- Specific binary arithmetic operators --
 

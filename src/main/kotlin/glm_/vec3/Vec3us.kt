@@ -137,6 +137,8 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
         val size = length * Ushort.BYTES
     }
 
+    override fun size() = size
+
 
     // -- Unary arithmetic operators --
 

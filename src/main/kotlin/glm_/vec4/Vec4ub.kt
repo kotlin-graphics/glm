@@ -114,7 +114,7 @@ class Vec4ub(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : Vec4t<Ubyte>(x, y, z, w) 
         val size = length * Ubyte.BYTES
     }
 
-    override fun instanceSize() = size
+    override fun size() = size
 
 
 

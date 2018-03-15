@@ -124,6 +124,7 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
         val size = length * Ulong.BYTES
     }
 
+    override fun size() = size
 
     // -- Unary arithmetic operators --
 

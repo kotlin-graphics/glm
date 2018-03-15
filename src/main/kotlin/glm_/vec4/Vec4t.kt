@@ -250,7 +250,7 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) : Vector4<T> {
 
     infix fun isEqual(b: Vec4t<out Number>) = glm.isEqual(this, b)
 
-    abstract fun instanceSize(): Int // TODO check
+    abstract fun size(): Int
 
     override operator fun component1() = x
     override operator fun component2() = y

@@ -162,7 +162,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
         }
     }
 
-    override fun instanceSize() = size
+    override fun size() = size
 
 
     fun toVec3() = Vec3(this)

@@ -124,6 +124,7 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
         val size = length * Uint.BYTES
     }
 
+    override fun size() = size
 
     // -- Unary arithmetic operators --
 

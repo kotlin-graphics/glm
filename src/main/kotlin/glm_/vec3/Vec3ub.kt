@@ -111,6 +111,7 @@ class Vec3ub(x: Ubyte, y: Ubyte, z: Ubyte) : Vec3t<Ubyte>(x, y, z) {
         val size = length * Ubyte.BYTES
     }
 
+    override fun size() = size
 
     // -- Unary arithmetic operators --
 

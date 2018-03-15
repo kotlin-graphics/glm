@@ -136,6 +136,8 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z), Vector3<D
         val size = length * Double.BYTES
     }
 
+    override fun size() = size
+
 
     // -- Unary arithmetic operators --
 

@@ -216,6 +216,8 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) : Vector3<T> {
         val length = 3
     }
 
+    abstract fun size(): Int
+
     override operator fun component1() = x
     override operator fun component2() = y
     override operator fun component3() = z

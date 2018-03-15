@@ -213,6 +213,8 @@ abstract class Vec2t<T : Number>(_x: T, _y: T) : Vector2<T> {
         val length = 2
     }
 
+    abstract fun size(): Int
+
 
     override operator fun component1() = x
     override operator fun component2() = y

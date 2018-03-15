@@ -136,6 +136,7 @@ class Vec3i(x: Int, y: Int, z: Int) : Vec3t<Int>(x, y, z) {
         val size = Vec3i.Companion.length * Int.BYTES
     }
 
+    override fun size() = size
 
     // -- Unary arithmetic operators --
 

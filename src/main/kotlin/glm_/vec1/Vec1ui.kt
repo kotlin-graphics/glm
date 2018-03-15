@@ -107,6 +107,8 @@ class Vec1ui(x: Uint) : Vec1t<Uint>(x) {
         val size = length * Uint.BYTES
     }
 
+    override fun size() = size
+
 
     // -- Unary arithmetic operators --
 

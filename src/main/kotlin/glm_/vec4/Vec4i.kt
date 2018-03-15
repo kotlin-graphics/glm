@@ -148,7 +148,7 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
         val size = length * Int.BYTES
     }
 
-    override fun instanceSize() = size
+    override fun size() = size
 
 
     // -- Unary arithmetic operators --

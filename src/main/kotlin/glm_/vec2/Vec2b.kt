@@ -114,6 +114,7 @@ class Vec2b(x: Byte, y: Byte) : Vec2t<Byte>(x, y) {
         val size = length * Byte.BYTES
     }
 
+    override fun size() = size
 
     // -- Unary arithmetic operators --
 

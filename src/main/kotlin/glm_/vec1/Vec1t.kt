@@ -155,6 +155,9 @@ abstract class Vec1t<T : Number>(_x: T) : Vector1<T> {
     operator fun invoke(floats: FloatBuffer, index: Int) = put(floats[index])
     operator fun invoke(doubles: DoubleBuffer, index: Int) = put(doubles[index])
 
+
+    abstract fun size(): Int
+
 // TODO
 //    infix fun lessThan(b: Vec2t<out Number>) = glm.lessThan(this, b, Vec2bool())
 //    fun lessThan(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.lessThan(this, b, res)

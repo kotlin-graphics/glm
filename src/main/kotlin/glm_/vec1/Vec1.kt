@@ -291,6 +291,8 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
         val size = length * Float.BYTES
     }
 
+    override fun size() = size
+
     override fun equals(other: Any?) = other is Vec1 && this[0] == other[0]
     override fun hashCode() = x.hashCode()
 }

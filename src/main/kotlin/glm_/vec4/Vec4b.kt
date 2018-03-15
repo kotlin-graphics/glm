@@ -113,7 +113,7 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
         val size = length * Byte.BYTES
     }
 
-    override fun instanceSize() = size
+    override fun size() = size
 
 
     // -- Unary arithmetic operators --

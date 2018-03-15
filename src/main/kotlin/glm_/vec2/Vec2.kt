@@ -122,6 +122,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
         val size = length * Float.BYTES
     }
 
+    override fun size() = size
 
     infix fun to(floats: FloatArray) = to(floats, 0)
     fun to(floats: FloatArray, index: Int): FloatArray {

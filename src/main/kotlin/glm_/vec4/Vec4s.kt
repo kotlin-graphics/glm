@@ -148,7 +148,7 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
         val size = length * Short.BYTES
     }
 
-    override fun instanceSize() = size
+    override fun size() = size
 
 
 
