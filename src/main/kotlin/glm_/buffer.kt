@@ -24,33 +24,45 @@ val CharBuffer.size
 
 
 operator fun ByteBuffer.set(index: Int, byte: Byte): ByteBuffer = put(index, byte)
-operator fun ByteBuffer.set(index: Int, short: Short): ByteBuffer = putShort(index, short)
-operator fun ByteBuffer.set(index: Int, int: Int): ByteBuffer = putInt(index, int)
-operator fun ByteBuffer.set(index: Int, long: Long): ByteBuffer = putLong(index, long)
-operator fun ByteBuffer.set(index: Int, float: Float): ByteBuffer = putFloat(index, float)
-operator fun ByteBuffer.set(index: Int, double: Double): ByteBuffer = putDouble(index, double)
-operator fun ByteBuffer.set(index: Int, char: Char): ByteBuffer = putChar(index, char)
-
-//operator fun ShortBuffer.set(index: Int, byte: Byte): ShortBuffer = put(index, byte)
-//operator fun ShortBuffer.set(index: Int, short: Short): ShortBuffer = putShort(index, short)
-//operator fun ShortBuffer.set(index: Int, int: Int): ShortBuffer = putInt(index, int)
-//operator fun ShortBuffer.set(index: Int, long: Long): ShortBuffer = putLong(index, long)
-//operator fun ShortBuffer.set(index: Int, float: Float): ShortBuffer = putFloat(index, float)
-//operator fun ShortBuffer.set(index: Int, double: Double): ShortBuffer = putDouble(index, double)
-//operator fun ShortBuffer.set(index: Int, char: Char): ShortBuffer = putChar(index, char)
+operator fun ByteBuffer.set(index: Int, int: Int): ByteBuffer = put(index, int.b)
+operator fun ByteBuffer.set(index: Int, short: Short): ByteBuffer = put(index, short.b)
 
 operator fun ShortBuffer.set(index: Int, short: Short): ShortBuffer = put(index, short)
-//operator fun ShortBuffer.set(index: Int, int: Int): ShortBuffer = put(index, int.s)
+operator fun ShortBuffer.set(index: Int, int: Int): ShortBuffer = put(index, int.s)
 
 operator fun IntBuffer.set(index: Int, int: Int): IntBuffer = put(index, int)
 
 operator fun LongBuffer.set(index: Int, long: Long): LongBuffer = put(index, long)
-//operator fun LongBuffer.set(index: Int, int: Int): LongBuffer = put(index, int.L)
+operator fun LongBuffer.set(index: Int, int: Int): LongBuffer = put(index, int.L)
 
 operator fun FloatBuffer.set(index: Int, float: Float): FloatBuffer = put(index, float)
 operator fun DoubleBuffer.set(index: Int, double: Double): DoubleBuffer = put(index, double)
 
 operator fun CharBuffer.set(index: Int, char: Char): CharBuffer = put(index, char)
-//operator fun CharBuffer.set(index: Int, int: Int): CharBuffer = put(index, int.c)
+operator fun CharBuffer.set(index: Int, int: Int): CharBuffer = put(index, int.c)
 
 operator fun ByteBuffer.set(index: Int, vec4: Vec4t<*>) = vec4.to(this, vec4.size() * index)
+
+
+operator fun ByteBuffer.invoke(index: Int, byte: Byte): ByteBuffer = put(index, byte)
+operator fun ByteBuffer.invoke(index: Int, short: Short): ByteBuffer = putShort(index, short)
+operator fun ByteBuffer.invoke(index: Int, int: Int): ByteBuffer = putInt(index, int)
+operator fun ByteBuffer.invoke(index: Int, long: Long): ByteBuffer = putLong(index, long)
+operator fun ByteBuffer.invoke(index: Int, float: Float): ByteBuffer = putFloat(index, float)
+operator fun ByteBuffer.invoke(index: Int, double: Double): ByteBuffer = putDouble(index, double)
+
+//operator fun ShortBuffer.invoke(index: Int, short: Short): ShortBuffer = put(index, short)
+//operator fun ShortBuffer.invoke(index: Int, int: Int): ShortBuffer = put(index, int.s)
+//
+//operator fun IntBuffer.invoke(index: Int, int: Int): IntBuffer = put(index, int)
+//
+//operator fun LongBuffer.invoke(index: Int, long: Long): LongBuffer = put(index, long)
+//operator fun LongBuffer.invoke(index: Int, int: Int): LongBuffer = put(index, int.L)
+//
+//operator fun FloatBuffer.invoke(index: Int, float: Float): FloatBuffer = put(index, float)
+//operator fun DoubleBuffer.invoke(index: Int, double: Double): DoubleBuffer = put(index, double)
+//
+//operator fun CharBuffer.invoke(index: Int, char: Char): CharBuffer = put(index, char)
+//operator fun CharBuffer.invoke(index: Int, int: Int): CharBuffer = put(index, int.c)
+//
+//operator fun ByteBuffer.invoke(index: Int, vec4: Vec4t<*>) = vec4.to(this, vec4.instanceSize() * index)
