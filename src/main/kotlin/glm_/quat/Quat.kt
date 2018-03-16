@@ -22,6 +22,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
     constructor() : this(1f, 0f, 0f, 0f)
     constructor(q: Quat) : this(q.w, q.x, q.y, q.z)
+    constructor(q: QuatT<Number>) : this(q.w, q.x, q.y, q.z)
     constructor(s: Float, v: Vec3) : this(s, v.x, v.y, v.z)
     constructor(u: Vec3, v: Vec3) : this() {
         val normUnormV = sqrt((u dot u) * (v dot v))
