@@ -68,7 +68,7 @@ val Int.msb get() = 31 - java.lang.Integer.numberOfLeadingZeros(this)
 val Int.lsb: Int
     get() {
         val res = java.lang.Integer.numberOfTrailingZeros(this)
-        return if(res == 32) -1 else res
+        return if (res == 32) -1 else res
     }
 
 
@@ -140,3 +140,12 @@ val Double.toString get() = java.lang.Double.toString(this)
 val Double.toHexString get() = java.lang.Double.toHexString(this)
 val Double.value get() = java.lang.Double.valueOf(this)
 val String.doubleValue get() = java.lang.Double.valueOf(this)
+
+
+fun Byte.clamp(min: Byte= this, max: Byte= this) = glm.clamp(this, min, max)
+fun Short.clamp(min: Short = this, max: Short = this) = glm.clamp(this, min, max)
+fun Int.clamp(min: Int = this, max: Int = this) = glm.clamp(this, min, max)
+fun Long.clamp(min: Long = this, max: Long = this) = glm.clamp(this, min, max)
+fun Float.clamp(min: Float = this, max: Float = this) = glm.clamp(this, min, max)
+fun Double.clamp(min: Double = this, max: Double = this) = glm.clamp(this, min, max)
+fun Char.clamp(min: Char = this, max: Char = this) = glm.clamp(this, min, max)

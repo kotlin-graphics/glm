@@ -110,6 +110,7 @@ interface func_common {
     fun min(a: Int, b: Int) = _min(a, b)
     fun min(a: Long, b: Long) = _min(a, b)
     fun min(a: Short, b: Short) = _min(a.i, b.i).s
+    fun min(a: Char, b: Char) = if(a < b) a else b
 
     fun max(a: Float, b: Float) = _max(a, b)
     fun max(a: Double, b: Double) = _max(a, b)
@@ -117,6 +118,7 @@ interface func_common {
     fun max(a: Int, b: Int) = _max(a, b)
     fun max(a: Long, b: Long) = _max(a, b)
     fun max(a: Short, b: Short) = _max(a.i, b.i).s
+    fun max(a: Char, b: Char) = if(a < b) b else a
 
 
     fun clamp(a: Float, min: Float, max: Float) = min(max(a, min), max)
@@ -125,6 +127,7 @@ interface func_common {
     fun clamp(a: Int, min: Int, max: Int) = min(max(a, min), max)
     fun clamp(a: Long, min: Long, max: Long) = min(max(a, min), max)
     fun clamp(a: Short, min: Short, max: Short) = min(max(a, min), max)
+    fun clamp(a: Char, min: Char, max: Char) = min(max(a, min), max)
 
 
     fun mix(a: Float, b: Float, interp: Float) = a + interp * (b - a)
