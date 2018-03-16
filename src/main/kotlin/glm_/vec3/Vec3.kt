@@ -342,7 +342,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     // -- functions --
 
     infix fun dot(b: Vec3) = glm.dot(this, b)   // TODO others
-    infix fun dot(b: Vec3t<Number>) = glm.dot(this, b)   // TODO others
+    infix fun dot(b: Vec3t<out Number>) = glm.dot(this, b)   // TODO others
 
     val length get() = glm.length(this)
     val length2 get() = glm.length2(this)
