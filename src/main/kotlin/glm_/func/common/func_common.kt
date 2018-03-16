@@ -308,12 +308,13 @@ infix fun Long.max(b: Long) = max(this, b)
 infix fun Short.max(b: Short) = max(this, b)
 
 
-fun Float.clamp(min: Float, max: Float) = clamp(this, min, max)
-fun Double.clamp(min: Double, max: Double) = clamp(this, min, max)
-fun Byte.clamp(min: Byte, max: Byte) = clamp(this, min, max)
-fun Int.clamp(min: Int, max: Int) = clamp(this, min, max)
-fun Long.clamp(min: Long, max: Long) = clamp(this, min, max)
-fun Short.clamp(min: Short, max: Short) = clamp(this, min, max)
+fun Byte.clamp(min: Byte= this, max: Byte= this) = glm.clamp(this, min, max)
+fun Short.clamp(min: Short = this, max: Short = this) = glm.clamp(this, min, max)
+fun Int.clamp(min: Int = this, max: Int = this) = glm.clamp(this, min, max)
+fun Long.clamp(min: Long = this, max: Long = this) = glm.clamp(this, min, max)
+fun Float.clamp(min: Float = this, max: Float = this) = glm.clamp(this, min, max)
+fun Double.clamp(min: Double = this, max: Double = this) = glm.clamp(this, min, max)
+fun Char.clamp(min: Char = this, max: Char = this) = glm.clamp(this, min, max)
 
 
 fun Float.mix(b: Float, interp: Float) = mix(this, b, interp)
