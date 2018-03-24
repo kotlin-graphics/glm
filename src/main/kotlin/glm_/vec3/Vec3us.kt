@@ -80,14 +80,61 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
     }
 
 
-    override fun put(x: Number, y: Number, z: Number): Vec3us {
+    fun put(x: Ushort, y: Ushort, z: Ushort) {
+        this.x = x
+        this.y = y
+        this.z = z
+    }
+
+    fun invoke(x: Ushort, y: Ushort, z: Ushort): Vec3us {
+        this.x = x
+        this.y = y
+        this.z = z
+        return this
+    }
+
+    fun put(x: Short, y: Short, z: Short) {
+        this.x.v = x
+        this.y.v = y
+        this.z.v = z
+    }
+
+    fun invoke(x: Short, y: Short, z: Short): Vec3us {
+        this.x.v = x
+        this.y.v = y
+        this.z.v = z
+        return this
+    }
+
+    override fun put(x: Number, y: Number, z: Number) {
+        this.x = x.us
+        this.y = y.us
+        this.z = z.us
+    }
+
+    override fun invoke(x: Number, y: Number, z: Number): Vec3us {
         this.x = x.us
         this.y = y.us
         this.z = z.us
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setShort(index, x.v)
+        bytes.setShort(index + Short.BYTES, y.v)
+        bytes.setShort(index + Short.BYTES * 2, z.v)
+        return bytes
+    }
 
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putShort(index, x.v)
+        bytes.putShort(index + Short.BYTES, y.v)
+        bytes.putShort(index + Short.BYTES * 2, z.v)
+        return bytes
+    }
+
+    fun toShortArray() = to(ShortArray(Companion.length), 0)
     infix fun to(shorts: ShortArray) = to(shorts, 0)
     fun to(shorts: ShortArray, index: Int): ShortArray {
         shorts[index] = x.v
@@ -96,7 +143,8 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
         return shorts
     }
 
-    infix fun to(floats: ShortBuffer) = to(floats, 0)
+    fun toShortBuffer() = to(ByteBuffer.allocateDirect(size).asShortBuffer(), 0)
+    infix fun to(shorts: ShortBuffer) = to(shorts, shorts.position())
     fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
         shorts[index] = x.v
         shorts[index + 1] = y.v
@@ -104,16 +152,15 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
         return shorts
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
-        bytes.putShort(offset, x.v)
-        bytes.putShort(offset + Short.BYTES, y.v)
-        bytes.putShort(offset + Short.BYTES * 2, z.v)
-        return bytes
-    }
-
 
     // -- Component accesses --
+
+    operator fun set(index: Int, value: Ushort) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        2 -> z = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.us
@@ -121,16 +168,6 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
         2 -> z = value.us
         else -> throw ArrayIndexOutOfBoundsException()
     }
-
-
-    companion object : vec3us_operators() {
-        @JvmField
-        val length = 3
-        @JvmField
-        val size = length * Ushort.BYTES
-    }
-
-    override fun size() = size
 
 
     // -- Unary arithmetic operators --
@@ -170,12 +207,15 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
     infix operator fun plusAssign(b: Ushort) {
         plus(this, this, b, b, b)
     }
+
     infix operator fun plusAssign(b: Short) {
         plus(this, this, b, b, b)
     }
+
     infix operator fun plusAssign(b: Int) {
         plus(this, this, b, b, b)
     }
+
     infix operator fun plusAssign(b: Vec3us) {
         plus(this, this, b.x, b.y, b.z)
     }
@@ -200,12 +240,15 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
     infix operator fun minusAssign(b: Ushort) {
         minus(this, this, b, b, b)
     }
+
     infix operator fun minusAssign(b: Short) {
         minus(this, this, b, b, b)
     }
+
     infix operator fun minusAssign(b: Int) {
         minus(this, this, b, b, b)
     }
+
     infix operator fun minusAssign(b: Vec3us) {
         minus(this, this, b.x, b.y, b.z)
     }
@@ -230,12 +273,15 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
     infix operator fun timesAssign(b: Ushort) {
         times(this, this, b, b, b)
     }
+
     infix operator fun timesAssign(b: Short) {
         times(this, this, b, b, b)
     }
+
     infix operator fun timesAssign(b: Int) {
         times(this, this, b, b, b)
     }
+
     infix operator fun timesAssign(b: Vec3us) {
         times(this, this, b.x, b.y, b.z)
     }
@@ -260,12 +306,15 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
     infix operator fun divAssign(b: Ushort) {
         div(this, this, b, b, b)
     }
+
     infix operator fun divAssign(b: Short) {
         div(this, this, b, b, b)
     }
+
     infix operator fun divAssign(b: Int) {
         div(this, this, b, b, b)
     }
+
     infix operator fun divAssign(b: Vec3us) {
         div(this, this, b.x, b.y, b.z)
     }
@@ -290,12 +339,15 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
     infix operator fun remAssign(b: Ushort) {
         rem(this, this, b, b, b)
     }
+
     infix operator fun remAssign(b: Short) {
         rem(this, this, b, b, b)
     }
+
     infix operator fun remAssign(b: Int) {
         rem(this, this, b, b, b)
     }
+
     infix operator fun remAssign(b: Vec3us) {
         rem(this, this, b.x, b.y, b.z)
     }
@@ -314,6 +366,7 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.i, b.i, b.i)
     }
+
     infix operator fun plusAssign(b: Vec3t<out Number>) {
         plus(this, this, b.x.i, b.y.i, b.z.i)
     }
@@ -330,6 +383,7 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.i, b.i, b.i)
     }
+
     infix operator fun minusAssign(b: Vec3t<out Number>) {
         minus(this, this, b.x.i, b.y.i, b.z.i)
     }
@@ -346,6 +400,7 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.i, b.i, b.i)
     }
+
     infix operator fun timesAssign(b: Vec3t<out Number>) {
         times(this, this, b.x.i, b.y.i, b.z.i)
     }
@@ -362,6 +417,7 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.i, b.i, b.i)
     }
+
     infix operator fun divAssign(b: Vec3t<out Number>) {
         div(this, this, b.x.i, b.y.i, b.z.i)
     }
@@ -378,6 +434,7 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.i, b.i, b.i)
     }
+
     infix operator fun remAssign(b: Vec3t<out Number>) {
         rem(this, this, b.x.i, b.y.i, b.z.i)
     }
@@ -580,6 +637,14 @@ class Vec3us(x: Ushort, y: Ushort, z: Ushort) : Vec3t<Ushort>(x, y, z) {
     fun shr(bX: Number, bY: Number, bZ: Number, res: Vec3us) = shr(res, this, bX.i, bY.i, bZ.i)
     fun shr(b: Vec3t<out Number>, res: Vec3us) = shr(res, this, b.x.i, b.y.i, b.z.i)
 
+
+    companion object : vec3us_operators() {
+        const val length = Vec3t.length
+        @JvmField
+        val size = length * Ushort.BYTES
+    }
+
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec3us && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.v.hashCode() + y.v.hashCode()) + z.v.hashCode()

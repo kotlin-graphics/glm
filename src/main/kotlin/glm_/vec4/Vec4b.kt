@@ -60,40 +60,88 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     constructor(x: Number, y: Number, z: Number, w: Number) : this(x.b, y.b, z.b, w.b)
 
 
-    override fun put(x: Number, y: Number, z: Number, w: Number): Vec4b {
-        this.x = x.b
-        this.y = y.b
-        this.z = z.b
-        this.w = w.b
+    fun put(x: Byte, y: Byte, z: Byte, w: Byte) {
+        this.x = x
+        this.y = y
+        this.z = z
+        this.w = w
+    }
+
+    fun invoke(x: Float, y: Float, z: Float, w: Float): Vec4 {
+        this.x = x
+        this.y = y
+        this.z = z
+        this.w = w
         return this
     }
 
+    override fun put(x: Number, y: Number, z: Number, w: Number) {
+        this.x = x.f
+        this.y = y.f
+        this.z = z.f
+        this.w = w.f
+    }
 
-    infix fun to(bytes: ByteArray) = to(bytes, 0)
-    fun to(bytes: ByteArray, index: Int): ByteArray {
-        bytes[index] = x
-        bytes[index + 1] = y
-        bytes[index + 2] = z
+    override fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4 {
+        this.x = x.f
+        this.y = y.f
+        this.z = z.f
+        this.w = w.f
+        return this
+    }
+
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setFloat(index, x)
+        bytes.setFloat(index + Float.BYTES, y)
+        bytes.setFloat(index + Float.BYTES * 2, z)
+        bytes.setFloat(index + Float.BYTES * 3, w)
         return bytes
     }
 
-    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
     override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.put(index, x)
-        bytes.put(index + Byte.BYTES, y)
-        bytes.put(index + Byte.BYTES * 2, z)
-        bytes.put(index + Byte.BYTES * 3, w)
+        bytes.putFloat(index, x)
+        bytes.putFloat(index + Float.BYTES, y)
+        bytes.putFloat(index + Float.BYTES * 2, z)
+        bytes.putFloat(index + Float.BYTES * 3, w)
         return bytes
     }
 
+    fun toFloatArray() = to(FloatArray(Companion.length), 0)
+    infix fun to(floats: FloatArray) = to(floats, 0)
+    fun to(floats: FloatArray, index: Int): FloatArray {
+        floats[index] = x
+        floats[index + 1] = y
+        floats[index + 2] = z
+        floats[index + 3] = w
+        return floats
+    }
+
+    fun toFloatBuffer() = to(ByteBuffer.allocateDirect(size).asFloatBuffer(), 0)
+    infix fun to(floats: FloatBuffer) = to(floats, floats.position())
+    fun to(floats: FloatBuffer, index: Int): FloatBuffer {
+        floats[index] = x
+        floats[index + 1] = y
+        floats[index + 2] = z
+        floats[index + 3] = w
+        return floats
+    }
 
     // -- Component accesses --
 
+    operator fun set(index: Int, value: Float) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        2 -> z = value
+        3 -> w = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
+
     override operator fun set(index: Int, value: Number) = when (index) {
-        0 -> x = value.b
-        1 -> y = value.b
-        2 -> z = value.b
-        3 -> w = value.b
+        0 -> x = value.f
+        1 -> y = value.f
+        2 -> z = value.f
+        3 -> w = value.f
         else -> throw ArrayIndexOutOfBoundsException()
     }
 

@@ -120,8 +120,8 @@ data class Mat2d(override var value: MutableList<Vec2d>) : Mat2x2t<Vec2d>(value)
 
 
     fun identity(): Mat2d {
-        value[0][0] = 1f; value[1][0] = 0f
-        value[0][1] = 0f; value[1][1] = 1f
+        value[0][0] = 1.0; value[1][0] = 0.0
+        value[0][1] = 0.0; value[1][1] = 1.0
         return this
     }
 

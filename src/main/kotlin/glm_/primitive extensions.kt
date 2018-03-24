@@ -1,5 +1,10 @@
 package glm_
 
+import unsigned.Ubyte
+import unsigned.Uint
+import unsigned.Ulong
+import unsigned.Ushort
+
 
 infix fun Byte.compare(other: Byte) = java.lang.Byte.compare(this, other)
 val String.decodeByte get () = java.lang.Byte.decode(this)
@@ -140,3 +145,28 @@ val Double.toString get() = java.lang.Double.toString(this)
 val Double.toHexString get() = java.lang.Double.toHexString(this)
 val Double.value get() = java.lang.Double.valueOf(this)
 val String.doubleValue get() = java.lang.Double.valueOf(this)
+
+
+// TODO check https://youtrack.jetbrains.com/issue/KT-8247
+val Byte.Companion.BYTES: Int
+    get() = java.lang.Byte.BYTES
+val Float.Companion.BYTES: Int
+    get() = java.lang.Float.BYTES
+val Double.Companion.BYTES: Int
+    get() = java.lang.Double.BYTES
+val Int.Companion.BYTES: Int
+    get() = Integer.BYTES
+val Long.Companion.BYTES: Int
+    get() = java.lang.Long.BYTES
+val Short.Companion.BYTES: Int
+    get() = java.lang.Short.BYTES
+val Ubyte.Companion.BYTES: Int
+    get() = java.lang.Byte.BYTES
+val Uint.Companion.BYTES: Int
+    get() = Integer.BYTES
+val Ulong.Companion.BYTES: Int
+    get() = java.lang.Long.BYTES
+val Ushort.Companion.BYTES: Int
+    get() = java.lang.Short.BYTES
+val Char.Companion.BYTES: Int
+    get() = Character.BYTES

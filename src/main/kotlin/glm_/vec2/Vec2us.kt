@@ -73,13 +73,53 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
     }
 
 
-    override fun put(x: Number, y: Number): Vec2us {
+    fun put(x: Ushort, y: Ushort) {
+        this.x = x
+        this.y = y
+    }
+
+    fun invoke(x: Ushort, y: Ushort): Vec2us {
+        this.x = x
+        this.y = y
+        return this
+    }
+
+    fun put(x: Short, y: Short) {
+        this.x.v = x
+        this.y.v = y
+    }
+
+    fun invoke(x: Short, y: Short): Vec2us {
+        this.x.v = x
+        this.y.v = y
+        return this
+    }
+
+    override fun put(x: Number, y: Number) {
+        this.x = x.us
+        this.y = y.us
+    }
+
+    override fun invoke(x: Number, y: Number): Vec2us {
         this.x = x.us
         this.y = y.us
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setShort(index, x.v)
+        bytes.setShort(index + Short.BYTES, y.v)
+        return bytes
+    }
 
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putShort(index, x.v)
+        bytes.putShort(index + Short.BYTES, y.v)
+        return bytes
+    }
+
+    fun toShortArray() = to(ShortArray(Companion.length), 0)
     infix fun to(shorts: ShortArray) = to(shorts, 0)
     fun to(shorts: ShortArray, index: Int): ShortArray {
         shorts[index] = x.v
@@ -87,38 +127,27 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
         return shorts
     }
 
-    infix fun to(floats: ShortBuffer) = to(floats, 0)
+    fun toShortBuffer() = to(ByteBuffer.allocateDirect(size).asShortBuffer(), 0)
+    infix fun to(shorts: ShortBuffer) = to(shorts, shorts.position())
     fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
         shorts[index] = x.v
         shorts[index + 1] = y.v
         return shorts
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
-        bytes.putShort(offset, x.v)
-        bytes.putShort(offset + Short.BYTES, y.v)
-        return bytes
-    }
-
-
     // -- Component accesses --
+
+    operator fun set(index: Int, value: Ushort) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.us
         1 -> y = value.us
         else -> throw ArrayIndexOutOfBoundsException()
     }
-
-
-    companion object : opVec2us() {
-        @JvmField
-        val length = 2
-        @JvmField
-        val size = length * Ushort.BYTES
-    }
-
-    override fun size() = size
 
     // -- Unary arithmetic operators --
 
@@ -316,6 +345,7 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.i, b.i)
     }
+
     infix operator fun plusAssign(b: Vec2t<out Number>) {
         plus(this, this, b.x.i, b.y.i)
     }
@@ -332,6 +362,7 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.i, b.i)
     }
+
     infix operator fun minusAssign(b: Vec2t<out Number>) {
         minus(this, this, b.x.i, b.y.i)
     }
@@ -348,6 +379,7 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.i, b.i)
     }
+
     infix operator fun timesAssign(b: Vec2t<out Number>) {
         times(this, this, b.x.i, b.y.i)
     }
@@ -364,6 +396,7 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.i, b.i)
     }
+
     infix operator fun divAssign(b: Vec2t<out Number>) {
         div(this, this, b.x.i, b.y.i)
     }
@@ -380,6 +413,7 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.i, b.i)
     }
+
     infix operator fun remAssign(b: Vec2t<out Number>) {
         rem(this, this, b.x.i, b.y.i)
     }
@@ -582,6 +616,14 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
     fun shr(bX: Number, bY: Number, res: Vec2us) = shr(res, this, bX.i, bY.i)
     fun shr(b: Vec2t<out Number>, res: Vec2us) = shr(res, this, b.x.i, b.y.i)
 
+
+    companion object : opVec2us() {
+        const val length = Vec2t.length
+        @JvmField
+        val size = length * Ushort.BYTES
+    }
+
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec2us && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.v.hashCode() + y.v.hashCode()

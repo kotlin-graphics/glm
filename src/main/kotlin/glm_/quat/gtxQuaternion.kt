@@ -60,7 +60,7 @@ interface gtxQuaternion {
         val resX = v.x + (uvX * w + uuvX) * 2f
         val resY = v.y + (uvY * w + uuvY) * 2f
         val resZ = v.z + (uvZ * w + uuvZ) * 2f
-        return res.put(resX, resY, resZ)
+        return res(resX, resY, resZ)
     }
 
     /** Compute a cross product between a vector and a quaternion.
@@ -76,7 +76,7 @@ interface gtxQuaternion {
         val resX = v.x + (uvX * q.w + uuvX) * 2f
         val resY = v.y + (uvY * q.w + uuvY) * 2f
         val resZ = v.z + (uvZ * q.w + uuvZ) * 2f
-        return res.put(resX, resY, resZ)
+        return res(resX, resY, resZ)
     }
 
     /** Compute a point on a path according squad equation.

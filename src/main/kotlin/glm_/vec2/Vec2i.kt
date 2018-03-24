@@ -73,19 +73,42 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     }
 
 
-    fun put(x: Int, y: Int): Vec2i {
+    fun put(x: Int, y: Int) {
+        this.x = x
+        this.y = y
+    }
+
+    fun invoke(x: Int, y: Int): Vec2i {
         this.x = x
         this.y = y
         return this
     }
 
-    override fun put(x: Number, y: Number): Vec2i {
+    override fun put(x: Number, y: Number) {
+        this.x = x.i
+        this.y = y.i
+    }
+
+    override fun invoke(x: Number, y: Number): Vec2i {
         this.x = x.i
         this.y = y.i
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setInt(index, x)
+        bytes.setInt(index + Int.BYTES, y)
+        return bytes
+    }
 
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putInt(index, x)
+        bytes.putInt(index + Int.BYTES, y)
+        return bytes
+    }
+
+    fun toIntArray() = to(IntArray(Companion.length), 0)
     infix fun to(ints: IntArray) = to(ints, 0)
     fun to(ints: IntArray, index: Int): IntArray {
         ints[index] = x
@@ -93,22 +116,21 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
         return ints
     }
 
-    infix fun to(ints: IntBuffer) = to(ints, 0)
+    fun toIntBuffer() = to(ByteBuffer.allocateDirect(size).asIntBuffer(), 0)
+    infix fun to(ints: IntBuffer) = to(ints, ints.position())
     fun to(ints: IntBuffer, index: Int): IntBuffer {
         ints[index] = x
         ints[index + 1] = y
         return ints
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
-        bytes.putInt(offset, x)
-        bytes.putInt(offset + Int.BYTES, y)
-        return bytes
-    }
-
-
     // -- Component accesses --
+
+    operator fun set(index: Int, value: Int) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.i
@@ -119,15 +141,6 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     // TODO
     fun comptimes() = x * y
 
-
-    companion object : opVec2i() {
-        @JvmField
-        val length = 2
-        @JvmField
-        val size = length * Int.BYTES
-    }
-
-    override fun size() = size
 
     // -- Unary arithmetic operators --
 
@@ -498,6 +511,14 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     }
 
     val aspect get() = x.f / y
+
+    companion object : opVec2i() {
+        const val length = Vec2t.length
+        @JvmField
+        val size = length * Int.BYTES
+    }
+
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec2i && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()

@@ -53,41 +53,47 @@ class Vec1ub(x: Ubyte) : Vec1t<Ubyte>(x) {
     constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index])
     constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index])
 
+    constructor(block: (Int) -> Ubyte) : this(block(0))
+
     constructor(x: Number) : this(x.ub)
 
 
-    override fun put(x: Number): Vec1ub {
+    fun put(x: Ubyte) {
+        this.x = x
+    }
+
+    fun put(x: Byte) {
+        this.x.v = x
+    }
+
+    fun invoke(x: Ubyte): Vec1ub {
+        this.x = x
+        return this
+    }
+
+    fun invoke(x: Byte): Vec1ub {
+        this.x.v = x
+        return this
+    }
+
+    override fun put(x: Number) {
+        this.x = x.ub
+    }
+
+    override fun invoke(x: Number): Vec1ub {
         this.x = x.ub
         return this
     }
 
-
-    infix fun to(bytes: ByteArray) = to(bytes, 0)
-    fun to(bytes: ByteArray, index: Int): ByteArray {
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
         bytes[index] = x.v
         return bytes
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int):ByteBuffer = bytes.put(offset, x.v)
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer = bytes.put(index, x.v)
 
 
-    // -- Component accesses --
-
-    override operator fun set(index: Int, value: Number) = when (index) {
-        0 -> x = value.ub
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-
-    companion object /*: opVec2ub*/ {
-        @JvmField
-        val length = 1
-        @JvmField
-        val size = length * Ubyte.BYTES
-    }
-
-    override fun size() = size
 
 
     // -- Unary arithmetic operators --
@@ -531,6 +537,14 @@ class Vec1ub(x: Ubyte) : Vec1t<Ubyte>(x) {
 //    infix fun shr_(b: Vec2t<out Number>) = shr(this, this, b.x.i, b.y.i)
 //    fun shr_(bX: Number, bY: Number) = shr(this, this, bX.i, bY.i)
 
+
+    companion object /*: opVec2ub*/ {
+        const val length = Vec1t.length
+        @JvmField
+        val size = length * Ubyte.BYTES
+    }
+
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec1ub && this[0] == other[0]
     override fun hashCode() = x.v.hashCode()

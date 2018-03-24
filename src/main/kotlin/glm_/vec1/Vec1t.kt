@@ -19,13 +19,25 @@ abstract class Vec1t<T : Number>(_x: T) {
     var x = _x
 
     fun component1() = x
+
+
+    // -- Component accesses --
+
     operator fun get(index: Int) = when (index) {
         0 -> x
         else -> throw IndexOutOfBoundsException()
     }
-    abstract fun set(index: Int, value: Number)
+
+    operator fun set(index: Int, value: T) = when (index) {
+        0 -> x = value
+        else -> throw IndexOutOfBoundsException()
+    }
+
+    abstract fun size(): Int
 
     // -- infix Generic Constructors --
+
+    abstract fun put(x: Number)
 
     infix fun put(v: Vec1t<out Number>) = put(v.x)
     infix fun put(v: Vec2t<out Number>) = put(v.x)
@@ -60,8 +72,6 @@ abstract class Vec1t<T : Number>(_x: T) {
     infix fun put(floats: FloatBuffer) = put(floats, 0)
     infix fun put(doubles: DoubleBuffer) = put(doubles, 0)
 
-    abstract fun put(x: Number): Vec1t<T>
-
     // -- indexed Generic Constructors --
 
     fun put(bytes: ByteArray, index: Int) = put(bytes[index])
@@ -79,10 +89,9 @@ abstract class Vec1t<T : Number>(_x: T) {
 
     fun put(list: List<Any>, index: Int) {
         val x = list[index]
-        val y = list[index + 1]
-        if (x is Number && y is Number) put(x)
-        else if (x is Char && y is Char) put(x.b)
-        else if (x is Boolean && y is Boolean) put(x.b)
+        if (x is Number) put(x)
+        else if (x is Char) put(x.b)
+        else if (x is Boolean) put(x.b)
         else throw ArithmeticException("incompatible with this type")
     }
 
@@ -94,75 +103,84 @@ abstract class Vec1t<T : Number>(_x: T) {
     fun put(floats: FloatBuffer, index: Int) = put(floats[index])
     fun put(doubles: DoubleBuffer, index: Int) = put(doubles[index])
 
+
     // Same, but with ()
 
-    infix operator fun invoke(v: Vec1t<out Number>) = put(v.x)
-    infix operator fun invoke(v: Vec2t<out Number>) = put(v.x)
-    infix operator fun invoke(v: Vec3t<out Number>) = put(v.x)
-    infix operator fun invoke(v: Vec4t<out Number>) = put(v.x)
+    abstract operator fun invoke(x: Number): Vec1t<out Number>
 
-    infix operator fun invoke(v: Vec1bool) = put(v.x.b)
-    infix operator fun invoke(v: Vec2bool) = put(v.x.b)
-    infix operator fun invoke(v: Vec3bool) = put(v.x.b)
-    infix operator fun invoke(v: Vec4bool) = put(v.x.b)
+    infix operator fun invoke(v: Vec1t<out Number>) = invoke(v.x)
+    infix operator fun invoke(v: Vec2t<out Number>) = invoke(v.x)
+    infix operator fun invoke(v: Vec3t<out Number>) = invoke(v.x)
+    infix operator fun invoke(v: Vec4t<out Number>) = invoke(v.x)
 
-    infix operator fun invoke(bytes: ByteArray) = put(bytes, 0)
-    infix operator fun invoke(chars: CharArray) = put(chars, 0)
-    infix operator fun invoke(shorts: ShortArray) = put(shorts, 0)
-    infix operator fun invoke(ints: IntArray) = put(ints, 0)
-    infix operator fun invoke(longs: LongArray) = put(longs, 0)
-    infix operator fun invoke(floats: FloatArray) = put(floats, 0)
-    infix operator fun invoke(doubles: DoubleArray) = put(doubles, 0)
-    infix operator fun invoke(booleans: BooleanArray) = put(booleans, 0)
+    infix operator fun invoke(v: Vec1bool) = invoke(v.x.b)
+    infix operator fun invoke(v: Vec2bool) = invoke(v.x.b)
+    infix operator fun invoke(v: Vec3bool) = invoke(v.x.b)
+    infix operator fun invoke(v: Vec4bool) = invoke(v.x.b)
 
-    infix operator fun invoke(numbers: Array<out Number>) = put(numbers, 0)
-    infix operator fun invoke(chars: Array<Char>) = put(chars, 0)
-    infix operator fun invoke(a: Array<Boolean>) = put(a, 0)
+    infix operator fun invoke(bytes: ByteArray) = invoke(bytes, 0)
+    infix operator fun invoke(chars: CharArray) = invoke(chars, 0)
+    infix operator fun invoke(shorts: ShortArray) = invoke(shorts, 0)
+    infix operator fun invoke(ints: IntArray) = invoke(ints, 0)
+    infix operator fun invoke(longs: LongArray) = invoke(longs, 0)
+    infix operator fun invoke(floats: FloatArray) = invoke(floats, 0)
+    infix operator fun invoke(doubles: DoubleArray) = invoke(doubles, 0)
+    infix operator fun invoke(booleans: BooleanArray) = invoke(booleans, 0)
 
-    infix operator fun invoke(list: List<Any>) = put(list, 0)
+    infix operator fun invoke(numbers: Array<out Number>) = invoke(numbers, 0)
+    infix operator fun invoke(chars: Array<Char>) = invoke(chars, 0)
+    infix operator fun invoke(a: Array<Boolean>) = invoke(a, 0)
 
-    infix operator fun invoke(bytes: ByteBuffer) = put(bytes, 0)
-    infix operator fun invoke(chars: CharBuffer) = put(chars, 0)
-    infix operator fun invoke(shorts: ShortBuffer) = put(shorts, 0)
-    infix operator fun invoke(ints: IntBuffer) = put(ints, 0)
-    infix operator fun invoke(longs: LongBuffer) = put(longs, 0)
-    infix operator fun invoke(floats: FloatBuffer) = put(floats, 0)
-    infix operator fun invoke(doubles: DoubleBuffer) = put(doubles, 0)
+    infix operator fun invoke(list: List<Any>) = invoke(list, 0)
+
+    infix operator fun invoke(bytes: ByteBuffer) = invoke(bytes, 0)
+    infix operator fun invoke(chars: CharBuffer) = invoke(chars, 0)
+    infix operator fun invoke(shorts: ShortBuffer) = invoke(shorts, 0)
+    infix operator fun invoke(ints: IntBuffer) = invoke(ints, 0)
+    infix operator fun invoke(longs: LongBuffer) = invoke(longs, 0)
+    infix operator fun invoke(floats: FloatBuffer) = invoke(floats, 0)
+    infix operator fun invoke(doubles: DoubleBuffer) = invoke(doubles, 0)
 
     // -- indexed Generic Constructors --
 
-    operator fun invoke(bytes: ByteArray, index: Int) = put(bytes[index])
-    operator fun invoke(chars: CharArray, index: Int) = put(chars[index].b)
-    operator fun invoke(shorts: ShortArray, index: Int) = put(shorts[index])
-    operator fun invoke(ints: IntArray, index: Int) = put(ints[index])
-    operator fun invoke(longs: LongArray, index: Int) = put(longs[index])
-    operator fun invoke(floats: FloatArray, index: Int) = put(floats[index])
-    operator fun invoke(doubles: DoubleArray, index: Int) = put(doubles[index])
-    operator fun invoke(booleans: BooleanArray, index: Int) = put(booleans[index].b)
+    operator fun invoke(bytes: ByteArray, index: Int) = invoke(bytes[index])
+    operator fun invoke(chars: CharArray, index: Int) = invoke(chars[index].b)
+    operator fun invoke(shorts: ShortArray, index: Int) = invoke(shorts[index])
+    operator fun invoke(ints: IntArray, index: Int) = invoke(ints[index])
+    operator fun invoke(longs: LongArray, index: Int) = invoke(longs[index])
+    operator fun invoke(floats: FloatArray, index: Int) = invoke(floats[index])
+    operator fun invoke(doubles: DoubleArray, index: Int) = invoke(doubles[index])
+    operator fun invoke(booleans: BooleanArray, index: Int) = invoke(booleans[index].b)
 
-    operator fun invoke(a: Array<out Number>, index: Int) = put(a[index])
-    operator fun invoke(a: Array<Char>, index: Int) = put(a[index].b)
-    operator fun invoke(a: Array<Boolean>, index: Int) = put(a[index].b)
+    operator fun invoke(a: Array<out Number>, index: Int) = invoke(a[index])
+    operator fun invoke(a: Array<Char>, index: Int) = invoke(a[index].b)
+    operator fun invoke(a: Array<Boolean>, index: Int) = invoke(a[index].b)
 
     operator fun invoke(list: List<Any>, index: Int) {
         val x = list[index]
-        val y = list[index + 1]
-        if (x is Number && y is Number) put(x)
-        else if (x is Char && y is Char) put(x.b)
-        else if (x is Boolean && y is Boolean) put(x.b)
+        if (x is Number) invoke(x)
+        else if (x is Char) invoke(x.b)
+        else if (x is Boolean) invoke(x.b)
         else throw ArithmeticException("incompatible with this type")
     }
 
-    operator fun invoke(bytes: ByteBuffer, index: Int) = put(bytes[index])
-    operator fun invoke(chars: CharBuffer, index: Int) = put(chars[index].b)
-    operator fun invoke(shorts: ShortBuffer, index: Int) = put(shorts[index])
-    operator fun invoke(ints: IntBuffer, index: Int) = put(ints[index])
-    operator fun invoke(longs: LongBuffer, index: Int) = put(longs[index])
-    operator fun invoke(floats: FloatBuffer, index: Int) = put(floats[index])
-    operator fun invoke(doubles: DoubleBuffer, index: Int) = put(doubles[index])
+    operator fun invoke(bytes: ByteBuffer, index: Int) = invoke(bytes[index])
+    operator fun invoke(chars: CharBuffer, index: Int) = invoke(chars[index].b)
+    operator fun invoke(shorts: ShortBuffer, index: Int) = invoke(shorts[index])
+    operator fun invoke(ints: IntBuffer, index: Int) = invoke(ints[index])
+    operator fun invoke(longs: LongBuffer, index: Int) = invoke(longs[index])
+    operator fun invoke(floats: FloatBuffer, index: Int) = invoke(floats[index])
+    operator fun invoke(doubles: DoubleBuffer, index: Int) = invoke(doubles[index])
 
 
-    abstract fun size(): Int
+    fun toByteArray(bigEndian: Boolean = true) = to(ByteArray(length), 0)
+    infix fun to(bytes: ByteArray) = to(bytes, 0)
+    fun to(bytes: ByteArray, bigEndian: Boolean) = to(bytes, 0)
+    abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
+
+    fun toByteBuffer() = to(ByteBuffer.allocateDirect(length), 0)
+    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
+    abstract fun to(bytes: ByteBuffer, index: Int): ByteBuffer
 
 // TODO
 //    infix fun lessThan(b: Vec2t<out Number>) = glm.lessThan(this, b, Vec2bool())
@@ -187,11 +205,7 @@ abstract class Vec1t<T : Number>(_x: T) {
 
 
     companion object {
-
-        // -- functions --
-
-        @JvmField
-        val length = 2
+        const val length = 1
     }
 
 
@@ -205,8 +219,8 @@ abstract class Vec1t<T : Number>(_x: T) {
 
 
     var s
-        @JvmName("toShort") get() = x
-        @JvmName("toShort") set(value) {
+        @JvmName("s") get() = x
+        @JvmName("s") set(value) {
             x = value
         }
 }

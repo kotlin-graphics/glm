@@ -82,36 +82,42 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     }
 
 
-    fun put(x: Float, y: Float): Vec2 {
+    fun put(x: Float, y: Float) {
+        this.x = x
+        this.y = y
+    }
+
+    fun invoke(x: Float, y: Float): Vec2 {
         this.x = x
         this.y = y
         return this
     }
 
-    override fun put(x: Number, y: Number): Vec2 {
+    override fun put(x: Number, y: Number) {
+        this.x = x.f
+        this.y = y.f
+    }
+
+    override fun invoke(x: Number, y: Number): Vec2 {
         this.x = x.f
         this.y = y.f
         return this
     }
 
-    // -- Component accesses --
-
-    override operator fun set(index: Int, value: Number) = when (index) {
-        0 -> x = value.f
-        1 -> y = value.f
-        else -> throw ArrayIndexOutOfBoundsException()
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setFloat(index, x)
+        bytes.setFloat(index + Float.BYTES, y)
+        return bytes
     }
 
-
-    companion object : opVec2() {
-        @JvmField
-        val length = 2
-        @JvmField
-        val size = length * Float.BYTES
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putFloat(index, x)
+        bytes.putFloat(index + Float.BYTES, y)
+        return bytes
     }
 
-    override fun size() = size
-
+    fun toFloatArray() = to(FloatArray(Companion.length), 0)
     infix fun to(floats: FloatArray) = to(floats, 0)
     fun to(floats: FloatArray, index: Int): FloatArray {
         floats[index] = x
@@ -119,20 +125,27 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
         return floats
     }
 
-    infix fun to(floats: FloatBuffer) = to(floats, 0)
+    fun toFloatBuffer() = to(ByteBuffer.allocateDirect(size).asFloatBuffer(), 0)
+    infix fun to(floats: FloatBuffer) = to(floats, floats.position())
     fun to(floats: FloatBuffer, index: Int): FloatBuffer {
         floats[index] = x
         floats[index + 1] = y
         return floats
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
-        bytes.putFloat(offset, x)
-        bytes.putFloat(offset + Float.BYTES, y)
-        return bytes
+    // -- Component accesses --
+
+    operator fun set(index: Int, value: Float) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        else -> throw ArrayIndexOutOfBoundsException()
     }
 
+    override operator fun set(index: Int, value: Number) = when (index) {
+        0 -> x = value.f
+        1 -> y = value.f
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     // -- Unary arithmetic operators --
 
@@ -205,6 +218,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix operator fun timesAssign(b: Float) {
         times(this, this, b, b)
     }
+
     infix operator fun timesAssign(b: Vec2) {
         times(this, this, b.x, b.y)
     }
@@ -301,6 +315,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.f, b.f)
     }
+
     infix operator fun timesAssign(b: Vec2t<out Number>) {
         times(this, this, b.x.f, b.y.f)
     }
@@ -319,6 +334,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.f, b.f)
     }
+
     infix operator fun divAssign(b: Vec2t<out Number>) {
         div(this, this, b.x.f, b.y.f)
     }
@@ -337,6 +353,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.f, b.f)
     }
+
     infix operator fun remAssign(b: Vec2t<out Number>) {
         rem(this, this, b.x.f, b.y.f)
     }
@@ -381,7 +398,7 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
         x = glm.max(x, b.f)
         y = glm.max(y, b.f)
     }
-    
+
     infix fun min(b: Vec2) = glm.min(this, b, Vec2())
 
     infix fun minAssign(b: Vec2) {
@@ -449,6 +466,15 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
         res.y = -y
         return res
     }
+
+
+    companion object : opVec2() {
+        const val length = Vec2t.length
+        @JvmField
+        val size = length * Float.BYTES
+    }
+
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec2 && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()

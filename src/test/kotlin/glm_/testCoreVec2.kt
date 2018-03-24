@@ -4,12 +4,14 @@ package glm_
  * Created by GBarbieri on 05.10.2016.
  */
 
+import glm_.vec1.Vec1
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2i
 import glm_.vec2.operators.div
 import glm_.vec2.operators.minus
 import glm_.vec2.operators.plus
 import glm_.vec2.operators.times
+import glm_.vec3.Vec3
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.specs.StringSpec
 
@@ -20,6 +22,12 @@ class testCoreVec2 : StringSpec() {
 
         "operators specific" {
 
+            run {
+                val a = Vec1(3)
+                val b = a.invoke(4)
+                val c = b.unaryPlus()
+                Vec1.length
+            }
             run {
                 val a = Vec2({ it + 1f })
                 a shouldBe Vec2(1, 2)
@@ -424,7 +432,7 @@ class testCoreVec2 : StringSpec() {
         "operator_increment" {
 
             run {
-                var v0 = Vec2i(1)
+                val v0 = Vec2i(1)
                 var v1 = Vec2i(v0)
                 var v2 = Vec2i(v0)
                 var v3 = ++v1

@@ -79,14 +79,48 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
     }
 
 
-    override fun put(x: Number, y: Number, z: Number): Vec3s {
+    fun put(x: Short, y: Short, z: Short) {
+        this.x = x
+        this.y = y
+        this.z = z
+    }
+
+    fun invoke(x: Short, y: Short, z: Short): Vec3s {
+        this.x = x
+        this.y = y
+        this.z = z
+        return this
+    }
+
+    override fun put(x: Number, y: Number, z: Number) {
+        this.x = x.s
+        this.y = y.s
+        this.z = z.s
+    }
+
+    override fun invoke(x: Number, y: Number, z: Number): Vec3s {
         this.x = x.s
         this.y = y.s
         this.z = z.s
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setShort(index, x)
+        bytes.setShort(index + Short.BYTES, y)
+        bytes.setShort(index + Short.BYTES * 2, z)
+        return bytes
+    }
 
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putShort(index, x)
+        bytes.putShort(index + Short.BYTES, y)
+        bytes.putShort(index + Short.BYTES * 2, z)
+        return bytes
+    }
+
+    fun toShortArray() = to(ShortArray(Companion.length), 0)
     infix fun to(shorts: ShortArray) = to(shorts, 0)
     fun to(shorts: ShortArray, index: Int): ShortArray {
         shorts[index] = x
@@ -95,7 +129,8 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
         return shorts
     }
 
-    infix fun to(floats: ShortBuffer) = to(floats, 0)
+    fun toShortBuffer() = to(ByteBuffer.allocateDirect(size).asShortBuffer(), 0)
+    infix fun to(shorts: ShortBuffer) = to(shorts, shorts.position())
     fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
         shorts[index] = x
         shorts[index + 1] = y
@@ -103,16 +138,14 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
         return shorts
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
-        bytes.putShort(offset, x)
-        bytes.putShort(offset + Short.BYTES, y)
-        bytes.putShort(offset + Short.BYTES * 2, z)
-        return bytes
-    }
-
-
     // -- Component accesses --
+
+    operator fun set(index: Int, value: Short) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        2 -> z = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.s
@@ -121,15 +154,6 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
-
-    companion object : vec3s_operators() {
-        @JvmField
-        val length = 3
-        @JvmField
-        val size = length * Short.BYTES
-    }
-
-    override fun size() = size
 
     // -- Unary arithmetic operators --
 
@@ -469,6 +493,14 @@ class Vec3s(x: Short, y: Short, z: Short) : Vec3t<Short>(x, y, z) {
 
     fun shrAssign(bX: Number, bY: Number, bZ: Number) = shr(this, this, bX.s, bY.s, bZ.s)
 
+
+    companion object : vec3s_operators() {
+        const val length = Vec3t.length
+        @JvmField
+        val size = length * Short.BYTES
+    }
+
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec3s && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()

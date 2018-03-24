@@ -80,14 +80,61 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
     }
 
 
-    override fun put(x: Number, y: Number, z: Number): Vec3ui {
+    fun put(x: Uint, y: Uint, z: Uint) {
+        this.x = x
+        this.y = y
+        this.z = z
+    }
+
+    fun invoke(x: Uint, y: Uint, z: Uint): Vec3ui {
+        this.x = x
+        this.y = y
+        this.z = z
+        return this
+    }
+
+    fun put(x: Int, y: Int, z: Int) {
+        this.x.v = x
+        this.y.v = y
+        this.z.v = z
+    }
+
+    fun invoke(x: Int, y: Int, z: Int): Vec3ui {
+        this.x.v = x
+        this.y.v = y
+        this.z.v = z
+        return this
+    }
+
+    override fun put(x: Number, y: Number, z: Number) {
+        this.x = x.ui
+        this.y = y.ui
+        this.z = z.ui
+    }
+
+    override fun invoke(x: Number, y: Number, z: Number): Vec3ui {
         this.x = x.ui
         this.y = y.ui
         this.z = z.ui
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setInt(index, x.v)
+        bytes.setInt(index + Int.BYTES, y.v)
+        bytes.setInt(index + Int.BYTES * 2, z.v)
+        return bytes
+    }
 
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putInt(index, x.v)
+        bytes.putInt(index + Int.BYTES, y.v)
+        bytes.putInt(index + Int.BYTES * 2, z.v)
+        return bytes
+    }
+
+    fun toIntArray() = to(IntArray(Companion.length), 0)
     infix fun to(ints: IntArray) = to(ints, 0)
     fun to(ints: IntArray, index: Int): IntArray {
         ints[index] = x.v
@@ -96,7 +143,8 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
         return ints
     }
 
-    infix fun to(ints: IntBuffer) = to(ints, 0)
+    fun toIntBuffer() = to(ByteBuffer.allocateDirect(size).asIntBuffer(), 0)
+    infix fun to(ints: IntBuffer) = to(ints, ints.position())
     fun to(ints: IntBuffer, index: Int): IntBuffer {
         ints[index] = x.v
         ints[index + 1] = y.v
@@ -104,16 +152,14 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
         return ints
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
-        bytes.putInt(offset, x.v)
-        bytes.putInt(offset + Int.BYTES, y.v)
-        bytes.putInt(offset + Int.BYTES * 2, z.v)
-        return bytes
-    }
-
-
     // -- Component accesses --
+
+    operator fun set(index: Int, value: Uint) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        2 -> z = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.ui
@@ -122,15 +168,6 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
-
-    companion object : vec3ui_operators() {
-        @JvmField
-        val length = 3
-        @JvmField
-        val size = length * Uint.BYTES
-    }
-
-    override fun size() = size
 
     // -- Unary arithmetic operators --
 
@@ -165,9 +202,11 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
     infix operator fun plusAssign(b: Uint) {
         plus(this, this, b, b, b)
     }
+
     infix operator fun plusAssign(b: Int) {
         plus(this, this, b, b, b)
     }
+
     infix operator fun plusAssign(b: Vec3ui) {
         plus(this, this, b.x, b.y, b.z)
     }
@@ -188,9 +227,11 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
     infix operator fun minusAssign(b: Uint) {
         minus(this, this, b, b, b)
     }
+
     infix operator fun minusAssign(b: Int) {
         minus(this, this, b, b, b)
     }
+
     infix operator fun minusAssign(b: Vec3ui) {
         minus(this, this, b.x, b.y, b.z)
     }
@@ -211,9 +252,11 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
     infix operator fun timesAssign(b: Uint) {
         times(this, this, b, b, b)
     }
+
     infix operator fun timesAssign(b: Int) {
         times(this, this, b, b, b)
     }
+
     infix operator fun timesAssign(b: Vec3ui) {
         times(this, this, b.x, b.y, b.z)
     }
@@ -234,9 +277,11 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
     infix operator fun divAssign(b: Uint) {
         div(this, this, b, b, b)
     }
+
     infix operator fun divAssign(b: Int) {
         div(this, this, b, b, b)
     }
+
     infix operator fun divAssign(b: Vec3ui) {
         div(this, this, b.x, b.y, b.z)
     }
@@ -257,9 +302,11 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
     infix operator fun remAssign(b: Uint) {
         rem(this, this, b, b, b)
     }
+
     infix operator fun remAssign(b: Int) {
         rem(this, this, b, b, b)
     }
+
     infix operator fun remAssign(b: Vec3ui) {
         rem(this, this, b.x, b.y, b.z)
     }
@@ -278,6 +325,7 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.i, b.i, b.i)
     }
+
     infix operator fun plusAssign(b: Vec3t<out Number>) {
         plus(this, this, b.x.i, b.y.i, b.z.i)
     }
@@ -294,6 +342,7 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.i, b.i, b.i)
     }
+
     infix operator fun minusAssign(b: Vec3t<out Number>) {
         minus(this, this, b.x.i, b.y.i, b.z.i)
     }
@@ -310,6 +359,7 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.i, b.i, b.i)
     }
+
     infix operator fun timesAssign(b: Vec3t<out Number>) {
         times(this, this, b.x.i, b.y.i, b.z.i)
     }
@@ -326,6 +376,7 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.i, b.i, b.i)
     }
+
     infix operator fun divAssign(b: Vec3t<out Number>) {
         div(this, this, b.x.i, b.y.i, b.z.i)
     }
@@ -342,6 +393,7 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.i, b.i, b.i)
     }
+
     infix operator fun remAssign(b: Vec3t<out Number>) {
         rem(this, this, b.x.i, b.y.i, b.z.i)
     }
@@ -519,6 +571,14 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
 
     fun shrAssign(bX: Number, bY: Number, bZ: Number) = shr(this, this, bX.i, bY.i, bZ.i)
 
+
+    companion object : vec3ui_operators() {
+        const val length = 3
+        @JvmField
+        val size = length * Uint.BYTES
+    }
+
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec3ui && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.v.hashCode() + y.v.hashCode()) + z.v.hashCode()

@@ -73,13 +73,53 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     }
 
 
-    override fun put(x: Number, y: Number): Vec2ul {
+    fun put(x: Ulong, y: Ulong) {
+        this.x = x
+        this.y = y
+    }
+
+    fun invoke(x: Ulong, y: Ulong): Vec2ul {
+        this.x = x
+        this.y = y
+        return this
+    }
+
+    fun put(x: Long, y: Long) {
+        this.x.v = x
+        this.y.v = y
+    }
+
+    fun invoke(x: Long, y: Long): Vec2ul {
+        this.x.v = x
+        this.y.v = y
+        return this
+    }
+
+    override fun put(x: Number, y: Number) {
+        this.x = x.ul
+        this.y = y.ul
+    }
+
+    override fun invoke(x: Number, y: Number): Vec2ul {
         this.x = x.ul
         this.y = y.ul
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setLong(index, x.v)
+        bytes.setLong(index + Long.BYTES, y.v)
+        return bytes
+    }
 
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putLong(index, x.v)
+        bytes.putLong(index + Long.BYTES, y.v)
+        return bytes
+    }
+
+    fun toLongArray() = to(LongArray(Companion.length), 0)
     infix fun to(longs: LongArray) = to(longs, 0)
     fun to(longs: LongArray, index: Int): LongArray {
         longs[index] = x.v
@@ -87,38 +127,27 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
         return longs
     }
 
-    infix fun to(longs: LongBuffer) = to(longs, 0)
+    fun toLongBuffer() = to(ByteBuffer.allocateDirect(size).asLongBuffer(), 0)
+    infix fun to(longs: LongBuffer) = to(longs, longs.position())
     fun to(longs: LongBuffer, index: Int): LongBuffer {
         longs[index] = x.v
         longs[index + 1] = y.v
         return longs
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
-        bytes.putLong(offset, x.v)
-        bytes.putLong(offset + Long.BYTES, y.v)
-        return bytes
-    }
-
-
     // -- Component accesses --
+
+    operator fun set(index: Int, value: Ulong) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.ul
         1 -> y = value.ul
         else -> throw ArrayIndexOutOfBoundsException()
     }
-
-
-    companion object : opVec2ul() {
-        @JvmField
-        val length = 2
-        @JvmField
-        val size = length * Ulong.BYTES
-    }
-
-    override fun size() = size
 
     // -- Unary arithmetic operators --
 
@@ -157,9 +186,11 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun plusAssign(b: Ulong) {
         plus(this, this, b, b)
     }
+
     infix operator fun plusAssign(b: Long) {
         plus(this, this, b, b)
     }
+
     infix operator fun plusAssign(b: Vec2ul) {
         plus(this, this, b.x, b.y)
     }
@@ -184,9 +215,11 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun minusAssign(b: Ulong) {
         minus(this, this, b, b)
     }
+
     infix operator fun minusAssign(b: Long) {
         minus(this, this, b, b)
     }
+
     infix operator fun minusAssign(b: Vec2ul) {
         minus(this, this, b.x, b.y)
     }
@@ -211,9 +244,11 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun timesAssign(b: Ulong) {
         times(this, this, b, b)
     }
+
     infix operator fun timesAssign(b: Long) {
         times(this, this, b, b)
     }
+
     infix operator fun timesAssign(b: Vec2ul) {
         times(this, this, b.x, b.y)
     }
@@ -238,9 +273,11 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun divAssign(b: Ulong) {
         div(this, this, b, b)
     }
+
     infix operator fun divAssign(b: Long) {
         div(this, this, b, b)
     }
+
     infix operator fun divAssign(b: Vec2ul) {
         div(this, this, b.x, b.y)
     }
@@ -265,9 +302,11 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun remAssign(b: Ulong) {
         rem(this, this, b, b)
     }
+
     infix operator fun remAssign(b: Long) {
         rem(this, this, b, b)
     }
+
     infix operator fun remAssign(b: Vec2ul) {
         rem(this, this, b.x, b.y)
     }
@@ -288,6 +327,7 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.L, b.L)
     }
+
     infix operator fun plusAssign(b: Vec2t<out Number>) {
         plus(this, this, b.x.L, b.y.L)
     }
@@ -306,6 +346,7 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.L, b.L)
     }
+
     infix operator fun minusAssign(b: Vec2t<out Number>) {
         minus(this, this, b.x.L, b.y.L)
     }
@@ -324,6 +365,7 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.L, b.L)
     }
+
     infix operator fun timesAssign(b: Vec2t<out Number>) {
         times(this, this, b.x.L, b.y.L)
     }
@@ -342,6 +384,7 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.L, b.L)
     }
+
     infix operator fun divAssign(b: Vec2t<out Number>) {
         div(this, this, b.x.L, b.y.L)
     }
@@ -360,6 +403,7 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.L, b.L)
     }
+
     infix operator fun remAssign(b: Vec2t<out Number>) {
         rem(this, this, b.x.L, b.y.L)
     }
@@ -513,6 +557,14 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
     infix fun shrAssign(b: Number) = shr(this, this, b.L, b.L)
     fun shrAssign(bX: Number, bY: Number) = shr(this, this, bX.L, bY.L)
 
+
+    companion object : opVec2ul() {
+        const val length = Vec2t.length
+        @JvmField
+        val size = length * Ulong.BYTES
+    }
+
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec2ul && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.v.hashCode() + y.v.hashCode()

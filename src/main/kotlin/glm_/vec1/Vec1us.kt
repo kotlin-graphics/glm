@@ -55,6 +55,8 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
     constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index])
     constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index])
 
+    constructor(block: (Int) -> Ushort) : this(block(0))
+
     constructor(x: Number) : this(x.us)
 
 
@@ -67,41 +69,55 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
     }
 
 
-    override fun put(x: Number): Vec1us {
+    fun put(x: Ushort) {
+        this.x = x
+    }
+
+    operator fun invoke(x: Ushort): Vec1us {
+        this.x = x
+        return this
+    }
+
+    fun put(x: Short) {
+        this.x.v = x
+    }
+
+    operator fun invoke(x: Short): Vec1us {
+        this.x.v = x
+        return this
+    }
+
+    override fun put(x: Number) {
+        this.x = x.us
+    }
+
+    override fun invoke(x: Number): Vec1us {
         this.x = x.us
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setShort(index, x.v)
+        return bytes
+    }
 
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer = bytes.putShort(index, x.v)
+
+    fun toShortArray() = to(ShortArray(length), 0)
     infix fun to(shorts: ShortArray) = to(shorts, 0)
     fun to(shorts: ShortArray, index: Int): ShortArray {
         shorts[index] = x.v
         return shorts
     }
 
-    infix fun to(floats: ShortBuffer) = to(floats, 0)
-    fun to(shorts: ShortBuffer, index: Int): ShortBuffer = shorts.put(index, x.v)
-
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer = bytes.putShort(offset, x.v)
-
-
-    // -- Component accesses --
-
-    override operator fun set(index: Int, value: Number) = when (index) {
-        0 -> x = value.us
-        else -> throw ArrayIndexOutOfBoundsException()
+    fun toShortBuffer() = to(ByteBuffer.allocateDirect(size()).asShortBuffer(), 0)
+    infix fun to(shorts: ShortBuffer) = to(shorts, shorts.position())
+    fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
+        shorts[index] = x.v
+        return shorts
     }
 
-
-    companion object /*: opVec2us*/ {
-        @JvmField
-        val length = 1
-        @JvmField
-        val size = length * Ushort.BYTES
-    }
-
-    override fun size() = size
 
     // -- Unary arithmetic operators --
 
@@ -490,6 +506,14 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
 //    fun shr(bX: Number, bY: Number, res: Vec1us) = shr(res, this, bX.i, bY.i)
 //    fun shr(b: Vec2t<out Number>, res: Vec1us) = shr(res, this, b.x.i, b.y.i)
 
+
+    companion object /*: opVec2us*/ {
+        const val length = Vec1t.length
+        @JvmField
+        val size = length * Ushort.BYTES
+    }
+
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec1us && this[0] == other[0]
     override fun hashCode() = x.v.hashCode()

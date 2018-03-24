@@ -80,14 +80,61 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
     }
 
 
-    override fun put(x: Number, y: Number, z: Number): Vec3ul {
+    fun put(x: Ulong, y: Ulong, z: Ulong) {
+        this.x = x
+        this.y = y
+        this.z = z
+    }
+
+    fun invoke(x: Ulong, y: Ulong, z: Ulong): Vec3ul {
+        this.x = x
+        this.y = y
+        this.z = z
+        return this
+    }
+
+    fun put(x: Long, y: Long, z: Long) {
+        this.x.v = x
+        this.y.v = y
+        this.z.v = z
+    }
+
+    fun invoke(x: Long, y: Long, z: Long): Vec3ul {
+        this.x.v = x
+        this.y.v = y
+        this.z.v = z
+        return this
+    }
+
+    override fun put(x: Number, y: Number, z: Number) {
+        this.x = x.ul
+        this.y = y.ul
+        this.z = z.ul
+    }
+
+    override fun invoke(x: Number, y: Number, z: Number): Vec3ul {
         this.x = x.ul
         this.y = y.ul
         this.z = z.ul
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setLong(index, x.v)
+        bytes.setLong(index + Long.BYTES, y.v)
+        bytes.setLong(index + Long.BYTES * 2, z.v)
+        return bytes
+    }
 
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putLong(index, x.v)
+        bytes.putLong(index + Long.BYTES, y.v)
+        bytes.putLong(index + Long.BYTES * 2, z.v)
+        return bytes
+    }
+
+    fun toLongArray() = to(LongArray(Companion.length), 0)
     infix fun to(longs: LongArray) = to(longs, 0)
     fun to(longs: LongArray, index: Int): LongArray {
         longs[index] = x.v
@@ -96,7 +143,8 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
         return longs
     }
 
-    infix fun to(longs: LongBuffer) = to(longs, 0)
+    fun toLongBuffer() = to(ByteBuffer.allocateDirect(size).asLongBuffer(), 0)
+    infix fun to(longs: LongBuffer) = to(longs, longs.position())
     fun to(longs: LongBuffer, index: Int): LongBuffer {
         longs[index] = x.v
         longs[index + 1] = y.v
@@ -104,16 +152,14 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
         return longs
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
-        bytes.putLong(offset, x.v)
-        bytes.putLong(offset + Long.BYTES, y.v)
-        bytes.putLong(offset + Long.BYTES * 2, z.v)
-        return bytes
-    }
-
-
     // -- Component accesses --
+
+    operator fun set(index: Int, value: Ulong) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        2 -> z = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.ul
@@ -122,15 +168,6 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
-
-    companion object : vec3ul_operators() {
-        @JvmField
-        val length = 3
-        @JvmField
-        val size = length * Ulong.BYTES
-    }
-
-    override fun size() = size
 
     // -- Unary arithmetic operators --
 
@@ -165,9 +202,11 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
     infix operator fun plusAssign(b: Ulong) {
         plus(this, this, b, b, b)
     }
+
     infix operator fun plusAssign(b: Long) {
         plus(this, this, b, b, b)
     }
+
     infix operator fun plusAssign(b: Vec3ul) {
         plus(this, this, b.x, b.y, b.z)
     }
@@ -188,9 +227,11 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
     infix operator fun minusAssign(b: Ulong) {
         minus(this, this, b, b, b)
     }
+
     infix operator fun minusAssign(b: Long) {
         minus(this, this, b, b, b)
     }
+
     infix operator fun minusAssign(b: Vec3ul) {
         minus(this, this, b.x, b.y, b.z)
     }
@@ -211,9 +252,11 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
     infix operator fun timesAssign(b: Ulong) {
         times(this, this, b, b, b)
     }
+
     infix operator fun timesAssign(b: Long) {
         times(this, this, b, b, b)
     }
+
     infix operator fun timesAssign(b: Vec3ul) {
         times(this, this, b.x, b.y, b.z)
     }
@@ -234,9 +277,11 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
     infix operator fun divAssign(b: Ulong) {
         div(this, this, b, b, b)
     }
+
     infix operator fun divAssign(b: Long) {
         div(this, this, b, b, b)
     }
+
     infix operator fun divAssign(b: Vec3ul) {
         div(this, this, b.x, b.y, b.z)
     }
@@ -257,9 +302,11 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
     infix operator fun remAssign(b: Ulong) {
         rem(this, this, b, b, b)
     }
+
     infix operator fun remAssign(b: Long) {
         rem(this, this, b, b, b)
     }
+
     infix operator fun remAssign(b: Vec3ul) {
         rem(this, this, b.x, b.y, b.z)
     }
@@ -278,6 +325,7 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.L, b.L, b.L)
     }
+
     infix operator fun plusAssign(b: Vec3t<out Number>) {
         plus(this, this, b.x.L, b.y.L, b.z.L)
     }
@@ -294,6 +342,7 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.L, b.L, b.L)
     }
+
     infix operator fun minusAssign(b: Vec3t<out Number>) {
         minus(this, this, b.x.L, b.y.L, b.z.L)
     }
@@ -310,6 +359,7 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.L, b.L, b.L)
     }
+
     infix operator fun timesAssign(b: Vec3t<out Number>) {
         times(this, this, b.x.L, b.y.L, b.z.L)
     }
@@ -326,6 +376,7 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.L, b.L, b.L)
     }
+
     infix operator fun divAssign(b: Vec3t<out Number>) {
         div(this, this, b.x.L, b.y.L, b.z.L)
     }
@@ -342,6 +393,7 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.L, b.L, b.L)
     }
+
     infix operator fun remAssign(b: Vec3t<out Number>) {
         rem(this, this, b.x.L, b.y.L, b.z.L)
     }
@@ -490,6 +542,14 @@ class Vec3ul(x: Ulong, y: Ulong, z: Ulong) : Vec3t<Ulong>(x, y, z) {
     fun shr(b: Number, res: Vec3ul) = shr(res, this, b.L, b.L, b.L)
     fun shr(bX: Number, bY: Number, bZ: Number, res: Vec3ul) = shr(res, this, bX.L, bY.L, bZ.L)
 
+
+    companion object : vec3ul_operators() {
+        const val length = Vec3t.length
+        @JvmField
+        val size = length * Ulong.BYTES
+    }
+
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec3ul && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.v.hashCode() + y.v.hashCode()) + z.v.hashCode()

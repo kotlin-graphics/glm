@@ -173,15 +173,15 @@ data class Mat3d(override var value: MutableList<Vec3d>) : Mat3x3t<Vec3d>(value)
     fun put(x: Double, y: Double, z: Double): Mat3d {
 
         value[0][0] = x
-        value[0][1] = 0f
-        value[0][2] = 0f
+        value[0][1] = 0.0
+        value[0][2] = 0.0
 
-        value[1][0] = 0f
+        value[1][0] = 0.0
         value[1][1] = y
-        value[1][2] = 0f
+        value[1][2] = 0.0
 
-        value[2][0] = 0f
-        value[2][1] = 0f
+        value[2][0] = 0.0
+        value[2][1] = 0.0
         value[2][2] = z
 
         return this

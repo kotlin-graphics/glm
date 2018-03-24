@@ -72,19 +72,42 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
     }
 
 
-    fun put(x: Short, y: Short): Vec2s {
+    fun put(x: Short, y: Short) {
+        this.x = x
+        this.y = y
+    }
+
+    fun invoke(x: Short, y: Short): Vec2s {
         this.x = x
         this.y = y
         return this
     }
 
-    override fun put(x: Number, y: Number): Vec2s {
+    override fun put(x: Number, y: Number) {
+        this.x = x.s
+        this.y = y.s
+    }
+
+    override fun invoke(x: Number, y: Number): Vec2s {
         this.x = x.s
         this.y = y.s
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setShort(index, x)
+        bytes.setShort(index + Short.BYTES, y)
+        return bytes
+    }
 
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putShort(index, x)
+        bytes.putShort(index + Short.BYTES, y)
+        return bytes
+    }
+
+    fun toShortArray() = to(ShortArray(Companion.length), 0)
     infix fun to(shorts: ShortArray) = to(shorts, 0)
     fun to(shorts: ShortArray, index: Int): ShortArray {
         shorts[index] = x
@@ -92,22 +115,21 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
         return shorts
     }
 
-    infix fun to(floats: ShortBuffer) = to(floats, 0)
+    fun toShortBuffer() = to(ByteBuffer.allocateDirect(size).asShortBuffer(), 0)
+    infix fun to(shorts: ShortBuffer) = to(shorts, shorts.position())
     fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
         shorts[index] = x
         shorts[index + 1] = y
         return shorts
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
-        bytes.putShort(offset, x)
-        bytes.putShort(offset + Short.BYTES, y)
-        return bytes
-    }
-
-
     // -- Component accesses --
+
+    operator fun set(index: Int, value: Short) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.s
@@ -115,15 +137,6 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
-
-    companion object : opVec2s() {
-        @JvmField
-        val length = 2
-        @JvmField
-        val size = length * Short.BYTES
-    }
-
-    override fun size() = size
 
     // -- Unary arithmetic operators --
 
@@ -165,9 +178,11 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
     infix operator fun plusAssign(b: Short) {
         plus(this, this, b, b)
     }
+
     infix operator fun plusAssign(b: Int) {
         plus(this, this, b, b)
     }
+
     infix operator fun plusAssign(b: Vec2s) {
         plus(this, this, b.x, b.y)
     }
@@ -192,9 +207,11 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
     infix operator fun minusAssign(b: Short) {
         minus(this, this, b, b)
     }
+
     infix operator fun minusAssign(b: Int) {
         minus(this, this, b, b)
     }
+
     infix operator fun minusAssign(b: Vec2s) {
         minus(this, this, b.x, b.y)
     }
@@ -216,12 +233,14 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
 
     fun timesAssign(bX: Short, bY: Short) = times(this, this, bX, bY)
     fun timesAssign(bX: Int, bY: Int) = times(this, this, bX, bY)
-    infix operator  fun timesAssign(b: Short) {
+    infix operator fun timesAssign(b: Short) {
         times(this, this, b, b)
     }
+
     infix operator fun timesAssign(b: Int) {
         times(this, this, b, b)
     }
+
     infix operator fun timesAssign(b: Vec2s) {
         times(this, this, b.x, b.y)
     }
@@ -246,9 +265,11 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
     infix operator fun divAssign(b: Short) {
         div(this, this, b, b)
     }
+
     infix operator fun divAssign(b: Int) {
         div(this, this, b, b)
     }
+
     infix operator fun divAssign(b: Vec2s) {
         div(this, this, b.x, b.y)
     }
@@ -273,9 +294,11 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
     infix operator fun remAssign(b: Short) {
         rem(this, this, b, b)
     }
+
     infix operator fun remAssign(b: Int) {
         rem(this, this, b, b)
     }
+
     infix operator fun remAssign(b: Vec2s) {
         rem(this, this, b.x, b.y)
     }
@@ -296,6 +319,7 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.s, b.s)
     }
+
     infix operator fun plusAssign(b: Vec2t<out Number>) {
         plus(this, this, b.x.s, b.y.s)
     }
@@ -314,6 +338,7 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.s, b.s)
     }
+
     infix operator fun minusAssign(b: Vec2t<out Number>) {
         minus(this, this, b.x.s, b.y.s)
     }
@@ -332,6 +357,7 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.s, b.s)
     }
+
     infix operator fun timesAssign(b: Vec2t<out Number>) {
         times(this, this, b.x.s, b.y.s)
     }
@@ -350,6 +376,7 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.s, b.s)
     }
+
     infix operator fun divAssign(b: Vec2t<out Number>) {
         div(this, this, b.x.s, b.y.s)
     }
@@ -368,6 +395,7 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.s, b.s)
     }
+
     infix operator fun remAssign(b: Vec2t<out Number>) {
         rem(this, this, b.x.s, b.y.s)
     }
@@ -547,6 +575,14 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
     infix fun shrAssign(b: Vec2t<out Number>) = shr(this, this, b.x.s, b.y.s)
     fun shrAssign(bX: Number, bY: Number) = shr(this, this, bX.s, bY.s)
 
+
+    companion object : opVec2s() {
+        const val length = Vec2t.length
+        @JvmField
+        val size = length * Short.BYTES
+    }
+
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec2s && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()

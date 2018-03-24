@@ -79,14 +79,48 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     }
 
 
-    override fun put(x: Number, y: Number, z: Number): Vec3d {
+    fun put(x: Double, y: Double, z: Double) {
+        this.x = x
+        this.y = y
+        this.z = z
+    }
+
+    fun invoke(x: Double, y: Double, z: Double): Vec3d {
+        this.x = x
+        this.y = y
+        this.z = z
+        return this
+    }
+
+    override fun put(x: Number, y: Number, z: Number) {
+        this.x = x.d
+        this.y = y.d
+        this.z = z.d
+    }
+
+    override fun invoke(x: Number, y: Number, z: Number): Vec3d {
         this.x = x.d
         this.y = y.d
         this.z = z.d
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setDouble(index, x)
+        bytes.setDouble(index + Double.BYTES, y)
+        bytes.setDouble(index + Double.BYTES * 2, z)
+        return bytes
+    }
 
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putDouble(index, x)
+        bytes.putDouble(index + Double.BYTES, y)
+        bytes.putDouble(index + Double.BYTES * 2, z)
+        return bytes
+    }
+
+    fun toDoubleArray() = to(DoubleArray(Companion.length), 0)
     infix fun to(doubles: DoubleArray) = to(doubles, 0)
     fun to(doubles: DoubleArray, index: Int): DoubleArray {
         doubles[index] = x
@@ -95,7 +129,8 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
         return doubles
     }
 
-    infix fun to(doubles: DoubleBuffer) = to(doubles, 0)
+    fun toDoubleBuffer() = to(ByteBuffer.allocateDirect(size).asDoubleBuffer(), 0)
+    infix fun to(doubles: DoubleBuffer) = to(doubles, doubles.position())
     fun to(doubles: DoubleBuffer, index: Int): DoubleBuffer {
         doubles[index] = x
         doubles[index + 1] = y
@@ -103,16 +138,15 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
         return doubles
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
-        bytes.putDouble(offset, x)
-        bytes.putDouble(offset + Double.BYTES, y)
-        bytes.putDouble(offset + Double.BYTES * 2, z)
-        return bytes
-    }
-
 
     // -- Component accesses --
+
+    operator fun set(index: Int, value: Double) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        2 -> z = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.d
@@ -120,17 +154,6 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
         2 -> z = value.d
         else -> throw ArrayIndexOutOfBoundsException()
     }
-
-
-    companion object : vec3d_operators() {
-        @JvmField
-        val length = 3
-        @JvmField
-        val size = length * Double.BYTES
-    }
-
-    override fun size() = size
-
 
     // -- Unary arithmetic operators --
 
@@ -161,6 +184,7 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     infix operator fun plusAssign(b: Double) {
         plus(this, this, b, b, b)
     }
+
     infix operator fun plusAssign(b: Vec3d) {
         plus(this, this, b.x, b.y, b.z)
     }
@@ -177,6 +201,7 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     infix operator fun minusAssign(b: Double) {
         minus(this, this, b, b, b)
     }
+
     infix operator fun minusAssign(b: Vec3d) {
         minus(this, this, b.x, b.y, b.z)
     }
@@ -193,6 +218,7 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     infix operator fun timesAssign(b: Double) {
         times(this, this, b, b, b)
     }
+
     infix operator fun timesAssign(b: Vec3d) {
         times(this, this, b.x, b.y, b.z)
     }
@@ -209,6 +235,7 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     infix operator fun divAssign(b: Double) {
         div(this, this, b, b, b)
     }
+
     infix operator fun divAssign(b: Vec3d) {
         div(this, this, b.x, b.y, b.z)
     }
@@ -225,6 +252,7 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     infix operator fun remAssign(b: Double) {
         rem(this, this, b, b, b)
     }
+
     infix operator fun remAssign(b: Vec3d) {
         rem(this, this, b.x, b.y, b.z)
     }
@@ -243,6 +271,7 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.d, b.d, b.d)
     }
+
     infix operator fun plusAssign(b: Vec3t<out Number>) {
         plus(this, this, b.x.d, b.y.d, b.z.d)
     }
@@ -259,6 +288,7 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.d, b.d, b.d)
     }
+
     infix operator fun minusAssign(b: Vec3t<out Number>) {
         minus(this, this, b.x.d, b.y.d, b.z.d)
     }
@@ -275,6 +305,7 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.d, b.d, b.d)
     }
+
     infix operator fun timesAssign(b: Vec3t<out Number>) {
         times(this, this, b.x.d, b.y.d, b.z.d)
     }
@@ -291,6 +322,7 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.d, b.d, b.d)
     }
+
     infix operator fun divAssign(b: Vec3t<out Number>) {
         div(this, this, b.x.d, b.y.d, b.z.d)
     }
@@ -307,6 +339,7 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.d, b.d, b.d)
     }
+
     infix operator fun remAssign(b: Vec3t<out Number>) {
         rem(this, this, b.x.d, b.y.d, b.z.d)
     }
@@ -337,6 +370,14 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
 
     fun negateAssign() = negate(this)
 
+
+    companion object : vec3d_operators() {
+        const val length = Vec3t.length
+        @JvmField
+        val size = length * Double.BYTES
+    }
+
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec3d && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()

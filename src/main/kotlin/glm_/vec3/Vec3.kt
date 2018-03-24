@@ -15,7 +15,6 @@ import java.nio.*
 
 class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
 
-
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
     constructor() : this(0)
@@ -85,26 +84,48 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     }
 
 
-    override infix fun put(s: Number) = put(s, s, s)
-    override fun put(x: Number, y: Number, z: Number): Vec3 {
-        this.x = x.f
-        this.y = y.f
-        this.z = z.f
-        return this
+    fun put(x: Float, y: Float, z: Float) {
+        this.x = x
+        this.y = y
+        this.z = z
     }
 
-    // TODO others
-    infix fun put(s: Float) = put(s, s, s)
-
-    infix fun put(v: Vec3) = put(v.x, v.y, v.z)
-    fun put(x: Float, y: Float, z: Float): Vec3 { // TODO inline
+    fun invoke(x: Float, y: Float, z: Float): Vec3 {
         this.x = x
         this.y = y
         this.z = z
         return this
     }
 
+    override fun put(x: Number, y: Number, z: Number) {
+        this.x = x.f
+        this.y = y.f
+        this.z = z.f
+    }
 
+    override fun invoke(x: Number, y: Number, z: Number): Vec3 {
+        this.x = x.f
+        this.y = y.f
+        this.z = z.f
+        return this
+    }
+
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setFloat(index, x)
+        bytes.setFloat(index + Float.BYTES, y)
+        bytes.setFloat(index + Float.BYTES * 2, z)
+        return bytes
+    }
+
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putFloat(index, x)
+        bytes.putFloat(index + Float.BYTES, y)
+        bytes.putFloat(index + Float.BYTES * 2, z)
+        return bytes
+    }
+
+    fun toFloatArray() = to(FloatArray(Companion.length), 0)
     infix fun to(floats: FloatArray) = to(floats, 0)
     fun to(floats: FloatArray, index: Int): FloatArray {
         floats[index] = x
@@ -113,6 +134,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
         return floats
     }
 
+    fun toFloatBuffer() = to(ByteBuffer.allocateDirect(size).asFloatBuffer(), 0)
     infix fun to(floats: FloatBuffer) = to(floats, floats.position())
     fun to(floats: FloatBuffer, index: Int): FloatBuffer {
         floats[index] = x
@@ -121,17 +143,14 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
         return floats
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
-        bytes.putFloat(offset, x)
-        bytes.putFloat(offset + Float.BYTES, y)
-        bytes.putFloat(offset + Float.BYTES * 2, z)
-        return bytes
-    }
-
-
     // -- Component accesses --
 
+    operator fun set(index: Int, value: Float) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        2 -> z = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.f
@@ -139,15 +158,6 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
         2 -> z = value.f
         else -> throw ArrayIndexOutOfBoundsException()
     }
-
-    companion object : vec3_operators() {
-        @JvmField
-        val length = 3
-        @JvmField
-        val size = length * Float.BYTES
-    }
-
-    override fun size() = size
 
     // -- Unary arithmetic operators --
 
@@ -180,6 +190,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix operator fun plusAssign(b: Float) {
         plus(this, this, b, b, b)
     }
+
     infix operator fun plusAssign(b: Vec3) {
         plus(this, this, b.x, b.y, b.z)
     }
@@ -198,6 +209,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix operator fun minusAssign(b: Float) {
         minus(this, this, b, b, b)
     }
+
     infix operator fun minusAssign(b: Vec3) {
         minus(this, this, b.x, b.y, b.z)
     }
@@ -216,6 +228,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix operator fun timesAssign(b: Float) {
         times(this, this, b, b, b)
     }
+
     infix operator fun timesAssign(b: Vec3) {
         times(this, this, b.x, b.y, b.z)
     }
@@ -234,6 +247,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix operator fun divAssign(b: Float) {
         div(this, this, b, b, b)
     }
+
     infix operator fun divAssign(b: Vec3) {
         div(this, this, b.x, b.y, b.z)
     }
@@ -252,6 +266,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix operator fun remAssign(b: Float) {
         rem(this, this, b, b, b)
     }
+
     infix operator fun remAssign(b: Vec3) {
         rem(this, this, b.x, b.y, b.z)
     }
@@ -271,6 +286,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.f, b.f, b.f)
     }
+
     infix operator fun plusAssign(b: Vec3t<out Number>) {
         plus(this, this, b.x.f, b.y.f, b.z.f)
     }
@@ -286,6 +302,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.f, b.f, b.f)
     }
+
     infix operator fun minusAssign(b: Vec3t<out Number>) {
         minus(this, this, b.x.f, b.y.f, b.z.f)
     }
@@ -299,9 +316,10 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     fun times(b: Vec3t<out Number>, res: Vec3 = Vec3()) = times(res, this, b.x.f, b.y.f, b.z.f)
 
     fun timesAssign(bX: Number, bY: Number, bZ: Number) = times(this, this, bX.f, bY.f, bZ.f)
-    infix operator  fun timesAssign(b: Number) {
+    infix operator fun timesAssign(b: Number) {
         times(this, this, b.f, b.f, b.f)
     }
+
     infix operator fun timesAssign(b: Vec3t<out Number>) {
         times(this, this, b.x.f, b.y.f, b.z.f)
     }
@@ -318,6 +336,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.f, b.f, b.f)
     }
+
     infix operator fun divAssign(b: Vec3t<out Number>) {
         div(this, this, b.x.f, b.y.f, b.z.f)
     }
@@ -334,6 +353,7 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.f, b.f, b.f)
     }
+
     infix operator fun remAssign(b: Vec3t<out Number>) {
         rem(this, this, b.x.f, b.y.f, b.z.f)
     }
@@ -365,6 +385,14 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
 
     fun negateAssign() = negate(this)
 
+
+    companion object : vec3_operators() {
+        const val length = Vec3t.length
+        @JvmField
+        val size = length * Float.BYTES
+    }
+
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec3 && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()

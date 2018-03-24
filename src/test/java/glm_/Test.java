@@ -1,6 +1,7 @@
 package glm_;
 
 import glm_.mat4x4.Mat4;
+import glm_.vec1.Vec1;
 import glm_.vec2.Vec2;
 import glm_.vec3.Vec3;
 
@@ -23,6 +24,8 @@ public class Test {
 
         Vec2 a = (Vec2) v.xx();
         a.xy(v.xy());
+        Vec1 b = new Vec1();
+        int l = Vec1.length;
 //        Vec2 b = (Vec2) v.aa();
     }
 

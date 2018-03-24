@@ -72,19 +72,42 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     }
 
 
-    fun put(x: Double, y: Double): Vec2d {
+    fun put(x: Double, y: Double) {
+        this.x = x
+        this.y = y
+    }
+
+    fun invoke(x: Double, y: Double): Vec2d {
         this.x = x
         this.y = y
         return this
     }
 
-    override fun put(x: Number, y: Number): Vec2d {
+    override fun put(x: Number, y: Number) {
+        this.x = x.d
+        this.y = y.d
+    }
+
+    override fun invoke(x: Number, y: Number): Vec2d {
         this.x = x.d
         this.y = y.d
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setDouble(index, x)
+        bytes.setDouble(index + Double.BYTES, y)
+        return bytes
+    }
 
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putDouble(index, x)
+        bytes.putDouble(index + Double.BYTES, y)
+        return bytes
+    }
+
+    fun toDoubleArray() = to(DoubleArray(Companion.length), 0)
     infix fun to(doubles: DoubleArray) = to(doubles, 0)
     fun to(doubles: DoubleArray, index: Int): DoubleArray {
         doubles[index] = x
@@ -92,22 +115,21 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
         return doubles
     }
 
-    infix fun to(doubles: DoubleBuffer) = to(doubles, 0)
+    fun toDoubleBuffer() = to(ByteBuffer.allocateDirect(size).asDoubleBuffer(), 0)
+    infix fun to(doubles: DoubleBuffer) = to(doubles, doubles.position())
     fun to(doubles: DoubleBuffer, index: Int): DoubleBuffer {
         doubles[index] = x
         doubles[index + 1] = y
         return doubles
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer {
-        bytes.putDouble(offset, x)
-        bytes.putDouble(offset + Double.BYTES, y)
-        return bytes
-    }
-
-
     // -- Component accesses --
+
+    operator fun set(index: Int, value: Double) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.d
@@ -115,15 +137,6 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
-
-    companion object : opVec2d() {
-        @JvmField
-        val length = 2
-        @JvmField
-        val size = length * Double.BYTES
-    }
-
-    override fun size() = size
 
     // -- Unary arithmetic operators --
 
@@ -361,7 +374,13 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     fun negateAssign() = negate(this)
 
 
+    companion object : opVec2d() {
+        const val length = Vec2t.length
+        @JvmField
+        val size = length * Double.BYTES
+    }
 
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec2d && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()

@@ -7,6 +7,7 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4_operators
+import java.awt.Color
 import java.io.InputStream
 import java.nio.*
 
@@ -93,7 +94,29 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     }
 
 
-    override fun put(x: Number, y: Number, z: Number, w: Number): Vec4 {
+    fun put(x: Float, y: Float, z: Float, w: Float) {
+        this.x = x
+        this.y = y
+        this.z = z
+        this.w = w
+    }
+
+    fun invoke(x: Float, y: Float, z: Float, w: Float): Vec4 {
+        this.x = x
+        this.y = y
+        this.z = z
+        this.w = w
+        return this
+    }
+
+    override fun put(x: Number, y: Number, z: Number, w: Number) {
+        this.x = x.f
+        this.y = y.f
+        this.z = z.f
+        this.w = w.f
+    }
+
+    override fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4 {
         this.x = x.f
         this.y = y.f
         this.z = z.f
@@ -101,8 +124,24 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setFloat(index, x)
+        bytes.setFloat(index + Float.BYTES, y)
+        bytes.setFloat(index + Float.BYTES * 2, z)
+        bytes.setFloat(index + Float.BYTES * 3, w)
+        return bytes
+    }
 
-    fun toFloatArray() = to(FloatArray(4), 0)   // TODO others
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putFloat(index, x)
+        bytes.putFloat(index + Float.BYTES, y)
+        bytes.putFloat(index + Float.BYTES * 2, z)
+        bytes.putFloat(index + Float.BYTES * 3, w)
+        return bytes
+    }
+
+    fun toFloatArray() = to(FloatArray(Companion.length), 0)
     infix fun to(floats: FloatArray) = to(floats, 0)
     fun to(floats: FloatArray, index: Int): FloatArray {
         floats[index] = x
@@ -112,6 +151,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
         return floats
     }
 
+    fun toFloatBuffer() = to(ByteBuffer.allocateDirect(size).asFloatBuffer(), 0)
     infix fun to(floats: FloatBuffer) = to(floats, floats.position())
     fun to(floats: FloatBuffer, index: Int): FloatBuffer {
         floats[index] = x
@@ -121,17 +161,15 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
         return floats
     }
 
-    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.putFloat(index, x)
-        bytes.putFloat(index + Float.BYTES, y)
-        bytes.putFloat(index + Float.BYTES * 2, z)
-        bytes.putFloat(index + Float.BYTES * 3, w)
-        return bytes
-    }
-
-
     // -- Component accesses --
+
+    operator fun set(index: Int, value: Float) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        2 -> z = value
+        3 -> w = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.f
@@ -140,21 +178,6 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
         3 -> w = value.f
         else -> throw ArrayIndexOutOfBoundsException()
     }
-
-
-    companion object : vec4_operators() {
-        @JvmField
-        val length = 4
-        @JvmField
-        val size = length * Float.BYTES
-
-        fun fromColor(r: Number, g: Number, b: Number, a: Number = 255f): Vec4 { // TODO constructor(Color)
-            val sc = 1f / 255f
-            return Vec4(r.f * sc, g.f * sc, b.f * sc, a.f * sc)
-        }
-    }
-
-    override fun size() = size
 
 
     fun toVec3() = Vec3(this)
@@ -189,6 +212,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     infix operator fun plusAssign(b: Float) {
         plus(this, this, b, b, b, b)
     }
+
     infix operator fun plusAssign(b: Vec4) {
         plus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -205,6 +229,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     infix operator fun minusAssign(b: Float) {
         minus(this, this, b, b, b, b)
     }
+
     infix operator fun minusAssign(b: Vec4) {
         minus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -221,6 +246,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     infix operator fun timesAssign(b: Float) {
         times(this, this, b, b, b, b)
     }
+
     infix operator fun timesAssign(b: Vec4) {
         times(this, this, b.x, b.y, b.z, b.w)
     }
@@ -237,6 +263,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     infix operator fun divAssign(b: Float) {
         div(this, this, b, b, b, b)
     }
+
     infix operator fun divAssign(b: Vec4) {
         div(this, this, b.x, b.y, b.z, b.w)
     }
@@ -253,6 +280,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     infix operator fun remAssign(b: Float) {
         rem(this, this, b, b, b, b)
     }
+
     infix operator fun remAssign(b: Vec4) {
         rem(this, this, b.x, b.y, b.z, b.w)
     }
@@ -271,6 +299,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.f, b.f, b.f, b.f)
     }
+
     infix operator fun plusAssign(b: Vec4t<out Number>) {
         plus(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
     }
@@ -287,6 +316,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.f, b.f, b.f, b.f)
     }
+
     infix operator fun minusAssign(b: Vec4t<out Number>) {
         minus(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
     }
@@ -303,6 +333,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.f, b.f, b.f, b.f)
     }
+
     infix operator fun timesAssign(b: Vec4t<out Number>) {
         times(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
     }
@@ -319,6 +350,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.f, b.f, b.f, b.f)
     }
+
     infix operator fun divAssign(b: Vec4t<out Number>) {
         div(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
     }
@@ -335,6 +367,7 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.f, b.f, b.f, b.f)
     }
+
     infix operator fun remAssign(b: Vec4t<out Number>) {
         rem(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
     }
@@ -363,6 +396,19 @@ class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
 
     fun negateAssign() = negate(this)
 
+
+    companion object : vec4_operators() {
+        const val length = Vec4t.length
+        @JvmField
+        val size = length * Float.BYTES
+
+        // TODO others
+        fun fromColor(color: Color) = Vec4(color.red / 255, color.green / 255, color.blue / 255, color.alpha / 255)
+
+        fun fromColor(r: Number, g: Number, b: Number, a: Number = 255f) = Vec4(r.f / 255, g.f / 255, b.f / 255f, a.f / 255)
+    }
+
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec4 && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
     override fun hashCode() = 31 * (31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()) + w.hashCode()

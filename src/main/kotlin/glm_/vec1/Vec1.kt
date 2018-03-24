@@ -1,9 +1,6 @@
 package glm_.vec1
 
-import glm_.BYTES
-import glm_.f
-import glm_.getFloat
-import glm_.set
+import glm_.*
 import glm_.vec1.operators.vec1_operators
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
@@ -62,6 +59,8 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
     constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index])
     constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index])
 
+    constructor(block: (Int) -> Float) : this(block(0))
+
     constructor(s: Number) : this(s.f)
 
 
@@ -73,37 +72,52 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
         x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index)
     }
 
+    fun put(x: Float) {
+        this.x = x
+    }
 
-    fun put(x: Float): Vec1 {
+    fun invoke(x: Float): Vec1 {
         this.x = x
         return this
     }
 
-    override fun put(x: Number): Vec1 {
+    override fun put(x: Number) {
+        this.x = x.f
+    }
+
+    override fun invoke(x: Number): Vec1 {
         this.x = x.f
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setFloat(index, x)
+        return bytes
+    }
+
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer = bytes.putFloat(index, x)
+
+    fun toFloatArray() = to(FloatArray(length), 0)
     infix fun to(floats: FloatArray) = to(floats, 0)
     fun to(floats: FloatArray, index: Int): FloatArray {
         floats[index] = x
         return floats
     }
 
+    fun toFloatBuffer() = to(ByteBuffer.allocateDirect(size()).asFloatBuffer(), 0)
     infix fun to(floats: FloatBuffer) = to(floats, floats.position())
     fun to(floats: FloatBuffer, index: Int): FloatBuffer {
         floats[index] = x
         return floats
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, index: Int): ByteBuffer = bytes.putFloat(index, x)
-
     // -- Unary arithmetic operators --
 
     operator fun unaryPlus() = this
 
     operator fun unaryMinus() = Vec1(-x)
+
 
     // -- Increment main.and decrement operators --
 
@@ -116,6 +130,7 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
     operator fun dec() = minus(Vec1(), this, 1f)
     infix fun dec(res: Vec1) = minus(res, this, 1f)
     fun decAssign() = minus(this, this, 1f)
+
 
     // -- Specific binary arithmetic operators --
 
@@ -158,6 +173,7 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
     infix operator fun timesAssign(b: Float) {
         times(this, this, b)
     }
+
     infix operator fun timesAssign(b: Vec1) {
         times(this, this, b.x)
     }
@@ -234,6 +250,7 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.f)
     }
+
     infix operator fun timesAssign(b: Vec1t<out Number>) {
         times(this, this, b.x.f)
     }
@@ -248,6 +265,7 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.f)
     }
+
     infix operator fun divAssign(b: Vec1t<out Number>) {
         div(this, this, b.x.f)
     }
@@ -262,21 +280,14 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.f)
     }
+
     infix operator fun remAssign(b: Vec1t<out Number>) {
         rem(this, this, b.x.f)
     }
-    
 
-    // -- Component accesses --
-
-    override operator fun set(index: Int, value: Number) = when (index) {
-        0 -> x = value.f
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
 
     companion object : vec1_operators {
-        @JvmField
-        val length = 1
+        const val length = Vec1t.length
         @JvmField
         val size = length * Float.BYTES
     }

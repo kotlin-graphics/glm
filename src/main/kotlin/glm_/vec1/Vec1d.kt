@@ -59,6 +59,8 @@ class Vec1d(x: Double) : Vec1t<Double>(x) {
     constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index])
     constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index])
 
+    constructor(block: (Int) -> Double) : this(block(0))
+
     constructor(s: Number) : this(s.d)
 
 
@@ -71,30 +73,45 @@ class Vec1d(x: Double) : Vec1t<Double>(x) {
     }
 
 
-    fun put(x: Double): Vec1d {
+    fun put(x: Double) {
+        this.x = x
+    }
+
+    operator fun invoke(x: Double): Vec1d {
         this.x = x
         return this
     }
 
-    override fun put(x: Number): Vec1d {
+    override fun put(x: Number) {
+        this.x = x.d
+    }
+
+    override fun invoke(x: Number): Vec1d {
         this.x = x.d
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setDouble(index, x)
+        return bytes
+    }
+
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer  = bytes.putDouble(index, x)
+
+    fun toDoubleArray() = to(DoubleArray(length), 0)
     infix fun to(doubles: DoubleArray) = to(doubles, 0)
     fun to(doubles: DoubleArray, index: Int): DoubleArray {
         doubles[index] = x
         return doubles
     }
 
+    fun toDoubleBuffer() = to(ByteBuffer.allocateDirect(size()).asDoubleBuffer(), 0)
     infix fun to(doubles: DoubleBuffer) = to(doubles, doubles.position())
     fun to(doubles: DoubleBuffer, index: Int): DoubleBuffer {
         doubles[index] = x
         return doubles
     }
-
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, index: Int): ByteBuffer = bytes.putDouble(index, x)
 
     // -- Unary arithmetic operators --
 
@@ -262,18 +279,10 @@ class Vec1d(x: Double) : Vec1t<Double>(x) {
     infix operator fun remAssign(b: Vec1t<out Number>) {
         rem(this, this, b.x.d)
     }
-    
 
-    // -- Component accesses --
-
-    override operator fun set(index: Int, value: Number) = when (index) {
-        0 -> x = value.d
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
 
     companion object : vec1d_operators {
-        @JvmField
-        val length = 1
+        const val length = Vec1t.length
         @JvmField
         val size = length * Double.BYTES
     }

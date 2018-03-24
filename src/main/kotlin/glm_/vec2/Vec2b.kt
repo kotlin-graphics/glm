@@ -1,9 +1,6 @@
 package glm_.vec2
 
-import glm_.BYTES
-import glm_.b
-import glm_.i
-import glm_.toByte
+import glm_.*
 import glm_.vec2.operators.opVec2b
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
@@ -58,35 +55,48 @@ class Vec2b(x: Byte, y: Byte) : Vec2t<Byte>(x, y) {
     constructor(x: Number, y: Number) : this(x.b, y.b)
 
 
-    fun put(x: Byte, y: Byte): Vec2b {
+    fun put(x: Byte, y: Byte) {
+        this.x = x
+        this.y = y
+    }
+
+    fun invoke(x: Byte, y: Byte): Vec2b {
         this.x = x
         this.y = y
         return this
     }
 
-    override fun put(x: Number, y: Number): Vec2b {
+    override fun put(x: Number, y: Number) {
+        this.x = x.b
+        this.y = y.b
+    }
+
+    override fun invoke(x: Number, y: Number): Vec2b {
         this.x = x.b
         this.y = y.b
         return this
     }
 
-
-    infix fun to(bytes: ByteArray) = to(bytes, 0)
-    fun to(bytes: ByteArray, index: Int): ByteArray {
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
         bytes[index] = x
-        bytes[index + 1] = y
+        bytes[index + Byte.BYTES] = y
         return bytes
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int):ByteBuffer {
-        bytes.put(offset, x)
-        bytes.put(offset + Byte.BYTES, y)
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes[index] = x
+        bytes[index + Float.BYTES] = y
         return bytes
     }
-
 
     // -- Component accesses --
+
+    operator fun set(index: Int, value: Byte) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.b
@@ -94,15 +104,6 @@ class Vec2b(x: Byte, y: Byte) : Vec2t<Byte>(x, y) {
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
-
-    companion object : opVec2b() {
-        @JvmField
-        val length = 2
-        @JvmField
-        val size = length * Byte.BYTES
-    }
-
-    override fun size() = size
 
     // -- Unary arithmetic operators --
 
@@ -525,6 +526,14 @@ class Vec2b(x: Byte, y: Byte) : Vec2t<Byte>(x, y) {
     infix fun shrAssign(b: Vec2t<out Number>) = shr(this, this, b.x.b, b.y.b)
     fun shrAssign(bX: Number, bY: Number) = shr(this, this, bX.b, bY.b)
 
+
+    companion object : opVec2b() {
+        const val length = Vec2t.length
+        @JvmField
+        val size = length * Byte.BYTES
+    }
+
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec2b && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()

@@ -48,38 +48,39 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
     constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index])
     constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index])
 
+    constructor(block: (Int) -> Byte) : this(block(0))
+
     constructor(x: Number) : this(x.b)
 
 
-    fun put(x: Byte): Vec1b {
+    fun put(x: Byte) {
         this.x = x
-        return this
     }
 
-    override fun put(x: Number): Vec1b {
+    fun invoke(x: Byte): Vec1b {
         this.x = x.b
         return this
     }
 
-    infix fun to(bytes: ByteArray) = to(bytes, 0)
-    fun to(bytes: ByteArray, index: Int): ByteArray {
+    override fun put(x: Number) {
+        this.x = x.b
+    }
+
+    override fun invoke(x: Number): Vec1b {
+        this.x = x.b
+        return this
+    }
+
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
         bytes[index] = x
         return bytes
     }
 
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, index: Int): ByteBuffer = bytes.put(index, x)
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer = bytes.put(index, x)
 
-    // -- Component accesses --
-
-    override operator fun set(index: Int, value: Number) = when (index) {
-        0 -> x = value.b
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-    companion object {//TODO : vec2b_operators {
-    @JvmField
-    val length = 1
+    companion object { //TODO : vec2b_operators {
+        const val length = Vec1t.length
         @JvmField
         val size = length * Byte.BYTES
     }

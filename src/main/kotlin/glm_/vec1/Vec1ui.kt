@@ -55,6 +55,8 @@ class Vec1ui(x: Uint) : Vec1t<Uint>(x) {
     constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index])
     constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index])
 
+    constructor(block: (Int) -> Uint) : this(block(0))
+
     constructor(x: Number) : this(x.ui)
 
 
@@ -67,41 +69,57 @@ class Vec1ui(x: Uint) : Vec1t<Uint>(x) {
     }
 
 
-    override fun put(x: Number): Vec1ui {
+    fun put(x: Uint) {
+        this.x = x
+    }
+
+    fun invoke(x: Uint): Vec1ui {
+        this.x = x
+        return this
+    }
+
+    fun put(x: Int) {
+        this.x.v = x
+    }
+
+    fun invoke(x: Int): Vec1ui {
+        this.x.v = x
+        return this
+    }
+
+    override fun put(x: Number) {
+        this.x = x.ui
+    }
+
+    override fun invoke(x: Number): Vec1ui {
         this.x = x.ui
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setInt(index, x.v)
+        return bytes
+    }
 
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer = bytes.putInt(index, x.v)
+
+    fun toIntArray() = to(IntArray(length), 0)
     infix fun to(ints: IntArray) = to(ints, 0)
     fun to(ints: IntArray, index: Int): IntArray {
         ints[index] = x.v
         return ints
     }
 
-    infix fun to(ints: IntBuffer) = to(ints, 0)
-    fun to(ints: IntBuffer, index: Int): IntBuffer = ints.put(index, x.v)
-
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    fun to(bytes: ByteBuffer, offset: Int): ByteBuffer = bytes.putInt(offset, x.v)
-
-
-    // -- Component accesses --
-
-    override operator fun set(index: Int, value: Number) = when (index) {
-        0 -> x = value.ui
-        else -> throw ArrayIndexOutOfBoundsException()
+    fun toIntBuffer() = to(ByteBuffer.allocateDirect(size()).asIntBuffer(), 0)
+    infix fun to(ints: IntBuffer) = to(ints, ints.position())
+    fun to(ints: IntBuffer, index: Int): IntBuffer {
+        ints[index] = x.v
+        return ints
     }
 
 
-    companion object /*: opVec2ui */ {
-        @JvmField
-        val length = 1
-        @JvmField
-        val size = length * Uint.BYTES
-    }
 
-    override fun size() = size
 
 
     // -- Unary arithmetic operators --
@@ -473,6 +491,14 @@ class Vec1ui(x: Uint) : Vec1t<Uint>(x) {
 //    infix fun shr_(b: Vec2t<out Number>) = shr(this, this, b.x.i, b.y.i)
 //    fun shr_(bX: Number, bY: Number) = shr(this, this, bX.i, bY.i)
 
+
+    companion object /*: opVec2ui */ {
+        const val length = Vec1t.length
+        @JvmField
+        val size = length * Uint.BYTES
+    }
+
+    override fun size() = size
 
     override fun equals(other: Any?) = other is Vec1ui && this[0] == other[0]
     override fun hashCode() = x.v.hashCode()
