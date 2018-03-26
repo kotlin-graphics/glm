@@ -84,7 +84,29 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     }
 
 
-    override fun put(x: Number, y: Number, z: Number, w: Number): Vec4i {
+    fun put(x: Int, y: Int, z: Int, w: Int) {
+        this.x = x
+        this.y = y
+        this.z = z
+        this.w = w
+    }
+
+    fun invoke(x: Int, y: Int, z: Int, w: Int): Vec4i {
+        this.x = x
+        this.y = y
+        this.z = z
+        this.w = w
+        return this
+    }
+
+    override fun put(x: Number, y: Number, z: Number, w: Number) {
+        this.x = x.i
+        this.y = y.i
+        this.z = z.i
+        this.w = w.i
+    }
+
+    override fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4i {
         this.x = x.i
         this.y = y.i
         this.z = z.i
@@ -92,8 +114,24 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setInt(index, x)
+        bytes.setInt(index + Int.BYTES, y)
+        bytes.setInt(index + Int.BYTES * 2, z)
+        bytes.setInt(index + Int.BYTES * 3, w)
+        return bytes
+    }
 
-    fun toIntArray() = to(IntArray(4))
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putInt(index, x)
+        bytes.putInt(index + Int.BYTES, y)
+        bytes.putInt(index + Int.BYTES * 2, z)
+        bytes.putInt(index + Int.BYTES * 3, w)
+        return bytes
+    }
+
+    fun toIntArray() = to(IntArray(Companion.length), 0)
     infix fun to(ints: IntArray) = to(ints, 0)
     fun to(ints: IntArray, index: Int): IntArray {
         ints[index] = x
@@ -103,7 +141,8 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
         return ints
     }
 
-    infix fun to(ints: IntBuffer) = to(ints, 0)
+    fun toIntBuffer() = to(ByteBuffer.allocateDirect(size).asIntBuffer(), 0)
+    infix fun to(ints: IntBuffer) = to(ints, ints.position())
     fun to(ints: IntBuffer, index: Int): IntBuffer {
         ints[index] = x
         ints[index + 1] = y
@@ -112,17 +151,15 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
         return ints
     }
 
-    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.putInt(index, x)
-        bytes.putInt(index + Int.BYTES, y)
-        bytes.putInt(index + Int.BYTES * 2, z)
-        bytes.putInt(index + Int.BYTES * 3, w)
-        return bytes
-    }
-
-
     // -- Component accesses --
+
+    operator fun set(index: Int, value: Int) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        2 -> z = value
+        3 -> w = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.i
@@ -133,14 +170,6 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     }
 
 
-    companion object : vec4i_operators() {
-        @JvmField
-        val length = 4
-        @JvmField
-        val size = length * Int.BYTES
-    }
-
-    override fun size() = size
 
 
     // -- Unary arithmetic operators --
@@ -479,6 +508,16 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
     fun shr(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4i = Vec4i()) = shr(res, this, bX.i, bY.i, bZ.i, bW.i)
 
     fun shrAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(this, this, bX.i, bY.i, bZ.i, bW.i)
+
+
+
+    companion object : vec4i_operators() {
+        const val length = Vec4t.length
+        @JvmField
+        val size = length * Int.BYTES
+    }
+
+    override fun size() = size
 
 
     override fun equals(other: Any?) = other is Vec4i && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]

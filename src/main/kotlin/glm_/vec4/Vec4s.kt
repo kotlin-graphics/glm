@@ -84,7 +84,29 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
     }
 
 
-    override fun put(x: Number, y: Number, z: Number, w: Number): Vec4s {
+    fun put(x: Short, y: Short, z: Short, w: Short) {
+        this.x = x
+        this.y = y
+        this.z = z
+        this.w = w
+    }
+
+    fun invoke(x: Short, y: Short, z: Short, w: Short): Vec4s {
+        this.x = x
+        this.y = y
+        this.z = z
+        this.w = w
+        return this
+    }
+
+    override fun put(x: Number, y: Number, z: Number, w: Number) {
+        this.x = x.s
+        this.y = y.s
+        this.z = z.s
+        this.w = w.s
+    }
+
+    override fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4s {
         this.x = x.s
         this.y = y.s
         this.z = z.s
@@ -92,7 +114,24 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setShort(index, x)
+        bytes.setShort(index + Short.BYTES, y)
+        bytes.setShort(index + Short.BYTES * 2, z)
+        bytes.setShort(index + Short.BYTES * 3, w)
+        return bytes
+    }
 
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putShort(index, x)
+        bytes.putShort(index + Short.BYTES, y)
+        bytes.putShort(index + Short.BYTES * 2, z)
+        bytes.putShort(index + Short.BYTES * 3, w)
+        return bytes
+    }
+
+    fun toShortArray() = to(ShortArray(Companion.length), 0)
     infix fun to(shorts: ShortArray) = to(shorts, 0)
     fun to(shorts: ShortArray, index: Int): ShortArray {
         shorts[index] = x
@@ -102,7 +141,8 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
         return shorts
     }
 
-    infix fun to(floats: ShortBuffer) = to(floats, 0)
+    fun toShortBuffer() = to(ByteBuffer.allocateDirect(size).asShortBuffer(), 0)
+    infix fun to(shorts: ShortBuffer) = to(shorts, shorts.position())
     fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
         shorts[index] = x
         shorts[index + 1] = y
@@ -111,18 +151,15 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
         return shorts
     }
 
-    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.putShort(index, x)
-        bytes.putShort(index + Short.BYTES, y)
-        bytes.putShort(index + Short.BYTES * 2, z)
-        bytes.putShort(index + Short.BYTES * 3, w)
-        return bytes
-    }
-
-
-
     // -- Component accesses --
+
+    operator fun set(index: Int, value: Short) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        2 -> z = value
+        3 -> w = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.s
@@ -133,14 +170,7 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
     }
 
 
-    companion object : vec4s_operators() {
-        @JvmField
-        val length = 4
-        @JvmField
-        val size = length * Short.BYTES
-    }
 
-    override fun size() = size
 
 
 
@@ -531,6 +561,15 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
     fun shr(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4s = Vec4s()) = shr(res, this, bX.s, bY.s, bZ.s, bW.s)
 
     fun shrAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(this, this, bX.s, bY.s, bZ.s, bW.s)
+
+
+    companion object : vec4s_operators() {
+        const val length = Vec4t.length
+        @JvmField
+        val size = length * Short.BYTES
+    }
+
+    override fun size() = size
 
 
     override fun equals(other: Any?) = other is Vec4s && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]

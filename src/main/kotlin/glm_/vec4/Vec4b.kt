@@ -67,7 +67,7 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
         this.w = w
     }
 
-    fun invoke(x: Float, y: Float, z: Float, w: Float): Vec4 {
+    fun invoke(x: Byte, y: Byte, z: Byte, w: Byte): Vec4b {
         this.x = x
         this.y = y
         this.z = z
@@ -76,60 +76,40 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     }
 
     override fun put(x: Number, y: Number, z: Number, w: Number) {
-        this.x = x.f
-        this.y = y.f
-        this.z = z.f
-        this.w = w.f
+        this.x = x.b
+        this.y = y.b
+        this.z = z.b
+        this.w = w.b
     }
 
-    override fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4 {
-        this.x = x.f
-        this.y = y.f
-        this.z = z.f
-        this.w = w.f
+    override fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4b {
+        this.x = x.b
+        this.y = y.b
+        this.z = z.b
+        this.w = w.b
         return this
     }
 
     fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
-        bytes.setFloat(index, x)
-        bytes.setFloat(index + Float.BYTES, y)
-        bytes.setFloat(index + Float.BYTES * 2, z)
-        bytes.setFloat(index + Float.BYTES * 3, w)
+        bytes[index] = x
+        bytes[index + 1] = y
+        bytes[index + 2] = z
+        bytes[index + 3] = w
         return bytes
     }
 
     override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.putFloat(index, x)
-        bytes.putFloat(index + Float.BYTES, y)
-        bytes.putFloat(index + Float.BYTES * 2, z)
-        bytes.putFloat(index + Float.BYTES * 3, w)
+        bytes[index] = x
+        bytes[index + 1] = y
+        bytes[index + 2] = z
+        bytes[index + 3] = w
         return bytes
-    }
-
-    fun toFloatArray() = to(FloatArray(Companion.length), 0)
-    infix fun to(floats: FloatArray) = to(floats, 0)
-    fun to(floats: FloatArray, index: Int): FloatArray {
-        floats[index] = x
-        floats[index + 1] = y
-        floats[index + 2] = z
-        floats[index + 3] = w
-        return floats
-    }
-
-    fun toFloatBuffer() = to(ByteBuffer.allocateDirect(size).asFloatBuffer(), 0)
-    infix fun to(floats: FloatBuffer) = to(floats, floats.position())
-    fun to(floats: FloatBuffer, index: Int): FloatBuffer {
-        floats[index] = x
-        floats[index + 1] = y
-        floats[index + 2] = z
-        floats[index + 3] = w
-        return floats
     }
 
     // -- Component accesses --
 
-    operator fun set(index: Int, value: Float) = when (index) {
+    operator fun set(index: Int, value: Byte) = when (index) {
         0 -> x = value
         1 -> y = value
         2 -> z = value
@@ -138,22 +118,12 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     }
 
     override operator fun set(index: Int, value: Number) = when (index) {
-        0 -> x = value.f
-        1 -> y = value.f
-        2 -> z = value.f
-        3 -> w = value.f
+        0 -> x = value.b
+        1 -> y = value.b
+        2 -> z = value.b
+        3 -> w = value.b
         else -> throw ArrayIndexOutOfBoundsException()
     }
-
-
-    companion object : vec4b_operators() {
-        @JvmField
-        val length = 4
-        @JvmField
-        val size = length * Byte.BYTES
-    }
-
-    override fun size() = size
 
 
     // -- Unary arithmetic operators --
@@ -189,9 +159,11 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     infix operator fun plusAssign(b: Byte) {
         plus(this, this, b, b, b, b)
     }
+
     infix operator fun plusAssign(b: Int) {
         plus(this, this, b, b, b, b)
     }
+
     infix operator fun plusAssign(b: Vec4b) {
         plus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -212,9 +184,11 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     infix operator fun minusAssign(b: Byte) {
         minus(this, this, b, b, b, b)
     }
+
     infix operator fun minusAssign(b: Int) {
         minus(this, this, b, b, b, b)
     }
+
     infix operator fun minusAssign(b: Vec4b) {
         minus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -235,9 +209,11 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     infix operator fun timesAssign(b: Byte) {
         times(this, this, b, b, b, b)
     }
+
     infix operator fun timesAssign(b: Int) {
         times(this, this, b, b, b, b)
     }
+
     infix operator fun timesAssign(b: Vec4b) {
         times(this, this, b.x, b.y, b.z, b.w)
     }
@@ -258,9 +234,11 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     infix operator fun divAssign(b: Byte) {
         div(this, this, b, b, b, b)
     }
+
     infix operator fun divAssign(b: Int) {
         div(this, this, b, b, b, b)
     }
+
     infix operator fun divAssign(b: Vec4b) {
         div(this, this, b.x, b.y, b.z, b.w)
     }
@@ -281,9 +259,11 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     infix operator fun remAssign(b: Byte) {
         rem(this, this, b, b, b, b)
     }
+
     infix operator fun remAssign(b: Int) {
         rem(this, this, b, b, b, b)
     }
+
     infix operator fun remAssign(b: Vec4b) {
         rem(this, this, b.x, b.y, b.z, b.w)
     }
@@ -302,6 +282,7 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun plusAssign(b: Vec4t<out Number>) {
         plus(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -318,6 +299,7 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun minusAssign(b: Vec4t<out Number>) {
         minus(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -334,6 +316,7 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun timesAssign(b: Vec4t<out Number>) {
         times(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -350,6 +333,7 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun divAssign(b: Vec4t<out Number>) {
         div(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -366,6 +350,7 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun remAssign(b: Vec4t<out Number>) {
         rem(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -542,6 +527,15 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     fun shr(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4b = Vec4b()) = shr(res, this, bX.b, bY.b, bZ.b, bW.b)
 
     fun shrAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(this, this, bX.b, bY.b, bZ.b, bW.b)
+
+
+    companion object : vec4b_operators() {
+        const val length = Vec4t.length
+        @JvmField
+        val size = length * Byte.BYTES
+    }
+
+    override fun size() = size
 
 
     override fun equals(other: Any?) = other is Vec4b && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]

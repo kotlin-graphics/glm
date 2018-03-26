@@ -85,7 +85,44 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
     }
 
 
-    override fun put(x: Number, y: Number, z: Number, w: Number): Vec4us {
+    fun put(x: Ushort, y: Ushort, z: Ushort, w: Ushort) {
+        this.x = x
+        this.y = y
+        this.z = z
+        this.w = w
+    }
+
+    fun put(x: Short, y: Short, z: Short, w: Short) {
+        this.x.v = x
+        this.y.v = y
+        this.z.v = z
+        this.w.v = w
+    }
+
+    fun invoke(x: Ushort, y: Ushort, z: Ushort, w: Ushort): Vec4us {
+        this.x = x
+        this.y = y
+        this.z = z
+        this.w = w
+        return this
+    }
+
+    fun invoke(x: Short, y: Short, z: Short, w: Short): Vec4us {
+        this.x.v = x
+        this.y.v = y
+        this.z.v = z
+        this.w.v = w
+        return this
+    }
+
+    override fun put(x: Number, y: Number, z: Number, w: Number) {
+        this.x = x.us
+        this.y = y.us
+        this.z = z.us
+        this.w = w.us
+    }
+
+    override fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4us {
         this.x = x.us
         this.y = y.us
         this.z = z.us
@@ -93,7 +130,24 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setShort(index, x.v)
+        bytes.setShort(index + Short.BYTES, y.v)
+        bytes.setShort(index + Short.BYTES * 2, z.v)
+        bytes.setShort(index + Short.BYTES * 3, w.v)
+        return bytes
+    }
 
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putShort(index, x.v)
+        bytes.putShort(index + Short.BYTES, y.v)
+        bytes.putShort(index + Short.BYTES * 2, z.v)
+        bytes.putShort(index + Short.BYTES * 3, w.v)
+        return bytes
+    }
+
+    fun toShortArray() = to(ShortArray(Companion.length), 0)
     infix fun to(shorts: ShortArray) = to(shorts, 0)
     fun to(shorts: ShortArray, index: Int): ShortArray {
         shorts[index] = x.v
@@ -103,7 +157,8 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
         return shorts
     }
 
-    infix fun to(floats: ShortBuffer) = to(floats, 0)
+    fun toShortBuffer() = to(ByteBuffer.allocateDirect(size).asShortBuffer(), 0)
+    infix fun to(shorts: ShortBuffer) = to(shorts, shorts.position())
     fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
         shorts[index] = x.v
         shorts[index + 1] = y.v
@@ -112,17 +167,23 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
         return shorts
     }
 
-    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.putShort(index, x.v)
-        bytes.putShort(index + Short.BYTES, y.v)
-        bytes.putShort(index + Short.BYTES * 2, z.v)
-        bytes.putShort(index + Short.BYTES * 3, w.v)
-        return bytes
+    // -- Component accesses --
+
+    operator fun set(index: Int, value: Ushort) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        2 -> z = value
+        3 -> w = value
+        else -> throw ArrayIndexOutOfBoundsException()
     }
 
-
-    // -- Component accesses --
+    operator fun set(index: Int, value: Short) = when (index) {
+        0 -> x.v = value
+        1 -> y.v = value
+        2 -> z.v = value
+        3 -> w.v = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.us

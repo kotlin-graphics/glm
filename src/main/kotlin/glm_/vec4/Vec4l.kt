@@ -84,7 +84,29 @@ class Vec4l(x: Long, y: Long, z: Long, w: Long) : Vec4t<Long>(x, y, z, w) {
     }
 
 
-    override fun put(x: Number, y: Number, z: Number, w: Number): Vec4l {
+    fun put(x: Long, y: Long, z: Long, w: Long) {
+        this.x = x
+        this.y = y
+        this.z = z
+        this.w = w
+    }
+
+    fun invoke(x: Long, y: Long, z: Long, w: Long): Vec4l {
+        this.x = x
+        this.y = y
+        this.z = z
+        this.w = w
+        return this
+    }
+
+    override fun put(x: Number, y: Number, z: Number, w: Number) {
+        this.x = x.L
+        this.y = y.L
+        this.z = z.L
+        this.w = w.L
+    }
+
+    override fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4l {
         this.x = x.L
         this.y = y.L
         this.z = z.L
@@ -92,7 +114,24 @@ class Vec4l(x: Long, y: Long, z: Long, w: Long) : Vec4t<Long>(x, y, z, w) {
         return this
     }
 
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
+        bytes.setLong(index, x)
+        bytes.setLong(index + Long.BYTES, y)
+        bytes.setLong(index + Long.BYTES * 2, z)
+        bytes.setLong(index + Long.BYTES * 3, w)
+        return bytes
+    }
 
+    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
+        bytes.putLong(index, x)
+        bytes.putLong(index + Long.BYTES, y)
+        bytes.putLong(index + Long.BYTES * 2, z)
+        bytes.putLong(index + Long.BYTES * 3, w)
+        return bytes
+    }
+
+    fun toLongArray() = to(LongArray(Companion.length), 0)
     infix fun to(longs: LongArray) = to(longs, 0)
     fun to(longs: LongArray, index: Int): LongArray {
         longs[index] = x
@@ -102,7 +141,8 @@ class Vec4l(x: Long, y: Long, z: Long, w: Long) : Vec4t<Long>(x, y, z, w) {
         return longs
     }
 
-    infix fun to(longs: LongBuffer) = to(longs, 0)
+    fun toLongBuffer() = to(ByteBuffer.allocateDirect(size).asLongBuffer(), 0)
+    infix fun to(longs: LongBuffer) = to(longs, longs.position())
     fun to(longs: LongBuffer, index: Int): LongBuffer {
         longs[index] = x
         longs[index + 1] = y
@@ -111,17 +151,15 @@ class Vec4l(x: Long, y: Long, z: Long, w: Long) : Vec4t<Long>(x, y, z, w) {
         return longs
     }
 
-    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.putLong(index, x)
-        bytes.putLong(index + Long.BYTES, y)
-        bytes.putLong(index + Long.BYTES * 2, z)
-        bytes.putLong(index + Long.BYTES * 3, w)
-        return bytes
-    }
-
-
     // -- Component accesses --
+
+    operator fun set(index: Int, value: Long) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        2 -> z = value
+        3 -> w = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.L
@@ -132,14 +170,7 @@ class Vec4l(x: Long, y: Long, z: Long, w: Long) : Vec4t<Long>(x, y, z, w) {
     }
 
 
-    companion object : vec4l_operators() {
-        @JvmField
-        val length = 4
-        @JvmField
-        val size = length * Long.BYTES
-    }
 
-    override fun size() = Vec4l.size
 
 
     // -- Unary arithmetic operators --
@@ -468,6 +499,15 @@ class Vec4l(x: Long, y: Long, z: Long, w: Long) : Vec4t<Long>(x, y, z, w) {
     fun shr(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4l = Vec4l()) = shr(res, this, bX.L, bY.L, bZ.L, bW.L)
 
     fun shrAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(this, this, bX.L, bY.L, bZ.L, bW.L)
+
+
+    companion object : vec4l_operators() {
+        const val length = Vec4t.length
+        @JvmField
+        val size = length * Long.BYTES
+    }
+
+    override fun size() = Vec4l.size
 
 
     override fun equals(other: Any?) = other is Vec4l && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]

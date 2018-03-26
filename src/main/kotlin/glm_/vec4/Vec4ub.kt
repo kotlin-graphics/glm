@@ -60,7 +60,44 @@ class Vec4ub(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : Vec4t<Ubyte>(x, y, z, w) 
     constructor(x: Number, y: Number, z: Number, w: Number) : this(x.ub, y.ub, z.ub, w.ub)
 
 
-    override fun put(x: Number, y: Number, z: Number, w: Number): Vec4ub {
+    fun put(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) {
+        this.x = x
+        this.y = y
+        this.z = z
+        this.w = w
+    }
+    
+    fun put(x: Byte, y: Byte, z: Byte, w: Byte) {
+        this.x.v = x
+        this.y.v = y
+        this.z.v = z
+        this.w.v = w
+    }
+
+    fun invoke(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte): Vec4ub {
+        this.x = x
+        this.y = y
+        this.z = z
+        this.w = w
+        return this
+    }
+
+    fun invoke(x: Byte, y: Byte, z: Byte, w: Byte): Vec4ub {
+        this.x.v = x
+        this.y.v = y
+        this.z.v = z
+        this.w.v = w
+        return this
+    }
+
+    override fun put(x: Number, y: Number, z: Number, w: Number) {
+        this.x = x.ub
+        this.y = y.ub
+        this.z = z.ub
+        this.w = w.ub
+    }
+
+    override fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4ub {
         this.x = x.ub
         this.y = y.ub
         this.z = z.ub
@@ -68,9 +105,8 @@ class Vec4ub(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : Vec4t<Ubyte>(x, y, z, w) 
         return this
     }
 
-
-    infix fun to(bytes: ByteArray) = to(bytes, 0)
-    fun to(bytes: ByteArray, index: Int): ByteArray {
+    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
         bytes[index] = x.v
         bytes[index + 1] = y.v
         bytes[index + 2] = z.v
@@ -78,7 +114,6 @@ class Vec4ub(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : Vec4t<Ubyte>(x, y, z, w) 
         return bytes
     }
 
-    override infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
     override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
         bytes[index] = x.v
         bytes[index + 1] = y.v
@@ -90,6 +125,22 @@ class Vec4ub(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : Vec4t<Ubyte>(x, y, z, w) 
 
     // -- Component accesses --
 
+    operator fun set(index: Int, value: Ubyte) = when (index) {
+        0 -> x = value
+        1 -> y = value
+        2 -> z = value
+        3 -> w = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
+
+    operator fun set(index: Int, value: Byte) = when (index) {
+        0 -> x.v = value
+        1 -> y.v = value
+        2 -> z.v = value
+        3 -> w.v = value
+        else -> throw ArrayIndexOutOfBoundsException()
+    }
+
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.ub
         1 -> y = value.ub
@@ -99,14 +150,7 @@ class Vec4ub(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : Vec4t<Ubyte>(x, y, z, w) 
     }
 
 
-    companion object : vec4ub_operators() {
-        @JvmField
-        val length = 4
-        @JvmField
-        val size = length * Ubyte.BYTES
-    }
 
-    override fun size() = size
 
 
 
@@ -557,6 +601,15 @@ class Vec4ub(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : Vec4t<Ubyte>(x, y, z, w) 
     fun shr(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4ub = Vec4ub()) = shr(res, this, bX.i, bY.i, bZ.i, bW.i)
 
     fun shrAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(this, this, bX.i, bY.i, bZ.i, bW.i)
+
+
+    companion object : vec4ub_operators() {
+        const val length = Vec4t.length
+        @JvmField
+        val size = length * Ubyte.BYTES
+    }
+
+    override fun size() = size
 
 
     override fun equals(other: Any?) = other is Vec4ub && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
