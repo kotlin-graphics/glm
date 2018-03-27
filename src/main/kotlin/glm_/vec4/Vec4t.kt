@@ -79,8 +79,6 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
     infix fun put(floats: FloatBuffer) = put(floats, 0)
     infix fun put(doubles: DoubleBuffer) = put(doubles, 0)
 
-    infix fun put(s: Number) = put(s, s, s, s)
-
     // -- indexed Generic Constructors --
 
     fun put(bytes: ByteArray, index: Int) = put(bytes[index], bytes[index + 1], bytes[index + 2], bytes[index + 2])
