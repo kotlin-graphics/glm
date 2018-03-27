@@ -117,9 +117,9 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
     fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
         bytes.setDouble(index, x)
-        bytes.setDouble(index + Float.BYTES, y)
-        bytes.setDouble(index + Float.BYTES * 2, z)
-        bytes.setDouble(index + Float.BYTES * 3, w)
+        bytes.setDouble(index + Double.BYTES, y)
+        bytes.setDouble(index + Double.BYTES * 2, z)
+        bytes.setDouble(index + Double.BYTES * 3, w)
         return bytes
     }
 

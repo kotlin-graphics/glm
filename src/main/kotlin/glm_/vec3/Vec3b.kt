@@ -87,15 +87,15 @@ class Vec3b(x: Byte, y: Byte, z: Byte) : Vec3t<Byte>(x, y, z) {
     fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
         bytes[index] = x
-        bytes[index + Float.BYTES] = y
-        bytes[index + Float.BYTES * 2] = z
+        bytes[index + Byte.BYTES] = y
+        bytes[index + Byte.BYTES * 2] = z
         return bytes
     }
 
     override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
         bytes[index] = x
-        bytes[index + Float.BYTES] = y
-        bytes[index + Float.BYTES * 2] = z
+        bytes[index + Byte.BYTES] = y
+        bytes[index + Byte.BYTES * 2] = z
         return bytes
     }
 

@@ -86,7 +86,7 @@ class Vec2b(x: Byte, y: Byte) : Vec2t<Byte>(x, y) {
 
     override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
         bytes[index] = x
-        bytes[index + Float.BYTES] = y
+        bytes[index + Byte.BYTES] = y
         return bytes
     }
 
