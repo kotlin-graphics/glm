@@ -100,7 +100,7 @@ object glm :
     @JvmField
     val Ef = 2.71828182845904523536f
 
-    val π = 0
+    val π = Math.PI
 }
 
 object Detail :
@@ -123,3 +123,9 @@ class Java {
 
 typealias uint = Int
 typealias ulong = Long
+
+val GLM_VERSION_MAJOR = 0
+val GLM_VERSION_MINOR = 9
+val GLM_VERSION_PATCH = 9
+val GLM_VERSION_REVISION = 0
+val GLM_VERSION = 990
