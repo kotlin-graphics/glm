@@ -4,6 +4,7 @@ import glm_.mat4x4.Mat4
 import unsigned.*
 import java.io.InputStream
 import java.math.BigInteger
+import kotlin.math.pow
 
 /**
  * Created by GBarbieri on 07.12.2016.
@@ -314,3 +315,5 @@ internal val Any.toShort: Short
         is String -> this.s
         else -> throw ArithmeticException("incompatible type")
     }
+
+infix fun Int.pow(exponent: Int) = f.pow(exponent).i

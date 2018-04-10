@@ -23,8 +23,6 @@ import kotlin.math.sqrt as _sqrt
 
 interface func_exponential {
 
-    infix fun Int.pow(exponent: Int) = f.pow(exponent).i
-
     fun pow(base: Double, exponent: Double) = base.pow(exponent)
     fun pow(base: Float, exponent: Float) = base.pow(exponent)
 
