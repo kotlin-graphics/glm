@@ -1,7 +1,6 @@
 package  glm_.mat4x4
 
 import glm_.*
-import glm_.glm.determinant
 import glm_.glm.inverse
 import glm_.glm.transpose
 import glm_.mat2x2.Mat2x2t
@@ -78,6 +77,24 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
             list.elementAt(index + 8)!!.toFloat, list.elementAt(index + 9)!!.toFloat, list.elementAt(index + 10)!!.toFloat,
             list.elementAt(index + 11)!!.toFloat, list.elementAt(index + 12)!!.toFloat, list.elementAt(index + 13)!!.toFloat,
             list.elementAt(index + 14)!!.toFloat, list.elementAt(index + 15)!!.toFloat)
+
+    constructor(buffer: ByteBuffer, offset: Int) : this(
+            buffer.getFloat(offset),
+            buffer.getFloat(offset + Float.BYTES),
+            buffer.getFloat(offset + Float.BYTES * 2),
+            buffer.getFloat(offset + Float.BYTES * 3),
+            buffer.getFloat(offset + Float.BYTES * 4),
+            buffer.getFloat(offset + Float.BYTES * 5),
+            buffer.getFloat(offset + Float.BYTES * 6),
+            buffer.getFloat(offset + Float.BYTES * 7),
+            buffer.getFloat(offset + Float.BYTES * 8),
+            buffer.getFloat(offset + Float.BYTES * 9),
+            buffer.getFloat(offset + Float.BYTES * 10),
+            buffer.getFloat(offset + Float.BYTES * 11),
+            buffer.getFloat(offset + Float.BYTES * 12),
+            buffer.getFloat(offset + Float.BYTES * 13),
+            buffer.getFloat(offset + Float.BYTES * 14),
+            buffer.getFloat(offset + Float.BYTES * 15))
 
     // -- Matrix conversions --
 
@@ -355,6 +372,7 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     infix operator fun plusAssign(b: Float) {
         plus(this, this, b)
     }
+
     infix operator fun plusAssign(b: Mat4) {
         plus(this, this, b)
     }
@@ -369,6 +387,7 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     infix operator fun minusAssign(b: Float) {
         minus(this, this, b)
     }
+
     infix operator fun minusAssign(b: Mat4) {
         minus(this, this, b)
     }
@@ -393,9 +412,11 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     infix operator fun timesAssign(b: Float) {
         times(this, this, b)
     }
+
     infix operator fun timesAssign(b: Vec4) {
         times(b, this, b)
     }
+
     infix operator fun timesAssign(b: Mat4) {
         times(this, this, b)
     }
@@ -410,6 +431,7 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     infix operator fun divAssign(b: Float) {
         div(this, this, b)
     }
+
     infix operator fun divAssign(b: Mat4) {
         div(this, this, b)
     }
@@ -432,6 +454,7 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
 
     // TODO others
     infix fun scale(scale: Vec3) = scale(scale.x, scale.y, scale.z, Mat4())
+
     fun scale(scale: Vec3, res: Mat4) = scale(scale.x, scale.y, scale.z, res)
 
     infix fun scale(scale: Float) = scale(scale, scale, scale, Mat4())
@@ -558,10 +581,11 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
         }
 
 
-    val isIdentity get() = this[0][0] == 1f && this[1][0] == 0f && this[2][0] == 0f && this[3][0] == 0f &&
-            this[0][1] == 0f && this[1][1] == 1f && this[2][1] == 0f && this[3][1] == 0f &&
-            this[0][2] == 0f && this[1][2] == 0f && this[2][2] == 1f && this[3][2] == 0f &&
-            this[0][3] == 0f && this[1][3] == 0f && this[2][3] == 0f && this[3][3] == 1f
+    val isIdentity
+        get() = this[0][0] == 1f && this[1][0] == 0f && this[2][0] == 0f && this[3][0] == 0f &&
+                this[0][1] == 0f && this[1][1] == 1f && this[2][1] == 0f && this[3][1] == 0f &&
+                this[0][2] == 0f && this[1][2] == 0f && this[2][2] == 1f && this[3][2] == 0f &&
+                this[0][3] == 0f && this[1][3] == 0f && this[2][3] == 0f && this[3][3] == 1f
 
 
     override fun toString() = super.toString()
