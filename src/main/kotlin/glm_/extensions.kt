@@ -317,3 +317,6 @@ internal val Any.toShort: Short
     }
 
 infix fun Int.pow(exponent: Int) = f.pow(exponent).i
+infix fun Int.pow(exponent: Float) = f.pow(exponent).i
+infix fun Float.pow(exponent: Int) = pow(exponent)
+infix fun Float.pow(exponent: Float) = pow(exponent)
