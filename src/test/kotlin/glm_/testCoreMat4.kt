@@ -5,7 +5,7 @@ import glm_.mat4x4.Mat4d
 import glm_.mat4x4.operators.times
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4d
-import io.kotlintest.matchers.shouldBe
+import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
 /**

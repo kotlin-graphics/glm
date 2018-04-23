@@ -1,7 +1,7 @@
 package glm_
 
 import glm_.mat4x4.Mat4
-import io.kotlintest.matchers.shouldBe
+import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
 /**

@@ -10,7 +10,7 @@ import glm_.vec4.operators.div
 import glm_.vec4.operators.minus
 import glm_.vec4.operators.plus
 import glm_.vec4.operators.times
-import io.kotlintest.matchers.shouldBe
+import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
 class testCorePure : StringSpec() {

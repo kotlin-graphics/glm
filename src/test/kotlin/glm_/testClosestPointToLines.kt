@@ -1,7 +1,7 @@
 package glm_
 
 import glm_.vec3.Vec3
-import io.kotlintest.matchers.shouldBe
+import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
 class testClosestPointToLines : StringSpec() {

@@ -3,7 +3,7 @@ package glm_
 import glm_.mat2x2.Mat2
 import glm_.mat2x2.operators.times
 import glm_.vec2.Vec2
-import io.kotlintest.matchers.shouldBe
+import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
 /**

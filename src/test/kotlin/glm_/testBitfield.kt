@@ -5,7 +5,7 @@ import glm_.vec2.Vec2b
 import glm_.vec2.Vec2s
 import glm_.vec4.Vec4b
 import glm_.vec4.Vec4i
-import io.kotlintest.matchers.shouldBe
+import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 import unsigned.toUInt
 import unsigned.toULong

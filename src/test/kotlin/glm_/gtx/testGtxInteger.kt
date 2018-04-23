@@ -4,7 +4,7 @@ import glm_.d
 import glm_.glm
 import glm_.i
 import glm_.msb
-import io.kotlintest.matchers.shouldBe
+import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
 class testGtxInteger : StringSpec() {

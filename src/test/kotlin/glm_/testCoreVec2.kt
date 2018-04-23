@@ -12,7 +12,7 @@ import glm_.vec2.operators.minus
 import glm_.vec2.operators.plus
 import glm_.vec2.operators.times
 import glm_.vec3.Vec3
-import io.kotlintest.matchers.shouldBe
+import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
 
