@@ -15,7 +15,6 @@ import java.nio.*
 class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
-
     constructor() : this(0)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y)

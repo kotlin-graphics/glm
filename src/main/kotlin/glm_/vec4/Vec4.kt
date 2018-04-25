@@ -15,7 +15,22 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4(x: Float, y: Float, z: Float, w: Float) : Vec4t<Float>(x, y, z, w) {
+class Vec4(var ofs: Int = 0, var array: FloatArray = FloatArray(Companion.length)) : Vec4t<Float>(array[ofs], array[ofs + 1], array[ofs + 2], array[ofs + 3]) {
+
+    constructor(x: Float, y: Float, z: Float, w: Float) : this(0, floatArrayOf(x, y, z, w))
+
+    override inline var x: Float
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    override inline var y: Float
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
+    override inline var z: Float
+        get() = array[ofs + 2]
+        set(value) = array.set(ofs + 2, value)
+    override inline var w: Float
+        get() = array[ofs + 3]
+        set(value) = array.set(ofs + 3, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 

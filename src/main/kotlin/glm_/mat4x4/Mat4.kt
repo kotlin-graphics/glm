@@ -25,7 +25,7 @@ import java.nio.FloatBuffer
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
+data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
 
     // -- Constructors --
 
@@ -34,11 +34,11 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     constructor(s: Number) : this(s, s, s, s)
 
     constructor(x: Number, y: Number, z: Number) : this(x, y, z, 1f)    // TODO others
-    constructor(x: Number, y: Number, z: Number, w: Number) : this(mutableListOf(
-            Vec4(x, 0, 0, 0),
-            Vec4(0, y, 0, 0),
-            Vec4(0, 0, z, 0),
-            Vec4(0, 0, 0, w)))
+    constructor(x: Number, y: Number, z: Number, w: Number) : this(floatArrayOf(
+            x.f, 0f, 0f, 0f,
+            0f, y.f, 0f, 0f,
+            0f, 0f, z.f, 0f,
+            0f, 0f, 0f, w.f))
 
     // TODO others
 
@@ -55,11 +55,11 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     constructor(x0: Number, y0: Number, z0: Number, w0: Number,
                 x1: Number, y1: Number, z1: Number, w1: Number,
                 x2: Number, y2: Number, z2: Number, w2: Number,
-                x3: Number, y3: Number, z3: Number, w3: Number) : this(mutableListOf(
-            Vec4(x0, y0, z0, w0),
-            Vec4(x1, y1, z1, w1),
-            Vec4(x2, y2, z2, w2),
-            Vec4(x3, y3, z3, w3)))
+                x3: Number, y3: Number, z3: Number, w3: Number) : this(floatArrayOf(
+            x0.f, y0.f, z0.f, w0.f,
+            x1.f, y1.f, z1.f, w1.f,
+            x2.f, y2.f, z2.f, w2.f,
+            x3.f, y3.f, z3.f, w3.f))
 
     constructor(v0: Vec4t<out Number>, v1: Vec4t<out Number>, v2: Vec4t<out Number>, v3: Vec4t<out Number>) : this(mutableListOf(
             Vec4(v0),
@@ -153,17 +153,13 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
             Vec4(mat4x3[3], 1)))
 
     // TODO others
-    @JvmOverloads constructor(floats: FloatArray, transpose: Boolean = false) : this(
-            if (transpose) mutableListOf(
-                    Vec4(floats[0], floats[4], floats[8], floats[12]),
-                    Vec4(floats[1], floats[5], floats[9], floats[13]),
-                    Vec4(floats[2], floats[6], floats[10], floats[14]),
-                    Vec4(floats[3], floats[7], floats[11], floats[15]))
-            else mutableListOf(
-                    Vec4(floats, 0),
-                    Vec4(floats, 4),
-                    Vec4(floats, 8),
-                    Vec4(floats, 12)))
+    constructor(floats: FloatArray, transpose: Boolean) : this(
+            if (transpose) floatArrayOf(
+                    floats[0], floats[4], floats[8], floats[12],
+                    floats[1], floats[5], floats[9], floats[13],
+                    floats[2], floats[6], floats[10], floats[14],
+                    floats[3], floats[7], floats[11], floats[15])
+            else floats)
 
     // TODO others
     constructor(inputStream: InputStream, bigEndian: Boolean = true) : this(
@@ -173,18 +169,14 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
             inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian))
 
     fun put(v0: Vec4, v1: Vec4, v2: Vec4, v3: Vec4) {
-        value[0] to v0
-        value[1] to v1
-        value[2] to v2
-        value[3] to v3
+        v0.to(array, 0)
+        v1.to(array, 4)
+        v2.to(array, 8)
+        v3.to(array, 12)
     }
 
     // TODO others
-    infix fun put(mat4: Mat4) {
-        value = mutableListOf(
-                Vec4(mat4[0]), Vec4(mat4[1]),
-                Vec4(mat4[2]), Vec4(mat4[3]))
-    }
+    infix fun put(mat4: Mat4) = System.arraycopy(mat4.array.clone(), 0, array, 0, 16)
 
     infix fun put(s: Float) = put(s, s, s, s)
     infix fun put(v: Vec3) = put(v.x, v.y, v.z, 1f)
@@ -204,25 +196,25 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
             c0: Float, c1: Float, c2: Float, c3: Float,
             d0: Float, d1: Float, d2: Float, d3: Float): Mat4 {
 
-        value[0][0] = a0
-        value[0][1] = a1
-        value[0][2] = a2
-        value[0][3] = a3
+        array[0] = a0
+        array[1] = a1
+        array[2] = a2
+        array[3] = a3
 
-        value[1][0] = b0
-        value[1][1] = b1
-        value[1][2] = b2
-        value[1][3] = b3
+        array[4] = b0
+        array[5] = b1
+        array[6] = b2
+        array[7] = b3
 
-        value[2][0] = c0
-        value[2][1] = c1
-        value[2][2] = c2
-        value[2][3] = c3
+        array[8] = c0
+        array[9] = c1
+        array[10] = c2
+        array[11] = c3
 
-        value[3][0] = d0
-        value[3][1] = d1
-        value[3][2] = d2
-        value[3][3] = d3
+        array[12] = d0
+        array[13] = d1
+        array[14] = d2
+        array[15] = d3
 
         return this
     }
@@ -251,22 +243,22 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     infix fun to(dbb: ByteBuffer): ByteBuffer = to(dbb, 0)
 
     fun to(dbb: ByteBuffer, offset: Int): ByteBuffer {
-        dbb.putFloat(offset + 0 * Float.BYTES, value[0][0])
-        dbb.putFloat(offset + 1 * Float.BYTES, value[0][1])
-        dbb.putFloat(offset + 2 * Float.BYTES, value[0][2])
-        dbb.putFloat(offset + 3 * Float.BYTES, value[0][3])
-        dbb.putFloat(offset + 4 * Float.BYTES, value[1][0])
-        dbb.putFloat(offset + 5 * Float.BYTES, value[1][1])
-        dbb.putFloat(offset + 6 * Float.BYTES, value[1][2])
-        dbb.putFloat(offset + 7 * Float.BYTES, value[1][3])
-        dbb.putFloat(offset + 8 * Float.BYTES, value[2][0])
-        dbb.putFloat(offset + 9 * Float.BYTES, value[2][1])
-        dbb.putFloat(offset + 10 * Float.BYTES, value[2][2])
-        dbb.putFloat(offset + 11 * Float.BYTES, value[2][3])
-        dbb.putFloat(offset + 12 * Float.BYTES, value[3][0])
-        dbb.putFloat(offset + 13 * Float.BYTES, value[3][1])
-        dbb.putFloat(offset + 14 * Float.BYTES, value[3][2])
-        dbb.putFloat(offset + 15 * Float.BYTES, value[3][3])
+        dbb.putFloat(offset + 0 * Float.BYTES, array[0])
+        dbb.putFloat(offset + 1 * Float.BYTES, array[1])
+        dbb.putFloat(offset + 2 * Float.BYTES, array[2])
+        dbb.putFloat(offset + 3 * Float.BYTES, array[3])
+        dbb.putFloat(offset + 4 * Float.BYTES, array[4])
+        dbb.putFloat(offset + 5 * Float.BYTES, array[5])
+        dbb.putFloat(offset + 6 * Float.BYTES, array[6])
+        dbb.putFloat(offset + 7 * Float.BYTES, array[7])
+        dbb.putFloat(offset + 8 * Float.BYTES, array[8])
+        dbb.putFloat(offset + 9 * Float.BYTES, array[9])
+        dbb.putFloat(offset + 10 * Float.BYTES, array[10])
+        dbb.putFloat(offset + 11 * Float.BYTES, array[11])
+        dbb.putFloat(offset + 12 * Float.BYTES, array[12])
+        dbb.putFloat(offset + 13 * Float.BYTES, array[13])
+        dbb.putFloat(offset + 14 * Float.BYTES, array[14])
+        dbb.putFloat(offset + 15 * Float.BYTES, array[15])
         return dbb
     }
 
@@ -274,22 +266,22 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     infix fun to(dfb: FloatBuffer) = to(dfb, 0)
 
     fun to(dfb: FloatBuffer, offset: Int): FloatBuffer {
-        dfb[offset + 0] = value[0][0]
-        dfb[offset + 1] = value[0][1]
-        dfb[offset + 2] = value[0][2]
-        dfb[offset + 3] = value[0][3]
-        dfb[offset + 4] = value[1][0]
-        dfb[offset + 5] = value[1][1]
-        dfb[offset + 6] = value[1][2]
-        dfb[offset + 7] = value[1][3]
-        dfb[offset + 8] = value[2][0]
-        dfb[offset + 9] = value[2][1]
-        dfb[offset + 10] = value[2][2]
-        dfb[offset + 11] = value[2][3]
-        dfb[offset + 12] = value[3][0]
-        dfb[offset + 13] = value[3][1]
-        dfb[offset + 14] = value[3][2]
-        dfb[offset + 15] = value[3][3]
+        dfb[offset + 0] = array[0]
+        dfb[offset + 1] = array[1]
+        dfb[offset + 2] = array[2]
+        dfb[offset + 3] = array[3]
+        dfb[offset + 4] = array[4]
+        dfb[offset + 5] = array[5]
+        dfb[offset + 6] = array[6]
+        dfb[offset + 7] = array[7]
+        dfb[offset + 8] = array[8]
+        dfb[offset + 9] = array[9]
+        dfb[offset + 10] = array[10]
+        dfb[offset + 11] = array[11]
+        dfb[offset + 12] = array[12]
+        dfb[offset + 13] = array[13]
+        dfb[offset + 14] = array[14]
+        dfb[offset + 15] = array[15]
         return dfb
     }
 
@@ -299,9 +291,25 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
     // -- put --
 
     fun to(mat2x2: Mat2x2t<*>) {
-        value = mutableListOf(
-                Vec4(mat2x2[0]),
-                Vec4(mat2x2[1]))
+        array[0] = mat2x2[0][0].f
+        array[1] = mat2x2[0][1].f
+        array[2] = 0f
+        array[3] = 0f
+
+        array[4] = mat2x2[1][0].f
+        array[5] = mat2x2[1][1].f
+        array[6] = 0f
+        array[7] = 0f
+
+        array[8] = 0f
+        array[9] = 0f
+        array[10] = 0f
+        array[11] = 0f
+
+        array[12] = 0f
+        array[13] = 0f
+        array[14] = 0f
+        array[15] = 0f
     }
 
 //    fun to(scalar: Number) {
@@ -325,17 +333,18 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
 
     // -- Accesses --
 
-    override operator fun get(i: Int) = value[i]
-    operator fun get(c: Int, r: Int) = value[c][r]
+    operator fun get(i: Int) = Vec4(i * 4, array)
+    operator fun get(c: Int, r: Int) = array[c * 4 + r]
 
-    operator fun set(c: Int, r: Int, s: Float) {
-        value[c][r] = s
+    operator fun set(c: Int, r: Int, s: Float) = array.set(c * 4 + r, s)
+
+    operator fun set(i: Int, v: Vec4) = v.to(array, i * 4)
+
+    // TODO other cases
+    fun set(i: Int, v: Vec3, s: Float) {
+        v.to(array, i * 4)
+        array[i * 4 + 3] = s
     }
-
-    operator fun set(i: Int, v: Vec4) = value[i] put v
-
-
-    fun set(i: Int, v: Vec3, s: Float) = value[i].put(v, s) // TODO other cases
 
     companion object : mat4x4_operators() {
         @JvmField
@@ -349,7 +358,11 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
 
     operator fun unaryPlus() = this
 
-    operator fun unaryMinus() = Mat4(-value[0], -value[1], -value[2], -value[3])
+    operator fun unaryMinus() = Mat4(
+            -array[0], -array[1], -array[2], -array[3],
+            -array[4], -array[5], -array[6], -array[7],
+            -array[8], -array[9], -array[10], -array[11],
+            -array[12], -array[13], -array[14], -array[15])
 
 
     // -- Increment main.and decrement operators --
@@ -497,88 +510,56 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
 
     // TODO others
     var a0: Float
-        @JvmName("v00") get() = value[0][0]
-        @JvmName("v00") set(v) {
-            value[0][0] = v
-        }
+        @JvmName("v00") get() = array[0]
+        @JvmName("v00") set(v) = array.set(0, v)
     var a1: Float
-        @JvmName("v01") get() = value[0][1]
-        @JvmName("v01") set(v) {
-            value[0][1] = v
-        }
+        @JvmName("v01") get() = array[1]
+        @JvmName("v01") set(v) = array.set(1, v)
     var a2: Float
-        @JvmName("v02") get() = value[0][2]
-        @JvmName("v02") set(v) {
-            value[0][2] = v
-        }
+        @JvmName("v02") get() = array[2]
+        @JvmName("v02") set(v) = array.set(2, v)
     var a3: Float
-        @JvmName("v03") get() = value[0][3]
-        @JvmName("v03") set(v) {
-            value[0][3] = v
-        }
+        @JvmName("v03") get() = array[3]
+        @JvmName("v03") set(v) = array.set(3, v)
 
     var b0: Float
-        @JvmName("v10") get() = value[1][0]
-        @JvmName("v10") set(v) {
-            value[1][0] = v
-        }
+        @JvmName("v10") get() = array[4]
+        @JvmName("v10") set(v) = array.set(4, v)
     var b1: Float
-        @JvmName("v11") get() = value[1][1]
-        @JvmName("v11") set(v) {
-            value[1][1] = v
-        }
+        @JvmName("v11") get() = array[5]
+        @JvmName("v11") set(v) = array.set(5, v)
     var b2: Float
-        @JvmName("v12") get() = value[1][2]
-        @JvmName("v12") set(v) {
-            value[1][2] = v
-        }
+        @JvmName("v12") get() = array[6]
+        @JvmName("v12") set(v) = array.set(6, v)
     var b3: Float
-        @JvmName("v13") get() = value[1][3]
-        @JvmName("v13") set(v) {
-            value[1][3] = v
-        }
+        @JvmName("v13") get() = array[7]
+        @JvmName("v13") set(v) = array.set(7, v)
 
     var c0: Float
-        @JvmName("v20") get() = value[2][0]
-        @JvmName("v20") set(v) {
-            value[2][0] = v
-        }
+        @JvmName("v20") get() = array[8]
+        @JvmName("v20") set(v) = array.set(8, v)
     var c1: Float
-        @JvmName("v21") get() = value[2][1]
-        @JvmName("v21") set(v) {
-            value[2][1] = v
-        }
+        @JvmName("v21") get() = array[9]
+        @JvmName("v21") set(v) = array.set(9, v)
     var c2: Float
-        @JvmName("v22") get() = value[2][2]
-        @JvmName("v22") set(v) {
-            value[2][2] = v
-        }
+        @JvmName("v22") get() = array[10]
+        @JvmName("v22") set(v) = array.set(10, v)
     var c3: Float
-        @JvmName("v23") get() = value[2][3]
-        @JvmName("v23") set(v) {
-            value[2][3] = v
-        }
+        @JvmName("v23") get() = array[11]
+        @JvmName("v23") set(v) = array.set(11, v)
 
     var d0: Float
-        @JvmName("v30") get() = value[3][0]
-        @JvmName("v30") set(v) {
-            value[3][0] = v
-        }
+        @JvmName("v30") get() = array[12]
+        @JvmName("v30") set(v) = array.set(12, v)
     var d1: Float
-        @JvmName("v31") get() = value[3][1]
-        @JvmName("v31") set(v) {
-            value[3][1] = v
-        }
+        @JvmName("v31") get() = array[13]
+        @JvmName("v31") set(v) = array.set(13, v)
     var d2: Float
-        @JvmName("v32") get() = value[3][2]
-        @JvmName("v32") set(v) {
-            value[3][2] = v
-        }
+        @JvmName("v32") get() = array[14]
+        @JvmName("v32") set(v) = array.set(14, v)
     var d3: Float
-        @JvmName("v33") get() = value[3][3]
-        @JvmName("v33") set(v) {
-            value[3][3] = v
-        }
+        @JvmName("v33") get() = array[15]
+        @JvmName("v33") set(v) = array.set(15, v)
 
 
     val isIdentity
@@ -596,5 +577,5 @@ data class Mat4(override var value: MutableList<Vec4>) : Mat4x4t<Vec4>(value) {
             this[2, 0] == other[2, 0] && this[2, 1] == other[2, 1] && this[2, 2] == other[2, 2] && this[2, 3] == other[2, 3] &&
             this[3, 0] == other[3, 0] && this[3, 1] == other[3, 1] && this[3, 2] == other[3, 2] && this[3, 3] == other[3, 3]
 
-    override fun hashCode() = 31 * (31 * (31 * value[0].hashCode() + value[1].hashCode()) + value[2].hashCode()) + value[3].hashCode()
+    override fun hashCode() = 31 * (31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()) + this[3].hashCode()
 }

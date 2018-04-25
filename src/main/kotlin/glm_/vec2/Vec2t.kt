@@ -15,10 +15,8 @@ import java.nio.*
 
 abstract class Vec2t<T : Number>(_x: T, _y: T) {
 
-    @JvmField
-    var x = _x
-    @JvmField
-    var y = _y
+    open var x = _x
+    open var y = _y
 
     operator fun component1() = x
     operator fun component2() = y

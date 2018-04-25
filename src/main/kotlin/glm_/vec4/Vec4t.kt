@@ -10,14 +10,10 @@ import java.nio.*
 // TODO other
 abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
 
-    @JvmField
-    var x = _x
-    @JvmField
-    var y = _y
-    @JvmField
-    var z = _z
-    @JvmField
-    var w = _w
+    open var x = _x
+    open var y = _y
+    open var z = _z
+    open var w = _w
 
     operator fun component1() = x
     operator fun component2() = y
