@@ -477,6 +477,56 @@ data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
         res.array[14] = v23
         res.array[15] = v33
     }
+    inline fun timesTest3(b: Mat4, res: Mat4) {
+        val var3 = b.array[0]
+        val var4 = b.array[1]
+        val var5 = b.array[2]
+        val var6 = b.array[3]
+        val var7 = b.array[4]
+        val var8 = b.array[5]
+        val var9 = b.array[6]
+        val var10 = b.array[7]
+        val var11 = b.array[8]
+        val var12 = b.array[9]
+        val var13 = b.array[10]
+        val var14 = b.array[11]
+        val var15 = b.array[12]
+        val var16 = b.array[13]
+        val var17 = b.array[14]
+        val var18 = b.array[15]
+        var var19 = array[0]
+        var var20 = array[4]
+        var var21 = array[8]
+        var var22 = array[12]
+        res.array[0] = var19 * var3 + var20 * var4 + var21 * var5 + var22 * var6
+        res.array[4] = var19 * var7 + var20 * var8 + var21 * var9 + var22 * var10
+        res.array[8] = var19 * var11 + var20 * var12 + var21 * var13 + var22 * var14
+        res.array[12] = var19 * var15 + var20 * var16 + var21 * var17 + var22 * var18
+        var19 = array[1]
+        var20 = array[5]
+        var21 = array[9]
+        var22 = array[13]
+        res.array[1] = var19 * var3 + var20 * var4 + var21 * var5 + var22 * var6
+        res.array[5] = var19 * var7 + var20 * var8 + var21 * var9 + var22 * var10
+        res.array[9] = var19 * var11 + var20 * var12 + var21 * var13 + var22 * var14
+        res.array[13] = var19 * var15 + var20 * var16 + var21 * var17 + var22 * var18
+        var19 = array[2]
+        var20 = array[6]
+        var21 = array[10]
+        var22 = array[14]
+        res.array[2] = var19 * var3 + var20 * var4 + var21 * var5 + var22 * var6
+        res.array[6] = var19 * var7 + var20 * var8 + var21 * var9 + var22 * var10
+        res.array[10] = var19 * var11 + var20 * var12 + var21 * var13 + var22 * var14
+        res.array[14] = var19 * var15 + var20 * var16 + var21 * var17 + var22 * var18
+        var19 = array[3]
+        var20 = array[7]
+        var21 = array[11]
+        var22 = array[15]
+        res.array[3] = var19 * var3 + var20 * var4 + var21 * var5 + var22 * var6
+        res.array[7] = var19 * var7 + var20 * var8 + var21 * var9 + var22 * var10
+        res.array[11] = var19 * var11 + var20 * var12 + var21 * var13 + var22 * var14
+        res.array[15] = var19 * var15 + var20 * var16 + var21 * var17 + var22 * var18
+    }
 
     infix operator fun timesAssign(b: Float) {
         times(this, this, b)
