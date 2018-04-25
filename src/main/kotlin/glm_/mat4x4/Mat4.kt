@@ -421,6 +421,28 @@ data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
 
     fun times(b: Vec4, res: Vec4) = times(res, this, b)
     fun times(b: Mat4, res: Mat4) = times(res, this, b)
+    inline fun timesTest(b: Mat4, res: Mat4) {
+        val v00 = this[0, 0] * b[0,0] + this[1, 0] * b[0,1] + this[2, 0] * b[0,2] + this[3, 0] * b[0,3]
+        val v01 = this[0, 1] * b[0,0] + this[1, 1] * b[0,1] + this[2, 1] * b[0,2] + this[3, 1] * b[0,3]
+        val v02 = this[0, 2] * b[0,0] + this[1, 2] * b[0,1] + this[2, 2] * b[0,2] + this[3, 2] * b[0,3]
+        val v03 = this[0, 3] * b[0,0] + this[1, 3] * b[0,1] + this[2, 3] * b[0,2] + this[3, 3] * b[0,3]
+        val v10 = this[0, 0] * b[1,0] + this[1, 0] * b[1,1] + this[2, 0] * b[1,2] + this[3, 0] * b[1,3]
+        val v11 = this[0, 1] * b[1,0] + this[1, 1] * b[1,1] + this[2, 1] * b[1,2] + this[3, 1] * b[1,3]
+        val v12 = this[0, 2] * b[1,0] + this[1, 2] * b[1,1] + this[2, 2] * b[1,2] + this[3, 2] * b[1,3]
+        val v13 = this[0, 3] * b[1,0] + this[1, 3] * b[1,1] + this[2, 3] * b[1,2] + this[3, 3] * b[1,3]
+        val v20 = this[0, 0] * b[2,0] + this[1, 0] * b[2,1] + this[2, 0] * b[2,2] + this[3, 0] * b[2,3]
+        val v21 = this[0, 1] * b[2,0] + this[1, 1] * b[2,1] + this[2, 1] * b[2,2] + this[3, 1] * b[2,3]
+        val v22 = this[0, 2] * b[2,0] + this[1, 2] * b[2,1] + this[2, 2] * b[2,2] + this[3, 2] * b[2,3]
+        val v23 = this[0, 3] * b[2,0] + this[1, 3] * b[2,1] + this[2, 3] * b[2,2] + this[3, 3] * b[2,3]
+        val v30 = this[0, 0] * b[3,0] + this[1, 0] * b[3,1] + this[2, 0] * b[3,2] + this[3, 0] * b[3,3]
+        val v31 = this[0, 1] * b[3,0] + this[1, 1] * b[3,1] + this[2, 1] * b[3,2] + this[3, 1] * b[3,3]
+        val v32 = this[0, 2] * b[3,0] + this[1, 2] * b[3,1] + this[2, 2] * b[3,2] + this[3, 2] * b[3,3]
+        val v33 = this[0, 3] * b[3,0] + this[1, 3] * b[3,1] + this[2, 3] * b[3,2] + this[3, 3] * b[3,3]
+        res[0, 0] = v00; res[1, 0] = v10; res[2, 0] = v20; res[3, 0] = v30
+        res[0, 1] = v01; res[1, 1] = v11; res[2, 1] = v21; res[3, 1] = v31
+        res[0, 2] = v02; res[1, 2] = v12; res[2, 2] = v22; res[3, 2] = v32
+        res[0, 3] = v03; res[1, 3] = v13; res[2, 3] = v23; res[3, 3] = v33
+    }
 
     infix operator fun timesAssign(b: Float) {
         times(this, this, b)
