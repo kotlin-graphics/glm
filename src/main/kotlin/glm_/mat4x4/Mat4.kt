@@ -334,9 +334,9 @@ data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
     // -- Accesses --
 
     operator fun get(i: Int) = Vec4(i * 4, array)
-    operator fun get(c: Int, r: Int) = array[c * 4 + r]
+    inline operator fun get(c: Int, r: Int) = array[c * 4 + r]
 
-    operator fun set(c: Int, r: Int, s: Float) = array.set(c * 4 + r, s)
+    inline operator fun set(c: Int, r: Int, s: Float) = array.set(c * 4 + r, s)
 
     operator fun set(i: Int, v: Vec4) = v.to(array, i * 4)
 
