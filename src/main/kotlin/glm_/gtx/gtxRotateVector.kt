@@ -174,7 +174,7 @@ interface gtxRotateVector {
     fun orientation(res: Mat4, normal: Vec3, up: Vec3, tmp: Vec3 = Vec3()): Mat4 {
 
         if (normal.x == up.x && normal.y == up.y && normal.z == up.z)
-            return res put 1f
+            return res(1f)
 
         val rotationAxis = cross(tmp, up, normal)
         val angle = acos(dot(normal, up))

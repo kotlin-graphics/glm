@@ -178,6 +178,28 @@ data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
     // TODO others
     infix fun put(mat4: Mat4) = System.arraycopy(mat4.array.clone(), 0, array, 0, 16)
 
+    infix operator fun invoke(s: Float) = invoke(s, s, s, s)
+    infix operator fun invoke(v: Vec3) = invoke(v.x, v.y, v.z, 1f)
+    infix operator fun invoke(v: Vec4) = invoke(v.x, v.y, v.z, v.w)
+
+    infix operator fun invoke(floats: FloatArray) = invoke(floats[0], floats[1], floats[2], floats[3], floats[4], floats[5], floats[6],
+            floats[7], floats[8], floats[9], floats[10], floats[11], floats[12], floats[13], floats[14], floats[15])
+
+    operator fun invoke(x: Float, y: Float, z: Float, w: Float) = invoke(
+            x, 0f, 0f, 0f,
+            0f, y, 0f, 0f,
+            0f, 0f, z, 0f,
+            0f, 0f, 0f, w)
+
+    inline fun invoke(a0: Float, a1: Float, a2: Float, a3: Float,
+                      b0: Float, b1: Float, b2: Float, b3: Float,
+                      c0: Float, c1: Float, c2: Float, c3: Float,
+                      d0: Float, d1: Float, d2: Float, d3: Float): Mat4 {
+
+        put(a0, a1, a2, a3, b0, b1, b2, b3, c0, c1, c2, c3, d0, d1, d2, d3)
+        return this
+    }
+
     infix fun put(s: Float) = put(s, s, s, s)
     infix fun put(v: Vec3) = put(v.x, v.y, v.z, 1f)
     infix fun put(v: Vec4) = put(v.x, v.y, v.z, v.w)
@@ -194,7 +216,7 @@ data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
     fun put(a0: Float, a1: Float, a2: Float, a3: Float,
             b0: Float, b1: Float, b2: Float, b3: Float,
             c0: Float, c1: Float, c2: Float, c3: Float,
-            d0: Float, d1: Float, d2: Float, d3: Float): Mat4 {
+            d0: Float, d1: Float, d2: Float, d3: Float) {
 
         array[0] = a0
         array[1] = a1
@@ -215,8 +237,6 @@ data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
         array[13] = d1
         array[14] = d2
         array[15] = d3
-
-        return this
     }
 
     // TODO others
