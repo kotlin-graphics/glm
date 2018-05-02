@@ -116,15 +116,15 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
             0.0, 0.0, 0.0, 1.0)
 
     constructor(mat3: Mat3) : this(
-            mat3[0, 0], mat3[0, 1], mat3[0, 3], 0,
-            mat3[1, 0], mat3[1, 1], mat3[1, 3], 0,
-            mat3[2, 0], mat3[2, 1], mat3[2, 3], 0,
+            mat3[0, 0], mat3[0, 1], mat3[0, 2], 0,
+            mat3[1, 0], mat3[1, 1], mat3[1, 2], 0,
+            mat3[2, 0], mat3[2, 1], mat3[2, 2], 0,
             0, 0, 0, 1)
 
     constructor(mat3: Mat3d) : this(
-            mat3[0, 0], mat3[0, 1], mat3[0, 3], 0,
-            mat3[1, 0], mat3[1, 1], mat3[1, 3], 0,
-            mat3[2, 0], mat3[2, 1], mat3[2, 3], 0,
+            mat3[0, 0], mat3[0, 1], mat3[0, 2], 0,
+            mat3[1, 0], mat3[1, 1], mat3[1, 2], 0,
+            mat3[2, 0], mat3[2, 1], mat3[2, 2], 0,
             0, 0, 0, 1)
 
     constructor(mat4: Mat4) : this(0, mat4.array.clone())
