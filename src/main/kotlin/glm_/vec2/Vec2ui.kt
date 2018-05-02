@@ -13,7 +13,24 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
+class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>() {
+
+    constructor(x: Uint, y: Uint) : this(0, intArrayOf(x.v, y.v))
+    constructor(x: Int, y: Int) : this(0, intArrayOf(x, y))
+
+    override inline var x: Uint
+        get() = Uint(array[ofs])
+        set(value) = array.set(ofs, value.v)
+    override inline var y: Uint
+        get() = Uint(array[ofs + 1])
+        set(value) = array.set(ofs + 1, value.v)
+
+    inline var vX: Int
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    inline var vY: Int
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -582,6 +599,9 @@ class Vec2ui(x: Uint, y: Uint) : Vec2t<Uint>(x, y) {
     infix fun shrAssign(b: Number) = shr(this, this, b.i, b.i)
     infix fun shrAssign(b: Vec2t<out Number>) = shr(this, this, b.x.i, b.y.i)
     fun shrAssign(bX: Number, bY: Number) = shr(this, this, bX.i, bY.i)
+
+
+    override fun createInstance(x: Uint, y: Uint) = Vec2ui(x, y)
 
 
     companion object : opVec2ui() {

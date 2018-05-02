@@ -2,8 +2,10 @@ package glm_.vec4
 
 import glm_.*
 import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2i
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
+import glm_.vec3.Vec3i
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4i_operators
 import java.nio.*
@@ -12,7 +14,22 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
+class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>() {
+
+    constructor(x: Int, y: Int, z: Int, w: Int) : this(0, intArrayOf(x, y, z, w))
+
+    override inline var x: Int
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    override inline var y: Int
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
+    override inline var z: Int
+        get() = array[ofs + 2]
+        set(value) = array.set(ofs + 2, value)
+    override inline var w: Int
+        get() = array[ofs + 3]
+        set(value) = array.set(ofs + 3, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -509,6 +526,10 @@ open class Vec4i(x: Int, y: Int, z: Int, w: Int) : Vec4t<Int>(x, y, z, w) {
 
     fun shrAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(this, this, bX.i, bY.i, bZ.i, bW.i)
 
+
+    override fun createInstance(x: Int, y: Int) = Vec2i(x, y)
+    override fun createInstance(x: Int, y: Int, z: Int) = Vec3i(x, y, z)
+    override fun createInstance(x: Int, y: Int, z: Int, w: Int) = Vec4i(x, y, z, w)
 
 
     companion object : vec4i_operators() {

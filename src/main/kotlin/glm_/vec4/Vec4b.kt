@@ -1,8 +1,10 @@
 package glm_.vec4
 
 import glm_.*
+import glm_.vec2.Vec2b
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
+import glm_.vec3.Vec3b
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4b_operators
@@ -12,8 +14,22 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
+class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>() {
 
+    constructor(x: Byte, y: Byte, z: Byte, w: Byte) : this(0, byteArrayOf(x, y, z, w))
+
+    override inline var x: Byte
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    override inline var y: Byte
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
+    override inline var z: Byte
+        get() = array[ofs + 2]
+        set(value) = array.set(ofs + 2, value)
+    override inline var w: Byte
+        get() = array[ofs + 3]
+        set(value) = array.set(ofs + 3, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -527,6 +543,11 @@ class Vec4b(x: Byte, y: Byte, z: Byte, w: Byte) : Vec4t<Byte>(x, y, z, w) {
     fun shr(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4b = Vec4b()) = shr(res, this, bX.b, bY.b, bZ.b, bW.b)
 
     fun shrAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(this, this, bX.b, bY.b, bZ.b, bW.b)
+
+
+    override fun createInstance(x: Byte, y: Byte) = Vec2b(x, y)
+    override fun createInstance(x: Byte, y: Byte, z: Byte) = Vec3b(x, y, z)
+    override fun createInstance(x: Byte, y: Byte, z: Byte, w: Byte) = Vec4b(x, y, z, w)
 
 
     companion object : vec4b_operators() {

@@ -3,13 +3,66 @@ package glm_.mat2x2
 import glm_.vec2.Vec2t
 
 
-abstract class Mat2x2t<T : Vec2t<*>>(open var value: MutableList<T>) {
+abstract class Mat2x2t<T : Number> {
 
-    fun length() = 2
+    abstract var a0: T
+    abstract var a1: T
+
+    abstract var b0: T
+    abstract var b1: T
+
+
+    operator fun component1() = a0
+    operator fun component2() = a1
+
+    operator fun component3() = b0
+    operator fun component4() = b1
+
 
     // -- Accesses --
 
-    operator fun get(i: Int) = value[i]
+    abstract operator fun get(index: Int): Vec2t<out Number>
+    abstract operator fun get(column: Int, row: Int): T
 
-    override fun toString() = "| ${this[0][0]}][ ${this[1][0]} |\n" + "| ${this[0][1]}][ ${this[1][1]} |"
+    abstract operator fun set(index: Int, value: Vec2t<out Number>)
+    abstract operator fun set(column: Int, row: Int, value: T)
+
+
+    // component alias
+
+    var v00
+        @JvmName("v00") get() = a0
+        @JvmName("v00") set(value) {
+            a0 = value
+        }
+    var v01
+        @JvmName("v01") get() = a1
+        @JvmName("v01") set(value) {
+            a1 = value
+        }
+
+    var v10
+        @JvmName("v10") get() = b0
+        @JvmName("v02") set(value) {
+            b0 = value
+        }
+    var v11
+        @JvmName("v11") get() = b1
+        @JvmName("v11") set(value) {
+            b1 = value
+        }
+
+    abstract val isIdentity: Boolean
+
+    abstract fun size(): Int
+
+    companion object {
+        const val length = 2 * 2
+    }
+
+
+//    override fun toString() =
+//            "| ${this[0][ 0]}][ ${this[1][ 0]}][ ${this[2][ 0]} |\n" +
+//                    "| ${this[0][ 1]}][ ${this[1][ 1]}][ ${this[2][ 1]} |\n" +
+//                    "| ${this[0][ 2]}][ ${this[1][ 2]}][ ${this[2][ 2]} |"
 }

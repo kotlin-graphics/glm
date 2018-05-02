@@ -3,8 +3,10 @@ package glm_.vec4
 import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
+import glm_.vec2.Vec2us
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
+import glm_.vec3.Vec3us
 import glm_.vec4.operators.vec4us_operators
 import unsigned.Ushort
 import java.nio.*
@@ -13,7 +15,36 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z, w) {
+class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>() {
+
+    constructor(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : this(0, shortArrayOf(x.v, y.v, z.v, w.v))
+    constructor(x: Short, y: Short, z: Short, w: Short) : this(0, shortArrayOf(x, y, z, w))
+
+    override inline var x: Ushort
+        get() = Ushort(array[ofs])
+        set(value) = array.set(ofs, value.v)
+    override inline var y: Ushort
+        get() = Ushort(array[ofs + 1])
+        set(value) = array.set(ofs + 1, value.v)
+    override inline var z: Ushort
+        get() = Ushort(array[ofs + 2])
+        set(value) = array.set(ofs + 2, value.v)
+    override inline var w: Ushort
+        get() = Ushort(array[ofs + 3])
+        set(value) = array.set(ofs + 3, value.v)
+
+    inline var vX: Short
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    inline var vY: Short
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
+    inline var vZ: Short
+        get() = array[ofs + 2]
+        set(value) = array.set(ofs + 2, value)
+    inline var vW: Short
+        get() = array[ofs + 3]
+        set(value) = array.set(ofs + 3, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -193,16 +224,6 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
-    override fun size() = size
-
-
-    companion object : vec4us_operators() {
-        @JvmField
-        val length = 4
-        @JvmField
-        val size = length * Ushort.BYTES
-    }
-
 
     // -- Unary arithmetic operators --
 
@@ -241,12 +262,15 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
     infix operator fun plusAssign(b: Ushort) {
         plus(this, this, b, b, b, b)
     }
+
     infix operator fun plusAssign(b: Short) {
         plus(this, this, b, b, b, b)
     }
+
     infix operator fun plusAssign(b: Int) {
         plus(this, this, b, b, b, b)
     }
+
     infix operator fun plusAssign(b: Vec4us) {
         plus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -271,12 +295,15 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
     infix operator fun minusAssign(b: Ushort) {
         minus(this, this, b, b, b, b)
     }
+
     infix operator fun minusAssign(b: Short) {
         minus(this, this, b, b, b, b)
     }
+
     infix operator fun minusAssign(b: Int) {
         minus(this, this, b, b, b, b)
     }
+
     infix operator fun minusAssign(b: Vec4us) {
         minus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -301,12 +328,15 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
     infix operator fun timesAssign(b: Ushort) {
         times(this, this, b, b, b, b)
     }
+
     infix operator fun timesAssign(b: Short) {
         times(this, this, b, b, b, b)
     }
+
     infix operator fun timesAssign(b: Int) {
         times(this, this, b, b, b, b)
     }
+
     infix operator fun timesAssign(b: Vec4us) {
         times(this, this, b.x, b.y, b.z, b.w)
     }
@@ -331,12 +361,15 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
     infix operator fun divAssign(b: Ushort) {
         div(this, this, b, b, b, b)
     }
+
     infix operator fun divAssign(b: Short) {
         div(this, this, b, b, b, b)
     }
+
     infix operator fun divAssign(b: Int) {
         div(this, this, b, b, b, b)
     }
+
     infix operator fun divAssign(b: Vec4us) {
         div(this, this, b.x, b.y, b.z, b.w)
     }
@@ -361,12 +394,15 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
     infix operator fun remAssign(b: Ushort) {
         rem(this, this, b, b, b, b)
     }
+
     infix operator fun remAssign(b: Short) {
         rem(this, this, b, b, b, b)
     }
+
     infix operator fun remAssign(b: Int) {
         rem(this, this, b, b, b, b)
     }
+
     infix operator fun remAssign(b: Vec4us) {
         rem(this, this, b.x, b.y, b.z, b.w)
     }
@@ -385,6 +421,7 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun plusAssign(b: Vec4t<out Number>) {
         plus(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -401,6 +438,7 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun minusAssign(b: Vec4t<out Number>) {
         minus(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -417,6 +455,7 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun timesAssign(b: Vec4t<out Number>) {
         times(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -433,6 +472,7 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
     infix operator fun divAssign(b: Number) {
         div(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun divAssign(b: Vec4t<out Number>) {
         div(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -449,6 +489,7 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun remAssign(b: Vec4t<out Number>) {
         rem(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -650,6 +691,20 @@ class Vec4us(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : Vec4t<Ushort>(x, y, z
     fun shr(b: Number, res: Vec4us) = shr(res, this, b.i, b.i, b.i, b.i)
     fun shr(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4us) = shr(res, this, bX.i, bY.i, bZ.i, bW.i)
     fun shr(b: Vec4t<out Number>, res: Vec4us) = shr(res, this, b.x.i, b.y.i, b.z.i, b.w.i)
+
+
+    override fun createInstance(x: Ushort, y: Ushort) = Vec2us(x, y)
+    override fun createInstance(x: Ushort, y: Ushort, z: Ushort) = Vec3us(x, y, z)
+    override fun createInstance(x: Ushort, y: Ushort, z: Ushort, w: Ushort) = Vec4us(x, y, z, w)
+
+
+    companion object : vec4us_operators() {
+        const val length = Vec4t.length
+        @JvmField
+        val size = length * Ushort.BYTES
+    }
+
+    override fun size() = size
 
 
     override fun equals(other: Any?) = other is Vec4us && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]

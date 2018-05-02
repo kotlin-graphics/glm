@@ -1,6 +1,7 @@
 package glm_.vec4
 
 import glm_.*
+import glm_.vec2.Vec2
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
@@ -15,7 +16,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4(var ofs: Int = 0, var array: FloatArray = FloatArray(Companion.length)) : Vec4t<Float>(array[ofs], array[ofs + 1], array[ofs + 2], array[ofs + 3]) {
+class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>() {
 
     constructor(x: Float, y: Float, z: Float, w: Float) : this(0, floatArrayOf(x, y, z, w))
 
@@ -410,6 +411,11 @@ class Vec4(var ofs: Int = 0, var array: FloatArray = FloatArray(Companion.length
     }
 
     fun negateAssign() = negate(this)
+
+
+    override fun createInstance(x: Float, y: Float) = Vec2(x, y)
+    override fun createInstance(x: Float, y: Float, z: Float) = Vec3(x, y, z)
+    override fun createInstance(x: Float, y: Float, z: Float, w: Float) = Vec4(x, y, z, w)
 
 
     companion object : vec4_operators() {

@@ -2,6 +2,7 @@ package glm_.vec3
 
 import glm_.*
 import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3d_operators
 import glm_.vec4.Vec4bool
@@ -12,7 +13,19 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
+class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>() {
+
+    constructor(x: Double, y: Double, z: Double) : this(0, doubleArrayOf(x, y, z))
+
+    override inline var x: Double
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    override inline var y: Double
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
+    override inline var z: Double
+        get() = array[ofs + 2]
+        set(value) = array.set(ofs + 2, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -369,6 +382,10 @@ class Vec3d(x: Double, y: Double, z: Double) : Vec3t<Double>(x, y, z) {
     }
 
     fun negateAssign() = negate(this)
+
+
+    override fun createInstance(x: Double, y: Double) = Vec2d(x, y)
+    override fun createInstance(x: Double, y: Double, z: Double) = Vec3d(x, y, z)
 
 
     companion object : vec3d_operators() {

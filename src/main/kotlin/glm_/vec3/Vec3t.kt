@@ -8,14 +8,11 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import java.nio.*
 
-abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
+abstract class Vec3t<T : Number> {
 
-    @JvmField
-    var x = _x
-    @JvmField
-    var y = _y
-    @JvmField
-    var z = _z
+    abstract var x: T
+    abstract var y: T
+    abstract var z: T
 
     operator fun component1() = x
     operator fun component2() = y
@@ -274,29 +271,23 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
 
 
     // swizzling
+    protected abstract fun createInstance(x: T, y: T): Vec2t<out Number>
+    protected abstract fun createInstance(x: T, y: T, z: T): Vec3t<out Number>
 
     val xx @JvmName("xx") get() = createInstance(x, x)
     var xy
         @JvmName("xy") get() = createInstance(x, y)
-        @JvmName("xy") set(value) = put(value.x, value.y, z)
+        @JvmName("xy") set(value) {
+            x = value.x as T
+            y = value.y as T
+        }
     var yx
         @JvmName("yx") get() = createInstance(y, x)
-        @JvmName("yx") set(value) = put(value.y, value.x, z)
+        @JvmName("yx") set(value) {
+            y = value.x as T
+            x = value.y as T
+        }
     val yy @JvmName("yy") get() = createInstance(y, y)
-
-    private fun createInstance(x: T, y: T) = when (this) {
-        is Vec3 -> Vec2(x, y)
-        is Vec3d -> Vec2d(x, y)
-        is Vec3b -> Vec2b(x, y)
-        is Vec3i -> Vec2i(x, y)
-        is Vec3s -> Vec2s(x, y)
-        is Vec3l -> Vec2l(x, y)
-        is Vec3ub -> Vec2ub(x, y)
-        is Vec3ui -> Vec2ui(x, y)
-        is Vec3us -> Vec2us(x, y)
-        is Vec3ul -> Vec2ul(x, y)
-        else -> throw IllegalStateException()
-    }
 
 
     val xxx @JvmName("xxx") get() = createInstance(x, x, x)
@@ -340,18 +331,4 @@ abstract class Vec3t<T : Number>(_x: T, _y: T, _z: T) {
     val zzx @JvmName("zzx") get() = createInstance(z, z, x)
     val zzy @JvmName("zzy") get() = createInstance(z, z, y)
     val zzz @JvmName("zzz") get() = createInstance(z, z, z)
-
-    private fun createInstance(x: T, y: T, z: T) = when (this) {
-        is Vec3 -> Vec3(x, y, z)
-        is Vec3d -> Vec3d(x, y, z)
-        is Vec3b -> Vec3b(x, y, z)
-        is Vec3i -> Vec3i(x, y, z)
-        is Vec3s -> Vec3s(x, y, z)
-        is Vec3l -> Vec3l(x, y, z)
-        is Vec3ub -> Vec3ub(x, y, z)
-        is Vec3ui -> Vec3ui(x, y, z)
-        is Vec3us -> Vec3us(x, y, z)
-        is Vec3ul -> Vec3ul(x, y, z)
-        else -> throw IllegalStateException()
-    }
 }

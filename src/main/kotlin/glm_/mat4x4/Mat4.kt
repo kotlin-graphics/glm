@@ -3,11 +3,14 @@ package  glm_.mat4x4
 import glm_.*
 import glm_.glm.inverse
 import glm_.glm.transpose
+import glm_.mat2x2.Mat2
+import glm_.mat2x2.Mat2d
 import glm_.mat2x2.Mat2x2t
 import glm_.mat2x3.Mat2x3t
 import glm_.mat2x4.Mat2x4t
 import glm_.mat3x2.Mat3x2t
 import glm_.mat3x3.Mat3
+import glm_.mat3x3.Mat3d
 import glm_.mat3x4.Mat3x4t
 import glm_.mat4x2.Mat4x2t
 import glm_.mat4x3.Mat4x3t
@@ -21,11 +24,12 @@ import glm_.vec4.Vec4t
 import java.io.InputStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
+import java.util.*
 
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
+class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
 
     // -- Constructors --
 
@@ -34,11 +38,11 @@ data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
     constructor(s: Number) : this(s, s, s, s)
 
     constructor(x: Number, y: Number, z: Number) : this(x, y, z, 1f)    // TODO others
-    constructor(x: Number, y: Number, z: Number, w: Number) : this(floatArrayOf(
-            x.f, 0f, 0f, 0f,
-            0f, y.f, 0f, 0f,
-            0f, 0f, z.f, 0f,
-            0f, 0f, 0f, w.f))
+    constructor(x: Number, y: Number, z: Number, w: Number) : this(
+            x, 0, 0, 0,
+            0, y, 0, 0,
+            0, 0, z, 0,
+            0, 0, 0, w)
 
     // TODO others
 
@@ -55,28 +59,29 @@ data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
     constructor(x0: Number, y0: Number, z0: Number, w0: Number,
                 x1: Number, y1: Number, z1: Number, w1: Number,
                 x2: Number, y2: Number, z2: Number, w2: Number,
-                x3: Number, y3: Number, z3: Number, w3: Number) : this(floatArrayOf(
+                x3: Number, y3: Number, z3: Number, w3: Number) : this(0, floatArrayOf(
             x0.f, y0.f, z0.f, w0.f,
             x1.f, y1.f, z1.f, w1.f,
             x2.f, y2.f, z2.f, w2.f,
             x3.f, y3.f, z3.f, w3.f))
 
-    constructor(v0: Vec4t<out Number>, v1: Vec4t<out Number>, v2: Vec4t<out Number>, v3: Vec4t<out Number>) : this(mutableListOf(
-            Vec4(v0),
-            Vec4(v1),
-            Vec4(v2),
-            Vec4(v3)))
+    constructor(v0: Vec4t<out Number>, v1: Vec4t<out Number>, v2: Vec4t<out Number>, v3: Vec4t<out Number>) : this(
+            v0.x, v0.y, v0.z, v0.w,
+            v1.x, v1.y, v1.z, v1.w,
+            v2.x, v2.y, v2.z, v2.w,
+            v3.x, v3.y, v3.z, v3.w)
 
-    constructor(block: (Int) -> Number) : this(block(0).f, block(1).f, block(2).f, block(3).f, block(4).f,
-            block(5).f, block(6).f, block(7).f, block(8).f, block(9).f, block(10).f, block(11).f, block(12).f,
-            block(13).f, block(14).f, block(15).f)
+    constructor(block: (Int) -> Number) : this(
+            block(0).f, block(1).f, block(2).f, block(3).f,
+            block(4).f, block(5).f, block(6).f, block(7).f,
+            block(8).f, block(9).f, block(10).f, block(11).f,
+            block(12).f, block(13).f, block(14).f, block(15).f)
 
-    constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toFloat, list.elementAt(index + 1)!!.toFloat,
-            list.elementAt(index + 2)!!.toFloat, list.elementAt(index + 3)!!.toFloat, list.elementAt(index + 4)!!.toFloat,
-            list.elementAt(index + 5)!!.toFloat, list.elementAt(index + 6)!!.toFloat, list.elementAt(index + 7)!!.toFloat,
-            list.elementAt(index + 8)!!.toFloat, list.elementAt(index + 9)!!.toFloat, list.elementAt(index + 10)!!.toFloat,
-            list.elementAt(index + 11)!!.toFloat, list.elementAt(index + 12)!!.toFloat, list.elementAt(index + 13)!!.toFloat,
-            list.elementAt(index + 14)!!.toFloat, list.elementAt(index + 15)!!.toFloat)
+    constructor(list: Iterable<*>, index: Int = 0) : this(
+            list.elementAt(index)!!.toFloat, list.elementAt(index + 1)!!.toFloat, list.elementAt(index + 2)!!.toFloat, list.elementAt(index + 3)!!.toFloat,
+            list.elementAt(index + 4)!!.toFloat, list.elementAt(index + 5)!!.toFloat, list.elementAt(index + 6)!!.toFloat, list.elementAt(index + 7)!!.toFloat,
+            list.elementAt(index + 8)!!.toFloat, list.elementAt(index + 9)!!.toFloat, list.elementAt(index + 10)!!.toFloat, list.elementAt(index + 11)!!.toFloat,
+            list.elementAt(index + 12)!!.toFloat, list.elementAt(index + 13)!!.toFloat, list.elementAt(index + 14)!!.toFloat, list.elementAt(index + 15)!!.toFloat)
 
     constructor(buffer: ByteBuffer, offset: Int) : this(
             buffer.getFloat(offset),
@@ -98,68 +103,77 @@ data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
 
     // -- Matrix conversions --
 
-    constructor(mat2x2: Mat2x2t<*>) : this(mutableListOf(
-            Vec4(mat2x2[0], 0, 0),
-            Vec4(mat2x2[1], 0, 0),
-            Vec4(0, 0, 1, 0),
-            Vec4(0, 0, 0, 1)))
+    constructor(mat2: Mat2) : this(
+            mat2[0, 0], mat2[0, 1], 0f, 0f,
+            mat2[1, 0], mat2[1, 1], 0f, 0f,
+            0f, 0f, 1f, 0f,
+            0f, 0f, 0f, 1f)
 
-    constructor(mat3: Mat3) : this(mutableListOf(
-            Vec4(mat3[0], 0),
-            Vec4(mat3[1], 0),
-            Vec4(mat3[2], 0),
-            Vec4(0, 0, 0, 1)))
+    constructor(mat2: Mat2d) : this(
+            mat2[0, 0], mat2[0, 1], 0.0, 0.0,
+            mat2[1, 0], mat2[1, 1], 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0)
 
-    constructor(mat4: Mat4) : this(mutableListOf(
-            Vec4(mat4[0]),
-            Vec4(mat4[1]),
-            Vec4(mat4[2]),
-            Vec4(mat4[3])))
+    constructor(mat3: Mat3) : this(
+            mat3[0, 0], mat3[0, 1], mat3[0, 3], 0,
+            mat3[1, 0], mat3[1, 1], mat3[1, 3], 0,
+            mat3[2, 0], mat3[2, 1], mat3[2, 3], 0,
+            0, 0, 0, 1)
 
-    constructor(mat2x3: Mat2x3t<*>) : this(mutableListOf(
-            Vec4(mat2x3[0], 0),
-            Vec4(mat2x3[1], 0),
-            Vec4(0, 0, 0, 1),
-            Vec4(0, 0, 0, 1)))
+    constructor(mat3: Mat3d) : this(
+            mat3[0, 0], mat3[0, 1], mat3[0, 3], 0,
+            mat3[1, 0], mat3[1, 1], mat3[1, 3], 0,
+            mat3[2, 0], mat3[2, 1], mat3[2, 3], 0,
+            0, 0, 0, 1)
 
-    constructor(mat3x2: Mat3x2t<*>) : this(mutableListOf(
-            Vec4(mat3x2[0], 0, 0),
-            Vec4(mat3x2[1], 0, 0),
-            Vec4(mat3x2[2], 1, 0),
-            Vec4(0, 0, 0, 1)))
+    constructor(mat4: Mat4) : this(0, mat4.array.clone())
+    constructor(mat4: Mat4d) : this(0, FloatArray(length) { mat4.array[it].f })
 
-    constructor(mat2x4: Mat2x4t<*>) : this(mutableListOf(
-            Vec4(mat2x4[0]),
-            Vec4(mat2x4[1]),
-            Vec4(0, 0, 1, 0),
-            Vec4(0, 0, 0, 1)))
+    constructor(mat2x3: Mat2x3t<*>) : this(
+            mat2x3[0, 0], mat2x3[0, 1], mat2x3[0, 2], 0,
+            mat2x3[1, 0], mat2x3[1, 1], mat2x3[1, 2], 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1)
 
-    constructor(mat4x2: Mat4x2t<*>) : this(mutableListOf(
-            Vec4(mat4x2[0], 0, 0),
-            Vec4(mat4x2[1], 0, 0),
-            Vec4(mat4x2[2], 1, 0),
-            Vec4(mat4x2[3], 0, 1)))
+    constructor(mat3x2: Mat3x2t<*>) : this(
+            mat3x2[0, 0], mat3x2[0, 1], 0, 0,
+            mat3x2[1, 0], mat3x2[1, 1], 0, 0,
+            mat3x2[2, 0], mat3x2[2, 1], 1, 0,
+            0, 0, 0, 1)
 
-    constructor(mat3x4: Mat3x4t<*>) : this(mutableListOf(
-            Vec4(mat3x4[0]),
-            Vec4(mat3x4[1]),
-            Vec4(mat3x4[2]),
-            Vec4(0, 0, 0, 1)))
+    constructor(mat2x4: Mat2x4t<*>) : this(
+            mat2x4[0, 0], mat2x4[0, 1], mat2x4[0, 2], mat2x4[0, 3],
+            mat2x4[1, 0], mat2x4[1, 1], mat2x4[1, 2], mat2x4[1, 3],
+            0, 0, 1, 0,
+            0, 0, 0, 1)
 
-    constructor(mat4x3: Mat4x3t<*>) : this(mutableListOf(
-            Vec4(mat4x3[0], 0),
-            Vec4(mat4x3[1], 0),
-            Vec4(mat4x3[2], 0),
-            Vec4(mat4x3[3], 1)))
+    constructor(mat4x2: Mat4x2t<*>) : this(
+            mat4x2[0, 0], mat4x2[0, 1], 0, 0,
+            mat4x2[1, 0], mat4x2[1, 1], 0, 0,
+            mat4x2[2, 0], mat4x2[2, 1], 1, 0,
+            mat4x2[3, 0], mat4x2[3, 1], 0, 1)
+
+    constructor(mat3x4: Mat3x4t<*>) : this(
+            mat3x4[0, 0], mat3x4[0, 1], mat3x4[0, 2], mat3x4[0, 3],
+            mat3x4[1, 0], mat3x4[1, 1], mat3x4[1, 2], mat3x4[1, 3],
+            mat3x4[2, 0], mat3x4[2, 1], mat3x4[2, 2], mat3x4[2, 3],
+            0, 0, 0, 1)
+
+    constructor(mat4x3: Mat4x3t<*>) : this(
+            mat4x3[0, 0], mat4x3[0, 1], mat4x3[0, 2], 0,
+            mat4x3[1, 0], mat4x3[1, 1], mat4x3[1, 2], 0,
+            mat4x3[2, 0], mat4x3[2, 1], mat4x3[2, 2], 0,
+            mat4x3[3, 0], mat4x3[3, 1], mat4x3[3, 2], 1)
 
     // TODO others
-    constructor(floats: FloatArray, transpose: Boolean) : this(
+    constructor(floats: FloatArray, transpose: Boolean = false) : this(0,
             if (transpose) floatArrayOf(
                     floats[0], floats[4], floats[8], floats[12],
                     floats[1], floats[5], floats[9], floats[13],
                     floats[2], floats[6], floats[10], floats[14],
                     floats[3], floats[7], floats[11], floats[15])
-            else floats)
+            else floats.clone())
 
     // TODO others
     constructor(inputStream: InputStream, bigEndian: Boolean = true) : this(
@@ -176,9 +190,8 @@ data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
     }
 
     // TODO others
-    infix fun put(mat4: Mat4) = System.arraycopy(mat4.array.clone(), 0, array, 0, 16)
-
     infix operator fun invoke(s: Float) = invoke(s, s, s, s)
+
     infix operator fun invoke(v: Vec3) = invoke(v.x, v.y, v.z, 1f)
     infix operator fun invoke(v: Vec4) = invoke(v.x, v.y, v.z, v.w)
 
@@ -199,6 +212,8 @@ data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
         put(a0, a1, a2, a3, b0, b1, b2, b3, c0, c1, c2, c3, d0, d1, d2, d3)
         return this
     }
+
+    infix fun put(mat4: Mat4) = System.arraycopy(mat4.array.clone(), 0, array, 0, 16)
 
     infix fun put(s: Float) = put(s, s, s, s)
     infix fun put(v: Vec3) = put(v.x, v.y, v.z, 1f)
@@ -244,17 +259,17 @@ data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
 
     infix fun to(res: Mat3): Mat3 {
 
-        res[0][0] = this[0][0]
-        res[0][1] = this[0][1]
-        res[0][2] = this[0][2]
+        res[0, 0] = this[0, 0]
+        res[0, 1] = this[0, 1]
+        res[0, 2] = this[0, 2]
 
-        res[1][0] = this[1][0]
-        res[1][1] = this[1][1]
-        res[1][2] = this[1][2]
+        res[1, 0] = this[1, 0]
+        res[1, 1] = this[1, 1]
+        res[1, 2] = this[1, 2]
 
-        res[2][0] = this[2][0]
-        res[2][1] = this[2][1]
-        res[2][2] = this[2][2]
+        res[2, 0] = this[2, 0]
+        res[2, 1] = this[2, 1]
+        res[2, 2] = this[2, 2]
 
         return res
     }
@@ -310,14 +325,14 @@ data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
 
     // -- put --
 
-    fun to(mat2x2: Mat2x2t<*>) {
-        array[0] = mat2x2[0][0].f
-        array[1] = mat2x2[0][1].f
+    fun put(mat2x2: Mat2x2t<Number>) {
+        array[0] = mat2x2[0, 0].f
+        array[1] = mat2x2[0, 1].f
         array[2] = 0f
         array[3] = 0f
 
-        array[4] = mat2x2[1][0].f
-        array[5] = mat2x2[1][1].f
+        array[4] = mat2x2[1, 0].f
+        array[5] = mat2x2[1, 1].f
         array[6] = 0f
         array[7] = 0f
 
@@ -353,24 +368,26 @@ data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
 
     // -- Accesses --
 
-    operator fun get(i: Int) = Vec4(i * 4, array)
-    inline operator fun get(c: Int, r: Int) = array[c * 4 + r]
+    override inline operator fun get(index: Int) = Vec4(index * 4, array)
+    override inline operator fun get(c: Int, r: Int) = array[c * 4 + r]
 
-    inline operator fun set(c: Int, r: Int, s: Float) = array.set(c * 4 + r, s)
+    override inline operator fun set(c: Int, r: Int, s: Float) = array.set(c * 4 + r, s)
 
-    operator fun set(i: Int, v: Vec4) = v.to(array, i * 4)
+    override inline operator fun set(i: Int, v: Vec4t<out Number>) {
+        array[i * 4] = v.x.f
+        array[i * 4 + 1] = v.y.f
+        array[i * 4 + 2] = v.z.f
+        array[i * 4 + 3] = v.w.f
+    }
+
+    inline operator fun set(i: Int, v: Vec4) {
+        v.to(array, i * 4)
+    }
 
     // TODO other cases
     fun set(i: Int, v: Vec3, s: Float) {
         v.to(array, i * 4)
         array[i * 4 + 3] = s
-    }
-
-    companion object : mat4x4_operators() {
-        @JvmField
-        val length = 4    // TODO others
-        @JvmField
-        val size = length * Vec4.size
     }
 
 
@@ -528,74 +545,74 @@ data class Mat4(var array: FloatArray) : Mat4x4t<Vec4>() {
     fun rotateAssign(angle: Float, v: Vec3) = glm.rotate(this, this, angle, v)
 
 
-    // TODO others
-    var a0: Float
-        @JvmName("v00") get() = array[0]
-        @JvmName("v00") set(v) = array.set(0, v)
-    var a1: Float
-        @JvmName("v01") get() = array[1]
-        @JvmName("v01") set(v) = array.set(1, v)
-    var a2: Float
-        @JvmName("v02") get() = array[2]
-        @JvmName("v02") set(v) = array.set(2, v)
-    var a3: Float
-        @JvmName("v03") get() = array[3]
-        @JvmName("v03") set(v) = array.set(3, v)
+    override var a0: Float
+        get() = array[0]
+        set(v) = array.set(0, v)
+    override var a1: Float
+        get() = array[1]
+        set(v) = array.set(1, v)
+    override var a2: Float
+        get() = array[2]
+        set(v) = array.set(2, v)
+    override var a3: Float
+        get() = array[3]
+        set(v) = array.set(3, v)
 
-    var b0: Float
-        @JvmName("v10") get() = array[4]
-        @JvmName("v10") set(v) = array.set(4, v)
-    var b1: Float
-        @JvmName("v11") get() = array[5]
-        @JvmName("v11") set(v) = array.set(5, v)
-    var b2: Float
-        @JvmName("v12") get() = array[6]
-        @JvmName("v12") set(v) = array.set(6, v)
-    var b3: Float
-        @JvmName("v13") get() = array[7]
-        @JvmName("v13") set(v) = array.set(7, v)
+    override var b0: Float
+        get() = array[4]
+        set(v) = array.set(4, v)
+    override var b1: Float
+        get() = array[5]
+        set(v) = array.set(5, v)
+    override var b2: Float
+        get() = array[6]
+        set(v) = array.set(6, v)
+    override var b3: Float
+        get() = array[7]
+        set(v) = array.set(7, v)
 
-    var c0: Float
-        @JvmName("v20") get() = array[8]
-        @JvmName("v20") set(v) = array.set(8, v)
-    var c1: Float
-        @JvmName("v21") get() = array[9]
-        @JvmName("v21") set(v) = array.set(9, v)
-    var c2: Float
-        @JvmName("v22") get() = array[10]
-        @JvmName("v22") set(v) = array.set(10, v)
-    var c3: Float
-        @JvmName("v23") get() = array[11]
-        @JvmName("v23") set(v) = array.set(11, v)
+    override var c0: Float
+        get() = array[8]
+        set(v) = array.set(8, v)
+    override var c1: Float
+        get() = array[9]
+        set(v) = array.set(9, v)
+    override var c2: Float
+        get() = array[10]
+        set(v) = array.set(10, v)
+    override var c3: Float
+        get() = array[11]
+        set(v) = array.set(11, v)
 
-    var d0: Float
-        @JvmName("v30") get() = array[12]
-        @JvmName("v30") set(v) = array.set(12, v)
-    var d1: Float
-        @JvmName("v31") get() = array[13]
-        @JvmName("v31") set(v) = array.set(13, v)
-    var d2: Float
-        @JvmName("v32") get() = array[14]
-        @JvmName("v32") set(v) = array.set(14, v)
-    var d3: Float
-        @JvmName("v33") get() = array[15]
-        @JvmName("v33") set(v) = array.set(15, v)
-
-
-    val isIdentity
-        get() = this[0][0] == 1f && this[1][0] == 0f && this[2][0] == 0f && this[3][0] == 0f &&
-                this[0][1] == 0f && this[1][1] == 1f && this[2][1] == 0f && this[3][1] == 0f &&
-                this[0][2] == 0f && this[1][2] == 0f && this[2][2] == 1f && this[3][2] == 0f &&
-                this[0][3] == 0f && this[1][3] == 0f && this[2][3] == 0f && this[3][3] == 1f
+    override var d0: Float
+        get() = array[12]
+        set(v) = array.set(12, v)
+    override var d1: Float
+        get() = array[13]
+        set(v) = array.set(13, v)
+    override var d2: Float
+        get() = array[14]
+        set(v) = array.set(14, v)
+    override var d3: Float
+        get() = array[15]
+        set(v) = array.set(15, v)
 
 
-    override fun toString() = super.toString()
+    override val isIdentity
+        get() = this[0, 0] == 1f && this[1, 0] == 0f && this[2, 0] == 0f && this[3, 0] == 0f &&
+                this[0, 1] == 0f && this[1, 1] == 1f && this[2, 1] == 0f && this[3, 1] == 0f &&
+                this[0, 2] == 0f && this[1, 2] == 0f && this[2, 2] == 1f && this[3, 2] == 0f &&
+                this[0, 3] == 0f && this[1, 3] == 0f && this[2, 3] == 0f && this[3, 3] == 1f
 
-    override fun equals(other: Any?) = other is Mat4 &&
-            this[0, 0] == other[0, 0] && this[0, 1] == other[0, 1] && this[0, 2] == other[0, 2] && this[0, 3] == other[0, 3] &&
-            this[1, 0] == other[1, 0] && this[1, 1] == other[1, 1] && this[1, 2] == other[1, 2] && this[1, 3] == other[1, 3] &&
-            this[2, 0] == other[2, 0] && this[2, 1] == other[2, 1] && this[2, 2] == other[2, 2] && this[2, 3] == other[2, 3] &&
-            this[3, 0] == other[3, 0] && this[3, 1] == other[3, 1] && this[3, 2] == other[3, 2] && this[3, 3] == other[3, 3]
+    companion object : mat4x4_operators() {
+        const val length = Mat4x4t.length
+        @JvmField
+        val size = length * Float.BYTES
+    }
+
+    override fun size() = size
+
+    override fun equals(other: Any?) = other is Mat4 && Arrays.equals(array, other.array)
 
     override fun hashCode() = 31 * (31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()) + this[3].hashCode()
 }

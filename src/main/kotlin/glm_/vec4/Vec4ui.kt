@@ -3,8 +3,10 @@ package glm_.vec4
 import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
+import glm_.vec2.Vec2ui
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
+import glm_.vec3.Vec3ui
 import glm_.vec4.operators.vec4ui_operators
 import unsigned.Uint
 import java.nio.*
@@ -13,7 +15,36 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4ui(x: Uint, y: Uint, z: Uint, w: Uint) : Vec4t<Uint>(x, y, z, w) {
+class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>() {
+
+    constructor(x: Uint, y: Uint, z: Uint, w: Uint) : this(0, intArrayOf(x.v, y.v, z.v, w.v))
+    constructor(x: Int, y: Int, z: Int, w: Int) : this(0, intArrayOf(x, y, z, w))
+
+    override inline var x: Uint
+        get() = Uint(array[ofs])
+        set(value) = array.set(ofs, value.v)
+    override inline var y: Uint
+        get() = Uint(array[ofs + 1])
+        set(value) = array.set(ofs + 1, value.v)
+    override inline var z: Uint
+        get() = Uint(array[ofs + 2])
+        set(value) = array.set(ofs + 2, value.v)
+    override inline var w: Uint
+        get() = Uint(array[ofs + 3])
+        set(value) = array.set(ofs + 3, value.v)
+
+    inline var vX: Int
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    inline var vY: Int
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
+    inline var vZ: Int
+        get() = array[ofs + 2]
+        set(value) = array.set(ofs + 2, value)
+    inline var vW: Int
+        get() = array[ofs + 3]
+        set(value) = array.set(ofs + 3, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -583,6 +614,11 @@ class Vec4ui(x: Uint, y: Uint, z: Uint, w: Uint) : Vec4t<Uint>(x, y, z, w) {
     fun shr(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4ui = Vec4ui()) = shr(res, this, bX.i, bY.i, bZ.i, bW.i)
 
     fun shrAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(this, this, bX.i, bY.i, bZ.i, bW.i)
+
+
+    override fun createInstance(x: Uint, y: Uint) = Vec2ui(x, y)
+    override fun createInstance(x: Uint, y: Uint, z: Uint) = Vec3ui(x, y, z)
+    override fun createInstance(x: Uint, y: Uint, z: Uint, w: Uint) = Vec4ui(x, y, z, w)
 
 
     companion object : vec4ui_operators() {

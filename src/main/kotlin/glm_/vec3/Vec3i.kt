@@ -2,6 +2,7 @@ package glm_.vec3
 
 import glm_.*
 import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2i
 import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3i_operators
 import glm_.vec4.Vec4bool
@@ -12,7 +13,19 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec3i(x: Int, y: Int, z: Int) : Vec3t<Int>(x, y, z) {
+class Vec3i(var ofs: Int, var array: IntArray) : Vec3t<Int>() {
+
+    constructor(x: Int, y: Int, z: Int) : this(0, intArrayOf(x, y, z))
+
+    override inline var x: Int
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    override inline var y: Int
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
+    override inline var z: Int
+        get() = array[ofs + 2]
+        set(value) = array.set(ofs + 2, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -496,6 +509,10 @@ class Vec3i(x: Int, y: Int, z: Int) : Vec3t<Int>(x, y, z) {
     fun shr(bX: Number, bY: Number, bZ: Number, res: Vec3i = Vec3i()) = shr(res, this, bX.i, bY.i, bZ.i)
 
     fun shrAssign(bX: Number, bY: Number, bZ: Number) = shr(this, this, bX.i, bY.i, bZ.i)
+
+
+    override fun createInstance(x: Int, y: Int) = Vec2i(x, y)
+    override fun createInstance(x: Int, y: Int, z: Int) = Vec3i(x, y, z)
 
 
     companion object : vec3i_operators() {

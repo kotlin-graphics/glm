@@ -16,7 +16,7 @@ import glm_.vec2.Vec2.Companion.times
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-open class mat2_operators {
+open class mat2x2_operators {
 
     /** Mat2 = Mat2 + scalar */
     inline fun plus(res: Mat2, a: Mat2, b: Float): Mat2 {
@@ -222,12 +222,6 @@ open class mat2_operators {
 }
 
 // TODO give a check from here to below
-
-// -- Unary arithmetic operators --
-
-operator fun Mat2.unaryPlus() = this
-
-operator fun Mat2.unaryMinus() = Mat2(-value[0], -value[1])
 
 
 // -- Increment main.and decrement operators --

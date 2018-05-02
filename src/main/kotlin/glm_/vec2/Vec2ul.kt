@@ -13,7 +13,24 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
+class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>() {
+
+    constructor(x: Ulong, y: Ulong) : this(0, longArrayOf(x.v, y.v))
+    constructor(x: Long, y: Long) : this(0, longArrayOf(x, y))
+
+    override inline var x: Ulong
+        get() = Ulong(array[ofs])
+        set(value) = array.set(ofs, value.v)
+    override inline var y: Ulong
+        get() = Ulong(array[ofs + 1])
+        set(value) = array.set(ofs + 1, value.v)
+
+    inline var vX: Long
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    inline var vY: Long
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -556,6 +573,9 @@ class Vec2ul(x: Ulong, y: Ulong) : Vec2t<Ulong>(x, y) {
 
     infix fun shrAssign(b: Number) = shr(this, this, b.L, b.L)
     fun shrAssign(bX: Number, bY: Number) = shr(this, this, bX.L, bY.L)
+
+
+    override fun createInstance(x: Ulong, y: Ulong) = Vec2ul(x, y)
 
 
     companion object : opVec2ul() {

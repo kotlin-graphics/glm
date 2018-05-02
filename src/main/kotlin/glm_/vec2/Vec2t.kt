@@ -13,10 +13,10 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-abstract class Vec2t<T : Number>(_x: T, _y: T) {
+abstract class Vec2t<T : Number> {
 
-    open var x = _x
-    open var y = _y
+    abstract var x: T
+    abstract var y: T
 
     operator fun component1() = x
     operator fun component2() = y
@@ -261,8 +261,9 @@ abstract class Vec2t<T : Number>(_x: T, _y: T) {
         }
 
     // swizzling
+    protected abstract fun createInstance(x: T, y: T): Vec2t<out Number>
 
-    val xx@JvmName("xx") get() = createInstance(x, x)
+    val xx @JvmName("xx") get() = createInstance(x, x)
     var xy
         @JvmName("xy") get() = createInstance(x, y)
         @JvmName("xy") set(value) = put(value.x, value.y)
@@ -291,18 +292,4 @@ abstract class Vec2t<T : Number>(_x: T, _y: T) {
         @JvmName("ts") get() = createInstance(t, s)
         @JvmName("ts") set(value) = put(value.t, value.s)
     val tt @JvmName("tt") get() = createInstance(t, t)
-
-    private fun createInstance(x: T, y: T) = when (this) {
-        is Vec2 -> Vec2(x, y)
-        is Vec2d -> Vec2d(x, y)
-        is Vec2b -> Vec2b(x, y)
-        is Vec2i -> Vec2i(x, y)
-        is Vec2s -> Vec2s(x, y)
-        is Vec2l -> Vec2l(x, y)
-        is Vec2ub -> Vec2ub(x, y)
-        is Vec2ui -> Vec2ui(x, y)
-        is Vec2us -> Vec2us(x, y)
-        is Vec2ul -> Vec2ul(x, y)
-        else -> throw IllegalStateException()
-    }
 }

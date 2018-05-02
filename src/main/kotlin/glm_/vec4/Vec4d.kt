@@ -2,8 +2,10 @@ package glm_.vec4
 
 import glm_.*
 import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
+import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4d_operators
 import java.nio.*
@@ -12,7 +14,22 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z, w) {
+class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
+
+    constructor(x: Double, y: Double, z: Double, w: Double) : this(0, doubleArrayOf(x, y, z, w))
+
+    override inline var x: Double
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    override inline var y: Double
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
+    override inline var z: Double
+        get() = array[ofs + 2]
+        set(value) = array.set(ofs + 2, value)
+    override inline var w: Double
+        get() = array[ofs + 3]
+        set(value) = array.set(ofs + 3, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -358,6 +375,11 @@ class Vec4d(x: Double, y: Double, z: Double, w: Double) : Vec4t<Double>(x, y, z,
 
     val length get() = glm.length(this)
     val length2 get() = glm.length2(this)
+
+
+    override fun createInstance(x: Double, y: Double) = Vec2d(x, y)
+    override fun createInstance(x: Double, y: Double, z: Double) = Vec3d(x, y, z)
+    override fun createInstance(x: Double, y: Double, z: Double, w: Double) = Vec4d(x, y, z, w)
 
 
     companion object : vec4d_operators() {

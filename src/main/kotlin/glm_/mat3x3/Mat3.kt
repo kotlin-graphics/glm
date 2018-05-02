@@ -3,6 +3,8 @@ package  glm_.mat3x3
 import glm_.*
 import glm_.glm.inverse
 import glm_.glm.transpose
+import glm_.mat2x2.Mat2
+import glm_.mat2x2.Mat2d
 import glm_.mat2x2.Mat2x2t
 import glm_.mat2x3.Mat2x3t
 import glm_.mat2x4.Mat2x4t
@@ -12,6 +14,7 @@ import glm_.mat3x4.Mat3x4t
 import glm_.mat4x2.Mat4x2t
 import glm_.mat4x3.Mat4x3t
 import glm_.mat4x4.Mat4
+import glm_.mat4x4.Mat4d
 import glm_.quat.Quat
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
@@ -19,12 +22,13 @@ import glm_.vec3.Vec3t
 import glm_.vec4.Vec4t
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
+import java.util.*
 
 /**
  * Created by GBarbieri on 10.11.2016.
  */
 
-data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
+class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
 
     // -- Constructors --
 
@@ -32,10 +36,10 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
 
     constructor(s: Number) : this(s, s, s)
 
-    constructor(x: Number, y: Number, z: Number) : this(mutableListOf(
-            Vec3(x, 0, 0),
-            Vec3(0, y, 0),
-            Vec3(0, 0, z)))
+    constructor(x: Number, y: Number, z: Number) : this(
+            x, 0, 0,
+            0, y, 0,
+            0, 0, z)
 
     constructor(v: Vec2t<*>) : this(v.x, v.y, 0)
     constructor(v: Vec2t<*>, z: Number) : this(v.x, v.y, z)
@@ -44,87 +48,92 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
 
     constructor(x0: Number, y0: Number, z0: Number,
                 x1: Number, y1: Number, z1: Number,
-                x2: Number, y2: Number, z2: Number) : this(mutableListOf(
-            Vec3(x0, y0, z0),
-            Vec3(x1, y1, z1),
-            Vec3(x2, y2, z2)))
+                x2: Number, y2: Number, z2: Number) : this(0, floatArrayOf(
+            x0.f, y0.f, z0.f,
+            x1.f, y1.f, z1.f,
+            x2.f, y2.f, z2.f))
 
-    constructor(v0: Vec3t<out Number>, v1: Vec3t<out Number>, v2: Vec3t<out Number>) : this(mutableListOf(
-            Vec3(v0),
-            Vec3(v1),
-            Vec3(v2)))
+    constructor(v0: Vec3t<out Number>, v1: Vec3t<out Number>, v2: Vec3t<out Number>) : this(
+            v0.x, v0.y, v0.z,
+            v1.x, v1.y, v1.z,
+            v2.x, v2.y, v2.z)
 
-    constructor(block: (Int) -> Number): this(block(0).f, block(1).f, block(2).f, block(3).f, block(4).f,
-            block(5).f, block(6).f, block(7).f, block(8).f)
+    constructor(block: (Int) -> Number) : this(
+            block(0).f, block(1).f, block(2).f,
+            block(3).f, block(4).f, block(5).f,
+            block(6).f, block(7).f, block(8).f)
 
-    constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toFloat, list.elementAt(index + 1)!!.toFloat,
-            list.elementAt(index + 2)!!.toFloat, list.elementAt(index + 3)!!.toFloat, list.elementAt(index + 4)!!.toFloat,
-            list.elementAt(index + 5)!!.toFloat, list.elementAt(index + 6)!!.toFloat, list.elementAt(index + 7)!!.toFloat,
-            list.elementAt(index + 8)!!.toFloat)
+    constructor(list: Iterable<*>, index: Int = 0) : this(
+            list.elementAt(index)!!.toFloat, list.elementAt(index + 1)!!.toFloat, list.elementAt(index + 2)!!.toFloat,
+            list.elementAt(index + 3)!!.toFloat, list.elementAt(index + 4)!!.toFloat, list.elementAt(index + 5)!!.toFloat,
+            list.elementAt(index + 6)!!.toFloat, list.elementAt(index + 7)!!.toFloat, list.elementAt(index + 8)!!.toFloat)
 
     // -- Matrix conversions --
 
-    constructor(mat2x2: Mat2x2t<*>) : this(mutableListOf(
-            Vec3(mat2x2[0], 0),
-            Vec3(mat2x2[1], 0),
-            Vec3(0, 0, 1)))
+    constructor(mat2: Mat2) : this(
+            mat2[0, 0], mat2[0, 1], 0f,
+            mat2[1, 0], mat2[1, 1], 0f,
+            0f, 0f, 1f)
 
-    constructor(mat3: Mat3) : this(mutableListOf(
-            Vec3(mat3[0]),
-            Vec3(mat3[1]),
-            Vec3(mat3[2])))
+    constructor(mat2: Mat2d) : this(
+            mat2[0, 0], mat2[0, 1], 0.0,
+            mat2[1, 0], mat2[1, 1], 0.0,
+            0.0, 0.0, 1.0)
 
-    constructor(mat4: Mat4) : this(mutableListOf(
-            Vec3(mat4[0]),
-            Vec3(mat4[1]),
-            Vec3(mat4[2])))
+    constructor(mat3: Mat3) : this(0, mat3.array.clone())
+    constructor(mat3: Mat3d) : this(0, FloatArray(length) { mat3.array[it].f })
 
-    constructor(mat2x3: Mat2x3t<*>) : this(mutableListOf(
-            Vec3(mat2x3[0]),
-            Vec3(mat2x3[1]),
-            Vec3(0, 0, 1)))
+    constructor(mat4: Mat4) : this(
+            mat4[0, 0], mat4[0, 1], mat4[0, 2],
+            mat4[1, 0], mat4[1, 1], mat4[1, 2],
+            mat4[2, 0], mat4[2, 1], mat4[2, 2])
+    constructor(mat4: Mat4d) : this(
+            mat4[0, 0], mat4[0, 1], mat4[0, 2],
+            mat4[1, 0], mat4[1, 1], mat4[1, 2],
+            mat4[2, 0], mat4[2, 1], mat4[2, 2])
 
-    constructor(mat3x2: Mat3x2t<*>) : this(mutableListOf(
-            Vec3(mat3x2[0], 0),
-            Vec3(mat3x2[1], 0),
-            Vec3(mat3x2[2], 1)))
+    constructor(mat2x3: Mat2x3t<*>) : this(
+            mat2x3[0, 0], mat2x3[0, 1], mat2x3[0, 2],
+            mat2x3[1, 0], mat2x3[1, 1], mat2x3[1, 2],
+            0, 0, 1)
 
-    constructor(mat2x4: Mat2x4t<*>) : this(mutableListOf(
-            Vec3(mat2x4[0]),
-            Vec3(mat2x4[1]),
-            Vec3(0, 0, 1)))
+    constructor(mat3x2: Mat3x2t<*>) : this(
+            mat3x2[0, 0], mat3x2[0, 1], 0,
+            mat3x2[1, 0], mat3x2[1, 1], 0,
+            mat3x2[2, 0], mat3x2[2, 1], 1)
 
-    constructor(mat4x2: Mat4x2t<*>) : this(mutableListOf(
-            Vec3(mat4x2[0], 0),
-            Vec3(mat4x2[1], 0),
-            Vec3(mat4x2[2], 1)))
+    constructor(mat2x4: Mat2x4t<*>) : this(
+            mat2x4[0, 0], mat2x4[0, 1], mat2x4[0, 2],
+            mat2x4[1, 0], mat2x4[1, 1], mat2x4[1, 2],
+            0, 0, 1)
 
-    constructor(mat3x4: Mat3x4t<*>) : this(mutableListOf(
-            Vec3(mat3x4[0]),
-            Vec3(mat3x4[1]),
-            Vec3(mat3x4[2])))
+    constructor(mat4x2: Mat4x2t<*>) : this(
+            mat4x2[0, 0], mat4x2[0, 1], 0,
+            mat4x2[1, 0], mat4x2[1, 1], 0,
+            mat4x2[2, 0], mat4x2[2, 1], 1)
 
-    constructor(mat4x3: Mat4x3t<*>) : this(mutableListOf(
-            Vec3(mat4x3[0]),
-            Vec3(mat4x3[1]),
-            Vec3(mat4x3[2])))
+    constructor(mat3x4: Mat3x4t<*>) : this(
+            mat3x4[0, 0], mat3x4[0, 1], mat3x4[0, 2],
+            mat3x4[1, 0], mat3x4[1, 1], mat3x4[1, 2],
+            mat3x4[2, 0], mat3x4[2, 1], mat3x4[2, 2])
 
-    @JvmOverloads constructor(floats: FloatArray, transpose: Boolean = false) : this(
-            if (transpose) mutableListOf(
-                    Vec3(floats[0], floats[4], floats[8]),
-                    Vec3(floats[1], floats[5], floats[9]),
-                    Vec3(floats[2], floats[6], floats[10]))
-            else mutableListOf(
-                    Vec3(floats, 0),
-                    Vec3(floats, 4),
-                    Vec3(floats, 8)))
+    constructor(mat4x3: Mat4x3t<*>) : this(
+            mat4x3[0, 0], mat4x3[0, 1], mat4x3[0, 2],
+            mat4x3[1, 0], mat4x3[1, 1], mat4x3[1, 2],
+            mat4x3[2, 0], mat4x3[2, 1], mat4x3[2, 2])
+
+    constructor(floats: FloatArray, transpose: Boolean = false) : this(0,
+            if (transpose) floatArrayOf(
+                    floats[0], floats[3], floats[6],
+                    floats[1], floats[4], floats[7],
+                    floats[2], floats[5], floats[8])
+            else floats.clone())
 
     // to
-    fun to(mat2x2: Mat2x2t<*>) {
-        value = mutableListOf(
-                Vec3(mat2x2[0]),
-                Vec3(mat2x2[1]))
-    }
+//    fun to(mat2x2: Mat2x2t<Number>) {
+//        mat2x2[0, 0] = array[0]; mat2x2[0, 1] = array[1]
+//        mat2x2[1, 0] = array[3]; mat2x2[1, 1] = array[4]
+//    }
 
 //    fun to(scalar: Number) {
 //        value = mutableListOf(
@@ -146,11 +155,19 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
 
     // -- Accesses --
 
-    operator fun set(i: Int, v: Vec3) = value[i] put v
-    operator fun set(c: Int, r: Int, v: Float) {
-        value[c][r] = v
+    override inline operator fun get(index: Int) = Vec3(index * 3, array)
+    override inline operator fun get(c: Int, r: Int) = array[c * 3 + r]
+
+    override inline operator fun set(c: Int, r: Int, s: Float) = array.set(c * 3 + r, s)
+    override inline operator fun set(i: Int, v: Vec3t<out Number>) {
+        array[i * 3] = v.x.f
+        array[i * 3 + 1] = v.y.f
+        array[i * 3 + 2] = v.z.f
     }
-    operator fun get(c: Int, r: Int) = value[c][r]
+
+    inline operator fun set(i: Int, v: Vec3) {
+        v.to(array, i * 3)
+    }
 
     // -- Matrix functions --
 
@@ -172,17 +189,17 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
 
     fun put(x: Float, y: Float, z: Float): Mat3 {
 
-        value[0][0] = x
-        value[0][1] = 0f
-        value[0][2] = 0f
+        array[0] = x
+        array[1] = 0f
+        array[2] = 0f
 
-        value[1][0] = 0f
-        value[1][1] = y
-        value[1][2] = 0f
+        array[3] = 0f
+        array[4] = y
+        array[5] = 0f
 
-        value[2][0] = 0f
-        value[2][1] = 0f
-        value[2][2] = z
+        array[6] = 0f
+        array[7] = 0f
+        array[8] = z
 
         return this
     }
@@ -190,25 +207,25 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
     // TODO others
     infix fun to(res: Mat4): Mat4 {
 
-        res[0][0] = this[0][0]
-        res[0][1] = this[0][1]
-        res[0][2] = this[0][2]
-        res[0][3] = 0f
+        res[0, 0] = this[0, 0]
+        res[0, 1] = this[0, 1]
+        res[0, 2] = this[0, 2]
+        res[0, 3] = 0f
 
-        res[1][0] = this[1][0]
-        res[1][1] = this[1][1]
-        res[1][2] = this[1][2]
-        res[1][3] = 0f
+        res[1, 0] = this[1, 0]
+        res[1, 1] = this[1, 1]
+        res[1, 2] = this[1, 2]
+        res[1, 3] = 0f
 
-        res[2][0] = this[2][0]
-        res[2][1] = this[2][1]
-        res[2][2] = this[2][2]
-        res[2][3] = 0f
+        res[2, 0] = this[2, 0]
+        res[2, 1] = this[2, 1]
+        res[2, 2] = this[2, 2]
+        res[2, 3] = 0f
 
-        res[3][0] = 0f
-        res[3][1] = 0f
-        res[3][2] = 0f
-        res[3][3] = 1f
+        res[3, 0] = 0f
+        res[3, 1] = 0f
+        res[3, 2] = 0f
+        res[3, 3] = 1f
 
         return res
     }
@@ -222,15 +239,15 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
     infix fun to(dbb: ByteBuffer): ByteBuffer = to(dbb, 0)
 
     fun to(dbb: ByteBuffer, offset: Int): ByteBuffer {
-        dbb.putFloat(offset + 0 * Float.BYTES, value[0][0])
-        dbb.putFloat(offset + 1 * Float.BYTES, value[0][1])
-        dbb.putFloat(offset + 2 * Float.BYTES, value[0][2])
-        dbb.putFloat(offset + 3 * Float.BYTES, value[1][0])
-        dbb.putFloat(offset + 4 * Float.BYTES, value[1][1])
-        dbb.putFloat(offset + 5 * Float.BYTES, value[1][2])
-        dbb.putFloat(offset + 6 * Float.BYTES, value[2][0])
-        dbb.putFloat(offset + 7 * Float.BYTES, value[2][1])
-        dbb.putFloat(offset + 8 * Float.BYTES, value[2][2])
+        dbb.putFloat(offset + 0 * Float.BYTES, array[0])
+        dbb.putFloat(offset + 1 * Float.BYTES, array[1])
+        dbb.putFloat(offset + 2 * Float.BYTES, array[2])
+        dbb.putFloat(offset + 3 * Float.BYTES, array[3])
+        dbb.putFloat(offset + 4 * Float.BYTES, array[4])
+        dbb.putFloat(offset + 5 * Float.BYTES, array[5])
+        dbb.putFloat(offset + 6 * Float.BYTES, array[6])
+        dbb.putFloat(offset + 7 * Float.BYTES, array[7])
+        dbb.putFloat(offset + 8 * Float.BYTES, array[8])
         return dbb
     }
 
@@ -238,22 +255,16 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
     infix fun to(dfb: FloatBuffer) = to(dfb, 0)
 
     fun to(dfb: FloatBuffer, offset: Int): FloatBuffer {
-        dfb[offset + 0] = value[0][0]
-        dfb[offset + 1] = value[0][1]
-        dfb[offset + 2] = value[0][2]
-        dfb[offset + 3] = value[1][0]
-        dfb[offset + 4] = value[1][1]
-        dfb[offset + 5] = value[1][2]
-        dfb[offset + 6] = value[2][0]
-        dfb[offset + 7] = value[2][1]
-        dfb[offset + 8] = value[2][2]
+        dfb[offset + 0] = array[0]
+        dfb[offset + 1] = array[1]
+        dfb[offset + 2] = array[2]
+        dfb[offset + 3] = array[3]
+        dfb[offset + 4] = array[4]
+        dfb[offset + 5] = array[5]
+        dfb[offset + 6] = array[6]
+        dfb[offset + 7] = array[7]
+        dfb[offset + 8] = array[8]
         return dfb
-    }
-
-
-    companion object : mat3x3_operators() {
-        @JvmField
-        val size = 3 * 3 * Float.BYTES
     }
 
 
@@ -261,7 +272,10 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
 
     operator fun unaryPlus() = this
 
-    operator fun unaryMinus() = Mat3(-value[0], -value[1], -value[2])
+    operator fun unaryMinus() = Mat3(
+            -array[0], -array[1], -array[2],
+            -array[3], -array[4], -array[5],
+            -array[6], -array[7], -array[8])
 
 
 // -- Increment main.and decrement operators --
@@ -281,10 +295,11 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
     fun plus(b: Float, res: Mat3) = plus(res, this, b)
     fun plus(b: Mat3, res: Mat3) = plus(res, this, b)
 
-    infix operator  fun plusAssign(b: Float) {
+    infix operator fun plusAssign(b: Float) {
         plus(this, this, b)
     }
-    infix operator  fun plusAssign(b: Mat3) {
+
+    infix operator fun plusAssign(b: Mat3) {
         plus(this, this, b)
     }
 
@@ -295,10 +310,11 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
     fun minus(b: Float, res: Mat3) = minus(res, this, b)
     fun minus(b: Mat3, res: Mat3) = minus(res, this, b)
 
-    infix operator  fun minusAssign(b: Float) {
+    infix operator fun minusAssign(b: Float) {
         minus(this, this, b)
     }
-    infix operator  fun minusAssign(b: Mat3) {
+
+    infix operator fun minusAssign(b: Mat3) {
         minus(this, this, b)
     }
 
@@ -311,13 +327,15 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
     fun times(b: Vec3, res: Vec3) = times(res, this, b)
     fun times(b: Mat3, res: Mat3) = times(res, this, b)
 
-    infix operator  fun timesAssign(b: Float) {
+    infix operator fun timesAssign(b: Float) {
         times(this, this, b)
     }
-    infix operator  fun timesAssign(b: Vec3) {
+
+    infix operator fun timesAssign(b: Vec3) {
         times(b, this, b)
     }
-    infix operator  fun timesAssign(b: Mat3) {
+
+    infix operator fun timesAssign(b: Mat3) {
         times(this, this, b)
     }
 
@@ -328,76 +346,62 @@ data class Mat3(override var value: MutableList<Vec3>) : Mat3x3t<Vec3>(value) {
     fun div(b: Float, res: Mat3) = div(res, this, b)
     fun div(b: Mat3, res: Mat3) = div(res, this, b)
 
-    infix operator  fun divAssign(b: Float) {
+    infix operator fun divAssign(b: Float) {
         div(this, this, b)
     }
-    infix operator  fun divAssign(b: Mat3) {
+
+    infix operator fun divAssign(b: Mat3) {
         div(this, this, b)
     }
 
 
     infix fun isEqual(b: Mat3) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2])
 
-    // TODO others
-    var a0: Float
-        @JvmName("v00") get() = value[0][0]
-        @JvmName("v00") set(v) {
-            value[0][0] = v
-        }
-    var a1: Float
-        @JvmName("v01") get() = value[0][1]
-        @JvmName("v01") set(v) {
-            value[0][1] = v
-        }
-    var a2: Float
-        @JvmName("v02") get() = value[0][2]
-        @JvmName("v02") set(v) {
-            value[0][2] = v
-        }
+    override var a0: Float
+        get() = array[0]
+        set(v) = array.set(0, v)
+    override var a1: Float
+        get() = array[1]
+        set(v) = array.set(1, v)
+    override var a2: Float
+        get() = array[2]
+        set(v) = array.set(2, v)
 
-    var b0: Float
-        @JvmName("v10") get() = value[1][0]
-        @JvmName("v10") set(v) {
-            value[1][0] = v
-        }
-    var b1: Float
-        @JvmName("v11") get() = value[1][1]
-        @JvmName("v11") set(v) {
-            value[1][1] = v
-        }
-    var b2: Float
-        @JvmName("v12") get() = value[1][2]
-        @JvmName("v12") set(v) {
-            value[1][2] = v
-        }
+    override var b0: Float
+        get() = array[3]
+        set(v) = array.set(3, v)
+    override var b1: Float
+        get() = array[4]
+        set(v) = array.set(4, v)
+    override var b2: Float
+        get() = array[5]
+        set(v) = array.set(5, v)
 
-    var c0: Float
-        @JvmName("v20") get() = value[2][0]
-        @JvmName("v20") set(v) {
-            value[2][0] = v
-        }
-    var c1: Float
-        @JvmName("v21") get() = value[2][1]
-        @JvmName("v21") set(v) {
-            value[2][1] = v
-        }
-    var c2: Float
-        @JvmName("v22") get() = value[2][2]
-        @JvmName("v22") set(v) {
-            value[2][2] = v
-        }
+    override var c0: Float
+        get() = array[6]
+        set(v) = array.set(6, v)
+    override var c1: Float
+        get() = array[7]
+        set(v) = array.set(7, v)
+    override var c2: Float
+        get() = array[8]
+        set(v) = array.set(8, v)
 
 
-    val isIdentity get() = this[0][0] == 1f && this[1][0] == 0f && this[2][0] == 0f &&
-            this[0][1] == 0f && this[1][1] == 1f && this[2][1] == 0f &&
-            this[0][2] == 0f && this[1][2] == 0f && this[2][2] == 1f
+    override val isIdentity
+        get() = this[0, 0] == 1f && this[1, 0] == 0f && this[2, 0] == 0f &&
+                this[0, 1] == 0f && this[1, 1] == 1f && this[2, 1] == 0f &&
+                this[0, 2] == 0f && this[1, 2] == 0f && this[2, 2] == 1f
 
+    companion object : mat3x3_operators() {
+        const val length = Mat3x3t.length
+        @JvmField
+        val size = length * Float.BYTES
+    }
 
-    override fun toString() = super.toString()
+    override fun size() = size
 
-    override fun equals(other: Any?) = other is Mat3 &&
-            this[0, 0] == other[0, 0] && this[0, 1] == other[0, 1] && this[0, 2] == other[0, 2] &&
-            this[1, 0] == other[1, 0] && this[1, 1] == other[1, 1] && this[1, 2] == other[1, 2] &&
-            this[2, 0] == other[2, 0] && this[2, 1] == other[2, 1] && this[2, 2] == other[2, 2]
-    override fun hashCode() = 31 * (31 * value[0].hashCode() + value[1].hashCode()) + value[2].hashCode()
+    override fun equals(other: Any?) = other is Mat3 && Arrays.equals(array, other.array)
+
+    override fun hashCode() = 31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()
 }

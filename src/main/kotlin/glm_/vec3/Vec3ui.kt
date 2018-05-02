@@ -3,6 +3,7 @@ package glm_.vec3
 import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
+import glm_.vec2.Vec2ui
 import glm_.vec3.operators.vec3ui_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
@@ -13,7 +14,30 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
+class Vec3ui(var ofs: Int, var array: IntArray) : Vec3t<Uint>() {
+
+    constructor(x: Uint, y: Uint, z: Uint) : this(0, intArrayOf(x.v, y.v, z.v))
+    constructor(x: Int, y: Int, z: Int) : this(0, intArrayOf(x, y, z))
+
+    override inline var x: Uint
+        get() = Uint(array[ofs])
+        set(value) = array.set(ofs, value.v)
+    override inline var y: Uint
+        get() = Uint(array[ofs + 1])
+        set(value) = array.set(ofs + 1, value.v)
+    override inline var z: Uint
+        get() = Uint(array[ofs + 2])
+        set(value) = array.set(ofs + 2, value.v)
+
+    inline var vX: Int
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    inline var vY: Int
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
+    inline var vZ: Int
+        get() = array[ofs + 2]
+        set(value) = array.set(ofs + 2, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -570,6 +594,10 @@ class Vec3ui(x: Uint, y: Uint, z: Uint) : Vec3t<Uint>(x, y, z) {
     fun shr(bX: Number, bY: Number, bZ: Number, res: Vec3ui = Vec3ui()) = shr(res, this, bX.i, bY.i, bZ.i)
 
     fun shrAssign(bX: Number, bY: Number, bZ: Number) = shr(this, this, bX.i, bY.i, bZ.i)
+
+
+    override fun createInstance(x: Uint, y: Uint) = Vec2ui(x, y)
+    override fun createInstance(x: Uint, y: Uint, z: Uint) = Vec3ui(x, y, z)
 
 
     companion object : vec3ui_operators() {

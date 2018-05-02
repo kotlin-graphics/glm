@@ -12,7 +12,16 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
+class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>() {
+
+    constructor(x: Float, y: Float) : this(0, floatArrayOf(x, y))
+
+    override inline var x: Float
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    override inline var y: Float
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
     constructor() : this(0)
@@ -465,6 +474,9 @@ class Vec2(x: Float, y: Float) : Vec2t<Float>(x, y) {
         res.y = -y
         return res
     }
+
+
+    override fun createInstance(x: Float, y: Float) = Vec2(x, y)
 
 
     companion object : opVec2() {

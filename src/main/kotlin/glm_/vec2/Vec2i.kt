@@ -12,7 +12,16 @@ import java.nio.*
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
+class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
+
+    constructor(x: Int, y: Int) : this(0, intArrayOf(x, y))
+
+    override inline var x: Int
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    override inline var y: Int
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -511,6 +520,10 @@ class Vec2i(x: Int, y: Int) : Vec2t<Int>(x, y) {
     }
 
     val aspect get() = x.f / y
+
+
+    override fun createInstance(x: Int, y: Int) = Vec2i(x, y)
+
 
     companion object : opVec2i() {
         const val length = Vec2t.length

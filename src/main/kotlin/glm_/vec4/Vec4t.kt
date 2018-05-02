@@ -8,12 +8,12 @@ import glm_.vec3.*
 import java.nio.*
 
 // TODO other
-abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
+abstract class Vec4t<T : Number> {
 
-    open var x = _x
-    open var y = _y
-    open var z = _z
-    open var w = _w
+    abstract var x: T
+    abstract var y: T
+    abstract var z: T
+    abstract var w: T
 
     operator fun component1() = x
     operator fun component2() = y
@@ -212,12 +212,12 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
     operator fun invoke(doubles: DoubleBuffer, index: Int) = invoke(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
 
-    fun toByteArray(bigEndian: Boolean = true) = to(ByteArray(Companion.length), 0, bigEndian)
+    fun toByteArray(bigEndian: Boolean = true) = to(ByteArray(length), 0, bigEndian)
     infix fun to(bytes: ByteArray) = to(bytes, 0)
     fun to(bytes: ByteArray, bigEndian: Boolean) = to(bytes, 0, bigEndian)
     abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
 
-    fun toByteBuffer() = to(ByteBuffer.allocateDirect(Companion.length), 0)
+    fun toByteBuffer() = to(ByteBuffer.allocateDirect(length), 0)
     infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
     abstract fun to(bytes: ByteBuffer, index: Int): ByteBuffer
 
@@ -263,8 +263,8 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
             y = value
         }
     var b
-        @JvmName("toByte") get() = z
-        @JvmName("toByte") set(value) {
+        @JvmName("b") get() = z
+        @JvmName("b") set(value) {
             z = value
         }
     var a
@@ -275,8 +275,8 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
 
 
     var s
-        @JvmName("toShort") get() = x
-        @JvmName("toShort") set(value) {
+        @JvmName("s") get() = x
+        @JvmName("s") set(value) {
             x = value
         }
     var t
@@ -297,6 +297,9 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
 
 
     // swizzling
+    protected abstract fun createInstance(x: T, y: T): Vec2t<out Number>
+    protected abstract fun createInstance(x: T, y: T, z: T): Vec3t<out Number>
+    protected abstract fun createInstance(x: T, y: T, z: T, w: T): Vec4t<out Number>
 
     val xx @JvmName("xx") get() = createInstance(x, x)
     var xy
@@ -682,46 +685,4 @@ abstract class Vec4t<T : Number>(_x: T, _y: T, _z: T, _w: T) {
     val wwwy @JvmName("wwwy") get() = createInstance(w, w, w, y)
     val wwwz @JvmName("wwwz") get() = createInstance(w, w, w, z)
     val wwww @JvmName("wwww") get() = createInstance(w, w, w, w)
-
-    private fun createInstance(x: T, y: T) = when (this) {
-        is Vec4 -> Vec2(x, y)
-        is Vec4d -> Vec2d(x, y)
-        is Vec4b -> Vec2b(x, y)
-        is Vec4i -> Vec2i(x, y)
-        is Vec4s -> Vec2s(x, y)
-        is Vec4l -> Vec2l(x, y)
-        is Vec4ub -> Vec2ub(x, y)
-        is Vec4ui -> Vec2ui(x, y)
-        is Vec4us -> Vec2us(x, y)
-        is Vec4ul -> Vec2ul(x, y)
-        else -> throw IllegalStateException()
-    }
-
-    private fun createInstance(x: T, y: T, z: T) = when (this) {
-        is Vec4 -> Vec3(x, y, z)
-        is Vec4d -> Vec3d(x, y, z)
-        is Vec4b -> Vec3b(x, y, z)
-        is Vec4i -> Vec3i(x, y, z)
-        is Vec4s -> Vec3s(x, y, z)
-        is Vec4l -> Vec3l(x, y, z)
-        is Vec4ub -> Vec3ub(x, y, z)
-        is Vec4ui -> Vec3ui(x, y, z)
-        is Vec4us -> Vec3us(x, y, z)
-        is Vec4ul -> Vec3ul(x, y, z)
-        else -> throw IllegalStateException()
-    }
-
-    private fun createInstance(x: T, y: T, z: T, w: T) = when (this) {
-        is Vec4 -> Vec4(x, y, z, w)
-        is Vec4d -> Vec4d(x, y, z, w)
-        is Vec4b -> Vec4b(x, y, z, w)
-        is Vec4i -> Vec4i(x, y, z, w)
-        is Vec4s -> Vec4s(x, y, z, w)
-        is Vec4l -> Vec4l(x, y, z, w)
-        is Vec4ub -> Vec4ub(x, y, z, w)
-        is Vec4ui -> Vec4ui(x, y, z, w)
-        is Vec4us -> Vec4us(x, y, z, w)
-        is Vec4ul -> Vec4ul(x, y, z, w)
-        else -> throw IllegalStateException()
-    }
 }

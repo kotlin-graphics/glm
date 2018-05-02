@@ -12,7 +12,16 @@ import java.nio.*
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
+class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>() {
+
+    constructor(x: Double, y: Double) : this(0, doubleArrayOf(x, y))
+
+    override inline var x: Double
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    override inline var y: Double
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -372,6 +381,9 @@ class Vec2d(x: Double, y: Double) : Vec2t<Double>(x, y) {
     }
 
     fun negateAssign() = negate(this)
+
+
+    override fun createInstance(x: Double, y: Double) = Vec2d(x, y)
 
 
     companion object : opVec2d() {

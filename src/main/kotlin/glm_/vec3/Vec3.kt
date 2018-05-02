@@ -1,6 +1,7 @@
 package glm_.vec3
 
 import glm_.*
+import glm_.vec2.Vec2
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3_operators
@@ -13,7 +14,19 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
+class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
+
+    constructor(x: Float, y: Float, z: Float) : this(0, floatArrayOf(x, y, z))
+
+    override inline var x: Float
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    override inline var y: Float
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
+    override inline var z: Float
+        get() = array[ofs + 2]
+        set(value) = array.set(ofs + 2, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -384,6 +397,10 @@ class Vec3(x: Float, y: Float, z: Float) : Vec3t<Float>(x, y, z) {
     }
 
     fun negateAssign() = negate(this)
+
+
+    override fun createInstance(x: Float, y: Float) = Vec2(x, y)
+    override fun createInstance(x: Float, y: Float, z: Float) = Vec3(x, y, z)
 
 
     companion object : vec3_operators() {

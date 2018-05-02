@@ -12,7 +12,16 @@ import java.nio.*
  * Created by GBarbieri on 06.10.2016.
  */
 
-class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
+class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>() {
+
+    constructor(x: Short, y: Short) : this(0, shortArrayOf(x, y))
+
+    override inline var x: Short
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    override inline var y: Short
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -574,6 +583,9 @@ class Vec2s(x: Short, y: Short) : Vec2t<Short>(x, y) {
     infix fun shrAssign(b: Number) = shr(this, this, b.s, b.s)
     infix fun shrAssign(b: Vec2t<out Number>) = shr(this, this, b.x.s, b.y.s)
     fun shrAssign(bX: Number, bY: Number) = shr(this, this, bX.s, bY.s)
+
+
+    override fun createInstance(x: Short, y: Short) = Vec2l(x, y)
 
 
     companion object : opVec2s() {

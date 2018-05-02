@@ -3,8 +3,10 @@ package glm_.vec4
 import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
+import glm_.vec2.Vec2ul
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
+import glm_.vec3.Vec3ul
 import glm_.vec4.operators.vec4ul_operators
 import unsigned.Ulong
 import java.nio.*
@@ -13,7 +15,36 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) {
+class Vec4ul(var ofs: Int, var array: LongArray) : Vec4t<Ulong>() {
+
+    constructor(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : this(0, longArrayOf(x.v, y.v, z.v, w.v))
+    constructor(x: Long, y: Long, z: Long, w: Long) : this(0, longArrayOf(x, y, z, w))
+
+    override inline var x: Ulong
+        get() = Ulong(array[ofs])
+        set(value) = array.set(ofs, value.v)
+    override inline var y: Ulong
+        get() = Ulong(array[ofs + 1])
+        set(value) = array.set(ofs + 1, value.v)
+    override inline var z: Ulong
+        get() = Ulong(array[ofs + 2])
+        set(value) = array.set(ofs + 2, value.v)
+    override inline var w: Ulong
+        get() = Ulong(array[ofs + 3])
+        set(value) = array.set(ofs + 3, value.v)
+
+    inline var vX: Long
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    inline var vY: Long
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
+    inline var vZ: Long
+        get() = array[ofs + 2]
+        set(value) = array.set(ofs + 2, value)
+    inline var vW: Long
+        get() = array[ofs + 3]
+        set(value) = array.set(ofs + 3, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -566,6 +597,11 @@ class Vec4ul(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : Vec4t<Ulong>(x, y, z, w) 
 
     fun shr(b: Number, res: Vec4ul) = shr(res, this, b.L, b.L, b.L, b.L)
     fun shr(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4ul) = shr(res, this, bX.L, bY.L, bZ.L, bW.L)
+
+
+    override fun createInstance(x: Ulong, y: Ulong) = Vec2ul(x, y)
+    override fun createInstance(x: Ulong, y: Ulong, z: Ulong) = Vec3ul(x, y, z)
+    override fun createInstance(x: Ulong, y: Ulong, z: Ulong, w: Ulong) = Vec4ul(x, y, z, w)
 
 
     companion object : vec4ul_operators() {

@@ -3,8 +3,10 @@ package glm_.vec4
 import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
+import glm_.vec2.Vec2ub
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
+import glm_.vec3.Vec3ub
 import glm_.vec4.operators.vec4ub_operators
 import unsigned.Ubyte
 import java.nio.*
@@ -13,7 +15,36 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4ub(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : Vec4t<Ubyte>(x, y, z, w) {
+class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>() {
+
+    constructor(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : this(0, byteArrayOf(x.v, y.v, z.v, w.v))
+    constructor(x: Byte, y: Byte, z: Byte, w: Byte) : this(0, byteArrayOf(x, y, z, w))
+
+    override inline var x: Ubyte
+        get() = Ubyte(array[ofs])
+        set(value) = array.set(ofs, value.v)
+    override inline var y: Ubyte
+        get() = Ubyte(array[ofs + 1])
+        set(value) = array.set(ofs + 1, value.v)
+    override inline var z: Ubyte
+        get() = Ubyte(array[ofs + 2])
+        set(value) = array.set(ofs + 2, value.v)
+    override inline var w: Ubyte
+        get() = Ubyte(array[ofs + 3])
+        set(value) = array.set(ofs + 3, value.v)
+
+    inline var vX: Byte
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    inline var vY: Byte
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
+    inline var vZ: Byte
+        get() = array[ofs + 2]
+        set(value) = array.set(ofs + 2, value)
+    inline var vW: Byte
+        get() = array[ofs + 3]
+        set(value) = array.set(ofs + 3, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -601,6 +632,11 @@ class Vec4ub(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : Vec4t<Ubyte>(x, y, z, w) 
     fun shr(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4ub = Vec4ub()) = shr(res, this, bX.i, bY.i, bZ.i, bW.i)
 
     fun shrAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(this, this, bX.i, bY.i, bZ.i, bW.i)
+
+
+    override fun createInstance(x: Ubyte, y: Ubyte) = Vec2ub(x, y)
+    override fun createInstance(x: Ubyte, y: Ubyte, z: Ubyte) = Vec3ub(x, y, z)
+    override fun createInstance(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) = Vec4(x, y, z, w)
 
 
     companion object : vec4ub_operators() {

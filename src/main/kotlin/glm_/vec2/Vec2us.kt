@@ -13,7 +13,24 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
+class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>() {
+
+    constructor(x: Ushort, y: Ushort) : this(0, shortArrayOf(x.v, y.v))
+    constructor(x: Short, y: Short) : this(0, shortArrayOf(x, y))
+
+    override inline var x: Ushort
+        get() = Ushort(array[ofs])
+        set(value) = array.set(ofs, value.v)
+    override inline var y: Ushort
+        get() = Ushort(array[ofs + 1])
+        set(value) = array.set(ofs + 1, value.v)
+
+    inline var vX: Short
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    inline var vY: Short
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -615,6 +632,9 @@ class Vec2us(x: Ushort, y: Ushort) : Vec2t<Ushort>(x, y) {
     fun shr(b: Number, res: Vec2us) = shr(res, this, b.i, b.i)
     fun shr(bX: Number, bY: Number, res: Vec2us) = shr(res, this, bX.i, bY.i)
     fun shr(b: Vec2t<out Number>, res: Vec2us) = shr(res, this, b.x.i, b.y.i)
+
+
+    override fun createInstance(x: Ushort, y: Ushort) = Vec2us(x, y)
 
 
     companion object : opVec2us() {

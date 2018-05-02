@@ -2,8 +2,10 @@ package glm_.vec4
 
 import glm_.*
 import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2s
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
+import glm_.vec3.Vec3s
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4s_operators
 import java.nio.*
@@ -12,7 +14,22 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
+class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
+
+    constructor(x: Short, y: Short, z: Short, w: Short) : this(0, shortArrayOf(x, y, z, w))
+
+    override inline var x: Short
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    override inline var y: Short
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
+    override inline var z: Short
+        get() = array[ofs + 2]
+        set(value) = array.set(ofs + 2, value)
+    override inline var w: Short
+        get() = array[ofs + 3]
+        set(value) = array.set(ofs + 3, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -561,6 +578,11 @@ class Vec4s(x: Short, y: Short, z: Short, w: Short) : Vec4t<Short>(x, y, z, w) {
     fun shr(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4s = Vec4s()) = shr(res, this, bX.s, bY.s, bZ.s, bW.s)
 
     fun shrAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(this, this, bX.s, bY.s, bZ.s, bW.s)
+
+
+    override fun createInstance(x: Short, y: Short) = Vec2s(x, y)
+    override fun createInstance(x: Short, y: Short, z: Short) = Vec3s(x, y, z)
+    override fun createInstance(x: Short, y: Short, z: Short, w: Short) = Vec4s(x, y, z, w)
 
 
     companion object : vec4s_operators() {

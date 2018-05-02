@@ -1,41 +1,79 @@
 package  glm_.mat2x3
 
 import glm_.BYTES
+import glm_.f
 import glm_.set
 import glm_.vec3.Vec3
+import glm_.vec3.Vec3t
 import java.nio.FloatBuffer
+import java.util.*
 
 /**
  * Created by GBarbieri on 09.12.2016.
  */
 
-data class Mat2x3(override var value: MutableList<Vec3>) : Mat2x3t<Vec3>(value) {
-
+class Mat2x3(dummy: Int, var array: FloatArray) : Mat2x3t<Float>() {
 
     // -- Accesses --
 
-    operator fun set(i: Int, v: Vec3) = value[i] put v
-    operator fun set(c: Int, r: Int, v: Float) {
-        value[c][r] = v
+    override inline operator fun get(index: Int) = Vec3(index * 3, array)
+    override inline operator fun get(c: Int, r: Int) = array[c * 3 + r]
+
+    override inline operator fun set(c: Int, r: Int, s: Float) = array.set(c * 3 + r, s)
+
+    override inline operator fun set(i: Int, v: Vec3t<out Number>) {
+        array[i * 3] = v.x.f
+        array[i * 3 + 1] = v.y.f
+        array[i * 3 + 2] = v.z.f
     }
-    operator fun get(c: Int, r: Int) = value[c][r]
+
+    inline operator fun set(i: Int, v: Vec3) {
+        v.to(array, i * 3)
+    }
+
 
     infix fun to(dfb: FloatBuffer) = to(dfb, 0)
 
     fun to(dfb: FloatBuffer, offset: Int): FloatBuffer {
-        dfb[offset + 0] = value[0][0]
-        dfb[offset + 1] = value[0][1]
-        dfb[offset + 2] = value[0][2]
-        dfb[offset + 3] = value[1][0]
-        dfb[offset + 4] = value[1][1]
-        dfb[offset + 5] = value[1][2]
+        dfb[offset + 0] = array[0]
+        dfb[offset + 1] = array[1]
+        dfb[offset + 2] = array[2]
+        dfb[offset + 3] = array[3]
+        dfb[offset + 4] = array[4]
+        dfb[offset + 5] = array[5]
         return dfb
     }
 
+    override var a0: Float
+        get() = array[0]
+        set(v) = array.set(0, v)
+    override var a1: Float
+        get() = array[1]
+        set(v) = array.set(1, v)
+    override var a2: Float
+        get() = array[2]
+        set(v) = array.set(2, v)
+
+    override var b0: Float
+        get() = array[4]
+        set(v) = array.set(4, v)
+    override var b1: Float
+        get() = array[5]
+        set(v) = array.set(5, v)
+    override var b2: Float
+        get() = array[6]
+        set(v) = array.set(6, v)
+
+
     companion object {
+        const val length = Mat2x3t.length
         @JvmField
-        val size = 2 * 3 * Float.BYTES
+        val size = length * Float.BYTES
     }
 
-    override fun toString() = super.toString()
+    override fun size() = size
+
+    override fun equals(other: Any?) = other is Mat2x3 && Arrays.equals(array, other.array)
+
+    override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
 }

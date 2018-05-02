@@ -12,7 +12,16 @@ import java.nio.*
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2l(x: Long, y: Long) : Vec2t<Long>(x, y) {
+class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>() {
+
+    constructor(x: Long, y: Long) : this(0, longArrayOf(x, y))
+
+    override inline var x: Long
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    override inline var y: Long
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -473,6 +482,9 @@ class Vec2l(x: Long, y: Long) : Vec2t<Long>(x, y) {
     infix fun shr_(b: Number) = shr(this, this, b.L, b.L)
     infix fun shr_(b: Vec2t<out Number>) = shr(this, this, b.x.L, b.y.L)
     fun shr_(bX: Number, bY: Number) = shr(this, this, bX.L, bY.L)
+
+
+    override fun createInstance(x: Long, y: Long) = Vec2l(x, y)
 
 
     companion object : opVec2l() {

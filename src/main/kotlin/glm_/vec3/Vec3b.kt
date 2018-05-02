@@ -1,6 +1,7 @@
 package glm_.vec3
 
 import glm_.*
+import glm_.vec2.Vec2b
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3b_operators
@@ -12,7 +13,20 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec3b(x: Byte, y: Byte, z: Byte) : Vec3t<Byte>(x, y, z) {
+class Vec3b(var ofs: Int, var array: ByteArray) : Vec3t<Byte>() {
+
+    constructor(x: Byte, y: Byte, z: Byte) : this(0, byteArrayOf(x, y, z))
+
+    override inline var x: Byte
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    override inline var y: Byte
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
+    override inline var z: Byte
+        get() = array[ofs + 2]
+        set(value) = array.set(ofs + 2, value)
+
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -517,6 +531,10 @@ class Vec3b(x: Byte, y: Byte, z: Byte) : Vec3t<Byte>(x, y, z) {
     fun shr(bX: Number, bY: Number, bZ: Number, res: Vec3b = Vec3b()) = shr(res, this, bX.b, bY.b, bZ.b)
 
     fun shrAssign(bX: Number, bY: Number, bZ: Number) = shr(this, this, bX.b, bY.b, bZ.b)
+
+
+    override fun createInstance(x: Byte, y: Byte) = Vec2b(x, y)
+    override fun createInstance(x: Byte, y: Byte, z: Byte) = Vec3b(x, y, z)
 
 
     companion object : vec3b_operators() {

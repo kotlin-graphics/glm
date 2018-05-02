@@ -12,7 +12,16 @@ import java.nio.*
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2b(x: Byte, y: Byte) : Vec2t<Byte>(x, y) {
+class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
+
+    constructor(x: Byte, y: Byte) : this(0, byteArrayOf(x, y))
+
+    override inline var x: Byte
+        get() = array[ofs]
+        set(value) = array.set(ofs, value)
+    override inline var y: Byte
+        get() = array[ofs + 1]
+        set(value) = array.set(ofs + 1, value)
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -525,6 +534,9 @@ class Vec2b(x: Byte, y: Byte) : Vec2t<Byte>(x, y) {
     infix fun shrAssign(b: Number) = shr(this, this, b.b, b.b)
     infix fun shrAssign(b: Vec2t<out Number>) = shr(this, this, b.x.b, b.y.b)
     fun shrAssign(bX: Number, bY: Number) = shr(this, this, bX.b, bY.b)
+
+
+    override fun createInstance(x: Byte, y: Byte) = Vec2b(x, y)
 
 
     companion object : opVec2b() {
