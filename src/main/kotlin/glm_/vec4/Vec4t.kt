@@ -86,6 +86,8 @@ abstract class Vec4t<T : Number> {
     fun put(doubles: DoubleArray, index: Int) = put(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
     fun put(booleans: BooleanArray, index: Int) = put(booleans[index].b, booleans[index + 1].b, booleans[index + 2].b, booleans[index + 3].b)
 
+    fun put(floats: FloatArray, index: Int, w: Number) = put(floats[index], floats[index + 1], floats[index + 2], w) // TODO others
+
     fun put(a: Array<out Number>, index: Int) = put(a[index], a[index + 1], a[index + 2], a[index + 3])
     fun put(a: Array<Char>, index: Int) = put(a[index].b, a[index + 1].b, a[index + 2].b, a[index + 3].b)
     fun put(a: Array<Boolean>, index: Int) = put(a[index].b, a[index + 1].b, a[index + 2].b, a[index + 3].b)
@@ -120,8 +122,6 @@ abstract class Vec4t<T : Number> {
     fun put(longs: LongBuffer, index: Int) = put(longs[index], longs[index + 1], longs[index + 2], longs[index + 3])
     fun put(floats: FloatBuffer, index: Int) = put(floats[index], floats[index + 1], floats[index + 2], floats[index + 3])
     fun put(doubles: DoubleBuffer, index: Int) = put(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
-
-    fun put(floats: FloatBuffer, index: Int, w: Number) = put(floats[index], floats[index + 1], floats[index + 2], w)
 
 
     // -- Same but with () --
