@@ -121,6 +121,8 @@ abstract class Vec4t<T : Number> {
     fun put(floats: FloatBuffer, index: Int) = put(floats[index], floats[index + 1], floats[index + 2], floats[index + 3])
     fun put(doubles: DoubleBuffer, index: Int) = put(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
+    fun put(floats: FloatBuffer, index: Int, w: Number) = put(floats[index], floats[index + 1], floats[index + 2], w)
+
 
     // -- Same but with () --
 
