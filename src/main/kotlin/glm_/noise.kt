@@ -131,7 +131,7 @@ interface noise {
         val ixy1 = detail.permute(ixy + iz1)
 
         var gx0 = ixy0 * (1f / 7f)
-        var gy0 = fract(floor(gx0) * (1f / 7f)) - 0.5f
+        val gy0 = fract(floor(gx0) * (1f / 7f)) - 0.5f
         gx0 = fract(gx0)
         val gz0 = Vec4(0.5f) - abs(gx0) - abs(gy0)
         val sz0 = step(gz0, Vec4(0f))
@@ -139,7 +139,7 @@ interface noise {
         gy0 minusAssign sz0 * (step(0f, gy0) - 0.5f)
 
         var gx1 = ixy1 * (1f / 7f)
-        var gy1 = fract(floor(gx1) * (1f / 7f)) - 0.5f
+        val gy1 = fract(floor(gx1) * (1f / 7f)) - 0.5f
         gx1 = fract(gx1)
         val gz1 = Vec4(0.5f) - abs(gx1) - abs(gy1)
         val sz1 = step(gz1, Vec4(0f))
@@ -373,7 +373,7 @@ interface noise {
         val ixy1 = detail.permute(ixy + iz1)
 
         var gx0 = ixy0 / 7f
-        var gy0 = fract(floor(gx0) / 7f) - 0.5f
+        val gy0 = fract(floor(gx0) / 7f) - 0.5f
         gx0 = fract(gx0)
         val gz0 = Vec4(0.5f) - abs(gx0) - abs(gy0)
         val sz0 = step(gz0, Vec4(0f))
@@ -381,7 +381,7 @@ interface noise {
         gy0 minusAssign sz0 * (step(0f, gy0) - 0.5f)
 
         var gx1 = ixy1 / 7f
-        var gy1 = fract(floor(gx1) / 7f) - 0.5f
+        val gy1 = fract(floor(gx1) / 7f) - 0.5f
         gx1 = fract(gx1)
         val gz1 = Vec4(0.5f) - abs(gx1) - abs(gy1)
         val sz1 = step(gz1, Vec4(0f))

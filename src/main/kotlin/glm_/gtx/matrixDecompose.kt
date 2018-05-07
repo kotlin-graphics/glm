@@ -67,7 +67,7 @@ interface gtxMatrixDecompose {
                 row[i][j] = localMatrix[i, j]
 
         // Compute X scale factor and normalize first row.
-        scale.x = row.get(0).length // v3Length(Row[0]);
+        scale.x = row.get(0).length() // v3Length(Row[0]);
 
         row[0] = detail.scale(row[0], 1f)
 
@@ -76,7 +76,7 @@ interface gtxMatrixDecompose {
         row[1] = detail.combine(row[1], row[0], 1f, -skew.z)
 
         // Now, compute Y scale and normalize 2nd row.
-        scale.y = row[1].length
+        scale.y = row[1].length()
         row[1] = detail.scale(row[1], 1f)
         skew.z /= scale.y
 
@@ -87,7 +87,7 @@ interface gtxMatrixDecompose {
         row[2] = detail.combine(row[2], row[1], 1f, -skew.x)
 
         // Next, get Z scale and normalize 3rd row.
-        scale.z = row[2].length
+        scale.z = row[2].length()
         row[2] = detail.scale(row[2], 1f)
         skew.y /= scale.z
         skew.x /= scale.z
@@ -153,5 +153,5 @@ interface detail_matrixDecompose {
      *  result = (a * ascl) + (b * bscl)    */
     fun combine(a: Vec3, b: Vec3, ascl: Float, bscl: Float) = a * ascl + b * bscl
 
-    fun scale(v: Vec3, desiredLength: Float) = v * desiredLength / v.length
+    fun scale(v: Vec3, desiredLength: Float) = v * desiredLength / v.length()
 }

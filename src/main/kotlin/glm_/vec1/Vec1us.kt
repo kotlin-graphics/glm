@@ -1,6 +1,7 @@
 package glm_.vec1
 
 import glm_.*
+import glm_.buffer.shortBufferBig
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -111,7 +112,7 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
         return shorts
     }
 
-    fun toShortBuffer() = to(ByteBuffer.allocateDirect(size()).asShortBuffer(), 0)
+    fun toShortBuffer() = to(shortBufferBig(length), 0)
     infix fun to(shorts: ShortBuffer) = to(shorts, shorts.position())
     fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
         shorts[index] = x.v

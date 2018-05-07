@@ -1,6 +1,7 @@
 package glm_.vec1
 
 import glm_.*
+import glm_.buffer.doubleBufferBig
 import glm_.vec1.operators.vec1d_operators
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
@@ -106,7 +107,7 @@ class Vec1d(x: Double) : Vec1t<Double>(x) {
         return doubles
     }
 
-    fun toDoubleBuffer() = to(ByteBuffer.allocateDirect(size()).asDoubleBuffer(), 0)
+    fun toDoubleBuffer() = to(doubleBufferBig(length), 0)
     infix fun to(doubles: DoubleBuffer) = to(doubles, doubles.position())
     fun to(doubles: DoubleBuffer, index: Int): DoubleBuffer {
         doubles[index] = x

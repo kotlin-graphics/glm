@@ -1,6 +1,7 @@
 package glm_.vec3
 
 import glm_.*
+import glm_.buffer.floatBufferBig
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
@@ -138,7 +139,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
         return bytes
     }
 
-    fun toFloatArray() = to(FloatArray(Companion.length), 0)
+    fun toFloatArray() = to(FloatArray(length), 0)
     infix fun to(floats: FloatArray) = to(floats, 0)
     fun to(floats: FloatArray, index: Int): FloatArray {
         floats[index] = x
@@ -147,7 +148,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
         return floats
     }
 
-    fun toFloatBuffer() = to(ByteBuffer.allocateDirect(size).asFloatBuffer(), 0)
+    fun toFloatBuffer() = to(floatBufferBig(length), 0)
     infix fun to(floats: FloatBuffer) = to(floats, floats.position())
     fun to(floats: FloatBuffer, index: Int): FloatBuffer {
         floats[index] = x
@@ -377,8 +378,8 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
     infix fun dot(b: Vec3) = glm.dot(this, b)   // TODO others
     infix fun dot(b: Vec3t<out Number>) = glm.dot(this, b)   // TODO others
 
-    val length get() = glm.length(this)
-    val length2 get() = glm.length2(this)
+    fun length() = glm.length(this)
+    fun length2() = glm.length2(this)
 
     @JvmOverloads
     fun normalize(res: Vec3 = Vec3()) = glm.normalize(this, res) // TODO others

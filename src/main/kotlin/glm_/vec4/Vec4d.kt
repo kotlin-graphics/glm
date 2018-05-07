@@ -1,6 +1,7 @@
 package glm_.vec4
 
 import glm_.*
+import glm_.buffer.doubleBufferBig
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
@@ -148,7 +149,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
         return bytes
     }
 
-    fun toDoubleArray() = to(DoubleArray(Companion.length), 0)
+    fun toDoubleArray() = to(DoubleArray(length), 0)
     infix fun to(doubles: DoubleArray) = to(doubles, 0)
     fun to(doubles: DoubleArray, index: Int): DoubleArray {
         doubles[index] = x
@@ -158,7 +159,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
         return doubles
     }
 
-    fun toDoubleBuffer() = to(ByteBuffer.allocateDirect(size).asDoubleBuffer(), 0)
+    fun toDoubleBuffer() = to(doubleBufferBig(length), 0)
     infix fun to(doubles: DoubleBuffer) = to(doubles, doubles.position())
     fun to(doubles: DoubleBuffer, index: Int): DoubleBuffer {
         doubles[index] = x
@@ -185,10 +186,6 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
         3 -> w = value.d
         else -> throw ArrayIndexOutOfBoundsException()
     }
-
-
-
-
 
 
     // -- Unary arithmetic operators --
@@ -220,6 +217,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
     infix operator fun plusAssign(b: Double) {
         plus(this, this, b, b, b, b)
     }
+
     infix operator fun plusAssign(b: Vec4d) {
         plus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -236,6 +234,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
     infix operator fun minusAssign(b: Double) {
         minus(this, this, b, b, b, b)
     }
+
     infix operator fun minusAssign(b: Vec4d) {
         minus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -252,6 +251,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
     infix operator fun timesAssign(b: Double) {
         times(this, this, b, b, b, b)
     }
+
     infix operator fun timesAssign(b: Vec4d) {
         times(this, this, b.x, b.y, b.z, b.w)
     }
@@ -268,6 +268,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
     infix operator fun divAssign(b: Double) {
         div(this, this, b, b, b, b)
     }
+
     infix operator fun divAssign(b: Vec4d) {
         div(this, this, b.x, b.y, b.z, b.w)
     }
@@ -284,6 +285,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
     infix operator fun remAssign(b: Double) {
         rem(this, this, b, b, b, b)
     }
+
     infix operator fun remAssign(b: Vec4d) {
         rem(this, this, b.x, b.y, b.z, b.w)
     }
@@ -302,6 +304,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.d, b.d, b.d, b.d)
     }
+
     infix operator fun plusAssign(b: Vec4t<out Number>) {
         plus(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
     }
@@ -318,6 +321,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.d, b.d, b.d, b.d)
     }
+
     infix operator fun minusAssign(b: Vec4t<out Number>) {
         minus(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
     }
@@ -334,6 +338,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.d, b.d, b.d, b.d)
     }
+
     infix operator fun timesAssign(b: Vec4t<out Number>) {
         times(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
     }
@@ -350,6 +355,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.d, b.d, b.d, b.d)
     }
+
     infix operator fun divAssign(b: Vec4t<out Number>) {
         div(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
     }
@@ -366,6 +372,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.d, b.d, b.d, b.d)
     }
+
     infix operator fun remAssign(b: Vec4t<out Number>) {
         rem(this, this, b.x.d, b.y.d, b.z.d, b.w.d)
     }
@@ -373,8 +380,8 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
 
     infix fun dot(b: Vec4d) = glm.dot(this, b)   // TODO others
 
-    val length get() = glm.length(this)
-    val length2 get() = glm.length2(this)
+    fun length() = glm.length(this)
+    fun length2() = glm.length2(this)
 
 
     override fun createInstance(x: Double, y: Double) = Vec2d(x, y)

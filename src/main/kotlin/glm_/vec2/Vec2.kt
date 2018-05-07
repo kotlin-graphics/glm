@@ -1,6 +1,7 @@
 package glm_.vec2
 
 import glm_.*
+import glm_.buffer.floatBufferBig
 import glm_.vec2.operators.opVec2
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
@@ -125,7 +126,7 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>() {
         return bytes
     }
 
-    fun toFloatArray() = to(FloatArray(Companion.length), 0)
+    fun toFloatArray() = to(FloatArray(length), 0)
     infix fun to(floats: FloatArray) = to(floats, 0)
     fun to(floats: FloatArray, index: Int): FloatArray {
         floats[index] = x
@@ -133,7 +134,7 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>() {
         return floats
     }
 
-    fun toFloatBuffer() = to(ByteBuffer.allocateDirect(size).asFloatBuffer(), 0)
+    fun toFloatBuffer() = to(floatBufferBig(length), 0)
     infix fun to(floats: FloatBuffer) = to(floats, floats.position())
     fun to(floats: FloatBuffer, index: Int): FloatBuffer {
         floats[index] = x
@@ -456,8 +457,8 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>() {
 
     infix fun rotate(angle: Float) = glm.rotate(Vec2(), this, angle)
 
-    val length get() = glm.length(this)
-    val length2 get() = glm.length2(this)
+    fun length() = glm.length(this)
+    fun length2() = glm.length2(this)
 
     @JvmOverloads
     fun normalize(res: Vec2 = Vec2()) = glm.normalize(this, res) // TODO others

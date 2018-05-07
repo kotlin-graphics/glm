@@ -1,6 +1,7 @@
 package glm_.vec2
 
 import glm_.*
+import glm_.buffer.doubleBufferBig
 import glm_.vec2.operators.opVec2d
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
@@ -116,7 +117,7 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>() {
         return bytes
     }
 
-    fun toDoubleArray() = to(DoubleArray(Companion.length), 0)
+    fun toDoubleArray() = to(DoubleArray(length), 0)
     infix fun to(doubles: DoubleArray) = to(doubles, 0)
     fun to(doubles: DoubleArray, index: Int): DoubleArray {
         doubles[index] = x
@@ -124,7 +125,7 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>() {
         return doubles
     }
 
-    fun toDoubleBuffer() = to(ByteBuffer.allocateDirect(size).asDoubleBuffer(), 0)
+    fun toDoubleBuffer() = to(doubleBufferBig(length), 0)
     infix fun to(doubles: DoubleBuffer) = to(doubles, doubles.position())
     fun to(doubles: DoubleBuffer, index: Int): DoubleBuffer {
         doubles[index] = x
@@ -363,8 +364,8 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>() {
 
     infix fun dot(b: Vec2d) = glm.dot(this, b)
 
-    val length get() = glm.length(this)
-    val length2 get() = glm.length2(this)
+    fun length() = glm.length(this)
+    fun length2() = glm.length2(this)
 
     @JvmOverloads
     fun normalize(res: Vec2d = Vec2d()) = glm.normalize(this, res) // TODO others

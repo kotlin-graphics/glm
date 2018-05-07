@@ -1,6 +1,7 @@
 package glm_.vec1
 
 import glm_.b
+import glm_.buffer.bufferBig
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -178,7 +179,7 @@ abstract class Vec1t<T : Number>(_x: T) {
     fun to(bytes: ByteArray, bigEndian: Boolean) = to(bytes, 0)
     abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
 
-    fun toByteBuffer() = to(ByteBuffer.allocateDirect(length), 0)
+    fun toBuffer() = to(bufferBig(size()))
     infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
     abstract fun to(bytes: ByteBuffer, index: Int): ByteBuffer
 

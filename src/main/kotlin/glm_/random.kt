@@ -251,12 +251,12 @@ interface random {
 
         res.x = linearRand(-radius, radius)
         res.y = linearRand(-radius, radius)
-        var lenRadius = res.length
+        var lenRadius = res.length()
 
         while (lenRadius > radius) {
             res.x = linearRand(-radius, radius)
             res.y = linearRand(-radius, radius)
-            lenRadius = res.length
+            lenRadius = res.length()
         }
         return res
     }
@@ -266,12 +266,12 @@ interface random {
 
         res.x = linearRand(-radius, radius)
         res.y = linearRand(-radius, radius)
-        var lenRadius = res.length
+        var lenRadius = res.length()
 
         while (lenRadius > radius) {
             res.x = linearRand(-radius, radius)
             res.y = linearRand(-radius, radius)
-            lenRadius = res.length
+            lenRadius = res.length()
         }
         return res
     }
@@ -282,13 +282,13 @@ interface random {
         res.x = linearRand(-radius, radius)
         res.y = linearRand(-radius, radius)
         res.z = linearRand(-radius, radius)
-        var lenRadius = res.length
+        var lenRadius = res.length()
 
         while (lenRadius > radius) {
             res.x = linearRand(-radius, radius)
             res.y = linearRand(-radius, radius)
             res.z = linearRand(-radius, radius)
-            lenRadius = res.length
+            lenRadius = res.length()
         }
         return res
     }
@@ -299,13 +299,13 @@ interface random {
         res.x = linearRand(-radius, radius)
         res.y = linearRand(-radius, radius)
         res.z = linearRand(-radius, radius)
-        var lenRadius = res.length
+        var lenRadius = res.length()
 
         while (lenRadius > radius) {
             res.x = linearRand(-radius, radius)
             res.y = linearRand(-radius, radius)
             res.z = linearRand(-radius, radius)
-            lenRadius = res.length
+            lenRadius = res.length()
         }
         return res
     }
@@ -317,14 +317,14 @@ interface random {
         res.y = linearRand(-radius, radius)
         res.z = linearRand(-radius, radius)
         res.w = linearRand(-radius, radius)
-        var lenRadius = res.length
+        var lenRadius = res.length()
 
         while (lenRadius > radius) {
             res.x = linearRand(-radius, radius)
             res.y = linearRand(-radius, radius)
             res.z = linearRand(-radius, radius)
             res.w = linearRand(-radius, radius)
-            lenRadius = res.length
+            lenRadius = res.length()
         }
         return res
     }
@@ -336,14 +336,14 @@ interface random {
         res.y = linearRand(-radius, radius)
         res.z = linearRand(-radius, radius)
         res.w = linearRand(-radius, radius)
-        var lenRadius = res.length
+        var lenRadius = res.length()
 
         while (lenRadius > radius) {
             res.x = linearRand(-radius, radius)
             res.y = linearRand(-radius, radius)
             res.z = linearRand(-radius, radius)
             res.w = linearRand(-radius, radius)
-            lenRadius = res.length
+            lenRadius = res.length()
         }
         return res
     }
@@ -355,7 +355,7 @@ interface random {
 
         do {
             res put linearRand(Vec3(-radius), Vec3(radius))
-            lenRadius = res.length
+            lenRadius = res.length()
         }
         while(lenRadius > radius)
 
@@ -369,7 +369,7 @@ interface random {
 
         do {
             res put linearRand(Vec3d(-radius), Vec3d(radius))
-            lenRadius = res.length
+            lenRadius = res.length()
         }
         while(lenRadius > radius)
 

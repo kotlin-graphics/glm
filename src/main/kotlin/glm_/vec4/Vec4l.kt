@@ -1,6 +1,7 @@
 package glm_.vec4
 
 import glm_.*
+import glm_.buffer.longBufferBig
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2l
 import glm_.vec2.Vec2t
@@ -148,7 +149,7 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>() {
         return bytes
     }
 
-    fun toLongArray() = to(LongArray(Companion.length), 0)
+    fun toLongArray() = to(LongArray(length), 0)
     infix fun to(longs: LongArray) = to(longs, 0)
     fun to(longs: LongArray, index: Int): LongArray {
         longs[index] = x
@@ -158,7 +159,7 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>() {
         return longs
     }
 
-    fun toLongBuffer() = to(ByteBuffer.allocateDirect(size).asLongBuffer(), 0)
+    fun toLongBuffer() = to(longBufferBig(length), 0)
     infix fun to(longs: LongBuffer) = to(longs, longs.position())
     fun to(longs: LongBuffer, index: Int): LongBuffer {
         longs[index] = x

@@ -59,7 +59,7 @@ interface func_geometric {
 
 
     /** Shortest distance between Point and Line    */
-    fun distance(point: Vec3, lineA: Vec3, lineB: Vec3) = abs(((point - lineA) cross (point - lineB)).length) / abs((lineB - lineA).length)
+    fun distance(point: Vec3, lineA: Vec3, lineB: Vec3) = abs(((point - lineA) cross (point - lineB)).length()) / abs((lineB - lineA).length())
 
 
     fun dot(a: Float, b: Float) = a * b

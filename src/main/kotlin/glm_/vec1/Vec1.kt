@@ -1,6 +1,7 @@
 package glm_.vec1
 
 import glm_.*
+import glm_.buffer.floatBufferBig
 import glm_.vec1.operators.vec1_operators
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
@@ -105,7 +106,7 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
         return floats
     }
 
-    fun toFloatBuffer() = to(ByteBuffer.allocateDirect(size()).asFloatBuffer(), 0)
+    fun toFloatBuffer() = to(floatBufferBig(length), 0)
     infix fun to(floats: FloatBuffer) = to(floats, floats.position())
     fun to(floats: FloatBuffer, index: Int): FloatBuffer {
         floats[index] = x

@@ -1,3 +1,5 @@
+import org.gradle.internal.os.OperatingSystem
+
 apply plugin: 'kotlin'
 //apply plugin: 'java'
 
@@ -15,6 +17,7 @@ buildscript {
         jcenter()   // shadow
         mavenCentral()
         maven { setUrl("https://dl.bintray.com/kotlin/kotlin-eap") }
+        maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
@@ -30,11 +33,37 @@ dependencies {
     compile 'com.github.kotlin-graphics:kotlin-unsigned:755ac3f8b6697485b794bc180e9c238281688d2e'
 
     testCompile 'io.kotlintest:kotlintest-runner-junit5:3.0.6'
+
+    ext.lwjglVersion = "3.1.7-SNAPSHOT"
+    switch (OperatingSystem.current()) {
+        case OperatingSystem.WINDOWS:
+            ext.lwjglNatives = "natives-windows"
+            break
+        case OperatingSystem.LINUX:
+            ext.lwjglNatives = "natives-linux"
+            break
+        case OperatingSystem.MAC_OS:
+            ext.lwjglNatives = "natives-macos"
+            break
+    }
+    compile "org.lwjgl:lwjgl:${lwjglVersion}"
+    compile "org.lwjgl:lwjgl-glfw:${lwjglVersion}"
+    compile "org.lwjgl:lwjgl-jemalloc:${lwjglVersion}"
+    compile "org.lwjgl:lwjgl-openal:${lwjglVersion}"
+    compile "org.lwjgl:lwjgl-opengl:${lwjglVersion}"
+    compile "org.lwjgl:lwjgl-stb:${lwjglVersion}"
+    runtime "org.lwjgl:lwjgl:${lwjglVersion}:${lwjglNatives}"
+    runtime "org.lwjgl:lwjgl-glfw:${lwjglVersion}:${lwjglNatives}"
+    runtime "org.lwjgl:lwjgl-jemalloc:${lwjglVersion}:${lwjglNatives}"
+    runtime "org.lwjgl:lwjgl-openal:${lwjglVersion}:${lwjglNatives}"
+    runtime "org.lwjgl:lwjgl-opengl:${lwjglVersion}:${lwjglNatives}"
+    runtime "org.lwjgl:lwjgl-stb:${lwjglVersion}:${lwjglNatives}"
 }
 
 repositories {
     mavenCentral()
     maven { setUrl("https://dl.bintray.com/kotlin/kotlin-eap") }
+    maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
     maven { setUrl("https://jitpack.io") }
 }
 

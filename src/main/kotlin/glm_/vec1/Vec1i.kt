@@ -1,6 +1,7 @@
 package glm_.vec1
 
 import glm_.*
+import glm_.buffer.intBufferBig
 import glm_.vec1.operators.vec1i_operators
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
@@ -106,7 +107,7 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
         return ints
     }
 
-    fun toIntBuffer() = to(ByteBuffer.allocateDirect(size()).asIntBuffer(), 0)
+    fun toIntBuffer() = to(intBufferBig(length), 0)
     infix fun to(ints: IntBuffer) = to(ints, ints.position())
     fun to(ints: IntBuffer, index: Int): IntBuffer {
         ints[index] = x
