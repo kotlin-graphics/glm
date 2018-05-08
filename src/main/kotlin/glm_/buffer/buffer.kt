@@ -10,6 +10,7 @@ import java.nio.*
  */
 
 fun floatBufferBig(capacity: Int): FloatBuffer = MemoryUtil.memCallocFloat(capacity)
+
 fun doubleBufferBig(capacity: Int): DoubleBuffer = MemoryUtil.memCallocDouble(capacity)
 
 fun bufferBig(capacity: Int): ByteBuffer = MemoryUtil.memCalloc(capacity)
@@ -24,10 +25,63 @@ fun pointerBufferBig(capacity: IntBuffer): PointerBuffer = MemoryUtil.memCallocP
 fun pointerBufferBig(capacity: IntArray): PointerBuffer = MemoryUtil.memCallocPointer(capacity[0])
 
 
-fun ByteBuffer.free() = MemoryUtil.memFree(this) // TODO rename?
+fun ByteBuffer.free() = MemoryUtil.memFree(this)
 fun ShortBuffer.free() = MemoryUtil.memFree(this)
 fun IntBuffer.free() = MemoryUtil.memFree(this)
 fun LongBuffer.free() = MemoryUtil.memFree(this)
 fun FloatBuffer.free() = MemoryUtil.memFree(this)
 fun DoubleBuffer.free() = MemoryUtil.memFree(this)
 fun CharBuffer.free() = MemoryUtil.memFree(this)
+
+
+val ByteBuffer.adr get() = MemoryUtil.memAddress(this)
+val ShortBuffer.adr get() = MemoryUtil.memAddress(this)
+val IntBuffer.adr get() = MemoryUtil.memAddress(this)
+val LongBuffer.adr get() = MemoryUtil.memAddress(this)
+val FloatBuffer.adr get() = MemoryUtil.memAddress(this)
+val DoubleBuffer.adr get() = MemoryUtil.memAddress(this)
+val CharBuffer.adr get() = MemoryUtil.memAddress(this)
+
+var ByteBuffer.pos
+    get() = position()
+    set(value) {
+        position(value)
+    }
+var ShortBuffer.pos
+    get() = position()
+    set(value) {
+        position(value)
+    }
+var IntBuffer.pos
+    get() = position()
+    set(value) {
+        position(value)
+    }
+var LongBuffer.pos
+    get() = position()
+    set(value) {
+        position(value)
+    }
+var FloatBuffer.pos
+    get() = position()
+    set(value) {
+        position(value)
+    }
+var DoubleBuffer.pos
+    get() = position()
+    set(value) {
+        position(value)
+    }
+var CharBuffer.pos
+    get() = position()
+    set(value) {
+        position(value)
+    }
+
+val ByteBuffer.cap get() = capacity()
+val ShortBuffer.cap get() = capacity()
+val IntBuffer.cap get() = capacity()
+val LongBuffer.cap get() = capacity()
+val FloatBuffer.cap get() = capacity()
+val DoubleBuffer.cap get() = capacity()
+val CharBuffer.cap get() = capacity()
