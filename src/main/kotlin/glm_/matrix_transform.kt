@@ -310,17 +310,17 @@ interface matrix_transform {
 
         res put 1f
 
-        res[0][0] = 2f / (right - left)
-        res[1][1] = 2f / (top - bottom)
-        res[3][0] = -(right + left) / (right - left)
-        res[3][1] = -(top + bottom) / (top - bottom)
+        res[0, 0] = 2f / (right - left)
+        res[1, 1] = 2f / (top - bottom)
+        res[3, 0] = -(right + left) / (right - left)
+        res[3, 1] = -(top + bottom) / (top - bottom)
 
         if (GLM_DEPTH_CLIP_SPACE == GLM_DEPTH_ZERO_TO_ONE) {
-            res[2][2] = 1f / (zFar - zNear)
-            res[3][2] = -zNear / (zFar - zNear)
+            res[2, 2] = 1f / (zFar - zNear)
+            res[3, 2] = -zNear / (zFar - zNear)
         } else {
-            res[2][2] = 2f / (zFar - zNear)
-            res[3][2] = -(zFar + zNear) / (zFar - zNear)
+            res[2, 2] = 2f / (zFar - zNear)
+            res[3, 2] = -(zFar + zNear) / (zFar - zNear)
         }
 
         return res
@@ -342,17 +342,17 @@ interface matrix_transform {
 
         res put 1f
 
-        res[0][0] = 2f / (right - left)
-        res[1][1] = 2f / (top - bottom)
-        res[3][0] = -(right + left) / (right - left)
-        res[3][1] = -(top + bottom) / (top - bottom)
+        res[0, 0] = 2f / (right - left)
+        res[1, 1] = 2f / (top - bottom)
+        res[3, 0] = -(right + left) / (right - left)
+        res[3, 1] = -(top + bottom) / (top - bottom)
 
         if (GLM_DEPTH_CLIP_SPACE == GLM_DEPTH_ZERO_TO_ONE) {
-            res[2][2] = -1f / (zFar - zNear)
-            res[3][2] = -zNear / (zFar - zNear)
+            res[2, 2] = -1f / (zFar - zNear)
+            res[3, 2] = -zNear / (zFar - zNear)
         } else {
-            res[2][2] = -2f / (zFar - zNear)
-            res[3][2] = -(zFar + zNear) / (zFar - zNear)
+            res[2, 2] = -2f / (zFar - zNear)
+            res[3, 2] = -(zFar + zNear) / (zFar - zNear)
         }
 
         return res
@@ -372,11 +372,11 @@ interface matrix_transform {
 
         res put 1f
 
-        res[0][0] = 2f / (right - left)
-        res[1][1] = 2f / (top - bottom)
-        res[2][2] = -1f
-        res[3][0] = -(right + left) / (right - left)
-        res[3][1] = -(top + bottom) / (top - bottom)
+        res[0, 0] = 2f / (right - left)
+        res[1, 1] = 2f / (top - bottom)
+        res[2, 2] = -1f
+        res[3, 0] = -(right + left) / (right - left)
+        res[3, 1] = -(top + bottom) / (top - bottom)
 
         return res
     }
@@ -421,18 +421,18 @@ interface matrix_transform {
 
         res put 0f
 
-        res[0][0] = (2f * near) / (right - left)
-        res[1][1] = (2f * near) / (top - bottom)
-        res[2][0] = (right + left) / (right - left)
-        res[2][1] = (top + bottom) / (top - bottom)
-        res[2][3] = 1f
+        res[0, 0] = (2f * near) / (right - left)
+        res[1, 1] = (2f * near) / (top - bottom)
+        res[2, 0] = (right + left) / (right - left)
+        res[2, 1] = (top + bottom) / (top - bottom)
+        res[2, 3] = 1f
 
         if (GLM_DEPTH_CLIP_SPACE == GLM_DEPTH_ZERO_TO_ONE) {
-            res[2][2] = far / (far - near)
-            res[3][2] = -(far * near) / (far - near)
+            res[2, 2] = far / (far - near)
+            res[3, 2] = -(far * near) / (far - near)
         } else {
-            res[2][2] = (far + near) / (far - near)
-            res[3][2] = -(2f * far * near) / (far - near)
+            res[2, 2] = (far + near) / (far - near)
+            res[3, 2] = -(2f * far * near) / (far - near)
         }
 
         return res
@@ -454,18 +454,18 @@ interface matrix_transform {
 
         res put 0f
 
-        res[0][0] = (2f * near) / (right - left)
-        res[1][1] = (2f * near) / (top - bottom)
-        res[2][0] = (right + left) / (right - left)
-        res[2][1] = (top + bottom) / (top - bottom)
-        res[2][3] = -1f
+        res[0, 0] = (2f * near) / (right - left)
+        res[1, 1] = (2f * near) / (top - bottom)
+        res[2, 0] = (right + left) / (right - left)
+        res[2, 1] = (top + bottom) / (top - bottom)
+        res[2, 3] = -1f
 
         if (GLM_DEPTH_CLIP_SPACE == GLM_DEPTH_ZERO_TO_ONE) {
-            res[2][2] = far / (near - far)
-            res[3][2] = -(far * near) / (far - near)
+            res[2, 2] = far / (near - far)
+            res[3, 2] = -(far * near) / (far - near)
         } else {
-            res[2][2] = -(far + near) / (far - near)
-            res[3][2] = -(2f * far * near) / (far - near)
+            res[2, 2] = -(far + near) / (far - near)
+            res[3, 2] = -(2f * far * near) / (far - near)
         }
 
         return res
@@ -511,16 +511,16 @@ interface matrix_transform {
 
         res put 0f
 
-        res[0][0] = 1f / (aspect * tanHalfFovy)
-        res[1][1] = 1f / tanHalfFovy
-        res[2][3] = -1f
+        res[0, 0] = 1f / (aspect * tanHalfFovy)
+        res[1, 1] = 1f / tanHalfFovy
+        res[2, 3] = -1f
 
         if (GLM_DEPTH_CLIP_SPACE == GLM_DEPTH_ZERO_TO_ONE) {
-            res[2][2] = zFar / (zNear - zFar)
-            res[3][2] = -(zFar * zNear) / (zFar - zNear)
+            res[2, 2] = zFar / (zNear - zFar)
+            res[3, 2] = -(zFar * zNear) / (zFar - zNear)
         } else {
-            res[2][2] = -(zFar + zNear) / (zFar - zNear)
-            res[3][2] = -(2f * zFar * zNear) / (zFar - zNear)
+            res[2, 2] = -(zFar + zNear) / (zFar - zNear)
+            res[3, 2] = -(2f * zFar * zNear) / (zFar - zNear)
         }
 
         return res
@@ -545,16 +545,16 @@ interface matrix_transform {
 
         res put 0f
 
-        res[0][0] = 1f / (aspect * tanHalfFovy)
-        res[1][1] = 1f / tanHalfFovy
-        res[2][3] = 1f
+        res[0, 0] = 1f / (aspect * tanHalfFovy)
+        res[1, 1] = 1f / tanHalfFovy
+        res[2, 3] = 1f
 
         if (GLM_DEPTH_CLIP_SPACE == GLM_DEPTH_ZERO_TO_ONE) {
-            res[2][2] = zFar / (zFar - zNear)
-            res[3][2] = -(zFar * zNear) / (zFar - zNear)
+            res[2, 2] = zFar / (zFar - zNear)
+            res[3, 2] = -(zFar * zNear) / (zFar - zNear)
         } else {
-            res[2][2] = (zFar + zNear) / (zFar - zNear)
-            res[3][2] = -(2f * zFar * zNear) / (zFar - zNear)
+            res[2, 2] = (zFar + zNear) / (zFar - zNear)
+            res[3, 2] = -(2f * zFar * zNear) / (zFar - zNear)
         }
 
         return res
@@ -599,16 +599,16 @@ interface matrix_transform {
 
         res put 0f
 
-        res[0][0] = w
-        res[1][1] = h
-        res[2][3] = -1f
+        res[0, 0] = w
+        res[1, 1] = h
+        res[2, 3] = -1f
 
         if (GLM_DEPTH_CLIP_SPACE == GLM_DEPTH_ZERO_TO_ONE) {
-            res[2][2] = zFar / (zNear - zFar)
-            res[3][2] = -(zFar * zNear) / (zFar - zNear)
+            res[2, 2] = zFar / (zNear - zFar)
+            res[3, 2] = -(zFar * zNear) / (zFar - zNear)
         } else {
-            res[2][2] = -(zFar + zNear) / (zFar - zNear)
-            res[3][2] = -(2f * zFar * zNear) / (zFar - zNear)
+            res[2, 2] = -(zFar + zNear) / (zFar - zNear)
+            res[3, 2] = -(2f * zFar * zNear) / (zFar - zNear)
         }
 
         return res
@@ -634,16 +634,16 @@ interface matrix_transform {
 
         res put 0f
 
-        res[0][0] = w
-        res[1][1] = h
-        res[2][3] = 1f
+        res[0, 0] = w
+        res[1, 1] = h
+        res[2, 3] = 1f
 
         if (GLM_DEPTH_CLIP_SPACE == GLM_DEPTH_ZERO_TO_ONE) {
-            res[2][2] = zFar / (zFar - zNear)
-            res[3][2] = -(zFar * zNear) / (zFar - zNear)
+            res[2, 2] = zFar / (zFar - zNear)
+            res[3, 2] = -(zFar * zNear) / (zFar - zNear)
         } else {
-            res[2][2] = (zFar + zNear) / (zFar - zNear)
-            res[3][2] = -(2f * zFar * zNear) / (zFar - zNear)
+            res[2, 2] = (zFar + zNear) / (zFar - zNear)
+            res[3, 2] = -(2f * zFar * zNear) / (zFar - zNear)
         }
 
         return res
@@ -684,11 +684,11 @@ interface matrix_transform {
         val top = range
 
         res put 0f
-        res[0][0] = (2f * zNear) / (right - left)
-        res[1][1] = (2f * zNear) / (top - bottom)
-        res[2][2] = -1f
-        res[2][3] = -1f
-        res[3][2] = -2f * zNear
+        res[0, 0] = (2f * zNear) / (right - left)
+        res[1, 1] = (2f * zNear) / (top - bottom)
+        res[2, 2] = -1f
+        res[2, 3] = -1f
+        res[3, 2] = -2f * zNear
 
         return res
     }
@@ -711,11 +711,11 @@ interface matrix_transform {
         val top = range
 
         res put 0f
-        res[0][0] = (2f * zNear) / (right - left)
-        res[1][1] = (2f * zNear) / (top - bottom)
-        res[2][2] = 1f
-        res[2][3] = 1f
-        res[3][2] = -2f * zNear
+        res[0, 0] = (2f * zNear) / (right - left)
+        res[1, 1] = (2f * zNear) / (top - bottom)
+        res[2, 2] = 1f
+        res[2, 3] = 1f
+        res[3, 2] = -2f * zNear
 
         return res
     }
@@ -752,11 +752,11 @@ interface matrix_transform {
         val top = range
 
         res put 0f
-        res[0][0] = (2f * zNear) / (right - left)
-        res[1][1] = (2f * zNear) / (top - bottom)
-        res[2][2] = ep - 1f
-        res[2][3] = -1f
-        res[3][2] = (ep - 2f) * zNear
+        res[0, 0] = (2f * zNear) / (right - left)
+        res[1, 1] = (2f * zNear) / (top - bottom)
+        res[2, 2] = ep - 1f
+        res[2, 3] = -1f
+        res[3, 2] = (ep - 2f) * zNear
         return res
     }
 
@@ -775,15 +775,15 @@ interface matrix_transform {
     fun project(res: Vec3, obj: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 {
 
         // tmp = model * obj
-        val tmpX = model[0][0] * obj.x + model[1][0] * obj.y + model[2][0] * obj.z + model[3][0]
-        val tmpY = model[0][1] * obj.x + model[1][1] * obj.y + model[2][1] * obj.z + model[3][1]
-        val tmpZ = model[0][2] * obj.x + model[1][2] * obj.y + model[2][2] * obj.z + model[3][2]
-        val tmpW = model[0][3] * obj.x + model[1][3] * obj.y + model[2][3] * obj.z + model[3][3]
+        val tmpX = model[0, 0] * obj.x + model[1, 0] * obj.y + model[2, 0] * obj.z + model[3, 0]
+        val tmpY = model[0, 1] * obj.x + model[1, 1] * obj.y + model[2, 1] * obj.z + model[3, 1]
+        val tmpZ = model[0, 2] * obj.x + model[1, 2] * obj.y + model[2, 2] * obj.z + model[3, 2]
+        val tmpW = model[0, 3] * obj.x + model[1, 3] * obj.y + model[2, 3] * obj.z + model[3, 3]
         // res = proj * tmp
-        res.x = proj[0][0] * tmpX + proj[1][0] * tmpY + proj[2][0] * tmpZ + proj[3][0] * tmpW
-        res.y = proj[0][1] * tmpX + proj[1][1] * tmpY + proj[2][1] * tmpZ + proj[3][1] * tmpW
-        res.z = proj[0][2] * tmpX + proj[1][2] * tmpY + proj[2][2] * tmpZ + proj[3][2] * tmpW
-        //val tmpW = proj[0][3] * tmpX + proj[1][3] * tmpY + proj[2][3] * tmpZ + proj[3][3] * tmpW
+        res.x = proj[0, 0] * tmpX + proj[1, 0] * tmpY + proj[2, 0] * tmpZ + proj[3, 0] * tmpW
+        res.y = proj[0, 1] * tmpX + proj[1, 1] * tmpY + proj[2, 1] * tmpZ + proj[3, 1] * tmpW
+        res.z = proj[0, 2] * tmpX + proj[1, 2] * tmpY + proj[2, 2] * tmpZ + proj[3, 2] * tmpW
+        //val tmpW = proj[0, 3] * tmpX + proj[1, 3] * tmpY + proj[2, 3] * tmpZ + proj[3, 3] * tmpW
 
         res /= tmpW
 
@@ -814,22 +814,22 @@ interface matrix_transform {
     fun unProject(res: Vec3, win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 {
 
         // pm = proj * model
-        val pm00 = proj[0][0] * model[0][0] + proj[1][0] * model[0][1] + proj[2][0] * model[0][2] + proj[3][0] * model[0][3]
-        val pm01 = proj[0][1] * model[0][0] + proj[1][1] * model[0][1] + proj[2][1] * model[0][2] + proj[3][1] * model[0][3]
-        val pm02 = proj[0][2] * model[0][0] + proj[1][2] * model[0][1] + proj[2][2] * model[0][2] + proj[3][2] * model[0][3]
-        val pm03 = proj[0][3] * model[0][0] + proj[1][3] * model[0][1] + proj[2][3] * model[0][2] + proj[3][3] * model[0][3]
-        val pm10 = proj[0][0] * model[1][0] + proj[1][0] * model[1][1] + proj[2][0] * model[1][2] + proj[3][0] * model[1][3]
-        val pm11 = proj[0][1] * model[1][0] + proj[1][1] * model[1][1] + proj[2][1] * model[1][2] + proj[3][1] * model[1][3]
-        val pm12 = proj[0][2] * model[1][0] + proj[1][2] * model[1][1] + proj[2][2] * model[1][2] + proj[3][2] * model[1][3]
-        val pm13 = proj[0][3] * model[1][0] + proj[1][3] * model[1][1] + proj[2][3] * model[1][2] + proj[3][3] * model[1][3]
-        val pm20 = proj[0][0] * model[2][0] + proj[1][0] * model[2][1] + proj[2][0] * model[2][2] + proj[3][0] * model[2][3]
-        val pm21 = proj[0][1] * model[2][0] + proj[1][1] * model[2][1] + proj[2][1] * model[2][2] + proj[3][1] * model[2][3]
-        val pm22 = proj[0][2] * model[2][0] + proj[1][2] * model[2][1] + proj[2][2] * model[2][2] + proj[3][2] * model[2][3]
-        val pm23 = proj[0][3] * model[2][0] + proj[1][3] * model[2][1] + proj[2][3] * model[2][2] + proj[3][3] * model[2][3]
-        val pm30 = proj[0][0] * model[3][0] + proj[1][0] * model[3][1] + proj[2][0] * model[3][2] + proj[3][0] * model[3][3]
-        val pm31 = proj[0][1] * model[3][0] + proj[1][1] * model[3][1] + proj[2][1] * model[3][2] + proj[3][1] * model[3][3]
-        val pm32 = proj[0][2] * model[3][0] + proj[1][2] * model[3][1] + proj[2][2] * model[3][2] + proj[3][2] * model[3][3]
-        val pm33 = proj[0][3] * model[3][0] + proj[1][3] * model[3][1] + proj[2][3] * model[3][2] + proj[3][3] * model[3][3]
+        val pm00 = proj[0, 0] * model[0, 0] + proj[1, 0] * model[0, 1] + proj[2, 0] * model[0, 2] + proj[3, 0] * model[0, 3]
+        val pm01 = proj[0, 1] * model[0, 0] + proj[1, 1] * model[0, 1] + proj[2, 1] * model[0, 2] + proj[3, 1] * model[0, 3]
+        val pm02 = proj[0, 2] * model[0, 0] + proj[1, 2] * model[0, 1] + proj[2, 2] * model[0, 2] + proj[3, 2] * model[0, 3]
+        val pm03 = proj[0, 3] * model[0, 0] + proj[1, 3] * model[0, 1] + proj[2, 3] * model[0, 2] + proj[3, 3] * model[0, 3]
+        val pm10 = proj[0, 0] * model[1, 0] + proj[1, 0] * model[1, 1] + proj[2, 0] * model[1, 2] + proj[3, 0] * model[1, 3]
+        val pm11 = proj[0, 1] * model[1, 0] + proj[1, 1] * model[1, 1] + proj[2, 1] * model[1, 2] + proj[3, 1] * model[1, 3]
+        val pm12 = proj[0, 2] * model[1, 0] + proj[1, 2] * model[1, 1] + proj[2, 2] * model[1, 2] + proj[3, 2] * model[1, 3]
+        val pm13 = proj[0, 3] * model[1, 0] + proj[1, 3] * model[1, 1] + proj[2, 3] * model[1, 2] + proj[3, 3] * model[1, 3]
+        val pm20 = proj[0, 0] * model[2, 0] + proj[1, 0] * model[2, 1] + proj[2, 0] * model[2, 2] + proj[3, 0] * model[2, 3]
+        val pm21 = proj[0, 1] * model[2, 0] + proj[1, 1] * model[2, 1] + proj[2, 1] * model[2, 2] + proj[3, 1] * model[2, 3]
+        val pm22 = proj[0, 2] * model[2, 0] + proj[1, 2] * model[2, 1] + proj[2, 2] * model[2, 2] + proj[3, 2] * model[2, 3]
+        val pm23 = proj[0, 3] * model[2, 0] + proj[1, 3] * model[2, 1] + proj[2, 3] * model[2, 2] + proj[3, 3] * model[2, 3]
+        val pm30 = proj[0, 0] * model[3, 0] + proj[1, 0] * model[3, 1] + proj[2, 0] * model[3, 2] + proj[3, 0] * model[3, 3]
+        val pm31 = proj[0, 1] * model[3, 0] + proj[1, 1] * model[3, 1] + proj[2, 1] * model[3, 2] + proj[3, 1] * model[3, 3]
+        val pm32 = proj[0, 2] * model[3, 0] + proj[1, 2] * model[3, 1] + proj[2, 2] * model[3, 2] + proj[3, 2] * model[3, 3]
+        val pm33 = proj[0, 3] * model[3, 0] + proj[1, 3] * model[3, 1] + proj[2, 3] * model[3, 2] + proj[3, 3] * model[3, 3]
 
         // inverse(pm)
         val c00 = pm22 * pm33 - pm32 * pm23
@@ -1004,18 +1004,18 @@ interface matrix_transform {
 
         res put 1f
 
-        res[0][0] = sX
-        res[1][0] = sY
-        res[2][0] = sZ
-        res[0][1] = uX
-        res[1][1] = uY
-        res[2][1] = uZ
-        res[0][2] = -fX
-        res[1][2] = -fY
-        res[2][2] = -fZ
-        res[3][0] = -(sX * eye.x + sY * eye.y + sZ * eye.z)
-        res[3][1] = -(uX * eye.x + uY * eye.y + uZ * eye.z)
-        res[3][2] = fX * eye.x + fY * eye.y + fZ * eye.z
+        res[0, 0] = sX
+        res[1, 0] = sY
+        res[2, 0] = sZ
+        res[0, 1] = uX
+        res[1, 1] = uY
+        res[2, 1] = uZ
+        res[0, 2] = -fX
+        res[1, 2] = -fY
+        res[2, 2] = -fZ
+        res[3, 0] = -(sX * eye.x + sY * eye.y + sZ * eye.z)
+        res[3, 1] = -(uX * eye.x + uY * eye.y + uZ * eye.z)
+        res[3, 2] = fX * eye.x + fY * eye.y + fZ * eye.z
 
         return res
     }
@@ -1054,18 +1054,18 @@ interface matrix_transform {
 
         res put 1f
 
-        res[0][0] = sX
-        res[1][0] = sY
-        res[2][0] = sZ
-        res[0][1] = uX
-        res[1][1] = uY
-        res[2][1] = uZ
-        res[0][2] = fX
-        res[1][2] = fY
-        res[2][2] = fZ
-        res[3][0] = -(sX * eye.x + sY * eye.y + sZ * eye.z)
-        res[3][1] = -(uX * eye.x + uY * eye.y + uZ * eye.z)
-        res[3][2] = -(fX * eye.x + fY * eye.y + fZ * eye.z)
+        res[0, 0] = sX
+        res[1, 0] = sY
+        res[2, 0] = sZ
+        res[0, 1] = uX
+        res[1, 1] = uY
+        res[2, 1] = uZ
+        res[0, 2] = fX
+        res[1, 2] = fY
+        res[2, 2] = fZ
+        res[3, 0] = -(sX * eye.x + sY * eye.y + sZ * eye.z)
+        res[3, 1] = -(uX * eye.x + uY * eye.y + uZ * eye.z)
+        res[3, 2] = -(fX * eye.x + fY * eye.y + fZ * eye.z)
 
         return res
     }

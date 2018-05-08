@@ -66,9 +66,9 @@ interface gtxRotateVector {
      */
     fun rotate(res: Vec3, v: Vec3, angle: Float, normal: Vec3, tmp: Mat4 = Mat4()): Vec3 {
         glm.rotate(tmp, angle, normal)
-        res[0] = tmp[0][0] * v.x + tmp[1][0] * v.y + tmp[2][0] * v.z
-        res[1] = tmp[0][1] * v.x + tmp[1][1] * v.y + tmp[2][1] * v.z
-        res[2] = tmp[0][2] * v.x + tmp[1][2] * v.y + tmp[2][2] * v.z
+        res[0] = tmp[0, 0] * v.x + tmp[1, 0] * v.y + tmp[2, 0] * v.z
+        res[1] = tmp[0, 1] * v.x + tmp[1, 1] * v.y + tmp[2, 1] * v.z
+        res[2] = tmp[0, 2] * v.x + tmp[1, 2] * v.y + tmp[2, 2] * v.z
         return res
     }
 
@@ -77,10 +77,10 @@ interface gtxRotateVector {
      */
     fun rotate(res: Vec4, v: Vec4, angle: Float, normal: Vec3, tmp: Mat4 = Mat4()): Vec4 {
         glm.rotate(tmp, angle, normal)
-        res[0] = tmp[0][0] * v.x + tmp[1][0] * v.y + tmp[2][0] * v.z + tmp[3][0] * v.w
-        res[1] = tmp[0][1] * v.x + tmp[1][1] * v.y + tmp[2][1] * v.z + tmp[3][1] * v.w
-        res[2] = tmp[0][2] * v.x + tmp[1][2] * v.y + tmp[2][2] * v.z + tmp[3][2] * v.w
-        res[3] = tmp[0][3] * v.x + tmp[1][3] * v.y + tmp[2][3] * v.z + tmp[3][3] * v.w
+        res[0] = tmp[0, 0] * v.x + tmp[1, 0] * v.y + tmp[2, 0] * v.z + tmp[3, 0] * v.w
+        res[1] = tmp[0, 1] * v.x + tmp[1, 1] * v.y + tmp[2, 1] * v.z + tmp[3, 1] * v.w
+        res[2] = tmp[0, 2] * v.x + tmp[1, 2] * v.y + tmp[2, 2] * v.z + tmp[3, 2] * v.w
+        res[3] = tmp[0, 3] * v.x + tmp[1, 3] * v.y + tmp[2, 3] * v.z + tmp[3, 3] * v.w
         return res
     }
 

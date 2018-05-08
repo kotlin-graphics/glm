@@ -375,9 +375,9 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
 
 
     override val isIdentity
-        get() = this[0][0] == 1.0 && this[1][0] == 0.0 && this[2][0] == 0.0 &&
-                this[0][1] == 0.0 && this[1][1] == 1.0 && this[2][1] == 0.0 &&
-                this[0][2] == 0.0 && this[1][2] == 0.0 && this[2][2] == 1.0
+        get() = this[0, 0] == 1.0 && this[1, 0] == 0.0 && this[2, 0] == 0.0 &&
+                this[0, 1] == 0.0 && this[1, 1] == 1.0 && this[2, 1] == 0.0 &&
+                this[0, 2] == 0.0 && this[1, 2] == 0.0 && this[2, 2] == 1.0
 
     companion object : mat3d_operators() {
         const val length = Mat3x3t.length
