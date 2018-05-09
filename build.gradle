@@ -46,23 +46,9 @@ dependencies {
             ext.lwjglNatives = "natives-macos"
             break
     }
-    ["org.lwjgl:lwjgl:${lwjglVersion}",
-     "org.lwjgl:lwjgl-glfw:${lwjglVersion}",
-     "org.lwjgl:lwjgl-jemalloc:${lwjglVersion}",
-     "org.lwjgl:lwjgl-openal:${lwjglVersion}",
-     "org.lwjgl:lwjgl-opengl:${lwjglVersion}",
-     "org.lwjgl:lwjgl-stb:${lwjglVersion}"
-    ].each {
-        implementation it
-    }
-    ["org.lwjgl:lwjgl:${lwjglVersion}:${lwjglNatives}",
-     "org.lwjgl:lwjgl-glfw:${lwjglVersion}:${lwjglNatives}",
-     "org.lwjgl:lwjgl-jemalloc:${lwjglVersion}:${lwjglNatives}",
-     "org.lwjgl:lwjgl-openal:${lwjglVersion}:${lwjglNatives}",
-     "org.lwjgl:lwjgl-opengl:${lwjglVersion}:${lwjglNatives}",
-     "org.lwjgl:lwjgl-stb:${lwjglVersion}:${lwjglNatives}"
-    ].each {
-        implementation it
+    ["", "-glfw", "-jemalloc", "-openal", "-opengl", "-stb"].each {
+        implementation "org.lwjgl:lwjgl$it:$lwjglVersion"
+        implementation "org.lwjgl:lwjgl$it:$lwjglVersion:$lwjglNatives"
     }
 }
 
