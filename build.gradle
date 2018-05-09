@@ -28,11 +28,11 @@ buildscript {
 
 dependencies {
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
-    compile 'com.github.kotlin-graphics:kotlin-unsigned:755ac3f8b6697485b794bc180e9c238281688d2e'
+    implementation 'com.github.kotlin-graphics:kotlin-unsigned:1a060d87adc12a53ad1e16f08489bb4924b9c036'
 
-    testCompile 'io.kotlintest:kotlintest-runner-junit5:3.0.6'
+    testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.0.6'
 
     ext.lwjglVersion = "3.1.7-SNAPSHOT"
     switch (OperatingSystem.current()) {
@@ -46,18 +46,24 @@ dependencies {
             ext.lwjglNatives = "natives-macos"
             break
     }
-    compile "org.lwjgl:lwjgl:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-glfw:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-jemalloc:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-openal:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-opengl:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-stb:${lwjglVersion}"
-    runtime "org.lwjgl:lwjgl:${lwjglVersion}:${lwjglNatives}"
-    runtime "org.lwjgl:lwjgl-glfw:${lwjglVersion}:${lwjglNatives}"
-    runtime "org.lwjgl:lwjgl-jemalloc:${lwjglVersion}:${lwjglNatives}"
-    runtime "org.lwjgl:lwjgl-openal:${lwjglVersion}:${lwjglNatives}"
-    runtime "org.lwjgl:lwjgl-opengl:${lwjglVersion}:${lwjglNatives}"
-    runtime "org.lwjgl:lwjgl-stb:${lwjglVersion}:${lwjglNatives}"
+    ["org.lwjgl:lwjgl:${lwjglVersion}",
+     "org.lwjgl:lwjgl-glfw:${lwjglVersion}",
+     "org.lwjgl:lwjgl-jemalloc:${lwjglVersion}",
+     "org.lwjgl:lwjgl-openal:${lwjglVersion}",
+     "org.lwjgl:lwjgl-opengl:${lwjglVersion}",
+     "org.lwjgl:lwjgl-stb:${lwjglVersion}"
+    ].each {
+        implementation it
+    }
+    ["org.lwjgl:lwjgl:${lwjglVersion}:${lwjglNatives}",
+     "org.lwjgl:lwjgl-glfw:${lwjglVersion}:${lwjglNatives}",
+     "org.lwjgl:lwjgl-jemalloc:${lwjglVersion}:${lwjglNatives}",
+     "org.lwjgl:lwjgl-openal:${lwjglVersion}:${lwjglNatives}",
+     "org.lwjgl:lwjgl-opengl:${lwjglVersion}:${lwjglNatives}",
+     "org.lwjgl:lwjgl-stb:${lwjglVersion}:${lwjglNatives}"
+    ].each {
+        implementation it
+    }
 }
 
 repositories {
