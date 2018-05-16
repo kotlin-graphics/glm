@@ -28,6 +28,7 @@ interface gtcMatrixInverse {
 //        vec < 4, T, P>(-Inv * vec<3, T, P>(m[3]), static_cast<T>(1)))
 //    }
 
+    fun inverseTranspose(m: Mat2) = inverseTranspose(Mat2(), m)
     fun inverseTranspose(res: Mat2, m: Mat2): Mat2 {
 
         val determinant = m[0, 0] * m[1, 1] - m[1, 0] * m[0, 1]
@@ -39,6 +40,7 @@ interface gtcMatrixInverse {
                 +m[0, 0] / determinant)
     }
 
+    fun inverseTranspose(m: Mat3) = inverseTranspose(Mat3(), m)
     fun inverseTranspose(res: Mat3, m: Mat3): Mat3 {
 
         val determinant =
@@ -61,6 +63,7 @@ interface gtcMatrixInverse {
         return res
     }
 
+    fun inverseTranspose(m: Mat4) = inverseTranspose(Mat4(), m)
     fun inverseTranspose(res: Mat4, m: Mat4): Mat4 {
         val subFactor00 = m[2, 2] * m[3, 3] - m[3, 2] * m[2, 3]
         val subFactor01 = m[2, 1] * m[3, 3] - m[3, 1] * m[2, 3]
