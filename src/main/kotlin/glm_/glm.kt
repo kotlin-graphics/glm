@@ -6,6 +6,7 @@ package glm_
 
 import glm_.func.*
 import glm_.func.common.*
+import glm_.gtc.gtcMatrixInverse
 import glm_.gtx.*
 import glm_.quat.gtxQuaternion
 import glm_.quat.quat_func
@@ -59,6 +60,8 @@ object glm :
         optimumPow,
 
         gradientPaint,
+
+        gtcMatrixInverse,
 
         gtxFastTrigonometry,
         gtxInteger,

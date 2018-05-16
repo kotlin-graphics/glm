@@ -12,6 +12,8 @@ import glm_.mat4x2.Mat4x2t
 import glm_.mat4x4.Mat4
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2t
+import glm_.vec3.Vec3
+import glm_.vec4.Vec4
 import java.nio.FloatBuffer
 import java.util.*
 
@@ -116,6 +118,50 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
 
     inline operator fun set(i: Int, v: Vec2) {
         v.to(array, i * 2)
+    }
+
+
+    infix operator fun invoke(s: Float) = invoke(s, s)
+
+    infix operator fun invoke(v: Vec2) = invoke(v.x, v.y)
+    infix operator fun invoke(v: Vec3) = invoke(v.x, v.y)
+    infix operator fun invoke(v: Vec4) = invoke(v.x, v.y)
+
+    infix operator fun invoke(floats: FloatArray) = invoke(floats[0], floats[1], floats[2], floats[3])
+
+    operator fun invoke(x: Float, y: Float) = invoke(
+            x, 0f,
+            0f, y)
+
+    inline operator fun invoke(a0: Float, a1: Float,
+                               b0: Float, b1: Float): Mat2 {
+
+        put(a0, a1, b0, b1)
+        return this
+    }
+
+
+    infix fun put(mat2: Mat2) = System.arraycopy(mat2.array.clone(), 0, array, 0, length)
+
+    infix fun put(s: Float) = put(s, s)
+    infix fun put(v: Vec2) = put(v.x, v.y)
+    infix fun put(v: Vec3) = put(v.x, v.y)
+    infix fun put(v: Vec4) = put(v.x, v.y)
+
+    infix fun put(floats: FloatArray) = put(floats[0], floats[1], floats[2], floats[3])
+
+    fun put(x: Float, y: Float) = put(
+            x, 0f,
+            0f, y)
+
+    fun put(a0: Float, a1: Float,
+            b0: Float, b1: Float) {
+
+        array[0] = a0
+        array[1] = a1
+
+        array[4] = b0
+        array[5] = b1
     }
 
 

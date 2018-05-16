@@ -5,7 +5,6 @@ import glm_.glm.inverse
 import glm_.glm.transpose
 import glm_.mat2x2.Mat2
 import glm_.mat2x2.Mat2d
-import glm_.mat2x2.Mat2x2t
 import glm_.mat2x3.Mat2x3t
 import glm_.mat2x4.Mat2x4t
 import glm_.mat3x2.Mat3x2t
@@ -16,9 +15,11 @@ import glm_.mat4x3.Mat4x3t
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.quat.Quat
+import glm_.vec2.Vec2
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
+import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
@@ -184,24 +185,57 @@ class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
     fun transposeAssign() = transpose(this, this)
 
 
-    infix fun put(s: Float) = put(s, s, s)
-    infix fun put(v: Vec3) = put(v.x, v.y, v.z)
+    infix operator fun invoke(s: Float) = invoke(s, s, s)
 
-    fun put(x: Float, y: Float, z: Float): Mat3 {
+    infix operator fun invoke(v: Vec2) = invoke(v.x, v.y, 1f)
+    infix operator fun invoke(v: Vec3) = invoke(v.x, v.y, v.z)
+    infix operator fun invoke(v: Vec4) = invoke(v.x, v.y, v.z)
 
-        array[0] = x
-        array[1] = 0f
-        array[2] = 0f
+    infix operator fun invoke(floats: FloatArray) = invoke(floats[0], floats[1], floats[2], floats[3], floats[4], floats[5], floats[6], floats[7], floats[8])
 
-        array[3] = 0f
-        array[4] = y
-        array[5] = 0f
+    operator fun invoke(x: Float, y: Float, z: Float) = invoke(
+            x, 0f, 0f,
+            0f, y, 0f,
+            0f, 0f, z)
 
-        array[6] = 0f
-        array[7] = 0f
-        array[8] = z
+    inline operator fun invoke(a0: Float, a1: Float, a2: Float,
+                      b0: Float, b1: Float, b2: Float,
+                      c0: Float, c1: Float, c2: Float): Mat3 {
 
+        put(a0, a1, a2, b0, b1, b2, c0, c1, c2)
         return this
+    }
+
+
+    infix fun put(mat3: Mat3) = System.arraycopy(mat3.array.clone(), 0, array, 0, length)
+
+    infix fun put(s: Float) = put(s, s, s)
+    infix fun put(v: Vec2) = put(v.x, v.y,1f)
+    infix fun put(v: Vec3) = put(v.x, v.y, v.z)
+    infix fun put(v: Vec4) = put(v.x, v.y, v.z)
+
+    infix fun put(floats: FloatArray) = put(floats[0], floats[1], floats[2], floats[3], floats[4], floats[5], floats[6], floats[7], floats[8])
+
+    fun put(x: Float, y: Float, z: Float) = put(
+            x, 0f, 0f,
+            0f, y, 0f,
+            0f, 0f, z)
+
+    fun put(a0: Float, a1: Float, a2: Float,
+            b0: Float, b1: Float, b2: Float,
+            c0: Float, c1: Float, c2: Float) {
+
+        array[0] = a0
+        array[1] = a1
+        array[2] = a2
+
+        array[4] = b0
+        array[5] = b1
+        array[6] = b2
+
+        array[8] = c0
+        array[9] = c1
+        array[10] = c2
     }
 
     // TODO others

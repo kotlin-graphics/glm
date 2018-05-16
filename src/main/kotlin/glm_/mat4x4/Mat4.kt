@@ -16,6 +16,7 @@ import glm_.mat4x2.Mat4x2t
 import glm_.mat4x3.Mat4x3t
 import glm_.mat4x4.operators.mat4x4_operators
 import glm_.quat.Quat
+import glm_.vec2.Vec2
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
@@ -189,9 +190,10 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
         v3.to(array, 12)
     }
 
-    // TODO others
+
     infix operator fun invoke(s: Float) = invoke(s, s, s, s)
 
+    infix operator fun invoke(v: Vec2) = invoke(v.x, v.y, 1f, 1f)
     infix operator fun invoke(v: Vec3) = invoke(v.x, v.y, v.z, 1f)
     infix operator fun invoke(v: Vec4) = invoke(v.x, v.y, v.z, v.w)
 
@@ -204,7 +206,7 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
             0f, 0f, z, 0f,
             0f, 0f, 0f, w)
 
-    inline fun invoke(a0: Float, a1: Float, a2: Float, a3: Float,
+    inline operator fun invoke(a0: Float, a1: Float, a2: Float, a3: Float,
                       b0: Float, b1: Float, b2: Float, b3: Float,
                       c0: Float, c1: Float, c2: Float, c3: Float,
                       d0: Float, d1: Float, d2: Float, d3: Float): Mat4 {
@@ -213,9 +215,10 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
         return this
     }
 
-    infix fun put(mat4: Mat4) = System.arraycopy(mat4.array.clone(), 0, array, 0, 16)
+    infix fun put(mat4: Mat4) = System.arraycopy(mat4.array.clone(), 0, array, 0, length)
 
     infix fun put(s: Float) = put(s, s, s, s)
+    infix fun put(v: Vec2) = put(v.x, v.y, 1f, 1f)
     infix fun put(v: Vec3) = put(v.x, v.y, v.z, 1f)
     infix fun put(v: Vec4) = put(v.x, v.y, v.z, v.w)
 

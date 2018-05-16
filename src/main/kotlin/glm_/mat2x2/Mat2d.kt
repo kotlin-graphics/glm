@@ -1,5 +1,7 @@
 package glm_.mat2x2
 
+import com.sun.javafx.geom.Vec3d
+import com.sun.javafx.geom.Vec4d
 import glm_.*
 import glm_.mat2x2.operators.mat2x2d_operators
 import glm_.mat2x3.Mat2x3t
@@ -125,6 +127,51 @@ class Mat2d(dummy: Int, var array: DoubleArray) : Mat2x2t<Double>() {
 
     fun transpose(res: Mat2d = Mat2d()) = glm.transpose(res, this)
     fun transposeAssign() = glm.transpose(this, this)
+
+
+    infix operator fun invoke(s: Double) = invoke(s, s)
+
+    infix operator fun invoke(v: Vec2d) = invoke(v.x, v.y)
+    infix operator fun invoke(v: Vec3d) = invoke(v.x, v.y)
+    infix operator fun invoke(v: Vec4d) = invoke(v.x, v.y)
+
+    infix operator fun invoke(doubles: DoubleArray) = invoke(doubles[0], doubles[1], doubles[2], doubles[3])
+
+    operator fun invoke(x: Double, y: Double) = invoke(
+            x, 0.0,
+            0.0, y)
+
+    inline fun invoke(a0: Double, a1: Double,
+                      b0: Double, b1: Double): Mat2d {
+
+        put(a0, a1, b0, b1)
+        return this
+    }
+
+
+    infix fun put(mat2: Mat2d) = System.arraycopy(mat2.array.clone(), 0, array, 0, length)
+
+    infix fun put(s: Double) = put(s, s)
+    infix fun put(v: Vec2d) = put(v.x, v.y)
+    infix fun put(v: Vec3d) = put(v.x, v.y)
+    infix fun put(v: Vec4d) = put(v.x, v.y)
+
+    infix fun put(doubles: DoubleArray) = put(doubles[0], doubles[1], doubles[2], doubles[3])
+
+    fun put(x: Double, y: Double) = put(
+            x, 0.0,
+            0.0, y)
+
+    fun put(a0: Double, a1: Double,
+            b0: Double, b1: Double) {
+
+        array[0] = a0
+        array[1] = a1
+
+        array[4] = b0
+        array[5] = b1
+    }
+
 
     // TODO inc
 

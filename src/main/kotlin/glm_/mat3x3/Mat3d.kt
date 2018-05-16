@@ -5,7 +5,6 @@ import glm_.glm.inverse
 import glm_.glm.transpose
 import glm_.mat2x2.Mat2
 import glm_.mat2x2.Mat2d
-import glm_.mat2x2.Mat2x2t
 import glm_.mat2x3.Mat2x3t
 import glm_.mat2x4.Mat2x4t
 import glm_.mat3x2.Mat3x2t
@@ -16,9 +15,11 @@ import glm_.mat4x3.Mat4x3t
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.quat.QuatD
+import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
+import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
 import java.nio.DoubleBuffer
 import java.util.*
@@ -170,6 +171,10 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
         v.to(array, i * 3)
     }
 
+
+
+
+
     // -- Matrix functions --
 
     val det get() = glm.determinant(this)
@@ -185,24 +190,57 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
     fun transposeAssign() = transpose(this, this)
 
 
-    infix fun put(s: Double) = put(s, s, s)
-    infix fun put(v: Vec3d) = put(v.x, v.y, v.z)
+    infix operator fun invoke(s: Double) = invoke(s, s, s)
 
-    fun put(x: Double, y: Double, z: Double): Mat3d {
+    infix operator fun invoke(v: Vec2d) = invoke(v.x, v.y, 1.0)
+    infix operator fun invoke(v: Vec3d) = invoke(v.x, v.y, v.z)
+    infix operator fun invoke(v: Vec4d) = invoke(v.x, v.y, v.z)
 
-        array[0] = x
-        array[1] = 0.0
-        array[2] = 0.0
+    infix operator fun invoke(doubles: DoubleArray) = invoke(doubles[0], doubles[1], doubles[2], doubles[3], doubles[4], doubles[5], doubles[6], doubles[7], doubles[8])
 
-        array[3] = 0.0
-        array[4] = y
-        array[5] = 0.0
+    operator fun invoke(x: Double, y: Double, z: Double) = invoke(
+            x, 0.0, 0.0,
+            0.0, y, 0.0,
+            0.0, 0.0, z)
 
-        array[6] = 0.0
-        array[7] = 0.0
-        array[8] = z
+    inline fun invoke(a0: Double, a1: Double, a2: Double,
+                      b0: Double, b1: Double, b2: Double,
+                      c0: Double, c1: Double, c2: Double): Mat3d {
 
+        put(a0, a1, a2, b0, b1, b2, c0, c1, c2)
         return this
+    }
+
+
+    infix fun put(mat3: Mat3d) = System.arraycopy(mat3.array.clone(), 0, array, 0, length)
+
+    infix fun put(s: Double) = put(s, s, s)
+    infix fun put(v: Vec2d) = put(v.x, v.y,1.0)
+    infix fun put(v: Vec3d) = put(v.x, v.y, v.z)
+    infix fun put(v: Vec4d) = put(v.x, v.y, v.z)
+
+    infix fun put(doubles: DoubleArray) = put(doubles[0], doubles[1], doubles[2], doubles[3], doubles[4], doubles[5], doubles[6], doubles[7], doubles[8])
+
+    fun put(x: Double, y: Double, z: Double) = put(
+            x, 0.0, 0.0,
+            0.0, y, 0.0,
+            0.0, 0.0, z)
+
+    fun put(a0: Double, a1: Double, a2: Double,
+            b0: Double, b1: Double, b2: Double,
+            c0: Double, c1: Double, c2: Double) {
+
+        array[0] = a0
+        array[1] = a1
+        array[2] = a2
+
+        array[4] = b0
+        array[5] = b1
+        array[6] = b2
+
+        array[8] = c0
+        array[9] = c1
+        array[10] = c2
     }
 
     // TODO others

@@ -16,6 +16,7 @@ import glm_.mat4x2.Mat4x2t
 import glm_.mat4x3.Mat4x3t
 import glm_.mat4x4.operators.mat4d_operators
 import glm_.quat.QuatD
+import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
@@ -163,6 +164,7 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
     // TODO others
     infix operator fun invoke(s: Double) = invoke(s, s, s, s)
 
+    infix operator fun invoke(v: Vec2d) = invoke(v.x, v.y, 1.0, 1.0)
     infix operator fun invoke(v: Vec3d) = invoke(v.x, v.y, v.z, 1.0)
     infix operator fun invoke(v: Vec4d) = invoke(v.x, v.y, v.z, v.w)
 
@@ -187,6 +189,7 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
     infix fun put(mat4: Mat4d) = System.arraycopy(mat4.array.clone(), 0, array, 0, 16)
 
     infix fun put(s: Double) = put(s, s, s, s)
+    infix fun put(v: Vec2d) = put(v.x, v.y, 1.0, 1.0)
     infix fun put(v: Vec3d) = put(v.x, v.y, v.z, 1.0)
     infix fun put(v: Vec4d) = put(v.x, v.y, v.z, v.w)
 
