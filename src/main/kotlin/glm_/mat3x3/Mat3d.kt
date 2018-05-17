@@ -214,6 +214,7 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
 
     infix fun put(mat3: Mat3d) = System.arraycopy(mat3.array.clone(), 0, array, 0, length)
 
+    fun identity() = put(1.0)
     infix fun put(s: Double) = put(s, s, s)
     infix fun put(v: Vec2d) = put(v.x, v.y,1.0)
     infix fun put(v: Vec3d) = put(v.x, v.y, v.z)

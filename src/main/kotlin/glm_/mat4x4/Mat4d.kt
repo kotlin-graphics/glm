@@ -188,6 +188,7 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
 
     infix fun put(mat4: Mat4d) = System.arraycopy(mat4.array.clone(), 0, array, 0, 16)
 
+    fun identity() = put(1.0)
     infix fun put(s: Double) = put(s, s, s, s)
     infix fun put(v: Vec2d) = put(v.x, v.y, 1.0, 1.0)
     infix fun put(v: Vec3d) = put(v.x, v.y, v.z, 1.0)

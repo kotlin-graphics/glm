@@ -209,6 +209,7 @@ class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
 
     infix fun put(mat3: Mat3) = System.arraycopy(mat3.array.clone(), 0, array, 0, length)
 
+    fun identity() = put(1f)
     infix fun put(s: Float) = put(s, s, s)
     infix fun put(v: Vec2) = put(v.x, v.y,1f)
     infix fun put(v: Vec3) = put(v.x, v.y, v.z)

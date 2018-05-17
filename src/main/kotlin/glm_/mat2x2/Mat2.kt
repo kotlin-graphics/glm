@@ -143,6 +143,7 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
 
     infix fun put(mat2: Mat2) = System.arraycopy(mat2.array.clone(), 0, array, 0, length)
 
+    fun identity() = put(1f)
     infix fun put(s: Float) = put(s, s)
     infix fun put(v: Vec2) = put(v.x, v.y)
     infix fun put(v: Vec3) = put(v.x, v.y)

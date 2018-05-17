@@ -207,9 +207,9 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
             0f, 0f, 0f, w)
 
     inline operator fun invoke(a0: Float, a1: Float, a2: Float, a3: Float,
-                      b0: Float, b1: Float, b2: Float, b3: Float,
-                      c0: Float, c1: Float, c2: Float, c3: Float,
-                      d0: Float, d1: Float, d2: Float, d3: Float): Mat4 {
+                               b0: Float, b1: Float, b2: Float, b3: Float,
+                               c0: Float, c1: Float, c2: Float, c3: Float,
+                               d0: Float, d1: Float, d2: Float, d3: Float): Mat4 {
 
         put(a0, a1, a2, a3, b0, b1, b2, b3, c0, c1, c2, c3, d0, d1, d2, d3)
         return this
@@ -217,6 +217,7 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
 
     infix fun put(mat4: Mat4) = System.arraycopy(mat4.array.clone(), 0, array, 0, length)
 
+    fun identity() = put(1f)
     infix fun put(s: Float) = put(s, s, s, s)
     infix fun put(v: Vec2) = put(v.x, v.y, 1f, 1f)
     infix fun put(v: Vec3) = put(v.x, v.y, v.z, 1f)

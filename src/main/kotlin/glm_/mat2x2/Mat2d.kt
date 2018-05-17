@@ -151,6 +151,7 @@ class Mat2d(dummy: Int, var array: DoubleArray) : Mat2x2t<Double>() {
 
     infix fun put(mat2: Mat2d) = System.arraycopy(mat2.array.clone(), 0, array, 0, length)
 
+    fun identity() = put(1.0)
     infix fun put(s: Double) = put(s, s)
     infix fun put(v: Vec2d) = put(v.x, v.y)
     infix fun put(v: Vec3d) = put(v.x, v.y)
