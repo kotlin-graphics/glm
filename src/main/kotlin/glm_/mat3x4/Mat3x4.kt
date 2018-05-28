@@ -17,15 +17,15 @@ class Mat3x4(dummy: Int, var array: FloatArray) : Mat3x4t<Float>() {
     // -- Accesses --
 
     override inline operator fun get(index: Int) = Vec4(index * 4, array)
-    override inline operator fun get(c: Int, r: Int) = array[c * 4 + r]
+    override inline operator fun get(column: Int, row: Int) = array[column * 4 + row]
 
-    override inline operator fun set(c: Int, r: Int, s: Float) = array.set(c * 4 + r, s)
+    override inline operator fun set(column: Int, row: Int, value: Float) = array.set(column * 4 + row, value)
 
-    override inline operator fun set(i: Int, v: Vec4t<out Number>) {
-        array[i * 4] = v.x.f
-        array[i * 4 + 1] = v.y.f
-        array[i * 4 + 2] = v.z.f
-        array[i * 4 + 2] = v.w.f
+    override inline operator fun set(index: Int, value: Vec4t<out Number>) {
+        array[index * 4] = value.x.f
+        array[index * 4 + 1] = value.y.f
+        array[index * 4 + 2] = value.z.f
+        array[index * 4 + 2] = value.w.f
     }
 
     inline operator fun set(i: Int, v: Vec4) {

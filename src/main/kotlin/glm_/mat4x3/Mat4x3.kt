@@ -18,14 +18,14 @@ class Mat4x3(dummy: Int, var array: FloatArray) : Mat4x3t<Float>() {
     // -- Accesses --
 
     override inline operator fun get(index: Int) = Vec3(index * 3, array)
-    override inline operator fun get(c: Int, r: Int) = array[c * 3 + r]
+    override inline operator fun get(column: Int, row: Int) = array[column * 3 + row]
 
-    override inline operator fun set(c: Int, r: Int, s: Float) = array.set(c * 3 + r, s)
+    override inline operator fun set(column: Int, row: Int, value: Float) = array.set(column * 3 + row, value)
 
-    override inline operator fun set(i: Int, v: Vec3t<out Number>) {
-        array[i * 3] = v.x.f
-        array[i * 3 + 1] = v.y.f
-        array[i * 3 + 2] = v.z.f
+    override inline operator fun set(index: Int, value: Vec3t<out Number>) {
+        array[index * 3] = value.x.f
+        array[index * 3 + 1] = value.y.f
+        array[index * 3 + 2] = value.z.f
     }
 
     inline operator fun set(i: Int, v: Vec3) {

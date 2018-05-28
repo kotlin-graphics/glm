@@ -158,13 +158,13 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
     // -- Accesses --
 
     override inline operator fun get(index: Int) = Vec3d(index * 3, array)
-    override inline operator fun get(c: Int, r: Int) = array[c * 3 + r]
+    override inline operator fun get(column: Int, row: Int) = array[column * 3 + row]
 
-    override inline operator fun set(c: Int, r: Int, s: Double) = array.set(c * 3 + r, s)
-    override inline operator fun set(i: Int, v: Vec3t<out Number>) {
-        array[i * 3] = v.x.d
-        array[i * 3 + 1] = v.y.d
-        array[i * 3 + 2] = v.z.d
+    override inline operator fun set(column: Int, row: Int, value: Double) = array.set(column * 3 + row, value)
+    override inline operator fun set(index: Int, value: Vec3t<out Number>) {
+        array[index * 3] = value.x.d
+        array[index * 3 + 1] = value.y.d
+        array[index * 3 + 2] = value.z.d
     }
 
     inline operator fun set(i: Int, v: Vec3d) {
@@ -377,6 +377,19 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
     infix operator fun divAssign(b: Mat3d) {
         div(this, this, b)
     }
+
+
+    fun rotateX(angle: Double, res: Mat3d = Mat3d()) = glm.rotateX(res, this, angle)
+    fun rotateY(angle: Double, res: Mat3d = Mat3d()) = glm.rotateY(res, this, angle)
+    fun rotateZ(angle: Double, res: Mat3d = Mat3d()) = glm.rotateZ(res, this, angle)
+    fun rotateXYZ(angle: Vec3d, res: Mat3d = Mat3d()) = glm.rotateXYZ(res, this, angle.x, angle.y, angle.z)
+    fun rotateXYZ(angleX: Double, angleY: Double, angleZ: Double, res: Mat3d = Mat3d()) = glm.rotateXYZ(res, this, angleX, angleY, angleZ)
+
+    fun rotateXassign(angle: Double) = glm.rotateX(this, this, angle)
+    fun rotateYassign(angle: Double) = glm.rotateY(this, this, angle)
+    fun rotateZassign(angle: Double) = glm.rotateZ(this, this, angle)
+    fun rotateXYZassign(angle: Vec3d) = glm.rotateXYZ(this, this, angle.x, angle.y, angle.z)
+    fun rotateXYZassign(angleX: Double, angleY: Double, angleZ: Double) = glm.rotateXYZ(this, this, angleX, angleY, angleZ)
 
 
     infix fun isEqual(b: Mat3d) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2])

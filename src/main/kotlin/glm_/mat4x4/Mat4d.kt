@@ -344,15 +344,15 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
     // -- Accesses --
 
     override inline operator fun get(index: Int) = Vec4d(index * 4, array)
-    override inline operator fun get(c: Int, r: Int) = array[c * 4 + r]
+    override inline operator fun get(column: Int, row: Int) = array[column * 4 + row]
 
-    override inline operator fun set(c: Int, r: Int, s: Double) = array.set(c * 4 + r, s)
+    override inline operator fun set(column: Int, row: Int, value: Double) = array.set(column * 4 + row, value)
 
-    override inline operator fun set(i: Int, v: Vec4t<out Number>) {
-        array[i * 4] = v.x.d
-        array[i * 4 + 1] = v.y.d
-        array[i * 4 + 2] = v.z.d
-        array[i * 4 + 3] = v.w.d
+    override inline operator fun set(index: Int, value: Vec4t<out Number>) {
+        array[index * 4] = value.x.d
+        array[index * 4 + 1] = value.y.d
+        array[index * 4 + 2] = value.z.d
+        array[index * 4 + 3] = value.w.d
     }
 
     inline operator fun set(i: Int, v: Vec4d) {
@@ -518,6 +518,19 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
 
     fun rotateAssign(angle: Double, vX: Double, vY: Double, vZ: Double) = glm.rotate(this, this, angle, vX, vY, vZ)
     fun rotateAssign(angle: Double, v: Vec3d) = glm.rotate(this, this, angle, v)
+
+
+    fun rotateX(angle: Double, res: Mat4d = Mat4d()) = glm.rotateX(res, this, angle)
+    fun rotateY(angle: Double, res: Mat4d = Mat4d()) = glm.rotateY(res, this, angle)
+    fun rotateZ(angle: Double, res: Mat4d = Mat4d()) = glm.rotateZ(res, this, angle)
+    fun rotateXYZ(angle: Vec3d, res: Mat4d = Mat4d()) = glm.rotateXYZ(res, this, angle.x, angle.y, angle.z)
+    fun rotateXYZ(angleX: Double, angleY: Double, angleZ: Double, res: Mat4d = Mat4d()) = glm.rotateXYZ(res, this, angleX, angleY, angleZ)
+
+    fun rotateXassign(angle: Double) = glm.rotateX(this, this, angle)
+    fun rotateYassign(angle: Double) = glm.rotateY(this, this, angle)
+    fun rotateZassign(angle: Double) = glm.rotateZ(this, this, angle)
+    fun rotateXYZassign(angle: Vec3d) = glm.rotateXYZ(this, this, angle.x, angle.y, angle.z)
+    fun rotateXYZassign(angleX: Double, angleY: Double, angleZ: Double) = glm.rotateXYZ(this, this, angleX, angleY, angleZ)
 
 
     override var a0: Double

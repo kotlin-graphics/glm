@@ -157,13 +157,13 @@ class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
     // -- Accesses --
 
     override inline operator fun get(index: Int) = Vec3(index * 3, array)
-    override inline operator fun get(c: Int, r: Int) = array[c * 3 + r]
+    override inline operator fun get(column: Int, row: Int) = array[column * 3 + row]
 
-    override inline operator fun set(c: Int, r: Int, s: Float) = array.set(c * 3 + r, s)
-    override inline operator fun set(i: Int, v: Vec3t<out Number>) {
-        array[i * 3] = v.x.f
-        array[i * 3 + 1] = v.y.f
-        array[i * 3 + 2] = v.z.f
+    override inline operator fun set(column: Int, row: Int, value: Float) = array.set(column * 3 + row, value)
+    override inline operator fun set(index: Int, value: Vec3t<out Number>) {
+        array[index * 3] = value.x.f
+        array[index * 3 + 1] = value.y.f
+        array[index * 3 + 2] = value.z.f
     }
 
     inline operator fun set(i: Int, v: Vec3) {
@@ -388,6 +388,19 @@ class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
     infix operator fun divAssign(b: Mat3) {
         div(this, this, b)
     }
+
+
+    fun rotateX(angle: Float, res: Mat3 = Mat3()) = glm.rotateX(res, this, angle)
+    fun rotateY(angle: Float, res: Mat3 = Mat3()) = glm.rotateY(res, this, angle)
+    fun rotateZ(angle: Float, res: Mat3 = Mat3()) = glm.rotateZ(res, this, angle)
+    fun rotateXYZ(angle: Vec3, res: Mat3 = Mat3()) = glm.rotateXYZ(res, this, angle.x, angle.y, angle.z)
+    fun rotateXYZ(angleX: Float, angleY: Float, angleZ: Float, res: Mat3 = Mat3()) = glm.rotateXYZ(res, this, angleX, angleY, angleZ)
+
+    fun rotateXassign(angle: Float) = glm.rotateX(this, this, angle)
+    fun rotateYassign(angle: Float) = glm.rotateY(this, this, angle)
+    fun rotateZassign(angle: Float) = glm.rotateZ(this, this, angle)
+    fun rotateXYZassign(angle: Vec3) = glm.rotateXYZ(this, this, angle.x, angle.y, angle.z)
+    fun rotateXYZassign(angleX: Float, angleY: Float, angleZ: Float) = glm.rotateXYZ(this, this, angleX, angleY, angleZ)
 
 
     infix fun isEqual(b: Mat3) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2])

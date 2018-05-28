@@ -9,6 +9,8 @@ import glm_.glm.cos
 import glm_.glm.inverseSqrt
 import glm_.glm.sin
 import glm_.glm.tan
+import glm_.mat3x3.Mat3
+import glm_.mat3x3.Mat3d
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.vec2.Vec2
@@ -206,6 +208,610 @@ interface matrix_transform {
     fun rotate(res: Mat4d, m: Mat4d, angle: Double, v: Vec3d) = rotate(res, m, angle, v.x, v.y, v.z)
     fun rotate(m: Mat4d, angle: Double, v: Vec3d) = rotate(Mat4d(), m, angle, v.x, v.y, v.z)
     fun rotate(m: Mat4d, angle: Double, vX: Double, vY: Double, vZ: Double) = rotate(Mat4d(), m, angle, vX, vY, vZ)
+
+    fun rotateX(res: Mat3, mat: Mat3, angle: Float): Mat3 {
+        val sin: Float
+        val cos: Float
+        if (angle == glm.PIf || angle == -glm.PIf) {
+            cos = -1f
+            sin = 0f
+        } else if (angle == glm.PIf * 0.5f || angle == -glm.PIf * 1.5f) {
+            cos = 0f
+            sin = 1f
+        } else if (angle == -glm.PIf * 0.5f || angle == glm.PIf * 1.5f) {
+            cos = 0f
+            sin = -1f
+        } else {
+            sin = sin(angle)
+            cos = cos(angle)
+        }
+        val rm11 = cos
+        val rm21 = -sin
+        val rm12 = sin
+        val rm22 = cos
+
+        // add temporaries for dependent values
+        val nm10 = mat[1, 0] * rm11 + mat[2, 0] * rm12
+        val nm11 = mat[1, 1] * rm11 + mat[2, 1] * rm12
+        val nm12 = mat[1, 2] * rm11 + mat[2, 2] * rm12
+        // set non-dependent values directly
+        res[2, 0] = mat[1, 0] * rm21 + mat[2, 0] * rm22
+        res[2, 1] = mat[1, 1] * rm21 + mat[2, 1] * rm22
+        res[2, 2] = mat[1, 2] * rm21 + mat[2, 2] * rm22
+        // set other values
+        res[1, 0] = nm10
+        res[1, 1] = nm11
+        res[1, 2] = nm12
+        res[0, 0] = mat[0, 0]
+        res[0, 1] = mat[0, 1]
+        res[0, 2] = mat[0, 2]
+
+        return res
+    }
+
+    fun rotateX(res: Mat3d, mat: Mat3d, angle: Double): Mat3d {
+        val sin: Double
+        val cos: Double
+        if (angle == glm.PI || angle == -glm.PI) {
+            cos = -1.0
+            sin = 0.0
+        } else if (angle == glm.PI * 0.5 || angle == -glm.PI * 1.5) {
+            cos = 0.0
+            sin = 1.0
+        } else if (angle == -glm.PI * 0.5 || angle == glm.PI * 1.5) {
+            cos = 0.0
+            sin = -1.0
+        } else {
+            sin = sin(angle)
+            cos = cos(angle)
+        }
+        val rm11 = cos
+        val rm21 = -sin
+        val rm12 = sin
+        val rm22 = cos
+
+        // add temporaries for dependent values
+        val nm10 = mat[1, 0] * rm11 + mat[2, 0] * rm12
+        val nm11 = mat[1, 1] * rm11 + mat[2, 1] * rm12
+        val nm12 = mat[1, 2] * rm11 + mat[2, 2] * rm12
+        // set non-dependent values directly
+        res[2, 0] = mat[1, 0] * rm21 + mat[2, 0] * rm22
+        res[2, 1] = mat[1, 1] * rm21 + mat[2, 1] * rm22
+        res[2, 2] = mat[1, 2] * rm21 + mat[2, 2] * rm22
+        // set other values
+        res[1, 0] = nm10
+        res[1, 1] = nm11
+        res[1, 2] = nm12
+        res[0, 0] = mat[0, 0]
+        res[0, 1] = mat[0, 1]
+        res[0, 2] = mat[0, 2]
+
+        return res
+    }
+
+    fun rotateY(res: Mat3, mat: Mat3, angle: Float): Mat3 {
+        val sin: Float
+        val cos: Float
+        if (angle == glm.PIf || angle == -glm.PIf) {
+            cos = -1f
+            sin = 0f
+        } else if (angle == glm.PIf * 0.5f || angle == -glm.PIf * 1.5f) {
+            cos = 0f
+            sin = 1f
+        } else if (angle == -glm.PIf * 0.5f || angle == glm.PIf * 1.5f) {
+            cos = 0f
+            sin = -1f
+        } else {
+            sin = sin(angle)
+            cos = cos(angle)
+        }
+        val rm00 = cos
+        val rm20 = sin
+        val rm02 = -sin
+        val rm22 = cos
+
+        // add temporaries for dependent values
+        val nm00 = mat[0, 0] * rm00 + mat[2, 0] * rm02
+        val nm01 = mat[0, 1] * rm00 + mat[2, 1] * rm02
+        val nm02 = mat[0, 2] * rm00 + mat[2, 2] * rm02
+        // set non-dependent values directly
+        res[2, 0] = mat[0, 0] * rm20 + mat[2, 0] * rm22
+        res[2, 1] = mat[0, 1] * rm20 + mat[2, 1] * rm22
+        res[2, 2] = mat[0, 2] * rm20 + mat[2, 2] * rm22
+        // set other values
+        res[0, 0] = nm00
+        res[0, 1] = nm01
+        res[0, 2] = nm02
+        res[1, 0] = mat[1, 0]
+        res[1, 1] = mat[1, 1]
+        res[1, 2] = mat[1, 2]
+
+        return res
+    }
+
+    fun rotateY(res: Mat3d, mat: Mat3d, angle: Double): Mat3d {
+        val sin: Double
+        val cos: Double
+        if (angle == glm.PI || angle == -glm.PI) {
+            cos = -1.0
+            sin = 0.0
+        } else if (angle == glm.PI * 0.5 || angle == -glm.PI * 1.5) {
+            cos = 0.0
+            sin = 1.0
+        } else if (angle == -glm.PI * 0.5 || angle == glm.PI * 1.5) {
+            cos = 0.0
+            sin = -1.0
+        } else {
+            sin = sin(angle)
+            cos = cos(angle)
+        }
+        val rm00 = cos
+        val rm20 = sin
+        val rm02 = -sin
+        val rm22 = cos
+
+        // add temporaries for dependent values
+        val nm00 = mat[0, 0] * rm00 + mat[2, 0] * rm02
+        val nm01 = mat[0, 1] * rm00 + mat[2, 1] * rm02
+        val nm02 = mat[0, 2] * rm00 + mat[2, 2] * rm02
+        // set non-dependent values directly
+        res[2, 0] = mat[0, 0] * rm20 + mat[2, 0] * rm22
+        res[2, 1] = mat[0, 1] * rm20 + mat[2, 1] * rm22
+        res[2, 2] = mat[0, 2] * rm20 + mat[2, 2] * rm22
+        // set other values
+        res[0, 0] = nm00
+        res[0, 1] = nm01
+        res[0, 2] = nm02
+        res[1, 0] = mat[1, 0]
+        res[1, 1] = mat[1, 1]
+        res[1, 2] = mat[1, 2]
+
+        return res
+    }
+
+    fun rotateZ(res: Mat3, mat: Mat3, angle: Float): Mat3 {
+        val sin: Float
+        val cos: Float
+        if (angle == glm.PIf || angle == -glm.PIf) {
+            cos = -1f
+            sin = 0f
+        } else if (angle == glm.PIf * 0.5f || angle == -glm.PIf * 1.5f) {
+            cos = 0f
+            sin = 1f
+        } else if (angle == -glm.PIf * 0.5f || angle == glm.PIf * 1.5f) {
+            cos = 0f
+            sin = -1f
+        } else {
+            sin = sin(angle)
+            cos = cos(angle)
+        }
+        val rm00 = cos
+        val rm10 = -sin
+        val rm01 = sin
+        val rm11 = cos
+
+        // add temporaries for dependent values
+        val nm00 = mat[0, 0] * rm00 + mat[1, 0] * rm01
+        val nm01 = mat[0, 1] * rm00 + mat[1, 1] * rm01
+        val nm02 = mat[0, 2] * rm00 + mat[1, 2] * rm01
+        // set non-dependent values directly
+        res[1, 0] = mat[0, 0] * rm10 + mat[1, 0] * rm11
+        res[1, 1] = mat[0, 1] * rm10 + mat[1, 1] * rm11
+        res[1, 2] = mat[0, 2] * rm10 + mat[1, 2] * rm11
+        // set other values
+        res[0, 0] = nm00
+        res[0, 1] = nm01
+        res[0, 2] = nm02
+        res[2, 0] = mat[2, 0]
+        res[2, 1] = mat[2, 1]
+        res[2, 2] = mat[2, 2]
+
+        return res
+    }
+
+    fun rotateZ(res: Mat3d, mat: Mat3d, angle: Double): Mat3d {
+        val sin: Double
+        val cos: Double
+        if (angle == glm.PI || angle == -glm.PI) {
+            cos = -1.0
+            sin = 0.0
+        } else if (angle == glm.PI * 0.5 || angle == -glm.PI * 1.5) {
+            cos = 0.0
+            sin = 1.0
+        } else if (angle == -glm.PI * 0.5 || angle == glm.PI * 1.5) {
+            cos = 0.0
+            sin = -1.0
+        } else {
+            sin = sin(angle)
+            cos = cos(angle)
+        }
+        val rm00 = cos
+        val rm10 = -sin
+        val rm01 = sin
+        val rm11 = cos
+
+        // add temporaries for dependent values
+        val nm00 = mat[0, 0] * rm00 + mat[1, 0] * rm01
+        val nm01 = mat[0, 1] * rm00 + mat[1, 1] * rm01
+        val nm02 = mat[0, 2] * rm00 + mat[1, 2] * rm01
+        // set non-dependent values directly
+        res[1, 0] = mat[0, 0] * rm10 + mat[1, 0] * rm11
+        res[1, 1] = mat[0, 1] * rm10 + mat[1, 1] * rm11
+        res[1, 2] = mat[0, 2] * rm10 + mat[1, 2] * rm11
+        // set other values
+        res[0, 0] = nm00
+        res[0, 1] = nm01
+        res[0, 2] = nm02
+        res[2, 0] = mat[2, 0]
+        res[2, 1] = mat[2, 1]
+        res[2, 2] = mat[2, 2]
+
+        return res
+    }
+
+    fun rotateXYZ(res: Mat3, mat: Mat3, angleX: Float, angleY: Float, angleZ: Float): Mat3 {
+        val sinX = sin(angleX)
+        val cosX = cos(angleX)
+        val sinY = sin(angleY)
+        val cosY = cos(angleY)
+        val sinZ = sin(angleZ)
+        val cosZ = cos(angleZ)
+        val m_sinX = -sinX
+        val m_sinY = -sinY
+        val m_sinZ = -sinZ
+
+        // rotateX
+        val nm10 = mat[1, 0] * cosX + mat[2, 0] * sinX
+        val nm11 = mat[1, 1] * cosX + mat[2, 1] * sinX
+        val nm12 = mat[1, 2] * cosX + mat[2, 2] * sinX
+        val nm20 = mat[1, 0] * m_sinX + mat[2, 0] * cosX
+        val nm21 = mat[1, 1] * m_sinX + mat[2, 1] * cosX
+        val nm22 = mat[1, 2] * m_sinX + mat[2, 2] * cosX
+        // rotateY
+        val nm00 = mat[0, 0] * cosY + nm20 * m_sinY
+        val nm01 = mat[0, 1] * cosY + nm21 * m_sinY
+        val nm02 = mat[0, 2] * cosY + nm22 * m_sinY
+        res[2, 0] = mat[0, 0] * sinY + nm20 * cosY
+        res[2, 1] = mat[0, 1] * sinY + nm21 * cosY
+        res[2, 2] = mat[0, 2] * sinY + nm22 * cosY
+        // rotateZ
+        res[0, 0] = nm00 * cosZ + nm10 * sinZ
+        res[0, 1] = nm01 * cosZ + nm11 * sinZ
+        res[0, 2] = nm02 * cosZ + nm12 * sinZ
+        res[1, 0] = nm00 * m_sinZ + nm10 * cosZ
+        res[1, 1] = nm01 * m_sinZ + nm11 * cosZ
+        res[1, 2] = nm02 * m_sinZ + nm12 * cosZ
+        return res
+    }
+
+    fun rotateXYZ(res: Mat3d, mat: Mat3d, angleX: Double, angleY: Double, angleZ: Double): Mat3d {
+        val sinX = sin(angleX)
+        val cosX = cos(angleX)
+        val sinY = sin(angleY)
+        val cosY = cos(angleY)
+        val sinZ = sin(angleZ)
+        val cosZ = cos(angleZ)
+        val m_sinX = -sinX
+        val m_sinY = -sinY
+        val m_sinZ = -sinZ
+
+        // rotateX
+        val nm10 = mat[1, 0] * cosX + mat[2, 0] * sinX
+        val nm11 = mat[1, 1] * cosX + mat[2, 1] * sinX
+        val nm12 = mat[1, 2] * cosX + mat[2, 2] * sinX
+        val nm20 = mat[1, 0] * m_sinX + mat[2, 0] * cosX
+        val nm21 = mat[1, 1] * m_sinX + mat[2, 1] * cosX
+        val nm22 = mat[1, 2] * m_sinX + mat[2, 2] * cosX
+        // rotateY
+        val nm00 = mat[0, 0] * cosY + nm20 * m_sinY
+        val nm01 = mat[0, 1] * cosY + nm21 * m_sinY
+        val nm02 = mat[0, 2] * cosY + nm22 * m_sinY
+        res[2, 0] = mat[0, 0] * sinY + nm20 * cosY
+        res[2, 1] = mat[0, 1] * sinY + nm21 * cosY
+        res[2, 2] = mat[0, 2] * sinY + nm22 * cosY
+        // rotateZ
+        res[0, 0] = nm00 * cosZ + nm10 * sinZ
+        res[0, 1] = nm01 * cosZ + nm11 * sinZ
+        res[0, 2] = nm02 * cosZ + nm12 * sinZ
+        res[1, 0] = nm00 * m_sinZ + nm10 * cosZ
+        res[1, 1] = nm01 * m_sinZ + nm11 * cosZ
+        res[1, 2] = nm02 * m_sinZ + nm12 * cosZ
+        return res
+    }
+
+    fun rotateX(res: Mat4, mat: Mat4, angle: Float): Mat4 {
+        val sin = sin(angle)
+        val cos = cos(sin)
+        val rm11 = cos
+        val rm12 = sin
+        val rm21 = -sin
+        val rm22 = cos
+
+        // add temporaries for dependent values
+        val nm10 = mat[1, 0] * rm11 + mat[2, 0] * rm12
+        val nm11 = mat[1, 1] * rm11 + mat[2, 1] * rm12
+        val nm12 = mat[1, 2] * rm11 + mat[2, 2] * rm12
+        val nm13 = mat[1, 3] * rm11 + mat[2, 3] * rm12
+        // set non-dependent values directly
+        res[2, 0] = mat[1, 0] * rm21 + mat[2, 0] * rm22
+        res[2, 1] = mat[1, 1] * rm21 + mat[2, 1] * rm22
+        res[2, 2] = mat[1, 2] * rm21 + mat[2, 2] * rm22
+        res[2, 3] = mat[1, 3] * rm21 + mat[2, 3] * rm22
+        // set other values
+        res[1, 0] = nm10
+        res[1, 1] = nm11
+        res[1, 2] = nm12
+        res[1, 3] = nm13
+        res[0, 0] = mat[0, 0]
+        res[0, 1] = mat[0, 1]
+        res[0, 2] = mat[0, 2]
+        res[0, 3] = mat[0, 3]
+        res[3, 0] = mat[3, 0]
+        res[3, 1] = mat[3, 1]
+        res[3, 2] = mat[3, 2]
+        res[3, 3] = mat[3, 3]
+        return res
+    }
+
+    fun rotateX(res: Mat4d, mat: Mat4d, angle: Double): Mat4d {
+        val sin = sin(angle)
+        val cos = cos(sin)
+        val rm11 = cos
+        val rm12 = sin
+        val rm21 = -sin
+        val rm22 = cos
+
+        // add temporaries for dependent values
+        val nm10 = mat[1, 0] * rm11 + mat[2, 0] * rm12
+        val nm11 = mat[1, 1] * rm11 + mat[2, 1] * rm12
+        val nm12 = mat[1, 2] * rm11 + mat[2, 2] * rm12
+        val nm13 = mat[1, 3] * rm11 + mat[2, 3] * rm12
+        // set non-dependent values directly
+        res[2, 0] = mat[1, 0] * rm21 + mat[2, 0] * rm22
+        res[2, 1] = mat[1, 1] * rm21 + mat[2, 1] * rm22
+        res[2, 2] = mat[1, 2] * rm21 + mat[2, 2] * rm22
+        res[2, 3] = mat[1, 3] * rm21 + mat[2, 3] * rm22
+        // set other values
+        res[1, 0] = nm10
+        res[1, 1] = nm11
+        res[1, 2] = nm12
+        res[1, 3] = nm13
+        res[0, 0] = mat[0, 0]
+        res[0, 1] = mat[0, 1]
+        res[0, 2] = mat[0, 2]
+        res[0, 3] = mat[0, 3]
+        res[3, 0] = mat[3, 0]
+        res[3, 1] = mat[3, 1]
+        res[3, 2] = mat[3, 2]
+        res[3, 3] = mat[3, 3]
+        return res
+    }
+
+    fun rotateY(res: Mat4, mat: Mat4, angle: Float): Mat4 {
+        val cos = cos(angle)
+        val sin = sin(angle)
+        val rm00 = cos
+        val rm02 = -sin
+        val rm20 = sin
+        val rm22 = cos
+
+        // add temporaries for dependent values
+        val nm00 = mat[0, 0] * rm00 + mat[2, 0] * rm02
+        val nm01 = mat[0, 1] * rm00 + mat[2, 1] * rm02
+        val nm02 = mat[0, 2] * rm00 + mat[2, 2] * rm02
+        val nm03 = mat[0, 3] * rm00 + mat[2, 3] * rm02
+        // set non-dependent values directly
+        res[2, 0] = mat[0, 0] * rm20 + mat[2, 0] * rm22
+        res[2, 1] = mat[0, 1] * rm20 + mat[2, 1] * rm22
+        res[2, 2] = mat[0, 2] * rm20 + mat[2, 2] * rm22
+        res[2, 3] = mat[0, 3] * rm20 + mat[2, 3] * rm22
+        // set other values
+        res[0, 0] = nm00
+        res[0, 1] = nm01
+        res[0, 2] = nm02
+        res[0, 3] = nm03
+        res[1, 0] = mat[1, 0]
+        res[1, 1] = mat[1, 1]
+        res[1, 2] = mat[1, 2]
+        res[1, 3] = mat[1, 3]
+        res[3, 0] = mat[3, 0]
+        res[3, 1] = mat[3, 1]
+        res[3, 2] = mat[3, 2]
+        res[3, 3] = mat[3, 3]
+        return res
+    }
+
+    fun rotateY(res: Mat4d, mat: Mat4d, angle: Double): Mat4d {
+        val cos = cos(angle)
+        val sin = sin(angle)
+        val rm00 = cos
+        val rm02 = -sin
+        val rm20 = sin
+        val rm22 = cos
+
+        // add temporaries for dependent values
+        val nm00 = mat[0, 0] * rm00 + mat[2, 0] * rm02
+        val nm01 = mat[0, 1] * rm00 + mat[2, 1] * rm02
+        val nm02 = mat[0, 2] * rm00 + mat[2, 2] * rm02
+        val nm03 = mat[0, 3] * rm00 + mat[2, 3] * rm02
+        // set non-dependent values directly
+        res[2, 0] = mat[0, 0] * rm20 + mat[2, 0] * rm22
+        res[2, 1] = mat[0, 1] * rm20 + mat[2, 1] * rm22
+        res[2, 2] = mat[0, 2] * rm20 + mat[2, 2] * rm22
+        res[2, 3] = mat[0, 3] * rm20 + mat[2, 3] * rm22
+        // set other values
+        res[0, 0] = nm00
+        res[0, 1] = nm01
+        res[0, 2] = nm02
+        res[0, 3] = nm03
+        res[1, 0] = mat[1, 0]
+        res[1, 1] = mat[1, 1]
+        res[1, 2] = mat[1, 2]
+        res[1, 3] = mat[1, 3]
+        res[3, 0] = mat[3, 0]
+        res[3, 1] = mat[3, 1]
+        res[3, 2] = mat[3, 2]
+        res[3, 3] = mat[3, 3]
+        return res
+    }
+
+    fun rotateZ(res: Mat4, mat: Mat4, angle: Float): Mat4 {
+        val sin = sin(angle)
+        val cos = cos(angle)
+        val rm00 = cos
+        val rm01 = sin
+        val rm10 = -sin
+        val rm11 = cos
+        // add temporaries for dependent values
+        val nm00 = mat[0, 0] * rm00 + mat[1, 0] * rm01
+        val nm01 = mat[0, 1] * rm00 + mat[1, 1] * rm01
+        val nm02 = mat[0, 2] * rm00 + mat[1, 2] * rm01
+        val nm03 = mat[0, 3] * rm00 + mat[1, 3] * rm01
+        // set non-dependent values directly
+        res[1, 0] = mat[0, 0] * rm10 + mat[1, 0] * rm11
+        res[1, 1] = mat[0, 1] * rm10 + mat[1, 1] * rm11
+        res[1, 2] = mat[0, 2] * rm10 + mat[1, 2] * rm11
+        res[1, 3] = mat[0, 3] * rm10 + mat[1, 3] * rm11
+        // set other values
+        res[0, 0] = nm00
+        res[0, 1] = nm01
+        res[0, 2] = nm02
+        res[0, 3] = nm03
+        res[2, 0] = mat[2, 0]
+        res[2, 1] = mat[2, 1]
+        res[2, 2] = mat[2, 2]
+        res[2, 3] = mat[2, 3]
+        res[3, 0] = mat[3, 0]
+        res[3, 1] = mat[3, 1]
+        res[3, 2] = mat[3, 2]
+        res[3, 3] = mat[3, 3]
+        return res
+    }
+
+    fun rotateZ(res: Mat4d, mat: Mat4d, angle: Double): Mat4d {
+        val sin = sin(angle)
+        val cos = cos(angle)
+        val rm00 = cos
+        val rm01 = sin
+        val rm10 = -sin
+        val rm11 = cos
+        // add temporaries for dependent values
+        val nm00 = mat[0, 0] * rm00 + mat[1, 0] * rm01
+        val nm01 = mat[0, 1] * rm00 + mat[1, 1] * rm01
+        val nm02 = mat[0, 2] * rm00 + mat[1, 2] * rm01
+        val nm03 = mat[0, 3] * rm00 + mat[1, 3] * rm01
+        // set non-dependent values directly
+        res[1, 0] = mat[0, 0] * rm10 + mat[1, 0] * rm11
+        res[1, 1] = mat[0, 1] * rm10 + mat[1, 1] * rm11
+        res[1, 2] = mat[0, 2] * rm10 + mat[1, 2] * rm11
+        res[1, 3] = mat[0, 3] * rm10 + mat[1, 3] * rm11
+        // set other values
+        res[0, 0] = nm00
+        res[0, 1] = nm01
+        res[0, 2] = nm02
+        res[0, 3] = nm03
+        res[2, 0] = mat[2, 0]
+        res[2, 1] = mat[2, 1]
+        res[2, 2] = mat[2, 2]
+        res[2, 3] = mat[2, 3]
+        res[3, 0] = mat[3, 0]
+        res[3, 1] = mat[3, 1]
+        res[3, 2] = mat[3, 2]
+        res[3, 3] = mat[3, 3]
+        return res
+    }
+
+    fun rotateXYZ(res: Mat4, mat: Mat4, angleX: Float, angleY: Float, angleZ: Float): Mat4 {
+        val sinX = sin(angleX)
+        val cosX = cos(angleX)
+        val sinY = sin(angleY)
+        val cosY = cos(angleY)
+        val sinZ = sin(angleZ)
+        val cosZ = cos(angleZ)
+        val m_sinX = -sinX
+        val m_sinY = -sinY
+        val m_sinZ = -sinZ
+
+        // rotateX
+        val nm10 = mat[1, 0] * cosX + mat[2, 0] * sinX
+        val nm11 = mat[1, 1] * cosX + mat[2, 1] * sinX
+        val nm12 = mat[1, 2] * cosX + mat[2, 2] * sinX
+        val nm13 = mat[1, 3] * cosX + mat[2, 3] * sinX
+        val nm20 = mat[1, 0] * m_sinX + mat[2, 0] * cosX
+        val nm21 = mat[1, 1] * m_sinX + mat[2, 1] * cosX
+        val nm22 = mat[1, 2] * m_sinX + mat[2, 2] * cosX
+        val nm23 = mat[1, 3] * m_sinX + mat[2, 3] * cosX
+        // rotateY
+        val nm00 = mat[0, 0] * cosY + nm20 * m_sinY
+        val nm01 = mat[0, 1] * cosY + nm21 * m_sinY
+        val nm02 = mat[0, 2] * cosY + nm22 * m_sinY
+        val nm03 = mat[0, 3] * cosY + nm23 * m_sinY
+        res[2, 0] = mat[0, 0] * sinY + nm20 * cosY
+        res[2, 1] = mat[0, 1] * sinY + nm21 * cosY
+        res[2, 2] = mat[0, 2] * sinY + nm22 * cosY
+        res[2, 3] = mat[0, 3] * sinY + nm23 * cosY
+        // rotateZ
+        res[0, 0] = nm00 * cosZ + nm10 * sinZ
+        res[0, 1] = nm01 * cosZ + nm11 * sinZ
+        res[0, 2] = nm02 * cosZ + nm12 * sinZ
+        res[0, 3] = nm03 * cosZ + nm13 * sinZ
+        res[1, 0] = nm00 * m_sinZ + nm10 * cosZ
+        res[1, 1] = nm01 * m_sinZ + nm11 * cosZ
+        res[1, 2] = nm02 * m_sinZ + nm12 * cosZ
+        res[1, 3] = nm03 * m_sinZ + nm13 * cosZ
+        // copy last column from 'this'
+        res[3, 0] = mat[3, 0]
+        res[3, 1] = mat[3, 1]
+        res[3, 2] = mat[3, 2]
+        res[3, 3] = mat[3, 3]
+        return res
+    }
+
+    fun rotateXYZ(res: Mat4d, mat: Mat4d, angleX: Double, angleY: Double, angleZ: Double): Mat4d {
+        val sinX = sin(angleX)
+        val cosX = cos(angleX)
+        val sinY = sin(angleY)
+        val cosY = cos(angleY)
+        val sinZ = sin(angleZ)
+        val cosZ = cos(angleZ)
+        val m_sinX = -sinX
+        val m_sinY = -sinY
+        val m_sinZ = -sinZ
+
+        // rotateX
+        val nm10 = mat[1, 0] * cosX + mat[2, 0] * sinX
+        val nm11 = mat[1, 1] * cosX + mat[2, 1] * sinX
+        val nm12 = mat[1, 2] * cosX + mat[2, 2] * sinX
+        val nm13 = mat[1, 3] * cosX + mat[2, 3] * sinX
+        val nm20 = mat[1, 0] * m_sinX + mat[2, 0] * cosX
+        val nm21 = mat[1, 1] * m_sinX + mat[2, 1] * cosX
+        val nm22 = mat[1, 2] * m_sinX + mat[2, 2] * cosX
+        val nm23 = mat[1, 3] * m_sinX + mat[2, 3] * cosX
+        // rotateY
+        val nm00 = mat[0, 0] * cosY + nm20 * m_sinY
+        val nm01 = mat[0, 1] * cosY + nm21 * m_sinY
+        val nm02 = mat[0, 2] * cosY + nm22 * m_sinY
+        val nm03 = mat[0, 3] * cosY + nm23 * m_sinY
+        res[2, 0] = mat[0, 0] * sinY + nm20 * cosY
+        res[2, 1] = mat[0, 1] * sinY + nm21 * cosY
+        res[2, 2] = mat[0, 2] * sinY + nm22 * cosY
+        res[2, 3] = mat[0, 3] * sinY + nm23 * cosY
+        // rotateZ
+        res[0, 0] = nm00 * cosZ + nm10 * sinZ
+        res[0, 1] = nm01 * cosZ + nm11 * sinZ
+        res[0, 2] = nm02 * cosZ + nm12 * sinZ
+        res[0, 3] = nm03 * cosZ + nm13 * sinZ
+        res[1, 0] = nm00 * m_sinZ + nm10 * cosZ
+        res[1, 1] = nm01 * m_sinZ + nm11 * cosZ
+        res[1, 2] = nm02 * m_sinZ + nm12 * cosZ
+        res[1, 3] = nm03 * m_sinZ + nm13 * cosZ
+        // copy last column from 'this'
+        res[3, 0] = mat[3, 0]
+        res[3, 1] = mat[3, 1]
+        res[3, 2] = mat[3, 2]
+        res[3, 3] = mat[3, 3]
+        return res
+    }
 
     /**
      * Builds a scale 4 * 4 matrix created from 3 scalars.

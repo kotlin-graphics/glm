@@ -108,16 +108,16 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
     // -- Accesses --
 
     override inline operator fun get(index: Int) = Vec2(index * 2, array)
-    override inline operator fun get(c: Int, r: Int) = array[c * 2 + r]
+    override inline operator fun get(column: Int, row: Int) = array[column * 2 + row]
 
-    override inline operator fun set(c: Int, r: Int, s: Float) = array.set(c * 2 + r, s)
-    override inline operator fun set(i: Int, v: Vec2t<out Number>) {
-        array[i * 2] = v.x.f
-        array[i * 2 + 1] = v.y.f
+    override inline operator fun set(column: Int, row: Int, value: Float) = array.set(column * 2 + row, value)
+    override inline operator fun set(index: Int, value: Vec2t<out Number>) {
+        array[index * 2] = value.x.f
+        array[index * 2 + 1] = value.y.f
     }
 
-    inline operator fun set(i: Int, v: Vec2) {
-        v.to(array, i * 2)
+    inline operator fun set(index: Int, value: Vec2) {
+        value.to(array, index * 2)
     }
 
 
