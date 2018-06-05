@@ -7,9 +7,10 @@ package glm_
 import glm_.func.*
 import glm_.func.common.*
 import glm_.gtc.gtcMatrixInverse
+import glm_.gtc.matrixTransform.*
 import glm_.gtx.*
 import glm_.quat.gtxQuaternion
-import glm_.quat.quat_func
+import glm_.quat.gtcQuaternion
 
 object glm :
 
@@ -31,8 +32,17 @@ object glm :
         func_geometric,
         func_trigonometric,
 
-        matrix_transform,
-        quat_func,
+        // matrix transform
+        gtcMatrixFrustum,
+        gtcMatrixOrtho,
+        gtcMatrixPerspective,
+        gtcMatrixProject,
+        gtcMatrixRotate,
+        gtcMatrixScale,
+        gtcMatrixTransform,
+        gtcMatrixTranslate,
+
+        gtcQuaternion,
 
         matrix_interpolation,
 
@@ -67,6 +77,7 @@ object glm :
         gtxInteger,
         gtxIntersect,
         gtxMatrixDecompose,
+        gtxMatrixFactorization,
         gtxQuaternion,
         gtxRotateVector,
         gtxTexture,

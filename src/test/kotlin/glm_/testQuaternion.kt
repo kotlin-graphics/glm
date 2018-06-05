@@ -279,13 +279,13 @@ class testQuaternion : StringSpec() {
 
                 // Test left-handed implementation
                 val testQuatLH = quatLookAtLH(normalize(center - eye), up)
-                val testMatLH = conjugate(quat_cast(lookAtLH(Mat4(), eye, center, up)))
+                val testMatLH = conjugate(quat_cast(lookAtLh(Mat4(), eye, center, up)))
                 (abs(length(testQuatLH) - 1f) > epsilonF) shouldBe false
                 (min(length(testQuatLH - testMatLH), length(testQuatLH + testMatLH)) > epsilonF) shouldBe false
 
                 // Test right-handed implementation
                 val testQuatRH = quatLookAtRH(normalize(center - eye), up)
-                val testMatRH = conjugate(quat_cast(lookAtRH(Mat4(), eye, center, up)))
+                val testMatRH = conjugate(quat_cast(lookAtRh(Mat4(), eye, center, up)))
                 (abs(length(testQuatRH) - 1f) > epsilonF) shouldBe false
                 (min(length(testQuatRH - testMatRH), length(testQuatRH + testMatRH)) > epsilonF) shouldBe false
             }

@@ -24,7 +24,7 @@ import glm_.vec4.Vec4bool
  * Created by GBarbieri on 14.12.2016.
  */
 
-interface quat_func {
+interface gtcQuaternion {
 
 
     /** Returns the length of the quaternion.   */

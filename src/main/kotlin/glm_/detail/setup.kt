@@ -7,16 +7,19 @@ package glm_.detail
 ///////////////////////////////////////////////////////////////////////////////////
 // Clip control
 
-val GLM_DEPTH_ZERO_TO_ONE = 0x00000001
-val GLM_DEPTH_NEGATIVE_ONE_TO_ONE = 0x00000002
+enum class GlmDepthClipSpace { ZERO_TO_ONE, NEGATIVE_ONE_TO_ONE }
 
-var GLM_DEPTH_CLIP_SPACE = GLM_DEPTH_NEGATIVE_ONE_TO_ONE
+var GLM_DEPTH_CLIP_SPACE = GlmDepthClipSpace.NEGATIVE_ONE_TO_ONE
 
 
 ///////////////////////////////////////////////////////////////////////////////////
 // Coordinate system
 
-val GLM_LEFT_HANDED = 0x00000001    // For DirectX, Metal, Vulkan
-val GLM_RIGHT_HANDED = 0x00000002    // For OpenGL, default in GLM
+enum class GlmCoordinateSystem {
+    /** For DirectX, Metal, Vulkan */
+    LEFT_HANDED,
+    /** For OpenGL, default in GLM */
+    RIGHT_HANDED
+}
 
-var GLM_COORDINATE_SYSTEM = GLM_RIGHT_HANDED
+var GLM_COORDINATE_SYSTEM = GlmCoordinateSystem.RIGHT_HANDED

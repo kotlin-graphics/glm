@@ -122,62 +122,50 @@ interface func_geometric {
     fun normalize(a: Double) = if (a < 0.0) -1.0 else 1.0
 
     fun normalize(a: Vec2, res: Vec2 = Vec2()): Vec2 {
-        val x = a.x * inverseSqrt(dot(a, a))
-        val y = a.y * inverseSqrt(dot(a, a))
-        res.x = x
-        res.y = y
+        val inv = inverseSqrt(dot(a, a))
+        res.x = a.x * inv
+        res.y = a.y * inv
         return res
     }
 
     fun normalize(a: Vec2d, res: Vec2d = Vec2d()): Vec2d {
-        val x = a.x * inverseSqrt(dot(a, a))
-        val y = a.y * inverseSqrt(dot(a, a))
-        res.x = x
-        res.y = y
+        val inv = inverseSqrt(dot(a, a))
+        res.x = a.x * inv
+        res.y = a.y * inv
         return res
     }
 
     fun normalize(a: Vec3, res: Vec3 = Vec3()): Vec3 {
-        val x = a.x * inverseSqrt(dot(a, a))
-        val y = a.y * inverseSqrt(dot(a, a))
-        val z = a.z * inverseSqrt(dot(a, a))
-        res.x = x
-        res.y = y
-        res.z = z
+        val inv = inverseSqrt(dot(a, a))
+        res.x = a.x * inv
+        res.y = a.y * inv
+        res.z = a.z * inv
         return res
     }
 
     fun normalize(a: Vec3d, res: Vec3d = Vec3d()): Vec3d {
-        val x = a.x * inverseSqrt(dot(a, a))
-        val y = a.y * inverseSqrt(dot(a, a))
-        val z = a.z * inverseSqrt(dot(a, a))
-        res.x = x
-        res.y = y
-        res.z = z
+        val inv = inverseSqrt(dot(a, a))
+        res.x = a.x * inv
+        res.y = a.y * inv
+        res.z = a.z * inv
         return res
     }
 
     fun normalize(a: Vec4, res: Vec4 = Vec4()): Vec4 {
-        val x = a.x * inverseSqrt(dot(a, a))
-        val y = a.y * inverseSqrt(dot(a, a))
-        val z = a.z * inverseSqrt(dot(a, a))
-        val w = a.w * inverseSqrt(dot(a, a))
-        res.x = x
-        res.y = y
-        res.z = z
-        res.w = w
+        val inv = inverseSqrt(dot(a, a))
+        res.x = a.x * inv
+        res.y = a.y * inv
+        res.z = a.z * inv
+        res.w = a.w * inv
         return res
     }
 
     fun normalize(a: Vec4d, res: Vec4d = Vec4d()): Vec4d {
-        val x = a.x * inverseSqrt(dot(a, a))
-        val y = a.y * inverseSqrt(dot(a, a))
-        val z = a.z * inverseSqrt(dot(a, a))
-        val w = a.w * inverseSqrt(dot(a, a))
-        res.x = x
-        res.y = y
-        res.z = z
-        res.w = w
+        val inv = inverseSqrt(dot(a, a))
+        res.x = a.x * inv
+        res.y = a.y * inv
+        res.z = a.z * inv
+        res.w = a.w * inv
         return res
     }
 

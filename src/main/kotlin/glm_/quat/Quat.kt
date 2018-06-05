@@ -102,7 +102,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     }
 
 
-    companion object : quat_operators(), quat_func {
+    companion object : quat_operators(), gtcQuaternion {
 
         @JvmField
         val size = 4 * Float.BYTES

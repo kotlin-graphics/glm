@@ -1,7 +1,7 @@
 package glm_.quat
 
 import glm_.detail.GLM_COORDINATE_SYSTEM
-import glm_.detail.GLM_LEFT_HANDED
+import glm_.detail.GlmCoordinateSystem
 import glm_.func.cos
 import glm_.func.sin
 import glm_.glm
@@ -39,7 +39,7 @@ interface gtxQuaternion {
 
     /** Create an identity quaternion.
      *  @see gtx_quaternion */
-    fun quat_identity(res: Quat) = res.put(1f, 0f, 0f, 0f)
+    fun quatIdentity(res: Quat) = res.put(1f, 0f, 0f, 0f)
 
     /** Compute a cross product between a quaternion and a vector.
      *  @see gtx_quaternion */
@@ -228,8 +228,8 @@ interface gtxQuaternion {
         val cosTheta = orig dot dest
 
         if (cosTheta >= 1 - epsilonF)
-        // orig and dest point in the same direction
-            return Quat()
+        // orig and dest point in the same direction : return identity quaternion.
+            return Quat(1f, 0f, 0f, 0f)
 
         if (cosTheta < -1 + epsilonF) {
             /*  special case when vectors in opposite directions :
@@ -260,9 +260,10 @@ interface gtxQuaternion {
     /** Build a look at quaternion based on the default handedness.
      *  @param direction Desired forward direction. Needs to be normalized.
      *  @param up Up vector, how the camera is oriented. Typically (0, 1, 0). */
-    fun quatLookAt(direction: Vec3, up: Vec3) =
-            if (GLM_COORDINATE_SYSTEM == GLM_LEFT_HANDED) quatLookAtLH(direction, up)
-            else quatLookAtRH(direction, up)
+    fun quatLookAt(direction: Vec3, up: Vec3) = when(GLM_COORDINATE_SYSTEM) {
+        GlmCoordinateSystem.LEFT_HANDED -> quatLookAtLH(direction, up)
+        else -> quatLookAtRH(direction, up)
+    }
 
     /** Build a right-handed look at quaternion.
      *  @param direction Desired forward direction onto which the -z-axis gets mapped. Needs to be normalized.
