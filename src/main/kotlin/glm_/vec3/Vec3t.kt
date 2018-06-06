@@ -282,6 +282,12 @@ abstract class Vec3t<T : Number> {
             x = value.x as T
             y = value.y as T
         }
+    var xz
+        @JvmName("xz") get() = createInstance(x, z)
+        @JvmName("xz") set(value) {
+            x = value.x as T
+            z = value.y as T
+        }
     var yx
         @JvmName("yx") get() = createInstance(y, x)
         @JvmName("yx") set(value) {
@@ -289,6 +295,25 @@ abstract class Vec3t<T : Number> {
             x = value.y as T
         }
     val yy @JvmName("yy") get() = createInstance(y, y)
+    var yz
+        @JvmName("yz") get() = createInstance(y, z)
+        @JvmName("yz") set(value) {
+            y = value.x as T
+            z = value.y as T
+        }
+    var zx
+        @JvmName("zx") get() = createInstance(z, x)
+        @JvmName("zx") set(value) {
+            z = value.x as T
+            x = value.y as T
+        }
+    var zy
+        @JvmName("zy") get() = createInstance(z, y)
+        @JvmName("zy") set(value) {
+            z = value.x as T
+            y = value.y as T
+        }
+    val zz @JvmName("zz") get() = createInstance(z, z)
 
 
     val xxx @JvmName("xxx") get() = createInstance(x, x, x)

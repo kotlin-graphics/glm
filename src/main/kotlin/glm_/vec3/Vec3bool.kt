@@ -78,5 +78,15 @@ data class Vec3bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
         return this
     }
 
+    infix fun and(b: Vec3bool): Vec3bool = and(b, Vec3bool())
+    fun and(b: Vec3bool, res: Vec3bool): Vec3bool {
+        return res.put(x && b.x, y && b.y, z && b.z)
+    }
+
+    infix fun or(b: Vec3bool): Vec3bool = or(b, Vec3bool())
+    fun or(b: Vec3bool, res: Vec3bool): Vec3bool {
+        return res.put(x || b.x, y || b.y, z || b.z)
+    }
+
     fun all() = x && y && z
 }
