@@ -567,36 +567,17 @@ interface gtcQuaternion {
         val biggestVal = sqrt(fourBiggestSquaredMinus1 + 1f) * 0.5f
         val mult = 0.25f / biggestVal
 
-        when (biggestIndex) {
-            0 -> {
-                res.w = biggestVal
-                res.x = (m12 - m21) * mult
-                res.y = (m20 - m02) * mult
-                res.z = (m01 - m10) * mult
-            }
-            1 -> {
-                res.w = (m12 - m21) * mult
-                res.x = biggestVal
-                res.y = (m01 + m10) * mult
-                res.z = (m20 + m02) * mult
-            }
-            2 -> {
-                res.w = (m20 - m02) * mult
-                res.x = (m01 + m10) * mult
-                res.y = biggestVal
-                res.z = (m12 + m21) * mult
-            }
-            3 -> {
-                res.w = (m01 - m10) * mult
-                res.x = (m20 + m02) * mult
-                res.y = (m12 + m21) * mult
-                res.z = biggestVal
-            }
-
+        return when (biggestIndex) {
+            0 -> res.put(biggestVal, (m12 - m21) * mult, (m20 - m02) * mult, (m01 - m10) * mult)
+            1 -> res.put((m12 - m21) * mult, biggestVal, (m01 + m10) * mult, (m20 + m02) * mult)
+            2 -> res.put((m20 - m02) * mult, (m01 + m10) * mult, biggestVal, (m12 + m21) * mult)
+            3 -> res.put((m01 - m10) * mult, (m20 + m02) * mult, (m12 + m21) * mult, biggestVal)
         // Silence a -Wswitch-default warning in GCC. Should never actually get here. Assert is just for sanity.
-            else -> assert(false)
+            else -> {
+                assert(false)
+                res.put(1f, 0f, 0f, 0f)
+            }
         }
-        return res
     }
 
     fun quat_cast(

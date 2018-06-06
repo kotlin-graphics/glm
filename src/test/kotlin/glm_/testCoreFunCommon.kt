@@ -416,7 +416,6 @@ class testCoreFunCommon : StringSpec() {
 
             // scalar
             run {
-
                 val edge = 2f
 
                 val a = glm.step(edge, 1f)

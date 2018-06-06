@@ -73,9 +73,11 @@ object glm :
 
         gtcMatrixInverse,
 
+        gtxEulerAngles,
         gtxFastTrigonometry,
         gtxInteger,
         gtxIntersect,
+        gtxMatrixCrossProduct,
         gtxMatrixDecompose,
         gtxMatrixFactorization,
         gtxQuaternion,

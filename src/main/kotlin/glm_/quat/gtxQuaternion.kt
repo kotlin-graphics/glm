@@ -39,7 +39,7 @@ interface gtxQuaternion {
 
     /** Create an identity quaternion.
      *  @see gtx_quaternion */
-    fun quatIdentity(res: Quat) = res.put(1f, 0f, 0f, 0f)
+    fun quatIdentity(res: Quat = Quat()) = res.put(1f, 0f, 0f, 0f)
 
     /** Compute a cross product between a quaternion and a vector.
      *  @see gtx_quaternion */
@@ -228,8 +228,8 @@ interface gtxQuaternion {
         val cosTheta = orig dot dest
 
         if (cosTheta >= 1 - epsilonF)
-        // orig and dest point in the same direction : return identity quaternion.
-            return Quat(1f, 0f, 0f, 0f)
+        // orig and dest point in the same direction
+            return quatIdentity()
 
         if (cosTheta < -1 + epsilonF) {
             /*  special case when vectors in opposite directions :

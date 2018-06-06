@@ -4,6 +4,7 @@ import glm_.glm.abs
 import glm_.glm.epsilonF
 import glm_.glm.greaterThan
 import glm_.glm.lessThan
+import glm_.mat4x4.Mat4
 import glm_.quat.Quat
 import glm_.quat.QuatD
 import glm_.vec1.Vec1
@@ -119,6 +120,14 @@ interface epsilon {
     fun epsilonEqual(a: Vec4s, b: Vec4s, epsilon: Vec4s, res: Vec4bool = Vec4bool()) = lessThan(abs(a - b), epsilon)
 
 
+    fun epsilonEqual(a: Mat4, b: Mat4, epsilon: Float): Boolean {
+        for(i in 0..15)
+            if(!epsilonEqual(a.array[i], b.array[i], epsilon))
+                return false
+        return true
+    }
+
+
     fun epsilonNotEqual(a: Vec1, b: Vec1, epsilon: Float, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), Vec1(epsilon), res)
     fun epsilonNotEqual(a: Vec1, b: Vec1, epsilon: Vec1, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), epsilon)
 
@@ -201,7 +210,6 @@ interface epsilon {
     fun epsilonNotEqual(a: Vec4s, b: Vec4s, epsilon: Short, res: Vec4bool = Vec4bool()) = greaterThan(abs(a - b), Vec4s(epsilon), res)
     fun epsilonNotEqual(a: Vec4s, b: Vec4s, epsilon: Int, res: Vec4bool = Vec4bool()) = greaterThan(abs(a - b), Vec4s(epsilon), res)
     fun epsilonNotEqual(a: Vec4s, b: Vec4s, epsilon: Vec4s, res: Vec4bool = Vec4bool()) = greaterThan(abs(a - b), epsilon)
-
 
     fun epsilonEqual(a: Quat, b: Quat, epsilon: Float, res: Vec4bool = Vec4bool()): Vec4bool {
         res.x = abs(a.x - b.x) < epsilon
