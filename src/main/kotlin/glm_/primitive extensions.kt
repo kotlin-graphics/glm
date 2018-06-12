@@ -129,6 +129,7 @@ val Float.toString get() = java.lang.Float.toString(this)
 val Float.toHexString get() = java.lang.Float.toHexString(this)
 val Float.value get() = java.lang.Float.valueOf(this)
 val String.floatValue get() = java.lang.Float.valueOf(this)
+val String.parseFloat get() = java.lang.Float.parseFloat(this)
 
 
 infix fun Double.compare(other: Double) = java.lang.Double.compare(this, other)
@@ -145,6 +146,7 @@ val Double.toString get() = java.lang.Double.toString(this)
 val Double.toHexString get() = java.lang.Double.toHexString(this)
 val Double.value get() = java.lang.Double.valueOf(this)
 val String.doubleValue get() = java.lang.Double.valueOf(this)
+val String.parseDouble get() = java.lang.Double.parseDouble(this)
 
 
 // TODO check https://youtrack.jetbrains.com/issue/KT-8247

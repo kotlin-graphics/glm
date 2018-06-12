@@ -304,7 +304,7 @@ interface func_vector4_common {
     }
 
 
-
+    // TODO openBounded closeBounded
 
 
     fun min(a: Vec4, b: Float) = min(a, b, Vec4())

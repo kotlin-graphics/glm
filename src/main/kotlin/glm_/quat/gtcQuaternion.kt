@@ -521,7 +521,7 @@ interface gtcQuaternion {
     fun mat4d_cast(res: Mat4, q: QuatD): Mat4 = TODO()
 
 
-    /** Converts a 3 * 3 matrix to a quaternion.    */
+    /** Converts a pure rotation 3 * 3 matrix to a quaternion.    */
     fun quat_cast(m: Mat3, res: Quat) = quat_cast(m[0, 0], m[0, 1], m[0, 2], m[1, 0], m[1, 1], m[1, 2], m[2, 0], m[2, 1], m[2, 2], res)
 
     fun quatD_cast(m: Mat3d, res: QuatD) = quatD_cast(m[0, 0], m[0, 1], m[0, 2], m[1, 0], m[1, 1], m[1, 2], m[2, 0], m[2, 1], m[2, 2], res)
@@ -529,7 +529,7 @@ interface gtcQuaternion {
     fun quat_cast(m: Mat3) = quat_cast(m, Quat())
     fun quatD_cast(m: Mat3d) = quatD_cast(m, QuatD())
 
-    /** Converts a 4 * 4 matrix to a quaternion.    */
+    /** Converts a pure rotation 4 * 4 matrix to a quaternion.    */
     fun quat_cast(m: Mat4, res: Quat) = quat_cast(m[0, 0], m[0, 1], m[0, 2], m[1, 0], m[1, 1], m[1, 2], m[2, 0], m[2, 1], m[2, 2], res)
 
     fun quatD_cast(m: Mat4d, res: QuatD) = quatD_cast(m[0, 0], m[0, 1], m[0, 2], m[1, 0], m[1, 1], m[1, 2], m[2, 0], m[2, 1], m[2, 2], res)
