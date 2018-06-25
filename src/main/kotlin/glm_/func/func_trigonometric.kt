@@ -149,12 +149,30 @@ interface func_trigonometric {
     }
 }
 
-val Float.deg get() = Math.toDegrees(this.d).f
-val Double.deg get() = Math.toDegrees(this)
-val Float.rad get() = Math.toRadians(this.d).f
-val Double.rad get() = Math.toRadians(this)
+val Int.deg: Float
+    get() = Math.toDegrees(d).f
+val Float.deg: Float
+    get() = Math.toDegrees(d).f
+val Double.deg: Double
+    get() = Math.toDegrees(this)
 
-val Float.cos get() = _cos(this)
-val Double.cos get() = _cos(this)
-val Float.sin get() = _sin(this)
-val Double.sin get() = _sin(this)
+val Int.rad: Float
+    get() = Math.toRadians(d).f
+val Float.rad: Float
+    get() = Math.toRadians(d).f
+val Double.rad: Double
+    get() = Math.toRadians(this)
+
+val Int.cos: Float
+    get() = _cos(f)
+val Float.cos: Float
+    get() = _cos(this)
+val Double.cos: Double
+    get() = _cos(this)
+
+val Int.sin: Double
+    get() = _sin(d)
+val Float.sin: Float
+    get() = _sin(this)
+val Double.sin: Double
+    get() = _sin(this)

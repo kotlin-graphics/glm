@@ -73,6 +73,7 @@ object glm :
 
         gtcMatrixInverse,
 
+        gtxClosestPoint,
         gtxEasing,
         gtxEulerAngles,
         gtxFastTrigonometry,
