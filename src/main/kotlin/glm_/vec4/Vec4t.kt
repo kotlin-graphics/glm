@@ -245,14 +245,6 @@ abstract class Vec4t<T : Number> {
 
     infix fun isEqual(b: Vec4t<out Number>) = glm.isEqual(this, b)
 
-
-    companion object {
-        const val length = 4
-    }
-
-
-    override fun toString() = "($x, $y, $z, $w)"
-
     // components alias
 
     var r
@@ -688,4 +680,10 @@ abstract class Vec4t<T : Number> {
     val wwwy @JvmName("wwwy") get() = createInstance(w, w, w, y)
     val wwwz @JvmName("wwwz") get() = createInstance(w, w, w, z)
     val wwww @JvmName("wwww") get() = createInstance(w, w, w, w)
+
+    companion object {
+        const val length = 4
+    }
+
+    override fun toString() : String = "Vect4 [$x, $y, $z, $w]"
 }

@@ -490,4 +490,5 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>() {
 
     override fun equals(other: Any?) = other is Vec2 && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
+    override fun toString() : String = "Vect2 [$x, $y]"
 }

@@ -228,14 +228,6 @@ abstract class Vec2t<T : Number> {
 
     infix fun isEqual(b: Vec2t<out Number>) = glm.isEqual(this, b)
 
-
-    companion object {
-        const val length = 2
-    }
-
-
-    override fun toString() = "($x, $y)"
-
     // component alias
 
     var r
@@ -293,4 +285,10 @@ abstract class Vec2t<T : Number> {
         @JvmName("ts") get() = createInstance(t, s)
         @JvmName("ts") set(value) = put(value.t, value.s)
     val tt @JvmName("tt") get() = createInstance(t, t)
+
+    companion object {
+        const val length = 2
+    }
+
+    override fun toString(): String = "Vect2 [$x, $y]"
 }

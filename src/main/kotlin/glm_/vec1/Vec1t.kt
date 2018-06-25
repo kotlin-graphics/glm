@@ -205,11 +205,6 @@ abstract class Vec1t<T : Number>(_x: T) {
 //    infix fun isEqual(b: Vec2t<out Number>) = glm.isEqual(this, b)
 
 
-    companion object {
-        const val length = 1
-    }
-
-
     // component alias
 
     var r
@@ -224,4 +219,10 @@ abstract class Vec1t<T : Number>(_x: T) {
         @JvmName("s") set(value) {
             x = value
         }
+
+    companion object {
+        const val length = 1
+    }
+
+    override fun toString() : String = "Vect1 [$x]"
 }

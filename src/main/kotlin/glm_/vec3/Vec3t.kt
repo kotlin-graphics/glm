@@ -229,14 +229,6 @@ abstract class Vec3t<T : Number> {
 
     infix fun isEqual(b: Vec3t<out Number>) = glm.isEqual(this, b)
 
-
-    companion object {
-        const val length = 3
-    }
-
-
-    override fun toString() = "($x, $y, $z)"
-
     // components alias
     var r
         @JvmName("r") get() = x
@@ -357,4 +349,11 @@ abstract class Vec3t<T : Number> {
     val zzx @JvmName("zzx") get() = createInstance(z, z, x)
     val zzy @JvmName("zzy") get() = createInstance(z, z, y)
     val zzz @JvmName("zzz") get() = createInstance(z, z, z)
+
+
+    companion object {
+        const val length = 3
+    }
+
+    override fun toString() : String = "Vect3 [$x, $y, $z]"
 }
