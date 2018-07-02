@@ -737,6 +737,10 @@ interface gtxEulerAngles {
      *  @see gtx_euler_angles */
     fun yawPitchRoll(yaw: Float, pitch: Float, roll: Float): Mat4 = yawPitchRoll(Mat4(), yaw, pitch, roll)
 
+    /** Creates a 3D 4 * 4 homogeneous rotation matrix from euler angles (Y * X * Z).
+     *  @see gtx_euler_angles */
+    fun yawPitchRoll(block: (Int) -> Float): Mat4 = yawPitchRoll(Mat4(), block(0), block(1), block(2))
+
     /** Creates a 2D 2 * 2 rotation matrix from an euler angle.
      *  @see gtx_euler_angles */
     fun orientate2(res: Mat2, angle: Float): Mat2 {

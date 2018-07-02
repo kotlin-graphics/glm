@@ -1,5 +1,7 @@
 package glm_.vec3
 
+import glm_.glm
+
 /**
  * Created by elect on 08/10/16.
  */
@@ -77,6 +79,9 @@ data class Vec3bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
         res.z = !z
         return this
     }
+
+    val all: Boolean
+        get() = glm.all(this)
 
     infix fun and(b: Vec3bool): Vec3bool = and(b, Vec3bool())
     fun and(b: Vec3bool, res: Vec3bool): Vec3bool {

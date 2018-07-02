@@ -1,5 +1,6 @@
 package glm_.vec4
 
+import glm_.glm
 import glm_.vec4.operators.vec4bool_operators
 
 /**
@@ -88,9 +89,10 @@ data class Vec4bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
         return this
     }
 
-    companion object : vec4bool_operators() {
+    companion object : vec4bool_operators()
 
-    }
+    val all: Boolean
+        get() = glm.all(this)
 
     // TODO others
     infix fun and(b: Vec4bool) = and(Vec4bool(), this, b.x, b.y, b.z, b.w)

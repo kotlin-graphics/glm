@@ -1,7 +1,6 @@
 package glm_.gtx
 
 import glm_.glm
-import glm_.msb
 import glm_.uint
 import unsigned.java_1_7.compareUnsigned
 import unsigned.java_1_7.divideUnsigned
@@ -34,9 +33,9 @@ interface gtxInteger {
     }
 
     /** Returns the floor log2 of x.
-     *  @param x: Unsigned Int*/
-    fun floorLog2(x: uint): uint {
-        var x = x
+     *  @param x_: Unsigned Int*/
+    fun floorLog2(x_: uint): uint {
+        var x = x_
         x = x or (x ushr 1)
         x = x or (x ushr 2)
         x = x or (x ushr 4)

@@ -1,5 +1,7 @@
 package glm_.vec1
 
+import glm_.glm
+
 
 /**
  * Created bY GBarbieri on 05.10.2016.
@@ -58,6 +60,9 @@ data class Vec1bool(var x: Boolean = false) {
     }
 
     // -- relational --
+
+    val all: Boolean
+        get() = glm.all(this)
 
     // TODO
 //    infix fun equal(b: Vec2bool) = glm.equal(this, b)

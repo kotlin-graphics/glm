@@ -1,6 +1,9 @@
 package glm_.quat
 
-import glm_.*
+import glm_.BYTES
+import glm_.f
+import glm_.float
+import glm_.glm
 import glm_.glm.cos
 import glm_.glm.sin
 import glm_.mat3x3.Mat3
@@ -21,24 +24,27 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     // -- Implicit basic constructors --
 
     constructor() : this(1f, 0f, 0f, 0f)
+    constructor(f: Float) : this(f, f, f, f)
     constructor(q: Quat) : this(q.w, q.x, q.y, q.z)
     constructor(q: QuatT<out Number>) : this(q.w, q.x, q.y, q.z)
     constructor(s: Float, v: Vec3) : this(s, v.x, v.y, v.z)
     constructor(u: Vec3, v: Vec3) : this() {
         val normUnormV = sqrt((u dot u) * (v dot v))
         var realPart = normUnormV + (u dot v)
-        val w: Vec3
-
-        w = if (realPart < 1e-6f * normUnormV) {
-            /*  If u and v are exactly opposite, rotate 180 degrees around an arbitrary orthogonal axis.
-                Axis normalisation can happen later, when we normalise the quaternion. */
-            realPart = 0f
-            if (abs(u.x) > abs(u.z)) Vec3(-u.y, u.x, 0f) else Vec3(0f, -u.z, u.y)
-        } else // Otherwise, build quaternion the standard way.
-            u cross v
-
-        put(Quat(realPart, w.x, w.y, w.z).normalizeAssign())
+        val w = when {
+            realPart < 1e-6f * normUnormV -> {
+                /*  If u and v are exactly opposite, rotate 180 degrees around an arbitrary orthogonal axis.
+                    Axis normalisation can happen later, when we normalise the quaternion. */
+                realPart = 0f
+                if (abs(u.x) > abs(u.z)) Vec3(-u.y, u.x, 0f) else Vec3(0f, -u.z, u.y)
+            }
+        // Otherwise, build quaternion the standard way.
+            else -> u cross v
+        }
+        put(realPart, w.x, w.y, w.z).normalizeAssign()
     }
+
+    constructor(block: (Int) -> Float) : this(block(0), block(1), block(2), block(3))
 
     constructor(eulerAngle: Vec3) : this() {
         val eX = eulerAngle.x * .5f
@@ -103,7 +109,6 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
 
     companion object : quat_operators(), gtcQuaternion {
-
         @JvmField
         val size = 4 * Float.BYTES
     }
@@ -204,7 +209,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     fun vectorize(res: Vec4 = Vec4()) = res.put(x, y, z, w)
 
 
-    override fun toString() = "($w | $x, $y, $z)"
+    override fun toString() = "($w, {$x, $y, $z})"
     override fun equals(other: Any?) = other is Quat && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
 
     override fun hashCode() = 31 * (31 * (31 * w.hashCode() + x.hashCode()) + y.hashCode()) + z.hashCode()

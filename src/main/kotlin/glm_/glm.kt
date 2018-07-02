@@ -67,8 +67,6 @@ object glm :
 
         random,
 
-        optimumPow,
-
         gradientPaint,
 
         gtcMatrixInverse,
@@ -82,8 +80,10 @@ object glm :
         gtxMatrixCrossProduct,
         gtxMatrixDecompose,
         gtxMatrixFactorization,
+        gtxOptimumPow,
         gtxQuaternion,
         gtxRotateVector,
+        gxtSpline,
         gtxTexture,
         gtxVectorAngle,
 
@@ -101,6 +101,8 @@ object glm :
     val PI = kotlin.math.PI
     @JvmField
     val PIf = kotlin.math.PI.f
+    val π = Math.PI
+    val πf = PIf
 
     @JvmField
     val PI2 = kotlin.math.PI * 2
@@ -117,8 +119,6 @@ object glm :
 
     @JvmField
     val Ef = 2.71828182845904523536f
-
-    val π = Math.PI
 }
 
 object Detail :

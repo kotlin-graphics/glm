@@ -7,6 +7,8 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
+import kotlin.math.abs
+import kotlin.math.sqrt
 
 
 /**
@@ -17,16 +19,26 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
     // -- Implicit basic constructors --
 
     constructor() : this(1.0, 0.0, 0.0, 0.0)
+    constructor(d: Double) : this(d, d, d, d)
     constructor(q: Quat) : this(q.w, q.x, q.y, q.z)
     constructor(s: Double, v: Vec3d) : this(s, v.x, v.y, v.z)
-    constructor(a: Vec3d, b: Vec3d) : this() {
-        val cX = a.y * b.z - b.y * a.z
-        val cY = a.z * b.x - b.z * a.x
-        val cZ = a.x * b.y - b.x * a.y
-        val dot = glm.dot(a, b)
-        put(1.0 + dot, cX, cY, cZ)
-        normalize(this, this)
+    constructor(u: Vec3d, v: Vec3d) : this() {
+        val normUnormV = sqrt((u dot u) * (v dot v))
+        var realPart = normUnormV + (u dot v)
+        val w = when {
+            realPart < 1e-6f * normUnormV -> {
+                /*  If u and v are exactly opposite, rotate 180 degrees around an arbitrary orthogonal axis.
+                    Axis normalisation can happen later, when we normalise the quaternion. */
+                realPart = 0.0
+                if (abs(u.x) > abs(u.z)) Vec3d(-u.y, u.x, 0.0) else Vec3d(0.0, -u.z, u.y)
+            }
+        // Otherwise, build quaternion the standard way.
+            else -> u cross v
+        }
+        put(realPart, w.x, w.y, w.z).normalizeAssign()
     }
+
+    constructor(block: (Int) -> Double) : this(block(0), block(1), block(2), block(3))
 
     constructor(eulerAngle: Vec3) : this() {
         val eX = eulerAngle.x * .5
@@ -175,7 +187,7 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
     fun slerpAssign(b: QuatD, interp: Double) = glm.slerp(this, b, interp, this)
 
 
-    override fun toString() = "($x, $y, $z), $w"
+    override fun toString() = "($w, {$x, $y, $z})"
 
     override fun equals(other: Any?) = other is QuatD && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
     override fun hashCode() = 31 * (31 * (31 * w.hashCode() + x.hashCode()) + y.hashCode()) + z.hashCode()

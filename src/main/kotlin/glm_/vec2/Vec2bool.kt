@@ -73,6 +73,9 @@ data class Vec2bool(var x: Boolean = false, var y: Boolean = false) {
 
     // -- relational --
 
+    val all: Boolean
+        get() = glm.all(this)
+
     infix fun equal(b: Vec2bool) = glm.equal(this, b)
     infix fun equalAssign(b: Vec2bool) = glm.equal(this, this, b)
     fun equal(b: Vec2bool, res: Vec2bool) = glm.equal(res, this, b)
