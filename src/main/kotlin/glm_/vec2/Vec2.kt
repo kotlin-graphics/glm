@@ -446,12 +446,25 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>() {
         y = glm.min(y, b.f)
     }
 
-    infix fun lessThan(f: Float) = x < f && y < f
-    infix fun lessThanEqual(f: Float) = x <= f && y <= f
-    infix fun equal(f: Float) = x == f && y == f
-    infix fun notEqual(f: Float) = x != f && y != f
-    infix fun greaterThan(f: Float) = x > f && y > f
-    infix fun greaterThanEqual(f: Float) = x >= f && y >= f
+
+    infix fun allLessThan(f: Float) = x < f && y < f
+    infix fun anyLessThan(f: Float) = x < f || y < f
+
+    infix fun allLessThanEqual(f: Float) = x <= f && y <= f
+    infix fun anyLessThanEqual(f: Float) = x <= f || y <= f
+
+    infix fun allEqual(f: Float) = x == f && y == f
+    infix fun anyEqual(f: Float) = x == f || y == f
+
+    infix fun allNotEqual(f: Float) = x != f && y != f
+    infix fun anyNotEqual(f: Float) = x != f || y != f
+
+    infix fun allGreaterThan(f: Float) = x > f && y > f
+    infix fun anyGreaterThan(f: Float) = x > f || y > f
+
+    infix fun allGreaterThanEqual(f: Float) = x >= f && y >= f
+    infix fun anyGreaterThanEqual(f: Float) = x >= f || y >= f
+
 
     infix fun dot(b: Vec2) = glm.dot(this, b)
 

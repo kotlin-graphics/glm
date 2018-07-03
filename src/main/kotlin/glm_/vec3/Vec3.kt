@@ -400,6 +400,25 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
     fun negateAssign() = negate(this)
 
 
+    infix fun allLessThan(f: Float) = x < f && y < f && z < f
+    infix fun anyLessThan(f: Float) = x < f || y < f || z < f
+
+    infix fun allLessThanEqual(f: Float) = x <= f && y <= f && z <= f
+    infix fun anyLessThanEqual(f: Float) = x <= f || y <= f || z <= f
+
+    infix fun allEqual(f: Float) = x == f && y == f && z == f
+    infix fun anyEqual(f: Float) = x == f || y == f || z == f
+
+    infix fun allNotEqual(f: Float) = x != f && y != f && z != f
+    infix fun anyNotEqual(f: Float) = x != f || y != f || z != f
+
+    infix fun allGreaterThan(f: Float) = x > f && y > f && z > f
+    infix fun anyGreaterThan(f: Float) = x > f || y > f || z > f
+
+    infix fun allGreaterThanEqual(f: Float) = x >= f && y >= f && z >= f
+    infix fun anyGreaterThanEqual(f: Float) = x >= f || y >= f || z >= f
+
+
     override fun createInstance(x: Float, y: Float) = Vec2(x, y)
     override fun createInstance(x: Float, y: Float, z: Float) = Vec3(x, y, z)
 

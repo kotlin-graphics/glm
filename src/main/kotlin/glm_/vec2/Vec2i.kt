@@ -508,12 +508,24 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
     fun shrAssign(bX: Number, bY: Number) = shr(this, this, bX.i, bY.i)
 
 
-    infix fun lessThan(i: Int) = x < i && y < i
-    infix fun lessThanEqual(i: Int) = x <= i && y <= i
-    infix fun equal(i: Int) = x == i && y == i
-    infix fun notEqual(i: Int) = x != i && y != i
-    infix fun greaterThan(i: Int) = x > i && y > i
-    infix fun greaterThanEqual(i: Int) = x >= i && y >= i
+    infix fun allLessThan(i: Int) = x < i && y < i
+    infix fun anyLessThan(i: Int) = x < i || y < i
+
+    infix fun allLessThanEqual(i: Int) = x <= i && y <= i
+    infix fun anyLessThanEqual(i: Int) = x <= i || y <= i
+
+    infix fun allEqual(i: Int) = x == i && y == i
+    infix fun anyEqual(i: Int) = x == i || y == i
+
+    infix fun allNotEqual(i: Int) = x != i && y != i
+    infix fun anyNotEqual(i: Int) = x != i || y != i
+
+    infix fun allGreaterThan(i: Int) = x > i && y > i
+    infix fun anyGreaterThan(i: Int) = x > i || y > i
+
+    infix fun allGreaterThanEqual(i: Int) = x >= i && y >= i
+    infix fun anyGreaterThanEqual(i: Int) = x >= i || y >= i
+
 
     infix fun clamp(int: Int) {
         if (x < int) x = int

@@ -416,6 +416,25 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>() {
     fun negateAssign() = negate(this)
 
 
+    infix fun allLessThan(f: Float) = x < f && y < f && z < f && w < f
+    infix fun anyLessThan(f: Float) = x < f || y < f || z < f || w < f
+
+    infix fun allLessThanEqual(f: Float) = x <= f && y <= f && z <= f && w <= f
+    infix fun anyLessThanEqual(f: Float) = x <= f || y <= f || z <= f || w <= f
+
+    infix fun allEqual(f: Float) = x == f && y == f && z == f && w == f
+    infix fun anyEqual(f: Float) = x == f || y == f || z == f || w == f
+
+    infix fun allNotEqual(f: Float) = x != f && y != f && z != f && w != f
+    infix fun anyNotEqual(f: Float) = x != f || y != f || z != f || w != f
+
+    infix fun allGreaterThan(f: Float) = x > f && y > f && z > f && w > f
+    infix fun anyGreaterThan(f: Float) = x > f || y > f || z > f || w > f
+
+    infix fun allGreaterThanEqual(f: Float) = x >= f && y >= f && z >= f && w >= f
+    infix fun anyGreaterThanEqual(f: Float) = x >= f || y >= f || z >= f || w >= f
+
+
     override fun createInstance(x: Float, y: Float) = Vec2(x, y)
     override fun createInstance(x: Float, y: Float, z: Float) = Vec3(x, y, z)
     override fun createInstance(x: Float, y: Float, z: Float, w: Float) = Vec4(x, y, z, w)
