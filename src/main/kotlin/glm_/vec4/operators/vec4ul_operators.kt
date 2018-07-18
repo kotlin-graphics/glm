@@ -7,11 +7,11 @@ import glm_.vec4.Vec4ul.Companion.minus
 import glm_.vec4.Vec4ul.Companion.plus
 import glm_.vec4.Vec4ul.Companion.rem
 import glm_.vec4.Vec4ul.Companion.times
-import udiv
+import unsigned.udiv
 import unsigned.Ulong
 import unsigned.udiv
 import unsigned.urem
-import urem
+import unsigned.urem
 
 /**
  * Created by elect on 09/11/16.

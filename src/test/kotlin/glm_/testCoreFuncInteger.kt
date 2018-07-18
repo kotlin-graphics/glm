@@ -120,8 +120,8 @@ class testCoreFuncInteger : StringSpec() {
 
             "uint bitfield reverse uint" {
 
-                fun bitfieldReverseUint32(x: uint): uint {
-                    var x = ((x and 0x55555555) shl 1) or ((x and 0xAAAAAAAA.i) ushr 1)
+                fun bitfieldReverseUint32(x_: uint): uint {
+                    var x = ((x_ and 0x55555555) shl 1) or ((x_ and 0xAAAAAAAA.i) ushr 1)
                     x = ((x and 0x33333333) shl 2) or ((x and 0xCCCCCCCC.i) ushr 2)
                     x = ((x and 0x0F0F0F0F) shl 4) or ((x and 0xF0F0F0F0.i) ushr 4)
                     x = ((x and 0x00FF00FF) shl 8) or ((x and 0xFF00FF00.i) ushr 8)
@@ -209,8 +209,8 @@ class testCoreFuncInteger : StringSpec() {
 
             "ulong bitfield reverse ulong" {
 
-                fun bitfieldReverseUlong64(x: ulong): ulong {
-                    var x = ((x and 0x5555555555555555) shl 1) or ((x and "AAAAAAAAAAAAAAAA".parseUnsignedLong(16)) ushr 1)
+                fun bitfieldReverseUlong64(x_: ulong): ulong {
+                    var x = ((x_ and 0x5555555555555555) shl 1) or ((x_ and "AAAAAAAAAAAAAAAA".parseUnsignedLong(16)) ushr 1)
                     x = ((x and 0x3333333333333333) shl 2) or ((x and "CCCCCCCCCCCCCCCC".parseUnsignedLong(16)) ushr 2)
                     x = ((x and 0x0F0F0F0F0F0F0F0F) shl 4) or ((x and "F0F0F0F0F0F0F0F0".parseUnsignedLong(16)) ushr 4)
                     x = ((x and 0x00FF00FF00FF00FF) shl 8) or ((x and "FF00FF00FF00FF00".parseUnsignedLong(16)) ushr 8)

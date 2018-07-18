@@ -22,8 +22,8 @@ interface gtxFastTrigonometry {
     fun fastSin(angle: Float) = fastCos(HPIf - angle)
 
     /** Faster than the common cos function but less accurate.  */
-    fun fastCos(angle: Float): Float {
-        val angle = wrapAngle(angle)
+    fun fastCos(angle_: Float): Float {
+        val angle = wrapAngle(angle_)
 
         return when {
             angle < HPIf -> detail.cos52s(angle)

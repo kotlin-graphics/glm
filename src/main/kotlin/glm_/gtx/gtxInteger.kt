@@ -97,10 +97,10 @@ interface gtxInteger {
 
 // Henry Gordon Dietz: http://aggregate.org/MAGIC/
 interface detail_gtxInteger {
-    fun ones32(x: uint): uint {
+    fun ones32(x_: uint): uint {
         /* 32-bit recursive reduction using SWAR...
         but first step is mapping 2-bit values into sum of 2 1-bit values in sneaky way        */
-        var x = x
+        var x = x_
         x -= (x ushr 1) and 0x55555555
         x = ((x ushr 2) and 0x33333333) + (x and 0x33333333)
         x = ((x ushr 4) + x) and 0x0f0f0f0f
