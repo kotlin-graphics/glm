@@ -19,6 +19,7 @@ interface gtcMatrixOrtho {
         res put 1f
         res[0, 0] = 2f / (right - left)
         res[1, 1] = 2f / (top - bottom)
+        res[2, 2] = - 1f
         res[3, 0] = -(right + left) / (right - left)
         res[3, 1] = -(top + bottom) / (top - bottom)
         return res
