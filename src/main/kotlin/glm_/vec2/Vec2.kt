@@ -466,6 +466,25 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>() {
     infix fun anyGreaterThanEqual(f: Float) = x >= f || y >= f
 
 
+    infix fun <T: Number>allLessThan(v: Vec2t<T>) = x < v.x.f && y < v.y.f
+    infix fun <T: Number>anyLessThan(v: Vec2t<T>) = x < v.x.f || y < v.y.f
+
+    infix fun <T: Number>allLessThanEqual(v: Vec2t<T>) = x <= v.x.f && y <= v.y.f
+    infix fun <T: Number>anyLessThanEqual(v: Vec2t<T>) = x <= v.x.f || y <= v.y.f
+
+    infix fun <T: Number>allEqual(v: Vec2t<T>) = x == v.x.f && y == v.y.f
+    infix fun <T: Number>anyEqual(v: Vec2t<T>) = x == v.x.f || y == v.y.f
+
+    infix fun <T: Number>allNotEqual(v: Vec2t<T>) = x != v.x.f && y != v.y.f
+    infix fun <T: Number>anyNotEqual(v: Vec2t<T>) = x != v.x.f || y != v.y.f
+
+    infix fun <T: Number>allGreaterThan(v: Vec2t<T>) = x > v.x.f && y > v.y.f
+    infix fun <T: Number>anyGreaterThan(v: Vec2t<T>) = x > v.x.f || y > v.y.f
+
+    infix fun <T: Number>allGreaterThanEqual(v: Vec2t<T>) = x >= v.x.f && y >= v.y.f
+    infix fun <T: Number>anyGreaterThanEqual(v: Vec2t<T>) = x >= v.x.f || y >= v.y.f
+
+
     infix fun dot(b: Vec2) = glm.dot(this, b)
 
     infix fun rotate(angle: Float) = glm.rotate(Vec2(), this, angle)
