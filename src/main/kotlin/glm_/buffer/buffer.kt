@@ -42,54 +42,14 @@ val FloatBuffer.adr get() = MemoryUtil.memAddress(this)
 val DoubleBuffer.adr get() = MemoryUtil.memAddress(this)
 val CharBuffer.adr get() = MemoryUtil.memAddress(this)
 
-var ByteBuffer.pos
-    get() = position()
-    set(value) {
-        position(value)
-    }
-var ShortBuffer.pos
-    get() = position()
-    set(value) {
-        position(value)
-    }
-var IntBuffer.pos
-    get() = position()
-    set(value) {
-        position(value)
-    }
-var LongBuffer.pos
-    get() = position()
-    set(value) {
-        position(value)
-    }
-var FloatBuffer.pos
-    get() = position()
-    set(value) {
-        position(value)
-    }
-var DoubleBuffer.pos
-    get() = position()
-    set(value) {
-        position(value)
-    }
-var CharBuffer.pos
+inline var Buffer.pos: Int
     get() = position()
     set(value) {
         position(value)
     }
 
-val ByteBuffer.cap get() = capacity()
-val ShortBuffer.cap get() = capacity()
-val IntBuffer.cap get() = capacity()
-val LongBuffer.cap get() = capacity()
-val FloatBuffer.cap get() = capacity()
-val DoubleBuffer.cap get() = capacity()
-val CharBuffer.cap get() = capacity()
+inline val Buffer.cap: Int
+    get() = capacity()
 
-val ByteBuffer.rem get() = remaining()
-val ShortBuffer.rem get() = remaining()
-val IntBuffer.rem get() = remaining()
-val LongBuffer.rem get() = remaining()
-val FloatBuffer.rem get() = remaining()
-val DoubleBuffer.rem get() = remaining()
-val CharBuffer.rem get() = remaining()
+inline val Buffer.rem: Int
+    get() = remaining()
