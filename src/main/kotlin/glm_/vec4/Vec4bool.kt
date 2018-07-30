@@ -1,7 +1,10 @@
 package glm_.vec4
 
+import glm_.bool
+import glm_.buffer.pos
 import glm_.glm
 import glm_.vec4.operators.vec4bool_operators
+import java.nio.IntBuffer
 
 /**
  * Created by elect on 09/10/16.
@@ -16,6 +19,10 @@ data class Vec4bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
     constructor(ba: BooleanArray) : this(ba[0], ba[1], ba[2], ba[3])
 
     constructor(ba: Array<Boolean>) : this(ba[0], ba[1], ba[2], ba[3])
+
+    // TODO others
+    constructor(ints: IntBuffer, position: Int = ints.pos) : this(ints[position], ints[position + 1], ints[position + 2], ints[position + 3])
+    constructor(x: Number, y: Number, z: Number, w: Number) : this(x.bool, y.bool, z.bool, w.bool)
 
     // -- Component accesses --
 
