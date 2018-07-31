@@ -34,7 +34,7 @@ dependencies {
 
     testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.0.6'
 
-    ext.lwjglVersion = "3.1.7-SNAPSHOT"
+    ext.lwjglVersion = "3.2.0"
     switch (OperatingSystem.current()) {
         case OperatingSystem.WINDOWS:
             ext.lwjglNatives = "natives-windows"
