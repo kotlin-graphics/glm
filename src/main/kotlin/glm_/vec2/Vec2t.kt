@@ -203,7 +203,7 @@ abstract class Vec2t<T : Number> {
     fun to(bytes: ByteArray, bigEndian: Boolean) = to(bytes, 0, bigEndian)
     abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
 
-    fun toByteBuffer() = to(bufferBig(size()), 0)
+    fun toByteBuffer() = to(bufferBig(size()), 0) // TODO -> appBuffer
     infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
     abstract fun to(bytes: ByteBuffer, index: Int): ByteBuffer
 
