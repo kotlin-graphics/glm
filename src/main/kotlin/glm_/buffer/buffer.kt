@@ -39,6 +39,10 @@ inline val Buffer.adr: Pointer
         else -> throw Error("unsupported buffer type")
     }
 
+inline val PointerBuffer.adr: Pointer
+    get() = MemoryUtil.memAddress(this)
+
+
 inline var Buffer.pos: Int
     get() = position()
     set(value) {
