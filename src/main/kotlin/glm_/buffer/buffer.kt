@@ -1,6 +1,7 @@
 package glm_.buffer
 
 
+import glm_.BYTES
 import org.lwjgl.PointerBuffer
 import org.lwjgl.system.MemoryUtil
 import java.nio.*
@@ -55,5 +56,16 @@ inline val Buffer.cap: Int
 inline val Buffer.rem: Int
     get() = remaining()
 
+inline val Buffer.remSize: Int
+    get() = rem * when(this) {
+        is ByteBuffer -> Byte.BYTES
+        is ShortBuffer -> Short.BYTES
+        is IntBuffer -> Int.BYTES
+        is LongBuffer -> Long.BYTES
+        is FloatBuffer -> Float.BYTES
+        is DoubleBuffer -> Double.BYTES
+        is CharBuffer -> Char.BYTES
+        else -> throw Error("unsupported buffer type")
+    }
 
-typealias Pointer = Long
+typealias Pointer = Long // TODO -> inline class
