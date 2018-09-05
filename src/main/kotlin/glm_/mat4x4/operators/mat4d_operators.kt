@@ -16,11 +16,11 @@ import glm_.vec4.Vec4d.Companion.times
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-open class mat4d_operators {
+interface mat4d_operators {
 
 
     /** Mat4d = Mat4d + scalar */
-    inline fun plus(res: Mat4d, a: Mat4d, b: Double): Mat4d {
+    fun plus(res: Mat4d, a: Mat4d, b: Double): Mat4d {
         plus(res[0], a[0], b, b, b, b)
         plus(res[1], a[1], b, b, b, b)
         plus(res[2], a[2], b, b, b, b)
@@ -29,7 +29,7 @@ open class mat4d_operators {
     }
 
     /** Mat4d = Mat4d - scalar */
-    inline fun minus(res: Mat4d, a: Mat4d, b: Double): Mat4d {
+    fun minus(res: Mat4d, a: Mat4d, b: Double): Mat4d {
         minus(res[0], a[0], b, b, b, b)
         minus(res[1], a[1], b, b, b, b)
         minus(res[2], a[2], b, b, b, b)
@@ -38,7 +38,7 @@ open class mat4d_operators {
     }
 
     /** Mat4d = scalar - Mat4d   */
-    inline fun minus(res: Mat4d, a: Double, b: Mat4d): Mat4d {
+    fun minus(res: Mat4d, a: Double, b: Mat4d): Mat4d {
         minus(res[0], a, a, a, a, b[0])
         minus(res[1], a, a, a, a, b[1])
         minus(res[2], a, a, a, a, b[2])
@@ -47,7 +47,7 @@ open class mat4d_operators {
     }
 
     /** Mat4d = Mat4d * scalar */
-    inline fun times(res: Mat4d, a: Mat4d, b: Double): Mat4d {
+    fun times(res: Mat4d, a: Mat4d, b: Double): Mat4d {
         times(res[0], a[0], b, b, b, b)
         times(res[1], a[1], b, b, b, b)
         times(res[2], a[2], b, b, b, b)
@@ -56,7 +56,7 @@ open class mat4d_operators {
     }
 
     /** Mat4d = Mat4d / scalar */
-    inline fun div(res: Mat4d, a: Mat4d, b: Double): Mat4d {
+    fun div(res: Mat4d, a: Mat4d, b: Double): Mat4d {
         div(res[0], a[0], b, b, b, b)
         div(res[1], a[1], b, b, b, b)
         div(res[2], a[2], b, b, b, b)
@@ -65,7 +65,7 @@ open class mat4d_operators {
     }
 
     /** Mat4d = scalar / Mat4d */
-    inline fun div(res: Mat4d, a: Double, b: Mat4d): Mat4d {
+    fun div(res: Mat4d, a: Double, b: Mat4d): Mat4d {
         div(res[0], a, a, a, a, b[0])
         div(res[1], a, a, a, a, b[1])
         div(res[2], a, a, a, a, b[2])
@@ -75,21 +75,21 @@ open class mat4d_operators {
 
 
     /** Mat4d = Mat4d + Mat4d */
-    inline fun plus(res: Mat4d, a: Mat4d, b: Mat4d) = plus(res, a,
+    fun plus(res: Mat4d, a: Mat4d, b: Mat4d) = plus(res, a,
             b[0, 0], b[0, 1], b[0, 2], b[0, 3],
             b[1, 0], b[1, 1], b[1, 2], b[1, 3],
             b[2, 0], b[2, 1], b[2, 2], b[2, 3],
             b[3, 0], b[3, 1], b[3, 2], b[3, 3])
 
     /** Mat4d = Mat4d + Mat4d */
-    inline fun plus(res: Mat4d, a: Mat4d, b0: Vec4d, b1: Vec4d, b2: Vec4d, b3: Vec4d) = plus(res, a,
+    fun plus(res: Mat4d, a: Mat4d, b0: Vec4d, b1: Vec4d, b2: Vec4d, b3: Vec4d) = plus(res, a,
             b0[0], b0[1], b0[2], b0[3],
             b1[0], b1[1], b1[2], b1[3],
             b2[0], b2[1], b2[2], b2[3],
             b3[0], b3[1], b3[2], b3[3])
 
     /** Mat4d = Mat4d + Mat4d */
-    inline fun plus(res: Mat4d, a: Mat4d,
+    fun plus(res: Mat4d, a: Mat4d,
                     b00: Double, b01: Double, b02: Double, b03: Double,
                     b10: Double, b11: Double, b12: Double, b13: Double,
                     b20: Double, b21: Double, b22: Double, b23: Double,
@@ -102,21 +102,21 @@ open class mat4d_operators {
     }
 
     /** Mat4d = Mat4d - Mat4d */
-    inline fun minus(res: Mat4d, a: Mat4d, b: Mat4d) = minus(res, a,
+    fun minus(res: Mat4d, a: Mat4d, b: Mat4d) = minus(res, a,
             b[0, 0], b[0, 1], b[0, 2], b[0, 3],
             b[1, 0], b[1, 1], b[1, 2], b[1, 3],
             b[2, 0], b[2, 1], b[2, 2], b[2, 3],
             b[3, 0], b[3, 1], b[3, 2], b[3, 3])
 
     /** Mat4d = Mat4d - Mat4d */
-    inline fun minus(res: Mat4d, a: Mat4d, b0: Vec4d, b1: Vec4d, b2: Vec4d, b3: Vec4d) = minus(res, a,
+    fun minus(res: Mat4d, a: Mat4d, b0: Vec4d, b1: Vec4d, b2: Vec4d, b3: Vec4d) = minus(res, a,
             b0[0], b0[1], b0[2], b0[3],
             b1[0], b1[1], b1[2], b1[3],
             b2[0], b2[1], b2[2], b2[3],
             b3[0], b3[1], b3[2], b3[3])
 
     /** Mat4d = Mat4d - Mat4d */
-    inline fun minus(res: Mat4d, a: Mat4d,
+    fun minus(res: Mat4d, a: Mat4d,
                      b00: Double, b01: Double, b02: Double, b03: Double,
                      b10: Double, b11: Double, b12: Double, b13: Double,
                      b20: Double, b21: Double, b22: Double, b23: Double,
@@ -129,14 +129,14 @@ open class mat4d_operators {
     }
 
     /** Mat4d = Mat4d - Mat4d */
-    inline fun minus(res: Mat4d, a0: Vec4d, a1: Vec4d, a2: Vec4d, a3: Vec4d, b: Mat4d) = minus(res,
+    fun minus(res: Mat4d, a0: Vec4d, a1: Vec4d, a2: Vec4d, a3: Vec4d, b: Mat4d) = minus(res,
             a0[0], a0[1], a0[2], a0[3],
             a1[0], a1[1], a1[2], a1[3],
             a2[0], a2[1], a2[2], a2[3],
             a3[0], a3[1], a3[2], a3[3], b)
 
     /** Mat4d = Mat4d - Mat4d */
-    inline fun minus(res: Mat4d,
+    fun minus(res: Mat4d,
                      a00: Double, a01: Double, a02: Double, a03: Double,
                      a10: Double, a11: Double, a12: Double, a13: Double,
                      a20: Double, a21: Double, a22: Double, a23: Double,
@@ -150,10 +150,10 @@ open class mat4d_operators {
 
 
     /** Vec4d col = Mat4d * Vec4d row  */
-    inline fun times(res: Vec4d, a: Mat4d, b: Vec4d) = times(res, a, b.x, b.y, b.z, b.w)
+    fun times(res: Vec4d, a: Mat4d, b: Vec4d) = times(res, a, b.x, b.y, b.z, b.w)
 
     /** Vec4d col = Mat4d * Vec4d row */
-    inline fun times(res: Vec4d, a: Mat4d, b0: Double, b1: Double, b2: Double, b3: Double): Vec4d {
+    fun times(res: Vec4d, a: Mat4d, b0: Double, b1: Double, b2: Double, b3: Double): Vec4d {
         res[0] = a[0, 0] * b0 + a[1, 0] * b1 + a[2, 0] * b2 + a[3, 0] * b3
         res[1] = a[0, 1] * b0 + a[1, 1] * b1 + a[2, 1] * b2 + a[3, 1] * b3
         res[2] = a[0, 2] * b0 + a[1, 2] * b1 + a[2, 2] * b2 + a[3, 2] * b3
@@ -162,10 +162,10 @@ open class mat4d_operators {
     }
 
     /** Vec4d row = Vec4d col * Mat4d  */
-    inline fun times(res: Vec4d, a: Vec4d, b: Mat4d) = times(res, a.x, a.y, a.z, a.w, b)
+    fun times(res: Vec4d, a: Vec4d, b: Mat4d) = times(res, a.x, a.y, a.z, a.w, b)
 
     /** Vec4d row = Vec4d col * Mat4d  */
-    inline fun times(res: Vec4d, a0: Double, a1: Double, a2: Double, a3: Double, b: Mat4d): Vec4d {
+    fun times(res: Vec4d, a0: Double, a1: Double, a2: Double, a3: Double, b: Mat4d): Vec4d {
         res[0] = a0 * b[0, 0] + a1 * b[0, 1] + a2 * b[0, 2] + a3 * b[0, 3]
         res[1] = a0 * b[1, 0] + a1 * b[1, 1] + a2 * b[1, 2] + a3 * b[1, 3]
         res[2] = a0 * b[2, 0] + a1 * b[2, 1] + a2 * b[2, 2] + a3 * b[2, 3]
@@ -174,21 +174,21 @@ open class mat4d_operators {
     }
 
     /** Mat4d = Mat4d * Mat4d */
-    inline fun times(res: Mat4d, a: Mat4d, b: Mat4d) = times(res, a,
+    fun times(res: Mat4d, a: Mat4d, b: Mat4d) = times(res, a,
             b[0, 0], b[0, 1], b[0, 2], b[0, 3],
             b[1, 0], b[1, 1], b[1, 2], b[1, 3],
             b[2, 0], b[2, 1], b[2, 2], b[2, 3],
             b[3, 0], b[3, 1], b[3, 2], b[3, 3])
 
     /** Mat4d = Mat4d * Mat4d */
-    inline fun times(res: Mat4d, a: Mat4d, b0: Vec4d, b1: Vec4d, b2: Vec4d, b3: Vec4d) = times(res, a,
+    fun times(res: Mat4d, a: Mat4d, b0: Vec4d, b1: Vec4d, b2: Vec4d, b3: Vec4d) = times(res, a,
             b0[0], b0[1], b0[2], b0[3],
             b1[0], b1[1], b1[2], b1[3],
             b2[0], b2[1], b2[2], b2[3],
             b3[0], b3[1], b3[2], b3[3])
 
     /** Mat4d = Mat4d * Mat4d */
-    inline fun times(res: Mat4d, a: Mat4d,
+    fun times(res: Mat4d, a: Mat4d,
                      b00: Double, b01: Double, b02: Double, b03: Double,
                      b10: Double, b11: Double, b12: Double, b13: Double,
                      b20: Double, b21: Double, b22: Double, b23: Double,
@@ -218,13 +218,13 @@ open class mat4d_operators {
 
 
     /** Mat24d = Mat4d * Mat24d */
-    inline fun times(res: Mat2x4d, a: Mat4d, b: Mat2x4d) = times(res, a, b[0], b[1])
+    fun times(res: Mat2x4d, a: Mat4d, b: Mat2x4d) = times(res, a, b[0], b[1])
 
     /** Mat24d = Mat4d * Mat24d */
-    inline fun times(res: Mat2x4d, a: Mat4d, b0: Vec4d, b1: Vec4d) = times(res, a, b0.x, b0.y, b0.z, b0.w, b1.x, b1.y, b1.z, b1.w)
+    fun times(res: Mat2x4d, a: Mat4d, b0: Vec4d, b1: Vec4d) = times(res, a, b0.x, b0.y, b0.z, b0.w, b1.x, b1.y, b1.z, b1.w)
 
     /** Mat24d = Mat4d * Mat24d */
-    inline fun times(res: Mat2x4d, a: Mat4d,
+    fun times(res: Mat2x4d, a: Mat4d,
                      b00: Double, b01: Double, b02: Double, b03: Double,
                      b10: Double, b11: Double, b12: Double, b13: Double): Mat2x4d {
         val v00 = a[0, 0] * b00 + a[1, 0] * b01 + a[2, 0] * b02 + a[3, 0] * b03
@@ -243,17 +243,17 @@ open class mat4d_operators {
     }
 
     /** Mat34d = Mat4d * Mat34d */
-    inline fun times(res: Mat3x4d, a: Mat4d, b: Mat3x4d) = times(res, a, b[0], b[1], b[2], b[3])
+    fun times(res: Mat3x4d, a: Mat4d, b: Mat3x4d) = times(res, a, b[0], b[1], b[2], b[3])
 
     /** Mat34d = Mat4d * Mat34d */
-    inline fun times(res: Mat3x4d, a: Mat4d, b0: Vec4d, b1: Vec4d, b2: Vec4d, b3: Vec4d) = times(res, a,
+    fun times(res: Mat3x4d, a: Mat4d, b0: Vec4d, b1: Vec4d, b2: Vec4d, b3: Vec4d) = times(res, a,
             b0.x, b0.y, b0.z,
             b1.x, b1.y, b1.z,
             b2.x, b2.y, b2.z,
             b3.x, b3.y, b3.z)
 
     /** Mat34d = Mat4d * Mat34d */
-    inline fun times(res: Mat3x4d, a: Mat4d,
+    fun times(res: Mat3x4d, a: Mat4d,
                      b00: Double, b01: Double, b02: Double, b03: Double,
                      b10: Double, b11: Double, b12: Double, b13: Double,
                      b20: Double, b21: Double, b22: Double, b23: Double): Mat3x4d {
@@ -278,21 +278,21 @@ open class mat4d_operators {
 
 
     /** Mat4d = Mat4d / Mat4d = Mat4d * Mat4d^-1 */
-    inline fun div(res: Mat4d, a: Mat4d, b: Mat4d) = div(res, a,
+    fun div(res: Mat4d, a: Mat4d, b: Mat4d) = div(res, a,
             b[0, 0], b[0, 1], b[0, 2], b[0, 3],
             b[1, 0], b[1, 1], b[1, 2], b[1, 3],
             b[2, 0], b[2, 1], b[2, 2], b[2, 3],
             b[3, 0], b[3, 1], b[3, 2], b[3, 3])
 
     /** Mat4d = Mat4d / Mat4d = Mat4d * Mat4d^-1 */
-    inline fun div(res: Mat4d, a: Mat4d, b0: Vec4d, b1: Vec4d, b2: Vec4d, b3: Vec4d) = div(res, a,
+    fun div(res: Mat4d, a: Mat4d, b0: Vec4d, b1: Vec4d, b2: Vec4d, b3: Vec4d) = div(res, a,
             b0[0], b0[1], b0[2], b0[3],
             b1[0], b1[1], b1[2], b1[3],
             b2[0], b2[1], b2[2], b2[3],
             b3[0], b3[1], b3[2], b3[3])
 
     /** Mat4d = Mat4d / Mat4d = Mat4d * Mat4d^-1 */
-    inline fun div(res: Mat4d, a: Mat4d,
+    fun div(res: Mat4d, a: Mat4d,
                    b00: Double, b01: Double, b02: Double, b03: Double,
                    b10: Double, b11: Double, b12: Double, b13: Double,
                    b20: Double, b21: Double, b22: Double, b23: Double,
@@ -308,10 +308,10 @@ open class mat4d_operators {
 
 
     /** Vec4d col = Mat4d * Vec4d row  */
-    inline fun div(res: Vec4d, a: Mat4d, b: Vec4d) = div(res, a, b.x, b.y, b.z, b.w)
+    fun div(res: Vec4d, a: Mat4d, b: Vec4d) = div(res, a, b.x, b.y, b.z, b.w)
 
     /** Vec4d col = Mat4d * Vec4d row  */
-    inline fun div(res: Vec4d, a: Mat4d, b0: Double, b1: Double, b2: Double, b3: Double): Vec4d {
+    fun div(res: Vec4d, a: Mat4d, b0: Double, b1: Double, b2: Double, b3: Double): Vec4d {
         // invert a
         val c00 = a[2, 2] * a[3, 3] - a[3, 2] * a[2, 3]
         val c02 = a[1, 2] * a[3, 3] - a[3, 2] * a[1, 3]
@@ -389,10 +389,10 @@ open class mat4d_operators {
     }
 
     /** Vec4d row = Vec4d col * Mat4d  */
-    inline fun div(res: Vec4d, a: Vec4d, b: Mat4d) = div(res, a.x, a.y, a.z, a.w, b)
+    fun div(res: Vec4d, a: Vec4d, b: Mat4d) = div(res, a.x, a.y, a.z, a.w, b)
 
     /** Vec4d row = Vec4d col * Mat4d  */
-    inline fun div(res: Vec4d, a0: Double, a1: Double, a2: Double, a3: Double, b: Mat4d): Vec4d {
+    fun div(res: Vec4d, a0: Double, a1: Double, a2: Double, a3: Double, b: Mat4d): Vec4d {
         // invert main.getB
         val c00 = b[2, 2] * b[3, 3] - b[3, 2] * b[2, 3]
         val c02 = b[1, 2] * b[3, 3] - b[3, 2] * b[1, 3]

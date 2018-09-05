@@ -16,10 +16,10 @@ import unsigned.urem
 /**
  * Created by elect on 09/11/16.
  */
-open class vec4ul_operators {
+interface vec4ul_operators {
 
 
-    inline fun plus(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
+    fun plus(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
         res.x.v = a.x.v + bX
         res.y.v = a.y.v + bY
         res.z.v = a.z.v + bZ
@@ -27,7 +27,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun plus(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
+    fun plus(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
         res.x.v = a.x.v + bX.v
         res.y.v = a.y.v + bY.v
         res.z.v = a.z.v + bZ.v
@@ -35,7 +35,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun plus(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
+    fun plus(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
         res.x.v = a.x.v + bX
         res.y.v = a.y.v + bY
         res.z.v = a.z.v + bZ
@@ -43,7 +43,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun minus(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
+    fun minus(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
         res.x.v = a.x.v - bX
         res.y.v = a.y.v - bY
         res.z.v = a.z.v - bZ
@@ -51,7 +51,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun minus(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
+    fun minus(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
         res.x.v = a.x.v - bX.v
         res.y.v = a.y.v - bY.v
         res.z.v = a.z.v - bZ.v
@@ -59,7 +59,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun minus(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
+    fun minus(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
         res.x.v = a.x.v - bX
         res.y.v = a.y.v - bY
         res.z.v = a.z.v - bZ
@@ -67,7 +67,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun minus(res: Vec4ul, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4ul): Vec4ul {
+    fun minus(res: Vec4ul, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4ul): Vec4ul {
         res.x.v = aX - b.x.v
         res.y.v = aY - b.y.v
         res.z.v = aZ - b.z.v
@@ -75,7 +75,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun minus(res: Vec4ul, aX: Ulong, aY: Ulong, aZ: Ulong, aW: Ulong, b: Vec4ul): Vec4ul {
+    fun minus(res: Vec4ul, aX: Ulong, aY: Ulong, aZ: Ulong, aW: Ulong, b: Vec4ul): Vec4ul {
         res.x.v = aX.v - b.x.v
         res.y.v = aY.v - b.y.v
         res.z.v = aZ.v - b.z.v
@@ -83,7 +83,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun minus(res: Vec4ul, aX: Long, aY: Long, aZ: Long, aW: Long, b: Vec4ul): Vec4ul {
+    fun minus(res: Vec4ul, aX: Long, aY: Long, aZ: Long, aW: Long, b: Vec4ul): Vec4ul {
         res.x.v = aX - b.x.v
         res.y.v = aY - b.y.v
         res.z.v = aZ - b.z.v
@@ -91,7 +91,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun times(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
+    fun times(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
         res.x.v = a.x.v * bX
         res.y.v = a.y.v * bY
         res.z.v = a.z.v * bZ
@@ -99,7 +99,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun times(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
+    fun times(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
         res.x.v = a.x.v * bX.v
         res.y.v = a.y.v * bY.v
         res.z.v = a.z.v * bZ.v
@@ -107,7 +107,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun times(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
+    fun times(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
         res.x.v = a.x.v * bX
         res.y.v = a.y.v * bY
         res.z.v = a.z.v * bZ
@@ -115,7 +115,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun div(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
+    fun div(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
         res.x.v = a.x.v udiv bX
         res.y.v = a.y.v udiv bY
         res.z.v = a.z.v udiv bZ
@@ -123,7 +123,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun div(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
+    fun div(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
         res.x.v = a.x.v udiv bX.v
         res.y.v = a.y.v udiv bY.v
         res.z.v = a.z.v udiv bZ.v
@@ -131,7 +131,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun div(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
+    fun div(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
         res.x.v = a.x.v udiv bX
         res.y.v = a.y.v udiv bY
         res.z.v = a.z.v udiv bZ
@@ -139,7 +139,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun div(res: Vec4ul, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4ul): Vec4ul {
+    fun div(res: Vec4ul, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4ul): Vec4ul {
         res.x.v = (aX udiv b.x.v).L
         res.y.v = (aY udiv b.y.v).L
         res.z.v = (aZ udiv b.z.v).L
@@ -147,7 +147,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun div(res: Vec4ul, aX: Ulong, aY: Ulong, aZ: Ulong, aW: Ulong, b: Vec4ul): Vec4ul {
+    fun div(res: Vec4ul, aX: Ulong, aY: Ulong, aZ: Ulong, aW: Ulong, b: Vec4ul): Vec4ul {
         res.x.v = aX.v udiv b.x.v
         res.y.v = aY.v udiv b.y.v
         res.z.v = aZ.v udiv b.z.v
@@ -155,7 +155,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun div(res: Vec4ul, aX: Long, aY: Long, aZ: Long, aW: Long, b: Vec4ul): Vec4ul {
+    fun div(res: Vec4ul, aX: Long, aY: Long, aZ: Long, aW: Long, b: Vec4ul): Vec4ul {
         res.x.v = aX udiv b.x.v
         res.y.v = aY udiv b.y.v
         res.z.v = aZ udiv b.z.v
@@ -163,7 +163,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun rem(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
+    fun rem(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
         res.x.v = a.x.v urem bX
         res.y.v = a.y.v urem bY
         res.z.v = a.z.v urem bZ
@@ -171,7 +171,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun rem(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
+    fun rem(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
         res.x.v = a.x.v urem bX.v
         res.y.v = a.y.v urem bY.v
         res.z.v = a.z.v urem bZ.v
@@ -179,7 +179,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun rem(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
+    fun rem(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
         res.x.v = a.x.v urem bX
         res.y.v = a.y.v urem bY
         res.z.v = a.z.v urem bZ
@@ -187,7 +187,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun rem(res: Vec4ul, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4ul): Vec4ul {
+    fun rem(res: Vec4ul, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4ul): Vec4ul {
         res.x.v = (aX urem b.x.v).L
         res.y.v = (aY urem b.y.v).L
         res.z.v = (aZ urem b.z.v).L
@@ -195,7 +195,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun rem(res: Vec4ul, aX: Ulong, aY: Ulong, aZ: Ulong, aW: Ulong, b: Vec4ul): Vec4ul {
+    fun rem(res: Vec4ul, aX: Ulong, aY: Ulong, aZ: Ulong, aW: Ulong, b: Vec4ul): Vec4ul {
         res.x.v = aX.v urem b.x.v
         res.y.v = aY.v urem b.y.v
         res.z.v = aZ.v urem b.z.v
@@ -203,7 +203,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun rem(res: Vec4ul, aX: Long, aY: Long, aZ: Long, aW: Long, b: Vec4ul): Vec4ul {
+    fun rem(res: Vec4ul, aX: Long, aY: Long, aZ: Long, aW: Long, b: Vec4ul): Vec4ul {
         res.x.v = aX urem b.x.v
         res.y.v = aY urem b.y.v
         res.z.v = aZ urem b.z.v
@@ -211,7 +211,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun and(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
+    fun and(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
         res.x.v = a.x.v and bX
         res.y.v = a.y.v and bY
         res.z.v = a.z.v and bZ
@@ -219,7 +219,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun and(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
+    fun and(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
         res.x.v = a.x.v and bX.v
         res.y.v = a.y.v and bY.v
         res.z.v = a.z.v and bZ.v
@@ -227,7 +227,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun and(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
+    fun and(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
         res.x.v = a.x.v and bX
         res.y.v = a.y.v and bY
         res.z.v = a.z.v and bZ
@@ -235,7 +235,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun or(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
+    fun or(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
         res.x.v = a.x.v or bX
         res.y.v = a.y.v or bY
         res.z.v = a.z.v or bZ
@@ -243,7 +243,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun or(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
+    fun or(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
         res.x.v = a.x.v or bX.v
         res.y.v = a.y.v or bY.v
         res.z.v = a.z.v or bZ.v
@@ -251,7 +251,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun or(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
+    fun or(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
         res.x.v = a.x.v or bX
         res.y.v = a.y.v or bY
         res.z.v = a.z.v or bZ
@@ -259,7 +259,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun xor(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
+    fun xor(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
         res.x.v = a.x.v xor bX
         res.y.v = a.y.v xor bY
         res.z.v = a.z.v xor bZ
@@ -267,7 +267,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun xor(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
+    fun xor(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
         res.x.v = a.x.v xor bX.v
         res.y.v = a.y.v xor bY.v
         res.z.v = a.z.v xor bZ.v
@@ -275,7 +275,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun xor(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
+    fun xor(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
         res.x.v = a.x.v xor bX
         res.y.v = a.y.v xor bY
         res.z.v = a.z.v xor bZ
@@ -284,7 +284,7 @@ open class vec4ul_operators {
     }
 
 
-    inline fun shl(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
+    fun shl(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
         res.x.v = a.x.v shl bX
         res.y.v = a.y.v shl bY
         res.z.v = a.z.v shl bZ
@@ -292,7 +292,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun shl(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
+    fun shl(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
         res.x.v = a.x.v shl bX.v.i
         res.y.v = a.y.v shl bY.v.i
         res.z.v = a.z.v shl bZ.v.i
@@ -300,7 +300,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun shl(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
+    fun shl(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
         res.x.v = a.x.v shl bX.i
         res.y.v = a.y.v shl bY.i
         res.z.v = a.z.v shl bZ.i
@@ -308,7 +308,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun shr(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
+    fun shr(res: Vec4ul, a: Vec4ul, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4ul {
         res.x.v = a.x.v ushr bX
         res.y.v = a.y.v ushr bY
         res.z.v = a.z.v ushr bZ
@@ -316,7 +316,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun shr(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
+    fun shr(res: Vec4ul, a: Vec4ul, bX: Ulong, bY: Ulong, bZ: Ulong, bW: Ulong): Vec4ul {
         res.x.v = a.x.v ushr bX.v.i
         res.y.v = a.y.v ushr bY.v.i
         res.z.v = a.z.v ushr bZ.v.i
@@ -324,7 +324,7 @@ open class vec4ul_operators {
         return res
     }
 
-    inline fun shr(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
+    fun shr(res: Vec4ul, a: Vec4ul, bX: Long, bY: Long, bZ: Long, bW: Long): Vec4ul {
         res.x.v = a.x.v ushr bX.i
         res.y.v = a.y.v ushr bY.i
         res.z.v = a.z.v ushr bZ.i
@@ -333,7 +333,7 @@ open class vec4ul_operators {
     }
 
 
-    inline fun inv(res: Vec4ul, a: Vec4ul): Vec4ul {
+    fun inv(res: Vec4ul, a: Vec4ul): Vec4ul {
         res.x.v = a.x.v.inv()
         res.y.v = a.y.v.inv()
         res.z.v = a.z.v.inv()

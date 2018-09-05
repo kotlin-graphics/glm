@@ -15,165 +15,165 @@ import unsigned.urem
  * Created by GBarbieri on 08.11.2016.
  */
 
-open class opVec2ui {
+interface opVec2ui {
 
-    inline fun plus(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
+    fun plus(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
         res.x.v = a.x.v + bX.v
         res.y.v = a.y.v + bY.v
         return res
     }
 
-    inline fun plus(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
+    fun plus(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
         res.x.v = a.x.v + bX
         res.y.v = a.y.v + bY
         return res
     }
 
-    inline fun minus(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
+    fun minus(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
         res.x.v = a.x.v - bX.v
         res.y.v = a.y.v - bY.v
         return res
     }
 
-    inline fun minus(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
+    fun minus(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
         res.x.v = a.x.v - bX
         res.y.v = a.y.v - bY
         return res
     }
 
-    inline fun minus(res: Vec2ui, aX: Uint, aY: Uint, b: Vec2ui): Vec2ui {
+    fun minus(res: Vec2ui, aX: Uint, aY: Uint, b: Vec2ui): Vec2ui {
         res.x.v = aX.v - b.x.v
         res.y.v = aY.v - b.y.v
         return res
     }
 
-    inline fun minus(res: Vec2ui, aX: Int, aY: Int, b: Vec2ui): Vec2ui {
+    fun minus(res: Vec2ui, aX: Int, aY: Int, b: Vec2ui): Vec2ui {
         res.x.v = aX - b.x.v
         res.y.v = aY - b.y.v
         return res
     }
 
-    inline fun times(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
+    fun times(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
         res.x.v = a.x.v * bX.v
         res.y.v = a.y.v * bY.v
         return res
     }
 
-    inline fun times(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
+    fun times(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
         res.x.v = a.x.v * bX
         res.y.v = a.y.v * bY
         return res
     }
 
-    inline fun div(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
+    fun div(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
         res.x.v = a.x.v udiv bX.v
         res.y.v = a.y.v udiv bY.v
         return res
     }
 
-    inline fun div(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
+    fun div(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
         res.x.v = a.x.v udiv bX
         res.y.v = a.y.v udiv bY
         return res
     }
 
-    inline fun div(res: Vec2ui, aX: Uint, aY: Uint, b: Vec2ui): Vec2ui {
+    fun div(res: Vec2ui, aX: Uint, aY: Uint, b: Vec2ui): Vec2ui {
         res.x.v = aX.v udiv b.x.v
         res.y.v = aY.v udiv b.y.v
         return res
     }
 
-    inline fun div(res: Vec2ui, aX: Int, aY: Int, b: Vec2ui): Vec2ui {
+    fun div(res: Vec2ui, aX: Int, aY: Int, b: Vec2ui): Vec2ui {
         res.x.v = aX udiv b.x.v
         res.y.v = aY udiv b.y.v
         return res
     }
 
-    inline fun rem(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
+    fun rem(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
         res.x.v = a.x.v urem bX.v
         res.y.v = a.y.v urem bY.v
         return res
     }
 
-    inline fun rem(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
+    fun rem(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
         res.x.v = a.x.v urem bX
         res.y.v = a.y.v urem bY
         return res
     }
 
-    inline fun rem(res: Vec2ui, aX: Uint, aY: Uint, b: Vec2ui): Vec2ui {
+    fun rem(res: Vec2ui, aX: Uint, aY: Uint, b: Vec2ui): Vec2ui {
         res.x.v = aX.v urem b.x.v
         res.y.v = aY.v urem b.y.v
         return res
     }
 
-    inline fun rem(res: Vec2ui, aX: Int, aY: Int, b: Vec2ui): Vec2ui {
+    fun rem(res: Vec2ui, aX: Int, aY: Int, b: Vec2ui): Vec2ui {
         res.x.v = aX urem b.x.v
         res.y.v = aY urem b.y.v
         return res
     }
 
-    inline fun and(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
+    fun and(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
         res.x.v = a.x.v and bX.v
         res.y.v = a.y.v and bY.v
         return res
     }
 
-    inline fun and(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
+    fun and(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
         res.x.v = a.x.v and bX
         res.y.v = a.y.v and bY
         return res
     }
 
-    inline fun or(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
+    fun or(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
         res.x.v = a.x.v or bX.v
         res.y.v = a.y.v or bY.v
         return res
     }
 
-    inline fun or(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
+    fun or(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
         res.x.v = a.x.v or bX
         res.y.v = a.y.v or bY
         return res
     }
 
-    inline fun xor(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
+    fun xor(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
         res.x.v = a.x.v xor bX.v
         res.y.v = a.y.v xor bY.v
         return res
     }
 
-    inline fun xor(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
+    fun xor(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
         res.x.v = a.x.v xor bX
         res.y.v = a.y.v xor bY
         return res
     }
 
-    inline fun shl(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
+    fun shl(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
         res.x.v = a.x.v shl bX.v
         res.y.v = a.y.v shl bY.v
         return res
     }
 
-    inline fun shl(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
+    fun shl(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
         res.x.v = a.x.v shl bX
         res.y.v = a.y.v shl bY
         return res
     }
 
-    inline fun shr(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
+    fun shr(res: Vec2ui, a: Vec2ui, bX: Uint, bY: Uint): Vec2ui {
         res.x.v = a.x.v ushr bX.v
         res.y.v = a.y.v ushr bY.v
         return res
     }
 
-    inline fun shr(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
+    fun shr(res: Vec2ui, a: Vec2ui, bX: Int, bY: Int): Vec2ui {
         res.x.v = a.x.v ushr bX
         res.y.v = a.y.v ushr bY
         return res
     }
 
-    inline fun inv(res: Vec2ui, a: Vec2ui): Vec2ui {
+    fun inv(res: Vec2ui, a: Vec2ui): Vec2ui {
         res.x.v = a.x.v.inv()
         res.y.v = a.y.v.inv()
         return res

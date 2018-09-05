@@ -16,44 +16,44 @@ import glm_.vec2.Vec2d.Companion.times
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-open class mat2x2d_operators {
+interface mat2x2d_operators {
 
     /** Mat2d = Mat2d + scalar */
-    inline fun plus(res: Mat2d, a: Mat2d, b: Double): Mat2d {
+    fun plus(res: Mat2d, a: Mat2d, b: Double): Mat2d {
         plus(res[0], a[0], b, b)
         plus(res[1], a[1], b, b)
         return res
     }
 
     /** Mat2d = Mat2d - scalar */
-    inline fun minus(res: Mat2d, a: Mat2d, b: Double): Mat2d {
+    fun minus(res: Mat2d, a: Mat2d, b: Double): Mat2d {
         minus(res[0], a[0], b, b)
         minus(res[1], a[1], b, b)
         return res
     }
 
     /** Mat2d = scalar - Mat2d   */
-    inline fun minus(res: Mat2d, a: Double, b: Mat2d): Mat2d {
+    fun minus(res: Mat2d, a: Double, b: Mat2d): Mat2d {
         minus(res[0], a, a, b[0])
         minus(res[1], a, a, b[1])
         return res
     }
 
     /** Mat2d = Mat2d * scalar */
-    inline fun times(res: Mat2d, a: Mat2d, b: Double): Mat2d {
+    fun times(res: Mat2d, a: Mat2d, b: Double): Mat2d {
         times(res[0], a[0], b, b)
         times(res[1], a[1], b, b)
         return res
     }
 
     /** Mat2d = Mat2d / scalar */
-    inline fun div(res: Mat2d, a: Mat2d, b: Double): Mat2d {
+    fun div(res: Mat2d, a: Mat2d, b: Double): Mat2d {
         div(res[0], a[0], b, b)
         div(res[1], a[1], b, b)
         return res
     }
     /** Mat2d = scalar / Mat2d */
-    inline fun div(res: Mat2d, a: Double, b: Mat2d): Mat2d {
+    fun div(res: Mat2d, a: Double, b: Mat2d): Mat2d {
         div(res[0], a, a, b[0])
         div(res[1], a, a, b[1])
         return res
@@ -61,36 +61,36 @@ open class mat2x2d_operators {
 
 
     /** Mat2d = Mat2d + Mat2d */
-    inline fun plus(res: Mat2d, a: Mat2d, b: Mat2d) = plus(res, a, b[0, 0], b[0, 1], b[1, 0], b[1, 1])
+    fun plus(res: Mat2d, a: Mat2d, b: Mat2d) = plus(res, a, b[0, 0], b[0, 1], b[1, 0], b[1, 1])
 
     /** Mat2d = Mat2d + Mat2d */
-    inline fun plus(res: Mat2d, a: Mat2d, b0: Vec2d, b1: Vec2d) = plus(res, a, b0[0], b0[1], b1[0], b1[1])
+    fun plus(res: Mat2d, a: Mat2d, b0: Vec2d, b1: Vec2d) = plus(res, a, b0[0], b0[1], b1[0], b1[1])
 
     /** Mat2d = Mat2d + Mat2d */
-    inline fun plus(res: Mat2d, a: Mat2d, b00: Double, b01: Double, b10: Double, b11: Double): Mat2d {
+    fun plus(res: Mat2d, a: Mat2d, b00: Double, b01: Double, b10: Double, b11: Double): Mat2d {
         plus(res[0], a[0], b00, b01)
         plus(res[1], a[1], b10, b11)
         return res
     }
 
     /** Mat2d = Mat2d - Mat2d */
-    inline fun minus(res: Mat2d, a: Mat2d, b: Mat2d) = minus(res, a, b[0, 0], b[0, 1], b[1, 0], b[1, 1])
+    fun minus(res: Mat2d, a: Mat2d, b: Mat2d) = minus(res, a, b[0, 0], b[0, 1], b[1, 0], b[1, 1])
 
     /** Mat2d = Mat2d - Mat2d */
-    inline fun minus(res: Mat2d, a: Mat2d, b0: Vec2d, b1: Vec2d) = minus(res, a, b0[0], b0[1], b1[0], b1[1])
+    fun minus(res: Mat2d, a: Mat2d, b0: Vec2d, b1: Vec2d) = minus(res, a, b0[0], b0[1], b1[0], b1[1])
 
     /** Mat2d = Mat2d - Mat2d */
-    inline fun minus(res: Mat2d, a: Mat2d, b00: Double, b01: Double, b10: Double, b11: Double): Mat2d {
+    fun minus(res: Mat2d, a: Mat2d, b00: Double, b01: Double, b10: Double, b11: Double): Mat2d {
         minus(res[0], a[0], b00, b01)
         minus(res[1], a[1], b10, b11)
         return res
     }
 
     /** Mat2d = Mat2d - Mat2d */
-    inline fun minus(res: Mat2d, a0: Vec2d, a1: Vec2d, b: Mat2d) = minus(res, a0[0], a0[1], a1[0], a1[1], b)
+    fun minus(res: Mat2d, a0: Vec2d, a1: Vec2d, b: Mat2d) = minus(res, a0[0], a0[1], a1[0], a1[1], b)
 
     /** Mat2d = Mat2d - Mat2d */
-    inline fun minus(res: Mat2d, a00: Double, a01: Double, a10: Double, a11: Double, b: Mat2d): Mat2d {
+    fun minus(res: Mat2d, a00: Double, a01: Double, a10: Double, a11: Double, b: Mat2d): Mat2d {
         minus(res[0], a00, a01, b[0])
         minus(res[1], a10, a11, b[1])
         return res
@@ -98,33 +98,33 @@ open class mat2x2d_operators {
 
 
     /** Vec2d col = Mat2d * Vec2d row  */
-    inline fun times(res: Vec2d, a: Mat2d, b: Vec2d) = times(res, a, b.x, b.y)
+    fun times(res: Vec2d, a: Mat2d, b: Vec2d) = times(res, a, b.x, b.y)
 
     /** Vec2d col = Mat2d * Vec2d row */
-    inline fun times(res: Vec2d, a: Mat2d, b0: Double, b1: Double): Vec2d {
+    fun times(res: Vec2d, a: Mat2d, b0: Double, b1: Double): Vec2d {
         res[0] = a[0, 0] * b0 + a[1, 0] * b1
         res[1] = a[0, 1] * b0 + a[1, 1] * b1
         return res
     }
 
     /** Vec2d row = Vec2d col * Mat2d  */
-    inline fun times(res: Vec2d, a: Vec2d, b: Mat2d) = times(res, a.x, a.y, b)
+    fun times(res: Vec2d, a: Vec2d, b: Mat2d) = times(res, a.x, a.y, b)
 
     /** Vec2d row = Vec2d col * Mat2d  */
-    inline fun times(res: Vec2d, a0: Double, a1: Double, b: Mat2d): Vec2d {
+    fun times(res: Vec2d, a0: Double, a1: Double, b: Mat2d): Vec2d {
         res[0] = a0 * b[0, 0] + a1 * b[0, 1]
         res[1] = a0 * b[1, 0] + a1 * b[1, 1]
         return res
     }
 
     /** Mat2d = Mat2d * Mat2d */
-    inline fun times(res: Mat2d, a: Mat2d, b: Mat2d) = times(res, a, b[0, 0], b[0, 1], b[1, 0], b[1, 1])
+    fun times(res: Mat2d, a: Mat2d, b: Mat2d) = times(res, a, b[0, 0], b[0, 1], b[1, 0], b[1, 1])
 
     /** Mat2d = Mat2d * Mat2d */
-    inline fun times(res: Mat2d, a: Mat2d, b0: Vec2d, b1: Vec2d) = times(res, a, b0[0], b0[1], b1[0], b1[1])
+    fun times(res: Mat2d, a: Mat2d, b0: Vec2d, b1: Vec2d) = times(res, a, b0[0], b0[1], b1[0], b1[1])
 
     /** Mat2d = Mat2d * Mat2d */
-    inline fun times(res: Mat2d, a: Mat2d, b00: Double, b01: Double, b10: Double, b11: Double): Mat2d {
+    fun times(res: Mat2d, a: Mat2d, b00: Double, b01: Double, b10: Double, b11: Double): Mat2d {
         val v00 = a[0, 0] * b00 + a[1, 0] * b01
         val v01 = a[0, 1] * b00 + a[1, 1] * b01
         val v10 = a[0, 0] * b10 + a[1, 0] * b11
@@ -135,11 +135,11 @@ open class mat2x2d_operators {
     }
 
     /** Mat32d = Mat2d * Mat32d */
-    inline fun times(res: Mat3x2d, a: Mat2d, b: Mat3x2d) = times(res, a, b[0], b[1], b[2])
+    fun times(res: Mat3x2d, a: Mat2d, b: Mat3x2d) = times(res, a, b[0], b[1], b[2])
     /** Mat32d = Mat2d * Mat32d */
-    inline fun times(res: Mat3x2d, a: Mat2d, b0: Vec2d, b1: Vec2d, b2: Vec2d) = times(res, a, b0.x, b0.y, b1.x, b1.y, b2.x, b2.y)
+    fun times(res: Mat3x2d, a: Mat2d, b0: Vec2d, b1: Vec2d, b2: Vec2d) = times(res, a, b0.x, b0.y, b1.x, b1.y, b2.x, b2.y)
     /** Mat32d = Mat2d * Mat32d */
-    inline fun times(res: Mat3x2d, a: Mat2d,
+    fun times(res: Mat3x2d, a: Mat2d,
                      b00: Double, b01: Double,
                      b10: Double, b11: Double,
                      b20: Double, b21: Double): Mat3x2d {
@@ -155,11 +155,11 @@ open class mat2x2d_operators {
     }
 
     /** Mat42d = Mat2d * Mat42d */
-    inline fun times(res: Mat4x2d, a: Mat2d, b: Mat4x2d) = times(res, a, b[0], b[1], b[2], b[3])
+    fun times(res: Mat4x2d, a: Mat2d, b: Mat4x2d) = times(res, a, b[0], b[1], b[2], b[3])
     /** Mat42d = Mat2d * Mat42d */
-    inline fun times(res: Mat4x2d, a: Mat2d, b0: Vec2d, b1: Vec2d, b2: Vec2d, b3: Vec2d) = times(res, a, b0.x, b0.y, b1.x, b1.y, b2.x, b2.y, b3.x, b3.y)
+    fun times(res: Mat4x2d, a: Mat2d, b0: Vec2d, b1: Vec2d, b2: Vec2d, b3: Vec2d) = times(res, a, b0.x, b0.y, b1.x, b1.y, b2.x, b2.y, b3.x, b3.y)
     /** Mat42d = Mat2d * Mat42d */
-    inline fun times(res: Mat4x2d, a: Mat2d,
+    fun times(res: Mat4x2d, a: Mat2d,
                      b00: Double, b01: Double,
                      b10: Double, b11: Double,
                      b20: Double, b21: Double,
@@ -179,11 +179,11 @@ open class mat2x2d_operators {
 
 
     /** Mat2d = Mat2d / Mat2d = Mat2d * Mat2d^-1 */
-    inline fun div(res: Mat2d, a: Mat2d, b: Mat2d) = div(res, a, b[0, 0], b[0, 1], b[1, 0], b[1, 1])
+    fun div(res: Mat2d, a: Mat2d, b: Mat2d) = div(res, a, b[0, 0], b[0, 1], b[1, 0], b[1, 1])
     /** Mat2d = Mat2d / Mat2d = Mat2d * Mat2d^-1 */
-    inline fun div(res: Mat2d, a: Mat2d, b0: Vec2d, b1: Vec2d) = div(res, a, b0[0], b0[1], b1[0], b1[1])
+    fun div(res: Mat2d, a: Mat2d, b0: Vec2d, b1: Vec2d) = div(res, a, b0[0], b0[1], b1[0], b1[1])
     /** Mat2d = Mat2d / Mat2d = Mat2d * Mat2d^-1 */
-    inline fun div(res: Mat2d, a: Mat2d, b00: Double, b01: Double, b10: Double, b11: Double): Mat2d {
+    fun div(res: Mat2d, a: Mat2d, b00: Double, b01: Double, b10: Double, b11: Double): Mat2d {
         res[0, 0] = b00; res[1, 0] = b10
         res[0, 1] = b01; res[1, 1] = b11
         res.inverseAssign()
@@ -193,9 +193,9 @@ open class mat2x2d_operators {
 
 
     /** Vec2d col = Mat2d * Vec2d row  */
-    inline fun div(res: Vec2d, a: Mat2d, b: Vec2d) = div(res, a, b.x, b.y)
+    fun div(res: Vec2d, a: Mat2d, b: Vec2d) = div(res, a, b.x, b.y)
     /** Vec2d col = Mat2d * Vec2d row  */
-    inline fun div(res: Vec2d, a: Mat2d, b0: Double, b1: Double): Vec2d {
+    fun div(res: Vec2d, a: Mat2d, b0: Double, b1: Double): Vec2d {
         val oneOverDet = 1 / a.det
         val i00 = +a[1, 1] * oneOverDet
         val i01 = -a[0, 1] * oneOverDet
@@ -207,9 +207,9 @@ open class mat2x2d_operators {
     }
 
     /** Vec2d row = Vec2d col * Mat2d  */
-    inline fun div(res: Vec2d, a: Vec2d, b: Mat2d) = div(res, a.x, a.y, b)
+    fun div(res: Vec2d, a: Vec2d, b: Mat2d) = div(res, a.x, a.y, b)
     /** Vec2d row = Vec2d col * Mat2d  */
-    inline fun div(res: Vec2d, a0: Double, a1: Double, b: Mat2d): Vec2d {
+    fun div(res: Vec2d, a0: Double, a1: Double, b: Mat2d): Vec2d {
         val oneOverDet = 1 / b.det
         val i00 = +b[1, 1] * oneOverDet
         val i01 = -b[0, 1] * oneOverDet

@@ -17,243 +17,243 @@ import kotlin.experimental.xor
  * Created by elect on 09/11/16.
  */
 
-open class opVec2us {
+interface opVec2us {
 
-    inline fun plus(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
+    fun plus(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
         res.x.v = (a.x.v + bX.v).s
         res.y.v = (a.y.v + bY.v).s
         return res
     }
 
-    inline fun plus(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
+    fun plus(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
         res.x.v = (a.x.v + bX).s
         res.y.v = (a.y.v + bY).s
         return res
     }
 
-    inline fun plus(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
+    fun plus(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
         res.x.v = (a.x.v + bX).s
         res.y.v = (a.y.v + bY).s
         return res
     }
 
-    inline fun minus(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
+    fun minus(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
         res.x.v = (a.x.v - bX.v).s
         res.y.v = (a.y.v - bY.v).s
         return res
     }
 
-    inline fun minus(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
+    fun minus(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
         res.x.v = (a.x.v - bX).s
         res.y.v = (a.y.v - bY).s
         return res
     }
 
-    inline fun minus(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
+    fun minus(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
         res.x.v = (a.x.v - bX).s
         res.y.v = (a.y.v - bY).s
         return res
     }
 
-    inline fun minus(res: Vec2us, aX: Ushort, aY: Ushort, b: Vec2us): Vec2us {
+    fun minus(res: Vec2us, aX: Ushort, aY: Ushort, b: Vec2us): Vec2us {
         res.x.v = (aX.v - b.x.v).s
         res.y.v = (aY.v - b.y.v).s
         return res
     }
 
-    inline fun minus(res: Vec2us, aX: Short, aY: Short, b: Vec2us): Vec2us {
+    fun minus(res: Vec2us, aX: Short, aY: Short, b: Vec2us): Vec2us {
         res.x.v = (aX - b.x.v).s
         res.y.v = (aY - b.y.v).s
         return res
     }
 
-    inline fun minus(res: Vec2us, aX: Int, aY: Int, b: Vec2us): Vec2us {
+    fun minus(res: Vec2us, aX: Int, aY: Int, b: Vec2us): Vec2us {
         res.x.v = (aX - b.x.v).s
         res.y.v = (aY - b.y.v).s
         return res
     }
 
-    inline fun times(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
+    fun times(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
         res.x.v = (a.x.v * bX.v).s
         res.y.v = (a.y.v * bY.v).s
         return res
     }
 
-    inline fun times(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
+    fun times(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
         res.x.v = (a.x.v * bX).s
         res.y.v = (a.y.v * bY).s
         return res
     }
 
-    inline fun times(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
+    fun times(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
         res.x.v = (a.x.v * bX).s
         res.y.v = (a.y.v * bY).s
         return res
     }
 
-    inline fun div(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
+    fun div(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
         res.x.v = a.x.v udiv bX.v
         res.y.v = a.y.v udiv bY.v
         return res
     }
 
-    inline fun div(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
+    fun div(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
         res.x.v = a.x.v udiv bX
         res.y.v = a.y.v udiv bY
         return res
     }
 
-    inline fun div(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
+    fun div(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
         res.x.v = a.x.v udiv bX
         res.y.v = a.y.v udiv bY
         return res
     }
 
-    inline fun div(res: Vec2us, aX: Ushort, aY: Ushort, b: Vec2us): Vec2us {
+    fun div(res: Vec2us, aX: Ushort, aY: Ushort, b: Vec2us): Vec2us {
         res.x.v = aX.v udiv b.x.v
         res.y.v = aY.v udiv b.y.v
         return res
     }
 
-    inline fun div(res: Vec2us, aX: Short, aY: Short, b: Vec2us): Vec2us {
+    fun div(res: Vec2us, aX: Short, aY: Short, b: Vec2us): Vec2us {
         res.x.v = aX udiv b.x.v
         res.y.v = aY udiv b.y.v
         return res
     }
 
-    inline fun div(res: Vec2us, aX: Int, aY: Int, b: Vec2us): Vec2us {
+    fun div(res: Vec2us, aX: Int, aY: Int, b: Vec2us): Vec2us {
         res.x.v = (aX udiv b.x.v).s
         res.y.v = (aY udiv b.y.v).s
         return res
     }
 
-    inline fun rem(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
+    fun rem(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
         res.x.v = a.x.v urem bX.v
         res.y.v = a.y.v urem bY.v
         return res
     }
 
-    inline fun rem(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
+    fun rem(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
         res.x.v = a.x.v urem bX
         res.y.v = a.y.v urem bY
         return res
     }
 
-    inline fun rem(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
+    fun rem(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
         res.x.v = a.x.v urem bX
         res.y.v = a.y.v urem bY
         return res
     }
 
-    inline fun rem(res: Vec2us, aX: Ushort, aY: Ushort, b: Vec2us): Vec2us {
+    fun rem(res: Vec2us, aX: Ushort, aY: Ushort, b: Vec2us): Vec2us {
         res.x.v = aX.v urem b.x.v
         res.y.v = aY.v urem b.y.v
         return res
     }
 
-    inline fun rem(res: Vec2us, aX: Short, aY: Short, b: Vec2us): Vec2us {
+    fun rem(res: Vec2us, aX: Short, aY: Short, b: Vec2us): Vec2us {
         res.x.v = aX urem b.x.v
         res.y.v = aY urem b.y.v
         return res
     }
 
-    inline fun rem(res: Vec2us, aX: Int, aY: Int, b: Vec2us): Vec2us {
+    fun rem(res: Vec2us, aX: Int, aY: Int, b: Vec2us): Vec2us {
         res.x.v = (aX urem b.x.v).s
         res.y.v = (aY urem b.y.v).s
         return res
     }
 
-    inline fun and(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
+    fun and(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
         res.x.v = a.x.v and bX.v
         res.y.v = a.y.v and bY.v
         return res
     }
 
-    inline fun and(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
+    fun and(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
         res.x.v = a.x.v and bX
         res.y.v = a.y.v and bY
         return res
     }
 
-    inline fun and(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
+    fun and(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
         res.x.v = a.x.v and bX
         res.y.v = a.y.v and bY
         return res
     }
 
-    inline fun or(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
+    fun or(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
         res.x.v = a.x.v or bX
         res.y.v = a.y.v or bY
         return res
     }
 
-    inline fun or(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
+    fun or(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
         res.x.v = a.x.v or bX
         res.y.v = a.y.v or bY
         return res
     }
 
-    inline fun or(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
+    fun or(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
         res.x.v = a.x.v or bX
         res.y.v = a.y.v or bY
         return res
     }
 
-    inline fun xor(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
+    fun xor(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
         res.x.v = a.x.v xor bX
         res.y.v = a.y.v xor bY
         return res
     }
 
-    inline fun xor(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
+    fun xor(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
         res.x.v = a.x.v xor bX
         res.y.v = a.y.v xor bY
         return res
     }
 
-    inline fun xor(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
+    fun xor(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
         res.x.v = a.x.v xor bX
         res.y.v = a.y.v xor bY
         return res
     }
 
-    inline fun shl(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
+    fun shl(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
         res.x.v = a.x.v shl bX
         res.y.v = a.y.v shl bY
         return res
     }
 
-    inline fun shl(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
+    fun shl(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
         res.x.v = a.x.v shl bX
         res.y.v = a.y.v shl bY
         return res
     }
 
-    inline fun shl(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
+    fun shl(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
         res.x.v = a.x.v shl bX
         res.y.v = a.y.v shl bY
         return res
     }
 
-    inline fun shr(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
+    fun shr(res: Vec2us, a: Vec2us, bX: Ushort, bY: Ushort): Vec2us {
         res.x.v = a.x.v ushr bX.v
         res.y.v = a.y.v ushr bY.v
         return res
     }
 
-    inline fun shr(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
+    fun shr(res: Vec2us, a: Vec2us, bX: Short, bY: Short): Vec2us {
         res.x.v = a.x.v ushr bX
         res.y.v = a.y.v ushr bY
         return res
     }
 
-    inline fun shr(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
+    fun shr(res: Vec2us, a: Vec2us, bX: Int, bY: Int): Vec2us {
         res.x.v = a.x.v ushr bX
         res.y.v = a.y.v ushr bY
         return res
     }
 
-    inline fun inv(res: Vec2us, a: Vec2us): Vec2us {
+    fun inv(res: Vec2us, a: Vec2us): Vec2us {
         res.x.v = a.x.v.inv()
         res.y.v = a.y.v.inv()
         return res

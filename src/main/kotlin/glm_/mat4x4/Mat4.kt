@@ -22,6 +22,9 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
+import kool.bufferBig
+import kool.floatBufferBig
+import org.lwjgl.system.MemoryStack
 import java.io.InputStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
@@ -206,7 +209,7 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
             0f, 0f, z, 0f,
             0f, 0f, 0f, w)
 
-    inline operator fun invoke(a0: Float, a1: Float, a2: Float, a3: Float,
+    operator fun invoke(a0: Float, a1: Float, a2: Float, a3: Float,
                                b0: Float, b1: Float, b2: Float, b3: Float,
                                c0: Float, c1: Float, c2: Float, c3: Float,
                                d0: Float, d1: Float, d2: Float, d3: Float): Mat4 {
@@ -278,50 +281,52 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
         return res
     }
 
-    // TODO others
-    infix fun to(dbb: ByteBuffer): ByteBuffer = to(dbb, 0)
+    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.calloc(size), 0)
+    fun toBuffer(): ByteBuffer = to(bufferBig(size), 0)
+    infix fun to(buf: ByteBuffer): ByteBuffer = to(buf, 0)
 
-    fun to(dbb: ByteBuffer, offset: Int): ByteBuffer {
-        dbb.putFloat(offset + 0 * Float.BYTES, array[0])
-        dbb.putFloat(offset + 1 * Float.BYTES, array[1])
-        dbb.putFloat(offset + 2 * Float.BYTES, array[2])
-        dbb.putFloat(offset + 3 * Float.BYTES, array[3])
-        dbb.putFloat(offset + 4 * Float.BYTES, array[4])
-        dbb.putFloat(offset + 5 * Float.BYTES, array[5])
-        dbb.putFloat(offset + 6 * Float.BYTES, array[6])
-        dbb.putFloat(offset + 7 * Float.BYTES, array[7])
-        dbb.putFloat(offset + 8 * Float.BYTES, array[8])
-        dbb.putFloat(offset + 9 * Float.BYTES, array[9])
-        dbb.putFloat(offset + 10 * Float.BYTES, array[10])
-        dbb.putFloat(offset + 11 * Float.BYTES, array[11])
-        dbb.putFloat(offset + 12 * Float.BYTES, array[12])
-        dbb.putFloat(offset + 13 * Float.BYTES, array[13])
-        dbb.putFloat(offset + 14 * Float.BYTES, array[14])
-        dbb.putFloat(offset + 15 * Float.BYTES, array[15])
-        return dbb
+    fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        return buf
+                .putFloat(offset + 0 * Float.BYTES, array[0])
+                .putFloat(offset + 1 * Float.BYTES, array[1])
+                .putFloat(offset + 2 * Float.BYTES, array[2])
+                .putFloat(offset + 3 * Float.BYTES, array[3])
+                .putFloat(offset + 4 * Float.BYTES, array[4])
+                .putFloat(offset + 5 * Float.BYTES, array[5])
+                .putFloat(offset + 6 * Float.BYTES, array[6])
+                .putFloat(offset + 7 * Float.BYTES, array[7])
+                .putFloat(offset + 8 * Float.BYTES, array[8])
+                .putFloat(offset + 9 * Float.BYTES, array[9])
+                .putFloat(offset + 10 * Float.BYTES, array[10])
+                .putFloat(offset + 11 * Float.BYTES, array[11])
+                .putFloat(offset + 12 * Float.BYTES, array[12])
+                .putFloat(offset + 13 * Float.BYTES, array[13])
+                .putFloat(offset + 14 * Float.BYTES, array[14])
+                .putFloat(offset + 15 * Float.BYTES, array[15])
     }
 
-    // TODO others
-    infix fun to(dfb: FloatBuffer) = to(dfb, 0)
+    fun toFloatBuffer(stack: MemoryStack) = to(stack.mallocFloat(length), 0)
+    fun toFloatBuffer() = to(floatBufferBig(length), 0)
+    infix fun to(buf: FloatBuffer) = to(buf, 0)
 
-    fun to(dfb: FloatBuffer, offset: Int): FloatBuffer {
-        dfb[offset + 0] = array[0]
-        dfb[offset + 1] = array[1]
-        dfb[offset + 2] = array[2]
-        dfb[offset + 3] = array[3]
-        dfb[offset + 4] = array[4]
-        dfb[offset + 5] = array[5]
-        dfb[offset + 6] = array[6]
-        dfb[offset + 7] = array[7]
-        dfb[offset + 8] = array[8]
-        dfb[offset + 9] = array[9]
-        dfb[offset + 10] = array[10]
-        dfb[offset + 11] = array[11]
-        dfb[offset + 12] = array[12]
-        dfb[offset + 13] = array[13]
-        dfb[offset + 14] = array[14]
-        dfb[offset + 15] = array[15]
-        return dfb
+    fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
+        buf[offset + 0] = array[0]
+        buf[offset + 1] = array[1]
+        buf[offset + 2] = array[2]
+        buf[offset + 3] = array[3]
+        buf[offset + 4] = array[4]
+        buf[offset + 5] = array[5]
+        buf[offset + 6] = array[6]
+        buf[offset + 7] = array[7]
+        buf[offset + 8] = array[8]
+        buf[offset + 9] = array[9]
+        buf[offset + 10] = array[10]
+        buf[offset + 11] = array[11]
+        buf[offset + 12] = array[12]
+        buf[offset + 13] = array[13]
+        buf[offset + 14] = array[14]
+        buf[offset + 15] = array[15]
+        return buf
     }
 
     infix fun to(res: Quat) = glm.quat_cast(this, res)
@@ -372,19 +377,19 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
 
     // -- Accesses --
 
-    override inline operator fun get(index: Int) = Vec4(index * 4, array)
-    override inline operator fun get(column: Int, row: Int) = array[column * 4 + row]
+    override operator fun get(index: Int) = Vec4(index * 4, array)
+    override operator fun get(column: Int, row: Int) = array[column * 4 + row]
 
-    override inline operator fun set(column: Int, row: Int, value: Float) = array.set(column * 4 + row, value)
+    override operator fun set(column: Int, row: Int, value: Float) = array.set(column * 4 + row, value)
 
-    override inline operator fun set(index: Int, value: Vec4t<out Number>) {
+    override operator fun set(index: Int, value: Vec4t<out Number>) {
         array[index * 4] = value.x.f
         array[index * 4 + 1] = value.y.f
         array[index * 4 + 2] = value.z.f
         array[index * 4 + 3] = value.w.f
     }
 
-    inline operator fun set(i: Int, v: Vec4) {
+    operator fun set(i: Int, v: Vec4) {
         v.to(array, i * 4)
     }
 
@@ -495,8 +500,8 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
 
     val det get() = glm.determinant(this)
 
-    inline fun inverse() = inverse(Mat4())  // TODO check style: inline + overload
-    inline infix fun inverse(res: Mat4) = inverse(res, this)
+    fun inverse() = inverse(Mat4())
+    infix fun inverse(res: Mat4) = inverse(res, this)
 
     fun inverseAssign() = inverse(this, this)
 
@@ -621,7 +626,7 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
                 this[0, 2] == 0f && this[1, 2] == 0f && this[2, 2] == 1f && this[3, 2] == 0f &&
                 this[0, 3] == 0f && this[1, 3] == 0f && this[2, 3] == 0f && this[3, 3] == 1f
 
-    companion object : mat4x4_operators() {
+    companion object : mat4x4_operators {
         const val length = Mat4x4t.length
         @JvmField
         val size = length * Float.BYTES

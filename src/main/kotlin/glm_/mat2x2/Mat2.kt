@@ -14,6 +14,10 @@ import glm_.vec2.Vec2
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
+import kool.bufferBig
+import kool.floatBufferBig
+import org.lwjgl.system.MemoryStack
+import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.util.*
 
@@ -107,16 +111,16 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
 
     // -- Accesses --
 
-    override inline operator fun get(index: Int) = Vec2(index * 2, array)
-    override inline operator fun get(column: Int, row: Int) = array[column * 2 + row]
+    override operator fun get(index: Int) = Vec2(index * 2, array)
+    override operator fun get(column: Int, row: Int) = array[column * 2 + row]
 
-    override inline operator fun set(column: Int, row: Int, value: Float) = array.set(column * 2 + row, value)
-    override inline operator fun set(index: Int, value: Vec2t<out Number>) {
+    override operator fun set(column: Int, row: Int, value: Float) = array.set(column * 2 + row, value)
+    override operator fun set(index: Int, value: Vec2t<out Number>) {
         array[index * 2] = value.x.f
         array[index * 2 + 1] = value.y.f
     }
 
-    inline operator fun set(index: Int, value: Vec2) {
+    operator fun set(index: Int, value: Vec2) {
         value.to(array, index * 2)
     }
 
@@ -133,7 +137,7 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
             x, 0f,
             0f, y)
 
-    inline operator fun invoke(a0: Float, a1: Float,
+    operator fun invoke(a0: Float, a1: Float,
                                b0: Float, b1: Float): Mat2 {
 
         put(a0, a1, b0, b1)
@@ -179,14 +183,29 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
     // TODO inc
 
 
-    infix fun to(dfb: FloatBuffer) = to(dfb, 0)
+    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.malloc(size), 0)
+    fun toBuffer(): ByteBuffer = to(bufferBig(size), 0)
+    infix fun to(buf: ByteBuffer) = to(buf, 0)
 
-    fun to(dfb: FloatBuffer, offset: Int): FloatBuffer {
-        dfb[offset + 0] = array[0]
-        dfb[offset + 1] = array[1]
-        dfb[offset + 2] = array[2]
-        dfb[offset + 3] = array[3]
-        return dfb
+    fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf
+                .putFloat(offset + 0 * Float.BYTES, array[0])
+                .putFloat(offset + 1 * Float.BYTES, array[1])
+                .putFloat(offset + 2 * Float.BYTES, array[2])
+                .putFloat(offset + 3 * Float.BYTES, array[3])
+        return buf
+    }
+
+    infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
+    fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
+    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, 0)
+
+    fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
+        buf[offset + 0] = array[0]
+        buf[offset + 1] = array[1]
+        buf[offset + 2] = array[2]
+        buf[offset + 3] = array[3]
+        return buf
     }
 
     // -- Unary arithmetic operators --
@@ -223,6 +242,7 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
     infix operator fun minusAssign(b: Mat2) {
         minus(this, this, b)
     }
+
     infix operator fun minusAssign(b: Float) {
         minus(this, this, b)
     }
@@ -243,6 +263,7 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
     infix operator fun timesAssign(b: Mat2) {
         times(this, this, b)
     } // TODO
+
     infix operator fun timesAssign(b: Float) {
         times(this, this, b)
     }
@@ -261,6 +282,7 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
     infix operator fun divAssign(b: Mat2) {
         div(this, this, b)
     }
+
     infix operator fun divAssign(b: Float) {
         div(this, this, b)
     }
@@ -287,7 +309,7 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
         get() = this[0, 0] == 1f && this[1, 0] == 0f &&
                 this[0, 1] == 0f && this[1, 1] == 1f
 
-    companion object : mat2x2_operators() {
+    companion object : mat2x2_operators {
         const val length = Mat2x2t.length
         @JvmField
         val size = length * Float.BYTES

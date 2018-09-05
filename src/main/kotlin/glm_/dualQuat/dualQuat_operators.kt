@@ -8,15 +8,15 @@ import glm_.vec4.Vec4
  * Created by GBarbieri on 13.12.2016.
  */
 
-open class dualQuat_operators {
+interface dualQuat_operators {
 
-    inline fun plus(res: DualQuat, a: DualQuat, b: DualQuat): DualQuat {
+    fun plus(res: DualQuat, a: DualQuat, b: DualQuat): DualQuat {
         a.real.plus(b.real, res.real)
         a.dual.plus(b.dual, res.dual)
         return res
     }
 
-//    inline fun minus(res: Quat, a: Quat, b: Quat): Quat {
+//    fun minus(res: Quat, a: Quat, b: Quat): Quat {
 //        res.w = a.w - b.w
 //        res.x = a.x - b.x
 //        res.y = a.y - b.y
@@ -24,7 +24,7 @@ open class dualQuat_operators {
 //        return res
 //    }
 
-    inline fun times(res: DualQuat, a: DualQuat, b: DualQuat): DualQuat {
+    fun times(res: DualQuat, a: DualQuat, b: DualQuat): DualQuat {
         a.real.times(b.real, res.real)
         a.real.times(b.dual, res.dual)
         val w = a.dual.w * b.real.w - a.dual.x * b.real.x - a.dual.y * b.real.y - a.dual.z * b.real.z
@@ -38,7 +38,7 @@ open class dualQuat_operators {
         return res
     }
 
-    inline fun times(res: Vec3, q: DualQuat, v: Vec3): Vec3 {
+    fun times(res: Vec3, q: DualQuat, v: Vec3): Vec3 {
         // t = cross(real_v3,v) + v * q.real.w + dual_v3)
         val t0 = q.real.y * v.z - v.y * q.real.z + v.x * q.real.w + q.dual.x
         val t1 = q.real.z * v.x - v.z * q.real.x + v.y * q.real.w + q.dual.y
@@ -54,7 +54,7 @@ open class dualQuat_operators {
                 c2 * 2f + v.z)
     }
 
-    inline fun times(res: Vec3, v: Vec3, q: DualQuat): Vec3 {
+    fun times(res: Vec3, v: Vec3, q: DualQuat): Vec3 {
         // inverse
         // conjugate
         val realW = q.real.w
@@ -88,7 +88,7 @@ open class dualQuat_operators {
                 c2 * 2f + v.z)
     }
 
-    inline fun times(res: Vec4, q: DualQuat, v: Vec4): Vec4 {
+    fun times(res: Vec4, q: DualQuat, v: Vec4): Vec4 {
         // t = cross(real_v3,v) + v * q.real.w + dual_v3)
         val t0 = q.real.y * v.z - v.y * q.real.z + v.x * q.real.w + q.dual.x
         val t1 = q.real.z * v.x - v.z * q.real.x + v.y * q.real.w + q.dual.y
@@ -105,7 +105,7 @@ open class dualQuat_operators {
                 v.w)
     }
 
-    inline fun times(res: Vec4, v: Vec4, q: DualQuat): Vec4 {
+    fun times(res: Vec4, v: Vec4, q: DualQuat): Vec4 {
         // inverse
         // conjugate
         val realW = q.real.w
@@ -140,13 +140,13 @@ open class dualQuat_operators {
                 v.w)
     }
 
-    inline fun times(res: DualQuat, q: DualQuat, s: Float): DualQuat {
+    fun times(res: DualQuat, q: DualQuat, s: Float): DualQuat {
         q.real.times(s, res.real)
         q.dual.times(s, res.dual)
         return res
     }
 
-    inline fun div(res: DualQuat, q: DualQuat, s: Float): DualQuat {
+    fun div(res: DualQuat, q: DualQuat, s: Float): DualQuat {
         q.real.div(s, res.real)
         q.dual.div(s, res.dual)
         return res

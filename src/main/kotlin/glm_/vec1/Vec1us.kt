@@ -1,13 +1,15 @@
 package glm_.vec1
 
 import glm_.*
-import glm_.buffer.shortBufferBig
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.pos
+import kool.shortBufferBig
+import org.lwjgl.system.MemoryStack
 import unsigned.Ushort
 import java.nio.*
 
@@ -46,15 +48,15 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
 
     constructor(list: List<Any>, index: Int = 0) : this(list[index].toShort)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUshort: Boolean = false) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneUshort: Boolean = false) : this(
             if (oneByteOneUshort) bytes[index].us else bytes.getShort(index).us)
 
-    constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].us)
-    constructor(shorts: ShortBuffer, index: Int = shorts.position()) : this(shorts[index])
-    constructor(ints: IntBuffer, index: Int = ints.position()) : this(ints[index])
-    constructor(longs: LongBuffer, index: Int = longs.position()) : this(longs[index])
-    constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index])
-    constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index])
+    constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].us)
+    constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index])
+    constructor(ints: IntBuffer, index: Int = ints.pos) : this(ints[index])
+    constructor(longs: LongBuffer, index: Int = longs.pos) : this(longs[index])
+    constructor(floats: FloatBuffer, index: Int = floats.pos) : this(floats[index])
+    constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index])
 
     constructor(block: (Int) -> Ushort) : this(block(0))
 
@@ -65,7 +67,7 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
         x.v = if (oneByteOneShort) bytes[index].s else bytes.getShort(index, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneShort: Boolean = false) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneShort: Boolean = false) {
         x.v = if (oneByteOneShort) bytes[index].s else bytes.getShort(index)
     }
 
@@ -99,24 +101,25 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
 
     fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
-        bytes.setShort(index, x.v)
+        bytes.putShort(index, x.v)
         return bytes
     }
 
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer = bytes.putShort(index, x.v)
+    override fun to(buf: ByteBuffer, index: Int): ByteBuffer = buf.putShort(index, x.v)
 
-    fun toShortArray() = to(ShortArray(length), 0)
-    infix fun to(shorts: ShortArray) = to(shorts, 0)
+    fun toShortArray(): ShortArray = to(ShortArray(length), 0)
+    infix fun to(shorts: ShortArray): ShortArray = to(shorts, 0)
     fun to(shorts: ShortArray, index: Int): ShortArray {
         shorts[index] = x.v
         return shorts
     }
 
-    fun toShortBuffer() = to(shortBufferBig(length), 0)
-    infix fun to(shorts: ShortBuffer) = to(shorts, shorts.position())
-    fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
-        shorts[index] = x.v
-        return shorts
+    infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
+    fun toShortBuffer(): ShortBuffer = to(shortBufferBig(length), 0)
+    infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)
+    fun to(buf: ShortBuffer, index: Int): ShortBuffer {
+        buf[index] = x.v
+        return buf
     }
 
 

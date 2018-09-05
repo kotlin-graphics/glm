@@ -1,7 +1,6 @@
 package glm_.vec4
 
 import glm_.*
-import glm_.buffer.shortBufferBig
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec2.Vec2us
@@ -9,6 +8,9 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec3.Vec3us
 import glm_.vec4.operators.vec4us_operators
+import kool.pos
+import kool.shortBufferBig
+import org.lwjgl.system.MemoryStack
 import unsigned.Ushort
 import java.nio.*
 
@@ -21,16 +23,16 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>() {
     constructor(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : this(0, shortArrayOf(x.v, y.v, z.v, w.v))
     constructor(x: Short, y: Short, z: Short, w: Short) : this(0, shortArrayOf(x, y, z, w))
 
-    override inline var x: Ushort
+    override var x: Ushort
         get() = Ushort(array[ofs])
         set(value) = array.set(ofs, value.v)
-    override inline var y: Ushort
+    override var y: Ushort
         get() = Ushort(array[ofs + 1])
         set(value) = array.set(ofs + 1, value.v)
-    override inline var z: Ushort
+    override var z: Ushort
         get() = Ushort(array[ofs + 2])
         set(value) = array.set(ofs + 2, value.v)
-    override inline var w: Ushort
+    override var w: Ushort
         get() = Ushort(array[ofs + 3])
         set(value) = array.set(ofs + 3, value.v)
 
@@ -83,18 +85,18 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>() {
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toShort, list.elementAt(index + 1)!!.toShort,
             list.elementAt(index + 2)!!.toShort, list.elementAt(index + 3)!!.toShort)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUshort: Boolean = false) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneUshort: Boolean = false) : this(
             if (oneByteOneUshort) bytes[index].us else bytes.getShort(index).us,
             if (oneByteOneUshort) bytes[index + 1].us else bytes.getShort(index + Ushort.BYTES).us,
             if (oneByteOneUshort) bytes[index + 2].us else bytes.getShort(index + Ushort.BYTES * 2).us,
             if (oneByteOneUshort) bytes[index + 3].us else bytes.getShort(index + Ushort.BYTES * 3).us)
 
-    constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].us, chars[index + 1].us, chars[index + 2].us, chars[index + 3].us)
-    constructor(shorts: ShortBuffer, index: Int = shorts.position()) : this(shorts[index], shorts[index + 1], shorts[index + 2], shorts[index + 3])
-    constructor(ints: IntBuffer, index: Int = ints.position()) : this(ints[index], ints[index + 1], ints[index + 2], ints[index + 3])
-    constructor(longs: LongBuffer, index: Int = longs.position()) : this(longs[index], longs[index + 1], longs[index + 2], longs[index + 3])
-    constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1], floats[index + 2], floats[index + 3])
-    constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
+    constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].us, chars[index + 1].us, chars[index + 2].us, chars[index + 3].us)
+    constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index], shorts[index + 1], shorts[index + 2], shorts[index + 3])
+    constructor(ints: IntBuffer, index: Int = ints.pos) : this(ints[index], ints[index + 1], ints[index + 2], ints[index + 3])
+    constructor(longs: LongBuffer, index: Int = longs.pos) : this(longs[index], longs[index + 1], longs[index + 2], longs[index + 3])
+    constructor(floats: FloatBuffer, index: Int = floats.pos) : this(floats[index], floats[index + 1], floats[index + 2], floats[index + 3])
+    constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
     constructor(block: (Int) -> Ushort) : this(block(0), block(1), block(2), block(3))
 
@@ -109,7 +111,7 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>() {
         w.v = if (oneByteOneShort) bytes[index + 3].s else bytes.getShort(index + Ushort.BYTES * 3, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneShort: Boolean = false) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneShort: Boolean = false) {
         x.v = if (oneByteOneShort) bytes[index].s else bytes.getShort(index)
         y.v = if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Ushort.BYTES)
         z.v = if (oneByteOneShort) bytes[index + 2].s else bytes.getShort(index + Ushort.BYTES * 2)
@@ -162,25 +164,25 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>() {
         return this
     }
 
-    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    fun to(bytes: ByteArray, index: Int): ByteArray = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
-        bytes.setShort(index, x.v)
-        bytes.setShort(index + Short.BYTES, y.v)
-        bytes.setShort(index + Short.BYTES * 2, z.v)
-        bytes.setShort(index + Short.BYTES * 3, w.v)
+        bytes.putShort(index, x.v, bigEndian)
+        bytes.putShort(index + Short.BYTES, y.v, bigEndian)
+        bytes.putShort(index + Short.BYTES * 2, z.v, bigEndian)
+        bytes.putShort(index + Short.BYTES * 3, w.v, bigEndian)
         return bytes
     }
 
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.putShort(index, x.v)
-        bytes.putShort(index + Short.BYTES, y.v)
-        bytes.putShort(index + Short.BYTES * 2, z.v)
-        bytes.putShort(index + Short.BYTES * 3, w.v)
-        return bytes
+    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
+        buf.putShort(index, x.v)
+        buf.putShort(index + Short.BYTES, y.v)
+        buf.putShort(index + Short.BYTES * 2, z.v)
+        buf.putShort(index + Short.BYTES * 3, w.v)
+        return buf
     }
 
-    fun toShortArray() = to(ShortArray(length), 0)
-    infix fun to(shorts: ShortArray) = to(shorts, 0)
+    fun toShortArray(): ShortArray = to(ShortArray(length), 0)
+    infix fun to(shorts: ShortArray): ShortArray = to(shorts, 0)
     fun to(shorts: ShortArray, index: Int): ShortArray {
         shorts[index] = x.v
         shorts[index + 1] = y.v
@@ -189,8 +191,9 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>() {
         return shorts
     }
 
-    fun toShortBuffer() = to(shortBufferBig(length), 0)
-    infix fun to(shorts: ShortBuffer) = to(shorts, shorts.position())
+    infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
+    fun toShortBuffer(): ShortBuffer = to(shortBufferBig(length), 0)
+    infix fun to(shorts: ShortBuffer): ShortBuffer = to(shorts, shorts.pos)
     fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
         shorts[index] = x.v
         shorts[index + 1] = y.v
@@ -699,7 +702,7 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>() {
     override fun createInstance(x: Ushort, y: Ushort, z: Ushort, w: Ushort) = Vec4us(x, y, z, w)
 
 
-    companion object : vec4us_operators() {
+    companion object : vec4us_operators {
         const val length = Vec4t.length
         @JvmField
         val size = length * Ushort.BYTES

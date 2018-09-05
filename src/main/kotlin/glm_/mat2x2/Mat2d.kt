@@ -105,16 +105,16 @@ class Mat2d(dummy: Int, var array: DoubleArray) : Mat2x2t<Double>() {
 
     // -- Accesses --
 
-    override inline operator fun get(index: Int) = Vec2d(index * 2, array)
-    override inline operator fun get(column: Int, row: Int) = array[column * 2 + row]
+    override operator fun get(index: Int) = Vec2d(index * 2, array)
+    override operator fun get(column: Int, row: Int) = array[column * 2 + row]
 
-    override inline operator fun set(column: Int, row: Int, value: Double) = array.set(column * 2 + row, value)
-    override inline operator fun set(index: Int, value: Vec2t<out Number>) {
+    override operator fun set(column: Int, row: Int, value: Double) = array.set(column * 2 + row, value)
+    override operator fun set(index: Int, value: Vec2t<out Number>) {
         array[index * 2] = value.x.d
         array[index * 2 + 1] = value.y.d
     }
 
-    inline operator fun set(i: Int, v: Vec2d) {
+    operator fun set(i: Int, v: Vec2d) {
         v.to(array, i * 2)
     }
 
@@ -141,7 +141,7 @@ class Mat2d(dummy: Int, var array: DoubleArray) : Mat2x2t<Double>() {
             x, 0.0,
             0.0, y)
 
-    inline fun invoke(a0: Double, a1: Double,
+    fun invoke(a0: Double, a1: Double,
                       b0: Double, b1: Double): Mat2d {
 
         put(a0, a1, b0, b1)
@@ -291,7 +291,7 @@ class Mat2d(dummy: Int, var array: DoubleArray) : Mat2x2t<Double>() {
         get() = this[0, 0] == 1.0 && this[1, 0] == 0.0 &&
                 this[0, 1] == 0.0 && this[1, 1] == 1.0
 
-    companion object : mat2x2d_operators() {
+    companion object : mat2x2d_operators {
         const val length = Mat2x2t.length
         @JvmField
         val size = length * Double.BYTES

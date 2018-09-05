@@ -15,165 +15,165 @@ import kotlin.experimental.xor
 /**
  * Created by GBarbieri on 08.11.2016.
  */
-open class opVec2b {
+interface opVec2b {
 
-    inline fun plus(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
+    fun plus(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
         res.x = (a.x + bX).b
         res.y = (a.y + bY).b
         return res
     }
 
-    inline fun plus(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
+    fun plus(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
         res.x = (a.x + bX).b
         res.y = (a.y + bY).b
         return res
     }
 
-    inline fun minus(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
+    fun minus(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
         res.x = (a.x - bX).b
         res.y = (a.y - bY).b
         return res
     }
 
-    inline fun minus(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
+    fun minus(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
         res.x = (a.x - bX).b
         res.y = (a.y - bY).b
         return res
     }
 
-    inline fun minus(res: Vec2b, aX: Byte, aY: Byte, b: Vec2b): Vec2b {
+    fun minus(res: Vec2b, aX: Byte, aY: Byte, b: Vec2b): Vec2b {
         res.x = (aX - b.x).b
         res.y = (aY - b.y).b
         return res
     }
 
-    inline fun minus(res: Vec2b, aX: Int, aY: Int, b: Vec2b): Vec2b {
+    fun minus(res: Vec2b, aX: Int, aY: Int, b: Vec2b): Vec2b {
         res.x = (aX - b.x).b
         res.y = (aY - b.y).b
         return res
     }
 
-    inline fun times(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
+    fun times(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
         res.x = (a.x * bX).b
         res.y = (a.y * bY).b
         return res
     }
 
-    inline fun times(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
+    fun times(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
         res.x = (a.x * bX).b
         res.y = (a.y * bY).b
         return res
     }
 
-    inline fun div(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
+    fun div(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
         res.x = (a.x / bX).b
         res.y = (a.y / bY).b
         return res
     }
 
-    inline fun div(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
+    fun div(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
         res.x = (a.x / bX).b
         res.y = (a.y / bY).b
         return res
     }
 
-    inline fun div(res: Vec2b, aX: Byte, aY: Byte, b: Vec2b): Vec2b {
+    fun div(res: Vec2b, aX: Byte, aY: Byte, b: Vec2b): Vec2b {
         res.x = (aX / b.x).b
         res.y = (aY / b.y).b
         return res
     }
 
-    inline fun div(res: Vec2b, aX: Int, aY: Int, b: Vec2b): Vec2b {
+    fun div(res: Vec2b, aX: Int, aY: Int, b: Vec2b): Vec2b {
         res.x = (aX / b.x).b
         res.y = (aY / b.y).b
         return res
     }
 
-    inline fun rem(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
+    fun rem(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
         res.x = (a.x % bX).b
         res.y = (a.y % bY).b
         return res
     }
 
-    inline fun rem(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
+    fun rem(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
         res.x = (a.x % bX).b
         res.y = (a.y % bY).b
         return res
     }
 
-    inline fun rem(res: Vec2b, aX: Byte, aY: Byte, b: Vec2b): Vec2b {
+    fun rem(res: Vec2b, aX: Byte, aY: Byte, b: Vec2b): Vec2b {
         res.x = (aX % b.x).b
         res.y = (aY % b.y).b
         return res
     }
 
-    inline fun rem(res: Vec2b, aX: Int, aY: Int, b: Vec2b): Vec2b {
+    fun rem(res: Vec2b, aX: Int, aY: Int, b: Vec2b): Vec2b {
         res.x = (aX % b.x).b
         res.y = (aY % b.y).b
         return res
     }
 
-    inline fun and(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
+    fun and(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
         res.x = a.x and bX
         res.y = a.y and bY
         return res
     }
 
-    inline fun and(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
+    fun and(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
         res.x = a.x and bX
         res.y = a.y and bY
         return res
     }
 
-    inline fun or(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
+    fun or(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
         res.x = a.x or bX
         res.y = a.y or bY
         return res
     }
 
-    inline fun or(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
+    fun or(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
         res.x = a.x or bX
         res.y = a.y or bY
         return res
     }
 
-    inline fun xor(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
+    fun xor(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
         res.x = a.x xor bX
         res.y = a.y xor bY
         return res
     }
 
-    inline fun xor(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
+    fun xor(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
         res.x = a.x xor bX
         res.y = a.y xor bY
         return res
     }
 
-    inline fun shl(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
+    fun shl(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
         res.x = a.x shl bX
         res.y = a.y shl bY
         return res
     }
 
-    inline fun shl(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
+    fun shl(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
         res.x = a.x shl bX
         res.y = a.y shl bY
         return res
     }
 
-    inline fun shr(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
+    fun shr(res: Vec2b, a: Vec2b, bX: Byte, bY: Byte): Vec2b {
         res.x = a.x shr bX
         res.y = a.y shr bY
         return res
     }
 
-    inline fun shr(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
+    fun shr(res: Vec2b, a: Vec2b, bX: Int, bY: Int): Vec2b {
         res.x = a.x shr bX
         res.y = a.y shr bY
         return res
     }
 
-    inline fun inv(res: Vec2b, a: Vec2b): Vec2b {
+    fun inv(res: Vec2b, a: Vec2b): Vec2b {
         res.x = a.x.inv()
         res.y = a.y.inv()
         return res

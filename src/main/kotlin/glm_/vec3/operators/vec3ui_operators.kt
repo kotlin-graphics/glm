@@ -16,191 +16,191 @@ import unsigned.urem
  * Created by GBarbieri on 08.11.2016.
  */
 
-open class vec3ui_operators {
+interface vec3ui_operators {
 
-    inline fun plus(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
+    fun plus(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
         res.x.v = a.x.v + bX.v
         res.y.v = a.y.v + bY.v
         res.z.v = a.z.v + bZ.v
         return res
     }
 
-    inline fun plus(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
+    fun plus(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
         res.x.v = a.x.v + bX
         res.y.v = a.y.v + bY
         res.z.v = a.z.v + bZ
         return res
     }
 
-    inline fun minus(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
+    fun minus(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
         res.x.v = a.x.v - bX.v
         res.y.v = a.y.v - bY.v
         res.z.v = a.z.v - bZ.v
         return res
     }
 
-    inline fun minus(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
+    fun minus(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
         res.x.v = a.x.v - bX
         res.y.v = a.y.v - bY
         res.z.v = a.z.v - bZ
         return res
     }
 
-    inline fun minus(res: Vec3ui, aX: Uint, aY: Uint, aZ: Uint, b: Vec3ui): Vec3ui {
+    fun minus(res: Vec3ui, aX: Uint, aY: Uint, aZ: Uint, b: Vec3ui): Vec3ui {
         res.x.v = aX.v - b.x.v
         res.y.v = aY.v - b.y.v
         res.z.v = aZ.v - b.z.v
         return res
     }
 
-    inline fun minus(res: Vec3ui, aX: Int, aY: Int, aZ: Int, b: Vec3ui): Vec3ui {
+    fun minus(res: Vec3ui, aX: Int, aY: Int, aZ: Int, b: Vec3ui): Vec3ui {
         res.x.v = aX - b.x.v
         res.y.v = aY - b.y.v
         res.z.v = aZ - b.z.v
         return res
     }
 
-    inline fun times(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
+    fun times(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
         res.x.v = a.x.v * bX.v
         res.y.v = a.y.v * bY.v
         res.z.v = a.z.v * bZ.v
         return res
     }
 
-    inline fun times(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
+    fun times(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
         res.x.v = a.x.v * bX
         res.y.v = a.y.v * bY
         res.z.v = a.z.v * bZ
         return res
     }
 
-    inline fun div(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
+    fun div(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
         res.x.v = a.x.v udiv bX.v
         res.y.v = a.y.v udiv bY.v
         res.z.v = a.z.v udiv bZ.v
         return res
     }
 
-    inline fun div(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
+    fun div(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
         res.x.v = a.x.v udiv bX
         res.y.v = a.y.v udiv bY
         res.z.v = a.z.v udiv bZ
         return res
     }
 
-    inline fun div(res: Vec3ui, aX: Uint, aY: Uint, aZ: Uint, b: Vec3ui): Vec3ui {
+    fun div(res: Vec3ui, aX: Uint, aY: Uint, aZ: Uint, b: Vec3ui): Vec3ui {
         res.x.v = aX.v udiv b.x.v
         res.y.v = aY.v udiv b.y.v
         res.z.v = aZ.v udiv b.z.v
         return res
     }
 
-    inline fun div(res: Vec3ui, aX: Int, aY: Int, aZ: Int, b: Vec3ui): Vec3ui {
+    fun div(res: Vec3ui, aX: Int, aY: Int, aZ: Int, b: Vec3ui): Vec3ui {
         res.x.v = aX udiv b.x.v
         res.y.v = aY udiv b.y.v
         res.z.v = aZ udiv b.z.v
         return res
     }
 
-    inline fun rem(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
+    fun rem(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
         res.x.v = a.x.v urem bX.v
         res.y.v = a.y.v urem bY.v
         res.z.v = a.z.v urem bZ.v
         return res
     }
 
-    inline fun rem(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
+    fun rem(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
         res.x.v = a.x.v urem bX
         res.y.v = a.y.v urem bY
         res.z.v = a.z.v urem bZ
         return res
     }
 
-    inline fun rem(res: Vec3ui, aX: Uint, aY: Uint, aZ: Uint, b: Vec3ui): Vec3ui {
+    fun rem(res: Vec3ui, aX: Uint, aY: Uint, aZ: Uint, b: Vec3ui): Vec3ui {
         res.x.v = aX.v urem b.x.v
         res.y.v = aY.v urem b.y.v
         res.z.v = aZ.v urem b.z.v
         return res
     }
 
-    inline fun rem(res: Vec3ui, aX: Int, aY: Int, aZ: Int, b: Vec3ui): Vec3ui {
+    fun rem(res: Vec3ui, aX: Int, aY: Int, aZ: Int, b: Vec3ui): Vec3ui {
         res.x.v = aX urem b.x.v
         res.y.v = aY urem b.y.v
         res.z.v = aZ urem b.z.v
         return res
     }
 
-    inline fun and(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
+    fun and(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
         res.x.v = a.x.v and bX.v
         res.y.v = a.y.v and bY.v
         res.z.v = a.z.v and bZ.v
         return res
     }
 
-    inline fun and(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
+    fun and(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
         res.x.v = a.x.v and bX
         res.y.v = a.y.v and bY
         res.z.v = a.z.v and bZ
         return res
     }
 
-    inline fun or(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
+    fun or(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
         res.x.v = a.x.v or bX.v
         res.y.v = a.y.v or bY.v
         res.z.v = a.z.v or bZ.v
         return res
     }
 
-    inline fun or(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
+    fun or(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
         res.x.v = a.x.v or bX
         res.y.v = a.y.v or bY
         res.z.v = a.z.v or bZ
         return res
     }
 
-    inline fun xor(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
+    fun xor(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
         res.x.v = a.x.v xor bX.v
         res.y.v = a.y.v xor bY.v
         res.z.v = a.z.v xor bZ.v
         return res
     }
 
-    inline fun xor(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
+    fun xor(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
         res.x.v = a.x.v xor bX
         res.y.v = a.y.v xor bY
         res.z.v = a.z.v xor bZ
         return res
     }
 
-    inline fun shl(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
+    fun shl(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
         res.x.v = a.x.v shl bX.v
         res.y.v = a.y.v shl bY.v
         res.z.v = a.z.v shl bZ.v
         return res
     }
 
-    inline fun shl(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
+    fun shl(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
         res.x.v = a.x.v shl bX
         res.y.v = a.y.v shl bY
         res.z.v = a.z.v shl bZ
         return res
     }
 
-    inline fun shr(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
+    fun shr(res: Vec3ui, a: Vec3ui, bX: Uint, bY: Uint, bZ: Uint): Vec3ui {
         res.x.v = a.x.v ushr bX.v
         res.y.v = a.y.v ushr bY.v
         res.z.v = a.z.v ushr bZ.v
         return res
     }
 
-    inline fun shr(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
+    fun shr(res: Vec3ui, a: Vec3ui, bX: Int, bY: Int, bZ: Int): Vec3ui {
         res.x.v = a.x.v ushr bX
         res.y.v = a.y.v ushr bY
         res.z.v = a.z.v ushr bZ
         return res
     }
 
-    inline fun inv(res: Vec3ui, a: Vec3ui): Vec3ui {
+    fun inv(res: Vec3ui, a: Vec3ui): Vec3ui {
         res.x.v = a.x.v.inv()
         res.y.v = a.y.v.inv()
         res.z.v = a.z.v.inv()

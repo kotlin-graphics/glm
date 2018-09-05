@@ -1,13 +1,15 @@
 package glm_.vec3
 
 import glm_.*
-import glm_.buffer.floatBufferBig
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.floatBufferBig
+import kool.pos
+import org.lwjgl.system.MemoryStack
 import java.io.InputStream
 import java.nio.*
 
@@ -19,13 +21,13 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
 
     constructor(x: Float, y: Float, z: Float) : this(0, floatArrayOf(x, y, z))
 
-    override inline var x: Float
+    override var x: Float
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override inline var y: Float
+    override var y: Float
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
-    override inline var z: Float
+    override var z: Float
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
 
@@ -63,17 +65,17 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toFloat, list.elementAt(index + 1)!!.toFloat,
             list.elementAt(index + 2)!!.toFloat)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = false) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneFloat: Boolean = false) : this(
             if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index),
             if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES),
             if (oneByteOneFloat) bytes[index + 2].f else bytes.getFloat(index + Float.BYTES * 2))
 
-    constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].f, chars[index + 1].f, chars[index + 2].f)
-    constructor(shorts: ShortBuffer, index: Int = shorts.position()) : this(shorts[index], shorts[index + 1], shorts[index + 2])
-    constructor(ints: IntBuffer, index: Int = ints.position()) : this(ints[index], ints[index + 1], ints[index + 2])
-    constructor(longs: LongBuffer, index: Int = longs.position()) : this(longs[index], longs[index + 1], longs[index + 2])
-    constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1], floats[index + 2])
-    constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1], doubles[index + 2])
+    constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].f, chars[index + 1].f, chars[index + 2].f)
+    constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index], shorts[index + 1], shorts[index + 2])
+    constructor(ints: IntBuffer, index: Int = ints.pos) : this(ints[index], ints[index + 1], ints[index + 2])
+    constructor(longs: LongBuffer, index: Int = longs.pos) : this(longs[index], longs[index + 1], longs[index + 2])
+    constructor(floats: FloatBuffer, index: Int = floats.pos) : this(floats[index], floats[index + 1], floats[index + 2])
+    constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
     constructor(block: (Int) -> Float) : this(block(0), block(1), block(2))
 
@@ -91,7 +93,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
         z = if (oneByteOneFloat) bytes[index + 2].f else bytes.getFloat(index + Float.BYTES * 2, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneFloat: Boolean = false) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneFloat: Boolean = false) {
         x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index)
         y = if (oneByteOneFloat) bytes[index + 1].f else bytes.getFloat(index + Float.BYTES)
         z = if (oneByteOneFloat) bytes[index + 2].f else bytes.getFloat(index + Float.BYTES * 2)
@@ -124,23 +126,23 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
         return this
     }
 
-    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    fun to(bytes: ByteArray, index: Int): ByteArray = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
-        bytes.setFloat(index, x)
-        bytes.setFloat(index + Float.BYTES, y)
-        bytes.setFloat(index + Float.BYTES * 2, z)
+        bytes.putFloat(index, x, bigEndian)
+        bytes.putFloat(index + Float.BYTES, y, bigEndian)
+        bytes.putFloat(index + Float.BYTES * 2, z, bigEndian)
         return bytes
     }
 
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.putFloat(index, x)
-        bytes.putFloat(index + Float.BYTES, y)
-        bytes.putFloat(index + Float.BYTES * 2, z)
-        return bytes
+    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
+        buf.putFloat(index, x)
+        buf.putFloat(index + Float.BYTES, y)
+        buf.putFloat(index + Float.BYTES * 2, z)
+        return buf
     }
 
-    fun toFloatArray() = to(FloatArray(length), 0)
-    infix fun to(floats: FloatArray) = to(floats, 0)
+    fun toFloatArray(): FloatArray = to(FloatArray(length), 0)
+    infix fun to(floats: FloatArray): FloatArray = to(floats, 0)
     fun to(floats: FloatArray, index: Int): FloatArray {
         floats[index] = x
         floats[index + 1] = y
@@ -148,13 +150,14 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
         return floats
     }
 
-    fun toFloatBuffer() = to(floatBufferBig(length), 0)
-    infix fun to(floats: FloatBuffer) = to(floats, floats.position())
-    fun to(floats: FloatBuffer, index: Int): FloatBuffer {
-        floats[index] = x
-        floats[index + 1] = y
-        floats[index + 2] = z
-        return floats
+    infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
+    fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
+    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
+    fun to(buf: FloatBuffer, index: Int): FloatBuffer {
+        buf[index] = x
+        buf[index + 1] = y
+        buf[index + 2] = z
+        return buf
     }
 
     // -- Component accesses --
@@ -423,7 +426,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
     override fun createInstance(x: Float, y: Float, z: Float) = Vec3(x, y, z)
 
 
-    companion object : vec3_operators() {
+    companion object : vec3_operators {
         const val length = Vec3t.length
         @JvmField
         val size = length * Float.BYTES

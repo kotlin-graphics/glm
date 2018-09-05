@@ -7,6 +7,7 @@ import glm_.vec2.Vec2ub
 import glm_.vec3.operators.vec3ub_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.pos
 import unsigned.Ubyte
 import java.nio.*
 
@@ -19,13 +20,13 @@ class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>() {
     constructor(x: Ubyte, y: Ubyte, z: Ubyte) : this(0, byteArrayOf(x.v, y.v, z.v))
     constructor(x: Byte, y: Byte, z: Byte) : this(0, byteArrayOf(x, y, z))
 
-    override inline var x: Ubyte
+    override var x: Ubyte
         get() = Ubyte(array[ofs])
         set(value) = array.set(ofs, value.v)
-    override inline var y: Ubyte
+    override var y: Ubyte
         get() = Ubyte(array[ofs + 1])
         set(value) = array.set(ofs + 1, value.v)
-    override inline var z: Ubyte
+    override var z: Ubyte
         get() = Ubyte(array[ofs + 2])
         set(value) = array.set(ofs + 2, value.v)
 
@@ -69,13 +70,13 @@ class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>() {
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toByte, list.elementAt(index + 1)!!.toByte,
             list.elementAt(index + 2)!!.toByte)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position()) : this(bytes[index], bytes[index + 1], bytes[index + 2])
-    constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].ub, chars[index + 1].ub, chars[index + 2].ub)
-    constructor(shorts: ShortBuffer, index: Int = shorts.position()) : this(shorts[index], shorts[index + 1], shorts[index + 2])
-    constructor(ints: IntBuffer, index: Int = ints.position()) : this(ints[index], ints[index + 1], ints[index + 2])
-    constructor(longs: LongBuffer, index: Int = longs.position()) : this(longs[index], longs[index + 1], longs[index + 2])
-    constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1], floats[index + 2])
-    constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1], doubles[index + 2])
+    constructor(bytes: ByteBuffer, index: Int = bytes.pos) : this(bytes[index], bytes[index + 1], bytes[index + 2])
+    constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].ub, chars[index + 1].ub, chars[index + 2].ub)
+    constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index], shorts[index + 1], shorts[index + 2])
+    constructor(ints: IntBuffer, index: Int = ints.pos) : this(ints[index], ints[index + 1], ints[index + 2])
+    constructor(longs: LongBuffer, index: Int = longs.pos) : this(longs[index], longs[index + 1], longs[index + 2])
+    constructor(floats: FloatBuffer, index: Int = floats.pos) : this(floats[index], floats[index + 1], floats[index + 2])
+    constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
     constructor(block: (Int) -> Ubyte) : this(block(0), block(1), block(2))
 
@@ -122,7 +123,7 @@ class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>() {
         return this
     }
 
-    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    fun to(bytes: ByteArray, index: Int): ByteArray = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
         bytes[index] = x.v
         bytes[index + Byte.BYTES] = y.v
@@ -130,11 +131,11 @@ class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>() {
         return bytes
     }
 
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes[index] = x.v
-        bytes[index + Byte.BYTES] = y.v
-        bytes[index + Byte.BYTES * 2] = z.v
-        return bytes
+    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
+        buf[index] = x.v
+        buf[index + Byte.BYTES] = y.v
+        buf[index + Byte.BYTES * 2] = z.v
+        return buf
     }
 
     // -- Component accesses --
@@ -626,7 +627,7 @@ class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>() {
     override fun createInstance(x: Ubyte, y: Ubyte, z: Ubyte) = Vec3ub(x, y, z)
 
 
-    companion object : vec3ub_operators() {
+    companion object : vec3ub_operators {
         const val length = Vec3t.length
         @JvmField
         val size = length * Ubyte.BYTES

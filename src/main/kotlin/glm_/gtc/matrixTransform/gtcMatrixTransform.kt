@@ -36,7 +36,7 @@ interface gtcMatrixTransform {
 
         val tmpX = (viewport[2] - 2f * (center.x - viewport[0])) / delta.x
         val tmpY = (viewport[3] - 2f * (center.y - viewport[1])) / delta.y
-        val tmpZ = 0f
+        //val tmpZ = 0f
 
         // Translate and scale the picked region to the entire window
         //Result = translate(Result, Temp)
@@ -256,7 +256,7 @@ interface gtcMatrixTransform {
 
         val tmpX = (viewport[2] - 2.0 * (center.x - viewport[0])) / delta.x
         val tmpY = (viewport[3] - 2.0 * (center.y - viewport[1])) / delta.y
-        val tmpZ = 0.0
+        //val tmpZ = 0.0
 
         // Translate and scale the picked region to the entire window
         //Result = translate(Result, Temp)

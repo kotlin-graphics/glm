@@ -12,58 +12,58 @@ import glm_.vec3.Vec3.Companion.times
  * Created by elect on 05/11/16.
  */
 
-open class vec3_operators {
+interface vec3_operators {
 
-    inline fun plus(res: Vec3, a: Vec3, bX: Float, bY: Float, bZ: Float): Vec3 {
+    fun plus(res: Vec3, a: Vec3, bX: Float, bY: Float, bZ: Float): Vec3 {
         res.x = a.x + bX
         res.y = a.y + bY
         res.z = a.z + bZ
         return res
     }
 
-    inline fun minus(res: Vec3, a: Vec3, bX: Float, bY: Float, bZ: Float): Vec3 {
+    fun minus(res: Vec3, a: Vec3, bX: Float, bY: Float, bZ: Float): Vec3 {
         res.x = a.x - bX
         res.y = a.y - bY
         res.z = a.z - bZ
         return res
     }
 
-    inline fun minus(res: Vec3, aX: Float, aY: Float, aZ: Float, b: Vec3): Vec3 {
+    fun minus(res: Vec3, aX: Float, aY: Float, aZ: Float, b: Vec3): Vec3 {
         res.x = aX - b.x
         res.y = aY - b.y
         res.z = aZ - b.z
         return res
     }
 
-    inline fun times(res: Vec3, a: Vec3, bX: Float, bY: Float, bZ: Float): Vec3 {
+    fun times(res: Vec3, a: Vec3, bX: Float, bY: Float, bZ: Float): Vec3 {
         res.x = a.x * bX
         res.y = a.y * bY
         res.z = a.z * bZ
         return res
     }
 
-    inline fun div(res: Vec3, a: Vec3, bX: Float, bY: Float, bZ: Float): Vec3 {
+    fun div(res: Vec3, a: Vec3, bX: Float, bY: Float, bZ: Float): Vec3 {
         res.x = a.x / bX
         res.y = a.y / bY
         res.z = a.z / bZ
         return res
     }
 
-    inline fun div(res: Vec3, aX: Float, aY: Float, aZ: Float, b: Vec3): Vec3 {
+    fun div(res: Vec3, aX: Float, aY: Float, aZ: Float, b: Vec3): Vec3 {
         res.x = aX / b.x
         res.y = aY / b.y
         res.z = aZ / b.z
         return res
     }
 
-    inline fun rem(res: Vec3, a: Vec3, bX: Float, bY: Float, bZ: Float): Vec3 {
+    fun rem(res: Vec3, a: Vec3, bX: Float, bY: Float, bZ: Float): Vec3 {
         res.x = a.x % bX
         res.y = a.y % bY
         res.z = a.z % bZ
         return res
     }
 
-    inline fun rem(res: Vec3, aX: Float, aY: Float, aZ: Float, b: Vec3): Vec3 {
+    fun rem(res: Vec3, aX: Float, aY: Float, aZ: Float, b: Vec3): Vec3 {
         res.x = aX % b.x
         res.y = aY % b.y
         res.z = aZ % b.z

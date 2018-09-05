@@ -17,11 +17,11 @@ import glm_.vec3.Vec3.Companion.times
  * Created by GBarbieri on 10.11.2016.
  */
 
-open class mat3x3_operators {
+interface mat3x3_operators {
 
 
     /** Mat3 = Mat3 + scalar */
-    inline fun plus(res: Mat3, a: Mat3, b: Float): Mat3 {
+    fun plus(res: Mat3, a: Mat3, b: Float): Mat3 {
         plus(res[0], a[0], b, b, b)
         plus(res[1], a[1], b, b, b)
         plus(res[2], a[2], b, b, b)
@@ -29,7 +29,7 @@ open class mat3x3_operators {
     }
 
     /** Mat3 = Mat3 - scalar */
-    inline fun minus(res: Mat3, a: Mat3, b: Float): Mat3 {
+    fun minus(res: Mat3, a: Mat3, b: Float): Mat3 {
         minus(res[0], a[0], b, b, b)
         minus(res[1], a[1], b, b, b)
         minus(res[2], a[2], b, b, b)
@@ -37,7 +37,7 @@ open class mat3x3_operators {
     }
 
     /** Mat3 = scalar - Mat3   */
-    inline fun minus(res: Mat3, a: Float, b: Mat3): Mat3 {
+    fun minus(res: Mat3, a: Float, b: Mat3): Mat3 {
         minus(res[0], a, a, a, b[0])
         minus(res[1], a, a, a, b[1])
         minus(res[2], a, a, a, b[2])
@@ -45,7 +45,7 @@ open class mat3x3_operators {
     }
 
     /** Mat3 = Mat3 * scalar */
-    inline fun times(res: Mat3, a: Mat3, b: Float): Mat3 {
+    fun times(res: Mat3, a: Mat3, b: Float): Mat3 {
         times(res[0], a[0], b, b, b)
         times(res[1], a[1], b, b, b)
         times(res[2], a[2], b, b, b)
@@ -53,7 +53,7 @@ open class mat3x3_operators {
     }
 
     /** Mat3 = Mat3 / scalar */
-    inline fun div(res: Mat3, a: Mat3, b: Float): Mat3 {
+    fun div(res: Mat3, a: Mat3, b: Float): Mat3 {
         div(res[0], a[0], b, b, b)
         div(res[1], a[1], b, b, b)
         div(res[2], a[2], b, b, b)
@@ -61,7 +61,7 @@ open class mat3x3_operators {
     }
 
     /** Mat3 = scalar / Mat3 */
-    inline fun div(res: Mat3, a: Float, b: Mat3): Mat3 {
+    fun div(res: Mat3, a: Float, b: Mat3): Mat3 {
         div(res[0], a, a, a, b[0])
         div(res[1], a, a, a, b[1])
         div(res[2], a, a, a, b[2])
@@ -70,19 +70,19 @@ open class mat3x3_operators {
 
 
     /** Mat3 = Mat3 + Mat3 */
-    inline fun plus(res: Mat3, a: Mat3, b: Mat3) = plus(res, a,
+    fun plus(res: Mat3, a: Mat3, b: Mat3) = plus(res, a,
             b[0, 0], b[0, 1], b[0, 2],
             b[1, 0], b[1, 1], b[1, 2],
             b[2, 0], b[2, 1], b[2, 2])
 
     /** Mat3 = Mat3 + Mat3 */
-    inline fun plus(res: Mat3, a: Mat3, b0: Vec3, b1: Vec3, b2: Vec3) = plus(res, a,
+    fun plus(res: Mat3, a: Mat3, b0: Vec3, b1: Vec3, b2: Vec3) = plus(res, a,
             b0[0], b0[1], b0[2],
             b1[0], b1[1], b1[2],
             b2[0], b2[1], b2[2])
 
     /** Mat3 = Mat3 + Mat3 */
-    inline fun plus(res: Mat3, a: Mat3,
+    fun plus(res: Mat3, a: Mat3,
                     b00: Float, b01: Float, b02: Float,
                     b10: Float, b11: Float, b12: Float,
                     b20: Float, b21: Float, b22: Float): Mat3 {
@@ -93,19 +93,19 @@ open class mat3x3_operators {
     }
 
     /** Mat3 = Mat3 - Mat3 */
-    inline fun minus(res: Mat3, a: Mat3, b: Mat3) = minus(res, a,
+    fun minus(res: Mat3, a: Mat3, b: Mat3) = minus(res, a,
             b[0, 0], b[0, 1], b[0, 2],
             b[1, 0], b[1, 1], b[1, 2],
             b[2, 0], b[2, 1], b[2, 2])
 
     /** Mat3 = Mat3 - Mat3 */
-    inline fun minus(res: Mat3, a: Mat3, b0: Vec3, b1: Vec3, b2: Vec3) = minus(res, a,
+    fun minus(res: Mat3, a: Mat3, b0: Vec3, b1: Vec3, b2: Vec3) = minus(res, a,
             b0[0], b0[1], b0[2],
             b1[0], b1[1], b1[2],
             b2[0], b2[1], b2[2])
 
     /** Mat3 = Mat3 - Mat3 */
-    inline fun minus(res: Mat3, a: Mat3,
+    fun minus(res: Mat3, a: Mat3,
                      b00: Float, b01: Float, b02: Float,
                      b10: Float, b11: Float, b12: Float,
                      b20: Float, b21: Float, b22: Float): Mat3 {
@@ -116,13 +116,13 @@ open class mat3x3_operators {
     }
 
     /** Mat3 = Mat3 - Mat3 */
-    inline fun minus(res: Mat3, a0: Vec3, a1: Vec3, a2: Vec3, b: Mat3) = minus(res,
+    fun minus(res: Mat3, a0: Vec3, a1: Vec3, a2: Vec3, b: Mat3) = minus(res,
             a0[0], a0[1], a0[2],
             a1[0], a1[1], a1[2],
             a2[0], a2[1], a2[2], b)
 
     /** Mat3 = Mat3 - Mat3 */
-    inline fun minus(res: Mat3,
+    fun minus(res: Mat3,
                      a00: Float, a01: Float, a02: Float,
                      a10: Float, a11: Float, a12: Float,
                      a20: Float, a21: Float, a22: Float, b: Mat3): Mat3 {
@@ -134,10 +134,10 @@ open class mat3x3_operators {
 
 
     /** Vec3 col = Mat3 * Vec3 row  */
-    inline fun times(res: Vec3, a: Mat3, b: Vec3) = times(res, a, b.x, b.y, b.z)
+    fun times(res: Vec3, a: Mat3, b: Vec3) = times(res, a, b.x, b.y, b.z)
 
     /** Vec3 col = Mat3 * Vec3 row */
-    inline fun times(res: Vec3, a: Mat3, b0: Float, b1: Float, b2: Float): Vec3 {
+    fun times(res: Vec3, a: Mat3, b0: Float, b1: Float, b2: Float): Vec3 {
         res[0] = a[0, 0] * b0 + a[1, 0] * b1 + a[2, 0] * b2
         res[1] = a[0, 1] * b0 + a[1, 1] * b1 + a[2, 1] * b2
         res[2] = a[0, 2] * b0 + a[1, 2] * b1 + a[2, 2] * b2
@@ -145,10 +145,10 @@ open class mat3x3_operators {
     }
 
     /** Vec3 row = Vec3 col * Mat3  */
-    inline fun times(res: Vec3, a: Vec3, b: Mat3) = times(res, a.x, a.y, a.z, b)
+    fun times(res: Vec3, a: Vec3, b: Mat3) = times(res, a.x, a.y, a.z, b)
 
     /** Vec3 row = Vec3 col * Mat3  */
-    inline fun times(res: Vec3, a0: Float, a1: Float, a2: Float, b: Mat3): Vec3 {
+    fun times(res: Vec3, a0: Float, a1: Float, a2: Float, b: Mat3): Vec3 {
         res[0] = a0 * b[0, 0] + a1 * b[0, 1] + a2 * b[0, 2]
         res[1] = a0 * b[1, 0] + a1 * b[1, 1] + a2 * b[1, 2]
         res[2] = a0 * b[2, 0] + a1 * b[2, 1] + a2 * b[2, 2]
@@ -156,19 +156,19 @@ open class mat3x3_operators {
     }
 
     /** Mat3 = Mat3 * Mat3 */
-    inline fun times(res: Mat3, a: Mat3, b: Mat3) = times(res, a,
+    fun times(res: Mat3, a: Mat3, b: Mat3) = times(res, a,
             b[0, 0], b[0, 1], b[0, 2],
             b[1, 0], b[1, 1], b[1, 2],
             b[2, 0], b[2, 1], b[2, 2])
 
     /** Mat3 = Mat3 * Mat3 */
-    inline fun times(res: Mat3, a: Mat3, b0: Vec3, b1: Vec3, b2: Vec3) = times(res, a,
+    fun times(res: Mat3, a: Mat3, b0: Vec3, b1: Vec3, b2: Vec3) = times(res, a,
             b0[0], b0[1], b0[2],
             b1[0], b1[1], b1[2],
             b2[0], b2[1], b2[2])
 
     /** Mat3 = Mat3 * Mat3 */
-    inline fun times(res: Mat3, a: Mat3,
+    fun times(res: Mat3, a: Mat3,
                      b00: Float, b01: Float, b02: Float,
                      b10: Float, b11: Float, b12: Float,
                      b20: Float, b21: Float, b22: Float): Mat3 {
@@ -189,11 +189,11 @@ open class mat3x3_operators {
 
 
     /** Mat23 = Mat3 * Mat23 */
-    inline fun times(res: Mat2x3, a: Mat3, b: Mat2x3) = times(res, a, b[0], b[1], b[2])
+    fun times(res: Mat2x3, a: Mat3, b: Mat2x3) = times(res, a, b[0], b[1], b[2])
     /** Mat23 = Mat3 * Mat23 */
-    inline fun times(res: Mat2x3, a: Mat3, b0: Vec3, b1: Vec3, b2: Vec3) = times(res, a, b0.x, b0.y, b1.x, b1.y, b2.x, b2.y)
+    fun times(res: Mat2x3, a: Mat3, b0: Vec3, b1: Vec3, b2: Vec3) = times(res, a, b0.x, b0.y, b1.x, b1.y, b2.x, b2.y)
     /** Mat23 = Mat3 * Mat23 */
-    inline fun times(res: Mat2x3, a: Mat3,
+    fun times(res: Mat2x3, a: Mat3,
                      b00: Float, b01: Float, b02: Float,
                      b10: Float, b11: Float, b12: Float): Mat2x3 {
         val v00 = a[0, 0] * b00 + a[1, 0] * b01 + a[2, 0] * b02
@@ -209,15 +209,15 @@ open class mat3x3_operators {
     }
 
     /** Mat43 = Mat3 * Mat43 */
-    inline fun times(res: Mat4x3, a: Mat3, b: Mat4x3) = times(res, a, b[0], b[1], b[2], b[3])
+    fun times(res: Mat4x3, a: Mat3, b: Mat4x3) = times(res, a, b[0], b[1], b[2], b[3])
     /** Mat43 = Mat3 * Mat43 */
-    inline fun times(res: Mat4x3, a: Mat3, b0: Vec3, b1: Vec3, b2: Vec3, b3: Vec3) = times(res, a,
+    fun times(res: Mat4x3, a: Mat3, b0: Vec3, b1: Vec3, b2: Vec3, b3: Vec3) = times(res, a,
             b0.x, b0.y, b0.z,
             b1.x, b1.y, b1.z,
             b2.x, b2.y, b2.z,
             b3.x, b3.y, b3.z)
     /** Mat43 = Mat3 * Mat43 */
-    inline fun times(res: Mat4x3, a: Mat3,
+    fun times(res: Mat4x3, a: Mat3,
                      b00: Float, b01: Float, b02: Float,
                      b10: Float, b11: Float, b12: Float,
                      b20: Float, b21: Float, b22: Float,
@@ -242,19 +242,19 @@ open class mat3x3_operators {
 
 
     /** Mat3 = Mat3 / Mat3 = Mat3 * Mat3^-1 */
-    inline fun div(res: Mat3, a: Mat3, b: Mat3) = div(res, a,
+    fun div(res: Mat3, a: Mat3, b: Mat3) = div(res, a,
             b[0, 0], b[0, 1], b[0, 2],
             b[1, 0], b[1, 1], b[1, 2],
             b[2, 0], b[2, 1], b[2, 2])
 
     /** Mat3 = Mat3 / Mat3 = Mat3 * Mat3^-1 */
-    inline fun div(res: Mat3, a: Mat3, b0: Vec3, b1: Vec3, b2: Vec3) = div(res, a,
+    fun div(res: Mat3, a: Mat3, b0: Vec3, b1: Vec3, b2: Vec3) = div(res, a,
             b0[0], b0[1], b0[2],
             b1[0], b1[1], b1[2],
             b2[0], b2[1], b2[2])
 
     /** Mat3 = Mat3 / Mat3 = Mat3 * Mat3^-1 */
-    inline fun div(res: Mat3, a: Mat3,
+    fun div(res: Mat3, a: Mat3,
                    b00: Float, b01: Float, b02: Float,
                    b10: Float, b11: Float, b12: Float,
                    b20: Float, b21: Float, b22: Float): Mat3 {
@@ -268,10 +268,10 @@ open class mat3x3_operators {
 
 
     /** Vec3 col = Mat3 * Vec3 row  */
-    inline fun div(res: Vec3, a: Mat3, b: Vec3) = div(res, a, b.x, b.y, b.z)
+    fun div(res: Vec3, a: Mat3, b: Vec3) = div(res, a, b.x, b.y, b.z)
 
     /** Vec3 col = Mat3 * Vec3 row  */
-    inline fun div(res: Vec3, a: Mat3, b0: Float, b1: Float, b2: Float): Vec3 {
+    fun div(res: Vec3, a: Mat3, b0: Float, b1: Float, b2: Float): Vec3 {
         val oneOverDet = 1 / a.det
         val i00 = +(a[1, 1] * a[2, 2] - a[2, 1] * a[1, 2]) * oneOverDet
         val i10 = -(a[1, 0] * a[2, 2] - a[2, 0] * a[1, 2]) * oneOverDet
@@ -289,10 +289,10 @@ open class mat3x3_operators {
     }
 
     /** Vec3 row = Vec3 col * Mat3  */
-    inline fun div(res: Vec3, a: Vec3, b: Mat3) = div(res, a.x, a.y, a.z, b)
+    fun div(res: Vec3, a: Vec3, b: Mat3) = div(res, a.x, a.y, a.z, b)
 
     /** Vec3 row = Vec3 col * Mat3  */
-    inline fun div(res: Vec3, a0: Float, a1: Float, a2: Float, b: Mat3): Vec3 {
+    fun div(res: Vec3, a0: Float, a1: Float, a2: Float, b: Mat3): Vec3 {
         val oneOverDet = 1 / b.det
         val i00 = +(b[1, 1] * b[2, 2] - b[2, 1] * b[1, 2]) * oneOverDet
         val i10 = -(b[1, 0] * b[2, 2] - b[2, 0] * b[1, 2]) * oneOverDet

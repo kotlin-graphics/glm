@@ -260,7 +260,7 @@ class DualQuatD(var real: QuatD, var dual: QuatD) {
         return res(real, dual)
     }
 
-    companion object : dualQuatD_operators() {
+    companion object : dualQuatD_operators {
         @JvmField
         val size = QuatD.size * 2
 

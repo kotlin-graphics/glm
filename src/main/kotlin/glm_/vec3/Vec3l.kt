@@ -1,13 +1,15 @@
 package glm_.vec3
 
 import glm_.*
-import glm_.buffer.longBufferBig
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2l
 import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3l_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.longBufferBig
+import kool.pos
+import org.lwjgl.system.MemoryStack
 import java.nio.*
 
 /**
@@ -18,13 +20,13 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>() {
 
     constructor(x: Long, y: Long, z: Long) : this(0, longArrayOf(x, y, z))
 
-    override inline var x: Long
+    override var x: Long
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override inline var y: Long
+    override var y: Long
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
-    override inline var z: Long
+    override var z: Long
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
 
@@ -62,17 +64,17 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>() {
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toLong, list.elementAt(index + 1)!!.toLong,
             list.elementAt(index + 2)!!.toLong)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneLong: Boolean = false) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneLong: Boolean = false) : this(
             if (oneByteOneLong) bytes[index].L else bytes.getLong(index),
             if (oneByteOneLong) bytes[index + 1].L else bytes.getLong(index + Long.BYTES),
             if (oneByteOneLong) bytes[index + 2].L else bytes.getLong(index + Long.BYTES * 2))
 
-    constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].L, chars[index + 1].L, chars[index + 2].L)
-    constructor(shorts: ShortBuffer, index: Int = shorts.position()) : this(shorts[index], shorts[index + 1], shorts[index + 2])
-    constructor(ints: IntBuffer, index: Int = ints.position()) : this(ints[index], ints[index + 1], ints[index + 2])
-    constructor(longs: LongBuffer, index: Int = longs.position()) : this(longs[index], longs[index + 1], longs[index + 2])
-    constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1], floats[index + 2])
-    constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1], doubles[index + 2])
+    constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].L, chars[index + 1].L, chars[index + 2].L)
+    constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index], shorts[index + 1], shorts[index + 2])
+    constructor(ints: IntBuffer, index: Int = ints.pos) : this(ints[index], ints[index + 1], ints[index + 2])
+    constructor(longs: LongBuffer, index: Int = longs.pos) : this(longs[index], longs[index + 1], longs[index + 2])
+    constructor(floats: FloatBuffer, index: Int = floats.pos) : this(floats[index], floats[index + 1], floats[index + 2])
+    constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
     constructor(block: (Int) -> Long) : this(block(0), block(1), block(2))
 
@@ -86,7 +88,7 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>() {
         z = if (oneByteOneLong) bytes[index + 2].L else bytes.getLong(index + Long.BYTES * 2, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneLong: Boolean = false) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneLong: Boolean = false) {
         x = if (oneByteOneLong) bytes[index].L else bytes.getLong(index)
         y = if (oneByteOneLong) bytes[index + 1].L else bytes.getLong(index + Long.BYTES)
         z = if (oneByteOneLong) bytes[index + 2].L else bytes.getLong(index + Long.BYTES * 2)
@@ -121,21 +123,21 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>() {
 
     fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
-        bytes.setLong(index, x)
-        bytes.setLong(index + Long.BYTES, y)
-        bytes.setLong(index + Long.BYTES * 2, z)
-        return bytes
-    }
-
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
         bytes.putLong(index, x)
         bytes.putLong(index + Long.BYTES, y)
         bytes.putLong(index + Long.BYTES * 2, z)
         return bytes
     }
 
-    fun toLongArray() = to(LongArray(length), 0)
-    infix fun to(longs: LongArray) = to(longs, 0)
+    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
+        buf.putLong(index, x)
+        buf.putLong(index + Long.BYTES, y)
+        buf.putLong(index + Long.BYTES * 2, z)
+        return buf
+    }
+
+    fun toLongArray(): LongArray = to(LongArray(length), 0)
+    infix fun to(longs: LongArray): LongArray = to(longs, 0)
     fun to(longs: LongArray, index: Int): LongArray {
         longs[index] = x
         longs[index + 1] = y
@@ -143,13 +145,14 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>() {
         return longs
     }
 
-    fun toLongBuffer() = to(longBufferBig(length), 0)
-    infix fun to(longs: LongBuffer) = to(longs, longs.position())
-    fun to(longs: LongBuffer, index: Int): LongBuffer {
-        longs[index] = x
-        longs[index + 1] = y
-        longs[index + 2] = z
-        return longs
+    infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(length), 0)
+    fun toLongBuffer(): LongBuffer = to(longBufferBig(length), 0)
+    infix fun to(buf: LongBuffer): LongBuffer = to(buf, buf.pos)
+    fun to(buf: LongBuffer, index: Int): LongBuffer {
+        buf[index] = x
+        buf[index + 1] = y
+        buf[index + 2] = z
+        return buf
     }
 
     // -- Component accesses --
@@ -511,7 +514,7 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>() {
     override fun createInstance(x: Long, y: Long, z: Long) = Vec3l(x, y, z)
 
 
-    companion object : vec3l_operators() {
+    companion object : vec3l_operators {
         const val length = Vec3t.length
         @JvmField
         val size = length * Long.BYTES

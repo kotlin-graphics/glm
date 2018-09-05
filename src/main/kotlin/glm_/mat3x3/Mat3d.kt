@@ -157,17 +157,17 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
 
     // -- Accesses --
 
-    override inline operator fun get(index: Int) = Vec3d(index * 3, array)
-    override inline operator fun get(column: Int, row: Int) = array[column * 3 + row]
+    override operator fun get(index: Int) = Vec3d(index * 3, array)
+    override operator fun get(column: Int, row: Int) = array[column * 3 + row]
 
-    override inline operator fun set(column: Int, row: Int, value: Double) = array.set(column * 3 + row, value)
-    override inline operator fun set(index: Int, value: Vec3t<out Number>) {
+    override operator fun set(column: Int, row: Int, value: Double) = array.set(column * 3 + row, value)
+    override operator fun set(index: Int, value: Vec3t<out Number>) {
         array[index * 3] = value.x.d
         array[index * 3 + 1] = value.y.d
         array[index * 3 + 2] = value.z.d
     }
 
-    inline operator fun set(i: Int, v: Vec3d) {
+    operator fun set(i: Int, v: Vec3d) {
         v.to(array, i * 3)
     }
 
@@ -203,7 +203,7 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
             0.0, y, 0.0,
             0.0, 0.0, z)
 
-    inline fun invoke(a0: Double, a1: Double, a2: Double,
+    fun invoke(a0: Double, a1: Double, a2: Double,
                       b0: Double, b1: Double, b2: Double,
                       c0: Double, c1: Double, c2: Double): Mat3d {
 
@@ -431,7 +431,7 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
                 this[0, 1] == 0.0 && this[1, 1] == 1.0 && this[2, 1] == 0.0 &&
                 this[0, 2] == 0.0 && this[1, 2] == 0.0 && this[2, 2] == 1.0
 
-    companion object : mat3d_operators() {
+    companion object : mat3d_operators {
         const val length = Mat3x3t.length
         @JvmField
         val size = length * Double.BYTES

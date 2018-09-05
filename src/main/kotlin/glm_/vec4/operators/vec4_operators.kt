@@ -12,9 +12,9 @@ import glm_.vec4.Vec4.Companion.times
  * Created by elect on 05/11/16.
  */
 
-open class vec4_operators {
+interface vec4_operators {
 
-    inline fun plus(res: Vec4, a: Vec4, bX: Float, bY: Float, bZ: Float, bW: Float): Vec4 {
+    fun plus(res: Vec4, a: Vec4, bX: Float, bY: Float, bZ: Float, bW: Float): Vec4 {
         res.x = a.x + bX
         res.y = a.y + bY
         res.z = a.z + bZ
@@ -22,7 +22,7 @@ open class vec4_operators {
         return res
     }
 
-    inline fun minus(res: Vec4, a: Vec4, bX: Float, bY: Float, bZ: Float, bW: Float): Vec4 {
+    fun minus(res: Vec4, a: Vec4, bX: Float, bY: Float, bZ: Float, bW: Float): Vec4 {
         res.x = a.x - bX
         res.y = a.y - bY
         res.z = a.z - bZ
@@ -30,7 +30,7 @@ open class vec4_operators {
         return res
     }
 
-    inline fun minus(res: Vec4, aX: Float, aY: Float, aZ: Float, aW: Float, b: Vec4): Vec4 {
+    fun minus(res: Vec4, aX: Float, aY: Float, aZ: Float, aW: Float, b: Vec4): Vec4 {
         res.x = aX - b.x
         res.y = aY - b.y
         res.z = aZ - b.z
@@ -38,7 +38,7 @@ open class vec4_operators {
         return res
     }
 
-    inline fun times(res: Vec4, a: Vec4, bX: Float, bY: Float, bZ: Float, bW: Float): Vec4 {
+    fun times(res: Vec4, a: Vec4, bX: Float, bY: Float, bZ: Float, bW: Float): Vec4 {
         res.x = a.x * bX
         res.y = a.y * bY
         res.z = a.z * bZ
@@ -46,7 +46,7 @@ open class vec4_operators {
         return res
     }
 
-    inline fun div(res: Vec4, a: Vec4, bX: Float, bY: Float, bZ: Float, bW: Float): Vec4 {
+    fun div(res: Vec4, a: Vec4, bX: Float, bY: Float, bZ: Float, bW: Float): Vec4 {
         res.x = a.x / bX
         res.y = a.y / bY
         res.z = a.z / bZ
@@ -54,7 +54,7 @@ open class vec4_operators {
         return res
     }
 
-    inline fun div(res: Vec4, aX: Float, aY: Float, aZ: Float, aW: Float, b: Vec4): Vec4 {
+    fun div(res: Vec4, aX: Float, aY: Float, aZ: Float, aW: Float, b: Vec4): Vec4 {
         res.x = aX / b.x
         res.y = aY / b.y
         res.z = aZ / b.z
@@ -62,7 +62,7 @@ open class vec4_operators {
         return res
     }
 
-    inline fun rem(res: Vec4, a: Vec4, bX: Float, bY: Float, bZ: Float, bW: Float): Vec4 {
+    fun rem(res: Vec4, a: Vec4, bX: Float, bY: Float, bZ: Float, bW: Float): Vec4 {
         res.x = a.x % bX
         res.y = a.y % bY
         res.z = a.z % bZ
@@ -70,7 +70,7 @@ open class vec4_operators {
         return res
     }
 
-    inline fun rem(res: Vec4, aX: Float, aY: Float, aZ: Float, aW: Float, b: Vec4): Vec4 {
+    fun rem(res: Vec4, aX: Float, aY: Float, aZ: Float, aW: Float, b: Vec4): Vec4 {
         res.x = aX % b.x
         res.y = aY % b.y
         res.z = aZ % b.z

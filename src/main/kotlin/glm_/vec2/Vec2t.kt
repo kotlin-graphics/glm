@@ -3,11 +3,13 @@
 package glm_.vec2
 
 import glm_.*
-import glm_.buffer.bufferBig
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.bufferBig
+import kool.pos
+import org.lwjgl.system.MemoryStack
 import java.nio.*
 
 /**
@@ -198,14 +200,15 @@ abstract class Vec2t<T : Number> {
     operator fun invoke(doubles: DoubleBuffer, index: Int) = invoke(doubles[index], doubles[index + 1])
 
 
-    fun toByteArray(bigEndian: Boolean = true) = to(ByteArray(length), 0, bigEndian)
-    infix fun to(bytes: ByteArray) = to(bytes, 0)
-    fun to(bytes: ByteArray, bigEndian: Boolean) = to(bytes, 0, bigEndian)
+    fun toByteArray(bigEndian: Boolean = true): ByteArray = to(ByteArray(length), 0, bigEndian)
+    infix fun to(bytes: ByteArray): ByteArray = to(bytes, 0)
+    fun to(bytes: ByteArray, bigEndian: Boolean): ByteArray = to(bytes, 0, bigEndian)
     abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
 
-    fun toByteBuffer() = to(bufferBig(size()), 0) // TODO -> appBuffer
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    abstract fun to(bytes: ByteBuffer, index: Int): ByteBuffer
+    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.malloc(size()), 0)
+    fun toBuffer(): ByteBuffer = to(bufferBig(size()), 0)
+    infix fun to(bytes: ByteBuffer): ByteBuffer = to(bytes, bytes.pos)
+    abstract fun to(buf: ByteBuffer, index: Int): ByteBuffer
 
 
     infix fun lessThan(b: Vec2t<out Number>) = glm.lessThan(this, b, Vec2bool())

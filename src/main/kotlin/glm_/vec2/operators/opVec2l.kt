@@ -12,165 +12,165 @@ import glm_.vec2.Vec2l.Companion.times
 /**
  * Created by GBarbieri on 08.11.2016.
  */
-open class opVec2l {
+interface opVec2l {
 
-    inline fun plus(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
+    fun plus(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
         res.x = a.x + bX
         res.y = a.y + bY
         return res
     }
 
-    inline fun plus(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
+    fun plus(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
         res.x = a.x + bX
         res.y = a.y + bY
         return res
     }
 
-    inline fun minus(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
+    fun minus(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
         res.x = a.x - bX
         res.y = a.y - bY
         return res
     }
 
-    inline fun minus(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
+    fun minus(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
         res.x = a.x - bX
         res.y = a.y - bY
         return res
     }
 
-    inline fun minus(res: Vec2l, aX: Int, aY: Int, b: Vec2l): Vec2l {
+    fun minus(res: Vec2l, aX: Int, aY: Int, b: Vec2l): Vec2l {
         res.x = aX - b.x
         res.y = aY - b.y
         return res
     }
 
-    inline fun minus(res: Vec2l, aX: Long, aY: Long, b: Vec2l): Vec2l {
+    fun minus(res: Vec2l, aX: Long, aY: Long, b: Vec2l): Vec2l {
         res.x = aX - b.x
         res.y = aY - b.y
         return res
     }
 
-    inline fun times(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
+    fun times(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
         res.x = a.x * bX
         res.y = a.y * bY
         return res
     }
 
-    inline fun times(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
+    fun times(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
         res.x = a.x * bX
         res.y = a.y * bY
         return res
     }
 
-    inline fun div(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
+    fun div(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
         res.x = a.x / bX
         res.y = a.y / bY
         return res
     }
 
-    inline fun div(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
+    fun div(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
         res.x = a.x / bX
         res.y = a.y / bY
         return res
     }
 
-    inline fun div(res: Vec2l, aX: Int, aY: Int, b: Vec2l): Vec2l {
+    fun div(res: Vec2l, aX: Int, aY: Int, b: Vec2l): Vec2l {
         res.x = aX / b.x
         res.y = aY / b.y
         return res
     }
 
-    inline fun div(res: Vec2l, aX: Long, aY: Long, b: Vec2l): Vec2l {
+    fun div(res: Vec2l, aX: Long, aY: Long, b: Vec2l): Vec2l {
         res.x = aX / b.x
         res.y = aY / b.y
         return res
     }
 
-    inline fun rem(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
+    fun rem(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
         res.x = a.x % bX
         res.y = a.y % bY
         return res
     }
 
-    inline fun rem(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
+    fun rem(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
         res.x = a.x % bX
         res.y = a.y % bY
         return res
     }
 
-    inline fun rem(res: Vec2l, aX: Int, aY: Int, b: Vec2l): Vec2l {
+    fun rem(res: Vec2l, aX: Int, aY: Int, b: Vec2l): Vec2l {
         res.x = aX % b.x
         res.y = aY % b.y
         return res
     }
 
-    inline fun rem(res: Vec2l, aX: Long, aY: Long, b: Vec2l): Vec2l {
+    fun rem(res: Vec2l, aX: Long, aY: Long, b: Vec2l): Vec2l {
         res.x = aX % b.x
         res.y = aY % b.y
         return res
     }
 
-    inline fun and(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
+    fun and(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
         res.x = a.x and bX
         res.y = a.y and bY
         return res
     }
 
-    inline fun and(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
+    fun and(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
         res.x = a.x and bX
         res.y = a.y and bY
         return res
     }
 
-    inline fun or(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
+    fun or(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
         res.x = a.x or bX
         res.y = a.y or bY
         return res
     }
 
-    inline fun or(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
+    fun or(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
         res.x = a.x or bX
         res.y = a.y or bY
         return res
     }
 
-    inline fun xor(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
+    fun xor(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
         res.x = a.x xor bX
         res.y = a.y xor bY
         return res
     }
 
-    inline fun xor(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
+    fun xor(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
         res.x = a.x xor bX
         res.y = a.y xor bY
         return res
     }
 
-    inline fun shl(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
+    fun shl(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
         res.x = a.x shl bX.i
         res.y = a.y shl bY.i
         return res
     }
 
-    inline fun shl(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
+    fun shl(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
         res.x = a.x shl bX
         res.y = a.y shl bY
         return res
     }
 
-    inline fun shr(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
+    fun shr(res: Vec2l, a: Vec2l, bX: Long, bY: Long): Vec2l {
         res.x = a.x shr bX.i
         res.y = a.y shr bY.i
         return res
     }
 
-    inline fun shr(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
+    fun shr(res: Vec2l, a: Vec2l, bX: Int, bY: Int): Vec2l {
         res.x = a.x shr bX
         res.y = a.y shr bY
         return res
     }
 
-    inline fun inv(res: Vec2l, a: Vec2l): Vec2l {
+    fun inv(res: Vec2l, a: Vec2l): Vec2l {
         res.x = a.x.inv()
         res.y = a.y.inv()
         return res

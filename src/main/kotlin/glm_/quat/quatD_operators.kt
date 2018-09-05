@@ -9,9 +9,9 @@ import glm_.vec4.Vec4d
  * Created by elect on 04/03/2017.
  */
 
-open class quatD_operators {
+interface quatD_operators {
 
-    inline fun plus(res: QuatD, a: QuatD, b: QuatD): QuatD {
+    fun plus(res: QuatD, a: QuatD, b: QuatD): QuatD {
         res.w = a.w + b.w
         res.x = a.x + b.x
         res.y = a.y + b.y
@@ -20,7 +20,7 @@ open class quatD_operators {
     }
 
 
-    inline fun minus(res: QuatD, a: QuatD, b: QuatD): QuatD {
+    fun minus(res: QuatD, a: QuatD, b: QuatD): QuatD {
         res.w = a.w - b.w
         res.x = a.x - b.x
         res.y = a.y - b.y
@@ -29,7 +29,7 @@ open class quatD_operators {
     }
 
 
-    inline fun times(res: QuatD, a: QuatD, b: QuatD): QuatD {
+    fun times(res: QuatD, a: QuatD, b: QuatD): QuatD {
         val resW = a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z
         val resX = a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y
         val resY = a.w * b.y + a.y * b.w + a.z * b.x - a.x * b.z
@@ -37,7 +37,7 @@ open class quatD_operators {
         return res.put(resW, resX, resY, resZ)
     }
 
-    inline fun times(res: QuatD, a: QuatD, b: Double): QuatD {
+    fun times(res: QuatD, a: QuatD, b: Double): QuatD {
         res.w = a.w * b
         res.x = a.x * b
         res.y = a.y * b
@@ -45,7 +45,7 @@ open class quatD_operators {
         return res
     }
 
-    inline fun times(res: Vec3d, a: QuatD, b: Vec3d): Vec3d {
+    fun times(res: Vec3d, a: QuatD, b: Vec3d): Vec3d {
         val uvX = a.y * b.z - b.y * a.z
         val uvY = a.z * b.x - b.z * a.x
         val uvZ = a.x * b.y - b.x * a.y
@@ -58,7 +58,7 @@ open class quatD_operators {
         return res
     }
 
-    inline fun times(res: Vec3d, a: Vec3d, b: QuatD): Vec3d {
+    fun times(res: Vec3d, a: Vec3d, b: QuatD): Vec3d {
         val dot = glm.dot(a, a)
         val iW = b.w / dot
         val iX = -b.x / dot
@@ -76,7 +76,7 @@ open class quatD_operators {
         return res
     }
 
-    inline fun times(res: QuatD, a: QuatD, b: Vec4d): QuatD {
+    fun times(res: QuatD, a: QuatD, b: Vec4d): QuatD {
         res.w = a.w
         res.x = a.x * b.x
         res.y = a.y * b.y
@@ -85,7 +85,7 @@ open class quatD_operators {
     }
 
 
-    inline fun div(res: QuatD, a: QuatD, b: Double): QuatD {
+    fun div(res: QuatD, a: QuatD, b: Double): QuatD {
         res.w = a.w / b
         res.x = a.x / b
         res.y = a.y / b

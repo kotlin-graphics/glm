@@ -1,7 +1,6 @@
 package glm_.vec4
 
 import glm_.*
-import glm_.buffer.doubleBufferBig
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
@@ -9,6 +8,9 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4d_operators
+import kool.doubleBufferBig
+import kool.pos
+import org.lwjgl.system.MemoryStack
 import java.nio.*
 
 /**
@@ -19,16 +21,16 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
 
     constructor(x: Double, y: Double, z: Double, w: Double) : this(0, doubleArrayOf(x, y, z, w))
 
-    override inline var x: Double
+    override var x: Double
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override inline var y: Double
+    override var y: Double
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
-    override inline var z: Double
+    override var z: Double
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
-    override inline var w: Double
+    override var w: Double
         get() = array[ofs + 3]
         set(value) = array.set(ofs + 3, value)
 
@@ -68,18 +70,18 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toDouble, list.elementAt(index + 1)!!.toDouble,
             list.elementAt(index + 2)!!.toDouble, list.elementAt(index + 3)!!.toDouble)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneDouble: Boolean = false) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneDouble: Boolean = false) : this(
             if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index),
             if (oneByteOneDouble) bytes[index + 1].d else bytes.getDouble(index + Double.BYTES),
             if (oneByteOneDouble) bytes[index + 2].d else bytes.getDouble(index + Double.BYTES * 2),
             if (oneByteOneDouble) bytes[index + 3].d else bytes.getDouble(index + Double.BYTES * 3))
 
-    constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].d, chars[index + 1].d, chars[index + 2].d, chars[index + 3].d)
-    constructor(shorts: ShortBuffer, index: Int = shorts.position()) : this(shorts[index], shorts[index + 1], shorts[index + 2], shorts[index + 3])
-    constructor(ints: IntBuffer, index: Int = ints.position()) : this(ints[index], ints[index + 1], ints[index + 2], ints[index + 3])
-    constructor(longs: LongBuffer, index: Int = longs.position()) : this(longs[index], longs[index + 1], longs[index + 2], longs[index + 3])
-    constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1], floats[index + 2], floats[index + 3])
-    constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
+    constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].d, chars[index + 1].d, chars[index + 2].d, chars[index + 3].d)
+    constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index], shorts[index + 1], shorts[index + 2], shorts[index + 3])
+    constructor(ints: IntBuffer, index: Int = ints.pos) : this(ints[index], ints[index + 1], ints[index + 2], ints[index + 3])
+    constructor(longs: LongBuffer, index: Int = longs.pos) : this(longs[index], longs[index + 1], longs[index + 2], longs[index + 3])
+    constructor(floats: FloatBuffer, index: Int = floats.pos) : this(floats[index], floats[index + 1], floats[index + 2], floats[index + 3])
+    constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
     constructor(block: (Int) -> Double) : this(block(0), block(1), block(2), block(3))
 
@@ -94,7 +96,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
         w = if (oneByteOneDouble) bytes[index + 3].d else bytes.getDouble(index + Double.BYTES * 3, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneDouble: Boolean = false) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneDouble: Boolean = false) {
         x = if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index)
         y = if (oneByteOneDouble) bytes[index + 1].d else bytes.getDouble(index + Double.BYTES)
         z = if (oneByteOneDouble) bytes[index + 2].d else bytes.getDouble(index + Double.BYTES * 2)
@@ -132,25 +134,25 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
         return this
     }
 
-    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    fun to(bytes: ByteArray, index: Int): ByteArray = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
-        bytes.setDouble(index, x)
-        bytes.setDouble(index + Double.BYTES, y)
-        bytes.setDouble(index + Double.BYTES * 2, z)
-        bytes.setDouble(index + Double.BYTES * 3, w)
+        bytes.putDouble(index, x, bigEndian)
+        bytes.putDouble(index + Double.BYTES, y, bigEndian)
+        bytes.putDouble(index + Double.BYTES * 2, z, bigEndian)
+        bytes.putDouble(index + Double.BYTES * 3, w, bigEndian)
         return bytes
     }
 
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes.putDouble(index, x)
-        bytes.putDouble(index + Double.BYTES, y)
-        bytes.putDouble(index + Double.BYTES * 2, z)
-        bytes.putDouble(index + Double.BYTES * 3, w)
-        return bytes
+    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
+        buf.putDouble(index, x)
+        buf.putDouble(index + Double.BYTES, y)
+        buf.putDouble(index + Double.BYTES * 2, z)
+        buf.putDouble(index + Double.BYTES * 3, w)
+        return buf
     }
 
-    fun toDoubleArray() = to(DoubleArray(length), 0)
-    infix fun to(doubles: DoubleArray) = to(doubles, 0)
+    fun toDoubleArray(): DoubleArray = to(DoubleArray(length), 0)
+    infix fun to(doubles: DoubleArray): DoubleArray = to(doubles, 0)
     fun to(doubles: DoubleArray, index: Int): DoubleArray {
         doubles[index] = x
         doubles[index + 1] = y
@@ -159,14 +161,15 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
         return doubles
     }
 
-    fun toDoubleBuffer() = to(doubleBufferBig(length), 0)
-    infix fun to(doubles: DoubleBuffer) = to(doubles, doubles.position())
-    fun to(doubles: DoubleBuffer, index: Int): DoubleBuffer {
-        doubles[index] = x
-        doubles[index + 1] = y
-        doubles[index + 2] = z
-        doubles[index + 3] = w
-        return doubles
+    infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
+    fun toDoubleBuffer(): DoubleBuffer = to(doubleBufferBig(length), 0)
+    infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
+    fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
+        buf[index] = x
+        buf[index + 1] = y
+        buf[index + 2] = z
+        buf[index + 3] = w
+        return buf
     }
 
     // -- Component accesses --
@@ -389,7 +392,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
     override fun createInstance(x: Double, y: Double, z: Double, w: Double) = Vec4d(x, y, z, w)
 
 
-    companion object : vec4d_operators() {
+    companion object : vec4d_operators {
         const val length = Vec4t.length
         @JvmField
         val size = length * Double.BYTES

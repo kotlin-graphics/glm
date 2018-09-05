@@ -21,6 +21,9 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
+import kool.bufferBig
+import kool.floatBufferBig
+import org.lwjgl.system.MemoryStack
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.util.*
@@ -88,6 +91,7 @@ class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
             mat4[0, 0], mat4[0, 1], mat4[0, 2],
             mat4[1, 0], mat4[1, 1], mat4[1, 2],
             mat4[2, 0], mat4[2, 1], mat4[2, 2])
+
     constructor(mat4: Mat4d) : this(
             mat4[0, 0], mat4[0, 1], mat4[0, 2],
             mat4[1, 0], mat4[1, 1], mat4[1, 2],
@@ -156,17 +160,17 @@ class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
 
     // -- Accesses --
 
-    override inline operator fun get(index: Int) = Vec3(index * 3, array)
-    override inline operator fun get(column: Int, row: Int) = array[column * 3 + row]
+    override operator fun get(index: Int) = Vec3(index * 3, array)
+    override operator fun get(column: Int, row: Int) = array[column * 3 + row]
 
-    override inline operator fun set(column: Int, row: Int, value: Float) = array.set(column * 3 + row, value)
-    override inline operator fun set(index: Int, value: Vec3t<out Number>) {
+    override operator fun set(column: Int, row: Int, value: Float) = array.set(column * 3 + row, value)
+    override operator fun set(index: Int, value: Vec3t<out Number>) {
         array[index * 3] = value.x.f
         array[index * 3 + 1] = value.y.f
         array[index * 3 + 2] = value.z.f
     }
 
-    inline operator fun set(i: Int, v: Vec3) {
+    operator fun set(i: Int, v: Vec3) {
         v.to(array, i * 3)
     }
 
@@ -198,9 +202,9 @@ class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
             0f, y, 0f,
             0f, 0f, z)
 
-    inline operator fun invoke(a0: Float, a1: Float, a2: Float,
-                      b0: Float, b1: Float, b2: Float,
-                      c0: Float, c1: Float, c2: Float): Mat3 {
+    operator fun invoke(a0: Float, a1: Float, a2: Float,
+                               b0: Float, b1: Float, b2: Float,
+                               c0: Float, c1: Float, c2: Float): Mat3 {
 
         put(a0, a1, a2, b0, b1, b2, c0, c1, c2)
         return this
@@ -211,7 +215,7 @@ class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
 
     fun identity() = put(1f)
     infix fun put(s: Float) = put(s, s, s)
-    infix fun put(v: Vec2) = put(v.x, v.y,1f)
+    infix fun put(v: Vec2) = put(v.x, v.y, 1f)
     infix fun put(v: Vec3) = put(v.x, v.y, v.z)
     infix fun put(v: Vec4) = put(v.x, v.y, v.z)
 
@@ -271,35 +275,39 @@ class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
     fun toQuat() = glm.quat_cast(this, Quat())
 
 
-    infix fun to(dbb: ByteBuffer): ByteBuffer = to(dbb, 0)
+    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.calloc(size), 0)
+    fun toBuffer(): ByteBuffer = to(bufferBig(size), 0)
+    infix fun to(buf: ByteBuffer): ByteBuffer = to(buf, 0)
 
-    fun to(dbb: ByteBuffer, offset: Int): ByteBuffer {
-        dbb.putFloat(offset + 0 * Float.BYTES, array[0])
-        dbb.putFloat(offset + 1 * Float.BYTES, array[1])
-        dbb.putFloat(offset + 2 * Float.BYTES, array[2])
-        dbb.putFloat(offset + 3 * Float.BYTES, array[3])
-        dbb.putFloat(offset + 4 * Float.BYTES, array[4])
-        dbb.putFloat(offset + 5 * Float.BYTES, array[5])
-        dbb.putFloat(offset + 6 * Float.BYTES, array[6])
-        dbb.putFloat(offset + 7 * Float.BYTES, array[7])
-        dbb.putFloat(offset + 8 * Float.BYTES, array[8])
-        return dbb
+    fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        return buf
+                .putFloat(offset + 0 * Float.BYTES, array[0])
+                .putFloat(offset + 1 * Float.BYTES, array[1])
+                .putFloat(offset + 2 * Float.BYTES, array[2])
+                .putFloat(offset + 3 * Float.BYTES, array[3])
+                .putFloat(offset + 4 * Float.BYTES, array[4])
+                .putFloat(offset + 5 * Float.BYTES, array[5])
+                .putFloat(offset + 6 * Float.BYTES, array[6])
+                .putFloat(offset + 7 * Float.BYTES, array[7])
+                .putFloat(offset + 8 * Float.BYTES, array[8])
     }
 
 
-    infix fun to(dfb: FloatBuffer) = to(dfb, 0)
+    fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
+    fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
+    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, 0)
 
-    fun to(dfb: FloatBuffer, offset: Int): FloatBuffer {
-        dfb[offset + 0] = array[0]
-        dfb[offset + 1] = array[1]
-        dfb[offset + 2] = array[2]
-        dfb[offset + 3] = array[3]
-        dfb[offset + 4] = array[4]
-        dfb[offset + 5] = array[5]
-        dfb[offset + 6] = array[6]
-        dfb[offset + 7] = array[7]
-        dfb[offset + 8] = array[8]
-        return dfb
+    fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
+        buf[offset + 0] = array[0]
+        buf[offset + 1] = array[1]
+        buf[offset + 2] = array[2]
+        buf[offset + 3] = array[3]
+        buf[offset + 4] = array[4]
+        buf[offset + 5] = array[5]
+        buf[offset + 6] = array[6]
+        buf[offset + 7] = array[7]
+        buf[offset + 8] = array[8]
+        return buf
     }
 
 
@@ -441,7 +449,7 @@ class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
                 this[0, 1] == 0f && this[1, 1] == 1f && this[2, 1] == 0f &&
                 this[0, 2] == 0f && this[1, 2] == 0f && this[2, 2] == 1f
 
-    companion object : mat3x3_operators() {
+    companion object : mat3x3_operators {
         const val length = Mat3x3t.length
         @JvmField
         val size = length * Float.BYTES

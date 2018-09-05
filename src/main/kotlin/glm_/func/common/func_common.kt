@@ -178,7 +178,7 @@ interface func_common {
     fun frexp(a: Float, exp: KMutableProperty0<Int>): Float {
 
         val bits = a.toIntBits
-        var realMant = 1f
+        var realMant: Float
 
         // Test for NaN, infinity, and zero.
         return when {
@@ -220,7 +220,7 @@ interface func_common {
     fun frexp(a: Double, exp: KMutableProperty0<Int>): Double {
 
         val bits = a.toLongBits
-        var realMant = 1.0
+        var realMant: Double
 
         // Test for NaN, infinity, and zero.
         return when {

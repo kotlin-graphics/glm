@@ -3,9 +3,13 @@
 package glm_.vec4
 
 import glm_.*
-import glm_.buffer.bufferBig
-import glm_.vec2.*
-import glm_.vec3.*
+import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2t
+import glm_.vec3.Vec3bool
+import glm_.vec3.Vec3t
+import kool.bufferBig
+import kool.pos
+import org.lwjgl.system.MemoryStack
 import java.nio.*
 
 // TODO other
@@ -215,14 +219,15 @@ abstract class Vec4t<T : Number> {
     operator fun invoke(doubles: DoubleBuffer, index: Int) = invoke(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
 
-    fun toByteArray(bigEndian: Boolean = true) = to(ByteArray(length), 0, bigEndian)
-    infix fun to(bytes: ByteArray) = to(bytes, 0)
-    fun to(bytes: ByteArray, bigEndian: Boolean) = to(bytes, 0, bigEndian)
+    fun toByteArray(bigEndian: Boolean = true): ByteArray = to(ByteArray(length), 0, bigEndian)
+    infix fun to(bytes: ByteArray): ByteArray = to(bytes, 0)
+    fun to(bytes: ByteArray, bigEndian: Boolean): ByteArray = to(bytes, 0, bigEndian)
     abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
 
-    fun toByteBuffer() = to(bufferBig(size()), 0)
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    abstract fun to(bytes: ByteBuffer, index: Int): ByteBuffer
+    infix fun toByteBuffer(stack: MemoryStack): ByteBuffer = to(stack.malloc(size()), 0)
+    fun toByteBuffer(): ByteBuffer = to(bufferBig(size()), 0)
+    infix fun to(buf: ByteBuffer): ByteBuffer = to(buf, buf.pos)
+    abstract fun to(buf: ByteBuffer, index: Int): ByteBuffer
 
 
     infix fun lessThan(b: Vec4t<out Number>) = glm.lessThan(this, b, Vec4bool())

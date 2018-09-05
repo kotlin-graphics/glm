@@ -124,11 +124,11 @@ fun ByteArray.getLong(index: Int, bigEndian: Boolean = true): Long {
     return a or b or c or d or e or f or g or h
 }
 
-fun ByteArray.setFloat(index: Int, float: Float, bigEndian: Boolean = true) = setInt(index, float.toRawIntBits, bigEndian)
+fun ByteArray.putFloat(index: Int, float: Float, bigEndian: Boolean = true) = putInt(index, float.toRawIntBits, bigEndian)
 
-fun ByteArray.setDouble(index: Int, double: Double, bigEndian: Boolean = true) = setLong(index, double.toRawLongBits, bigEndian)
+fun ByteArray.putDouble(index: Int, double: Double, bigEndian: Boolean = true) = putLong(index, double.toRawLongBits, bigEndian)
 
-fun ByteArray.setShort(index: Int, short: Short, bigEndian: Boolean = true) {
+fun ByteArray.putShort(index: Int, short: Short, bigEndian: Boolean = true) {
     val int = short.i
     if (bigEndian) {
         this[index + 1] = (int and 0xFF).b
@@ -139,7 +139,7 @@ fun ByteArray.setShort(index: Int, short: Short, bigEndian: Boolean = true) {
     }
 }
 
-fun ByteArray.setInt(index: Int, int: Int, bigEndian: Boolean = true) {
+fun ByteArray.putInt(index: Int, int: Int, bigEndian: Boolean = true) {
     if (bigEndian) {
         this[index + 3] = (int and 0xFF).b
         this[index + 2] = ((int ushr 8) and 0xFF).b
@@ -153,7 +153,7 @@ fun ByteArray.setInt(index: Int, int: Int, bigEndian: Boolean = true) {
     }
 }
 
-fun ByteArray.setLong(index: Int, long: Long, bigEndian: Boolean = true) {
+fun ByteArray.putLong(index: Int, long: Long, bigEndian: Boolean = true) {
     if (bigEndian) {
         this[index + 7] = (long and 0xFF).b
         this[index + 6] = ((long ushr 8) and 0xFF).b

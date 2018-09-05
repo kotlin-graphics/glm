@@ -1,7 +1,6 @@
 package glm_.vec1
 
 import glm_.*
-import glm_.buffer.doubleBufferBig
 import glm_.vec1.operators.vec1d_operators
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
@@ -9,6 +8,9 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.doubleBufferBig
+import kool.pos
+import org.lwjgl.system.MemoryStack
 import java.nio.*
 
 /**
@@ -50,15 +52,15 @@ class Vec1d(x: Double) : Vec1t<Double>(x) {
         put(list, index)
     }
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneDouble: Boolean = false)
+    constructor(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneDouble: Boolean = false)
             : this(if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index))
 
-    constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].d)
-    constructor(shorts: ShortBuffer, index: Int = shorts.position()) : this(shorts[index])
-    constructor(ints: IntBuffer, index: Int = ints.position()) : this(ints[index])
-    constructor(longs: LongBuffer, index: Int = longs.position()) : this(longs[index])
-    constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index])
-    constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index])
+    constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].d)
+    constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index])
+    constructor(ints: IntBuffer, index: Int = ints.pos) : this(ints[index])
+    constructor(longs: LongBuffer, index: Int = longs.pos) : this(longs[index])
+    constructor(floats: FloatBuffer, index: Int = floats.pos) : this(floats[index])
+    constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index])
 
     constructor(block: (Int) -> Double) : this(block(0))
 
@@ -69,7 +71,7 @@ class Vec1d(x: Double) : Vec1t<Double>(x) {
         x = if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneDouble: Boolean = false) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneDouble: Boolean = false) {
         x = if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index)
     }
 
@@ -94,24 +96,25 @@ class Vec1d(x: Double) : Vec1t<Double>(x) {
 
     fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
-        bytes.setDouble(index, x)
+        bytes.putDouble(index, x)
         return bytes
     }
 
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer  = bytes.putDouble(index, x)
+    override fun to(buf: ByteBuffer, index: Int): ByteBuffer  = buf.putDouble(index, x)
 
-    fun toDoubleArray() = to(DoubleArray(length), 0)
-    infix fun to(doubles: DoubleArray) = to(doubles, 0)
+    fun toDoubleArray(): DoubleArray = to(DoubleArray(length), 0)
+    infix fun to(doubles: DoubleArray): DoubleArray = to(doubles, 0)
     fun to(doubles: DoubleArray, index: Int): DoubleArray {
         doubles[index] = x
         return doubles
     }
 
-    fun toDoubleBuffer() = to(doubleBufferBig(length), 0)
-    infix fun to(doubles: DoubleBuffer) = to(doubles, doubles.position())
-    fun to(doubles: DoubleBuffer, index: Int): DoubleBuffer {
-        doubles[index] = x
-        return doubles
+    infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
+    fun toDoubleBuffer(): DoubleBuffer = to(doubleBufferBig(length), 0)
+    infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
+    fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
+        buf[index] = x
+        return buf
     }
 
     // -- Unary arithmetic operators --

@@ -11,51 +11,51 @@ import glm_.vec2.Vec2d.Companion.times
 /**
  * Created by GBarbieri on 08.11.2016.
  */
-open class opVec2d {
+interface opVec2d {
 
-    inline fun plus(res: Vec2d, a: Vec2d, bX: Double, bY: Double): Vec2d {
+    fun plus(res: Vec2d, a: Vec2d, bX: Double, bY: Double): Vec2d {
         res.x = a.x + bX
         res.y = a.y + bY
         return res
     }
 
-    inline fun minus(res: Vec2d, a: Vec2d, bX: Double, bY: Double): Vec2d {
+    fun minus(res: Vec2d, a: Vec2d, bX: Double, bY: Double): Vec2d {
         res.x = a.x - bX
         res.y = a.y - bY
         return res
     }
 
-    inline fun minus(res: Vec2d, aX: Double, aY: Double, b: Vec2d): Vec2d {
+    fun minus(res: Vec2d, aX: Double, aY: Double, b: Vec2d): Vec2d {
         res.x = aX - b.x
         res.y = aY - b.y
         return res
     }
 
-    inline fun times(res: Vec2d, a: Vec2d, bX: Double, bY: Double): Vec2d {
+    fun times(res: Vec2d, a: Vec2d, bX: Double, bY: Double): Vec2d {
         res.x = a.x * bX
         res.y = a.y * bY
         return res
     }
 
-    inline fun div(res: Vec2d, a: Vec2d, bX: Double, bY: Double): Vec2d {
+    fun div(res: Vec2d, a: Vec2d, bX: Double, bY: Double): Vec2d {
         res.x = a.x / bX
         res.y = a.y / bY
         return res
     }
 
-    inline fun div(res: Vec2d, aX: Double, aY: Double, b: Vec2d): Vec2d {
+    fun div(res: Vec2d, aX: Double, aY: Double, b: Vec2d): Vec2d {
         res.x = aX / b.x
         res.y = aY / b.y
         return res
     }
 
-    inline fun rem(res: Vec2d, a: Vec2d, bX: Double, bY: Double): Vec2d {
+    fun rem(res: Vec2d, a: Vec2d, bX: Double, bY: Double): Vec2d {
         res.x = a.x % bX
         res.y = a.y % bY
         return res
     }
 
-    inline fun rem(res: Vec2d, aX: Double, aY: Double, b: Vec2d): Vec2d {
+    fun rem(res: Vec2d, aX: Double, aY: Double, b: Vec2d): Vec2d {
         res.x = aX % b.x
         res.y = aY % b.y
         return res

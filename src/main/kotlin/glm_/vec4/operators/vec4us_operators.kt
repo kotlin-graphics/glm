@@ -17,9 +17,9 @@ import kotlin.experimental.xor
  * Created by elect on 09/11/16.
  */
 
-open class vec4us_operators {
+interface vec4us_operators {
 
-    inline fun plus(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
+    fun plus(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
         res.x.v = (a.x.v + bX.v).s
         res.y.v = (a.y.v + bY.v).s
         res.z.v = (a.z.v + bZ.v).s
@@ -27,7 +27,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun plus(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
+    fun plus(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
         res.x.v = (a.x.v + bX).s
         res.y.v = (a.y.v + bY).s
         res.z.v = (a.z.v + bZ).s
@@ -35,7 +35,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun plus(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
+    fun plus(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
         res.x.v = (a.x.v + bX).s
         res.y.v = (a.y.v + bY).s
         res.z.v = (a.z.v + bZ).s
@@ -43,7 +43,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun minus(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
+    fun minus(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
         res.x.v = (a.x.v - bX.v).s
         res.y.v = (a.y.v - bY.v).s
         res.z.v = (a.z.v - bZ.v).s
@@ -51,7 +51,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun minus(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
+    fun minus(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
         res.x.v = (a.x.v - bX).s
         res.y.v = (a.y.v - bY).s
         res.z.v = (a.z.v - bZ).s
@@ -59,7 +59,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun minus(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
+    fun minus(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
         res.x.v = (a.x.v - bX).s
         res.y.v = (a.y.v - bY).s
         res.z.v = (a.z.v - bZ).s
@@ -67,7 +67,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun minus(res: Vec4us, aX: Ushort, aY: Ushort, aZ: Ushort, aW: Ushort, b: Vec4us): Vec4us {
+    fun minus(res: Vec4us, aX: Ushort, aY: Ushort, aZ: Ushort, aW: Ushort, b: Vec4us): Vec4us {
         res.x.v = (aX.v - b.x.v).s
         res.y.v = (aY.v - b.y.v).s
         res.z.v = (aZ.v - b.z.v).s
@@ -75,7 +75,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun minus(res: Vec4us, aX: Short, aY: Short, aZ: Short, aW: Short, b: Vec4us): Vec4us {
+    fun minus(res: Vec4us, aX: Short, aY: Short, aZ: Short, aW: Short, b: Vec4us): Vec4us {
         res.x.v = (aX - b.x.v).s
         res.y.v = (aY - b.y.v).s
         res.z.v = (aZ - b.z.v).s
@@ -83,7 +83,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun minus(res: Vec4us, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4us): Vec4us {
+    fun minus(res: Vec4us, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4us): Vec4us {
         res.x.v = (aX - b.x.v).s
         res.y.v = (aY - b.y.v).s
         res.z.v = (aZ - b.z.v).s
@@ -91,7 +91,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun times(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
+    fun times(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
         res.x.v = (a.x.v * bX.v).s
         res.y.v = (a.y.v * bY.v).s
         res.z.v = (a.z.v * bZ.v).s
@@ -99,7 +99,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun times(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
+    fun times(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
         res.x.v = (a.x.v * bX).s
         res.y.v = (a.y.v * bY).s
         res.z.v = (a.z.v * bZ).s
@@ -107,7 +107,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun times(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
+    fun times(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
         res.x.v = (a.x.v * bX).s
         res.y.v = (a.y.v * bY).s
         res.z.v = (a.z.v * bZ).s
@@ -115,7 +115,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun div(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
+    fun div(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
         res.x.v = a.x.v udiv bX.v
         res.y.v = a.y.v udiv bY.v
         res.z.v = a.z.v udiv bZ.v
@@ -123,7 +123,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun div(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
+    fun div(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
         res.x.v = a.x.v udiv bX
         res.y.v = a.y.v udiv bY
         res.z.v = a.z.v udiv bZ
@@ -131,7 +131,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun div(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
+    fun div(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
         res.x.v = a.x.v udiv bX
         res.y.v = a.y.v udiv bY
         res.z.v = a.z.v udiv bZ
@@ -139,7 +139,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun div(res: Vec4us, aX: Ushort, aY: Ushort, aZ: Ushort, aW: Ushort, b: Vec4us): Vec4us {
+    fun div(res: Vec4us, aX: Ushort, aY: Ushort, aZ: Ushort, aW: Ushort, b: Vec4us): Vec4us {
         res.x.v = aX.v udiv b.x.v
         res.y.v = aY.v udiv b.y.v
         res.z.v = aZ.v udiv b.z.v
@@ -147,7 +147,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun div(res: Vec4us, aX: Short, aY: Short, aZ: Short, aW: Short, b: Vec4us): Vec4us {
+    fun div(res: Vec4us, aX: Short, aY: Short, aZ: Short, aW: Short, b: Vec4us): Vec4us {
         res.x.v = aX udiv b.x.v
         res.y.v = aY udiv b.y.v
         res.z.v = aZ udiv b.z.v
@@ -155,7 +155,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun div(res: Vec4us, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4us): Vec4us {
+    fun div(res: Vec4us, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4us): Vec4us {
         res.x.v = (aX udiv b.x.v).s
         res.y.v = (aY udiv b.y.v).s
         res.z.v = (aZ udiv b.z.v).s
@@ -163,7 +163,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun rem(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
+    fun rem(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
         res.x.v = a.x.v urem bX.v
         res.y.v = a.y.v urem bY.v
         res.z.v = a.z.v urem bZ.v
@@ -171,7 +171,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun rem(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
+    fun rem(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
         res.x.v = a.x.v urem bX
         res.y.v = a.y.v urem bY
         res.z.v = a.z.v urem bZ
@@ -179,7 +179,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun rem(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
+    fun rem(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
         res.x.v = a.x.v urem bX
         res.y.v = a.y.v urem bY
         res.z.v = a.z.v urem bZ
@@ -187,7 +187,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun rem(res: Vec4us, aX: Ushort, aY: Ushort, aZ: Ushort, aW: Ushort, b: Vec4us): Vec4us {
+    fun rem(res: Vec4us, aX: Ushort, aY: Ushort, aZ: Ushort, aW: Ushort, b: Vec4us): Vec4us {
         res.x.v = aX.v urem b.x.v
         res.y.v = aY.v urem b.y.v
         res.z.v = aZ.v urem b.z.v
@@ -195,7 +195,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun rem(res: Vec4us, aX: Short, aY: Short, aZ: Short, aW: Short, b: Vec4us): Vec4us {
+    fun rem(res: Vec4us, aX: Short, aY: Short, aZ: Short, aW: Short, b: Vec4us): Vec4us {
         res.x.v = aX urem b.x.v
         res.y.v = aY urem b.y.v
         res.z.v = aZ urem b.z.v
@@ -203,7 +203,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun rem(res: Vec4us, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4us): Vec4us {
+    fun rem(res: Vec4us, aX: Int, aY: Int, aZ: Int, aW: Int, b: Vec4us): Vec4us {
         res.x.v = (aX urem b.x.v).s
         res.y.v = (aY urem b.y.v).s
         res.z.v = (aZ urem b.z.v).s
@@ -211,7 +211,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun and(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
+    fun and(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
         res.x.v = a.x.v and bX.v
         res.y.v = a.y.v and bY.v
         res.z.v = a.z.v and bZ.v
@@ -219,7 +219,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun and(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
+    fun and(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
         res.x.v = a.x.v and bX
         res.y.v = a.y.v and bY
         res.z.v = a.z.v and bZ
@@ -227,7 +227,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun and(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
+    fun and(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
         res.x.v = a.x.v and bX
         res.y.v = a.y.v and bY
         res.z.v = a.z.v and bZ
@@ -235,7 +235,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun or(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
+    fun or(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
         res.x.v = a.x.v or bX
         res.y.v = a.y.v or bY
         res.z.v = a.z.v or bZ
@@ -243,7 +243,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun or(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
+    fun or(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
         res.x.v = a.x.v or bX
         res.y.v = a.y.v or bY
         res.z.v = a.z.v or bZ
@@ -251,7 +251,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun or(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
+    fun or(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
         res.x.v = a.x.v or bX
         res.y.v = a.y.v or bY
         res.z.v = a.z.v or bZ
@@ -259,7 +259,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun xor(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
+    fun xor(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
         res.x.v = a.x.v xor bX
         res.y.v = a.y.v xor bY
         res.z.v = a.z.v xor bZ
@@ -267,7 +267,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun xor(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
+    fun xor(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
         res.x.v = a.x.v xor bX
         res.y.v = a.y.v xor bY
         res.z.v = a.z.v xor bZ
@@ -275,7 +275,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun xor(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
+    fun xor(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
         res.x.v = a.x.v xor bX
         res.y.v = a.y.v xor bY
         res.z.v = a.z.v xor bZ
@@ -283,7 +283,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun shl(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
+    fun shl(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
         res.x.v = a.x.v shl bX
         res.y.v = a.y.v shl bY
         res.z.v = a.z.v shl bZ
@@ -291,7 +291,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun shl(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
+    fun shl(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
         res.x.v = a.x.v shl bX
         res.y.v = a.y.v shl bY
         res.z.v = a.z.v shl bZ
@@ -299,7 +299,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun shl(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
+    fun shl(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
         res.x.v = a.x.v shl bX
         res.y.v = a.y.v shl bY
         res.z.v = a.z.v shl bZ
@@ -307,7 +307,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun shr(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
+    fun shr(res: Vec4us, a: Vec4us, bX: Ushort, bY: Ushort, bZ: Ushort, bW: Ushort): Vec4us {
         res.x.v = a.x.v ushr bX.v
         res.y.v = a.y.v ushr bY.v
         res.z.v = a.z.v ushr bZ.v
@@ -315,7 +315,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun shr(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
+    fun shr(res: Vec4us, a: Vec4us, bX: Short, bY: Short, bZ: Short, bW: Short): Vec4us {
         res.x.v = a.x.v ushr bX
         res.y.v = a.y.v ushr bY
         res.z.v = a.z.v ushr bZ
@@ -323,7 +323,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun shr(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
+    fun shr(res: Vec4us, a: Vec4us, bX: Int, bY: Int, bZ: Int, bW: Int): Vec4us {
         res.x.v = a.x.v ushr bX
         res.y.v = a.y.v ushr bY
         res.z.v = a.z.v ushr bZ
@@ -331,7 +331,7 @@ open class vec4us_operators {
         return res
     }
 
-    inline fun inv(res: Vec4us, a: Vec4us): Vec4us {
+    fun inv(res: Vec4us, a: Vec4us): Vec4us {
         res.x.v = a.x.v.inv()
         res.y.v = a.y.v.inv()
         res.z.v = a.z.v.inv()

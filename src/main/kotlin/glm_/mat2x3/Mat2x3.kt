@@ -16,18 +16,18 @@ class Mat2x3(dummy: Int, var array: FloatArray) : Mat2x3t<Float>() {
 
     // -- Accesses --
 
-    override inline operator fun get(index: Int) = Vec3(index * 3, array)
-    override inline operator fun get(column: Int, row: Int) = array[column * 3 + row]
+    override operator fun get(index: Int) = Vec3(index * 3, array)
+    override operator fun get(column: Int, row: Int) = array[column * 3 + row]
 
-    override inline operator fun set(column: Int, row: Int, value: Float) = array.set(column * 3 + row, value)
+    override operator fun set(column: Int, row: Int, value: Float) = array.set(column * 3 + row, value)
 
-    override inline operator fun set(index: Int, value: Vec3t<out Number>) {
+    override operator fun set(index: Int, value: Vec3t<out Number>) {
         array[index * 3] = value.x.f
         array[index * 3 + 1] = value.y.f
         array[index * 3 + 2] = value.z.f
     }
 
-    inline operator fun set(i: Int, v: Vec3) {
+    operator fun set(i: Int, v: Vec3) {
         v.to(array, i * 3)
     }
 

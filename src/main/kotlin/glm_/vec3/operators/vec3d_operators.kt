@@ -11,58 +11,58 @@ import glm_.vec3.Vec3d.Companion.times
 /**
  * Created by GBarbieri on 08.11.2016.
  */
-open class vec3d_operators() {
+interface vec3d_operators {
 
-    inline fun plus(res: Vec3d, a: Vec3d, bX: Double, bY: Double, bZ: Double): Vec3d {
+    fun plus(res: Vec3d, a: Vec3d, bX: Double, bY: Double, bZ: Double): Vec3d {
         res.x = a.x + bX
         res.y = a.y + bY
         res.z = a.z + bZ
         return res
     }
 
-    inline fun minus(res: Vec3d, a: Vec3d, bX: Double, bY: Double, bZ: Double): Vec3d {
+    fun minus(res: Vec3d, a: Vec3d, bX: Double, bY: Double, bZ: Double): Vec3d {
         res.x = a.x - bX
         res.y = a.y - bY
         res.z = a.z - bZ
         return res
     }
 
-    inline fun minus(res: Vec3d, aX: Double, aY: Double, aZ: Double, b: Vec3d): Vec3d {
+    fun minus(res: Vec3d, aX: Double, aY: Double, aZ: Double, b: Vec3d): Vec3d {
         res.x = aX - b.x
         res.y = aY - b.y
         res.z = aZ - b.z
         return res
     }
 
-    inline fun times(res: Vec3d, a: Vec3d, bX: Double, bY: Double, bZ: Double): Vec3d {
+    fun times(res: Vec3d, a: Vec3d, bX: Double, bY: Double, bZ: Double): Vec3d {
         res.x = a.x * bX
         res.y = a.y * bY
         res.z = a.z * bZ
         return res
     }
 
-    inline fun div(res: Vec3d, a: Vec3d, bX: Double, bY: Double, bZ: Double): Vec3d {
+    fun div(res: Vec3d, a: Vec3d, bX: Double, bY: Double, bZ: Double): Vec3d {
         res.x = a.x / bX
         res.y = a.y / bY
         res.z = a.z / bZ
         return res
     }
 
-    inline fun div(res: Vec3d, aX: Double, aY: Double, aZ: Double, b: Vec3d): Vec3d {
+    fun div(res: Vec3d, aX: Double, aY: Double, aZ: Double, b: Vec3d): Vec3d {
         res.x = aX / b.x
         res.y = aY / b.y
         res.z = aZ / b.z
         return res
     }
 
-    inline fun rem(res: Vec3d, a: Vec3d, bX: Double, bY: Double, bZ: Double): Vec3d {
+    fun rem(res: Vec3d, a: Vec3d, bX: Double, bY: Double, bZ: Double): Vec3d {
         res.x = a.x % bX
         res.y = a.y % bY
         res.z = a.z % bZ
         return res
     }
 
-    inline fun rem(res: Vec3d, aX: Double, aY: Double, aZ: Double, b: Vec3d): Vec3d {
+    fun rem(res: Vec3d, aX: Double, aY: Double, aZ: Double, b: Vec3d): Vec3d {
         res.x = aX % b.x
         res.y = aY % b.y
         res.z = aZ % b.z

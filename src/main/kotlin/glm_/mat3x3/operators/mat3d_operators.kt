@@ -18,11 +18,11 @@ import glm_.vec3.Vec3d.Companion.times
  * Created by GBarbieri on 10.11.2016.
  */
 
-open class mat3d_operators {
+interface mat3d_operators {
 
 
     /** Mat3d = Mat3d + scalar */
-    inline fun plus(res: Mat3d, a: Mat3d, b: Double): Mat3d {
+    fun plus(res: Mat3d, a: Mat3d, b: Double): Mat3d {
         plus(res[0], a[0], b, b, b)
         plus(res[1], a[1], b, b, b)
         plus(res[2], a[2], b, b, b)
@@ -30,7 +30,7 @@ open class mat3d_operators {
     }
 
     /** Mat3d = Mat3d - scalar */
-    inline fun minus(res: Mat3d, a: Mat3d, b: Double): Mat3d {
+    fun minus(res: Mat3d, a: Mat3d, b: Double): Mat3d {
         minus(res[0], a[0], b, b, b)
         minus(res[1], a[1], b, b, b)
         minus(res[2], a[2], b, b, b)
@@ -38,7 +38,7 @@ open class mat3d_operators {
     }
 
     /** Mat3d = scalar - Mat3d   */
-    inline fun minus(res: Mat3d, a: Double, b: Mat3d): Mat3d {
+    fun minus(res: Mat3d, a: Double, b: Mat3d): Mat3d {
         minus(res[0], a, a, a, b[0])
         minus(res[1], a, a, a, b[1])
         minus(res[2], a, a, a, b[2])
@@ -46,7 +46,7 @@ open class mat3d_operators {
     }
 
     /** Mat3d = Mat3d * scalar */
-    inline fun times(res: Mat3d, a: Mat3d, b: Double): Mat3d {
+    fun times(res: Mat3d, a: Mat3d, b: Double): Mat3d {
         times(res[0], a[0], b, b, b)
         times(res[1], a[1], b, b, b)
         times(res[2], a[2], b, b, b)
@@ -54,7 +54,7 @@ open class mat3d_operators {
     }
 
     /** Mat3d = Mat3d / scalar */
-    inline fun div(res: Mat3d, a: Mat3d, b: Double): Mat3d {
+    fun div(res: Mat3d, a: Mat3d, b: Double): Mat3d {
         div(res[0], a[0], b, b, b)
         div(res[1], a[1], b, b, b)
         div(res[2], a[2], b, b, b)
@@ -62,7 +62,7 @@ open class mat3d_operators {
     }
 
     /** Mat3d = scalar / Mat3d */
-    inline fun div(res: Mat3d, a: Double, b: Mat3d): Mat3d {
+    fun div(res: Mat3d, a: Double, b: Mat3d): Mat3d {
         div(res[0], a, a, a, b[0])
         div(res[1], a, a, a, b[1])
         div(res[2], a, a, a, b[2])
@@ -71,19 +71,19 @@ open class mat3d_operators {
 
 
     /** Mat3d = Mat3d + Mat3d */
-    inline fun plus(res: Mat3d, a: Mat3d, b: Mat3d) = plus(res, a,
+    fun plus(res: Mat3d, a: Mat3d, b: Mat3d) = plus(res, a,
             b[0, 0], b[0, 1], b[0, 2],
             b[1, 0], b[1, 1], b[1, 2],
             b[2, 0], b[2, 1], b[2, 2])
 
     /** Mat3d = Mat3d + Mat3d */
-    inline fun plus(res: Mat3d, a: Mat3d, b0: Vec3d, b1: Vec3d, b2: Vec3d) = plus(res, a,
+    fun plus(res: Mat3d, a: Mat3d, b0: Vec3d, b1: Vec3d, b2: Vec3d) = plus(res, a,
             b0[0], b0[1], b0[2],
             b1[0], b1[1], b1[2],
             b2[0], b2[1], b2[2])
 
     /** Mat3d = Mat3d + Mat3d */
-    inline fun plus(res: Mat3d, a: Mat3d,
+    fun plus(res: Mat3d, a: Mat3d,
                     b00: Double, b01: Double, b02: Double,
                     b10: Double, b11: Double, b12: Double,
                     b20: Double, b21: Double, b22: Double): Mat3d {
@@ -94,19 +94,19 @@ open class mat3d_operators {
     }
 
     /** Mat3d = Mat3d - Mat3d */
-    inline fun minus(res: Mat3d, a: Mat3d, b: Mat3d) = minus(res, a,
+    fun minus(res: Mat3d, a: Mat3d, b: Mat3d) = minus(res, a,
             b[0, 0], b[0, 1], b[0, 2],
             b[1, 0], b[1, 1], b[1, 2],
             b[2, 0], b[2, 1], b[2, 2])
 
     /** Mat3d = Mat3d - Mat3d */
-    inline fun minus(res: Mat3d, a: Mat3d, b0: Vec3d, b1: Vec3d, b2: Vec3d) = minus(res, a,
+    fun minus(res: Mat3d, a: Mat3d, b0: Vec3d, b1: Vec3d, b2: Vec3d) = minus(res, a,
             b0[0], b0[1], b0[2],
             b1[0], b1[1], b1[2],
             b2[0], b2[1], b2[2])
 
     /** Mat3d = Mat3d - Mat3d */
-    inline fun minus(res: Mat3d, a: Mat3d,
+    fun minus(res: Mat3d, a: Mat3d,
                      b00: Double, b01: Double, b02: Double,
                      b10: Double, b11: Double, b12: Double,
                      b20: Double, b21: Double, b22: Double): Mat3d {
@@ -117,13 +117,13 @@ open class mat3d_operators {
     }
 
     /** Mat3d = Mat3d - Mat3d */
-    inline fun minus(res: Mat3d, a0: Vec3d, a1: Vec3d, a2: Vec3d, b: Mat3d) = minus(res,
+    fun minus(res: Mat3d, a0: Vec3d, a1: Vec3d, a2: Vec3d, b: Mat3d) = minus(res,
             a0[0], a0[1], a0[2],
             a1[0], a1[1], a1[2],
             a2[0], a2[1], a2[2], b)
 
     /** Mat3d = Mat3d - Mat3d */
-    inline fun minus(res: Mat3d,
+    fun minus(res: Mat3d,
                      a00: Double, a01: Double, a02: Double,
                      a10: Double, a11: Double, a12: Double,
                      a20: Double, a21: Double, a22: Double, b: Mat3d): Mat3d {
@@ -135,10 +135,10 @@ open class mat3d_operators {
 
 
     /** Vec3d col = Mat3d * Vec3d row  */
-    inline fun times(res: Vec3d, a: Mat3d, b: Vec3d) = times(res, a, b.x, b.y, b.z)
+    fun times(res: Vec3d, a: Mat3d, b: Vec3d) = times(res, a, b.x, b.y, b.z)
 
     /** Vec3d col = Mat3d * Vec3d row */
-    inline fun times(res: Vec3d, a: Mat3d, b0: Double, b1: Double, b2: Double): Vec3d {
+    fun times(res: Vec3d, a: Mat3d, b0: Double, b1: Double, b2: Double): Vec3d {
         res[0] = a[0, 0] * b0 + a[1, 0] * b1 + a[2, 0] * b2
         res[1] = a[0, 1] * b0 + a[1, 1] * b1 + a[2, 1] * b2
         res[2] = a[0, 2] * b0 + a[1, 2] * b1 + a[2, 2] * b2
@@ -146,10 +146,10 @@ open class mat3d_operators {
     }
 
     /** Vec3d row = Vec3d col * Mat3d  */
-    inline fun times(res: Vec3d, a: Vec3d, b: Mat3d) = times(res, a.x, a.y, a.z, b)
+    fun times(res: Vec3d, a: Vec3d, b: Mat3d) = times(res, a.x, a.y, a.z, b)
 
     /** Vec3d row = Vec3d col * Mat3d  */
-    inline fun times(res: Vec3d, a0: Double, a1: Double, a2: Double, b: Mat3d): Vec3d {
+    fun times(res: Vec3d, a0: Double, a1: Double, a2: Double, b: Mat3d): Vec3d {
         res[0] = a0 * b[0, 0] + a1 * b[0, 1] + a2 * b[0, 2]
         res[1] = a0 * b[1, 0] + a1 * b[1, 1] + a2 * b[1, 2]
         res[2] = a0 * b[2, 0] + a1 * b[2, 1] + a2 * b[2, 2]
@@ -157,19 +157,19 @@ open class mat3d_operators {
     }
 
     /** Mat3d = Mat3d * Mat3d */
-    inline fun times(res: Mat3d, a: Mat3d, b: Mat3d) = times(res, a,
+    fun times(res: Mat3d, a: Mat3d, b: Mat3d) = times(res, a,
             b[0, 0], b[0, 1], b[0, 2],
             b[1, 0], b[1, 1], b[1, 2],
             b[2, 0], b[2, 1], b[2, 2])
 
     /** Mat3d = Mat3d * Mat3d */
-    inline fun times(res: Mat3d, a: Mat3d, b0: Vec3d, b1: Vec3d, b2: Vec3d) = times(res, a,
+    fun times(res: Mat3d, a: Mat3d, b0: Vec3d, b1: Vec3d, b2: Vec3d) = times(res, a,
             b0[0], b0[1], b0[2],
             b1[0], b1[1], b1[2],
             b2[0], b2[1], b2[2])
 
     /** Mat3d = Mat3d * Mat3d */
-    inline fun times(res: Mat3d, a: Mat3d,
+    fun times(res: Mat3d, a: Mat3d,
                      b00: Double, b01: Double, b02: Double,
                      b10: Double, b11: Double, b12: Double,
                      b20: Double, b21: Double, b22: Double): Mat3d {
@@ -190,11 +190,11 @@ open class mat3d_operators {
 
 
     /** Mat23d = Mat3d * Mat23d */
-    inline fun times(res: Mat2x3d, a: Mat3d, b: Mat2x3d) = times(res, a, b[0], b[1], b[2])
+    fun times(res: Mat2x3d, a: Mat3d, b: Mat2x3d) = times(res, a, b[0], b[1], b[2])
     /** Mat23d = Mat3d * Mat23d */
-    inline fun times(res: Mat2x3d, a: Mat3d, b0: Vec3d, b1: Vec3d, b2: Vec3d) = times(res, a, b0.x, b0.y, b1.x, b1.y, b2.x, b2.y)
+    fun times(res: Mat2x3d, a: Mat3d, b0: Vec3d, b1: Vec3d, b2: Vec3d) = times(res, a, b0.x, b0.y, b1.x, b1.y, b2.x, b2.y)
     /** Mat23d = Mat3d * Mat23d */
-    inline fun times(res: Mat2x3d, a: Mat3d,
+    fun times(res: Mat2x3d, a: Mat3d,
                      b00: Double, b01: Double, b02: Double,
                      b10: Double, b11: Double, b12: Double): Mat2x3d {
         val v00 = a[0, 0] * b00 + a[1, 0] * b01 + a[2, 0] * b02
@@ -210,15 +210,15 @@ open class mat3d_operators {
     }
 
     /** Mat43d = Mat3d * Mat43d */
-    inline fun times(res: Mat4x3d, a: Mat3d, b: Mat4x3d) = times(res, a, b[0], b[1], b[2], b[3])
+    fun times(res: Mat4x3d, a: Mat3d, b: Mat4x3d) = times(res, a, b[0], b[1], b[2], b[3])
     /** Mat43d = Mat3d * Mat43d */
-    inline fun times(res: Mat4x3d, a: Mat3d, b0: Vec3d, b1: Vec3d, b2: Vec3d, b3: Vec3d) = times(res, a,
+    fun times(res: Mat4x3d, a: Mat3d, b0: Vec3d, b1: Vec3d, b2: Vec3d, b3: Vec3d) = times(res, a,
             b0.x, b0.y, b0.z,
             b1.x, b1.y, b1.z,
             b2.x, b2.y, b2.z,
             b3.x, b3.y, b3.z)
     /** Mat43d = Mat3d * Mat43d */
-    inline fun times(res: Mat4x3d, a: Mat3d,
+    fun times(res: Mat4x3d, a: Mat3d,
                      b00: Double, b01: Double, b02: Double,
                      b10: Double, b11: Double, b12: Double,
                      b20: Double, b21: Double, b22: Double,
@@ -243,19 +243,19 @@ open class mat3d_operators {
 
 
     /** Mat3d = Mat3d / Mat3d = Mat3d * Mat3d^-1 */
-    inline fun div(res: Mat3d, a: Mat3d, b: Mat3d) = div(res, a,
+    fun div(res: Mat3d, a: Mat3d, b: Mat3d) = div(res, a,
             b[0, 0], b[0, 1], b[0, 2],
             b[1, 0], b[1, 1], b[1, 2],
             b[2, 0], b[2, 1], b[2, 2])
 
     /** Mat3d = Mat3d / Mat3d = Mat3d * Mat3d^-1 */
-    inline fun div(res: Mat3d, a: Mat3d, b0: Vec3d, b1: Vec3d, b2: Vec3d) = div(res, a,
+    fun div(res: Mat3d, a: Mat3d, b0: Vec3d, b1: Vec3d, b2: Vec3d) = div(res, a,
             b0[0], b0[1], b0[2],
             b1[0], b1[1], b1[2],
             b2[0], b2[1], b2[2])
 
     /** Mat3d = Mat3d / Mat3d = Mat3d * Mat3d^-1 */
-    inline fun div(res: Mat3d, a: Mat3d,
+    fun div(res: Mat3d, a: Mat3d,
                    b00: Double, b01: Double, b02: Double,
                    b10: Double, b11: Double, b12: Double,
                    b20: Double, b21: Double, b22: Double): Mat3d {
@@ -269,10 +269,10 @@ open class mat3d_operators {
 
 
     /** Vec3d col = Mat3d * Vec3d row  */
-    inline fun div(res: Vec3d, a: Mat3d, b: Vec3d) = div(res, a, b.x, b.y, b.z)
+    fun div(res: Vec3d, a: Mat3d, b: Vec3d) = div(res, a, b.x, b.y, b.z)
 
     /** Vec3d col = Mat3d * Vec3d row  */
-    inline fun div(res: Vec3d, a: Mat3d, b0: Double, b1: Double, b2: Double): Vec3d {
+    fun div(res: Vec3d, a: Mat3d, b0: Double, b1: Double, b2: Double): Vec3d {
         val oneOverDet = 1 / a.det
         val i00 = +(a[1, 1] * a[2, 2] - a[2, 1] * a[1, 2]) * oneOverDet
         val i10 = -(a[1, 0] * a[2, 2] - a[2, 0] * a[1, 2]) * oneOverDet
@@ -290,10 +290,10 @@ open class mat3d_operators {
     }
 
     /** Vec3d row = Vec3d col * Mat3d  */
-    inline fun div(res: Vec3d, a: Vec3d, b: Mat3d) = div(res, a.x, a.y, a.z, b)
+    fun div(res: Vec3d, a: Vec3d, b: Mat3d) = div(res, a.x, a.y, a.z, b)
 
     /** Vec3d row = Vec3d col * Mat3d  */
-    inline fun div(res: Vec3d, a0: Double, a1: Double, a2: Double, b: Mat3d): Vec3d {
+    fun div(res: Vec3d, a0: Double, a1: Double, a2: Double, b: Mat3d): Vec3d {
         val oneOverDet = 1 / b.det
         val i00 = +(b[1, 1] * b[2, 2] - b[2, 1] * b[1, 2]) * oneOverDet
         val i10 = -(b[1, 0] * b[2, 2] - b[2, 0] * b[1, 2]) * oneOverDet

@@ -16,17 +16,17 @@ class Mat4x2(dummy: Int, var array: FloatArray) : Mat4x2t<Float>() {
 
     // -- Accesses --
 
-    override inline operator fun get(index: Int) = Vec2(index * 2, array)
-    override inline operator fun get(column: Int, row: Int) = array[column * 2 + row]
+    override operator fun get(index: Int) = Vec2(index * 2, array)
+    override operator fun get(column: Int, row: Int) = array[column * 2 + row]
 
-    override inline operator fun set(column: Int, row: Int, value: Float) = array.set(column * 2 + row, value)
+    override operator fun set(column: Int, row: Int, value: Float) = array.set(column * 2 + row, value)
 
-    override inline operator fun set(index: Int, value: Vec2t<out Number>) {
+    override operator fun set(index: Int, value: Vec2t<out Number>) {
         array[index * 2] = value.x.f
         array[index * 2 + 1] = value.y.f
     }
 
-    inline operator fun set(i: Int, v: Vec2) {
+    operator fun set(i: Int, v: Vec2) {
         v.to(array, i * 2)
     }
 

@@ -177,7 +177,7 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
             0.0, 0.0, z, 0.0,
             0.0, 0.0, 0.0, w)
 
-    inline fun invoke(a0: Double, a1: Double, a2: Double, a3: Double,
+    fun invoke(a0: Double, a1: Double, a2: Double, a3: Double,
                       b0: Double, b1: Double, b2: Double, b3: Double,
                       c0: Double, c1: Double, c2: Double, c3: Double,
                       d0: Double, d1: Double, d2: Double, d3: Double): Mat4d {
@@ -343,19 +343,19 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
 
     // -- Accesses --
 
-    override inline operator fun get(index: Int) = Vec4d(index * 4, array)
-    override inline operator fun get(column: Int, row: Int) = array[column * 4 + row]
+    override operator fun get(index: Int) = Vec4d(index * 4, array)
+    override operator fun get(column: Int, row: Int) = array[column * 4 + row]
 
-    override inline operator fun set(column: Int, row: Int, value: Double) = array.set(column * 4 + row, value)
+    override operator fun set(column: Int, row: Int, value: Double) = array.set(column * 4 + row, value)
 
-    override inline operator fun set(index: Int, value: Vec4t<out Number>) {
+    override operator fun set(index: Int, value: Vec4t<out Number>) {
         array[index * 4] = value.x.d
         array[index * 4 + 1] = value.y.d
         array[index * 4 + 2] = value.z.d
         array[index * 4 + 3] = value.w.d
     }
 
-    inline operator fun set(i: Int, v: Vec4d) {
+    operator fun set(i: Int, v: Vec4d) {
         v.to(array, i * 4)
     }
 
@@ -592,7 +592,7 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
                 this[0, 2] == 0.0 && this[1, 2] == 0.0 && this[2, 2] == 1.0 && this[3, 2] == 0.0 &&
                 this[0, 3] == 0.0 && this[1, 3] == 0.0 && this[2, 3] == 0.0 && this[3, 3] == 1.0
 
-    companion object : mat4d_operators() {
+    companion object : mat4d_operators {
         const val length = Mat4x4t.length
         @JvmField
         val size = length * Double.BYTES

@@ -99,7 +99,7 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
     }
 
 
-    companion object : quatD_operators(), gtcQuaternion {
+    companion object : quatD_operators, gtcQuaternion {
 
         @JvmField
         val size = 4 * Float.BYTES

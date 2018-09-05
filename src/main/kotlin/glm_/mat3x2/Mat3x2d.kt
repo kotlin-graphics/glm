@@ -16,17 +16,17 @@ class Mat3x2d(dummy: Int, var array: DoubleArray) : Mat3x2t<Double>() {
 
     // -- Accesses --
 
-    override inline operator fun get(index: Int) = Vec2d(index * 2, array)
-    override inline operator fun get(column: Int, row: Int) = array[column * 2 + row]
+    override operator fun get(index: Int) = Vec2d(index * 2, array)
+    override operator fun get(column: Int, row: Int) = array[column * 2 + row]
 
-    override inline operator fun set(column: Int, row: Int, value: Double) = array.set(column * 2 + row, value)
+    override operator fun set(column: Int, row: Int, value: Double) = array.set(column * 2 + row, value)
 
-    override inline operator fun set(index: Int, value: Vec2t<out Number>) {
+    override operator fun set(index: Int, value: Vec2t<out Number>) {
         array[index * 2] = value.x.d
         array[index * 2 + 1] = value.y.d
     }
 
-    inline operator fun set(i: Int, v: Vec2d) {
+    operator fun set(i: Int, v: Vec2d) {
         v.to(array, i * 2)
     }
 

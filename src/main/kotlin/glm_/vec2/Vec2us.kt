@@ -1,12 +1,14 @@
 package glm_.vec2
 
 import glm_.*
-import glm_.buffer.shortBufferBig
 import glm_.vec2.operators.opVec2us
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.pos
+import kool.shortBufferBig
+import org.lwjgl.system.MemoryStack
 import unsigned.Ushort
 import java.nio.*
 
@@ -19,10 +21,10 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>() {
     constructor(x: Ushort, y: Ushort) : this(0, shortArrayOf(x.v, y.v))
     constructor(x: Short, y: Short) : this(0, shortArrayOf(x, y))
 
-    override inline var x: Ushort
+    override var x: Ushort
         get() = Ushort(array[ofs])
         set(value) = array.set(ofs, value.v)
-    override inline var y: Ushort
+    override var y: Ushort
         get() = Ushort(array[ofs + 1])
         set(value) = array.set(ofs + 1, value.v)
 
@@ -63,16 +65,16 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>() {
 
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toShort, list.elementAt(index + 1)!!.toShort)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUshort: Boolean = false) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneUshort: Boolean = false) : this(
             if (oneByteOneUshort) bytes[index].us else bytes.getShort(index).us,
             if (oneByteOneUshort) bytes[index + 1].us else bytes.getShort(index + Ushort.BYTES).us)
 
-    constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].us, chars[index + 1].us)
-    constructor(shorts: ShortBuffer, index: Int = shorts.position()) : this(shorts[index], shorts[index + 1])
-    constructor(ints: IntBuffer, index: Int = ints.position()) : this(ints[index], ints[index + 1])
-    constructor(longs: LongBuffer, index: Int = longs.position()) : this(longs[index], longs[index + 1])
-    constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1])
-    constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1])
+    constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].us, chars[index + 1].us)
+    constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index], shorts[index + 1])
+    constructor(ints: IntBuffer, index: Int = ints.pos) : this(ints[index], ints[index + 1])
+    constructor(longs: LongBuffer, index: Int = longs.pos) : this(longs[index], longs[index + 1])
+    constructor(floats: FloatBuffer, index: Int = floats.pos) : this(floats[index], floats[index + 1])
+    constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Ushort) : this(block(0), block(1))
 
@@ -85,7 +87,7 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>() {
         y.v = if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Ushort.BYTES, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneShort: Boolean = false) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneShort: Boolean = false) {
         x.v = if (oneByteOneShort) bytes[index].s else bytes.getShort(index)
         y.v = if (oneByteOneShort) bytes[index + 1].s else bytes.getShort(index + Ushort.BYTES)
     }
@@ -126,31 +128,32 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>() {
 
     fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
-        bytes.setShort(index, x.v)
-        bytes.setShort(index + Short.BYTES, y.v)
-        return bytes
-    }
-
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
         bytes.putShort(index, x.v)
         bytes.putShort(index + Short.BYTES, y.v)
         return bytes
     }
 
-    fun toShortArray() = to(ShortArray(length), 0)
-    infix fun to(shorts: ShortArray) = to(shorts, 0)
+    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
+        buf.putShort(index, x.v)
+        buf.putShort(index + Short.BYTES, y.v)
+        return buf
+    }
+
+    fun toShortArray(): ShortArray = to(ShortArray(length), 0)
+    infix fun to(shorts: ShortArray): ShortArray = to(shorts, 0)
     fun to(shorts: ShortArray, index: Int): ShortArray {
         shorts[index] = x.v
         shorts[index + 1] = y.v
         return shorts
     }
 
-    fun toShortBuffer() = to(shortBufferBig(length), 0)
-    infix fun to(shorts: ShortBuffer) = to(shorts, shorts.position())
-    fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
-        shorts[index] = x.v
-        shorts[index + 1] = y.v
-        return shorts
+    infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
+    fun toShortBuffer(): ShortBuffer = to(shortBufferBig(length), 0)
+    infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)
+    fun to(buf: ShortBuffer, index: Int): ShortBuffer {
+        buf[index] = x.v
+        buf[index + 1] = y.v
+        return buf
     }
 
     // -- Component accesses --
@@ -638,7 +641,7 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>() {
     override fun createInstance(x: Ushort, y: Ushort) = Vec2us(x, y)
 
 
-    companion object : opVec2us() {
+    companion object : opVec2us {
         const val length = Vec2t.length
         @JvmField
         val size = length * Ushort.BYTES

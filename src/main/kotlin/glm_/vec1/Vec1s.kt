@@ -1,15 +1,14 @@
 package glm_.vec1
 
 import glm_.*
-import glm_.vec1.operators.vec1i_operators
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.intBufferBig
 import kool.pos
+import kool.shortBufferBig
 import org.lwjgl.system.MemoryStack
 import java.nio.*
 
@@ -17,7 +16,7 @@ import java.nio.*
  * Created by GBarbieri on 04.04.2017.
  */
 
-class Vec1i(x: Int) : Vec1t<Int>(x) {
+class Vec1s(x: Short) : Vec1t<Short>(x) {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -64,55 +63,55 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
 
     constructor(block: (Int) -> Int) : this(block(0))
 
-    constructor(s: Number) : this(s.i)
+    constructor(s: Number) : this(s.s)
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = false, bigEndian: Boolean = true) {
-        x = if (oneByteOneInt) bytes[index].i else bytes.getInt(index, bigEndian)
+        x = if (oneByteOneInt) bytes[index].s else bytes.getShort(index, bigEndian)
     }
 
     fun set(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneInt: Boolean = false) {
-        x = if (oneByteOneInt) bytes[index].i else bytes.getInt(index)
+        x = if (oneByteOneInt) bytes[index].s else bytes.getShort(index)
     }
 
 
-    fun put(x: Int) {
+    fun put(x: Short) {
         this.x = x
     }
 
-    operator fun invoke(x: Int): Vec1i {
+    operator fun invoke(x: Short): Vec1s {
         this.x = x
         return this
     }
 
     override fun put(x: Number) {
-        this.x = x.i
+        this.x = x.s
     }
 
-    override fun invoke(x: Number): Vec1i {
-        this.x = x.i
+    override fun invoke(x: Number): Vec1s {
+        this.x = x.s
         return this
     }
 
-    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    fun to(bytes: ByteArray, index: Int): ByteArray = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
-        bytes.putInt(index, x)
+        bytes.putShort(index, x)
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer = buf.putInt(index, x)
+    override fun to(buf: ByteBuffer, index: Int): ByteBuffer  = buf.putShort(index, x)
 
-    fun toIntArray(): IntArray = to(IntArray(length), 0)
-    infix fun to(ints: IntArray): IntArray = to(ints, 0)
-    fun to(ints: IntArray, index: Int): IntArray {
-        ints[index] = x
-        return ints
+    fun toShortArray(): ShortArray = to(ShortArray(length), 0)
+    infix fun to(shorts: ShortArray): ShortArray = to(shorts, 0)
+    fun to(shorts: ShortArray, index: Int): ShortArray {
+        shorts[index] = x
+        return shorts
     }
 
-    fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.callocInt(length), 0)
-    fun toIntBuffer(): IntBuffer = to(intBufferBig(length), 0)
-    infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
-    fun to(buf: IntBuffer, index: Int): IntBuffer {
+    infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
+    fun toShortBuffer(): ShortBuffer = to(shortBufferBig(length), 0)
+    infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)
+    fun to(buf: ShortBuffer, index: Int): ShortBuffer {
         buf[index] = x
         return buf
     }
@@ -120,63 +119,63 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
 
     // -- Specific binary arithmetic operators --
 
-    infix operator fun plus(b: Int) = plus(Vec1i(), this, b)
-    infix operator fun plus(b: Vec1i) = plus(Vec1i(), this, b.x)
+//    infix operator fun plus(b: Int) = plus(Vec1s(), this, b)
+//    infix operator fun plus(b: Vec1s) = plus(Vec1s(), this, b.x)
+//
+//    fun plus(b: Int, res: Vec1s) = plus(res, this, b)
+//    fun plus(b: Vec1s, res: Vec1s) = plus(res, this, b.x)
+//
+//    infix fun plusAssign(b: Short) = plus(this, this, b)
+//    infix fun plusAssign(b: Vec1s) = plus(this, this, b.x)
+//
+//
+//    infix operator fun minus(b: Short) = minus(Vec1s(), this, b)
+//    infix operator fun minus(b: Vec1s) = minus(Vec1s(), this, b.x)
+//
+//    fun minus(b: Int, res: Vec1s) = minus(res, this, b)
+//    fun minus(b: Vec1s, res: Vec1s) = minus(res, this, b.x)
+//
+//    infix fun minusAssign(b: Short) = minus(this, this, b)
+//    infix fun minusAssign(b: Vec1s) = minus(this, this, b.x)
+//
+//
+//    infix operator fun times(b: Short) = times(Vec1s(), this, b)
+//    infix operator fun times(b: Vec1s) = times(Vec1s(), this, b.x)
+//
+//    fun times(b: Int, res: Vec1s) = times(res, this, b)
+//    fun times(b: Vec1s, res: Vec1s) = times(res, this, b.x)
+//
+//    infix fun timesAssign(b: Int) = times(this, this, b)
+//    infix fun timesAssign(b: Vec1s) = times(this, this, b.x)
+//
+//
+//    infix operator fun div(b: Int) = div(Vec1i(), this, b)
+//    infix operator fun div(b: Vec1s) = div(Vec1i(), this, b.x)
+//
+//    fun div(b: Int, res: Vec1s) = div(res, this, b)
+//    fun div(b: Vec1s, res: Vec1s) = div(res, this, b.x)
+//
+//    infix fun divAssign(b: Int) = div(this, this, b)
+//    infix fun divAssign(b: Vec1s) = div(this, this, b.x)
+//
+//
+//    infix operator fun rem(b: Int) = rem(Vec1i(), this, b)
+//    infix operator fun rem(b: Vec1s) = rem(Vec1i(), this, b.x)
+//
+//    fun rem(b: Int, res: Vec1s) = rem(res, this, b)
+//    fun rem(b: Vec1s, res: Vec1s) = rem(res, this, b.x)
+//
+//    infix fun remAssign(b: Int) = rem(this, this, b)
+//    infix fun remAssign(b: Vec1s) = rem(this, this, b.x)
 
-    fun plus(b: Int, res: Vec1i) = plus(res, this, b)
-    fun plus(b: Vec1i, res: Vec1i) = plus(res, this, b.x)
-
-    infix fun plusAssign(b: Int) = plus(this, this, b)
-    infix fun plusAssign(b: Vec1i) = plus(this, this, b.x)
-
-
-    infix operator fun minus(b: Int) = minus(Vec1i(), this, b)
-    infix operator fun minus(b: Vec1i) = minus(Vec1i(), this, b.x)
-
-    fun minus(b: Int, res: Vec1i) = minus(res, this, b)
-    fun minus(b: Vec1i, res: Vec1i) = minus(res, this, b.x)
-
-    infix fun minusAssign(b: Int) = minus(this, this, b)
-    infix fun minusAssign(b: Vec1i) = minus(this, this, b.x)
-
-
-    infix operator fun times(b: Int) = times(Vec1i(), this, b)
-    infix operator fun times(b: Vec1i) = times(Vec1i(), this, b.x)
-
-    fun times(b: Int, res: Vec1i) = times(res, this, b)
-    fun times(b: Vec1i, res: Vec1i) = times(res, this, b.x)
-
-    infix fun timesAssign(b: Int) = times(this, this, b)
-    infix fun timesAssign(b: Vec1i) = times(this, this, b.x)
-
-
-    infix operator fun div(b: Int) = div(Vec1i(), this, b)
-    infix operator fun div(b: Vec1i) = div(Vec1i(), this, b.x)
-
-    fun div(b: Int, res: Vec1i) = div(res, this, b)
-    fun div(b: Vec1i, res: Vec1i) = div(res, this, b.x)
-
-    infix fun divAssign(b: Int) = div(this, this, b)
-    infix fun divAssign(b: Vec1i) = div(this, this, b.x)
-
-
-    infix operator fun rem(b: Int) = rem(Vec1i(), this, b)
-    infix operator fun rem(b: Vec1i) = rem(Vec1i(), this, b.x)
-
-    fun rem(b: Int, res: Vec1i) = rem(res, this, b)
-    fun rem(b: Vec1i, res: Vec1i) = rem(res, this, b.x)
-
-    infix fun remAssign(b: Int) = rem(this, this, b)
-    infix fun remAssign(b: Vec1i) = rem(this, this, b.x)
-
-    companion object : vec1i_operators {
+    companion object /*: vec1s_operators*/ {
         const val length = Vec1t.length
         @JvmField
-        val size = length * Int.BYTES
+        val size = length * Short.BYTES
     }
 
     override fun size() = size
 
-    override fun equals(other: Any?) = other is Vec1i && this[0] == other[0]
+    override fun equals(other: Any?) = other is Vec1s && this[0] == other[0]
     override fun hashCode() = x.hashCode()
 }

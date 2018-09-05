@@ -1,9 +1,9 @@
 package glm_.vec4
 
 import glm_.bool
-import glm_.buffer.pos
 import glm_.glm
 import glm_.vec4.operators.vec4bool_operators
+import kool.pos
 import java.nio.IntBuffer
 
 /**
@@ -96,7 +96,7 @@ data class Vec4bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
         return this
     }
 
-    companion object : vec4bool_operators()
+    companion object : vec4bool_operators
 
     val all: Boolean
         get() = glm.all(this)

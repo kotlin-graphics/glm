@@ -12,93 +12,93 @@ import glm_.vec3.Vec3i.Companion.times
 /**
  * Created by GBarbieri on 08.11.2016.
  */
-open class vec3i_operators {
+interface vec3i_operators {
 
-    inline fun plus(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
+    fun plus(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
         res.x = a.x + bX
         res.y = a.y + bY
         res.z = a.z + bZ
         return res
     }
 
-    inline fun minus(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
+    fun minus(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
         res.x = a.x - bX
         res.y = a.y - bY
         res.z = a.z - bZ
         return res
     }
 
-    inline fun minus(res: Vec3i, aX: Int, aY: Int, aZ: Int, b: Vec3i): Vec3i {
+    fun minus(res: Vec3i, aX: Int, aY: Int, aZ: Int, b: Vec3i): Vec3i {
         res.x = aX - b.x
         res.y = aY - b.y
         res.z = aZ - b.z
         return res
     }
 
-    inline fun times(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
+    fun times(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
         res.x = a.x * bX
         res.y = a.y * bY
         res.z = a.z * bZ
         return res
     }
 
-    inline fun div(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
+    fun div(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
         res.x = a.x / bX
         res.y = a.y / bY
         res.z = a.z / bZ
         return res
     }
 
-    inline fun div(res: Vec3i, aX: Int, aY: Int, aZ: Int, b: Vec3i): Vec3i {
+    fun div(res: Vec3i, aX: Int, aY: Int, aZ: Int, b: Vec3i): Vec3i {
         res.x = aX / b.x
         res.y = aY / b.y
         res.z = aZ / b.z
         return res
     }
 
-    inline fun rem(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
+    fun rem(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
         res.x = a.x % bX
         res.y = a.y % bY
         res.z = a.z % bZ
         return res
     }
 
-    inline fun rem(res: Vec3i, aX: Int, aY: Int, aZ: Int, b: Vec3i): Vec3i {
+    fun rem(res: Vec3i, aX: Int, aY: Int, aZ: Int, b: Vec3i): Vec3i {
         res.x = aX % b.x
         res.y = aY % b.y
         res.z = aZ % b.z
         return res
     }
 
-    inline fun and(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
+    fun and(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
         res.x = a.x and bX
         res.y = a.y and bY
         res.z = a.z and bZ
         return res
     }
 
-    inline fun or(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
+    fun or(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
         res.x = a.x or bX
         res.y = a.y or bY
         res.z = a.z or bZ
         return res
     }
 
-    inline fun xor(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
+    fun xor(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
         res.x = a.x xor bX
         res.y = a.y xor bY
         res.z = a.z xor bZ
         return res
     }
 
-    inline fun shl(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
+    fun shl(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
         res.x = a.x shl bX
         res.y = a.y shl bY
         res.z = a.z shl bZ
         return res
     }
 
-    inline fun shr(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
+    fun shr(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
         res.x = a.x shr bX
         res.y = a.y shr bY
         res.z = a.z shr bZ
@@ -106,14 +106,14 @@ open class vec3i_operators {
     }
 
     // TODO others
-    inline fun ushr(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
+    fun ushr(res: Vec3i, a: Vec3i, bX: Int, bY: Int, bZ: Int): Vec3i {
         res.x = a.x ushr bX
         res.y = a.y ushr bY
         res.z = a.z ushr bZ
         return res
     }
 
-    inline fun inv(res: Vec3i, a: Vec3i): Vec3i {
+    fun inv(res: Vec3i, a: Vec3i): Vec3i {
         res.x = a.x.inv()
         res.y = a.y.inv()
         res.z = a.z.inv()

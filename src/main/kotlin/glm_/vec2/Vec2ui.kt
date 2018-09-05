@@ -1,12 +1,14 @@
 package glm_.vec2
 
 import glm_.*
-import glm_.buffer.intBufferBig
 import glm_.vec2.operators.opVec2ui
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.intBufferBig
+import kool.pos
+import org.lwjgl.system.MemoryStack
 import unsigned.Uint
 import java.nio.*
 
@@ -19,10 +21,10 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>() {
     constructor(x: Uint, y: Uint) : this(0, intArrayOf(x.v, y.v))
     constructor(x: Int, y: Int) : this(0, intArrayOf(x, y))
 
-    override inline var x: Uint
+    override var x: Uint
         get() = Uint(array[ofs])
         set(value) = array.set(ofs, value.v)
-    override inline var y: Uint
+    override var y: Uint
         get() = Uint(array[ofs + 1])
         set(value) = array.set(ofs + 1, value.v)
 
@@ -63,16 +65,16 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>() {
 
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toInt, list.elementAt(index + 1)!!.toInt)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUint: Boolean = false) : this(
+    constructor(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneUint: Boolean = false) : this(
             if (oneByteOneUint) bytes[index].ui else bytes.getInt(index).ui,
             if (oneByteOneUint) bytes[index + 1].ui else bytes.getInt(index + Uint.BYTES).ui)
 
-    constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].ui, chars[index + 1].ui)
-    constructor(shorts: ShortBuffer, index: Int = shorts.position()) : this(shorts[index], shorts[index + 1])
-    constructor(ints: IntBuffer, index: Int = ints.position()) : this(ints[index], ints[index + 1])
-    constructor(longs: LongBuffer, index: Int = longs.position()) : this(longs[index], longs[index + 1])
-    constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1])
-    constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1])
+    constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].ui, chars[index + 1].ui)
+    constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index], shorts[index + 1])
+    constructor(ints: IntBuffer, index: Int = ints.pos) : this(ints[index], ints[index + 1])
+    constructor(longs: LongBuffer, index: Int = longs.pos) : this(longs[index], longs[index + 1])
+    constructor(floats: FloatBuffer, index: Int = floats.pos) : this(floats[index], floats[index + 1])
+    constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Uint) : this(block(0), block(1))
 
@@ -85,7 +87,7 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>() {
         y.v = if (oneByteOneUint) bytes[index + 1].i else bytes.getInt(index + Uint.BYTES, bigEndian)
     }
 
-    fun set(bytes: ByteBuffer, index: Int = bytes.position(), oneByteOneUint: Boolean = false) {
+    fun set(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneUint: Boolean = false) {
         x.v = if (oneByteOneUint) bytes[index].i else bytes.getInt(index)
         y.v = if (oneByteOneUint) bytes[index + 1].i else bytes.getInt(index + Uint.BYTES)
     }
@@ -126,31 +128,32 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>() {
 
     fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
-        bytes.setInt(index, x.v)
-        bytes.setInt(index + Int.BYTES, y.v)
-        return bytes
-    }
-
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
         bytes.putInt(index, x.v)
         bytes.putInt(index + Int.BYTES, y.v)
         return bytes
     }
 
-    fun toIntArray() = to(IntArray(length), 0)
-    infix fun to(ints: IntArray) = to(ints, 0)
+    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
+        buf.putInt(index, x.v)
+        buf.putInt(index + Int.BYTES, y.v)
+        return buf
+    }
+
+    fun toIntArray(): IntArray = to(IntArray(length), 0)
+    infix fun to(ints: IntArray): IntArray = to(ints, 0)
     fun to(ints: IntArray, index: Int): IntArray {
         ints[index] = x.v
         ints[index + 1] = y.v
         return ints
     }
 
-    fun toIntBuffer() = to(intBufferBig(length), 0)
-    infix fun to(ints: IntBuffer) = to(ints, ints.position())
-    fun to(ints: IntBuffer, index: Int): IntBuffer {
-        ints[index] = x.v
-        ints[index + 1] = y.v
-        return ints
+    infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(length), 0)
+    fun toIntBuffer(): IntBuffer = to(intBufferBig(length), 0)
+    infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
+    fun to(buf: IntBuffer, index: Int): IntBuffer {
+        buf[index] = x.v
+        buf[index + 1] = y.v
+        return buf
     }
 
     // -- Component accesses --
@@ -605,7 +608,7 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>() {
     override fun createInstance(x: Uint, y: Uint) = Vec2ui(x, y)
 
 
-    companion object : opVec2ui() {
+    companion object : opVec2ui {
         const val length = 2
         @JvmField
         val size = length * Uint.BYTES

@@ -8,6 +8,7 @@ import glm_.vec3.Vec3b
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4b_operators
+import kool.pos
 import java.nio.*
 
 /**
@@ -18,16 +19,16 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>() {
 
     constructor(x: Byte, y: Byte, z: Byte, w: Byte) : this(0, byteArrayOf(x, y, z, w))
 
-    override inline var x: Byte
+    override var x: Byte
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override inline var y: Byte
+    override var y: Byte
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
-    override inline var z: Byte
+    override var z: Byte
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
-    override inline var w: Byte
+    override var w: Byte
         get() = array[ofs + 3]
         set(value) = array.set(ofs + 3, value)
 
@@ -62,13 +63,13 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>() {
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toByte, list.elementAt(index + 1)!!.toByte,
             list.elementAt(index + 2)!!.toByte, list.elementAt(index + 3)!!.toByte)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position()) : this(bytes[index], bytes[index + 1], bytes[index + 2], bytes[index + 3])
-    constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].b, chars[index + 1].b, chars[index + 2].b, chars[index + 3].b)
-    constructor(shorts: ShortBuffer, index: Int = shorts.position()) : this(shorts[index], shorts[index + 1], shorts[index + 2], shorts[index + 3])
-    constructor(ints: IntBuffer, index: Int = ints.position()) : this(ints[index], ints[index + 1], ints[index + 2], ints[index + 3])
-    constructor(longs: LongBuffer, index: Int = longs.position()) : this(longs[index], longs[index + 1], longs[index + 2], longs[index + 3])
-    constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1], floats[index + 2], floats[index + 3])
-    constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
+    constructor(bytes: ByteBuffer, index: Int = bytes.pos) : this(bytes[index], bytes[index + 1], bytes[index + 2], bytes[index + 3])
+    constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].b, chars[index + 1].b, chars[index + 2].b, chars[index + 3].b)
+    constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index], shorts[index + 1], shorts[index + 2], shorts[index + 3])
+    constructor(ints: IntBuffer, index: Int = ints.pos) : this(ints[index], ints[index + 1], ints[index + 2], ints[index + 3])
+    constructor(longs: LongBuffer, index: Int = longs.pos) : this(longs[index], longs[index + 1], longs[index + 2], longs[index + 3])
+    constructor(floats: FloatBuffer, index: Int = floats.pos) : this(floats[index], floats[index + 1], floats[index + 2], floats[index + 3])
+    constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
     constructor(block: (Int) -> Byte) : this(block(0), block(1), block(2), block(3))
 
@@ -115,12 +116,12 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>() {
         return bytes
     }
 
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes[index] = x
-        bytes[index + 1] = y
-        bytes[index + 2] = z
-        bytes[index + 3] = w
-        return bytes
+    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
+        buf[index] = x
+        buf[index + 1] = y
+        buf[index + 2] = z
+        buf[index + 3] = w
+        return buf
     }
 
     // -- Component accesses --
@@ -550,7 +551,7 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>() {
     override fun createInstance(x: Byte, y: Byte, z: Byte, w: Byte) = Vec4b(x, y, z, w)
 
 
-    companion object : vec4b_operators() {
+    companion object : vec4b_operators {
         const val length = Vec4t.length
         @JvmField
         val size = length * Byte.BYTES

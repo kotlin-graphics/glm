@@ -9,6 +9,7 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.pos
 import unsigned.Ubyte
 import java.nio.*
 
@@ -45,13 +46,13 @@ class Vec1ub(x: Ubyte) : Vec1t<Ubyte>(x) {
 
     constructor(list: List<Any>, index: Int = 0) : this(list[index].toByte) // TODO ub kuns
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position()) : this(bytes[index])
-    constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].ub)
-    constructor(shorts: ShortBuffer, index: Int = shorts.position()) : this(shorts[index])
-    constructor(ints: IntBuffer, index: Int = ints.position()) : this(ints[index])
-    constructor(longs: LongBuffer, index: Int = longs.position()) : this(longs[index])
-    constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index])
-    constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index])
+    constructor(bytes: ByteBuffer, index: Int = bytes.pos) : this(bytes[index])
+    constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].ub)
+    constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index])
+    constructor(ints: IntBuffer, index: Int = ints.pos) : this(ints[index])
+    constructor(longs: LongBuffer, index: Int = longs.pos) : this(longs[index])
+    constructor(floats: FloatBuffer, index: Int = floats.pos) : this(floats[index])
+    constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index])
 
     constructor(block: (Int) -> Ubyte) : this(block(0))
 
@@ -85,13 +86,13 @@ class Vec1ub(x: Ubyte) : Vec1t<Ubyte>(x) {
         return this
     }
 
-    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    fun to(bytes: ByteArray, index: Int): ByteArray = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
         bytes[index] = x.v
         return bytes
     }
 
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer = bytes.put(index, x.v)
+    override fun to(buf: ByteBuffer, index: Int): ByteBuffer = buf.put(index, x.v)
 
 
 

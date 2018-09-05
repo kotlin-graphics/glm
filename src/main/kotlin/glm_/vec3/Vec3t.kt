@@ -3,10 +3,13 @@
 package glm_.vec3
 
 import glm_.*
-import glm_.buffer.bufferBig
-import glm_.vec2.*
+import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.bufferBig
+import kool.pos
+import org.lwjgl.system.MemoryStack
 import java.nio.*
 
 abstract class Vec3t<T : Number> {
@@ -199,14 +202,15 @@ abstract class Vec3t<T : Number> {
     operator fun invoke(doubles: DoubleBuffer, index: Int) = invoke(doubles[index], doubles[index + 1], doubles[index + 2])
 
 
-    fun toByteArray(bigEndian: Boolean = true) = to(ByteArray(length), 0, bigEndian)
-    infix fun to(bytes: ByteArray) = to(bytes, 0)
-    fun to(bytes: ByteArray, bigEndian: Boolean) = to(bytes, 0, bigEndian)
+    fun toByteArray(bigEndian: Boolean = true): ByteArray = to(ByteArray(length), 0, bigEndian)
+    infix fun to(bytes: ByteArray): ByteArray = to(bytes, 0)
+    fun to(bytes: ByteArray, bigEndian: Boolean): ByteArray = to(bytes, 0, bigEndian)
     abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
 
-    fun toByteBuffer() = to(bufferBig(size()), 0)
-    infix fun to(bytes: ByteBuffer) = to(bytes, bytes.position())
-    abstract fun to(bytes: ByteBuffer, index: Int): ByteBuffer
+    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.malloc(size()), 0)
+    fun toBuffer(): ByteBuffer = to(bufferBig(size()), 0)
+    infix fun to(buf: ByteBuffer): ByteBuffer = to(buf, buf.pos)
+    abstract fun to(buf: ByteBuffer, index: Int): ByteBuffer
 
 
     infix fun lessThan(b: Vec3t<out Number>) = glm.lessThan(this, b, Vec3bool())
@@ -265,6 +269,7 @@ abstract class Vec3t<T : Number> {
 
     // swizzling
     protected abstract fun createInstance(x: T, y: T): Vec2t<out Number>
+
     protected abstract fun createInstance(x: T, y: T, z: T): Vec3t<out Number>
 
     val xx @JvmName("xx") get() = createInstance(x, x)
@@ -355,5 +360,5 @@ abstract class Vec3t<T : Number> {
         const val length = 3
     }
 
-    override fun toString() : String = "Vect3 [$x, $y, $z]"
+    override fun toString(): String = "Vect3 [$x, $y, $z]"
 }

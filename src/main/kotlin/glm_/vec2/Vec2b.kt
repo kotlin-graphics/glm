@@ -6,6 +6,7 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.pos
 import java.nio.*
 
 /**
@@ -16,10 +17,10 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
 
     constructor(x: Byte, y: Byte) : this(0, byteArrayOf(x, y))
 
-    override inline var x: Byte
+    override var x: Byte
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override inline var y: Byte
+    override var y: Byte
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
 
@@ -50,13 +51,13 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
 
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toByte, list.elementAt(index + 1)!!.toByte)
 
-    constructor(bytes: ByteBuffer, index: Int = bytes.position()) : this(bytes[index], bytes[index + 1])
-    constructor(chars: CharBuffer, index: Int = chars.position()) : this(chars[index].b, chars[index + 1].b)
-    constructor(shorts: ShortBuffer, index: Int = shorts.position()) : this(shorts[index], shorts[index + 1])
-    constructor(ints: IntBuffer, index: Int = ints.position()) : this(ints[index], ints[index + 1])
-    constructor(longs: LongBuffer, index: Int = longs.position()) : this(longs[index], longs[index + 1])
-    constructor(floats: FloatBuffer, index: Int = floats.position()) : this(floats[index], floats[index + 1])
-    constructor(doubles: DoubleBuffer, index: Int = doubles.position()) : this(doubles[index], doubles[index + 1])
+    constructor(bytes: ByteBuffer, index: Int = bytes.pos) : this(bytes[index], bytes[index + 1])
+    constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].b, chars[index + 1].b)
+    constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index], shorts[index + 1])
+    constructor(ints: IntBuffer, index: Int = ints.pos) : this(ints[index], ints[index + 1])
+    constructor(longs: LongBuffer, index: Int = longs.pos) : this(longs[index], longs[index + 1])
+    constructor(floats: FloatBuffer, index: Int = floats.pos) : this(floats[index], floats[index + 1])
+    constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Byte) : this(block(0), block(1))
 
@@ -93,10 +94,10 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
         return bytes
     }
 
-    override fun to(bytes: ByteBuffer, index: Int): ByteBuffer {
-        bytes[index] = x
-        bytes[index + Byte.BYTES] = y
-        return bytes
+    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
+        buf[index] = x
+        buf[index + Byte.BYTES] = y
+        return buf
     }
 
     // -- Component accesses --
@@ -539,7 +540,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     override fun createInstance(x: Byte, y: Byte) = Vec2b(x, y)
 
 
-    companion object : opVec2b() {
+    companion object : opVec2b {
         const val length = Vec2t.length
         @JvmField
         val size = length * Byte.BYTES
