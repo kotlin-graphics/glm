@@ -2,7 +2,6 @@ package glm_.func.common
 
 import glm_.*
 import glm_.glm.ceil
-import glm_.glm.clamp
 import glm_.glm.floor
 import glm_.glm.fma
 import glm_.glm.fract

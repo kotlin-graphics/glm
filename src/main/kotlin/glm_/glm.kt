@@ -9,9 +9,8 @@ import glm_.func.common.*
 import glm_.gtc.gtcMatrixInverse
 import glm_.gtc.matrixTransform.*
 import glm_.gtx.*
-import glm_.quat.gtxQuaternion
 import glm_.quat.gtcQuaternion
-import glm_.vec3.Vec3
+import glm_.quat.gtxQuaternion
 
 object glm :
 
