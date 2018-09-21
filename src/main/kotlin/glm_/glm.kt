@@ -11,6 +11,7 @@ import glm_.gtc.matrixTransform.*
 import glm_.gtx.*
 import glm_.quat.gtxQuaternion
 import glm_.quat.gtcQuaternion
+import glm_.vec3.Vec3
 
 object glm :
 

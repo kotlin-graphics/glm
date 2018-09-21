@@ -210,9 +210,9 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
             0f, 0f, 0f, w)
 
     operator fun invoke(a0: Float, a1: Float, a2: Float, a3: Float,
-                               b0: Float, b1: Float, b2: Float, b3: Float,
-                               c0: Float, c1: Float, c2: Float, c3: Float,
-                               d0: Float, d1: Float, d2: Float, d3: Float): Mat4 {
+                        b0: Float, b1: Float, b2: Float, b3: Float,
+                        c0: Float, c1: Float, c2: Float, c3: Float,
+                        d0: Float, d1: Float, d2: Float, d3: Float): Mat4 {
 
         put(a0, a1, a2, a3, b0, b1, b2, b3, c0, c1, c2, c3, d0, d1, d2, d3)
         return this
@@ -279,6 +279,18 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
         res[2, 2] = this[2, 2]
 
         return res
+    }
+
+    // TODO toFloatArray others vec and mat
+    fun toFloatArray() = to(FloatArray(16), 0)
+
+    infix fun to(floats: FloatArray) = to(floats, 0)
+
+    // TODO by row?
+    fun to(floats: FloatArray, index: Int) {
+        for (i in 0..3)
+            for (j in 0..3)
+                floats[index + i * 4 + j] = get(i * 4, j)
     }
 
     infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.calloc(size), 0)
