@@ -183,19 +183,14 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
     // TODO inc
 
 
-    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.malloc(size), 0)
-    fun toBuffer(): ByteBuffer = to(bufferBig(size), 0)
-    infix fun to(buf: ByteBuffer) = to(buf, 0)
-
-    fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
-        buf
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer = buf
                 .putFloat(offset + 0 * Float.BYTES, array[0])
                 .putFloat(offset + 1 * Float.BYTES, array[1])
                 .putFloat(offset + 2 * Float.BYTES, array[2])
                 .putFloat(offset + 3 * Float.BYTES, array[3])
-        return buf
-    }
 
+
+    fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
     infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
     fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
     infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, 0)

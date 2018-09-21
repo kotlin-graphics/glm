@@ -106,7 +106,7 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>() {
         return this
     }
 
-    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    fun to(bytes: ByteArray, index: Int): ByteArray = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
         bytes.putDouble(index, x)
         bytes.putDouble(index + Double.BYTES, y)

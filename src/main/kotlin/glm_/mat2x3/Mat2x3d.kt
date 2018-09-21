@@ -5,6 +5,9 @@ import glm_.d
 import glm_.set
 import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
+import kool.doubleBufferBig
+import org.lwjgl.system.MemoryStack
+import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*
 
@@ -32,16 +35,28 @@ class Mat2x3d(dummy: Int, var array: DoubleArray) : Mat2x3t<Double>() {
     }
 
 
-    infix fun to(dfb: DoubleBuffer) = to(dfb, 0)
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer = buf
+            .putDouble(offset + 0 * Double.BYTES, array[0])
+            .putDouble(offset + 1 * Double.BYTES, array[1])
+            .putDouble(offset + 2 * Double.BYTES, array[2])
+            .putDouble(offset + 3 * Double.BYTES, array[3])
+            .putDouble(offset + 4 * Double.BYTES, array[4])
+            .putDouble(offset + 5 * Double.BYTES, array[5])
 
-    fun to(dfb: DoubleBuffer, offset: Int): DoubleBuffer {
-        dfb[offset + 0] = array[0]
-        dfb[offset + 1] = array[1]
-        dfb[offset + 2] = array[2]
-        dfb[offset + 3] = array[3]
-        dfb[offset + 4] = array[4]
-        dfb[offset + 5] = array[5]
-        return dfb
+
+    fun toDoubleBufferStack(): DoubleBuffer = to(MemoryStack.stackGet().mallocDouble(length), 0)
+    infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
+    fun toDoubleBuffer(): DoubleBuffer = to(doubleBufferBig(length), 0)
+    infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, 0)
+
+    fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
+        buf[offset + 0] = array[0]
+        buf[offset + 1] = array[1]
+        buf[offset + 2] = array[2]
+        buf[offset + 3] = array[3]
+        buf[offset + 4] = array[4]
+        buf[offset + 5] = array[5]
+        return buf
     }
 
     override var a0: Double

@@ -275,12 +275,8 @@ class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
     fun toQuat() = glm.quat_cast(this, Quat())
 
 
-    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.calloc(size), 0)
-    fun toBuffer(): ByteBuffer = to(bufferBig(size), 0)
-    infix fun to(buf: ByteBuffer): ByteBuffer = to(buf, 0)
 
-    fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
-        return buf
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer = buf
                 .putFloat(offset + 0 * Float.BYTES, array[0])
                 .putFloat(offset + 1 * Float.BYTES, array[1])
                 .putFloat(offset + 2 * Float.BYTES, array[2])
@@ -290,10 +286,10 @@ class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
                 .putFloat(offset + 6 * Float.BYTES, array[6])
                 .putFloat(offset + 7 * Float.BYTES, array[7])
                 .putFloat(offset + 8 * Float.BYTES, array[8])
-    }
 
 
-    fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
+    fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
+    infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
     fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
     infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, 0)
 

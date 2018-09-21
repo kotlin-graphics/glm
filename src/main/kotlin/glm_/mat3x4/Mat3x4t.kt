@@ -1,5 +1,6 @@
 package glm_.mat3x4
 
+import glm_.MatBuf
 import glm_.vec4.Vec4t
 
 /**
@@ -7,7 +8,7 @@ import glm_.vec4.Vec4t
  */
 
 
-abstract class Mat3x4t<T : Number> {
+abstract class Mat3x4t<T : Number> : MatBuf {
 
     abstract var a0: T
     abstract var a1: T
@@ -114,7 +115,6 @@ abstract class Mat3x4t<T : Number> {
             c3 = value
         }
 
-    abstract fun size(): Int
 
     companion object {
         const val length = 3 * 4
