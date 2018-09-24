@@ -249,6 +249,13 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
         return res
     }
 
+    fun toDoubleArray(): DoubleArray = to(DoubleArray(length), 0)
+    infix fun to(doubles: DoubleArray): DoubleArray = to(doubles, 0)
+    fun to(doubles: DoubleArray, index: Int): DoubleArray {
+        System.arraycopy(array, 0, doubles, index, length)
+        return doubles
+    }
+
     // TODO others
     infix fun to(dbb: ByteBuffer): ByteBuffer = to(dbb, 0)
 

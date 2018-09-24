@@ -32,6 +32,12 @@ class Mat4x3(dummy: Int, var array: FloatArray) : Mat4x3t<Float>() {
         v.to(array, i * 3)
     }
 
+    fun toFloatArray(): FloatArray = to(FloatArray(length), 0)
+    infix fun to(floats: FloatArray): FloatArray = to(floats, 0)
+    fun to(floats: FloatArray, index: Int): FloatArray {
+        System.arraycopy(array, 0, floats, index, length)
+        return floats
+    }
 
     infix fun to(dfb: FloatBuffer) = to(dfb, 0)
 

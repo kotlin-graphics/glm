@@ -139,9 +139,7 @@ class Vec3i(var ofs: Int, var array: IntArray) : Vec3t<Int>() {
     fun toIntArray(): IntArray = to(IntArray(length), 0)
     infix fun to(ints: IntArray): IntArray = to(ints, 0)
     fun to(ints: IntArray, index: Int): IntArray {
-        ints[index] = x
-        ints[index + 1] = y
-        ints[index + 2] = z
+        System.arraycopy(array, ofs, ints, index, length)
         return ints
     }
 

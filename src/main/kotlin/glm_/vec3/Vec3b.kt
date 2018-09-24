@@ -101,9 +101,7 @@ class Vec3b(var ofs: Int, var array: ByteArray) : Vec3t<Byte>() {
 
     fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
-        bytes[index] = x
-        bytes[index + Byte.BYTES] = y
-        bytes[index + Byte.BYTES * 2] = z
+        System.arraycopy(array, ofs, bytes, index, length)
         return bytes
     }
 

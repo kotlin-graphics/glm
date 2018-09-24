@@ -89,8 +89,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
 
     fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
-        bytes[index] = x
-        bytes[index + Byte.BYTES] = y
+        System.arraycopy(array, ofs, bytes, index, length)
         return bytes
     }
 

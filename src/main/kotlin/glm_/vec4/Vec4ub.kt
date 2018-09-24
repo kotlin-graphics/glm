@@ -139,10 +139,7 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>() {
 
     fun to(bytes: ByteArray, index: Int): ByteArray = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
-        bytes[index] = x.v
-        bytes[index + 1] = y.v
-        bytes[index + 2] = z.v
-        bytes[index + 3] = w.v
+        System.arraycopy(array, ofs, bytes, index, length)
         return bytes
     }
 

@@ -275,6 +275,12 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
     infix fun to(res: QuatD) = glm.quatD_cast(this, res)
     fun toQuatD() = glm.quatD_cast(this, QuatD())
 
+    fun toDoubleArray(): DoubleArray = to(DoubleArray(length), 0)
+    infix fun to(doubles: DoubleArray): DoubleArray = to(doubles, 0)
+    fun to(doubles: DoubleArray, index: Int): DoubleArray {
+        System.arraycopy(array, 0, doubles, index, length)
+        return doubles
+    }
 
     infix fun to(dfb: DoubleBuffer) = to(dfb, 0)
 

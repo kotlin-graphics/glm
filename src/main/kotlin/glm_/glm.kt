@@ -80,6 +80,7 @@ object glm :
         gtxMatrixCrossProduct,
         gtxMatrixDecompose,
         gtxMatrixFactorization,
+        gtxNormal,
         gtxOptimumPow,
         gtxQuaternion,
         gtxRotateVector,

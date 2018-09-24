@@ -16,7 +16,7 @@ import kotlin.math.abs
 import kotlin.math.sqrt
 
 /**
- * Created by GBarbieri on 15.11.2016.
+ * Created by GBarbieri on 15.11.2016. TODO array
  */
 class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 

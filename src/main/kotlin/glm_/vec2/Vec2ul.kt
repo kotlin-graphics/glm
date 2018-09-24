@@ -142,8 +142,7 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>() {
     fun toLongArray(): LongArray = to(LongArray(length), 0)
     infix fun to(longs: LongArray): LongArray = to(longs, 0)
     fun to(longs: LongArray, index: Int): LongArray {
-        longs[index] = x.v
-        longs[index + 1] = y.v
+        System.arraycopy(array, ofs, longs, index, length)
         return longs
     }
 

@@ -184,10 +184,7 @@ class Vec4ul(var ofs: Int, var array: LongArray) : Vec4t<Ulong>() {
     fun toLongArray(): LongArray = to(LongArray(length), 0)
     infix fun to(longs: LongArray): LongArray = to(longs, 0)
     fun to(longs: LongArray, index: Int): LongArray {
-        longs[index] = x.v
-        longs[index + 1] = y.v
-        longs[index + 2] = z.v
-        longs[index + 3] = w.v
+        System.arraycopy(array, ofs, longs, index, length)
         return longs
     }
 

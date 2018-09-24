@@ -144,9 +144,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
     fun toFloatArray(): FloatArray = to(FloatArray(length), 0)
     infix fun to(floats: FloatArray): FloatArray = to(floats, 0)
     fun to(floats: FloatArray, index: Int): FloatArray {
-        floats[index] = x
-        floats[index + 1] = y
-        floats[index + 2] = z
+        System.arraycopy(array, ofs, floats, index, length)
         return floats
     }
 

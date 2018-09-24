@@ -33,6 +33,13 @@ class Mat3x4(dummy: Int, var array: FloatArray) : Mat3x4t<Float>() {
     }
 
 
+    fun toFloatArray(): FloatArray = to(FloatArray(length), 0)
+    infix fun to(floats: FloatArray): FloatArray = to(floats, 0)
+    fun to(floats: FloatArray, index: Int): FloatArray {
+        System.arraycopy(array, 0, floats, index, length)
+        return floats
+    }
+
     infix fun to(dfb: FloatBuffer) = to(dfb, 0)
 
     fun to(dfb: FloatBuffer, offset: Int): FloatBuffer {

@@ -184,10 +184,7 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>() {
     fun toIntArray(): IntArray = to(IntArray(length), 0)
     infix fun to(ints: IntArray): IntArray = to(ints, 0)
     fun to(ints: IntArray, index: Int): IntArray {
-        ints[index] = x.v
-        ints[index + 1] = y.v
-        ints[index + 2] = z.v
-        ints[index + 3] = w.v
+        System.arraycopy(array, ofs, ints, index, length)
         return ints
     }
 

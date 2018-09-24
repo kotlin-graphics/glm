@@ -12,7 +12,7 @@ import kotlin.math.sqrt
 
 
 /**
- * Created by GBarbieri on 15.11.2016.
+ * Created by GBarbieri on 15.11.2016. TODO array
  */
 class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y, z) {
 

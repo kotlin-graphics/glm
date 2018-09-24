@@ -142,8 +142,7 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>() {
     fun toShortArray(): ShortArray = to(ShortArray(length), 0)
     infix fun to(shorts: ShortArray): ShortArray = to(shorts, 0)
     fun to(shorts: ShortArray, index: Int): ShortArray {
-        shorts[index] = x.v
-        shorts[index + 1] = y.v
+        System.arraycopy(array, ofs, shorts, index, length)
         return shorts
     }
 

@@ -45,6 +45,13 @@ data class Vec1bool(var x: Boolean = false) {
     }
 
 
+//    fun toBooleanArray(): BooleanArray = to(BooleanArray(length), 0)
+//    infix fun to(floats: BooleanArray): BooleanArray = to(floats, 0)
+//    fun to(floats: BooleanArray, index: Int): FloatArray {
+//        floats[index] = x
+//        return floats
+//    }
+
     // -- Unary arithmetic vecOperators --
 
     operator fun not(): Vec1bool = Vec1bool(!x)

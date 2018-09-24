@@ -183,6 +183,14 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
     // TODO inc
 
 
+    fun toFloatArray(): FloatArray = to(FloatArray(length), 0)
+    infix fun to(floats: FloatArray): FloatArray = to(floats, 0)
+    fun to(floats: FloatArray, index: Int): FloatArray {
+        System.arraycopy(array, 0, floats, index, length)
+        return floats
+    }
+
+
     infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.malloc(size), 0)
     fun toBuffer(): ByteBuffer = to(bufferBig(size), 0)
     infix fun to(buf: ByteBuffer) = to(buf, 0)

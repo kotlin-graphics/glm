@@ -154,10 +154,7 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>() {
     fun toLongArray(): LongArray = to(LongArray(length), 0)
     infix fun to(longs: LongArray): LongArray = to(longs, 0)
     fun to(longs: LongArray, index: Int): LongArray {
-        longs[index] = x
-        longs[index + 1] = y
-        longs[index + 2] = z
-        longs[index + 3] = w
+        System.arraycopy(array, ofs, longs, index, length)
         return longs
     }
 

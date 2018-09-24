@@ -139,9 +139,7 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>() {
     fun toDoubleArray(): DoubleArray = to(DoubleArray(length), 0)
     infix fun to(doubles: DoubleArray): DoubleArray = to(doubles, 0)
     fun to(doubles: DoubleArray, index: Int): DoubleArray {
-        doubles[index] = x
-        doubles[index + 1] = y
-        doubles[index + 2] = z
+        System.arraycopy(array, ofs, doubles, index, length)
         return doubles
     }
 

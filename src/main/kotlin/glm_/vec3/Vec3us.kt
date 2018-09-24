@@ -164,9 +164,7 @@ class Vec3us(var ofs: Int, var array: ShortArray) : Vec3t<Ushort>() {
     fun toShortArray(): ShortArray = to(ShortArray(length), 0)
     infix fun to(shorts: ShortArray): ShortArray = to(shorts, 0)
     fun to(shorts: ShortArray, index: Int): ShortArray {
-        shorts[index] = x.v
-        shorts[index + 1] = y.v
-        shorts[index + 2] = z.v
+        System.arraycopy(array, ofs, shorts, index, length)
         return shorts
     }
 

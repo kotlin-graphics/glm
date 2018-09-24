@@ -139,9 +139,7 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>() {
     fun toLongArray(): LongArray = to(LongArray(length), 0)
     infix fun to(longs: LongArray): LongArray = to(longs, 0)
     fun to(longs: LongArray, index: Int): LongArray {
-        longs[index] = x
-        longs[index + 1] = y
-        longs[index + 2] = z
+        System.arraycopy(array, ofs, longs, index, length)
         return longs
     }
 

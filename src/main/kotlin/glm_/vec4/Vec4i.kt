@@ -154,10 +154,7 @@ class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>() {
     fun toIntArray(): IntArray = to(IntArray(length), 0)
     infix fun to(ints: IntArray): IntArray = to(ints, 0)
     fun to(ints: IntArray, index: Int): IntArray {
-        ints[index] = x
-        ints[index + 1] = y
-        ints[index + 2] = z
-        ints[index + 3] = w
+        System.arraycopy(array, ofs, ints, index, length)
         return ints
     }
 

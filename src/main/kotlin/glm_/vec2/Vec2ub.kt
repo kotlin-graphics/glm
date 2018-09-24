@@ -109,8 +109,7 @@ class Vec2ub(var ofs: Int, var array: ByteArray) : Vec2t<Ubyte>() {
 
     fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
-        bytes[index] = x.v
-        bytes[index + Byte.BYTES] = y.v
+        System.arraycopy(array, ofs, bytes, index, length)
         return bytes
     }
 

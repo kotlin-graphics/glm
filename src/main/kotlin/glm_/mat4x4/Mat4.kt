@@ -281,16 +281,11 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
         return res
     }
 
-    // TODO toFloatArray others vec and mat
-    fun toFloatArray() = to(FloatArray(16), 0)
-
-    infix fun to(floats: FloatArray) = to(floats, 0)
-
-    // TODO by row?
-    fun to(floats: FloatArray, index: Int) {
-        for (i in 0..3)
-            for (j in 0..3)
-                floats[index + i * 4 + j] = get(i * 4, j)
+    fun toFloatArray(): FloatArray = to(FloatArray(length), 0)
+    infix fun to(floats: FloatArray): FloatArray = to(floats, 0)
+    fun to(floats: FloatArray, index: Int): FloatArray {
+        System.arraycopy(array, 0, floats, index, length)
+        return floats
     }
 
     infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.calloc(size), 0)

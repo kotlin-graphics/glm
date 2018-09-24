@@ -274,6 +274,12 @@ class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
     infix fun to(res: Quat) = glm.quat_cast(this, res)
     fun toQuat() = glm.quat_cast(this, Quat())
 
+    fun toFloatArray(): FloatArray = to(FloatArray(length), 0)
+    infix fun to(floats: FloatArray): FloatArray = to(floats, 0)
+    fun to(floats: FloatArray, index: Int): FloatArray {
+        System.arraycopy(array, 0, floats, index, length)
+        return floats
+    }
 
     infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.calloc(size), 0)
     fun toBuffer(): ByteBuffer = to(bufferBig(size), 0)
