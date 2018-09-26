@@ -897,4 +897,36 @@ interface gtcMatrixRotate {
     }
 
     fun rotateXYZ(mat: Mat4d, angleX: Double, angleY: Double, angleZ: Double): Mat4d = rotateXYZ(Mat4d(), mat, angleX, angleY, angleZ)
+
+//    fun rotateXYZ(angleX: Float, angleY: Float, angleZ: Float, res: Mat3): Mat3 { TODO?
+//        val sinX = sin(angleX)
+//        val cosX = cos(angleX)
+//        val sinY = sin(angleY)
+//        val cosY = cos(angleY)
+//        val sinZ = sin(angleZ)
+//        val cosZ = cos(angleZ)
+//        val m_sinX = -sinX
+//        val m_sinY = -sinY
+//        val m_sinZ = -sinZ
+//
+//        // rotateX
+//        // rotateY
+//        val nm00 = cosY
+//        val nm01 = m_sinX * m_sinY
+//        val nm02 = cosX * m_sinY
+//        res[2, 0] = 0f
+//        res[2, 1] = m_sinX * cosY
+//        res[2, 2] = cosX * cosY
+//        // rotateZ
+//        res[0, 0] = nm00 * cosZ
+//        res[0, 1] = nm01 * cosZ + cosX * sinZ
+//        res[0, 2] = nm02 * cosZ + sinX * sinZ
+//        res[1, 0] = nm00 * m_sinZ
+//        res[1, 1] = nm01 * m_sinZ + cosX * cosZ
+//        res[1, 2] = nm02 * m_sinZ + sinX * cosZ
+//        res[1, 1] = 1f
+//        return res
+//    }
+//
+//    fun rotateXYZ(angleX: Float, angleY: Float, angleZ: Float): Mat3 = rotateXYZ(angleX, angleY, angleZ, Mat3())
 }
