@@ -45,6 +45,10 @@ class Mat2d(dummy: Int, var array: DoubleArray) : Mat2x2t<Double>() {
             block(0).d, block(1).d,
             block(2).d, block(3).d)
 
+    constructor(block: (Int, Int) -> Number) : this(
+            block(0, 0).f, block(0, 1).f,
+            block(1, 0).f, block(1, 1).f)
+
     constructor(list: Iterable<*>, index: Int = 0) : this(
             list.elementAt(index)!!.toDouble, list.elementAt(index + 1)!!.toDouble,
             list.elementAt(index + 2)!!.toDouble, list.elementAt(index + 3)!!.toDouble)

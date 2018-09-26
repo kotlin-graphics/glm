@@ -10,6 +10,7 @@ import glm_.vec4.Vec4t
 import kool.floatBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import java.awt.Color
 import java.io.InputStream
 import java.nio.*
 
@@ -30,6 +31,8 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
     override var z: Float
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
+
+    val f = 0f
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -86,6 +89,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
     constructor(inputStream: InputStream, bigEndian: Boolean = true) :
             this(inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian))
 
+    constructor(color: Color) : this (color.red / 255f, color.green / 255f, color.blue / 255f)
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndian: Boolean = true) {
         x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndian)

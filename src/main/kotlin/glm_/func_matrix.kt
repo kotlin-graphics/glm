@@ -16,6 +16,17 @@ import glm_.vec4.Vec4
 
 interface func_matrix {
 
+    /**
+     * JVM custom
+     */
+    fun cleanTranslation(m: Mat4, res: Mat4): Mat4 {
+        res put m
+        res.v30 = 0f
+        res.v31 = 0f
+        res.v32 = 0f
+        res.v33 = 1f
+        return res
+    }
 
     fun transpose(m: Mat2) = transpose(Mat2(), m)
     fun transpose(res: Mat2, m: Mat2): Mat2 {

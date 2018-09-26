@@ -67,6 +67,11 @@ class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
             block(3).f, block(4).f, block(5).f,
             block(6).f, block(7).f, block(8).f)
 
+    constructor(block: (Int, Int) -> Number) : this(
+            block(0, 0).f, block(0, 1).f, block(0, 2).f,
+            block(1, 0).f, block(1, 1).f, block(1, 2).f,
+            block(2, 0).f, block(2, 1).f, block(2, 2).f)
+
     constructor(list: Iterable<*>, index: Int = 0) : this(
             list.elementAt(index)!!.toFloat, list.elementAt(index + 1)!!.toFloat, list.elementAt(index + 2)!!.toFloat,
             list.elementAt(index + 3)!!.toFloat, list.elementAt(index + 4)!!.toFloat, list.elementAt(index + 5)!!.toFloat,

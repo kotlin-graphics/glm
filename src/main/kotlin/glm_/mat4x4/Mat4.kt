@@ -81,6 +81,12 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
             block(8).f, block(9).f, block(10).f, block(11).f,
             block(12).f, block(13).f, block(14).f, block(15).f)
 
+    constructor(block: (Int, Int) -> Number) : this(
+            block(0, 0).f, block(0, 1).f, block(0, 2).f, block(0, 3).f,
+            block(1, 0).f, block(1, 1).f, block(1, 2).f, block(1, 3).f,
+            block(2, 0).f, block(2, 1).f, block(2, 2).f, block(2, 3).f,
+            block(3, 0).f, block(3, 1).f, block(3, 2).f, block(3, 3).f)
+
     constructor(list: Iterable<*>, index: Int = 0) : this(
             list.elementAt(index)!!.toFloat, list.elementAt(index + 1)!!.toFloat, list.elementAt(index + 2)!!.toFloat, list.elementAt(index + 3)!!.toFloat,
             list.elementAt(index + 4)!!.toFloat, list.elementAt(index + 5)!!.toFloat, list.elementAt(index + 6)!!.toFloat, list.elementAt(index + 7)!!.toFloat,
@@ -218,7 +224,10 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
         return this
     }
 
-    infix fun put(mat4: Mat4) = System.arraycopy(mat4.array.clone(), 0, array, 0, length)
+    infix fun put(mat4: Mat4) {
+        if (this !== mat4)
+            System.arraycopy(mat4.array, 0, array, 0, length)
+    }
 
     fun identity() = put(1f)
     infix fun put(s: Float) = put(s, s, s, s)
@@ -516,6 +525,12 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
     fun transpose(res: Mat4 = Mat4()) = transpose(res, this)
 
     fun transposeAssign() = transpose(this, this)
+
+
+
+    fun cleanTranslationAssign() = glm.cleanTranslation(this, this)
+
+    fun cleanTranslation(res: Mat4 = Mat4()) = glm.cleanTranslation(this, res)
 
 
     // TODO others

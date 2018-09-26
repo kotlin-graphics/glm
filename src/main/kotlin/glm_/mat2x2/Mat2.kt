@@ -51,6 +51,10 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
             block(0).f, block(1).f,
             block(2).f, block(3).f)
 
+    constructor(block: (Int, Int) -> Number) : this(
+            block(0, 0).f, block(0, 1).f,
+            block(1, 0).f, block(1, 1).f)
+
     constructor(list: Iterable<*>, index: Int = 0) : this(
             list.elementAt(index)!!.toFloat, list.elementAt(index + 1)!!.toFloat,
             list.elementAt(index + 2)!!.toFloat, list.elementAt(index + 3)!!.toFloat)

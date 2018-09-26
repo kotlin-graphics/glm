@@ -63,6 +63,11 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
             block(3).d, block(4).d, block(5).d,
             block(6).d, block(7).d, block(8).d)
 
+    constructor(block: (Int, Int) -> Number) : this(
+            block(0, 0).d, block(0, 1).d, block(0, 2).d,
+            block(1, 0).d, block(1, 1).d, block(1, 2).d,
+            block(2, 0).d, block(2, 1).d, block(2, 2).d)
+
     constructor(list: Iterable<*>, index: Int = 0) : this(
             list.elementAt(index)!!.toDouble, list.elementAt(index + 1)!!.toDouble, list.elementAt(index + 2)!!.toDouble,
             list.elementAt(index + 3)!!.toDouble, list.elementAt(index + 4)!!.toDouble, list.elementAt(index + 5)!!.toDouble,

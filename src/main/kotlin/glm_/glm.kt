@@ -11,6 +11,7 @@ import glm_.gtc.matrixTransform.*
 import glm_.gtx.*
 import glm_.quat.gtcQuaternion
 import glm_.quat.gtxQuaternion
+import glm_.vec3.Vec3
 
 object glm :
 
@@ -138,6 +139,12 @@ class Java {
         @JvmField
         val glm = glm_.glm
     }
+}
+
+fun main(args: Array<String>) {
+    val a = Vec3()
+    var b = a.x
+    b = 3f
 }
 
 typealias uint = Int

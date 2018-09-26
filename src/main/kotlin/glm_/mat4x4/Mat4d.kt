@@ -73,6 +73,12 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
             block(8).d, block(9).d, block(10).d, block(11).d,
             block(12).d, block(13).d, block(14).d, block(15).d)
 
+    constructor(block: (Int, Int) -> Number) : this(
+            block(0, 0).d, block(0, 1).d, block(0, 2).d, block(0, 3).d,
+            block(1, 0).d, block(1, 1).d, block(1, 2).d, block(1, 3).d,
+            block(2, 0).d, block(2, 1).d, block(2, 2).d, block(2, 3).d,
+            block(3, 0).d, block(3, 1).d, block(3, 2).d, block(3, 3).d)
+
     constructor(list: Iterable<*>, index: Int = 0) : this(
             list.elementAt(index)!!.toDouble, list.elementAt(index + 1)!!.toDouble, list.elementAt(index + 2)!!.toDouble, list.elementAt(index + 3)!!.toDouble,
             list.elementAt(index + 4)!!.toDouble, list.elementAt(index + 5)!!.toDouble, list.elementAt(index + 6)!!.toDouble, list.elementAt(index + 7)!!.toDouble,

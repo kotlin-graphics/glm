@@ -99,6 +99,9 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>() {
     constructor(inputStream: InputStream, bigEndian: Boolean = true) :
             this(inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian))
 
+    // TODO other non float?
+    constructor(color: Color) : this (color.red / 255f, color.green / 255f, color.blue / 255f, color.alpha / 255f)
+
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndian: Boolean = true) {
         x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndian)
@@ -444,9 +447,6 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>() {
         const val length = Vec4t.length
         @JvmField
         val size = length * Float.BYTES
-
-        // TODO others
-        fun fromColor(color: Color) = Vec4(color.red / 255, color.green / 255, color.blue / 255, color.alpha / 255)
 
         fun fromColor(r: Number, g: Number, b: Number, a: Number = 255f) = Vec4(r.f / 255, g.f / 255, b.f / 255f, a.f / 255)
     }

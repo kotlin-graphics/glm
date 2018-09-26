@@ -9,6 +9,8 @@ import glm_.vec4.Vec4t
 import kool.floatBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import java.awt.Color
+import java.io.InputStream
 import java.nio.*
 
 /**
@@ -71,6 +73,9 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>() {
     constructor(s: Number) : this(s, s)
     constructor(x: Number, y: Number) : this(x.f, y.f)
 
+    constructor(inputStream: InputStream, bigEndian: Boolean = true) : this(inputStream.float(bigEndian), inputStream.float(bigEndian))
+
+    constructor(color: Color) : this (color.red / 255f, color.green / 255f)
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndian: Boolean = true) {
         if (oneByteOneFloat) {

@@ -5,6 +5,7 @@ import glm_.glm
 import glm_.mat4x4.Mat4
 import glm_.vec2.Vec2
 import glm_.vec3.Vec3
+import glm_.vec4.Vec4
 import glm_.vec4.Vec4i
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
@@ -162,6 +163,17 @@ class testGtcMatrixTransform : StringSpec() {
                     -0.81649655f, 1.0430813E-7f, -0.57735026f, 0f,
                     0.40824836f, 0.7071067f, -0.57735026f, 0f,
                     -1.7881393E-7f, -1.4142135f, 1.7320508f, 1f)
+        }
+
+        "clean translation" {
+
+            val m = Mat4 { i, j -> i * 4 + j }
+
+            m[3] shouldBe Vec4(12f, 13f, 14f, 15f)
+
+            m.cleanTranslationAssign()
+
+            m[3] shouldBe Vec4(0f, 0f, 0f, 1f)
         }
     }
 }
