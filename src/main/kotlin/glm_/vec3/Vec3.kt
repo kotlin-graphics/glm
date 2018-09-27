@@ -432,7 +432,12 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
         const val length = Vec3t.length
         @JvmField
         val size = length * Float.BYTES
+
+        fun fromColor(n: Number) = Vec3(n.f / 255, n.f / 255, n.f / 255f)
+        fun fromColor(r: Number, g: Number, b: Number) = Vec3(r.f / 255, g.f / 255, b.f / 255f)
     }
+
+    fun toColor(alpha: Float = 255f) = Color(r * 255, g * 255, b * 255, alpha * 255)
 
     override fun size() = size
 

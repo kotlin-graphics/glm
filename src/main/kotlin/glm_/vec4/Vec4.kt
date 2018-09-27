@@ -448,8 +448,12 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>() {
         @JvmField
         val size = length * Float.BYTES
 
+        // TODO other? d?
+        fun fromColor(n: Number) = Vec4(n.f / 255, n.f / 255, n.f / 255f, n.f / 255)
         fun fromColor(r: Number, g: Number, b: Number, a: Number = 255f) = Vec4(r.f / 255, g.f / 255, b.f / 255f, a.f / 255)
     }
+
+    fun toColor() = Color(r * 255, g * 255, b * 255, a * 255)
 
     override fun size() = size
 
