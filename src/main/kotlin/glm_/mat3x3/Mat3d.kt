@@ -177,9 +177,6 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
     }
 
 
-
-
-
     // -- Matrix functions --
 
     val det get() = glm.determinant(this)
@@ -203,16 +200,52 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
 
     infix operator fun invoke(doubles: DoubleArray) = invoke(doubles[0], doubles[1], doubles[2], doubles[3], doubles[4], doubles[5], doubles[6], doubles[7], doubles[8])
 
+    infix operator fun invoke(mat2: Mat2) = invoke(
+            mat2[0, 0].d, mat2[0, 1].d, 0.0,
+            mat2[1, 0].d, mat2[1, 1].d, 0.0,
+            0.0, 0.0, 1.0)
+
+    infix operator fun invoke(mat2: Mat2d) = invoke(
+            mat2[0, 0], mat2[0, 1], 0.0,
+            mat2[1, 0], mat2[1, 1], 0.0,
+            0.0, 0.0, 1.0)
+
+    infix operator fun invoke(mat3: Mat3) = invoke(DoubleArray(length) { mat3.array[it].d })
+    infix operator fun invoke(mat3: Mat3d) = invoke(mat3.array.clone())
+
+    infix operator fun invoke(mat4: Mat4) = invoke(
+            mat4[0, 0].d, mat4[0, 1].d, mat4[0, 2].d,
+            mat4[1, 0].d, mat4[1, 1].d, mat4[1, 2].d,
+            mat4[2, 0].d, mat4[2, 1].d, mat4[2, 2].d)
+
+    infix operator fun invoke(mat4: Mat4d) = invoke(
+            mat4[0, 0], mat4[0, 1], mat4[0, 2],
+            mat4[1, 0], mat4[1, 1], mat4[1, 2],
+            mat4[2, 0], mat4[2, 1], mat4[2, 2])
+
     operator fun invoke(x: Double, y: Double, z: Double) = invoke(
             x, 0.0, 0.0,
             0.0, y, 0.0,
             0.0, 0.0, z)
 
+    operator fun invoke(x: Number, y: Number, z: Number) = invoke(
+            x.d, 0.0, 0.0,
+            0.0, y.d, 0.0,
+            0.0, 0.0, z.d)
+
     fun invoke(a0: Double, a1: Double, a2: Double,
-                      b0: Double, b1: Double, b2: Double,
-                      c0: Double, c1: Double, c2: Double): Mat3d {
+               b0: Double, b1: Double, b2: Double,
+               c0: Double, c1: Double, c2: Double): Mat3d {
 
         put(a0, a1, a2, b0, b1, b2, c0, c1, c2)
+        return this
+    }
+
+    fun invoke(a0: Number, a1: Number, a2: Number,
+               b0: Number, b1: Number, b2: Number,
+               c0: Number, c1: Number, c2: Number): Mat3d {
+
+        put(a0.d, a1.d, a2.d, b0.d, b1.d, b2.d, c0.d, c1.d, c2.d)
         return this
     }
 
@@ -221,7 +254,7 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
 
     fun identity() = put(1.0)
     infix fun put(s: Double) = put(s, s, s)
-    infix fun put(v: Vec2d) = put(v.x, v.y,1.0)
+    infix fun put(v: Vec2d) = put(v.x, v.y, 1.0)
     infix fun put(v: Vec3d) = put(v.x, v.y, v.z)
     infix fun put(v: Vec4d) = put(v.x, v.y, v.z)
 

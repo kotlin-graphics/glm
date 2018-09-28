@@ -202,16 +202,52 @@ class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
 
     infix operator fun invoke(floats: FloatArray) = invoke(floats[0], floats[1], floats[2], floats[3], floats[4], floats[5], floats[6], floats[7], floats[8])
 
+    infix operator fun invoke(mat2: Mat2) = invoke(
+            mat2[0, 0], mat2[0, 1], 0f,
+            mat2[1, 0], mat2[1, 1], 0f,
+            0f, 0f, 1f)
+
+    infix operator fun invoke(mat2: Mat2d) = invoke(
+            mat2[0, 0].f, mat2[0, 1].f, 0f,
+            mat2[1, 0].f, mat2[1, 1].f, 0f,
+            0f, 0f, 1f)
+
+    infix operator fun invoke(mat3: Mat3) = invoke(mat3.array.clone())
+    infix operator fun invoke(mat3: Mat3d) = invoke(FloatArray(length) { mat3.array[it].f })
+
+    infix operator fun invoke(mat4: Mat4) = invoke(
+            mat4[0, 0], mat4[0, 1], mat4[0, 2],
+            mat4[1, 0], mat4[1, 1], mat4[1, 2],
+            mat4[2, 0], mat4[2, 1], mat4[2, 2])
+
+    infix operator fun invoke(mat4: Mat4d) = invoke(
+            mat4[0, 0].f, mat4[0, 1].f, mat4[0, 2].f,
+            mat4[1, 0].f, mat4[1, 1].f, mat4[1, 2].f,
+            mat4[2, 0].f, mat4[2, 1].f, mat4[2, 2].f)
+
     operator fun invoke(x: Float, y: Float, z: Float) = invoke(
             x, 0f, 0f,
             0f, y, 0f,
             0f, 0f, z)
 
+    operator fun invoke(x: Number, y: Number, z: Number) = invoke(
+            x.f, 0f, 0f,
+            0f, y.f, 0f,
+            0f, 0f, z.f)
+
     operator fun invoke(a0: Float, a1: Float, a2: Float,
-                               b0: Float, b1: Float, b2: Float,
-                               c0: Float, c1: Float, c2: Float): Mat3 {
+                        b0: Float, b1: Float, b2: Float,
+                        c0: Float, c1: Float, c2: Float): Mat3 {
 
         put(a0, a1, a2, b0, b1, b2, c0, c1, c2)
+        return this
+    }
+
+    operator fun invoke(a0: Number, a1: Number, a2: Number,
+                        b0: Number, b1: Number, b2: Number,
+                        c0: Number, c1: Number, c2: Number): Mat3 {
+
+        put(a0.f, a1.f, a2.f, b0.f, b1.f, b2.f, c0.f, c1.f, c2.f)
         return this
     }
 

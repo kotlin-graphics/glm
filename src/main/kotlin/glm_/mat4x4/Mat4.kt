@@ -206,8 +206,74 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
     infix operator fun invoke(v: Vec3) = invoke(v.x, v.y, v.z, 1f)
     infix operator fun invoke(v: Vec4) = invoke(v.x, v.y, v.z, v.w)
 
-    infix operator fun invoke(floats: FloatArray) = invoke(floats[0], floats[1], floats[2], floats[3], floats[4], floats[5], floats[6],
-            floats[7], floats[8], floats[9], floats[10], floats[11], floats[12], floats[13], floats[14], floats[15])
+    infix operator fun invoke(floats: FloatArray) = invoke(
+            floats[0], floats[1], floats[2], floats[3],
+            floats[4], floats[5], floats[6], floats[7],
+            floats[8], floats[9], floats[10], floats[11],
+            floats[12], floats[13], floats[14], floats[15])
+
+    infix operator fun invoke(mat2: Mat2) = invoke(
+            mat2[0, 0], mat2[0, 1], 0f, 0f,
+            mat2[1, 0], mat2[1, 1], 0f, 0f,
+            0f, 0f, 1f, 0f,
+            0f, 0f, 0f, 1f)
+
+    infix operator fun invoke(mat2: Mat2d) = invoke(
+            mat2[0, 0].f, mat2[0, 1].f, 0f, 0f,
+            mat2[1, 0].f, mat2[1, 1].f, 0f, 0f,
+            0f, 0f, 1f, 0f,
+            0f, 0f, 0f, 1f)
+
+    infix operator fun invoke(mat3: Mat3) = invoke(
+            mat3[0, 0], mat3[0, 1], mat3[0, 2], 0f,
+            mat3[1, 0], mat3[1, 1], mat3[1, 2], 0f,
+            mat3[2, 0], mat3[2, 1], mat3[2, 2], 0f,
+            0f, 0f, 0f, 1f)
+
+    infix operator fun invoke(mat3: Mat3d) = invoke(
+            mat3[0, 0].f, mat3[0, 1].f, mat3[0, 2].f, 0f,
+            mat3[1, 0].f, mat3[1, 1].f, mat3[1, 2].f, 0f,
+            mat3[2, 0].f, mat3[2, 1].f, mat3[2, 2].f, 0f,
+            0f, 0f, 0f, 1f)
+
+    infix operator fun invoke(mat4: Mat4) = invoke(mat4.array.clone())
+    infix operator fun invoke(mat4: Mat4d) = invoke(FloatArray(length) { mat4.array[it].f })
+
+//    infix operator fun invoke(mat2x3: Mat2x3t<*>) = invoke(
+//            mat2x3[0, 0], mat2x3[0, 1], mat2x3[0, 2], 0,
+//            mat2x3[1, 0], mat2x3[1, 1], mat2x3[1, 2], 0,
+//            0, 0, 1, 0,
+//            0, 0, 0, 1)
+//
+//    infix operator fun invoke(mat3x2: Mat3x2t<*>) = invoke(
+//            mat3x2[0, 0], mat3x2[0, 1], 0, 0,
+//            mat3x2[1, 0], mat3x2[1, 1], 0, 0,
+//            mat3x2[2, 0], mat3x2[2, 1], 1, 0,
+//            0, 0, 0, 1)
+//
+//    infix operator fun invoke(mat2x4: Mat2x4t<*>) = invoke(
+//            mat2x4[0, 0], mat2x4[0, 1], mat2x4[0, 2], mat2x4[0, 3],
+//            mat2x4[1, 0], mat2x4[1, 1], mat2x4[1, 2], mat2x4[1, 3],
+//            0, 0, 1, 0,
+//            0, 0, 0, 1)
+//
+//    infix operator fun invoke(mat4x2: Mat4x2t<*>) = invoke(
+//            mat4x2[0, 0], mat4x2[0, 1], 0, 0,
+//            mat4x2[1, 0], mat4x2[1, 1], 0, 0,
+//            mat4x2[2, 0], mat4x2[2, 1], 1, 0,
+//            mat4x2[3, 0], mat4x2[3, 1], 0, 1)
+//
+//    infix operator fun invoke(mat3x4: Mat3x4t<*>) = invoke(
+//            mat3x4[0, 0], mat3x4[0, 1], mat3x4[0, 2], mat3x4[0, 3],
+//            mat3x4[1, 0], mat3x4[1, 1], mat3x4[1, 2], mat3x4[1, 3],
+//            mat3x4[2, 0], mat3x4[2, 1], mat3x4[2, 2], mat3x4[2, 3],
+//            0, 0, 0, 1)
+//
+//    infix operator fun invoke(mat4x3: Mat4x3t<*>) = invoke(
+//            mat4x3[0, 0], mat4x3[0, 1], mat4x3[0, 2], 0,
+//            mat4x3[1, 0], mat4x3[1, 1], mat4x3[1, 2], 0,
+//            mat4x3[2, 0], mat4x3[2, 1], mat4x3[2, 2], 0,
+//            mat4x3[3, 0], mat4x3[3, 1], mat4x3[3, 2], 1)
 
     operator fun invoke(x: Float, y: Float, z: Float, w: Float) = invoke(
             x, 0f, 0f, 0f,
@@ -215,12 +281,27 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
             0f, 0f, z, 0f,
             0f, 0f, 0f, w)
 
+    operator fun invoke(x: Number, y: Number, z: Number, w: Number) = invoke(
+            x.f, 0f, 0f, 0f,
+            0f, y.f, 0f, 0f,
+            0f, 0f, z.f, 0f,
+            0f, 0f, 0f, w.f)
+
     operator fun invoke(a0: Float, a1: Float, a2: Float, a3: Float,
                         b0: Float, b1: Float, b2: Float, b3: Float,
                         c0: Float, c1: Float, c2: Float, c3: Float,
                         d0: Float, d1: Float, d2: Float, d3: Float): Mat4 {
 
         put(a0, a1, a2, a3, b0, b1, b2, b3, c0, c1, c2, c3, d0, d1, d2, d3)
+        return this
+    }
+
+    operator fun invoke(a0: Number, a1: Number, a2: Number, a3: Number,
+                        b0: Number, b1: Number, b2: Number, b3: Number,
+                        c0: Number, c1: Number, c2: Number, c3: Number,
+                        d0: Number, d1: Number, d2: Number, d3: Number): Mat4 {
+
+        put(a0.f, a1.f, a2.f, a3.f, b0.f, b1.f, b2.f, b3.f, c0.f, c1.f, c2.f, c3.f, d0.f, d1.f, d2.f, d3.f)
         return this
     }
 
@@ -525,7 +606,6 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
     fun transpose(res: Mat4 = Mat4()) = transpose(res, this)
 
     fun transposeAssign() = transpose(this, this)
-
 
 
     fun cleanTranslationAssign() = glm.cleanTranslation(this, this)

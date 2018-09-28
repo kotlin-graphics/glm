@@ -9,9 +9,11 @@ import glm_.mat2x4.Mat2x4t
 import glm_.mat3x2.Mat3x2d
 import glm_.mat3x2.Mat3x2t
 import glm_.mat3x3.Mat3
+import glm_.mat3x3.Mat3d
 import glm_.mat4x2.Mat4x2d
 import glm_.mat4x2.Mat4x2t
 import glm_.mat4x4.Mat4
+import glm_.mat4x4.Mat4d
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import java.nio.DoubleBuffer
@@ -141,14 +143,44 @@ class Mat2d(dummy: Int, var array: DoubleArray) : Mat2x2t<Double>() {
 
     infix operator fun invoke(doubles: DoubleArray) = invoke(doubles[0], doubles[1], doubles[2], doubles[3])
 
+    infix operator fun invoke(mat2: Mat2) = invoke(DoubleArray(length) { mat2.array[it].d })
+    infix operator fun invoke(mat2: Mat2d) = invoke(mat2.array.clone())
+
+    infix operator fun invoke(mat3: Mat3) = invoke(
+            mat3[0, 0].d, mat3[0, 1].d,
+            mat3[1, 0].d, mat3[1, 1].d)
+
+    infix operator fun invoke(mat3: Mat3d) = invoke(
+            mat3[0, 0], mat3[0, 1],
+            mat3[1, 0], mat3[1, 1])
+
+    infix operator fun invoke(mat4: Mat4) = invoke(
+            mat4[0, 0].d, mat4[0, 1].d,
+            mat4[1, 0].d, mat4[1, 1].d)
+
+    infix operator fun invoke(mat4: Mat4d) = invoke(
+            mat4[0, 0], mat4[0, 1],
+            mat4[1, 0], mat4[1, 1])
+
     operator fun invoke(x: Double, y: Double) = invoke(
             x, 0.0,
             0.0, y)
 
+    operator fun invoke(x: Number, y: Number) = invoke(
+            x.d, 0.0,
+            0.0, y.d)
+
     fun invoke(a0: Double, a1: Double,
-                      b0: Double, b1: Double): Mat2d {
+               b0: Double, b1: Double): Mat2d {
 
         put(a0, a1, b0, b1)
+        return this
+    }
+
+    fun invoke(a0: Number, a1: Number,
+               b0: Number, b1: Number): Mat2d {
+
+        put(a0.d, a1.d, b0.d, b1.d)
         return this
     }
 
