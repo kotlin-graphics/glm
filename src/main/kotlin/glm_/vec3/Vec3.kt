@@ -32,8 +32,6 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
 
-    val f = 0f
-
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
     constructor() : this(0)
@@ -437,7 +435,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
         fun fromColor(r: Number, g: Number, b: Number) = Vec3(r.f / 255, g.f / 255, b.f / 255f)
     }
 
-    fun toColor(alpha: Float = 255f) = Color(r * 255, g * 255, b * 255, alpha * 255)
+    fun toColor(alpha: Float = 1f) = Color(r * 255, g * 255, b * 255, alpha * 255)
 
     override fun size() = size
 

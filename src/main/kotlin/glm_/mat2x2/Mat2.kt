@@ -7,9 +7,11 @@ import glm_.mat2x4.Mat2x4t
 import glm_.mat3x2.Mat3x2
 import glm_.mat3x2.Mat3x2t
 import glm_.mat3x3.Mat3
+import glm_.mat3x3.Mat3d
 import glm_.mat4x2.Mat4x2
 import glm_.mat4x2.Mat4x2t
 import glm_.mat4x4.Mat4
+import glm_.mat4x4.Mat4d
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
@@ -137,14 +139,44 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
 
     infix operator fun invoke(floats: FloatArray) = invoke(floats[0], floats[1], floats[2], floats[3])
 
+    infix operator fun invoke(mat2: Mat2) = invoke(mat2.array.clone())
+    infix operator fun invoke(mat2: Mat2d) = invoke(FloatArray(length) { mat2.array[it].f })
+
+    infix operator fun invoke(mat3: Mat3) = invoke(
+            mat3[0, 0], mat3[0, 1],
+            mat3[1, 0], mat3[1, 1])
+
+    infix operator fun invoke(mat3: Mat3d) = invoke(
+            mat3[0, 0].f, mat3[0, 1].f,
+            mat3[1, 0].f, mat3[1, 1].f)
+
+    infix operator fun invoke(mat4: Mat4) = invoke(
+            mat4[0, 0], mat4[0, 1],
+            mat4[1, 0], mat4[1, 1])
+
+    infix operator fun invoke(mat4: Mat4d) = invoke(
+            mat4[0, 0].f, mat4[0, 1].f,
+            mat4[1, 0].f, mat4[1, 1].f)
+
     operator fun invoke(x: Float, y: Float) = invoke(
             x, 0f,
             0f, y)
 
+    operator fun invoke(x: Number, y: Number) = invoke(
+            x.f, 0f,
+            0f, y.f)
+
     operator fun invoke(a0: Float, a1: Float,
-                               b0: Float, b1: Float): Mat2 {
+                        b0: Float, b1: Float): Mat2 {
 
         put(a0, a1, b0, b1)
+        return this
+    }
+
+    operator fun invoke(a0: Number, a1: Number,
+                        b0: Number, b1: Number): Mat2 {
+
+        put(a0.f, a1.f, b0.f, b1.f)
         return this
     }
 

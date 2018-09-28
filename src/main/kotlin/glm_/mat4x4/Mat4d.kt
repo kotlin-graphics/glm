@@ -174,8 +174,38 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
     infix operator fun invoke(v: Vec3d) = invoke(v.x, v.y, v.z, 1.0)
     infix operator fun invoke(v: Vec4d) = invoke(v.x, v.y, v.z, v.w)
 
-    infix operator fun invoke(doubles: DoubleArray) = invoke(doubles[0], doubles[1], doubles[2], doubles[3], doubles[4], doubles[5], doubles[6],
-            doubles[7], doubles[8], doubles[9], doubles[10], doubles[11], doubles[12], doubles[13], doubles[14], doubles[15])
+    infix operator fun invoke(doubles: DoubleArray) = invoke(
+            doubles[0], doubles[1], doubles[2], doubles[3],
+            doubles[4], doubles[5], doubles[6], doubles[7],
+            doubles[8], doubles[9], doubles[10], doubles[11],
+            doubles[12], doubles[13], doubles[14], doubles[15])
+
+    infix operator fun invoke(mat2: Mat2) = invoke(
+            mat2[0, 0].d, mat2[0, 1].d, 0.0, 0.0,
+            mat2[1, 0].d, mat2[1, 1].d, 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0)
+
+    infix operator fun invoke(mat2: Mat2d) = invoke(
+            mat2[0, 0], mat2[0, 1], 0.0, 0.0,
+            mat2[1, 0], mat2[1, 1], 0.0, 0.0,
+            0.0, 0.0, 1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0)
+
+    infix operator fun invoke(mat3: Mat3) = invoke(
+            mat3[0, 0].d, mat3[0, 1].d, mat3[0, 2].d, 0.0,
+            mat3[1, 0].d, mat3[1, 1].d, mat3[1, 2].d, 0.0,
+            mat3[2, 0].d, mat3[2, 1].d, mat3[2, 2].d, 0.0,
+            0.0, 0.0, 0.0, 1.0)
+
+    infix operator fun invoke(mat3: Mat3d) = invoke(
+            mat3[0, 0], mat3[0, 1], mat3[0, 2], 0.0,
+            mat3[1, 0], mat3[1, 1], mat3[1, 2], 0.0,
+            mat3[2, 0], mat3[2, 1], mat3[2, 2], 0.0,
+            0.0, 0.0, 0.0, 1.0)
+
+    infix operator fun invoke(mat4: Mat4) = invoke(DoubleArray(length) { mat4.array[it].d })
+    infix operator fun invoke(mat4: Mat4d) = invoke(mat4.array.clone())
 
     operator fun invoke(x: Double, y: Double, z: Double, w: Double) = invoke(
             x, 0.0, 0.0, 0.0,
@@ -183,12 +213,27 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
             0.0, 0.0, z, 0.0,
             0.0, 0.0, 0.0, w)
 
+    operator fun invoke(x: Number, y: Number, z: Number, w: Number) = invoke(
+            x.d, 0.0, 0.0, 0.0,
+            0.0, y.d, 0.0, 0.0,
+            0.0, 0.0, z.d, 0.0,
+            0.0, 0.0, 0.0, w.d)
+
     fun invoke(a0: Double, a1: Double, a2: Double, a3: Double,
-                      b0: Double, b1: Double, b2: Double, b3: Double,
-                      c0: Double, c1: Double, c2: Double, c3: Double,
-                      d0: Double, d1: Double, d2: Double, d3: Double): Mat4d {
+               b0: Double, b1: Double, b2: Double, b3: Double,
+               c0: Double, c1: Double, c2: Double, c3: Double,
+               d0: Double, d1: Double, d2: Double, d3: Double): Mat4d {
 
         put(a0, a1, a2, a3, b0, b1, b2, b3, c0, c1, c2, c3, d0, d1, d2, d3)
+        return this
+    }
+
+    fun invoke(a0: Number, a1: Number, a2: Number, a3: Number,
+               b0: Number, b1: Number, b2: Number, b3: Number,
+               c0: Number, c1: Number, c2: Number, c3: Number,
+               d0: Number, d1: Number, d2: Number, d3: Number): Mat4d {
+
+        put(a0.d, a1.d, a2.d, a3.d, b0.d, b1.d, b2.d, b3.d, c0.d, c1.d, c2.d, c3.d, d0.d, d1.d, d2.d, d3.d)
         return this
     }
 
