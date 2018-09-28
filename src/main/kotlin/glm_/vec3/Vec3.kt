@@ -32,8 +32,6 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
 
-    val f = 0f
-
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
     constructor() : this(0)
