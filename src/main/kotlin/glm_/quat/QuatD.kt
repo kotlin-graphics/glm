@@ -7,6 +7,9 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
+import kool.Ptr
+import org.lwjgl.system.MemoryUtil.memGetDouble
+import org.lwjgl.system.MemoryUtil.memPutDouble
 import kotlin.math.abs
 import kotlin.math.sqrt
 
@@ -88,6 +91,13 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
 
     infix fun put(quat: QuatD) = put(quat.w, quat.x, quat.y, quat.z)
 
+    infix fun to(ptr: Ptr) {
+        memPutDouble(ptr, w)
+        memPutDouble(ptr + Double.BYTES, x)
+        memPutDouble(ptr + Double.BYTES * 2, y)
+        memPutDouble(ptr + Double.BYTES * 3, z)
+    }
+    
     // -- Component accesses --
 
     override operator fun set(index: Int, value: Number) = when (index) {
@@ -96,13 +106,6 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
         2 -> z = value.d
         3 -> w = value.d
         else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-
-    companion object : quatD_operators, gtcQuaternion {
-
-        @JvmField
-        val size = 4 * Float.BYTES
     }
 
 
@@ -185,6 +188,16 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
     fun slerp(b: QuatD, interp: Double, res: QuatD = QuatD()) = glm.slerp(this, b, interp, res)
 
     fun slerpAssign(b: QuatD, interp: Double) = glm.slerp(this, b, interp, this)
+
+
+    companion object : quatD_operators, gtcQuaternion {
+
+        @JvmField
+        val size = 4 * Float.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Quat(memGetDouble(ptr), memGetDouble(ptr + Double.BYTES), memGetDouble(ptr + Double.BYTES * 2), memGetDouble(ptr + Double.BYTES * 3))
+    }
 
 
     override fun toString() = "($w, {$x, $y, $z})"

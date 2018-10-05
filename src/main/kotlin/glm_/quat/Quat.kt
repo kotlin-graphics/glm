@@ -1,6 +1,9 @@
 package glm_.quat
 
-import glm_.*
+import glm_.BYTES
+import glm_.f
+import glm_.float
+import glm_.glm
 import glm_.glm.cos
 import glm_.glm.sin
 import glm_.mat3x3.Mat3
@@ -8,6 +11,9 @@ import glm_.mat4x4.Mat4
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
+import kool.Ptr
+import org.lwjgl.system.MemoryUtil.memGetFloat
+import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.io.InputStream
 import kotlin.math.abs
 import kotlin.math.sqrt
@@ -35,7 +41,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
                 realPart = 0f
                 if (abs(u.x) > abs(u.z)) Vec3(-u.y, u.x, 0f) else Vec3(0f, -u.z, u.y)
             }
-        // Otherwise, build quaternion the standard way.
+            // Otherwise, build quaternion the standard way.
             else -> u cross v
         }
         put(realPart, w.x, w.y, w.z).normalizeAssign()
@@ -94,6 +100,13 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
     infix fun put(quat: Quat) = put(quat.w, quat.x, quat.y, quat.z)
 
+    infix fun to(ptr: Ptr) {
+        memPutFloat(ptr, w)
+        memPutFloat(ptr + Float.BYTES, x)
+        memPutFloat(ptr + Float.BYTES * 2, y)
+        memPutFloat(ptr + Float.BYTES * 3, z)
+    }
+
     // -- Component accesses --
 
     override operator fun set(index: Int, value: Number) = when (index) {
@@ -103,9 +116,6 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
         3 -> w = value.f
         else -> throw ArrayIndexOutOfBoundsException()
     }
-
-
-
 
 
     // -- Unary arithmetic operators --
@@ -206,6 +216,9 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     companion object : quat_operators, gtcQuaternion {
         @JvmField
         val size = 4 * Float.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Quat(memGetFloat(ptr), memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 3))
     }
 
     override fun toString() = "($w, {$x, $y, $z})"
