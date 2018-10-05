@@ -5,6 +5,9 @@ import glm_.f
 import glm_.set
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
+import kool.floatBufferBig
+import org.lwjgl.system.MemoryStack
+import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.util.*
 
@@ -41,21 +44,40 @@ class Mat3x4(dummy: Int, var array: FloatArray) : Mat3x4t<Float>() {
     }
 
     infix fun to(dfb: FloatBuffer) = to(dfb, 0)
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer = buf
+            .putFloat(offset + 0 * Float.BYTES, array[0])
+            .putFloat(offset + 1 * Float.BYTES, array[1])
+            .putFloat(offset + 2 * Float.BYTES, array[2])
+            .putFloat(offset + 3 * Float.BYTES, array[3])
+            .putFloat(offset + 4 * Float.BYTES, array[4])
+            .putFloat(offset + 5 * Float.BYTES, array[5])
+            .putFloat(offset + 6 * Float.BYTES, array[6])
+            .putFloat(offset + 7 * Float.BYTES, array[7])
+            .putFloat(offset + 8 * Float.BYTES, array[8])
+            .putFloat(offset + 9 * Float.BYTES, array[9])
+            .putFloat(offset + 10 * Float.BYTES, array[10])
+            .putFloat(offset + 11 * Float.BYTES, array[11])
 
-    fun to(dfb: FloatBuffer, offset: Int): FloatBuffer {
-        dfb[offset + 0] = array[0]
-        dfb[offset + 1] = array[1]
-        dfb[offset + 2] = array[2]
-        dfb[offset + 3] = array[3]
-        dfb[offset + 4] = array[4]
-        dfb[offset + 5] = array[5]
-        dfb[offset + 6] = array[6]
-        dfb[offset + 7] = array[7]
-        dfb[offset + 8] = array[8]
-        dfb[offset + 9] = array[9]
-        dfb[offset + 10] = array[10]
-        dfb[offset + 11] = array[11]
-        return dfb
+
+    fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
+    infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
+    fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
+    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, 0)
+
+    fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
+        buf[offset + 0] = array[0]
+        buf[offset + 1] = array[1]
+        buf[offset + 2] = array[2]
+        buf[offset + 3] = array[3]
+        buf[offset + 4] = array[4]
+        buf[offset + 5] = array[5]
+        buf[offset + 6] = array[6]
+        buf[offset + 7] = array[7]
+        buf[offset + 8] = array[8]
+        buf[offset + 9] = array[9]
+        buf[offset + 10] = array[10]
+        buf[offset + 11] = array[11]
+        return buf
     }
 
     override var a0: Float

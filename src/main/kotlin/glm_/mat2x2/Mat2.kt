@@ -240,6 +240,8 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
         return buf
     }
 
+
+    fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
     infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
     fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
     infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, 0)
