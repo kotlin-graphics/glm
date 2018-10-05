@@ -13,6 +13,7 @@ import kool.floatBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetFloat
+import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.awt.Color
 import java.io.InputStream
 import java.nio.*
@@ -184,6 +185,13 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToBuffer {
         buf[index + 2] = z
         buf[index + 3] = w
         return buf
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutFloat(ptr, x)
+        memPutFloat(ptr + Float.BYTES, y)
+        memPutFloat(ptr + Float.BYTES * 2, z)
+        memPutFloat(ptr + Float.BYTES * 3, w)
     }
 
     // -- Component accesses --

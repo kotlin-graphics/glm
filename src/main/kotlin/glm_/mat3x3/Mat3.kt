@@ -26,6 +26,7 @@ import kool.floatBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetFloat
+import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.util.*
@@ -357,6 +358,32 @@ class Mat3(dummy: Int, var array: FloatArray) : Mat3x3t<Float>() {
         return buf
     }
 
+    fun to(ptr: Ptr, transpose: Boolean = false) {
+        when {
+            transpose -> {
+                memPutFloat(ptr, get(0, 0))
+                memPutFloat(ptr + Float.BYTES, get(1, 0))
+                memPutFloat(ptr + Float.BYTES * 2, get(2, 0))
+                memPutFloat(ptr + Float.BYTES * 3, get(0, 1))
+                memPutFloat(ptr + Float.BYTES * 4, get(1, 1))
+                memPutFloat(ptr + Float.BYTES * 5, get(2, 1))
+                memPutFloat(ptr + Float.BYTES * 6, get(0, 2))
+                memPutFloat(ptr + Float.BYTES * 7, get(1, 2))
+                memPutFloat(ptr + Float.BYTES * 8, get(2, 2))
+            }
+            else -> {
+                memPutFloat(ptr, get(0, 0))
+                memPutFloat(ptr + Float.BYTES, get(0, 1))
+                memPutFloat(ptr + Float.BYTES * 2, get(0, 2))
+                memPutFloat(ptr + Float.BYTES * 3, get(1, 0))
+                memPutFloat(ptr + Float.BYTES * 4, get(1, 1))
+                memPutFloat(ptr + Float.BYTES * 5, get(1, 2))
+                memPutFloat(ptr + Float.BYTES * 6, get(2, 0))
+                memPutFloat(ptr + Float.BYTES * 7, get(2, 1))
+                memPutFloat(ptr + Float.BYTES * 8, get(2, 2))
+            }
+        }
+    }
 
     // -- Unary arithmetic operators --
 

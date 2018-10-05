@@ -27,6 +27,7 @@ import kool.floatBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetFloat
+import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.io.InputStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
@@ -428,6 +429,47 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
 
     infix fun to(res: Quat) = glm.quat_cast(this, res)
     fun toQuat() = glm.quat_cast(this, Quat())
+
+    fun to(ptr: Ptr, transpose: Boolean = false) {
+        when {
+            transpose -> {
+                memPutFloat(ptr, get(0, 0))
+                memPutFloat(ptr + Float.BYTES, get(1, 0))
+                memPutFloat(ptr + Float.BYTES * 2, get(2, 0))
+                memPutFloat(ptr + Float.BYTES * 3, get(3, 0))
+                memPutFloat(ptr + Float.BYTES * 4, get(0, 1))
+                memPutFloat(ptr + Float.BYTES * 5, get(1, 1))
+                memPutFloat(ptr + Float.BYTES * 6, get(2, 1))
+                memPutFloat(ptr + Float.BYTES * 7, get(3, 1))
+                memPutFloat(ptr + Float.BYTES * 8, get(0, 2))
+                memPutFloat(ptr + Float.BYTES * 9, get(1, 2))
+                memPutFloat(ptr + Float.BYTES * 10, get(2, 2))
+                memPutFloat(ptr + Float.BYTES * 11, get(3, 2))
+                memPutFloat(ptr + Float.BYTES * 12, get(0, 3))
+                memPutFloat(ptr + Float.BYTES * 13, get(1, 3))
+                memPutFloat(ptr + Float.BYTES * 14, get(2, 3))
+                memPutFloat(ptr + Float.BYTES * 15, get(3, 3))
+            }
+            else -> {
+                memPutFloat(ptr, get(0, 0))
+                memPutFloat(ptr + Float.BYTES, get(0, 1))
+                memPutFloat(ptr + Float.BYTES * 2, get(0, 2))
+                memPutFloat(ptr + Float.BYTES * 3, get(0, 3))
+                memPutFloat(ptr + Float.BYTES * 4, get(1, 0))
+                memPutFloat(ptr + Float.BYTES * 5, get(1, 1))
+                memPutFloat(ptr + Float.BYTES * 6, get(1, 2))
+                memPutFloat(ptr + Float.BYTES * 7, get(1, 3))
+                memPutFloat(ptr + Float.BYTES * 8, get(2, 0))
+                memPutFloat(ptr + Float.BYTES * 9, get(2, 1))
+                memPutFloat(ptr + Float.BYTES * 10, get(2, 2))
+                memPutFloat(ptr + Float.BYTES * 11, get(2, 3))
+                memPutFloat(ptr + Float.BYTES * 12, get(3, 0))
+                memPutFloat(ptr + Float.BYTES * 13, get(3, 1))
+                memPutFloat(ptr + Float.BYTES * 14, get(3, 2))
+                memPutFloat(ptr + Float.BYTES * 15, get(3, 3))
+            }
+        }
+    }
 
     // -- put --
 

@@ -29,7 +29,7 @@ class testCoreVec2 : StringSpec() {
                 Vec1.length
             }
             run {
-                val a = Vec2({ it + 1f })
+                val a = Vec2 { it + 1f }
                 a shouldBe Vec2(1, 2)
             }
 
@@ -457,6 +457,8 @@ class testCoreVec2 : StringSpec() {
             val b = Vec2(3, 4)
 
             b.xy = a
+
+//            val c = b.xy as Vec2
 
             b shouldBe Vec2(1, 2)
 

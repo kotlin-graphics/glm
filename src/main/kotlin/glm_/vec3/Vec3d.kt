@@ -12,6 +12,7 @@ import kool.doubleBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetDouble
+import org.lwjgl.system.MemoryUtil.memPutDouble
 import java.awt.Color
 import java.io.InputStream
 import java.nio.*
@@ -162,6 +163,11 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToBuffer {
         return buf
     }
 
+    infix fun to(ptr: Ptr) {
+        memPutDouble(ptr, x)
+        memPutDouble(ptr + Double.BYTES, y)
+        memPutDouble(ptr + Double.BYTES * 2, z)
+    }
 
     // -- Component accesses --
 

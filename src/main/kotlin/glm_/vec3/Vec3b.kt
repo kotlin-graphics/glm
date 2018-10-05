@@ -10,6 +10,7 @@ import glm_.vec4.Vec4t
 import kool.Ptr
 import kool.pos
 import org.lwjgl.system.MemoryUtil.memGetByte
+import org.lwjgl.system.MemoryUtil.memPutByte
 import java.nio.*
 
 /**
@@ -112,6 +113,12 @@ class Vec3b(var ofs: Int, var array: ByteArray) : Vec3t<Byte>(), ToBuffer {
         buf[offset + Byte.BYTES] = y
         buf[offset + Byte.BYTES * 2] = z
         return buf
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutByte(ptr, x)
+        memPutByte(ptr + Byte.BYTES, y)
+        memPutByte(ptr + Byte.BYTES * 2, z)
     }
 
     // -- Component accesses --

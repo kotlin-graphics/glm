@@ -11,6 +11,7 @@ import kool.intBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetInt
+import org.lwjgl.system.MemoryUtil.memPutInt
 import java.nio.*
 
 /**
@@ -138,6 +139,11 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>(), ToBuffer {
         buf[index] = x
         buf[index + 1] = y
         return buf
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutInt(ptr, x)
+        memPutInt(ptr + Int.BYTES, y)
     }
 
     // -- Component accesses --

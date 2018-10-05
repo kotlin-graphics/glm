@@ -11,6 +11,7 @@ import kool.pos
 import kool.shortBufferBig
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetShort
+import org.lwjgl.system.MemoryUtil.memPutShort
 import unsigned.Ushort
 import java.nio.*
 
@@ -156,6 +157,11 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
         buf[index] = x.v
         buf[index + 1] = y.v
         return buf
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutShort(ptr, x.v)
+        memPutShort(ptr + Short.BYTES, y.v)
     }
 
     // -- Component accesses --

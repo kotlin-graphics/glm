@@ -9,6 +9,7 @@ import glm_.vec4.Vec4t
 import kool.Ptr
 import kool.pos
 import org.lwjgl.system.MemoryUtil.memGetByte
+import org.lwjgl.system.MemoryUtil.memPutByte
 import java.nio.*
 
 /**
@@ -101,6 +102,11 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>(), ToBuffer {
                 .put(offset + 1, array[1])
                 .put(offset + 2, array[2])
                 .put(offset + 3, array[3])
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutByte(ptr, x)
+        memPutByte(ptr + Byte.BYTES, y)
     }
 
     // -- Component accesses --

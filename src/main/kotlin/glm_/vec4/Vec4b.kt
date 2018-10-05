@@ -11,6 +11,7 @@ import glm_.vec4.operators.vec4b_operators
 import kool.Ptr
 import kool.pos
 import org.lwjgl.system.MemoryUtil.memGetByte
+import org.lwjgl.system.MemoryUtil.memPutByte
 import java.nio.*
 
 /**
@@ -141,6 +142,12 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>(), ToBuffer {
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
+    infix fun to(ptr: Ptr) {
+        memPutByte(ptr, x)
+        memPutByte(ptr + Byte.BYTES, y)
+        memPutByte(ptr + Byte.BYTES * 2, z)
+        memPutByte(ptr + Byte.BYTES * 3, w)
+    }
 
     // -- Unary arithmetic operators --
 

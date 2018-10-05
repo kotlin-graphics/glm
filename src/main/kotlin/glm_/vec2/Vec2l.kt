@@ -11,6 +11,7 @@ import kool.longBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetLong
+import org.lwjgl.system.MemoryUtil.memPutLong
 import java.nio.*
 
 /**
@@ -135,6 +136,11 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
         buf[index] = x
         buf[index + 1] = y
         return buf
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutLong(ptr, x)
+        memPutLong(ptr + Long.BYTES, y)
     }
 
     // -- Component accesses --

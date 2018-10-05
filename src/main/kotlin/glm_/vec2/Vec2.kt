@@ -10,8 +10,8 @@ import kool.Ptr
 import kool.floatBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
-import org.lwjgl.system.MemoryUtil
 import org.lwjgl.system.MemoryUtil.memGetFloat
+import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.awt.Color
 import java.io.InputStream
 import java.nio.*
@@ -78,9 +78,7 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToBuffer {
 
     constructor(inputStream: InputStream, bigEndian: Boolean = true) : this(inputStream.float(bigEndian), inputStream.float(bigEndian))
 
-    constructor(p: Ptr) : this(memGetFloat(p), memGetFloat(p + Float.BYTES))
-
-    constructor(color: Color) : this (color.red / 255f, color.green / 255f)
+    constructor(color: Color) : this(color.red / 255f, color.green / 255f)
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndian: Boolean = true) {
         if (oneByteOneFloat) {
@@ -158,6 +156,11 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToBuffer {
         buf[offset + 2] = array[2]
         buf[offset + 3] = array[3]
         return buf
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutFloat(ptr, x)
+        memPutFloat(ptr + Float.BYTES, y)
     }
 
     // -- Component accesses --
@@ -484,23 +487,23 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToBuffer {
     infix fun anyGreaterThanEqual(f: Float) = x >= f || y >= f
 
 
-    infix fun <T: Number>allLessThan(v: Vec2t<T>) = x < v.x.f && y < v.y.f
-    infix fun <T: Number>anyLessThan(v: Vec2t<T>) = x < v.x.f || y < v.y.f
+    infix fun <T : Number> allLessThan(v: Vec2t<T>) = x < v.x.f && y < v.y.f
+    infix fun <T : Number> anyLessThan(v: Vec2t<T>) = x < v.x.f || y < v.y.f
 
-    infix fun <T: Number>allLessThanEqual(v: Vec2t<T>) = x <= v.x.f && y <= v.y.f
-    infix fun <T: Number>anyLessThanEqual(v: Vec2t<T>) = x <= v.x.f || y <= v.y.f
+    infix fun <T : Number> allLessThanEqual(v: Vec2t<T>) = x <= v.x.f && y <= v.y.f
+    infix fun <T : Number> anyLessThanEqual(v: Vec2t<T>) = x <= v.x.f || y <= v.y.f
 
-    infix fun <T: Number>allEqual(v: Vec2t<T>) = x == v.x.f && y == v.y.f
-    infix fun <T: Number>anyEqual(v: Vec2t<T>) = x == v.x.f || y == v.y.f
+    infix fun <T : Number> allEqual(v: Vec2t<T>) = x == v.x.f && y == v.y.f
+    infix fun <T : Number> anyEqual(v: Vec2t<T>) = x == v.x.f || y == v.y.f
 
-    infix fun <T: Number>allNotEqual(v: Vec2t<T>) = x != v.x.f && y != v.y.f
-    infix fun <T: Number>anyNotEqual(v: Vec2t<T>) = x != v.x.f || y != v.y.f
+    infix fun <T : Number> allNotEqual(v: Vec2t<T>) = x != v.x.f && y != v.y.f
+    infix fun <T : Number> anyNotEqual(v: Vec2t<T>) = x != v.x.f || y != v.y.f
 
-    infix fun <T: Number>allGreaterThan(v: Vec2t<T>) = x > v.x.f && y > v.y.f
-    infix fun <T: Number>anyGreaterThan(v: Vec2t<T>) = x > v.x.f || y > v.y.f
+    infix fun <T : Number> allGreaterThan(v: Vec2t<T>) = x > v.x.f && y > v.y.f
+    infix fun <T : Number> anyGreaterThan(v: Vec2t<T>) = x > v.x.f || y > v.y.f
 
-    infix fun <T: Number>allGreaterThanEqual(v: Vec2t<T>) = x >= v.x.f && y >= v.y.f
-    infix fun <T: Number>anyGreaterThanEqual(v: Vec2t<T>) = x >= v.x.f || y >= v.y.f
+    infix fun <T : Number> allGreaterThanEqual(v: Vec2t<T>) = x >= v.x.f && y >= v.y.f
+    infix fun <T : Number> anyGreaterThanEqual(v: Vec2t<T>) = x >= v.x.f || y >= v.y.f
 
 
     infix fun dot(b: Vec2) = glm.dot(this, b)
@@ -543,5 +546,5 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToBuffer {
 
     override fun equals(other: Any?) = other is Vec2 && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
-    override fun toString() : String = "Vect2 [$x, $y]"
+    override fun toString(): String = "Vect2 [$x, $y]"
 }
