@@ -1,9 +1,6 @@
 package glm_.quat
 
-import glm_.BYTES
-import glm_.f
-import glm_.float
-import glm_.glm
+import glm_.*
 import glm_.glm.cos
 import glm_.glm.sin
 import glm_.mat3x3.Mat3
@@ -108,10 +105,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     }
 
 
-    companion object : quat_operators, gtcQuaternion {
-        @JvmField
-        val size = 4 * Float.BYTES
-    }
+
 
 
     // -- Unary arithmetic operators --
@@ -208,6 +202,11 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     @JvmOverloads
     fun vectorize(res: Vec4 = Vec4()) = res.put(x, y, z, w)
 
+
+    companion object : quat_operators, gtcQuaternion {
+        @JvmField
+        val size = 4 * Float.BYTES
+    }
 
     override fun toString() = "($w, {$x, $y, $z})"
     override fun equals(other: Any?) = other is Quat && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]

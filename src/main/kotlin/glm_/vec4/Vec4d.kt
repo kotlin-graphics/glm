@@ -19,7 +19,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
+class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>(), ToBuffer {
 
     constructor(x: Double, y: Double, z: Double, w: Double) : this(0, doubleArrayOf(x, y, z, w))
 
@@ -149,14 +149,6 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putDouble(index, x)
-        buf.putDouble(index + Double.BYTES, y)
-        buf.putDouble(index + Double.BYTES * 2, z)
-        buf.putDouble(index + Double.BYTES * 3, w)
-        return buf
-    }
-
     fun toDoubleArray(): DoubleArray = to(DoubleArray(length), 0)
     infix fun to(doubles: DoubleArray): DoubleArray = to(doubles, 0)
     fun to(doubles: DoubleArray, index: Int): DoubleArray {
@@ -164,6 +156,15 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>() {
         return doubles
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putDouble(offset, x)
+        buf.putDouble(offset + Double.BYTES, y)
+        buf.putDouble(offset + Double.BYTES * 2, z)
+        buf.putDouble(offset + Double.BYTES * 3, w)
+        return buf
+    }
+
+    fun toDoubleBufferStack(): DoubleBuffer = to(MemoryStack.stackPush().mallocDouble(length), 0)
     infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
     fun toDoubleBuffer(): DoubleBuffer = to(doubleBufferBig(length), 0)
     infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)

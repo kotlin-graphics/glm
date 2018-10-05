@@ -15,7 +15,7 @@ import java.nio.*
  * Created by GBarbieri on 06.10.2016.
  */
 
-class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>() {
+class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>(), ToBuffer {
 
     constructor(x: Short, y: Short) : this(0, shortArrayOf(x, y))
 
@@ -113,12 +113,6 @@ class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putShort(index, x)
-        buf.putShort(index + Short.BYTES, y)
-        return buf
-    }
-
     fun toShortArray(): ShortArray = to(ShortArray(length), 0)
     infix fun to(shorts: ShortArray): ShortArray = to(shorts, 0)
     fun to(shorts: ShortArray, index: Int): ShortArray {
@@ -126,6 +120,13 @@ class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>() {
         return shorts
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putShort(offset, x)
+        buf.putShort(offset + Short.BYTES, y)
+        return buf
+    }
+
+    fun toShortBufferStack(): ShortBuffer = to(MemoryStack.stackPush().mallocShort(length), 0)
     infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
     fun toShortBuffer(): ShortBuffer = to(shortBufferBig(length), 0)
     infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)

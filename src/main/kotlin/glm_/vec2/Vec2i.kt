@@ -15,7 +15,7 @@ import java.nio.*
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
+class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>(), ToBuffer {
 
     constructor(x: Int, y: Int) : this(0, intArrayOf(x, y))
 
@@ -114,12 +114,6 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putInt(index, x)
-        buf.putInt(index + Int.BYTES, y)
-        return buf
-    }
-
     fun toIntArray(): IntArray = to(IntArray(length), 0)
     infix fun to(ints: IntArray): IntArray = to(ints, 0)
     fun to(ints: IntArray, index: Int): IntArray {
@@ -127,9 +121,17 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
         return ints
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putInt(offset, x)
+        buf.putInt(offset + Int.BYTES, y)
+        return buf
+    }
+
+    fun toIntBufferStack(): IntBuffer = to(MemoryStack.stackPush().mallocInt(length), 0)
     infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(length), 0)
     fun toIntBuffer(): IntBuffer = to(intBufferBig(length), 0)
     infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
+
     fun to(buf: IntBuffer, index: Int): IntBuffer {
         buf[index] = x
         buf[index + 1] = y

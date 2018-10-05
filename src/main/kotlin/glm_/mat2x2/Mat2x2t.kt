@@ -1,10 +1,10 @@
 package glm_.mat2x2
 
-import glm_.MatBuf
+import glm_.ToBuffer
 import glm_.vec2.Vec2t
 
 
-abstract class Mat2x2t<T : Number> : MatBuf {
+abstract class Mat2x2t<T : Number> : ToBuffer {
 
     abstract var a0: T
     abstract var a1: T

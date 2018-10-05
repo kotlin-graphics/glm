@@ -22,6 +22,9 @@ import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
+import kool.doubleBufferBig
+import kool.pos
+import org.lwjgl.system.MemoryStack
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*
@@ -151,7 +154,8 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
             mat4x3[3, 0], mat4x3[3, 1], mat4x3[3, 2], 1)
 
     // TODO others
-    @JvmOverloads constructor(doubles: DoubleArray, transpose: Boolean = false) : this(0,
+    @JvmOverloads
+    constructor(doubles: DoubleArray, transpose: Boolean = false) : this(0,
             if (transpose) doubleArrayOf(
                     doubles[0], doubles[4], doubles[8], doubles[12],
                     doubles[1], doubles[5], doubles[9], doubles[13],
@@ -307,50 +311,50 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
         return doubles
     }
 
-    // TODO others
-    infix fun to(dbb: ByteBuffer): ByteBuffer = to(dbb, 0)
-
-    fun to(dbb: ByteBuffer, offset: Int): ByteBuffer {
-        dbb.putDouble(offset + 0 * Double.BYTES, array[0])
-        dbb.putDouble(offset + 1 * Double.BYTES, array[1])
-        dbb.putDouble(offset + 2 * Double.BYTES, array[2])
-        dbb.putDouble(offset + 3 * Double.BYTES, array[3])
-        dbb.putDouble(offset + 4 * Double.BYTES, array[4])
-        dbb.putDouble(offset + 5 * Double.BYTES, array[5])
-        dbb.putDouble(offset + 6 * Double.BYTES, array[6])
-        dbb.putDouble(offset + 7 * Double.BYTES, array[7])
-        dbb.putDouble(offset + 8 * Double.BYTES, array[8])
-        dbb.putDouble(offset + 9 * Double.BYTES, array[9])
-        dbb.putDouble(offset + 10 * Double.BYTES, array[10])
-        dbb.putDouble(offset + 11 * Double.BYTES, array[11])
-        dbb.putDouble(offset + 12 * Double.BYTES, array[12])
-        dbb.putDouble(offset + 13 * Double.BYTES, array[13])
-        dbb.putDouble(offset + 14 * Double.BYTES, array[14])
-        dbb.putDouble(offset + 15 * Double.BYTES, array[15])
-        return dbb
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        return buf
+                .putDouble(offset + 0 * Double.BYTES, array[0])
+                .putDouble(offset + 1 * Double.BYTES, array[1])
+                .putDouble(offset + 2 * Double.BYTES, array[2])
+                .putDouble(offset + 3 * Double.BYTES, array[3])
+                .putDouble(offset + 4 * Double.BYTES, array[4])
+                .putDouble(offset + 5 * Double.BYTES, array[5])
+                .putDouble(offset + 6 * Double.BYTES, array[6])
+                .putDouble(offset + 7 * Double.BYTES, array[7])
+                .putDouble(offset + 8 * Double.BYTES, array[8])
+                .putDouble(offset + 9 * Double.BYTES, array[9])
+                .putDouble(offset + 10 * Double.BYTES, array[10])
+                .putDouble(offset + 11 * Double.BYTES, array[11])
+                .putDouble(offset + 12 * Double.BYTES, array[12])
+                .putDouble(offset + 13 * Double.BYTES, array[13])
+                .putDouble(offset + 14 * Double.BYTES, array[14])
+                .putDouble(offset + 15 * Double.BYTES, array[15])
     }
 
-    // TODO others
-    infix fun to(dfb: DoubleBuffer) = to(dfb, 0)
 
-    fun to(dfb: DoubleBuffer, offset: Int): DoubleBuffer {
-        dfb[offset + 0] = array[0]
-        dfb[offset + 1] = array[1]
-        dfb[offset + 2] = array[2]
-        dfb[offset + 3] = array[3]
-        dfb[offset + 4] = array[4]
-        dfb[offset + 5] = array[5]
-        dfb[offset + 6] = array[6]
-        dfb[offset + 7] = array[7]
-        dfb[offset + 8] = array[8]
-        dfb[offset + 9] = array[9]
-        dfb[offset + 10] = array[10]
-        dfb[offset + 11] = array[11]
-        dfb[offset + 12] = array[12]
-        dfb[offset + 13] = array[13]
-        dfb[offset + 14] = array[14]
-        dfb[offset + 15] = array[15]
-        return dfb
+    fun toDoubleBufferStack(): DoubleBuffer = to(MemoryStack.stackGet().mallocDouble(length), 0)
+    infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
+    fun toDoubleBuffer(): DoubleBuffer = to(doubleBufferBig(length), 0)
+    infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
+
+    fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
+        buf[offset + 0] = array[0]
+        buf[offset + 1] = array[1]
+        buf[offset + 2] = array[2]
+        buf[offset + 3] = array[3]
+        buf[offset + 4] = array[4]
+        buf[offset + 5] = array[5]
+        buf[offset + 6] = array[6]
+        buf[offset + 7] = array[7]
+        buf[offset + 8] = array[8]
+        buf[offset + 9] = array[9]
+        buf[offset + 10] = array[10]
+        buf[offset + 11] = array[11]
+        buf[offset + 12] = array[12]
+        buf[offset + 13] = array[13]
+        buf[offset + 14] = array[14]
+        buf[offset + 15] = array[15]
+        return buf
     }
 
     infix fun to(res: QuatD) = glm.quatD_cast(this, res)

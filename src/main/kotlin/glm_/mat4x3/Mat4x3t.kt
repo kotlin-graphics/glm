@@ -4,9 +4,10 @@ package glm_.mat4x3
  * Created by GBarbieri on 26.04.2017.
  */
 
+import glm_.ToBuffer
 import glm_.vec3.Vec3t
 
-abstract class Mat4x3t<T : Number> {
+abstract class Mat4x3t<T : Number> : ToBuffer {
 
     abstract var a0: T
     abstract var a1: T
@@ -115,9 +116,6 @@ abstract class Mat4x3t<T : Number> {
         @JvmName("v32") set(value) {
             d2 = value
         }
-
-
-    abstract fun size(): Int
 
     companion object {
         const val length = 4 * 3

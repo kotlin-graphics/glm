@@ -16,7 +16,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>() {
+class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>(), ToBuffer {
 
     constructor(x: Long, y: Long, z: Long) : this(0, longArrayOf(x, y, z))
 
@@ -129,13 +129,6 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putLong(index, x)
-        buf.putLong(index + Long.BYTES, y)
-        buf.putLong(index + Long.BYTES * 2, z)
-        return buf
-    }
-
     fun toLongArray(): LongArray = to(LongArray(length), 0)
     infix fun to(longs: LongArray): LongArray = to(longs, 0)
     fun to(longs: LongArray, index: Int): LongArray {
@@ -143,6 +136,14 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>() {
         return longs
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putLong(offset, x)
+        buf.putLong(offset + Long.BYTES, y)
+        buf.putLong(offset + Long.BYTES * 2, z)
+        return buf
+    }
+
+    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackPush().mallocLong(length), 0)
     infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(length), 0)
     fun toLongBuffer(): LongBuffer = to(longBufferBig(length), 0)
     infix fun to(buf: LongBuffer): LongBuffer = to(buf, buf.pos)

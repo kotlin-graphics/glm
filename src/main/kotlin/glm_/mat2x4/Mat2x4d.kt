@@ -6,6 +6,7 @@ import glm_.set
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
 import kool.doubleBufferBig
+import kool.pos
 import org.lwjgl.system.MemoryStack
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
@@ -44,26 +45,23 @@ class Mat2x4d(dummy: Int, var array: DoubleArray) : Mat2x4t<Double>() {
     }
 
 
-    infix fun to(dfb: DoubleBuffer) = to(dfb, 0)
-    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer = buf
-            .putDouble(offset + 0 * Double.BYTES, array[0])
-            .putDouble(offset + 1 * Double.BYTES, array[1])
-            .putDouble(offset + 2 * Double.BYTES, array[2])
-            .putDouble(offset + 3 * Double.BYTES, array[3])
-            .putDouble(offset + 4 * Double.BYTES, array[4])
-            .putDouble(offset + 5 * Double.BYTES, array[5])
-            .putDouble(offset + 6 * Double.BYTES, array[6])
-            .putDouble(offset + 7 * Double.BYTES, array[7])
-            .putDouble(offset + 8 * Double.BYTES, array[8])
-            .putDouble(offset + 9 * Double.BYTES, array[9])
-            .putDouble(offset + 10 * Double.BYTES, array[10])
-            .putDouble(offset + 11 * Double.BYTES, array[11])
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        return buf
+                .putDouble(offset + 0 * Double.BYTES, array[0])
+                .putDouble(offset + 1 * Double.BYTES, array[1])
+                .putDouble(offset + 2 * Double.BYTES, array[2])
+                .putDouble(offset + 3 * Double.BYTES, array[3])
+                .putDouble(offset + 4 * Double.BYTES, array[4])
+                .putDouble(offset + 5 * Double.BYTES, array[5])
+                .putDouble(offset + 6 * Double.BYTES, array[6])
+                .putDouble(offset + 7 * Double.BYTES, array[7])
+    }
 
 
     fun toDoubleBufferStack(): DoubleBuffer = to(MemoryStack.stackGet().mallocDouble(length), 0)
     infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
     fun toDoubleBuffer(): DoubleBuffer = to(doubleBufferBig(length), 0)
-    infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, 0)
+    infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
 
     fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
         buf[offset + 0] = array[0]
@@ -74,10 +72,6 @@ class Mat2x4d(dummy: Int, var array: DoubleArray) : Mat2x4t<Double>() {
         buf[offset + 5] = array[5]
         buf[offset + 6] = array[6]
         buf[offset + 7] = array[7]
-        buf[offset + 8] = array[8]
-        buf[offset + 9] = array[9]
-        buf[offset + 10] = array[10]
-        buf[offset + 11] = array[11]
         return buf
     }
 

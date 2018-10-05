@@ -18,6 +18,7 @@ import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import kool.bufferBig
 import kool.floatBufferBig
+import kool.pos
 import org.lwjgl.system.MemoryStack
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
@@ -218,7 +219,6 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
 
     // TODO inc
 
-
     fun toFloatArray(): FloatArray = to(FloatArray(length), 0)
     infix fun to(floats: FloatArray): FloatArray = to(floats, 0)
     fun to(floats: FloatArray, index: Int): FloatArray {
@@ -226,25 +226,18 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
         return floats
     }
 
-
-    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.malloc(size), 0)
-    fun toBuffer(): ByteBuffer = to(bufferBig(size), 0)
-    infix fun to(buf: ByteBuffer) = to(buf, 0)
-
-    fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
-        buf
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        return buf
                 .putFloat(offset + 0 * Float.BYTES, array[0])
                 .putFloat(offset + 1 * Float.BYTES, array[1])
                 .putFloat(offset + 2 * Float.BYTES, array[2])
                 .putFloat(offset + 3 * Float.BYTES, array[3])
-        return buf
     }
-
 
     fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
     infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
     fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
-    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, 0)
+    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
 
     fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
         buf[offset + 0] = array[0]

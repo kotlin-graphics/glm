@@ -24,6 +24,7 @@ import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
 import kool.bufferBig
 import kool.floatBufferBig
+import kool.pos
 import org.lwjgl.system.MemoryStack
 import java.io.InputStream
 import java.nio.ByteBuffer
@@ -378,11 +379,7 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
         return floats
     }
 
-    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.calloc(size), 0)
-    fun toBuffer(): ByteBuffer = to(bufferBig(size), 0)
-    infix fun to(buf: ByteBuffer): ByteBuffer = to(buf, 0)
-
-    fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
         return buf
                 .putFloat(offset + 0 * Float.BYTES, array[0])
                 .putFloat(offset + 1 * Float.BYTES, array[1])
@@ -402,9 +399,11 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
                 .putFloat(offset + 15 * Float.BYTES, array[15])
     }
 
-    fun toFloatBuffer(stack: MemoryStack) = to(stack.mallocFloat(length), 0)
-    fun toFloatBuffer() = to(floatBufferBig(length), 0)
-    infix fun to(buf: FloatBuffer) = to(buf, 0)
+
+    fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
+    infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
+    fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
+    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
 
     fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
         buf[offset + 0] = array[0]

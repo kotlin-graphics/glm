@@ -14,7 +14,7 @@ import java.nio.*
  * Created by elect on 07/10/16.
  */
 
-class Vec2ub(var ofs: Int, var array: ByteArray) : Vec2t<Ubyte>() {
+class Vec2ub(var ofs: Int, var array: ByteArray) : Vec2t<Ubyte>(), ToBuffer {
 
     constructor(x: Ubyte, y: Ubyte) : this(0, byteArrayOf(x.v, y.v))
     constructor(x: Byte, y: Byte) : this(0, byteArrayOf(x, y))
@@ -113,10 +113,12 @@ class Vec2ub(var ofs: Int, var array: ByteArray) : Vec2t<Ubyte>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf[index] = x.v
-        buf[index + Byte.BYTES] = y.v
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
         return buf
+                .put(offset + 0, array[0])
+                .put(offset + 1, array[1])
+                .put(offset + 2, array[2])
+                .put(offset + 3, array[3])
     }
 
     // -- Component accesses --

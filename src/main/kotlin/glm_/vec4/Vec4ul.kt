@@ -18,7 +18,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4ul(var ofs: Int, var array: LongArray) : Vec4t<Ulong>() {
+class Vec4ul(var ofs: Int, var array: LongArray) : Vec4t<Ulong>(), ToBuffer {
 
     constructor(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : this(0, longArrayOf(x.v, y.v, z.v, w.v))
     constructor(x: Long, y: Long, z: Long, w: Long) : this(0, longArrayOf(x, y, z, w))
@@ -173,14 +173,6 @@ class Vec4ul(var ofs: Int, var array: LongArray) : Vec4t<Ulong>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putLong(index, x.v)
-        buf.putLong(index + Ulong.BYTES, y.v)
-        buf.putLong(index + Ulong.BYTES * 2, z.v)
-        buf.putLong(index + Ulong.BYTES * 3, w.v)
-        return buf
-    }
-
     fun toLongArray(): LongArray = to(LongArray(length), 0)
     infix fun to(longs: LongArray): LongArray = to(longs, 0)
     fun to(longs: LongArray, index: Int): LongArray {
@@ -188,6 +180,15 @@ class Vec4ul(var ofs: Int, var array: LongArray) : Vec4t<Ulong>() {
         return longs
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putLong(offset, x.v)
+        buf.putLong(offset + Ulong.BYTES, y.v)
+        buf.putLong(offset + Ulong.BYTES * 2, z.v)
+        buf.putLong(offset + Ulong.BYTES * 3, w.v)
+        return buf
+    }
+
+    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackPush().mallocLong(length), 0)
     infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(length), 0)
     fun toLongBuffer(): LongBuffer = to(longBufferBig(length), 0)
     infix fun to(longs: LongBuffer): LongBuffer = to(longs, longs.pos)

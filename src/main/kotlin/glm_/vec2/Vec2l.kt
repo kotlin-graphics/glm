@@ -15,7 +15,7 @@ import java.nio.*
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>() {
+class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
 
     constructor(x: Long, y: Long) : this(0, longArrayOf(x, y))
 
@@ -113,12 +113,6 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putLong(index, x)
-        buf.putLong(index + Long.BYTES, y)
-        return buf
-    }
-
     fun toLongArray(): LongArray = to(LongArray(length), 0)
     infix fun to(longs: LongArray): LongArray = to(longs, 0)
     fun to(longs: LongArray, index: Int): LongArray {
@@ -126,6 +120,13 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>() {
         return longs
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putLong(offset, x)
+        buf.putLong(offset + Long.BYTES, y)
+        return buf
+    }
+
+    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackPush().mallocLong(length), 0)
     infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(length), 0)
     fun toLongBuffer(): LongBuffer = to(longBufferBig(length), 0)
     infix fun to(buf: LongBuffer): LongBuffer = to(buf, buf.pos)

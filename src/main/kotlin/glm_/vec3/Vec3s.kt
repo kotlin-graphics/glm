@@ -16,7 +16,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec3s(var ofs: Int, var array: ShortArray) : Vec3t<Short>() {
+class Vec3s(var ofs: Int, var array: ShortArray) : Vec3t<Short>(), ToBuffer {
 
     constructor(x: Short, y: Short, z: Short) : this(0, shortArrayOf(x, y, z))
 
@@ -129,13 +129,6 @@ class Vec3s(var ofs: Int, var array: ShortArray) : Vec3t<Short>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putShort(index, x)
-        buf.putShort(index + Short.BYTES, y)
-        buf.putShort(index + Short.BYTES * 2, z)
-        return buf
-    }
-
     fun toShortArray(): ShortArray = to(ShortArray(length), 0)
     infix fun to(shorts: ShortArray): ShortArray = to(shorts, 0)
     fun to(shorts: ShortArray, index: Int): ShortArray {
@@ -143,6 +136,14 @@ class Vec3s(var ofs: Int, var array: ShortArray) : Vec3t<Short>() {
         return shorts
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putShort(offset, x)
+        buf.putShort(offset + Short.BYTES, y)
+        buf.putShort(offset + Short.BYTES * 2, z)
+        return buf
+    }
+
+    fun toShortBufferStack(): ShortBuffer = to(MemoryStack.stackPush().mallocShort(length), 0)
     infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
     fun toShortBuffer(): ShortBuffer = to(shortBufferBig(length), 0)
     infix fun to(shorts: ShortBuffer): ShortBuffer = to(shorts, shorts.pos)

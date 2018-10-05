@@ -15,7 +15,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>() {
+class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>(), ToBuffer {
 
     constructor(x: Ubyte, y: Ubyte, z: Ubyte) : this(0, byteArrayOf(x.v, y.v, z.v))
     constructor(x: Byte, y: Byte, z: Byte) : this(0, byteArrayOf(x, y, z))
@@ -129,10 +129,10 @@ class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf[index] = x.v
-        buf[index + Byte.BYTES] = y.v
-        buf[index + Byte.BYTES * 2] = z.v
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf[offset] = x.v
+        buf[offset + Byte.BYTES] = y.v
+        buf[offset + Byte.BYTES * 2] = z.v
         return buf
     }
 

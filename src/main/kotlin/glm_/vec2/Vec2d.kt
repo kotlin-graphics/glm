@@ -17,7 +17,7 @@ import java.nio.*
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>() {
+class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToBuffer {
 
     constructor(x: Double, y: Double) : this(0, doubleArrayOf(x, y))
 
@@ -118,12 +118,6 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putDouble(index, x)
-        buf.putDouble(index + Double.BYTES, y)
-        return buf
-    }
-
     fun toDoubleArray(): DoubleArray = to(DoubleArray(length), 0)
     infix fun to(doubles: DoubleArray): DoubleArray = to(doubles, 0)
     fun to(doubles: DoubleArray, index: Int): DoubleArray {
@@ -131,9 +125,17 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>() {
         return doubles
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putDouble(offset, x)
+        buf.putDouble(offset + Double.BYTES, y)
+        return buf
+    }
+
+    fun toDoubleBufferStack(): DoubleBuffer = to(MemoryStack.stackGet().mallocDouble(length), 0)
     infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
     fun toDoubleBuffer(): DoubleBuffer = to(doubleBufferBig(length), 0)
     infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
+
     fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
         buf[index] = x
         buf[index + 1] = y

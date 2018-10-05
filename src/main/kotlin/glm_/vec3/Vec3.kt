@@ -18,7 +18,7 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
+class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToBuffer {
 
     constructor(x: Float, y: Float, z: Float) : this(0, floatArrayOf(x, y, z))
 
@@ -136,13 +136,6 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putFloat(index, x)
-        buf.putFloat(index + Float.BYTES, y)
-        buf.putFloat(index + Float.BYTES * 2, z)
-        return buf
-    }
-
     fun toFloatArray(): FloatArray = to(FloatArray(length), 0)
     infix fun to(floats: FloatArray): FloatArray = to(floats, 0)
     fun to(floats: FloatArray, index: Int): FloatArray {
@@ -150,6 +143,14 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
         return floats
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putFloat(offset, x)
+        buf.putFloat(offset + Float.BYTES, y)
+        buf.putFloat(offset + Float.BYTES * 2, z)
+        return buf
+    }
+
+    fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackPush().mallocFloat(length), 0)
     infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
     fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
     infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)

@@ -17,7 +17,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>() {
+class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
 
     constructor(x: Long, y: Long, z: Long, w: Long) : this(0, longArrayOf(x, y, z, w))
 
@@ -143,14 +143,6 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putLong(index, x)
-        buf.putLong(index + Long.BYTES, y)
-        buf.putLong(index + Long.BYTES * 2, z)
-        buf.putLong(index + Long.BYTES * 3, w)
-        return buf
-    }
-
     fun toLongArray(): LongArray = to(LongArray(length), 0)
     infix fun to(longs: LongArray): LongArray = to(longs, 0)
     fun to(longs: LongArray, index: Int): LongArray {
@@ -158,6 +150,15 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>() {
         return longs
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putLong(offset, x)
+        buf.putLong(offset + Long.BYTES, y)
+        buf.putLong(offset + Long.BYTES * 2, z)
+        buf.putLong(offset + Long.BYTES * 3, w)
+        return buf
+    }
+
+    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackPush().mallocLong(length), 0)
     infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(length), 0)
     fun toLongBuffer(): LongBuffer = to(longBufferBig(length), 0)
     infix fun to(buf: LongBuffer): LongBuffer = to(buf, buf.pos)

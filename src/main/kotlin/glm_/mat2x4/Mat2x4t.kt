@@ -4,10 +4,10 @@ package glm_.mat2x4
  * Created by GBarbieri on 26.04.2017.
  */
 
-import glm_.MatBuf
+import glm_.ToBuffer
 import glm_.vec4.Vec4t
 
-abstract class Mat2x4t<T : Number> : MatBuf {
+abstract class Mat2x4t<T : Number> : ToBuffer {
 
     abstract var a0: T
     abstract var a1: T

@@ -4,11 +4,10 @@ package glm_.mat3x2
  * Created by GBarbieri on 26.04.2017.
  */
 
-import glm_.MatBuf
+import glm_.ToBuffer
 import glm_.vec2.Vec2t
-import glm_.vec3.Vec3t
 
-abstract class Mat3x2t<T : Number> : MatBuf {
+abstract class Mat3x2t<T : Number> : ToBuffer {
 
     abstract var a0: T
     abstract var a1: T

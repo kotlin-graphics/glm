@@ -7,13 +7,14 @@ import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.pos
+import org.lwjgl.system.MemoryStack
 import java.nio.*
 
 /**
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
+class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>(), ToBuffer {
 
     constructor(x: Byte, y: Byte) : this(0, byteArrayOf(x, y))
 
@@ -93,10 +94,12 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf[index] = x
-        buf[index + Byte.BYTES] = y
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
         return buf
+                .put(offset + 0, array[0])
+                .put(offset + 1, array[1])
+                .put(offset + 2, array[2])
+                .put(offset + 3, array[3])
     }
 
     // -- Component accesses --

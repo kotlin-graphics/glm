@@ -1,9 +1,9 @@
 package  glm_.mat3x3
 
-import glm_.MatBuf
+import glm_.ToBuffer
 import glm_.vec3.Vec3t
 
-abstract class Mat3x3t<T : Number> : MatBuf {
+abstract class Mat3x3t<T : Number> : ToBuffer {
 
     abstract var a0: T
     abstract var a1: T

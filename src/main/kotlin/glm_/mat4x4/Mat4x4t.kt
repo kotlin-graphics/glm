@@ -1,8 +1,9 @@
 package  glm_.mat4x4
 
+import glm_.ToBuffer
 import  glm_.vec4.Vec4t
 
-abstract class Mat4x4t<T : Number> {
+abstract class Mat4x4t<T : Number> : ToBuffer {
 
     abstract var a0: T
     abstract var a1: T
@@ -141,8 +142,6 @@ abstract class Mat4x4t<T : Number> {
         }
 
     abstract val isIdentity: Boolean
-
-    abstract fun size(): Int
 
     companion object {
         const val length = 4 * 4

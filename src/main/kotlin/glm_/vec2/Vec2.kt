@@ -17,7 +17,7 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>() {
+class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToBuffer {
 
     constructor(x: Float, y: Float) : this(0, floatArrayOf(x, y))
 
@@ -127,25 +127,31 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putFloat(index, x)
-        buf.putFloat(index + Float.BYTES, y)
-        return buf
-    }
-
     fun toFloatArray(): FloatArray = to(FloatArray(length), 0)
     infix fun to(floats: FloatArray): FloatArray = to(floats, 0)
     fun to(floats: FloatArray, index: Int): FloatArray {
-        System.arraycopy(array, ofs, floats, index, length)
+        System.arraycopy(array, 0, floats, index, length)
         return floats
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        return buf
+                .putFloat(offset + 0 * Float.BYTES, array[0])
+                .putFloat(offset + 1 * Float.BYTES, array[1])
+                .putFloat(offset + 2 * Float.BYTES, array[2])
+                .putFloat(offset + 3 * Float.BYTES, array[3])
+    }
+
+    fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
     infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
     fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
     infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
-    fun to(buf: FloatBuffer, index: Int): FloatBuffer {
-        buf[index] = x
-        buf[index + 1] = y
+
+    fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
+        buf[offset + 0] = array[0]
+        buf[offset + 1] = array[1]
+        buf[offset + 2] = array[2]
+        buf[offset + 3] = array[3]
         return buf
     }
 

@@ -17,7 +17,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>() {
+class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>(), ToBuffer {
 
     constructor(x: Int, y: Int, z: Int, w: Int) : this(0, intArrayOf(x, y, z, w))
 
@@ -143,14 +143,6 @@ class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putInt(index, x)
-        buf.putInt(index + Int.BYTES, y)
-        buf.putInt(index + Int.BYTES * 2, z)
-        buf.putInt(index + Int.BYTES * 3, w)
-        return buf
-    }
-
     fun toIntArray(): IntArray = to(IntArray(length), 0)
     infix fun to(ints: IntArray): IntArray = to(ints, 0)
     fun to(ints: IntArray, index: Int): IntArray {
@@ -158,6 +150,15 @@ class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>() {
         return ints
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putInt(offset, x)
+        buf.putInt(offset + Int.BYTES, y)
+        buf.putInt(offset + Int.BYTES * 2, z)
+        buf.putInt(offset + Int.BYTES * 3, w)
+        return buf
+    }
+
+    fun toIntBufferStack(): IntBuffer = to(MemoryStack.stackPush().mallocInt(length), 0)
     infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(length), 0)
     fun toIntBuffer(): IntBuffer = to(intBufferBig(length), 0)
     infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
