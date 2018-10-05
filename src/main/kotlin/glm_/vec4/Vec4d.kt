@@ -8,9 +8,11 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4d_operators
+import kool.Ptr
 import kool.doubleBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetDouble
 import java.awt.Color
 import java.io.InputStream
 import java.nio.*
@@ -400,6 +402,9 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>(), ToBuffer {
         const val length = Vec4t.length
         @JvmField
         val size = length * Double.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec4d(memGetDouble(ptr), memGetDouble(ptr + Double.BYTES), memGetDouble(ptr + Double.BYTES * 2), memGetDouble(ptr + Double.BYTES * 3))
     }
 
     override fun size() = size

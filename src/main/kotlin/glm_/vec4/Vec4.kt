@@ -8,9 +8,11 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4_operators
+import kool.Ptr
 import kool.floatBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetFloat
 import java.awt.Color
 import java.io.InputStream
 import java.nio.*
@@ -448,6 +450,9 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToBuffer {
         const val length = Vec4t.length
         @JvmField
         val size = length * Float.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec4(memGetFloat(ptr), memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 3))
 
         // TODO other? d?
         fun fromColor(n: Number) = Vec4(n.f / 255, n.f / 255, n.f / 255f, n.f / 255)

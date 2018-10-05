@@ -6,9 +6,11 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.Ptr
 import kool.doubleBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetDouble
 import java.awt.Color
 import java.io.InputStream
 import java.nio.*
@@ -400,6 +402,9 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToBuffer {
         const val length = Vec2t.length
         @JvmField
         val size = length * Double.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec2d(memGetDouble(ptr), memGetDouble(ptr + Double.BYTES))
     }
 
     override fun size() = size

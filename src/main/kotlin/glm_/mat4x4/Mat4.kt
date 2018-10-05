@@ -22,10 +22,11 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
-import kool.bufferBig
+import kool.Ptr
 import kool.floatBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetFloat
 import java.io.InputStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
@@ -731,6 +732,22 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
         const val length = Mat4x4t.length
         @JvmField
         val size = length * Float.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr, transpose: Boolean = false): Mat4 {
+            return when {
+                transpose -> Mat4(
+                        memGetFloat(ptr), memGetFloat(ptr + Float.BYTES * 4), memGetFloat(ptr + Float.BYTES * 8), memGetFloat(ptr + Float.BYTES * 12),
+                        memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 5), memGetFloat(ptr + Float.BYTES * 9), memGetFloat(ptr + Float.BYTES * 13),
+                        memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 6), memGetFloat(ptr + Float.BYTES * 10), memGetFloat(ptr + Float.BYTES * 14),
+                        memGetFloat(ptr + Float.BYTES * 3), memGetFloat(ptr + Float.BYTES * 7), memGetFloat(ptr + Float.BYTES * 11), memGetFloat(ptr + Float.BYTES * 15))
+                else -> Mat4(
+                        memGetFloat(ptr), memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 3),
+                        memGetFloat(ptr + Float.BYTES * 4), memGetFloat(ptr + Float.BYTES * 5), memGetFloat(ptr + Float.BYTES * 6), memGetFloat(ptr + Float.BYTES * 7),
+                        memGetFloat(ptr + Float.BYTES * 8), memGetFloat(ptr + Float.BYTES * 9), memGetFloat(ptr + Float.BYTES * 10), memGetFloat(ptr + Float.BYTES * 11),
+                        memGetFloat(ptr + Float.BYTES * 12), memGetFloat(ptr + Float.BYTES * 13), memGetFloat(ptr + Float.BYTES * 14), memGetFloat(ptr + Float.BYTES * 15))
+            }
+        }
     }
 
     override fun size() = size

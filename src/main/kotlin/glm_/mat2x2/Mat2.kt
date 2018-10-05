@@ -16,10 +16,11 @@ import glm_.vec2.Vec2
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
-import kool.bufferBig
+import kool.Ptr
 import kool.floatBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetFloat
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.util.*
@@ -352,6 +353,18 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
         const val length = Mat2x2t.length
         @JvmField
         val size = length * Float.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr, transpose: Boolean = false): Mat2 {
+            return when {
+                transpose -> Mat2(
+                        memGetFloat(ptr), memGetFloat(ptr + Float.BYTES * 2),
+                        memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 3))
+                else -> Mat2(
+                        memGetFloat(ptr), memGetFloat(ptr + Float.BYTES),
+                        memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 3))
+            }
+        }
     }
 
     override fun size() = size

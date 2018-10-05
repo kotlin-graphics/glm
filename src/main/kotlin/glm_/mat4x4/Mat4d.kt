@@ -22,9 +22,11 @@ import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
+import kool.Ptr
 import kool.doubleBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetDouble
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*
@@ -658,6 +660,22 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
         const val length = Mat4x4t.length
         @JvmField
         val size = length * Double.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr, transpose: Boolean = false): Mat4 {
+            return when {
+                transpose -> Mat4(
+                        memGetDouble(ptr), memGetDouble(ptr + Double.BYTES * 4), memGetDouble(ptr + Double.BYTES * 8), memGetDouble(ptr + Double.BYTES * 12),
+                        memGetDouble(ptr + Double.BYTES), memGetDouble(ptr + Double.BYTES * 5), memGetDouble(ptr + Double.BYTES * 9), memGetDouble(ptr + Double.BYTES * 13),
+                        memGetDouble(ptr + Double.BYTES * 2), memGetDouble(ptr + Double.BYTES * 6), memGetDouble(ptr + Double.BYTES * 10), memGetDouble(ptr + Double.BYTES * 14),
+                        memGetDouble(ptr + Double.BYTES * 3), memGetDouble(ptr + Double.BYTES * 7), memGetDouble(ptr + Double.BYTES * 11), memGetDouble(ptr + Double.BYTES * 15))
+                else -> Mat4(
+                        memGetDouble(ptr), memGetDouble(ptr + Double.BYTES), memGetDouble(ptr + Double.BYTES * 2), memGetDouble(ptr + Double.BYTES * 3),
+                        memGetDouble(ptr + Double.BYTES * 4), memGetDouble(ptr + Double.BYTES * 5), memGetDouble(ptr + Double.BYTES * 6), memGetDouble(ptr + Double.BYTES * 7),
+                        memGetDouble(ptr + Double.BYTES * 8), memGetDouble(ptr + Double.BYTES * 9), memGetDouble(ptr + Double.BYTES * 10), memGetDouble(ptr + Double.BYTES * 11),
+                        memGetDouble(ptr + Double.BYTES * 12), memGetDouble(ptr + Double.BYTES * 13), memGetDouble(ptr + Double.BYTES * 14), memGetDouble(ptr + Double.BYTES * 15))
+            }
+        }
     }
 
     override fun size() = size

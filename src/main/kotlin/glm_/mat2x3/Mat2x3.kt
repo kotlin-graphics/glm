@@ -5,9 +5,11 @@ import glm_.f
 import glm_.set
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
+import kool.Ptr
 import kool.floatBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetFloat
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.util.*
@@ -95,6 +97,18 @@ class Mat2x3(dummy: Int, var array: FloatArray) : Mat2x3t<Float>() {
         const val length = Mat2x3t.length
         @JvmField
         val size = length * Float.BYTES
+
+//        @JvmStatic TODO constructors first
+//        fun fromPointer(ptr: Ptr, transpose: Boolean = false): Mat2x3 {
+//            return when {
+//                transpose -> Mat2x3(
+//                        memGetFloat(ptr), memGetFloat(ptr + Float.BYTES * 2),
+//                        memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 3))
+//                else -> Mat2x3(
+//                        memGetFloat(ptr), memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 2),
+//                        memGetFloat(ptr + Float.BYTES * 3), memGetFloat(ptr + Float.BYTES * 4), memGetFloat(ptr + Float.BYTES * 5))
+//            }
+//        }
     }
 
     override fun size() = size

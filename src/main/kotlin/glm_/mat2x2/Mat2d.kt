@@ -16,10 +16,12 @@ import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
+import kool.Ptr
 import kool.bufferBig
 import kool.doubleBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetDouble
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*
@@ -353,6 +355,18 @@ class Mat2d(dummy: Int, var array: DoubleArray) : Mat2x2t<Double>() {
         const val length = Mat2x2t.length
         @JvmField
         val size = length * Double.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr, transpose: Boolean = false): Mat2d {
+            return when {
+                transpose -> Mat2d(
+                        memGetDouble(ptr), memGetDouble(ptr + Double.BYTES * 2),
+                        memGetDouble(ptr + Double.BYTES), memGetDouble(ptr + Double.BYTES * 3))
+                else -> Mat2d(
+                        memGetDouble(ptr), memGetDouble(ptr + Double.BYTES),
+                        memGetDouble(ptr + Double.BYTES * 2), memGetDouble(ptr + Double.BYTES * 3))
+            }
+        }
     }
 
     override fun size() = size

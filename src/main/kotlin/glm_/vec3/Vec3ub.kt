@@ -7,7 +7,9 @@ import glm_.vec2.Vec2ub
 import glm_.vec3.operators.vec3ub_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.Ptr
 import kool.pos
+import org.lwjgl.system.MemoryUtil.memGetByte
 import unsigned.Ubyte
 import java.nio.*
 
@@ -629,6 +631,9 @@ class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>(), ToBuffer {
         const val length = Vec3t.length
         @JvmField
         val size = length * Ubyte.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec3ub(memGetByte(ptr), memGetByte(ptr + Byte.BYTES), memGetByte(ptr + Byte.BYTES * 2))
     }
 
     override fun size() = size

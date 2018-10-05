@@ -8,9 +8,11 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3l
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4l_operators
+import kool.Ptr
 import kool.longBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetLong
 import java.nio.*
 
 /**
@@ -529,6 +531,9 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
         const val length = Vec4t.length
         @JvmField
         val size = length * Long.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec4l(memGetLong(ptr), memGetLong(ptr + Long.BYTES), memGetLong(ptr + Long.BYTES * 2), memGetLong(ptr + Long.BYTES * 3))
     }
 
     override fun size() = Vec4l.size

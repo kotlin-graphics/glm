@@ -6,9 +6,11 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.Ptr
 import kool.longBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetLong
 import java.nio.*
 
 /**
@@ -71,7 +73,6 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
 
     constructor(s: Number) : this(s, s)
     constructor(x: Number, y: Number) : this(x.L, y.L)
-
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneLong: Boolean = false, bigEndian: Boolean = true) {
         x = if (oneByteOneLong) bytes[index].L else bytes.getLong(index, bigEndian)
@@ -495,6 +496,9 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
         const val length = Vec2t.length
         @JvmField
         val size = length * Long.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec2l(memGetLong(ptr), memGetLong(ptr + Long.BYTES))
     }
 
     override fun size() = size

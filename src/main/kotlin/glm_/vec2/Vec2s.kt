@@ -6,9 +6,11 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.Ptr
 import kool.pos
 import kool.shortBufferBig
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetShort
 import java.nio.*
 
 /**
@@ -596,6 +598,9 @@ class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>(), ToBuffer {
         const val length = Vec2t.length
         @JvmField
         val size = length * Short.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec2s(memGetShort(ptr), memGetShort(ptr + Short.BYTES))
     }
 
     override fun size() = size

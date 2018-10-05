@@ -6,9 +6,12 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.Ptr
 import kool.floatBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil
+import org.lwjgl.system.MemoryUtil.memGetFloat
 import java.awt.Color
 import java.io.InputStream
 import java.nio.*
@@ -74,6 +77,8 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToBuffer {
     constructor(x: Number, y: Number) : this(x.f, y.f)
 
     constructor(inputStream: InputStream, bigEndian: Boolean = true) : this(inputStream.float(bigEndian), inputStream.float(bigEndian))
+
+    constructor(p: Ptr) : this(memGetFloat(p), memGetFloat(p + Float.BYTES))
 
     constructor(color: Color) : this (color.red / 255f, color.green / 255f)
 
@@ -529,6 +534,9 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToBuffer {
         const val length = Vec2t.length
         @JvmField
         val size = length * Float.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec2(memGetFloat(ptr), memGetFloat(ptr + Float.BYTES))
     }
 
     override fun size() = size
