@@ -37,8 +37,8 @@ interface random {
      *  @param min Minimum value included in the sampling
      *  @param max Maximum value included in the sampling */
     fun linearRand(min: Int, max: Int): Int {
-        var d = ThreadLocalRandom.current().nextInt(min, max + Int.MIN_VALUE)
-        while (d > max) d = ThreadLocalRandom.current().nextInt(min, max + Int.MIN_VALUE)
+        var d = ThreadLocalRandom.current().nextInt(min, max)
+        while (d > max) d = ThreadLocalRandom.current().nextInt(min, max)
         return d
     }
 
@@ -46,8 +46,8 @@ interface random {
      *  @param min Minimum value included in the sampling
      *  @param max Maximum value included in the sampling */
     fun linearRand(min: Long, max: Long): Long {
-        var d = ThreadLocalRandom.current().nextLong(min, max + Long.MIN_VALUE)
-        while (d > max) d = ThreadLocalRandom.current().nextLong(min, max + Long.MIN_VALUE)
+        var d = ThreadLocalRandom.current().nextLong(min, max)
+        while (d > max) d = ThreadLocalRandom.current().nextLong(min, max)
         return d
     }
 
