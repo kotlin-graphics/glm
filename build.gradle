@@ -11,7 +11,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 
 buildscript {
 
-    ext.kotlinVersion = '1.3.0-rc-146'
+    ext.kotlinVersion = '1.3.0-rc-152'
 
     repositories {
         jcenter()   // shadow
@@ -30,8 +30,8 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
-    implementation 'com.github.kotlin-graphics:kotlin-unsigned:14e3eb683a8c5fc4bbbb0b3e336a7cdea738c4a0'
-    implementation 'com.github.kotlin-graphics:kool:4286ce378e3b8abeeed8570f899c6e1e4f41ead1'
+    implementation 'com.github.kotlin-graphics:kotlin-unsigned:98b482c3dd3e54164d4f0bb81a733e1d395aff12'
+    implementation 'com.github.kotlin-graphics:kool:07890af4dd4428cc389b0749b5672413e5a8040b'
 
     testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.1.10'
 
