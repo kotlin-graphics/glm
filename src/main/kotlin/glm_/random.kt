@@ -356,8 +356,7 @@ interface random {
         do {
             res put linearRand(Vec3(-radius), Vec3(radius))
             lenRadius = res.length()
-        }
-        while(lenRadius > radius)
+        } while (lenRadius > radius)
 
         return res
     }
@@ -370,8 +369,7 @@ interface random {
         do {
             res put linearRand(Vec3d(-radius), Vec3d(radius))
             lenRadius = res.length()
-        }
-        while(lenRadius > radius)
+        } while (lenRadius > radius)
 
         return res
     }

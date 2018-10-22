@@ -2,7 +2,6 @@ package glm_.gtx
 
 import glm_.glm
 import glm_.vec3.Vec3
-import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
 class testGtxClosestPoint : StringSpec() {

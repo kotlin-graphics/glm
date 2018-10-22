@@ -7,10 +7,8 @@ import glm_.vec3.Vec3ul.Companion.minus
 import glm_.vec3.Vec3ul.Companion.plus
 import glm_.vec3.Vec3ul.Companion.rem
 import glm_.vec3.Vec3ul.Companion.times
-import unsigned.udiv
 import unsigned.Ulong
 import unsigned.udiv
-import unsigned.urem
 import unsigned.urem
 
 /**

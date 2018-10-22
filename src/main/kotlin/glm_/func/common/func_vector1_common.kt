@@ -23,7 +23,6 @@ import glm_.glm.smoothStep
 import glm_.glm.step
 import glm_.glm.trunc
 import glm_.glm.uintBitsToFloat
-import glm_.i
 import glm_.vec1.*
 
 /**

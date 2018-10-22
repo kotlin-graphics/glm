@@ -83,9 +83,9 @@ interface mat3x3_operators {
 
     /** Mat3 = Mat3 + Mat3 */
     fun plus(res: Mat3, a: Mat3,
-                    b00: Float, b01: Float, b02: Float,
-                    b10: Float, b11: Float, b12: Float,
-                    b20: Float, b21: Float, b22: Float): Mat3 {
+             b00: Float, b01: Float, b02: Float,
+             b10: Float, b11: Float, b12: Float,
+             b20: Float, b21: Float, b22: Float): Mat3 {
         plus(res[0], a[0], b00, b01, b02)
         plus(res[1], a[1], b10, b11, b12)
         plus(res[2], a[2], b20, b21, b22)
@@ -106,9 +106,9 @@ interface mat3x3_operators {
 
     /** Mat3 = Mat3 - Mat3 */
     fun minus(res: Mat3, a: Mat3,
-                     b00: Float, b01: Float, b02: Float,
-                     b10: Float, b11: Float, b12: Float,
-                     b20: Float, b21: Float, b22: Float): Mat3 {
+              b00: Float, b01: Float, b02: Float,
+              b10: Float, b11: Float, b12: Float,
+              b20: Float, b21: Float, b22: Float): Mat3 {
         minus(res[0], a[0], b00, b01, b02)
         minus(res[1], a[1], b10, b11, b12)
         minus(res[2], a[2], b20, b21, b22)
@@ -123,9 +123,9 @@ interface mat3x3_operators {
 
     /** Mat3 = Mat3 - Mat3 */
     fun minus(res: Mat3,
-                     a00: Float, a01: Float, a02: Float,
-                     a10: Float, a11: Float, a12: Float,
-                     a20: Float, a21: Float, a22: Float, b: Mat3): Mat3 {
+              a00: Float, a01: Float, a02: Float,
+              a10: Float, a11: Float, a12: Float,
+              a20: Float, a21: Float, a22: Float, b: Mat3): Mat3 {
         minus(res[0], a00, a01, a02, b[0])
         minus(res[1], a10, a11, a12, b[1])
         minus(res[2], a20, a21, a22, b[2])
@@ -169,9 +169,9 @@ interface mat3x3_operators {
 
     /** Mat3 = Mat3 * Mat3 */
     fun times(res: Mat3, a: Mat3,
-                     b00: Float, b01: Float, b02: Float,
-                     b10: Float, b11: Float, b12: Float,
-                     b20: Float, b21: Float, b22: Float): Mat3 {
+              b00: Float, b01: Float, b02: Float,
+              b10: Float, b11: Float, b12: Float,
+              b20: Float, b21: Float, b22: Float): Mat3 {
         val v00 = a[0, 0] * b00 + a[1, 0] * b01 + a[2, 0] * b02
         val v01 = a[0, 1] * b00 + a[1, 1] * b01 + a[2, 1] * b02
         val v02 = a[0, 2] * b00 + a[1, 2] * b01 + a[2, 2] * b02
@@ -190,12 +190,14 @@ interface mat3x3_operators {
 
     /** Mat23 = Mat3 * Mat23 */
     fun times(res: Mat2x3, a: Mat3, b: Mat2x3) = times(res, a, b[0], b[1], b[2])
+
     /** Mat23 = Mat3 * Mat23 */
     fun times(res: Mat2x3, a: Mat3, b0: Vec3, b1: Vec3, b2: Vec3) = times(res, a, b0.x, b0.y, b1.x, b1.y, b2.x, b2.y)
+
     /** Mat23 = Mat3 * Mat23 */
     fun times(res: Mat2x3, a: Mat3,
-                     b00: Float, b01: Float, b02: Float,
-                     b10: Float, b11: Float, b12: Float): Mat2x3 {
+              b00: Float, b01: Float, b02: Float,
+              b10: Float, b11: Float, b12: Float): Mat2x3 {
         val v00 = a[0, 0] * b00 + a[1, 0] * b01 + a[2, 0] * b02
         val v01 = a[0, 1] * b00 + a[1, 1] * b01 + a[2, 1] * b02
         val v02 = a[0, 2] * b00 + a[1, 2] * b01 + a[2, 2] * b02
@@ -210,18 +212,20 @@ interface mat3x3_operators {
 
     /** Mat43 = Mat3 * Mat43 */
     fun times(res: Mat4x3, a: Mat3, b: Mat4x3) = times(res, a, b[0], b[1], b[2], b[3])
+
     /** Mat43 = Mat3 * Mat43 */
     fun times(res: Mat4x3, a: Mat3, b0: Vec3, b1: Vec3, b2: Vec3, b3: Vec3) = times(res, a,
             b0.x, b0.y, b0.z,
             b1.x, b1.y, b1.z,
             b2.x, b2.y, b2.z,
             b3.x, b3.y, b3.z)
+
     /** Mat43 = Mat3 * Mat43 */
     fun times(res: Mat4x3, a: Mat3,
-                     b00: Float, b01: Float, b02: Float,
-                     b10: Float, b11: Float, b12: Float,
-                     b20: Float, b21: Float, b22: Float,
-                     b30: Float, b31: Float, b32: Float): Mat4x3 {
+              b00: Float, b01: Float, b02: Float,
+              b10: Float, b11: Float, b12: Float,
+              b20: Float, b21: Float, b22: Float,
+              b30: Float, b31: Float, b32: Float): Mat4x3 {
         val v00 = a[0, 0] * b00 + a[1, 0] * b01 + a[2, 0] * b02
         val v01 = a[0, 1] * b00 + a[1, 1] * b01 + a[2, 1] * b02
         val v02 = a[0, 2] * b00 + a[1, 2] * b01 + a[2, 2] * b02
@@ -255,9 +259,9 @@ interface mat3x3_operators {
 
     /** Mat3 = Mat3 / Mat3 = Mat3 * Mat3^-1 */
     fun div(res: Mat3, a: Mat3,
-                   b00: Float, b01: Float, b02: Float,
-                   b10: Float, b11: Float, b12: Float,
-                   b20: Float, b21: Float, b22: Float): Mat3 {
+            b00: Float, b01: Float, b02: Float,
+            b10: Float, b11: Float, b12: Float,
+            b20: Float, b21: Float, b22: Float): Mat3 {
         res[0, 0] = b00; res[1, 0] = b10; res[2, 0] = b20
         res[0, 1] = b01; res[1, 1] = b11; res[2, 1] = b21
         res[0, 2] = b02; res[1, 2] = b12; res[2, 2] = b22

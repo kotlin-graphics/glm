@@ -4,11 +4,8 @@ import glm_.detail.GLM_DEPTH_CLIP_SPACE
 import glm_.detail.GlmDepthClipSpace
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
-import glm_.vec2.Vec2
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
-import glm_.vec4.Vec4
-import glm_.vec4.Vec4d
 import glm_.vec4.Vec4i
 
 interface gtcMatrixProject {
@@ -424,7 +421,7 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluUnProject.xml">gluUnProject man page</a>
      */
-    fun unProject(res: Vec3, win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 = when(GLM_DEPTH_CLIP_SPACE) {
+    fun unProject(res: Vec3, win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 = when (GLM_DEPTH_CLIP_SPACE) {
         GlmDepthClipSpace.ZERO_TO_ONE -> unProjectZo(res, win, model, proj, viewport)
         else -> unProjectNo(res, win, model, proj, viewport)
     }
@@ -441,7 +438,7 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluUnProject.xml">gluUnProject man page</a>
      */
-    fun unProject(win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 = when(GLM_DEPTH_CLIP_SPACE) {
+    fun unProject(win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 = when (GLM_DEPTH_CLIP_SPACE) {
         GlmDepthClipSpace.ZERO_TO_ONE -> unProjectZo(Vec3(), win, model, proj, viewport)
         else -> unProjectNo(Vec3(), win, model, proj, viewport)
     }
@@ -450,9 +447,8 @@ interface gtcMatrixProject {
     // -----------------------------------------------------------------------------------------------------------------
     // Mat4d version
     // -----------------------------------------------------------------------------------------------------------------
-    
-    
-    
+
+
     /** Map the specified object coordinates (obj.x, obj.y, obj.z) into window coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
      *
@@ -864,7 +860,7 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluUnProject.xml">gluUnProject man page</a>
      */
-    fun unProject(res: Vec3d, win: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d = when(GLM_DEPTH_CLIP_SPACE) {
+    fun unProject(res: Vec3d, win: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d = when (GLM_DEPTH_CLIP_SPACE) {
         GlmDepthClipSpace.ZERO_TO_ONE -> unProjectZo(res, win, model, proj, viewport)
         else -> unProjectNo(res, win, model, proj, viewport)
     }
@@ -881,7 +877,7 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluUnProject.xml">gluUnProject man page</a>
      */
-    fun unProject(win: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d = when(GLM_DEPTH_CLIP_SPACE) {
+    fun unProject(win: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d = when (GLM_DEPTH_CLIP_SPACE) {
         GlmDepthClipSpace.ZERO_TO_ONE -> unProjectZo(Vec3d(), win, model, proj, viewport)
         else -> unProjectNo(Vec3d(), win, model, proj, viewport)
     }

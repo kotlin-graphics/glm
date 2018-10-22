@@ -65,7 +65,7 @@ class testCoreFuncGeometric : StringSpec() {
             val cross2 = glm.cross(Vec3(0, 1, 0), Vec3(1, 0, 0))
 
             glm.all(glm.lessThan(glm.abs(cross1 - Vec3(0, 0, 1)), Vec3(Float.MIN_VALUE))) shouldBe true
-            glm.all(glm.lessThan(glm.abs(cross2 - Vec3(0, 0,-1)), Vec3(Float.MIN_VALUE))) shouldBe true
+            glm.all(glm.lessThan(glm.abs(cross2 - Vec3(0, 0, -1)), Vec3(Float.MIN_VALUE))) shouldBe true
         }
 
         "normalize" {
@@ -97,14 +97,14 @@ class testCoreFuncGeometric : StringSpec() {
         "reflect" {
 
             run {
-                val a = Vec2(1f,-1f)
+                val a = Vec2(1f, -1f)
                 val b = Vec2(0f, 1f)
                 val c = glm.reflect(a, b)
                 c shouldBe Vec2(1f)
             }
 
             run {
-                val a = Vec2d(1.0,-1.0)
+                val a = Vec2d(1.0, -1.0)
                 val b = Vec2d(0.0, 1.0)
                 val c = glm.reflect(a, b)
                 c shouldBe Vec2d(1.0)
@@ -121,14 +121,14 @@ class testCoreFuncGeometric : StringSpec() {
             }
 
             run {
-                val a = Vec2(0f,-1f)
+                val a = Vec2(0f, -1f)
                 val b = Vec2(0f, 1f)
                 val c = glm.refract(a, b, 0.5f)
                 glm.all(glm.epsilonEqual(c, Vec2(0, -1), 0.0001f)) shouldBe true
             }
 
             run {
-                val a = Vec2d(0.0,-1.0)
+                val a = Vec2d(0.0, -1.0)
                 val b = Vec2d(0.0, 1.0)
                 val c = glm.refract(a, b, 0.5)
                 c shouldBe Vec2d(0.0, -1.0)

@@ -1,7 +1,5 @@
 package glm_.gtx
 
-import glm_.glm
-import glm_.vec2.Vec2ub
 import io.kotlintest.specs.StringSpec
 
 class testGtxRandom : StringSpec() {

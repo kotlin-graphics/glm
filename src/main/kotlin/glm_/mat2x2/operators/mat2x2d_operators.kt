@@ -52,6 +52,7 @@ interface mat2x2d_operators {
         div(res[1], a[1], b, b)
         return res
     }
+
     /** Mat2d = scalar / Mat2d */
     fun div(res: Mat2d, a: Double, b: Mat2d): Mat2d {
         div(res[0], a, a, b[0])
@@ -136,13 +137,15 @@ interface mat2x2d_operators {
 
     /** Mat32d = Mat2d * Mat32d */
     fun times(res: Mat3x2d, a: Mat2d, b: Mat3x2d) = times(res, a, b[0], b[1], b[2])
+
     /** Mat32d = Mat2d * Mat32d */
     fun times(res: Mat3x2d, a: Mat2d, b0: Vec2d, b1: Vec2d, b2: Vec2d) = times(res, a, b0.x, b0.y, b1.x, b1.y, b2.x, b2.y)
+
     /** Mat32d = Mat2d * Mat32d */
     fun times(res: Mat3x2d, a: Mat2d,
-                     b00: Double, b01: Double,
-                     b10: Double, b11: Double,
-                     b20: Double, b21: Double): Mat3x2d {
+              b00: Double, b01: Double,
+              b10: Double, b11: Double,
+              b20: Double, b21: Double): Mat3x2d {
         val v00 = a[0, 0] * b00 + a[1, 0] * b01
         val v01 = a[0, 1] * b00 + a[1, 1] * b01
         val v10 = a[0, 0] * b10 + a[1, 0] * b11
@@ -156,14 +159,16 @@ interface mat2x2d_operators {
 
     /** Mat42d = Mat2d * Mat42d */
     fun times(res: Mat4x2d, a: Mat2d, b: Mat4x2d) = times(res, a, b[0], b[1], b[2], b[3])
+
     /** Mat42d = Mat2d * Mat42d */
     fun times(res: Mat4x2d, a: Mat2d, b0: Vec2d, b1: Vec2d, b2: Vec2d, b3: Vec2d) = times(res, a, b0.x, b0.y, b1.x, b1.y, b2.x, b2.y, b3.x, b3.y)
+
     /** Mat42d = Mat2d * Mat42d */
     fun times(res: Mat4x2d, a: Mat2d,
-                     b00: Double, b01: Double,
-                     b10: Double, b11: Double,
-                     b20: Double, b21: Double,
-                     b30: Double, b31: Double): Mat4x2d {
+              b00: Double, b01: Double,
+              b10: Double, b11: Double,
+              b20: Double, b21: Double,
+              b30: Double, b31: Double): Mat4x2d {
         val v00 = a[0, 0] * b00 + a[1, 0] * b01
         val v01 = a[0, 1] * b00 + a[1, 1] * b01
         val v10 = a[0, 0] * b10 + a[1, 0] * b11
@@ -180,8 +185,10 @@ interface mat2x2d_operators {
 
     /** Mat2d = Mat2d / Mat2d = Mat2d * Mat2d^-1 */
     fun div(res: Mat2d, a: Mat2d, b: Mat2d) = div(res, a, b[0, 0], b[0, 1], b[1, 0], b[1, 1])
+
     /** Mat2d = Mat2d / Mat2d = Mat2d * Mat2d^-1 */
     fun div(res: Mat2d, a: Mat2d, b0: Vec2d, b1: Vec2d) = div(res, a, b0[0], b0[1], b1[0], b1[1])
+
     /** Mat2d = Mat2d / Mat2d = Mat2d * Mat2d^-1 */
     fun div(res: Mat2d, a: Mat2d, b00: Double, b01: Double, b10: Double, b11: Double): Mat2d {
         res[0, 0] = b00; res[1, 0] = b10
@@ -194,6 +201,7 @@ interface mat2x2d_operators {
 
     /** Vec2d col = Mat2d * Vec2d row  */
     fun div(res: Vec2d, a: Mat2d, b: Vec2d) = div(res, a, b.x, b.y)
+
     /** Vec2d col = Mat2d * Vec2d row  */
     fun div(res: Vec2d, a: Mat2d, b0: Double, b1: Double): Vec2d {
         val oneOverDet = 1 / a.det
@@ -208,6 +216,7 @@ interface mat2x2d_operators {
 
     /** Vec2d row = Vec2d col * Mat2d  */
     fun div(res: Vec2d, a: Vec2d, b: Mat2d) = div(res, a.x, a.y, b)
+
     /** Vec2d row = Vec2d col * Mat2d  */
     fun div(res: Vec2d, a0: Double, a1: Double, b: Mat2d): Vec2d {
         val oneOverDet = 1 / b.det
@@ -220,7 +229,6 @@ interface mat2x2d_operators {
         return res
     }
 }
-
 
 
 // -- Increment main.and decrement operators --

@@ -95,8 +95,6 @@ class Vec1ub(x: Ubyte) : Vec1t<Ubyte>(x) {
     override fun to(buf: ByteBuffer, index: Int): ByteBuffer = buf.put(index, x.v)
 
 
-
-
     // -- Unary arithmetic operators --
 
     operator fun unaryPlus() = this

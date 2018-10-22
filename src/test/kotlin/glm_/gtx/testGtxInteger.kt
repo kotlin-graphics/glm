@@ -33,7 +33,7 @@ class testGtxInteger : StringSpec() {
 
         "log2" {
 
-            for(i in 1..23)            {
+            for (i in 1..23) {
                 val a = glm.log2(1 shl i)
                 val b = glm.log2((1 shl i).d).i
 

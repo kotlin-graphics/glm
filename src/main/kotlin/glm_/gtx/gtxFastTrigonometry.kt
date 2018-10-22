@@ -7,10 +7,10 @@ import glm_.glm.detail
 import glm_.glm.sign
 import glm_.vec2.Vec2
 import glm_.vec2.operators.minus
-import glm_.vec3.operators.minus
-import glm_.vec4.operators.minus
 import glm_.vec3.Vec3
+import glm_.vec3.operators.minus
 import glm_.vec4.Vec4
+import glm_.vec4.operators.minus
 import kotlin.math.abs
 
 interface gtxFastTrigonometry {
@@ -32,6 +32,7 @@ interface gtxFastTrigonometry {
             else -> detail.cos52s(PI2f - angle)
         }
     }
+
     fun fastCos(angle: Vec4) = Vec4(fastCos(angle.x), fastCos(angle.y), fastCos(angle.z), fastCos(angle.w))
 
     /** Faster than the common tan function but less accurate.  */

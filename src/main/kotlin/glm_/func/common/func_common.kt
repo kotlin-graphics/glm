@@ -109,7 +109,7 @@ interface func_common {
     fun min(a: Int, b: Int) = _min(a, b)
     fun min(a: Long, b: Long) = _min(a, b)
     fun min(a: Short, b: Short) = _min(a.i, b.i).s
-    fun min(a: Char, b: Char) = if(a < b) a else b
+    fun min(a: Char, b: Char) = if (a < b) a else b
 
     fun max(a: Float, b: Float) = _max(a, b)
     fun max(a: Double, b: Double) = _max(a, b)
@@ -117,7 +117,7 @@ interface func_common {
     fun max(a: Int, b: Int) = _max(a, b)
     fun max(a: Long, b: Long) = _max(a, b)
     fun max(a: Short, b: Short) = _max(a.i, b.i).s
-    fun max(a: Char, b: Char) = if(a < b) b else a
+    fun max(a: Char, b: Char) = if (a < b) b else a
 
 
     fun clamp(a: Float, min: Float, max: Float) = min(max(a, min), max)
@@ -307,7 +307,7 @@ infix fun Long.max(b: Long) = max(this, b)
 infix fun Short.max(b: Short) = max(this, b)
 
 
-fun Byte.clamp(min: Byte= this, max: Byte= this) = glm.clamp(this, min, max)
+fun Byte.clamp(min: Byte = this, max: Byte = this) = glm.clamp(this, min, max)
 fun Short.clamp(min: Short = this, max: Short = this) = glm.clamp(this, min, max)
 fun Int.clamp(min: Int = this, max: Int = this) = glm.clamp(this, min, max)
 fun Long.clamp(min: Long = this, max: Long = this) = glm.clamp(this, min, max)

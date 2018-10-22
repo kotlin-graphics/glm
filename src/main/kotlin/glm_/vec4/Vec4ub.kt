@@ -98,7 +98,7 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>() {
         this.z = z
         this.w = w
     }
-    
+
     fun put(x: Byte, y: Byte, z: Byte, w: Byte) {
         this.x.v = x
         this.y.v = y
@@ -179,11 +179,6 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>() {
     }
 
 
-
-
-
-
-
     // -- Unary arithmetic operators --
 
     operator fun unaryPlus() = this
@@ -221,12 +216,15 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>() {
     infix operator fun plusAssign(b: Ubyte) {
         plus(this, this, b, b, b, b)
     }
+
     infix operator fun plusAssign(b: Byte) {
         plus(this, this, b, b, b, b)
     }
+
     infix operator fun plusAssign(b: Int) {
         plus(this, this, b, b, b, b)
     }
+
     infix operator fun plusAssign(b: Vec4ub) {
         plus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -251,12 +249,15 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>() {
     infix operator fun minusAssign(b: Ubyte) {
         minus(this, this, b, b, b, b)
     }
+
     infix operator fun minusAssign(b: Byte) {
         minus(this, this, b, b, b, b)
     }
+
     infix operator fun minusAssign(b: Int) {
         minus(this, this, b, b, b, b)
     }
+
     infix operator fun minusAssign(b: Vec4ub) {
         minus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -281,12 +282,15 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>() {
     infix operator fun timesAssign(b: Ubyte) {
         times(this, this, b, b, b, b)
     }
+
     infix operator fun timesAssign(b: Byte) {
         times(this, this, b, b, b, b)
     }
+
     infix operator fun timesAssign(b: Int) {
         times(this, this, b, b, b, b)
     }
+
     infix operator fun timesAssign(b: Vec4ub) {
         times(this, this, b.x, b.y, b.z, b.w)
     }
@@ -311,12 +315,15 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>() {
     infix operator fun divAssign(b: Ubyte) {
         div(this, this, b, b, b, b)
     }
+
     infix operator fun divAssign(b: Byte) {
         div(this, this, b, b, b, b)
     }
+
     infix operator fun divAssign(b: Int) {
         div(this, this, b, b, b, b)
     }
+
     infix operator fun divAssign(b: Vec4ub) {
         div(this, this, b.x, b.y, b.z, b.w)
     }
@@ -341,12 +348,15 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>() {
     infix operator fun remAssign(b: Ubyte) {
         rem(this, this, b, b, b, b)
     }
+
     infix operator fun remAssign(b: Byte) {
         rem(this, this, b, b, b, b)
     }
+
     infix operator fun remAssign(b: Int) {
         rem(this, this, b, b, b, b)
     }
+
     infix operator fun remAssign(b: Vec4ub) {
         rem(this, this, b.x, b.y, b.z, b.w)
     }
@@ -365,6 +375,7 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>() {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun plusAssign(b: Vec4t<out Number>) {
         plus(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -381,6 +392,7 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>() {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun minusAssign(b: Vec4t<out Number>) {
         minus(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -397,6 +409,7 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>() {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun timesAssign(b: Vec4t<out Number>) {
         times(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -413,6 +426,7 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>() {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun divAssign(b: Vec4t<out Number>) {
         div(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -429,6 +443,7 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>() {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun remAssign(b: Vec4t<out Number>) {
         rem(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }

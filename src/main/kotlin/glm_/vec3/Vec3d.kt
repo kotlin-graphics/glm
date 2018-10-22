@@ -86,7 +86,7 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>() {
     constructor(inputStream: InputStream, bigEndian: Boolean = true) :
             this(inputStream.double(bigEndian), inputStream.double(bigEndian), inputStream.double(bigEndian))
 
-    constructor(color: Color) : this (color.red / 255.0, color.green / 255.0, color.blue / 255.0)
+    constructor(color: Color) : this(color.red / 255.0, color.green / 255.0, color.blue / 255.0)
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneDouble: Boolean = false, bigEndian: Boolean = true) {
         x = if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index, bigEndian)

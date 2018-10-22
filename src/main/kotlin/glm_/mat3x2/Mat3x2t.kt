@@ -5,7 +5,6 @@ package glm_.mat3x2
  */
 
 import glm_.vec2.Vec2t
-import glm_.vec3.Vec3t
 
 abstract class Mat3x2t<T : Number> {
 

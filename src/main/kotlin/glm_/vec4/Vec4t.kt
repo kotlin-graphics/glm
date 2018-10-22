@@ -298,6 +298,7 @@ abstract class Vec4t<T : Number> {
 
     // swizzling
     protected abstract fun createInstance(x: T, y: T): Vec2t<out Number>
+
     protected abstract fun createInstance(x: T, y: T, z: T): Vec3t<out Number>
     protected abstract fun createInstance(x: T, y: T, z: T, w: T): Vec4t<out Number>
 
@@ -690,5 +691,5 @@ abstract class Vec4t<T : Number> {
         const val length = 4
     }
 
-    override fun toString() : String = "Vect4 [$x, $y, $z, $w]"
+    override fun toString(): String = "Vect4 [$x, $y, $z, $w]"
 }

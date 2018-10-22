@@ -84,7 +84,7 @@ interface func_geometric {
     fun cross(a: Vec2, b: Vec2) = a.x * b.y - b.x * a.y
     fun cross(a: Vec2d, b: Vec2d) = a.x * b.y - b.x * a.y
 
-    
+
     fun cross(a: Vec3, b: Vec3, res: Vec3 = Vec3()): Vec3 {
         val x = a.y * b.z - b.y * a.z
         val y = a.z * b.x - b.z * a.x

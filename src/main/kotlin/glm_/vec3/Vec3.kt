@@ -87,7 +87,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
     constructor(inputStream: InputStream, bigEndian: Boolean = true) :
             this(inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian))
 
-    constructor(color: Color) : this (color.red / 255f, color.green / 255f, color.blue / 255f)
+    constructor(color: Color) : this(color.red / 255f, color.green / 255f, color.blue / 255f)
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndian: Boolean = true) {
         x = if (oneByteOneFloat) bytes[index].f else bytes.getFloat(index, bigEndian)

@@ -19,7 +19,7 @@ interface gtcMatrixOrtho {
         res put 1f
         res[0, 0] = 2f / (right - left)
         res[1, 1] = 2f / (top - bottom)
-        res[2, 2] = - 1f
+        res[2, 2] = -1f
         res[3, 0] = -(right + left) / (right - left)
         res[3, 1] = -(top + bottom) / (top - bottom)
         return res
@@ -244,7 +244,7 @@ interface gtcMatrixOrtho {
             else -> orthoRhNo(res, left, right, bottom, top, zNear, zFar)
         }
     }
-    
+
     /** Creates a matrix for an orthographic parallel viewing volume, using the default handedness and default near and far clip planes definition.
      *  To change default handedness use LEFT_HANDED. To change default near and far clip planes definition use ZERO_TO_ONE.
      *
@@ -262,11 +262,11 @@ interface gtcMatrixOrtho {
             else -> orthoRhNo(Mat4(), left, right, bottom, top, zNear, zFar)
         }
     }
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Mat4d version
     // -----------------------------------------------------------------------------------------------------------------
-    
+
     /** Creates a matrix for projecting two-dimensional coordinates onto the screen.
      *
      *  @see gtc_matrix_transform
@@ -501,7 +501,7 @@ interface gtcMatrixOrtho {
             else -> orthoRhNo(res, left, right, bottom, top, zNear, zFar)
         }
     }
-    
+
     /** Creates a matrix for an orthographic parallel viewing volume, using the default handedness and default near and far clip planes definition.
      *  To change default handedness use LEFT_HANDED. To change default near and far clip planes definition use ZERO_TO_ONE.
      *

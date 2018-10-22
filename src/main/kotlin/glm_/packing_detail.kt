@@ -424,7 +424,7 @@ interface packing {
         val colorX = rgb.r * tmp
         val colorY = rgb.g * tmp
         val colorZ = rgb.b * tmp
-        var alpha = glm.clamp(glm.max(glm.max(colorX, colorY), glm.max(colorZ, 1e-6f)), 0f, 1f);
+        var alpha = glm.clamp(glm.max(glm.max(colorX, colorY), glm.max(colorZ, 1e-6f)), 0f, 1f)
         alpha = glm.ceil(alpha * 255f) / 255f
         res.r = colorX / alpha
         res.g = colorY / alpha

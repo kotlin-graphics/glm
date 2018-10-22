@@ -1,7 +1,6 @@
 package glm_.vec1.operators
 
 import glm_.f
-import glm_.i
 import glm_.vec1.Vec1
 import glm_.vec1.Vec1.Companion.div
 import glm_.vec1.Vec1.Companion.minus

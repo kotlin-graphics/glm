@@ -100,7 +100,7 @@ class Vec1d(x: Double) : Vec1t<Double>(x) {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer  = buf.putDouble(index, x)
+    override fun to(buf: ByteBuffer, index: Int): ByteBuffer = buf.putDouble(index, x)
 
     fun toDoubleArray(): DoubleArray = to(DoubleArray(length), 0)
     infix fun to(doubles: DoubleArray): DoubleArray = to(doubles, 0)
@@ -176,6 +176,7 @@ class Vec1d(x: Double) : Vec1t<Double>(x) {
     infix operator fun timesAssign(b: Double) {
         times(this, this, b)
     }
+
     infix operator fun timesAssign(b: Vec1d) {
         times(this, this, b.x)
     }
@@ -252,6 +253,7 @@ class Vec1d(x: Double) : Vec1t<Double>(x) {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.d)
     }
+
     infix operator fun timesAssign(b: Vec1t<out Number>) {
         times(this, this, b.x.d)
     }
@@ -266,6 +268,7 @@ class Vec1d(x: Double) : Vec1t<Double>(x) {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.d)
     }
+
     infix operator fun divAssign(b: Vec1t<out Number>) {
         div(this, this, b.x.d)
     }
@@ -280,6 +283,7 @@ class Vec1d(x: Double) : Vec1t<Double>(x) {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.d)
     }
+
     infix operator fun remAssign(b: Vec1t<out Number>) {
         rem(this, this, b.x.d)
     }

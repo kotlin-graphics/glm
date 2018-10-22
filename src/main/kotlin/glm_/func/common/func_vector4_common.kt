@@ -24,7 +24,6 @@ import glm_.glm.step
 import glm_.glm.trunc
 import glm_.glm.uintBitsToFloat
 import glm_.vec4.*
-import kotlin.reflect.KMutableProperty0
 
 /**
  * Created by GBarbieri on 11.11.2016.
@@ -744,7 +743,7 @@ interface func_vector4_common {
         res.w = ldexp(a.w, exp.w)
         return res
     }
-    
+
 
     companion object {
         var _i = 0  // TODO mention potential multithread issues

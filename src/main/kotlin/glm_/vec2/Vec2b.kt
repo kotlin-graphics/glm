@@ -153,9 +153,11 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     infix operator fun plusAssign(b: Byte) {
         plus(this, this, b, b)
     }
+
     infix operator fun plusAssign(b: Int) {
         plus(this, this, b, b)
     }
+
     infix operator fun plusAssign(b: Vec2b) {
         plus(this, this, b.x, b.y)
     }
@@ -180,9 +182,11 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     infix operator fun minusAssign(b: Byte) {
         minus(this, this, b, b)
     }
+
     infix operator fun minusAssign(b: Int) {
         minus(this, this, b, b)
     }
+
     infix operator fun minusAssign(b: Vec2b) {
         minus(this, this, b.x, b.y)
     }
@@ -207,9 +211,11 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     infix operator fun timesAssign(b: Byte) {
         times(this, this, b, b)
     }
+
     infix operator fun timesAssign(b: Int) {
         times(this, this, b, b)
     }
+
     infix operator fun timesAssign(b: Vec2b) {
         times(this, this, b.x, b.y)
     }
@@ -234,9 +240,11 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     infix operator fun divAssign(b: Byte) {
         div(this, this, b, b)
     }
+
     infix operator fun divAssign(b: Int) {
         div(this, this, b, b)
     }
+
     infix operator fun divAssign(b: Vec2b) {
         div(this, this, b.x, b.y)
     }
@@ -261,9 +269,11 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     infix operator fun remAssign(b: Byte) {
         rem(this, this, b, b)
     }
+
     infix operator fun remAssign(b: Int) {
         rem(this, this, b, b)
     }
+
     infix operator fun remAssign(b: Vec2b) {
         rem(this, this, b.x, b.y)
     }
@@ -284,6 +294,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.i, b.i)
     }
+
     infix operator fun plusAssign(b: Vec2t<out Number>) {
         plus(this, this, b.x.i, b.y.i)
     }
@@ -302,6 +313,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.i, b.i)
     }
+
     infix operator fun minusAssign(b: Vec2t<out Number>) {
         minus(this, this, b.x.i, b.y.i)
     }
@@ -320,6 +332,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.i, b.i)
     }
+
     infix operator fun timesAssign(b: Vec2t<out Number>) {
         times(this, this, b.x.i, b.y.i)
     }
@@ -338,6 +351,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.i, b.i)
     }
+
     infix operator fun divAssign(b: Vec2t<out Number>) {
         div(this, this, b.x.i, b.y.i)
     }
@@ -356,6 +370,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.i, b.i)
     }
+
     infix operator fun remAssign(b: Vec2t<out Number>) {
         rem(this, this, b.x.i, b.y.i)
     }

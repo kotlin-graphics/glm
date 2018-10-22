@@ -90,10 +90,10 @@ interface mat4x4_operators {
 
     /** Mat4 = Mat4 + Mat4 */
     fun plus(res: Mat4, a: Mat4,
-                    b00: Float, b01: Float, b02: Float, b03: Float,
-                    b10: Float, b11: Float, b12: Float, b13: Float,
-                    b20: Float, b21: Float, b22: Float, b23: Float,
-                    b30: Float, b31: Float, b32: Float, b33: Float): Mat4 {
+             b00: Float, b01: Float, b02: Float, b03: Float,
+             b10: Float, b11: Float, b12: Float, b13: Float,
+             b20: Float, b21: Float, b22: Float, b23: Float,
+             b30: Float, b31: Float, b32: Float, b33: Float): Mat4 {
         plus(res[0], a[0], b00, b01, b02, b03)
         plus(res[1], a[1], b10, b11, b12, b13)
         plus(res[2], a[2], b20, b21, b22, b23)
@@ -117,10 +117,10 @@ interface mat4x4_operators {
 
     /** Mat4 = Mat4 - Mat4 */
     fun minus(res: Mat4, a: Mat4,
-                     b00: Float, b01: Float, b02: Float, b03: Float,
-                     b10: Float, b11: Float, b12: Float, b13: Float,
-                     b20: Float, b21: Float, b22: Float, b23: Float,
-                     b30: Float, b31: Float, b32: Float, b33: Float): Mat4 {
+              b00: Float, b01: Float, b02: Float, b03: Float,
+              b10: Float, b11: Float, b12: Float, b13: Float,
+              b20: Float, b21: Float, b22: Float, b23: Float,
+              b30: Float, b31: Float, b32: Float, b33: Float): Mat4 {
         minus(res[0], a[0], b00, b01, b02, b03)
         minus(res[1], a[1], b10, b11, b12, b13)
         minus(res[2], a[2], b20, b21, b22, b23)
@@ -137,10 +137,10 @@ interface mat4x4_operators {
 
     /** Mat4 = Mat4 - Mat4 */
     fun minus(res: Mat4,
-                     a00: Float, a01: Float, a02: Float, a03: Float,
-                     a10: Float, a11: Float, a12: Float, a13: Float,
-                     a20: Float, a21: Float, a22: Float, a23: Float,
-                     a30: Float, a31: Float, a32: Float, a33: Float, b: Mat4): Mat4 {
+              a00: Float, a01: Float, a02: Float, a03: Float,
+              a10: Float, a11: Float, a12: Float, a13: Float,
+              a20: Float, a21: Float, a22: Float, a23: Float,
+              a30: Float, a31: Float, a32: Float, a33: Float, b: Mat4): Mat4 {
         minus(res[0], a00, a01, a02, a03, b[0])
         minus(res[1], a10, a11, a12, a13, b[1])
         minus(res[2], a20, a21, a22, a23, b[2])
@@ -174,7 +174,7 @@ interface mat4x4_operators {
     }
 
     /** Mat4 = Mat4 * Mat4 */
-    fun times(res: Mat4, a: Mat4, b: Mat4): Mat4{
+    fun times(res: Mat4, a: Mat4, b: Mat4): Mat4 {
 
         val var3 = b.array[0]
         val var4 = b.array[1]
@@ -237,10 +237,10 @@ interface mat4x4_operators {
 
     /** Mat4 = Mat4 * Mat4 */
     fun times(res: Mat4, a: Mat4,
-                     b00: Float, b01: Float, b02: Float, b03: Float,
-                     b10: Float, b11: Float, b12: Float, b13: Float,
-                     b20: Float, b21: Float, b22: Float, b23: Float,
-                     b30: Float, b31: Float, b32: Float, b33: Float): Mat4 {
+              b00: Float, b01: Float, b02: Float, b03: Float,
+              b10: Float, b11: Float, b12: Float, b13: Float,
+              b20: Float, b21: Float, b22: Float, b23: Float,
+              b30: Float, b31: Float, b32: Float, b33: Float): Mat4 {
         val v00 = a[0, 0] * b00 + a[1, 0] * b01 + a[2, 0] * b02 + a[3, 0] * b03
         val v01 = a[0, 1] * b00 + a[1, 1] * b01 + a[2, 1] * b02 + a[3, 1] * b03
         val v02 = a[0, 2] * b00 + a[1, 2] * b01 + a[2, 2] * b02 + a[3, 2] * b03
@@ -273,8 +273,8 @@ interface mat4x4_operators {
 
     /** Mat24 = Mat4 * Mat24 */
     fun times(res: Mat2x4, a: Mat4,
-                     b00: Float, b01: Float, b02: Float, b03: Float,
-                     b10: Float, b11: Float, b12: Float, b13: Float): Mat2x4 {
+              b00: Float, b01: Float, b02: Float, b03: Float,
+              b10: Float, b11: Float, b12: Float, b13: Float): Mat2x4 {
         val v00 = a[0, 0] * b00 + a[1, 0] * b01 + a[2, 0] * b02 + a[3, 0] * b03
         val v01 = a[0, 1] * b00 + a[1, 1] * b01 + a[2, 1] * b02 + a[3, 1] * b03
         val v02 = a[0, 2] * b00 + a[1, 2] * b01 + a[2, 2] * b02 + a[3, 2] * b03
@@ -302,9 +302,9 @@ interface mat4x4_operators {
 
     /** Mat34 = Mat4 * Mat34 */
     fun times(res: Mat3x4, a: Mat4,
-                     b00: Float, b01: Float, b02: Float, b03: Float,
-                     b10: Float, b11: Float, b12: Float, b13: Float,
-                     b20: Float, b21: Float, b22: Float, b23: Float): Mat3x4 {
+              b00: Float, b01: Float, b02: Float, b03: Float,
+              b10: Float, b11: Float, b12: Float, b13: Float,
+              b20: Float, b21: Float, b22: Float, b23: Float): Mat3x4 {
         val v00 = a[0, 0] * b00 + a[1, 0] * b01 + a[2, 0] * b02 + a[3, 0] * b03
         val v01 = a[0, 1] * b00 + a[1, 1] * b01 + a[2, 1] * b02 + a[3, 1] * b03
         val v02 = a[0, 2] * b00 + a[1, 2] * b01 + a[2, 2] * b02 + a[3, 2] * b03
@@ -341,10 +341,10 @@ interface mat4x4_operators {
 
     /** Mat4 = Mat4 / Mat4 = Mat4 * Mat4^-1 */
     fun div(res: Mat4, a: Mat4,
-                   b00: Float, b01: Float, b02: Float, b03: Float,
-                   b10: Float, b11: Float, b12: Float, b13: Float,
-                   b20: Float, b21: Float, b22: Float, b23: Float,
-                   b30: Float, b31: Float, b32: Float, b33: Float): Mat4 {
+            b00: Float, b01: Float, b02: Float, b03: Float,
+            b10: Float, b11: Float, b12: Float, b13: Float,
+            b20: Float, b21: Float, b22: Float, b23: Float,
+            b30: Float, b31: Float, b32: Float, b33: Float): Mat4 {
         res[0, 0] = b00; res[1, 0] = b10; res[2, 0] = b20; res[3, 0] = b30
         res[0, 1] = b01; res[1, 1] = b11; res[2, 1] = b21; res[3, 1] = b31
         res[0, 2] = b02; res[1, 2] = b12; res[2, 2] = b22; res[3, 2] = b32

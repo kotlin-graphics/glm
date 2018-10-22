@@ -60,7 +60,8 @@ class testGtxIntersect : StringSpec() {
                 distance shouldBe 3f
             }
 
-            run { //dot product == 0
+            run {
+                //dot product == 0
                 val orig = Vec3(0, 0, 4)
                 val dir = Vec3(0, 0, -1)
                 val planeOrig = Vec3(0)

@@ -151,7 +151,8 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
             mat4x3[3, 0], mat4x3[3, 1], mat4x3[3, 2], 1)
 
     // TODO others
-    @JvmOverloads constructor(doubles: DoubleArray, transpose: Boolean = false) : this(0,
+    @JvmOverloads
+    constructor(doubles: DoubleArray, transpose: Boolean = false) : this(0,
             if (transpose) doubleArrayOf(
                     doubles[0], doubles[4], doubles[8], doubles[12],
                     doubles[1], doubles[5], doubles[9], doubles[13],

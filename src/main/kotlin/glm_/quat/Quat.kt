@@ -38,7 +38,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
                 realPart = 0f
                 if (abs(u.x) > abs(u.z)) Vec3(-u.y, u.x, 0f) else Vec3(0f, -u.z, u.y)
             }
-        // Otherwise, build quaternion the standard way.
+            // Otherwise, build quaternion the standard way.
             else -> u cross v
         }
         put(realPart, w.x, w.y, w.z).normalizeAssign()

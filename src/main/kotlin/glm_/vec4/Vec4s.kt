@@ -188,10 +188,6 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
     }
 
 
-
-
-
-
     // -- Unary arithmetic operators --
 
     operator fun unaryPlus() = this
@@ -226,9 +222,11 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
     infix operator fun plusAssign(b: Short) {
         plus(this, this, b, b, b, b)
     }
+
     infix operator fun plusAssign(b: Int) {
         plus(this, this, b, b, b, b)
     }
+
     infix operator fun plusAssign(b: Vec4s) {
         plus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -249,9 +247,11 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
     infix operator fun minusAssign(b: Short) {
         minus(this, this, b, b, b, b)
     }
+
     infix operator fun minusAssign(b: Int) {
         minus(this, this, b, b, b, b)
     }
+
     infix operator fun minusAssign(b: Vec4s) {
         minus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -272,9 +272,11 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
     infix operator fun timesAssign(b: Short) {
         times(this, this, b, b, b, b)
     }
+
     infix operator fun timesAssign(b: Int) {
         times(this, this, b, b, b, b)
     }
+
     infix operator fun timesAssign(b: Vec4s) {
         times(this, this, b.x, b.y, b.z, b.w)
     }
@@ -295,9 +297,11 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
     infix operator fun divAssign(b: Short) {
         div(this, this, b, b, b, b)
     }
+
     infix operator fun divAssign(b: Int) {
         div(this, this, b, b, b, b)
     }
+
     infix operator fun divAssign(b: Vec4s) {
         div(this, this, b.x, b.y, b.z, b.w)
     }
@@ -318,9 +322,11 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
     infix operator fun remAssign(b: Short) {
         rem(this, this, b, b, b, b)
     }
+
     infix operator fun remAssign(b: Int) {
         rem(this, this, b, b, b, b)
     }
+
     infix operator fun remAssign(b: Vec4s) {
         rem(this, this, b.x, b.y, b.z, b.w)
     }
@@ -339,6 +345,7 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.s, b.s, b.s, b.s)
     }
+
     infix operator fun plusAssign(b: Vec4t<out Number>) {
         plus(this, this, b.x.s, b.y.s, b.z.s, b.w.s)
     }
@@ -355,6 +362,7 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.s, b.s, b.s, b.s)
     }
+
     infix operator fun minusAssign(b: Vec4t<out Number>) {
         minus(this, this, b.x.s, b.y.s, b.z.s, b.w.s)
     }
@@ -371,6 +379,7 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.s, b.s, b.s, b.s)
     }
+
     infix operator fun timesAssign(b: Vec4t<out Number>) {
         times(this, this, b.x.s, b.y.s, b.z.s, b.w.s)
     }
@@ -387,6 +396,7 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.s, b.s, b.s, b.s)
     }
+
     infix operator fun divAssign(b: Vec4t<out Number>) {
         div(this, this, b.x.s, b.y.s, b.z.s, b.w.s)
     }
@@ -403,6 +413,7 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.s, b.s, b.s, b.s)
     }
+
     infix operator fun remAssign(b: Vec4t<out Number>) {
         rem(this, this, b.x.s, b.y.s, b.z.s, b.w.s)
     }

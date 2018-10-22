@@ -90,10 +90,10 @@ interface mat4d_operators {
 
     /** Mat4d = Mat4d + Mat4d */
     fun plus(res: Mat4d, a: Mat4d,
-                    b00: Double, b01: Double, b02: Double, b03: Double,
-                    b10: Double, b11: Double, b12: Double, b13: Double,
-                    b20: Double, b21: Double, b22: Double, b23: Double,
-                    b30: Double, b31: Double, b32: Double, b33: Double): Mat4d {
+             b00: Double, b01: Double, b02: Double, b03: Double,
+             b10: Double, b11: Double, b12: Double, b13: Double,
+             b20: Double, b21: Double, b22: Double, b23: Double,
+             b30: Double, b31: Double, b32: Double, b33: Double): Mat4d {
         plus(res[0], a[0], b00, b01, b02, b03)
         plus(res[1], a[1], b10, b11, b12, b13)
         plus(res[2], a[2], b20, b21, b22, b23)
@@ -117,10 +117,10 @@ interface mat4d_operators {
 
     /** Mat4d = Mat4d - Mat4d */
     fun minus(res: Mat4d, a: Mat4d,
-                     b00: Double, b01: Double, b02: Double, b03: Double,
-                     b10: Double, b11: Double, b12: Double, b13: Double,
-                     b20: Double, b21: Double, b22: Double, b23: Double,
-                     b30: Double, b31: Double, b32: Double, b33: Double): Mat4d {
+              b00: Double, b01: Double, b02: Double, b03: Double,
+              b10: Double, b11: Double, b12: Double, b13: Double,
+              b20: Double, b21: Double, b22: Double, b23: Double,
+              b30: Double, b31: Double, b32: Double, b33: Double): Mat4d {
         minus(res[0], a[0], b00, b01, b02, b03)
         minus(res[1], a[1], b10, b11, b12, b13)
         minus(res[2], a[2], b20, b21, b22, b23)
@@ -137,10 +137,10 @@ interface mat4d_operators {
 
     /** Mat4d = Mat4d - Mat4d */
     fun minus(res: Mat4d,
-                     a00: Double, a01: Double, a02: Double, a03: Double,
-                     a10: Double, a11: Double, a12: Double, a13: Double,
-                     a20: Double, a21: Double, a22: Double, a23: Double,
-                     a30: Double, a31: Double, a32: Double, a33: Double, b: Mat4d): Mat4d {
+              a00: Double, a01: Double, a02: Double, a03: Double,
+              a10: Double, a11: Double, a12: Double, a13: Double,
+              a20: Double, a21: Double, a22: Double, a23: Double,
+              a30: Double, a31: Double, a32: Double, a33: Double, b: Mat4d): Mat4d {
         minus(res[0], a00, a01, a02, a03, b[0])
         minus(res[1], a10, a11, a12, a13, b[1])
         minus(res[2], a20, a21, a22, a23, b[2])
@@ -189,10 +189,10 @@ interface mat4d_operators {
 
     /** Mat4d = Mat4d * Mat4d */
     fun times(res: Mat4d, a: Mat4d,
-                     b00: Double, b01: Double, b02: Double, b03: Double,
-                     b10: Double, b11: Double, b12: Double, b13: Double,
-                     b20: Double, b21: Double, b22: Double, b23: Double,
-                     b30: Double, b31: Double, b32: Double, b33: Double): Mat4d {
+              b00: Double, b01: Double, b02: Double, b03: Double,
+              b10: Double, b11: Double, b12: Double, b13: Double,
+              b20: Double, b21: Double, b22: Double, b23: Double,
+              b30: Double, b31: Double, b32: Double, b33: Double): Mat4d {
         val v00 = a[0, 0] * b00 + a[1, 0] * b01 + a[2, 0] * b02 + a[3, 0] * b03
         val v01 = a[0, 1] * b00 + a[1, 1] * b01 + a[2, 1] * b02 + a[3, 1] * b03
         val v02 = a[0, 2] * b00 + a[1, 2] * b01 + a[2, 2] * b02 + a[3, 2] * b03
@@ -225,8 +225,8 @@ interface mat4d_operators {
 
     /** Mat24d = Mat4d * Mat24d */
     fun times(res: Mat2x4d, a: Mat4d,
-                     b00: Double, b01: Double, b02: Double, b03: Double,
-                     b10: Double, b11: Double, b12: Double, b13: Double): Mat2x4d {
+              b00: Double, b01: Double, b02: Double, b03: Double,
+              b10: Double, b11: Double, b12: Double, b13: Double): Mat2x4d {
         val v00 = a[0, 0] * b00 + a[1, 0] * b01 + a[2, 0] * b02 + a[3, 0] * b03
         val v01 = a[0, 1] * b00 + a[1, 1] * b01 + a[2, 1] * b02 + a[3, 1] * b03
         val v02 = a[0, 2] * b00 + a[1, 2] * b01 + a[2, 2] * b02 + a[3, 2] * b03
@@ -254,9 +254,9 @@ interface mat4d_operators {
 
     /** Mat34d = Mat4d * Mat34d */
     fun times(res: Mat3x4d, a: Mat4d,
-                     b00: Double, b01: Double, b02: Double, b03: Double,
-                     b10: Double, b11: Double, b12: Double, b13: Double,
-                     b20: Double, b21: Double, b22: Double, b23: Double): Mat3x4d {
+              b00: Double, b01: Double, b02: Double, b03: Double,
+              b10: Double, b11: Double, b12: Double, b13: Double,
+              b20: Double, b21: Double, b22: Double, b23: Double): Mat3x4d {
         val v00 = a[0, 0] * b00 + a[1, 0] * b01 + a[2, 0] * b02 + a[3, 0] * b03
         val v01 = a[0, 1] * b00 + a[1, 1] * b01 + a[2, 1] * b02 + a[3, 1] * b03
         val v02 = a[0, 2] * b00 + a[1, 2] * b01 + a[2, 2] * b02 + a[3, 2] * b03
@@ -293,10 +293,10 @@ interface mat4d_operators {
 
     /** Mat4d = Mat4d / Mat4d = Mat4d * Mat4d^-1 */
     fun div(res: Mat4d, a: Mat4d,
-                   b00: Double, b01: Double, b02: Double, b03: Double,
-                   b10: Double, b11: Double, b12: Double, b13: Double,
-                   b20: Double, b21: Double, b22: Double, b23: Double,
-                   b30: Double, b31: Double, b32: Double, b33: Double): Mat4d {
+            b00: Double, b01: Double, b02: Double, b03: Double,
+            b10: Double, b11: Double, b12: Double, b13: Double,
+            b20: Double, b21: Double, b22: Double, b23: Double,
+            b30: Double, b31: Double, b32: Double, b33: Double): Mat4d {
         res[0, 0] = b00; res[1, 0] = b10; res[2, 0] = b20; res[3, 0] = b30
         res[0, 1] = b01; res[1, 1] = b11; res[2, 1] = b21; res[3, 1] = b31
         res[0, 2] = b02; res[1, 2] = b12; res[2, 2] = b22; res[3, 2] = b32

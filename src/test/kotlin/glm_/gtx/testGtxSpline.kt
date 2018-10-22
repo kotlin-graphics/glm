@@ -4,7 +4,7 @@ import glm_.glm
 import glm_.vec2.Vec2
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
-import io.kotlintest.matchers.shouldBe
+import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
 class testGtxSpline : StringSpec() {
@@ -73,7 +73,7 @@ class testGtxSpline : StringSpec() {
                     Vec2(1f, 1f),
                     Vec2(0f, 1f), 0.5f)
 
-            result2 shouldBe Vec2(0.75f,1.5f)
+            result2 shouldBe Vec2(0.75f, 1.5f)
 
             val result3 = glm.cubic(
                     Vec3(0f, 0f, 0f),
@@ -81,7 +81,7 @@ class testGtxSpline : StringSpec() {
                     Vec3(1f, 1f, 0f),
                     Vec3(0f, 1f, 0f), 0.5f)
 
-            result3 shouldBe Vec3(0.75f,1.5f,0f)
+            result3 shouldBe Vec3(0.75f, 1.5f, 0f)
 
             val result4 = glm.cubic(
                     Vec4(0f, 0f, 0f, 1f),
@@ -89,7 +89,7 @@ class testGtxSpline : StringSpec() {
                     Vec4(1f, 1f, 0f, 1f),
                     Vec4(0f, 1f, 0f, 1f), 0.5f)
 
-            result4 shouldBe Vec4(0.75f,1.5f,0f, 1.875f)
+            result4 shouldBe Vec4(0.75f, 1.5f, 0f, 1.875f)
         }
     }
 }
