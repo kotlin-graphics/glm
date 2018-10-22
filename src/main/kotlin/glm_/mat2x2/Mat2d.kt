@@ -1,7 +1,5 @@
 package glm_.mat2x2
 
-import com.sun.javafx.geom.Vec3d
-import com.sun.javafx.geom.Vec4d
 import glm_.*
 import glm_.mat2x2.operators.mat2x2d_operators
 import glm_.mat2x3.Mat2x3t
@@ -16,6 +14,8 @@ import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
+import glm_.vec3.Vec3d
+import glm_.vec4.Vec4d
 import java.nio.DoubleBuffer
 import java.util.*
 
