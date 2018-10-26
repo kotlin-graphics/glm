@@ -685,5 +685,6 @@ abstract class Vec4t<T : Number> {
         const val length = 4
     }
 
+    // TODO remove since implemented in every class?
     override fun toString() : String = "Vect4 [$x, $y, $z, $w]"
 }

@@ -22,6 +22,7 @@ import kool.pos
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetFloat
 import org.lwjgl.system.MemoryUtil.memPutFloat
+import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.util.*
@@ -390,4 +391,12 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
     override fun equals(other: Any?) = other is Mat2 && Arrays.equals(array, other.array)
 
     override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
+        $v00 $v10
+        $v01 $v11""")
+
+    override fun toString() = """
+        $v00 $v10
+        $v01 $v11"""
 }

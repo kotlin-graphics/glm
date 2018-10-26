@@ -199,11 +199,14 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
         fun fromPointer(ptr: Ptr) = Quat(memGetDouble(ptr), memGetDouble(ptr + Double.BYTES), memGetDouble(ptr + Double.BYTES * 2), memGetDouble(ptr + Double.BYTES * 3))
     }
 
-
-    override fun toString() = "($w, {$x, $y, $z})"
-
     override fun equals(other: Any?) = other is QuatD && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
     override fun hashCode() = 31 * (31 * (31 * w.hashCode() + x.hashCode()) + y.hashCode()) + z.hashCode()
+
+    fun printErr(name: String = "") = System.err.println("$name ($w, {$x, $y, $z})")
+
+    fun print(name: String = "") = println("$name ($w, {$x, $y, $z})")
+
+    override fun toString(): String = "QuatD ($w, {$x, $y, $z})"
 
     @JvmOverloads
     fun vectorize(res: Vec4d = Vec4d()) = res.put(x, y, z, w)

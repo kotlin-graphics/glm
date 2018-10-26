@@ -221,8 +221,13 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
         fun fromPointer(ptr: Ptr) = Quat(memGetFloat(ptr), memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 3))
     }
 
-    override fun toString() = "($w, {$x, $y, $z})"
     override fun equals(other: Any?) = other is Quat && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
 
     override fun hashCode() = 31 * (31 * (31 * w.hashCode() + x.hashCode()) + y.hashCode()) + z.hashCode()
+
+    fun printErr(name: String = "") = System.err.println("$name ($w, {$x, $y, $z})")
+
+    fun print(name: String = "") = println("$name ($w, {$x, $y, $z})")
+
+    override fun toString(): String = "Quat ($w, {$x, $y, $z})"
 }

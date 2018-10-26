@@ -14,6 +14,7 @@ import org.lwjgl.system.MemoryUtil.memGetFloat
 import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.awt.Color
 import java.io.InputStream
+import java.io.PrintStream
 import java.nio.*
 
 /**
@@ -546,5 +547,7 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToBuffer {
 
     override fun equals(other: Any?) = other is Vec2 && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
-    override fun toString(): String = "Vect2 [$x, $y]"
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y]")
+    override fun toString(): String = "Vec2 [$x, $y]"
 }

@@ -11,6 +11,7 @@ import kool.Ptr
 import kool.pos
 import org.lwjgl.system.MemoryUtil.memGetByte
 import org.lwjgl.system.MemoryUtil.memPutByte
+import java.io.PrintStream
 import java.nio.*
 
 /**
@@ -558,4 +559,7 @@ class Vec3b(var ofs: Int, var array: ByteArray) : Vec3t<Byte>(), ToBuffer {
 
     override fun equals(other: Any?) = other is Vec3b && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y, $z]")
+    override fun toString(): String = "Vec3b [$x, $y, $z]"
 }

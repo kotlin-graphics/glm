@@ -28,6 +28,7 @@ import kool.pos
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetDouble
 import org.lwjgl.system.MemoryUtil.memPutDouble
+import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*
@@ -725,4 +726,16 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
     override fun equals(other: Any?) = other is Mat4d && Arrays.equals(array, other.array)
 
     override fun hashCode() = 31 * (31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()) + this[3].hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
+        $v00 $v10 $v20 $v30
+        $v01 $v11 $v21 $v31
+        $v02 $v12 $v22 $v32
+        $v03 $v13 $v23 $v33""")
+
+    override fun toString() = """
+        $v00 $v10 $v20 $v30
+        $v01 $v11 $v21 $v31
+        $v02 $v12 $v22 $v32
+        $v03 $v13 $v23 $v33"""
 }

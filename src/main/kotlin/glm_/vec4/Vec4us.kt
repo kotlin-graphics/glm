@@ -14,6 +14,7 @@ import kool.shortBufferBig
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetShort
 import unsigned.Ushort
+import java.io.PrintStream
 import java.nio.*
 
 /**
@@ -716,4 +717,7 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
 
     override fun equals(other: Any?) = other is Vec4us && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
     override fun hashCode() = 31 * (31 * (31 * x.v.hashCode() + y.v.hashCode()) + z.v.hashCode()) + w.v.hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [${x.v}, ${y.v}, ${z.v}, ${w.v}]")
+    override fun toString(): String = "Vec4us [${x.v}, ${y.v}, ${z.v}, ${w.v}]"
 }

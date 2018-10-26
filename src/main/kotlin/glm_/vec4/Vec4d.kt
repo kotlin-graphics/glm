@@ -16,6 +16,7 @@ import org.lwjgl.system.MemoryUtil.memGetDouble
 import org.lwjgl.system.MemoryUtil.memPutDouble
 import java.awt.Color
 import java.io.InputStream
+import java.io.PrintStream
 import java.nio.*
 
 /**
@@ -420,4 +421,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>(), ToBuffer {
 
     override fun equals(other: Any?) = other is Vec4d && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
     override fun hashCode() = 31 * (31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()) + w.hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y, $z, $w]")
+    override fun toString(): String = "Vec4d [$x, $y, $z, $w]"
 }

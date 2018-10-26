@@ -12,6 +12,7 @@ import kool.shortBufferBig
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetShort
 import org.lwjgl.system.MemoryUtil.memPutShort
+import java.io.PrintStream
 import java.nio.*
 
 /**
@@ -613,4 +614,7 @@ class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>(), ToBuffer {
 
     override fun equals(other: Any?) = other is Vec2s && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y]")
+    override fun toString(): String = "Vec2s [$x, $y]"
 }

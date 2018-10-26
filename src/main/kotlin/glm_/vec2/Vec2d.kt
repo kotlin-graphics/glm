@@ -14,6 +14,7 @@ import org.lwjgl.system.MemoryUtil.memGetDouble
 import org.lwjgl.system.MemoryUtil.memPutDouble
 import java.awt.Color
 import java.io.InputStream
+import java.io.PrintStream
 import java.nio.*
 
 /**
@@ -417,4 +418,7 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToBuffer {
 
     override fun equals(other: Any?) = other is Vec2d && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y]")
+    override fun toString(): String = "Vec2d [$x, $y]"
 }
