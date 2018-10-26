@@ -6,17 +6,21 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.Ptr
 import kool.intBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetInt
+import org.lwjgl.system.MemoryUtil.memPutInt
 import unsigned.Uint
+import java.io.PrintStream
 import java.nio.*
 
 /**
  * Created by elect on 08/10/16.
  */
 
-class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>() {
+class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>(), ToBuffer {
 
     constructor(x: Uint, y: Uint) : this(0, intArrayOf(x.v, y.v))
     constructor(x: Int, y: Int) : this(0, intArrayOf(x, y))
@@ -133,12 +137,6 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putInt(index, x.v)
-        buf.putInt(index + Int.BYTES, y.v)
-        return buf
-    }
-
     fun toIntArray(): IntArray = to(IntArray(length), 0)
     infix fun to(ints: IntArray): IntArray = to(ints, 0)
     fun to(ints: IntArray, index: Int): IntArray {
@@ -146,6 +144,13 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>() {
         return ints
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putInt(offset, x.v)
+        buf.putInt(offset + Int.BYTES, y.v)
+        return buf
+    }
+
+    fun toIntBufferStack(): IntBuffer = to(MemoryStack.stackPush().mallocInt(length), 0)
     infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(length), 0)
     fun toIntBuffer(): IntBuffer = to(intBufferBig(length), 0)
     infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
@@ -153,6 +158,11 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>() {
         buf[index] = x.v
         buf[index + 1] = y.v
         return buf
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutInt(ptr, x.v)
+        memPutInt(ptr + Int.BYTES, y.v)
     }
 
     // -- Component accesses --
@@ -611,10 +621,16 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>() {
         const val length = 2
         @JvmField
         val size = length * Uint.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec2ui(memGetInt(ptr), memGetInt(ptr + Int.BYTES))
     }
 
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec2ui && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.v.hashCode() + y.v.hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [${x.v}, ${y.v}]")
+    override fun toString(): String = "Vec2ui [${x.v}, ${y.v}]"
 }

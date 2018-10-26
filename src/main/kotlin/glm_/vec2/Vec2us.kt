@@ -6,17 +6,21 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.Ptr
 import kool.pos
 import kool.shortBufferBig
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetShort
+import org.lwjgl.system.MemoryUtil.memPutShort
 import unsigned.Ushort
+import java.io.PrintStream
 import java.nio.*
 
 /**
  * Created by elect on 08/10/16.
  */
 
-class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>() {
+class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
 
     constructor(x: Ushort, y: Ushort) : this(0, shortArrayOf(x.v, y.v))
     constructor(x: Short, y: Short) : this(0, shortArrayOf(x, y))
@@ -133,12 +137,6 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putShort(index, x.v)
-        buf.putShort(index + Short.BYTES, y.v)
-        return buf
-    }
-
     fun toShortArray(): ShortArray = to(ShortArray(length), 0)
     infix fun to(shorts: ShortArray): ShortArray = to(shorts, 0)
     fun to(shorts: ShortArray, index: Int): ShortArray {
@@ -146,6 +144,13 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>() {
         return shorts
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putShort(offset, x.v)
+        buf.putShort(offset + Short.BYTES, y.v)
+        return buf
+    }
+
+    fun toShortBufferStack(): ShortBuffer = to(MemoryStack.stackPush().mallocShort(length), 0)
     infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
     fun toShortBuffer(): ShortBuffer = to(shortBufferBig(length), 0)
     infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)
@@ -153,6 +158,11 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>() {
         buf[index] = x.v
         buf[index + 1] = y.v
         return buf
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutShort(ptr, x.v)
+        memPutShort(ptr + Short.BYTES, y.v)
     }
 
     // -- Component accesses --
@@ -644,10 +654,16 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>() {
         const val length = Vec2t.length
         @JvmField
         val size = length * Ushort.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec2us(memGetShort(ptr), memGetShort(ptr + Short.BYTES))
     }
 
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec2us && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.v.hashCode() + y.v.hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [${x.v}, ${y.v}]")
+    override fun toString(): String = "Vec2us [${x.v}, ${y.v}]"
 }

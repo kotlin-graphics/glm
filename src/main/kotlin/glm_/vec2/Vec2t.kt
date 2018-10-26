@@ -199,16 +199,11 @@ abstract class Vec2t<T : Number> {
     operator fun invoke(floats: FloatBuffer, index: Int) = invoke(floats[index], floats[index + 1])
     operator fun invoke(doubles: DoubleBuffer, index: Int) = invoke(doubles[index], doubles[index + 1])
 
-
+    // TODO move to ToBuffer?
     fun toByteArray(bigEndian: Boolean = true): ByteArray = to(ByteArray(length), 0, bigEndian)
     infix fun to(bytes: ByteArray): ByteArray = to(bytes, 0)
     fun to(bytes: ByteArray, bigEndian: Boolean): ByteArray = to(bytes, 0, bigEndian)
     abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
-
-    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.malloc(size()), 0)
-    fun toBuffer(): ByteBuffer = to(bufferBig(size()), 0)
-    infix fun to(bytes: ByteBuffer): ByteBuffer = to(bytes, bytes.pos)
-    abstract fun to(buf: ByteBuffer, index: Int): ByteBuffer
 
 
     infix fun lessThan(b: Vec2t<out Number>) = glm.lessThan(this, b, Vec2bool())

@@ -8,16 +8,20 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3i
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4i_operators
+import kool.Ptr
 import kool.intBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetInt
+import org.lwjgl.system.MemoryUtil.memPutInt
+import java.io.PrintStream
 import java.nio.*
 
 /**
  * Created by elect on 09/10/16.
  */
 
-class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>() {
+class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>(), ToBuffer {
 
     constructor(x: Int, y: Int, z: Int, w: Int) : this(0, intArrayOf(x, y, z, w))
 
@@ -143,14 +147,6 @@ class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putInt(index, x)
-        buf.putInt(index + Int.BYTES, y)
-        buf.putInt(index + Int.BYTES * 2, z)
-        buf.putInt(index + Int.BYTES * 3, w)
-        return buf
-    }
-
     fun toIntArray(): IntArray = to(IntArray(length), 0)
     infix fun to(ints: IntArray): IntArray = to(ints, 0)
     fun to(ints: IntArray, index: Int): IntArray {
@@ -158,6 +154,15 @@ class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>() {
         return ints
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putInt(offset, x)
+        buf.putInt(offset + Int.BYTES, y)
+        buf.putInt(offset + Int.BYTES * 2, z)
+        buf.putInt(offset + Int.BYTES * 3, w)
+        return buf
+    }
+
+    fun toIntBufferStack(): IntBuffer = to(MemoryStack.stackPush().mallocInt(length), 0)
     infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(length), 0)
     fun toIntBuffer(): IntBuffer = to(intBufferBig(length), 0)
     infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
@@ -167,6 +172,13 @@ class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>() {
         buf[index + 2] = z
         buf[index + 3] = w
         return buf
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutInt(ptr, x)
+        memPutInt(ptr + Int.BYTES, y)
+        memPutInt(ptr + Int.BYTES * 2, z)
+        memPutInt(ptr + Int.BYTES * 3, w)
     }
 
     // -- Component accesses --
@@ -535,6 +547,9 @@ class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>() {
         const val length = Vec4t.length
         @JvmField
         val size = length * Int.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec4i(memGetInt(ptr), memGetInt(ptr + Int.BYTES), memGetInt(ptr + Int.BYTES * 2), memGetInt(ptr + Int.BYTES * 3))
     }
 
     override fun size() = size
@@ -542,4 +557,7 @@ class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>() {
 
     override fun equals(other: Any?) = other is Vec4i && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
     override fun hashCode() = 31 * (31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()) + w.hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y, $z, $w]")
+    override fun toString(): String = "Vec4i [$x, $y, $z, $w]"
 }

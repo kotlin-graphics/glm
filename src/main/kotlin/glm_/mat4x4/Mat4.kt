@@ -22,10 +22,14 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
-import kool.bufferBig
+import kool.Ptr
 import kool.floatBufferBig
+import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetFloat
+import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.io.InputStream
+import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.util.*
@@ -378,11 +382,7 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
         return floats
     }
 
-    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.calloc(size), 0)
-    fun toBuffer(): ByteBuffer = to(bufferBig(size), 0)
-    infix fun to(buf: ByteBuffer): ByteBuffer = to(buf, 0)
-
-    fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
         return buf
                 .putFloat(offset + 0 * Float.BYTES, array[0])
                 .putFloat(offset + 1 * Float.BYTES, array[1])
@@ -402,9 +402,11 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
                 .putFloat(offset + 15 * Float.BYTES, array[15])
     }
 
-    fun toFloatBuffer(stack: MemoryStack) = to(stack.mallocFloat(length), 0)
-    fun toFloatBuffer() = to(floatBufferBig(length), 0)
-    infix fun to(buf: FloatBuffer) = to(buf, 0)
+
+    fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
+    infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
+    fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
+    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
 
     fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
         buf[offset + 0] = array[0]
@@ -428,6 +430,47 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
 
     infix fun to(res: Quat) = glm.quat_cast(this, res)
     fun toQuat() = glm.quat_cast(this, Quat())
+
+    fun to(ptr: Ptr, transpose: Boolean = false) {
+        when {
+            transpose -> {
+                memPutFloat(ptr, get(0, 0))
+                memPutFloat(ptr + Float.BYTES, get(1, 0))
+                memPutFloat(ptr + Float.BYTES * 2, get(2, 0))
+                memPutFloat(ptr + Float.BYTES * 3, get(3, 0))
+                memPutFloat(ptr + Float.BYTES * 4, get(0, 1))
+                memPutFloat(ptr + Float.BYTES * 5, get(1, 1))
+                memPutFloat(ptr + Float.BYTES * 6, get(2, 1))
+                memPutFloat(ptr + Float.BYTES * 7, get(3, 1))
+                memPutFloat(ptr + Float.BYTES * 8, get(0, 2))
+                memPutFloat(ptr + Float.BYTES * 9, get(1, 2))
+                memPutFloat(ptr + Float.BYTES * 10, get(2, 2))
+                memPutFloat(ptr + Float.BYTES * 11, get(3, 2))
+                memPutFloat(ptr + Float.BYTES * 12, get(0, 3))
+                memPutFloat(ptr + Float.BYTES * 13, get(1, 3))
+                memPutFloat(ptr + Float.BYTES * 14, get(2, 3))
+                memPutFloat(ptr + Float.BYTES * 15, get(3, 3))
+            }
+            else -> {
+                memPutFloat(ptr, get(0, 0))
+                memPutFloat(ptr + Float.BYTES, get(0, 1))
+                memPutFloat(ptr + Float.BYTES * 2, get(0, 2))
+                memPutFloat(ptr + Float.BYTES * 3, get(0, 3))
+                memPutFloat(ptr + Float.BYTES * 4, get(1, 0))
+                memPutFloat(ptr + Float.BYTES * 5, get(1, 1))
+                memPutFloat(ptr + Float.BYTES * 6, get(1, 2))
+                memPutFloat(ptr + Float.BYTES * 7, get(1, 3))
+                memPutFloat(ptr + Float.BYTES * 8, get(2, 0))
+                memPutFloat(ptr + Float.BYTES * 9, get(2, 1))
+                memPutFloat(ptr + Float.BYTES * 10, get(2, 2))
+                memPutFloat(ptr + Float.BYTES * 11, get(2, 3))
+                memPutFloat(ptr + Float.BYTES * 12, get(3, 0))
+                memPutFloat(ptr + Float.BYTES * 13, get(3, 1))
+                memPutFloat(ptr + Float.BYTES * 14, get(3, 2))
+                memPutFloat(ptr + Float.BYTES * 15, get(3, 3))
+            }
+        }
+    }
 
     // -- put --
 
@@ -732,6 +775,22 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
         const val length = Mat4x4t.length
         @JvmField
         val size = length * Float.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr, transpose: Boolean = false): Mat4 {
+            return when {
+                transpose -> Mat4(
+                        memGetFloat(ptr), memGetFloat(ptr + Float.BYTES * 4), memGetFloat(ptr + Float.BYTES * 8), memGetFloat(ptr + Float.BYTES * 12),
+                        memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 5), memGetFloat(ptr + Float.BYTES * 9), memGetFloat(ptr + Float.BYTES * 13),
+                        memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 6), memGetFloat(ptr + Float.BYTES * 10), memGetFloat(ptr + Float.BYTES * 14),
+                        memGetFloat(ptr + Float.BYTES * 3), memGetFloat(ptr + Float.BYTES * 7), memGetFloat(ptr + Float.BYTES * 11), memGetFloat(ptr + Float.BYTES * 15))
+                else -> Mat4(
+                        memGetFloat(ptr), memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 3),
+                        memGetFloat(ptr + Float.BYTES * 4), memGetFloat(ptr + Float.BYTES * 5), memGetFloat(ptr + Float.BYTES * 6), memGetFloat(ptr + Float.BYTES * 7),
+                        memGetFloat(ptr + Float.BYTES * 8), memGetFloat(ptr + Float.BYTES * 9), memGetFloat(ptr + Float.BYTES * 10), memGetFloat(ptr + Float.BYTES * 11),
+                        memGetFloat(ptr + Float.BYTES * 12), memGetFloat(ptr + Float.BYTES * 13), memGetFloat(ptr + Float.BYTES * 14), memGetFloat(ptr + Float.BYTES * 15))
+            }
+        }
     }
 
     override fun size() = size
@@ -739,4 +798,16 @@ class Mat4(dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
     override fun equals(other: Any?) = other is Mat4 && Arrays.equals(array, other.array)
 
     override fun hashCode() = 31 * (31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()) + this[3].hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
+        $v00 $v10 $v20 $v30
+        $v01 $v11 $v21 $v31
+        $v02 $v12 $v22 $v32
+        $v03 $v13 $v23 $v33""")
+
+    override fun toString() = """
+        $v00 $v10 $v20 $v30
+        $v01 $v11 $v21 $v31
+        $v02 $v12 $v22 $v32
+        $v03 $v13 $v23 $v33"""
 }

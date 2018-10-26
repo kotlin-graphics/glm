@@ -8,14 +8,18 @@ import glm_.vec3.Vec3b
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4b_operators
+import kool.Ptr
 import kool.pos
+import org.lwjgl.system.MemoryUtil.memGetByte
+import org.lwjgl.system.MemoryUtil.memPutByte
+import java.io.PrintStream
 import java.nio.*
 
 /**
  * Created by elect on 09/10/16.
  */
 
-class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>() {
+class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>(), ToBuffer {
 
     constructor(x: Byte, y: Byte, z: Byte, w: Byte) : this(0, byteArrayOf(x, y, z, w))
 
@@ -113,11 +117,11 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf[index] = x
-        buf[index + 1] = y
-        buf[index + 2] = z
-        buf[index + 3] = w
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf[offset] = x
+        buf[offset + 1] = y
+        buf[offset + 2] = z
+        buf[offset + 3] = w
         return buf
     }
 
@@ -139,6 +143,12 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>() {
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
+    infix fun to(ptr: Ptr) {
+        memPutByte(ptr, x)
+        memPutByte(ptr + Byte.BYTES, y)
+        memPutByte(ptr + Byte.BYTES * 2, z)
+        memPutByte(ptr + Byte.BYTES * 3, w)
+    }
 
     // -- Unary arithmetic operators --
 
@@ -552,6 +562,9 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>() {
         const val length = Vec4t.length
         @JvmField
         val size = length * Byte.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec4b(memGetByte(ptr), memGetByte(ptr + Byte.BYTES), memGetByte(ptr + Byte.BYTES * 2), memGetByte(ptr + Byte.BYTES * 3))
     }
 
     override fun size() = size
@@ -559,4 +572,7 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>() {
 
     override fun equals(other: Any?) = other is Vec4b && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
     override fun hashCode() = 31 * (31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()) + w.hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y, $z, $w]")
+    override fun toString(): String = "Vec4b [$x, $y, $z, $w]"
 }

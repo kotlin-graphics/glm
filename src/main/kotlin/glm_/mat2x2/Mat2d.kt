@@ -16,6 +16,14 @@ import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d
+import kool.Ptr
+import kool.bufferBig
+import kool.doubleBufferBig
+import kool.pos
+import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetDouble
+import java.io.PrintStream
+import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*
 
@@ -219,14 +227,25 @@ class Mat2d(dummy: Int, var array: DoubleArray) : Mat2x2t<Double>() {
         return doubles
     }
 
-    infix fun to(dfb: DoubleBuffer) = to(dfb, 0)
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        return buf
+                .putDouble(offset + 0 * Double.BYTES, array[0])
+                .putDouble(offset + 1 * Double.BYTES, array[1])
+                .putDouble(offset + 2 * Double.BYTES, array[2])
+                .putDouble(offset + 3 * Double.BYTES, array[3])
+    }
 
-    fun to(dfb: DoubleBuffer, offset: Int): DoubleBuffer {
-        dfb[offset + 0] = array[0]
-        dfb[offset + 1] = array[1]
-        dfb[offset + 2] = array[2]
-        dfb[offset + 3] = array[3]
-        return dfb
+    fun toFloatBufferStack(): DoubleBuffer = to(MemoryStack.stackGet().mallocDouble(length), 0)
+    infix fun toFloatBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
+    fun toFloatBuffer(): DoubleBuffer = to(doubleBufferBig(length), 0)
+    infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
+
+    fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
+        buf[offset + 0] = array[0]
+        buf[offset + 1] = array[1]
+        buf[offset + 2] = array[2]
+        buf[offset + 3] = array[3]
+        return buf
     }
 
 
@@ -337,6 +356,18 @@ class Mat2d(dummy: Int, var array: DoubleArray) : Mat2x2t<Double>() {
         const val length = Mat2x2t.length
         @JvmField
         val size = length * Double.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr, transpose: Boolean = false): Mat2d {
+            return when {
+                transpose -> Mat2d(
+                        memGetDouble(ptr), memGetDouble(ptr + Double.BYTES * 2),
+                        memGetDouble(ptr + Double.BYTES), memGetDouble(ptr + Double.BYTES * 3))
+                else -> Mat2d(
+                        memGetDouble(ptr), memGetDouble(ptr + Double.BYTES),
+                        memGetDouble(ptr + Double.BYTES * 2), memGetDouble(ptr + Double.BYTES * 3))
+            }
+        }
     }
 
     override fun size() = size
@@ -344,4 +375,12 @@ class Mat2d(dummy: Int, var array: DoubleArray) : Mat2x2t<Double>() {
     override fun equals(other: Any?) = other is Mat2d && Arrays.equals(array, other.array)
 
     override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
+        $v00 $v10
+        $v01 $v11""")
+
+    override fun toString() = """
+        $v00 $v10
+        $v01 $v11"""
 }

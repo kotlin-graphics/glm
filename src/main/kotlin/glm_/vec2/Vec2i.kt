@@ -6,16 +6,20 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.Ptr
 import kool.intBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetInt
+import org.lwjgl.system.MemoryUtil.memPutInt
+import java.io.PrintStream
 import java.nio.*
 
 /**
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
+class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>(), ToBuffer {
 
     constructor(x: Int, y: Int) : this(0, intArrayOf(x, y))
 
@@ -114,12 +118,6 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putInt(index, x)
-        buf.putInt(index + Int.BYTES, y)
-        return buf
-    }
-
     fun toIntArray(): IntArray = to(IntArray(length), 0)
     infix fun to(ints: IntArray): IntArray = to(ints, 0)
     fun to(ints: IntArray, index: Int): IntArray {
@@ -127,13 +125,26 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
         return ints
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putInt(offset, x)
+        buf.putInt(offset + Int.BYTES, y)
+        return buf
+    }
+
+    fun toIntBufferStack(): IntBuffer = to(MemoryStack.stackPush().mallocInt(length), 0)
     infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(length), 0)
     fun toIntBuffer(): IntBuffer = to(intBufferBig(length), 0)
     infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
+
     fun to(buf: IntBuffer, index: Int): IntBuffer {
         buf[index] = x
         buf[index + 1] = y
         return buf
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutInt(ptr, x)
+        memPutInt(ptr + Int.BYTES, y)
     }
 
     // -- Component accesses --
@@ -544,11 +555,16 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
         const val length = Vec2t.length
         @JvmField
         val size = length * Int.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec2i(memGetInt(ptr), memGetInt(ptr + Int.BYTES))
     }
 
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec2i && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
-    override fun toString() = "($x, $y)"
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y]")
+    override fun toString(): String = "Vec2i [$x, $y]"
 }

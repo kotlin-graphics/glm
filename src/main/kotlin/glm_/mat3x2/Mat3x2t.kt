@@ -4,9 +4,10 @@ package glm_.mat3x2
  * Created by GBarbieri on 26.04.2017.
  */
 
+import glm_.ToBuffer
 import glm_.vec2.Vec2t
 
-abstract class Mat3x2t<T : Number> {
+abstract class Mat3x2t<T : Number> : ToBuffer {
 
     abstract var a0: T
     abstract var a1: T
@@ -70,8 +71,6 @@ abstract class Mat3x2t<T : Number> {
         @JvmName("v21") set(value) {
             c1 = value
         }
-
-    abstract fun size(): Int
 
     companion object {
         const val length = 3 * 2

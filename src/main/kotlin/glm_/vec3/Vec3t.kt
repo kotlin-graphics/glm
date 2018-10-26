@@ -207,11 +207,6 @@ abstract class Vec3t<T : Number> {
     fun to(bytes: ByteArray, bigEndian: Boolean): ByteArray = to(bytes, 0, bigEndian)
     abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
 
-    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.malloc(size()), 0)
-    fun toBuffer(): ByteBuffer = to(bufferBig(size()), 0)
-    infix fun to(buf: ByteBuffer): ByteBuffer = to(buf, buf.pos)
-    abstract fun to(buf: ByteBuffer, index: Int): ByteBuffer
-
 
     infix fun lessThan(b: Vec3t<out Number>) = glm.lessThan(this, b, Vec3bool())
     fun lessThan(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.lessThan(this, b, res)

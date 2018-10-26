@@ -16,9 +16,13 @@ import glm_.vec2.Vec2
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
-import kool.bufferBig
+import kool.Ptr
 import kool.floatBufferBig
+import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetFloat
+import org.lwjgl.system.MemoryUtil.memPutFloat
+import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.util.*
@@ -218,7 +222,6 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
 
     // TODO inc
 
-
     fun toFloatArray(): FloatArray = to(FloatArray(length), 0)
     infix fun to(floats: FloatArray): FloatArray = to(floats, 0)
     fun to(floats: FloatArray, index: Int): FloatArray {
@@ -226,23 +229,18 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
         return floats
     }
 
-
-    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.malloc(size), 0)
-    fun toBuffer(): ByteBuffer = to(bufferBig(size), 0)
-    infix fun to(buf: ByteBuffer) = to(buf, 0)
-
-    fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
-        buf
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        return buf
                 .putFloat(offset + 0 * Float.BYTES, array[0])
                 .putFloat(offset + 1 * Float.BYTES, array[1])
                 .putFloat(offset + 2 * Float.BYTES, array[2])
                 .putFloat(offset + 3 * Float.BYTES, array[3])
-        return buf
     }
 
+    fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
     infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
     fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
-    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, 0)
+    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
 
     fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
         buf[offset + 0] = array[0]
@@ -250,6 +248,23 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
         buf[offset + 2] = array[2]
         buf[offset + 3] = array[3]
         return buf
+    }
+
+    fun to(ptr: Ptr, transpose: Boolean = false) {
+        when {
+            transpose -> {
+                memPutFloat(ptr, get(0, 0))
+                memPutFloat(ptr + Float.BYTES, get(1, 0))
+                memPutFloat(ptr + Float.BYTES * 2, get(0, 1))
+                memPutFloat(ptr + Float.BYTES * 3, get(1, 1))
+            }
+            else -> {
+                memPutFloat(ptr, get(0, 0))
+                memPutFloat(ptr + Float.BYTES, get(0, 1))
+                memPutFloat(ptr + Float.BYTES * 2, get(1, 0))
+                memPutFloat(ptr + Float.BYTES * 3, get(1, 1))
+            }
+        }
     }
 
     // -- Unary arithmetic operators --
@@ -357,6 +372,18 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
         const val length = Mat2x2t.length
         @JvmField
         val size = length * Float.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr, transpose: Boolean = false): Mat2 {
+            return when {
+                transpose -> Mat2(
+                        memGetFloat(ptr), memGetFloat(ptr + Float.BYTES * 2),
+                        memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 3))
+                else -> Mat2(
+                        memGetFloat(ptr), memGetFloat(ptr + Float.BYTES),
+                        memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 3))
+            }
+        }
     }
 
     override fun size() = size
@@ -364,4 +391,12 @@ class Mat2(dummy: Int, var array: FloatArray) : Mat2x2t<Float>() {
     override fun equals(other: Any?) = other is Mat2 && Arrays.equals(array, other.array)
 
     override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
+        $v00 $v10
+        $v01 $v11""")
+
+    override fun toString() = """
+        $v00 $v10
+        $v01 $v11"""
 }

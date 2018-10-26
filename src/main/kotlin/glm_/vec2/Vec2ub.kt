@@ -6,15 +6,19 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.Ptr
 import kool.pos
+import org.lwjgl.system.MemoryUtil.memGetByte
+import org.lwjgl.system.MemoryUtil.memPutByte
 import unsigned.Ubyte
+import java.io.PrintStream
 import java.nio.*
 
 /**
  * Created by elect on 07/10/16.
  */
 
-class Vec2ub(var ofs: Int, var array: ByteArray) : Vec2t<Ubyte>() {
+class Vec2ub(var ofs: Int, var array: ByteArray) : Vec2t<Ubyte>(), ToBuffer {
 
     constructor(x: Ubyte, y: Ubyte) : this(0, byteArrayOf(x.v, y.v))
     constructor(x: Byte, y: Byte) : this(0, byteArrayOf(x, y))
@@ -113,10 +117,17 @@ class Vec2ub(var ofs: Int, var array: ByteArray) : Vec2t<Ubyte>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf[index] = x.v
-        buf[index + Byte.BYTES] = y.v
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
         return buf
+                .put(offset + 0, array[0])
+                .put(offset + 1, array[1])
+                .put(offset + 2, array[2])
+                .put(offset + 3, array[3])
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutByte(ptr, x.v)
+        memPutByte(ptr + Byte.BYTES, y.v)
     }
 
     // -- Component accesses --
@@ -663,11 +674,16 @@ class Vec2ub(var ofs: Int, var array: ByteArray) : Vec2t<Ubyte>() {
         const val length = Vec2t.length
         @JvmField
         val size = length * Ubyte.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec2ub(memGetByte(ptr), memGetByte(ptr + Byte.BYTES))
     }
 
     override fun size() = size
 
-
     override fun equals(other: Any?) = other is Vec2ub && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.v.hashCode() + y.v.hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [${x.v}, ${y.v}]")
+    override fun toString(): String = "Vec2ub [${x.v}, ${y.v}]"
 }

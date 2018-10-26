@@ -1,9 +1,10 @@
 package glm_.mat2x2
 
+import glm_.ToBuffer
 import glm_.vec2.Vec2t
 
 
-abstract class Mat2x2t<T : Number> {
+abstract class Mat2x2t<T : Number> : ToBuffer {
 
     abstract var a0: T
     abstract var a1: T
@@ -12,11 +13,11 @@ abstract class Mat2x2t<T : Number> {
     abstract var b1: T
 
 
-    operator fun component1() = a0
-    operator fun component2() = a1
+    operator fun component1(): T = a0
+    operator fun component2(): T = a1
 
-    operator fun component3() = b0
-    operator fun component4() = b1
+    operator fun component3(): T = b0
+    operator fun component4(): T = b1
 
 
     // -- Accesses --
@@ -52,12 +53,11 @@ abstract class Mat2x2t<T : Number> {
             b1 = value
         }
 
+
     abstract val isIdentity: Boolean
 
-    abstract fun size(): Int
-
     companion object {
-        const val length = 2 * 2
+        const val length = 2 * 2 // TODO parametrize using Vec2t.length
     }
 
 

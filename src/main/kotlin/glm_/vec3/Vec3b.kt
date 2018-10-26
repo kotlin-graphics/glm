@@ -7,14 +7,18 @@ import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3b_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.Ptr
 import kool.pos
+import org.lwjgl.system.MemoryUtil.memGetByte
+import org.lwjgl.system.MemoryUtil.memPutByte
+import java.io.PrintStream
 import java.nio.*
 
 /**
  * Created by elect on 08/10/16.
  */
 
-class Vec3b(var ofs: Int, var array: ByteArray) : Vec3t<Byte>() {
+class Vec3b(var ofs: Int, var array: ByteArray) : Vec3t<Byte>(), ToBuffer {
 
     constructor(x: Byte, y: Byte, z: Byte) : this(0, byteArrayOf(x, y, z))
 
@@ -105,11 +109,17 @@ class Vec3b(var ofs: Int, var array: ByteArray) : Vec3t<Byte>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf[index] = x
-        buf[index + Byte.BYTES] = y
-        buf[index + Byte.BYTES * 2] = z
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf[offset] = x
+        buf[offset + Byte.BYTES] = y
+        buf[offset + Byte.BYTES * 2] = z
         return buf
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutByte(ptr, x)
+        memPutByte(ptr + Byte.BYTES, y)
+        memPutByte(ptr + Byte.BYTES * 2, z)
     }
 
     // -- Component accesses --
@@ -540,10 +550,16 @@ class Vec3b(var ofs: Int, var array: ByteArray) : Vec3t<Byte>() {
         const val length = Vec3t.length
         @JvmField
         val size = length * Byte.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec3b(memGetByte(ptr), memGetByte(ptr + Byte.BYTES), memGetByte(ptr + Byte.BYTES * 2))
     }
 
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec3b && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y, $z]")
+    override fun toString(): String = "Vec3b [$x, $y, $z]"
 }

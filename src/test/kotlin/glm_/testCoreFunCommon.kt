@@ -98,7 +98,7 @@ class testCoreFunCommon : StringSpec() {
             }
         }
 
-        "mod" {
+        "modf" {
 
             run {
                 val x = 1.5f

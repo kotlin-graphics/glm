@@ -1,9 +1,10 @@
 package glm_.mat2x3
 
+import glm_.ToBuffer
 import glm_.vec3.Vec3t
 
 
-abstract class Mat2x3t<T : Number> {
+abstract class Mat2x3t<T : Number> : ToBuffer {
 
     abstract var a0: T
     abstract var a1: T
@@ -64,9 +65,6 @@ abstract class Mat2x3t<T : Number> {
         @JvmName("v12") set(value) {
             b2 = value
         }
-
-
-    abstract fun size(): Int
 
 
     companion object {

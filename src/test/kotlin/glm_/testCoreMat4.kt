@@ -21,10 +21,12 @@ class testCoreMat4 : StringSpec() {
             val matrix = Mat4(
                     0.6f, 0.2f, 0.3f, 0.4f,
                     0.2f, 0.7f, 0.5f, 0.3f,
-                    0.3f, 0.5f, 0.7f, 0.2f,
+                    0.3f, 0.5f, 0.743f, 0.2f,
                     0.4f, 0.3f, 0.2f, 0.6f)
             val inverse = matrix.inverse()
             val identity = matrix * inverse
+
+            matrix.print("mat")
 
             glm.all(glm.epsilonEqual(identity[0], Vec4(1f, 0f, 0f, 0f), Vec4(0.01f))) shouldBe true
             glm.all(glm.epsilonEqual(identity[1], Vec4(0f, 1f, 0f, 0f), Vec4(0.01f))) shouldBe true

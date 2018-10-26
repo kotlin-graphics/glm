@@ -8,16 +8,19 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3s
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4s_operators
+import kool.Ptr
 import kool.pos
 import kool.shortBufferBig
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetShort
+import java.io.PrintStream
 import java.nio.*
 
 /**
  * Created by elect on 09/10/16.
  */
 
-class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
+class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>(), ToBuffer {
 
     constructor(x: Short, y: Short, z: Short, w: Short) : this(0, shortArrayOf(x, y, z, w))
 
@@ -143,14 +146,6 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putShort(index, x)
-        buf.putShort(index + Short.BYTES, y)
-        buf.putShort(index + Short.BYTES * 2, z)
-        buf.putShort(index + Short.BYTES * 3, w)
-        return buf
-    }
-
     fun toShortArray(): ShortArray = to(ShortArray(length), 0)
     infix fun to(shorts: ShortArray): ShortArray = to(shorts, 0)
     fun to(shorts: ShortArray, index: Int): ShortArray {
@@ -158,6 +153,15 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
         return shorts
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putShort(offset, x)
+        buf.putShort(offset + Short.BYTES, y)
+        buf.putShort(offset + Short.BYTES * 2, z)
+        buf.putShort(offset + Short.BYTES * 3, w)
+        return buf
+    }
+
+    fun toShortBufferStack(): ShortBuffer = to(MemoryStack.stackPush().mallocShort(length), 0)
     infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
     fun toShortBuffer(): ShortBuffer = to(shortBufferBig(length), 0)
     infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)
@@ -601,6 +605,9 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
         const val length = Vec4t.length
         @JvmField
         val size = length * Short.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec4s(memGetShort(ptr), memGetShort(ptr + Short.BYTES), memGetShort(ptr + Short.BYTES * 2), memGetShort(ptr + Short.BYTES * 3))
     }
 
     override fun size() = size
@@ -608,4 +615,7 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>() {
 
     override fun equals(other: Any?) = other is Vec4s && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
     override fun hashCode() = 31 * (31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()) + w.hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y, $z, $w]")
+    override fun toString(): String = "Vec4s [$x, $y, $z, $w]"
 }

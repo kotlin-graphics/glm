@@ -1,6 +1,7 @@
 package glm_.vec2
 
 import glm_.glm
+import java.io.PrintStream
 
 
 /**
@@ -86,4 +87,8 @@ data class Vec2bool(var x: Boolean = false, var y: Boolean = false) {
     fun any() = glm.any(this)
 
     fun all() = glm.all(this)
+
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y]")
+    override fun toString(): String = "Vec2bool [$x, $y]"
 }

@@ -7,15 +7,19 @@ import glm_.vec2.Vec2ub
 import glm_.vec3.operators.vec3ub_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.Ptr
 import kool.pos
+import org.lwjgl.system.MemoryUtil.memGetByte
+import org.lwjgl.system.MemoryUtil.memPutByte
 import unsigned.Ubyte
+import java.io.PrintStream
 import java.nio.*
 
 /**
  * Created by elect on 09/10/16.
  */
 
-class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>() {
+class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>(), ToBuffer {
 
     constructor(x: Ubyte, y: Ubyte, z: Ubyte) : this(0, byteArrayOf(x.v, y.v, z.v))
     constructor(x: Byte, y: Byte, z: Byte) : this(0, byteArrayOf(x, y, z))
@@ -129,11 +133,17 @@ class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf[index] = x.v
-        buf[index + Byte.BYTES] = y.v
-        buf[index + Byte.BYTES * 2] = z.v
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf[offset] = x.v
+        buf[offset + Byte.BYTES] = y.v
+        buf[offset + Byte.BYTES * 2] = z.v
         return buf
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutByte(ptr, x.v)
+        memPutByte(ptr + Byte.BYTES, y.v)
+        memPutByte(ptr + Byte.BYTES * 2, z.v)
     }
 
     // -- Component accesses --
@@ -629,10 +639,16 @@ class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>() {
         const val length = Vec3t.length
         @JvmField
         val size = length * Ubyte.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec3ub(memGetByte(ptr), memGetByte(ptr + Byte.BYTES), memGetByte(ptr + Byte.BYTES * 2))
     }
 
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec3ub && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.v.hashCode() + y.v.hashCode()) + z.v.hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [${x.v}, ${y.v}, ${z.v}]")
+    override fun toString(): String = "Vec3ub [${x.v}, ${y.v}, ${z.v}]"
 }

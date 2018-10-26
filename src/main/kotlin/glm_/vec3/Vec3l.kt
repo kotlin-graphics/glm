@@ -7,16 +7,20 @@ import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3l_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.Ptr
 import kool.longBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetLong
+import org.lwjgl.system.MemoryUtil.memPutLong
+import java.io.PrintStream
 import java.nio.*
 
 /**
  * Created by elect on 09/10/16.
  */
 
-class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>() {
+class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>(), ToBuffer {
 
     constructor(x: Long, y: Long, z: Long) : this(0, longArrayOf(x, y, z))
 
@@ -129,13 +133,6 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putLong(index, x)
-        buf.putLong(index + Long.BYTES, y)
-        buf.putLong(index + Long.BYTES * 2, z)
-        return buf
-    }
-
     fun toLongArray(): LongArray = to(LongArray(length), 0)
     infix fun to(longs: LongArray): LongArray = to(longs, 0)
     fun to(longs: LongArray, index: Int): LongArray {
@@ -143,6 +140,14 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>() {
         return longs
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putLong(offset, x)
+        buf.putLong(offset + Long.BYTES, y)
+        buf.putLong(offset + Long.BYTES * 2, z)
+        return buf
+    }
+
+    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackPush().mallocLong(length), 0)
     infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(length), 0)
     fun toLongBuffer(): LongBuffer = to(longBufferBig(length), 0)
     infix fun to(buf: LongBuffer): LongBuffer = to(buf, buf.pos)
@@ -151,6 +156,12 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>() {
         buf[index + 1] = y
         buf[index + 2] = z
         return buf
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutLong(ptr, x)
+        memPutLong(ptr + Long.BYTES, y)
+        memPutLong(ptr + Long.BYTES * 2, z)
     }
 
     // -- Component accesses --
@@ -516,10 +527,16 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>() {
         const val length = Vec3t.length
         @JvmField
         val size = length * Long.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec3l(memGetLong(ptr), memGetLong(ptr + Long.BYTES), memGetLong(ptr + Long.BYTES * 2))
     }
 
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec3l && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y, $z]")
+    override fun toString(): String = "Vec3l [$x, $y, $z]"
 }

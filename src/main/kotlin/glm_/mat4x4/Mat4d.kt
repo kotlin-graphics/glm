@@ -22,6 +22,13 @@ import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
+import kool.Ptr
+import kool.doubleBufferBig
+import kool.pos
+import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetDouble
+import org.lwjgl.system.MemoryUtil.memPutDouble
+import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*
@@ -308,55 +315,96 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
         return doubles
     }
 
-    // TODO others
-    infix fun to(dbb: ByteBuffer): ByteBuffer = to(dbb, 0)
-
-    fun to(dbb: ByteBuffer, offset: Int): ByteBuffer {
-        dbb.putDouble(offset + 0 * Double.BYTES, array[0])
-        dbb.putDouble(offset + 1 * Double.BYTES, array[1])
-        dbb.putDouble(offset + 2 * Double.BYTES, array[2])
-        dbb.putDouble(offset + 3 * Double.BYTES, array[3])
-        dbb.putDouble(offset + 4 * Double.BYTES, array[4])
-        dbb.putDouble(offset + 5 * Double.BYTES, array[5])
-        dbb.putDouble(offset + 6 * Double.BYTES, array[6])
-        dbb.putDouble(offset + 7 * Double.BYTES, array[7])
-        dbb.putDouble(offset + 8 * Double.BYTES, array[8])
-        dbb.putDouble(offset + 9 * Double.BYTES, array[9])
-        dbb.putDouble(offset + 10 * Double.BYTES, array[10])
-        dbb.putDouble(offset + 11 * Double.BYTES, array[11])
-        dbb.putDouble(offset + 12 * Double.BYTES, array[12])
-        dbb.putDouble(offset + 13 * Double.BYTES, array[13])
-        dbb.putDouble(offset + 14 * Double.BYTES, array[14])
-        dbb.putDouble(offset + 15 * Double.BYTES, array[15])
-        return dbb
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        return buf
+                .putDouble(offset + 0 * Double.BYTES, array[0])
+                .putDouble(offset + 1 * Double.BYTES, array[1])
+                .putDouble(offset + 2 * Double.BYTES, array[2])
+                .putDouble(offset + 3 * Double.BYTES, array[3])
+                .putDouble(offset + 4 * Double.BYTES, array[4])
+                .putDouble(offset + 5 * Double.BYTES, array[5])
+                .putDouble(offset + 6 * Double.BYTES, array[6])
+                .putDouble(offset + 7 * Double.BYTES, array[7])
+                .putDouble(offset + 8 * Double.BYTES, array[8])
+                .putDouble(offset + 9 * Double.BYTES, array[9])
+                .putDouble(offset + 10 * Double.BYTES, array[10])
+                .putDouble(offset + 11 * Double.BYTES, array[11])
+                .putDouble(offset + 12 * Double.BYTES, array[12])
+                .putDouble(offset + 13 * Double.BYTES, array[13])
+                .putDouble(offset + 14 * Double.BYTES, array[14])
+                .putDouble(offset + 15 * Double.BYTES, array[15])
     }
 
-    // TODO others
-    infix fun to(dfb: DoubleBuffer) = to(dfb, 0)
 
-    fun to(dfb: DoubleBuffer, offset: Int): DoubleBuffer {
-        dfb[offset + 0] = array[0]
-        dfb[offset + 1] = array[1]
-        dfb[offset + 2] = array[2]
-        dfb[offset + 3] = array[3]
-        dfb[offset + 4] = array[4]
-        dfb[offset + 5] = array[5]
-        dfb[offset + 6] = array[6]
-        dfb[offset + 7] = array[7]
-        dfb[offset + 8] = array[8]
-        dfb[offset + 9] = array[9]
-        dfb[offset + 10] = array[10]
-        dfb[offset + 11] = array[11]
-        dfb[offset + 12] = array[12]
-        dfb[offset + 13] = array[13]
-        dfb[offset + 14] = array[14]
-        dfb[offset + 15] = array[15]
-        return dfb
+    fun toDoubleBufferStack(): DoubleBuffer = to(MemoryStack.stackGet().mallocDouble(length), 0)
+    infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
+    fun toDoubleBuffer(): DoubleBuffer = to(doubleBufferBig(length), 0)
+    infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
+
+    fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
+        buf[offset + 0] = array[0]
+        buf[offset + 1] = array[1]
+        buf[offset + 2] = array[2]
+        buf[offset + 3] = array[3]
+        buf[offset + 4] = array[4]
+        buf[offset + 5] = array[5]
+        buf[offset + 6] = array[6]
+        buf[offset + 7] = array[7]
+        buf[offset + 8] = array[8]
+        buf[offset + 9] = array[9]
+        buf[offset + 10] = array[10]
+        buf[offset + 11] = array[11]
+        buf[offset + 12] = array[12]
+        buf[offset + 13] = array[13]
+        buf[offset + 14] = array[14]
+        buf[offset + 15] = array[15]
+        return buf
     }
 
     infix fun to(res: QuatD) = glm.quatD_cast(this, res)
     fun toQuatD() = glm.quatD_cast(this, QuatD())
 
+    fun to(ptr: Ptr, transpose: Boolean = false) {
+        when {
+            transpose -> {
+                memPutDouble(ptr, get(0, 0))
+                memPutDouble(ptr + Double.BYTES, get(1, 0))
+                memPutDouble(ptr + Double.BYTES * 2, get(2, 0))
+                memPutDouble(ptr + Double.BYTES * 3, get(3, 0))
+                memPutDouble(ptr + Double.BYTES * 4, get(0, 1))
+                memPutDouble(ptr + Double.BYTES * 5, get(1, 1))
+                memPutDouble(ptr + Double.BYTES * 6, get(2, 1))
+                memPutDouble(ptr + Double.BYTES * 7, get(3, 1))
+                memPutDouble(ptr + Double.BYTES * 8, get(0, 2))
+                memPutDouble(ptr + Double.BYTES * 9, get(1, 2))
+                memPutDouble(ptr + Double.BYTES * 10, get(2, 2))
+                memPutDouble(ptr + Double.BYTES * 11, get(3, 2))
+                memPutDouble(ptr + Double.BYTES * 12, get(0, 3))
+                memPutDouble(ptr + Double.BYTES * 13, get(1, 3))
+                memPutDouble(ptr + Double.BYTES * 14, get(2, 3))
+                memPutDouble(ptr + Double.BYTES * 15, get(3, 3))
+            }
+            else -> {
+                memPutDouble(ptr, get(0, 0))
+                memPutDouble(ptr + Double.BYTES, get(0, 1))
+                memPutDouble(ptr + Double.BYTES * 2, get(0, 2))
+                memPutDouble(ptr + Double.BYTES * 3, get(0, 3))
+                memPutDouble(ptr + Double.BYTES * 4, get(1, 0))
+                memPutDouble(ptr + Double.BYTES * 5, get(1, 1))
+                memPutDouble(ptr + Double.BYTES * 6, get(1, 2))
+                memPutDouble(ptr + Double.BYTES * 7, get(1, 3))
+                memPutDouble(ptr + Double.BYTES * 8, get(2, 0))
+                memPutDouble(ptr + Double.BYTES * 9, get(2, 1))
+                memPutDouble(ptr + Double.BYTES * 10, get(2, 2))
+                memPutDouble(ptr + Double.BYTES * 11, get(2, 3))
+                memPutDouble(ptr + Double.BYTES * 12, get(3, 0))
+                memPutDouble(ptr + Double.BYTES * 13, get(3, 1))
+                memPutDouble(ptr + Double.BYTES * 14, get(3, 2))
+                memPutDouble(ptr + Double.BYTES * 15, get(3, 3))
+            }
+        }
+    }
+    
     // -- put --
 
     fun put(mat2x2: Mat2x2t<*>) {
@@ -655,6 +703,22 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
         const val length = Mat4x4t.length
         @JvmField
         val size = length * Double.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr, transpose: Boolean = false): Mat4 {
+            return when {
+                transpose -> Mat4(
+                        memGetDouble(ptr), memGetDouble(ptr + Double.BYTES * 4), memGetDouble(ptr + Double.BYTES * 8), memGetDouble(ptr + Double.BYTES * 12),
+                        memGetDouble(ptr + Double.BYTES), memGetDouble(ptr + Double.BYTES * 5), memGetDouble(ptr + Double.BYTES * 9), memGetDouble(ptr + Double.BYTES * 13),
+                        memGetDouble(ptr + Double.BYTES * 2), memGetDouble(ptr + Double.BYTES * 6), memGetDouble(ptr + Double.BYTES * 10), memGetDouble(ptr + Double.BYTES * 14),
+                        memGetDouble(ptr + Double.BYTES * 3), memGetDouble(ptr + Double.BYTES * 7), memGetDouble(ptr + Double.BYTES * 11), memGetDouble(ptr + Double.BYTES * 15))
+                else -> Mat4(
+                        memGetDouble(ptr), memGetDouble(ptr + Double.BYTES), memGetDouble(ptr + Double.BYTES * 2), memGetDouble(ptr + Double.BYTES * 3),
+                        memGetDouble(ptr + Double.BYTES * 4), memGetDouble(ptr + Double.BYTES * 5), memGetDouble(ptr + Double.BYTES * 6), memGetDouble(ptr + Double.BYTES * 7),
+                        memGetDouble(ptr + Double.BYTES * 8), memGetDouble(ptr + Double.BYTES * 9), memGetDouble(ptr + Double.BYTES * 10), memGetDouble(ptr + Double.BYTES * 11),
+                        memGetDouble(ptr + Double.BYTES * 12), memGetDouble(ptr + Double.BYTES * 13), memGetDouble(ptr + Double.BYTES * 14), memGetDouble(ptr + Double.BYTES * 15))
+            }
+        }
     }
 
     override fun size() = size
@@ -662,4 +726,16 @@ class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
     override fun equals(other: Any?) = other is Mat4d && Arrays.equals(array, other.array)
 
     override fun hashCode() = 31 * (31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()) + this[3].hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
+        $v00 $v10 $v20 $v30
+        $v01 $v11 $v21 $v31
+        $v02 $v12 $v22 $v32
+        $v03 $v13 $v23 $v33""")
+
+    override fun toString() = """
+        $v00 $v10 $v20 $v30
+        $v01 $v11 $v21 $v31
+        $v02 $v12 $v22 $v32
+        $v03 $v13 $v23 $v33"""
 }

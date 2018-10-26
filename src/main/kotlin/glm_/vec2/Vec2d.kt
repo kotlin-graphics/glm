@@ -6,18 +6,22 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.Ptr
 import kool.doubleBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetDouble
+import org.lwjgl.system.MemoryUtil.memPutDouble
 import java.awt.Color
 import java.io.InputStream
+import java.io.PrintStream
 import java.nio.*
 
 /**
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>() {
+class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToBuffer {
 
     constructor(x: Double, y: Double) : this(0, doubleArrayOf(x, y))
 
@@ -111,17 +115,11 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>() {
         return this
     }
 
-    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    fun to(bytes: ByteArray, index: Int): ByteArray = to(bytes, index, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
         bytes.putDouble(index, x)
         bytes.putDouble(index + Double.BYTES, y)
         return bytes
-    }
-
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putDouble(index, x)
-        buf.putDouble(index + Double.BYTES, y)
-        return buf
     }
 
     fun toDoubleArray(): DoubleArray = to(DoubleArray(length), 0)
@@ -131,13 +129,26 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>() {
         return doubles
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putDouble(offset, x)
+        buf.putDouble(offset + Double.BYTES, y)
+        return buf
+    }
+
+    fun toDoubleBufferStack(): DoubleBuffer = to(MemoryStack.stackGet().mallocDouble(length), 0)
     infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
     fun toDoubleBuffer(): DoubleBuffer = to(doubleBufferBig(length), 0)
     infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
+
     fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
         buf[index] = x
         buf[index + 1] = y
         return buf
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutDouble(ptr, x)
+        memPutDouble(ptr + Double.BYTES, y)
     }
 
     // -- Component accesses --
@@ -398,10 +409,16 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>() {
         const val length = Vec2t.length
         @JvmField
         val size = length * Double.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Vec2d(memGetDouble(ptr), memGetDouble(ptr + Double.BYTES))
     }
 
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec2d && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y]")
+    override fun toString(): String = "Vec2d [$x, $y]"
 }

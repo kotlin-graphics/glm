@@ -11,6 +11,9 @@ import glm_.mat4x4.Mat4
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
+import kool.Ptr
+import org.lwjgl.system.MemoryUtil.memGetFloat
+import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.io.InputStream
 import kotlin.math.abs
 import kotlin.math.sqrt
@@ -97,6 +100,13 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
     infix fun put(quat: Quat) = put(quat.w, quat.x, quat.y, quat.z)
 
+    infix fun to(ptr: Ptr) {
+        memPutFloat(ptr, w)
+        memPutFloat(ptr + Float.BYTES, x)
+        memPutFloat(ptr + Float.BYTES * 2, y)
+        memPutFloat(ptr + Float.BYTES * 3, z)
+    }
+
     // -- Component accesses --
 
     override operator fun set(index: Int, value: Number) = when (index) {
@@ -105,12 +115,6 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
         2 -> z = value.f
         3 -> w = value.f
         else -> throw ArrayIndexOutOfBoundsException()
-    }
-
-
-    companion object : quat_operators, gtcQuaternion {
-        @JvmField
-        val size = 4 * Float.BYTES
     }
 
 
@@ -209,8 +213,21 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     fun vectorize(res: Vec4 = Vec4()) = res.put(x, y, z, w)
 
 
-    override fun toString() = "($w, {$x, $y, $z})"
+    companion object : quat_operators, gtcQuaternion {
+        @JvmField
+        val size = 4 * Float.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr) = Quat(memGetFloat(ptr), memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 3))
+    }
+
     override fun equals(other: Any?) = other is Quat && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
 
     override fun hashCode() = 31 * (31 * (31 * w.hashCode() + x.hashCode()) + y.hashCode()) + z.hashCode()
+
+    fun printErr(name: String = "") = System.err.println("$name ($w, {$x, $y, $z})")
+
+    fun print(name: String = "") = println("$name ($w, {$x, $y, $z})")
+
+    override fun toString(): String = "Quat ($w, {$x, $y, $z})"
 }

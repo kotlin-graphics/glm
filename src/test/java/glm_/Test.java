@@ -18,6 +18,7 @@ public class Test {
 
     public static void main(String[] argvs) {
         glm.normalize(3.4);
+        glm.detail.mod289(new Vec2(3.0));
         glm_.glm.detail.mod289(new Vec2());
 
         Vec2 v = new Vec2(3, 4);
@@ -28,6 +29,8 @@ public class Test {
         Vec1 b = new Vec1();
         int l = Vec1.length;
 //        Vec2 b = (Vec2) v.aa();
+
+        Vec2 c = Vec2.fromPointer(4L);
     }
 
 

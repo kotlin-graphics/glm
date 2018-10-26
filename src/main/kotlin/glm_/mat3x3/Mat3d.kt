@@ -21,6 +21,14 @@ import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
+import kool.Ptr
+import kool.doubleBufferBig
+import kool.pos
+import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetDouble
+import org.lwjgl.system.MemoryUtil.memPutDouble
+import java.io.PrintStream
+import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*
 
@@ -320,21 +328,64 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
         return doubles
     }
 
-    infix fun to(dfb: DoubleBuffer) = to(dfb, 0)
-
-    fun to(dfb: DoubleBuffer, offset: Int): DoubleBuffer {
-        dfb[offset + 0] = array[0]
-        dfb[offset + 1] = array[1]
-        dfb[offset + 2] = array[2]
-        dfb[offset + 3] = array[3]
-        dfb[offset + 4] = array[4]
-        dfb[offset + 5] = array[5]
-        dfb[offset + 6] = array[6]
-        dfb[offset + 7] = array[7]
-        dfb[offset + 8] = array[8]
-        return dfb
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        return buf
+                .putDouble(offset + 0 * Double.BYTES, array[0])
+                .putDouble(offset + 1 * Double.BYTES, array[1])
+                .putDouble(offset + 2 * Double.BYTES, array[2])
+                .putDouble(offset + 3 * Double.BYTES, array[3])
+                .putDouble(offset + 4 * Double.BYTES, array[4])
+                .putDouble(offset + 5 * Double.BYTES, array[5])
+                .putDouble(offset + 6 * Double.BYTES, array[6])
+                .putDouble(offset + 7 * Double.BYTES, array[7])
+                .putDouble(offset + 8 * Double.BYTES, array[8])
     }
 
+
+    fun toDoubleBufferStack(): DoubleBuffer = to(MemoryStack.stackGet().mallocDouble(length), 0)
+    infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
+    fun toDoubleBuffer(): DoubleBuffer = to(doubleBufferBig(length), 0)
+    infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
+
+    fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
+        buf[offset + 0] = array[0]
+        buf[offset + 1] = array[1]
+        buf[offset + 2] = array[2]
+        buf[offset + 3] = array[3]
+        buf[offset + 4] = array[4]
+        buf[offset + 5] = array[5]
+        buf[offset + 6] = array[6]
+        buf[offset + 7] = array[7]
+        buf[offset + 8] = array[8]
+        return buf
+    }
+
+    fun to(ptr: Ptr, transpose: Boolean = false) {
+        when {
+            transpose -> {
+                memPutDouble(ptr, get(0, 0))
+                memPutDouble(ptr + Double.BYTES, get(1, 0))
+                memPutDouble(ptr + Double.BYTES * 2, get(2, 0))
+                memPutDouble(ptr + Double.BYTES * 3, get(0, 1))
+                memPutDouble(ptr + Double.BYTES * 4, get(1, 1))
+                memPutDouble(ptr + Double.BYTES * 5, get(2, 1))
+                memPutDouble(ptr + Double.BYTES * 6, get(0, 2))
+                memPutDouble(ptr + Double.BYTES * 7, get(1, 2))
+                memPutDouble(ptr + Double.BYTES * 8, get(2, 2))
+            }
+            else -> {
+                memPutDouble(ptr, get(0, 0))
+                memPutDouble(ptr + Double.BYTES, get(0, 1))
+                memPutDouble(ptr + Double.BYTES * 2, get(0, 2))
+                memPutDouble(ptr + Double.BYTES * 3, get(1, 0))
+                memPutDouble(ptr + Double.BYTES * 4, get(1, 1))
+                memPutDouble(ptr + Double.BYTES * 5, get(1, 2))
+                memPutDouble(ptr + Double.BYTES * 6, get(2, 0))
+                memPutDouble(ptr + Double.BYTES * 7, get(2, 1))
+                memPutDouble(ptr + Double.BYTES * 8, get(2, 2))
+            }
+        }
+    }
 
     // -- Unary arithmetic operators --
 
@@ -479,6 +530,20 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
         const val length = Mat3x3t.length
         @JvmField
         val size = length * Double.BYTES
+
+        @JvmStatic
+        fun fromPointer(ptr: Ptr, transpose: Boolean = false): Mat3 {
+            return when {
+                transpose -> Mat3(
+                        memGetDouble(ptr), memGetDouble(ptr + Double.BYTES * 3), memGetDouble(ptr + Double.BYTES * 6),
+                        memGetDouble(ptr + Double.BYTES), memGetDouble(ptr + Double.BYTES * 4), memGetDouble(ptr + Double.BYTES * 7),
+                        memGetDouble(ptr + Double.BYTES * 2), memGetDouble(ptr + Double.BYTES * 5), memGetDouble(ptr + Double.BYTES * 8))
+                else -> Mat3(
+                        memGetDouble(ptr), memGetDouble(ptr + Double.BYTES), memGetDouble(ptr + Double.BYTES * 2),
+                        memGetDouble(ptr + Double.BYTES * 3), memGetDouble(ptr + Double.BYTES * 4), memGetDouble(ptr + Double.BYTES * 5),
+                        memGetDouble(ptr + Double.BYTES * 6), memGetDouble(ptr + Double.BYTES * 7), memGetDouble(ptr + Double.BYTES * 8))
+            }
+        }
     }
 
     override fun size() = size
@@ -486,4 +551,14 @@ class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
     override fun equals(other: Any?) = other is Mat3d && Arrays.equals(array, other.array)
 
     override fun hashCode() = 31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
+        $v00 $v10 $v20
+        $v01 $v11 $v21
+        $v02 $v12 $v22""")
+
+    override fun toString() = """
+        $v00 $v10 $v20
+        $v01 $v11 $v21
+        $v02 $v12 $v22"""
 }

@@ -1,6 +1,7 @@
 package glm_.vec3
 
 import glm_.glm
+import java.io.PrintStream
 
 /**
  * Created by elect on 08/10/16.
@@ -94,4 +95,8 @@ data class Vec3bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
     }
 
     fun all() = x && y && z
+
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y, $z]")
+    override fun toString(): String = "Vec3bool [$x, $y, $z]"
 }

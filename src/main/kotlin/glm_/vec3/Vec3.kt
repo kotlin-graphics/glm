@@ -7,18 +7,22 @@ import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.Ptr
 import kool.floatBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetFloat
+import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.awt.Color
 import java.io.InputStream
+import java.io.PrintStream
 import java.nio.*
 
 /**
  * Created bY GBarbieri on 05.10.2016.
  */
 
-class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
+class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToBuffer {
 
     constructor(x: Float, y: Float, z: Float) : this(0, floatArrayOf(x, y, z))
 
@@ -136,13 +140,6 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer {
-        buf.putFloat(index, x)
-        buf.putFloat(index + Float.BYTES, y)
-        buf.putFloat(index + Float.BYTES * 2, z)
-        return buf
-    }
-
     fun toFloatArray(): FloatArray = to(FloatArray(length), 0)
     infix fun to(floats: FloatArray): FloatArray = to(floats, 0)
     fun to(floats: FloatArray, index: Int): FloatArray {
@@ -150,6 +147,14 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
         return floats
     }
 
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        buf.putFloat(offset, x)
+        buf.putFloat(offset + Float.BYTES, y)
+        buf.putFloat(offset + Float.BYTES * 2, z)
+        return buf
+    }
+
+    fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackPush().mallocFloat(length), 0)
     infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
     fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
     infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
@@ -158,6 +163,12 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
         buf[index + 1] = y
         buf[index + 2] = z
         return buf
+    }
+
+    infix fun to(ptr: Ptr) {
+        memPutFloat(ptr, x)
+        memPutFloat(ptr + Float.BYTES, y)
+        memPutFloat(ptr + Float.BYTES * 2, z)
     }
 
     // -- Component accesses --
@@ -431,6 +442,9 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
         @JvmField
         val size = length * Float.BYTES
 
+        @JvmStatic // TODO 1.3 use inline classes
+        fun fromPointer(ptr: Ptr) = Vec3(memGetFloat(ptr), memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 2))
+
         fun fromColor(n: Number) = Vec3(n.f / 255, n.f / 255, n.f / 255f)
         fun fromColor(r: Number, g: Number, b: Number) = Vec3(r.f / 255, g.f / 255, b.f / 255f)
     }
@@ -441,4 +455,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>() {
 
     override fun equals(other: Any?) = other is Vec3 && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()
+
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y, $z]")
+    override fun toString(): String = "Vec3 [$x, $y, $z]"
 }

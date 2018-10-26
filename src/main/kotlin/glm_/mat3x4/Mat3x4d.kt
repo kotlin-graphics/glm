@@ -5,6 +5,10 @@ import glm_.d
 import glm_.set
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
+import kool.doubleBufferBig
+import kool.pos
+import org.lwjgl.system.MemoryStack
+import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*
 
@@ -39,22 +43,42 @@ class Mat3x4d(dummy: Int, var array: DoubleArray) : Mat3x4t<Double>() {
         return doubles
     }
 
-    infix fun to(dfb: DoubleBuffer) = to(dfb, 0)
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
+        return buf
+                .putDouble(offset + 0 * Double.BYTES, array[0])
+                .putDouble(offset + 1 * Double.BYTES, array[1])
+                .putDouble(offset + 2 * Double.BYTES, array[2])
+                .putDouble(offset + 3 * Double.BYTES, array[3])
+                .putDouble(offset + 4 * Double.BYTES, array[4])
+                .putDouble(offset + 5 * Double.BYTES, array[5])
+                .putDouble(offset + 6 * Double.BYTES, array[6])
+                .putDouble(offset + 7 * Double.BYTES, array[7])
+                .putDouble(offset + 8 * Double.BYTES, array[8])
+                .putDouble(offset + 9 * Double.BYTES, array[9])
+                .putDouble(offset + 10 * Double.BYTES, array[10])
+                .putDouble(offset + 11 * Double.BYTES, array[11])
+    }
 
-    fun to(dfb: DoubleBuffer, offset: Int): DoubleBuffer {
-        dfb[offset + 0] = array[0]
-        dfb[offset + 1] = array[1]
-        dfb[offset + 2] = array[2]
-        dfb[offset + 3] = array[3]
-        dfb[offset + 4] = array[4]
-        dfb[offset + 5] = array[5]
-        dfb[offset + 6] = array[6]
-        dfb[offset + 7] = array[7]
-        dfb[offset + 8] = array[8]
-        dfb[offset + 9] = array[9]
-        dfb[offset + 10] = array[10]
-        dfb[offset + 11] = array[11]
-        return dfb
+
+    fun toDoubleBufferStack(): DoubleBuffer = to(MemoryStack.stackGet().mallocDouble(length), 0)
+    infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
+    fun toDoubleBuffer(): DoubleBuffer = to(doubleBufferBig(length), 0)
+    infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
+
+    fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
+        buf[offset + 0] = array[0]
+        buf[offset + 1] = array[1]
+        buf[offset + 2] = array[2]
+        buf[offset + 3] = array[3]
+        buf[offset + 4] = array[4]
+        buf[offset + 5] = array[5]
+        buf[offset + 6] = array[6]
+        buf[offset + 7] = array[7]
+        buf[offset + 8] = array[8]
+        buf[offset + 9] = array[9]
+        buf[offset + 10] = array[10]
+        buf[offset + 11] = array[11]
+        return buf
     }
 
     override var a0: Double
