@@ -579,6 +579,6 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>(), ToBuffer {
     override fun equals(other: Any?) = other is Vec2b && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
 
-    fun print(name: String = "", , stream: PrintStream = System.out) = stream.println("$name [$x, $y]")
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y]")
     override fun toString(): String = "Vec2b [$x, $y]"
 }
