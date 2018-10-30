@@ -123,9 +123,6 @@ class Vec1ui(x: Uint) : Vec1t<Uint>(x) {
     }
 
 
-
-
-
     // -- Unary arithmetic operators --
 
 //    operator fun unaryPlus() = this

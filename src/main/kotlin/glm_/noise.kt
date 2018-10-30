@@ -385,7 +385,7 @@ interface noise {
         gx1 = fract(gx1)
         val gz1 = Vec4(0.5f) - abs(gx1) - abs(gy1)
         val sz1 = step(gz1, Vec4(0f))
-        gx1 minusAssign  sz1 * (step(0f, gx1) - 0.5f)
+        gx1 minusAssign sz1 * (step(0f, gx1) - 0.5f)
         gy1 minusAssign sz1 * (step(0f, gy1) - 0.5f)
 
         val g000 = Vec3(gx0.x, gy0.x, gz0.x)

@@ -4,6 +4,7 @@ import glm_.func.rad
 import glm_.glm
 import glm_.glm.HPIf
 import glm_.glm.PI2f
+import glm_.glm.PI3over2f
 import glm_.glm.PIf
 import glm_.glm.abs
 import glm_.glm.cos
@@ -11,7 +12,6 @@ import glm_.glm.floatBitsToInt
 import glm_.glm.intBitsToFloat
 import glm_.glm.lessThanEqual
 import glm_.glm.mix
-import glm_.glm.PI3over2f
 import glm_.glm.trunc
 import glm_.vec1.Vec1
 import glm_.vec1.operators.minus
@@ -122,7 +122,7 @@ object taylorCos {
 
     val angleShift = Vec4(0f, HPIf, PIf, PI3over2f)
 
-        fun taylorSeriesNewCos(x: Vec4): Vec4 {
+    fun taylorSeriesNewCos(x: Vec4): Vec4 {
         val powed2 = x * x
         val powed4 = powed2 * powed2
         val powed6 = powed4 * powed2
@@ -186,7 +186,7 @@ object taylorCos {
 
     fun deterministicMod(x: Vec4, y: Float) = x - y * trunc(x / y)
 
-    fun fastCosDeterminisctic(x: Vec4): Vec4    {
+    fun fastCosDeterminisctic(x: Vec4): Vec4 {
         val angle0_PI = Vec4(abs(deterministicMod(x + PIf, PI2f) - PIf))
         val firstQuarterPi = Vec4(lessThanEqual(angle0_PI, Vec4(HPIf)))
 
@@ -199,18 +199,18 @@ object taylorCos {
 
     fun perfFastCosDeterminisctic(begin: Float, end: Float, samples: Int) {
 
-        val results = Array(samples, {Vec4()})
+        val results = Array(samples, { Vec4() })
 
         val steps = (end - begin) / samples
 
         val time = measureNanoTime {
-            for(i in 0 until samples)
+            for (i in 0 until samples)
                 results[i] = fastCosDeterminisctic(angleShift + Vec4(begin + steps * i))
         }
 
         println("fastCosDeterminisctic $time ns")
 
-        for(i in 0 until samples)
+        for (i in 0 until samples)
             (results[i].x in -1f..1f) shouldBe true
     }
 

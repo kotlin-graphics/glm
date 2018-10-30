@@ -200,9 +200,6 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
     }
 
 
-
-
-
     // -- Unary arithmetic operators --
 
     operator fun unaryPlus() = this
@@ -232,6 +229,7 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
     infix operator fun plusAssign(b: Long) {
         plus(this, this, b, b, b, b)
     }
+
     infix operator fun plusAssign(b: Vec4l) {
         plus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -248,6 +246,7 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
     infix operator fun minusAssign(b: Long) {
         minus(this, this, b, b, b, b)
     }
+
     infix operator fun minusAssign(b: Vec4l) {
         minus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -264,6 +263,7 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
     infix operator fun timesAssign(b: Long) {
         times(this, this, b, b, b, b)
     }
+
     infix operator fun timesAssign(b: Vec4l) {
         times(this, this, b.x, b.y, b.z, b.w)
     }
@@ -280,6 +280,7 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
     infix operator fun divAssign(b: Long) {
         div(this, this, b, b, b, b)
     }
+
     infix operator fun divAssign(b: Vec4l) {
         div(this, this, b.x, b.y, b.z, b.w)
     }
@@ -296,6 +297,7 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
     infix operator fun remAssign(b: Long) {
         rem(this, this, b, b, b, b)
     }
+
     infix operator fun remAssign(b: Vec4l) {
         rem(this, this, b.x, b.y, b.z, b.w)
     }
@@ -314,6 +316,7 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.L, b.L, b.L, b.L)
     }
+
     infix operator fun plusAssign(b: Vec4t<out Number>) {
         plus(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
     }
@@ -330,6 +333,7 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.L, b.L, b.L, b.L)
     }
+
     infix operator fun minusAssign(b: Vec4t<out Number>) {
         minus(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
     }
@@ -346,6 +350,7 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.L, b.L, b.L, b.L)
     }
+
     infix operator fun timesAssign(b: Vec4t<out Number>) {
         times(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
     }
@@ -362,6 +367,7 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.L, b.L, b.L, b.L)
     }
+
     infix operator fun divAssign(b: Vec4t<out Number>) {
         div(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
     }
@@ -378,6 +384,7 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.L, b.L, b.L, b.L)
     }
+
     infix operator fun remAssign(b: Vec4t<out Number>) {
         rem(this, this, b.x.L, b.y.L, b.z.L, b.w.L)
     }

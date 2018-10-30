@@ -104,7 +104,7 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToBuffer {
             this(inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian))
 
     // TODO other non float?
-    constructor(color: Color) : this (color.red / 255f, color.green / 255f, color.blue / 255f, color.alpha / 255f)
+    constructor(color: Color) : this(color.red / 255f, color.green / 255f, color.blue / 255f, color.alpha / 255f)
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneFloat: Boolean = false, bigEndian: Boolean = true) {
@@ -465,6 +465,7 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToBuffer {
 
         // TODO other? d?
         fun fromColor(n: Number) = Vec4(n.f / 255, n.f / 255, n.f / 255f, n.f / 255)
+
         fun fromColor(r: Number, g: Number, b: Number, a: Number = 255f) = Vec4(r.f / 255, g.f / 255, b.f / 255f, a.f / 255)
     }
 

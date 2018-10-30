@@ -8,8 +8,6 @@ import glm_.vec2.Vec2
 import glm_.vec2.Vec2d
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
-import glm_.vec4.Vec4
-import glm_.vec4.Vec4d
 import glm_.vec4.Vec4i
 import kotlin.math.sqrt
 
@@ -230,12 +228,12 @@ interface gtcMatrixTransform {
         else -> lookAtRh(Mat4(), eye, center, up)
     }
 
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Mat4d version
     // -----------------------------------------------------------------------------------------------------------------
 
-    
+
     /** Define a picking region
      *
      *  @param res the pick matrix

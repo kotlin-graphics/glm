@@ -149,5 +149,5 @@ interface detail_integer {
         return (((vL and mask) shl shift) or ((vL and mask.inv()) ushr shift)).i
     }
 
-    fun compute_bitfieldReverseStep(v: ulong, mask: ulong, shift: uint): ulong  = ((v and mask) shl shift) or ((v and mask.inv()) ushr shift)
+    fun compute_bitfieldReverseStep(v: ulong, mask: ulong, shift: uint): ulong = ((v and mask) shl shift) or ((v and mask.inv()) ushr shift)
 }

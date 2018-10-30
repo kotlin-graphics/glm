@@ -23,6 +23,7 @@ data class Vec4bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
 
     // TODO others
     constructor(ints: IntBuffer, position: Int = ints.pos) : this(ints[position], ints[position + 1], ints[position + 2], ints[position + 3])
+
     constructor(x: Number, y: Number, z: Number, w: Number) : this(x.bool, y.bool, z.bool, w.bool)
 
     // -- Component accesses --
@@ -104,6 +105,7 @@ data class Vec4bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
 
     // TODO others
     infix fun and(b: Vec4bool) = and(Vec4bool(), this, b.x, b.y, b.z, b.w)
+
     infix fun or(b: Vec4bool) = or(Vec4bool(), this, b.x, b.y, b.z, b.w)
     infix fun xor(b: Vec4bool) = xor(Vec4bool(), this, b.x, b.y, b.z, b.w)
 

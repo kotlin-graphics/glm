@@ -380,25 +380,25 @@ class testCoreVec3 : StringSpec() {
             // vec2
             val a = Vec2(1, 2)
             val b = Vec2(10, 20)
-            r = glm.dot(a, b);                 r.i shouldBe 50
-            r = glm.dot(Vec2(a.xy), Vec2(b.xy));       r.i shouldBe 50
-            r = glm.dot(Vec2(a.xy), Vec2(b.yy));       r.i shouldBe 60
+            r = glm.dot(a, b); r.i shouldBe 50
+            r = glm.dot(Vec2(a.xy), Vec2(b.xy)); r.i shouldBe 50
+            r = glm.dot(Vec2(a.xy), Vec2(b.yy)); r.i shouldBe 60
 
             // vec3
             val u = Vec3(1, 2, 3)
             val v = Vec3(10, 20, 30)
-            r = glm.dot(u, v);                 r.i shouldBe 140
-            r = glm.dot(u.xyz as Vec3, v.zyz as Vec3);     r.i shouldBe  160
-            r = glm.dot(u, v.zyx as Vec3);           r.i shouldBe 100
-            r = glm.dot(u.xyz as Vec3, v);           r.i shouldBe 140
-            r = glm.dot(u.xy as Vec2, v.xy as Vec2);       r.i shouldBe 50
+            r = glm.dot(u, v); r.i shouldBe 140
+            r = glm.dot(u.xyz as Vec3, v.zyz as Vec3); r.i shouldBe 160
+            r = glm.dot(u, v.zyx as Vec3); r.i shouldBe 100
+            r = glm.dot(u.xyz as Vec3, v); r.i shouldBe 140
+            r = glm.dot(u.xy as Vec2, v.xy as Vec2); r.i shouldBe 50
 
             // vec4
             val s = Vec4(1, 2, 3, 4)
             val t = Vec4(10, 20, 30, 40)
-            r = glm.dot(s, t);                 r.i shouldBe 300
-            r = glm.dot(s.xyzw as Vec4, t.xyzw as Vec4);   r.i shouldBe 300
-            r = glm.dot(s.xyz as Vec3, t.xyz as Vec3);     r.i shouldBe 140
+            r = glm.dot(s, t); r.i shouldBe 300
+            r = glm.dot(s.xyzw as Vec4, t.xyzw as Vec4); r.i shouldBe 300
+            r = glm.dot(s.xyz as Vec3, t.xyz as Vec3); r.i shouldBe 140
         }
     }
 }

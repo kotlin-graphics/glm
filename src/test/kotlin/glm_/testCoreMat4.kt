@@ -34,7 +34,8 @@ class testCoreMat4 : StringSpec() {
             glm.all(glm.epsilonEqual(identity[3], Vec4(0f, 0f, 0f, 1f), Vec4(0.01f))) shouldBe true
         }
 
-        "inverse mat4d" { val matrix = Mat4d(
+        "inverse mat4d" {
+            val matrix = Mat4d(
                     0.6, 0.2, 0.3, 0.4,
                     0.2, 0.7, 0.5, 0.3,
                     0.3, 0.5, 0.7, 0.2,

@@ -73,7 +73,7 @@ class testGtxMatrixFactorization : StringSpec() {
             //Test if the matrix r is upper triangular
             for (i in 0..2) {
                 var j = i + 1
-                while(j < 3)
+                while (j < 3)
                     r[i][j++] shouldBe 0f
             }
         }

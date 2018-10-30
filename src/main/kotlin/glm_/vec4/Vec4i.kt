@@ -200,8 +200,6 @@ class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>(), ToBuffer {
     }
 
 
-
-
     // -- Unary arithmetic operators --
 
     operator fun unaryPlus() = this

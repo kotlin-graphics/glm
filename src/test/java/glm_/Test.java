@@ -5,9 +5,9 @@ import glm_.vec1.Vec1;
 import glm_.vec2.Vec2;
 import glm_.vec3.Vec3;
 
-//import static glm_.glm;
-
 import static glm_.Java.glm;
+
+//import static glm_.glm;
 
 /**
  * Created by GBarbieri on 08.02.2017.
@@ -19,6 +19,7 @@ public class Test {
     public static void main(String[] argvs) {
         glm.normalize(3.4);
         glm.detail.mod289(new Vec2(3.0));
+        glm_.glm.detail.mod289(new Vec2());
 
         Vec2 v = new Vec2(3, 4);
 

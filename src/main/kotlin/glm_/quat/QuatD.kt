@@ -35,7 +35,7 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
                 realPart = 0.0
                 if (abs(u.x) > abs(u.z)) Vec3d(-u.y, u.x, 0.0) else Vec3d(0.0, -u.z, u.y)
             }
-        // Otherwise, build quaternion the standard way.
+            // Otherwise, build quaternion the standard way.
             else -> u cross v
         }
         put(realPart, w.x, w.y, w.z).normalizeAssign()

@@ -411,7 +411,7 @@ interface gtcQuaternion {
         val y = 2f * (q.y * q.z + q.w * q.x)
         val x = q.w * q.w - q.x * q.x - q.y * q.y + q.z * q.z
         return when {
-        //avoid atan2(0,0) - handle singularity - Matiis
+            //avoid atan2(0,0) - handle singularity - Matiis
             y == 0f && x == 0f -> 2f * atan(q.x, q.w)
             else -> atan(y, x)
         }
@@ -572,7 +572,7 @@ interface gtcQuaternion {
             1 -> res.put((m12 - m21) * mult, biggestVal, (m01 + m10) * mult, (m20 + m02) * mult)
             2 -> res.put((m20 - m02) * mult, (m01 + m10) * mult, biggestVal, (m12 + m21) * mult)
             3 -> res.put((m01 - m10) * mult, (m20 + m02) * mult, (m12 + m21) * mult, biggestVal)
-        // Silence a -Wswitch-default warning in GCC. Should never actually get here. Assert is just for sanity.
+            // Silence a -Wswitch-default warning in GCC. Should never actually get here. Assert is just for sanity.
             else -> {
                 assert(false)
                 res.put(1f, 0f, 0f, 0f)
@@ -641,7 +641,7 @@ interface gtcQuaternion {
                 res.z = biggestVal
             }
 
-        // Silence a -Wswitch-default warning in GCC. Should never actually get here. Assert is just for sanity.
+            // Silence a -Wswitch-default warning in GCC. Should never actually get here. Assert is just for sanity.
             else -> assert(false)
         }
         return res

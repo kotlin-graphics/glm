@@ -82,7 +82,7 @@ class testReflection : StringSpec() {
             run {
                 val refls = Array(4) { FloatArray(6) }
 
-                for(i in 0..1) {
+                for (i in 0..1) {
 
                     mirrorPoints[5 + i] to refls[i]
                     reflections[5 + i].to(refls[i], 3)
@@ -110,7 +110,7 @@ class testReflection : StringSpec() {
             run {
                 val refls = Array(4) { FloatArray(6) }
 
-                for(i in 0..1) {
+                for (i in 0..1) {
 
                     mirrorPoints[3 + i] to refls[i]
                     reflections[3 + i].to(refls[i], 3)
@@ -138,7 +138,7 @@ class testReflection : StringSpec() {
             run {
                 val refls = Array(4) { FloatArray(6) }
 
-                for(i in 0..1) {
+                for (i in 0..1) {
 
                     mirrorPoints[1 + i] to refls[i]
                     reflections[1 + i].to(refls[i], 3)

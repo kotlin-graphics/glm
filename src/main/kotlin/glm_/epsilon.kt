@@ -55,7 +55,7 @@ interface epsilon {
 //    fun epsilonEqual(a: Vec1s, b: Vec1s, epsilon: Short, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), Vec1s(epsilon), res)
 //    fun epsilonEqual(a: Vec1s, b: Vec1s, epsilon: Int, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), Vec1s(epsilon), res)
 //    fun epsilonEqual(a: Vec1s, b: Vec1s, epsilon: Vec1s, res: Vec1bool = Vec1bool()) = lessThan(abs(a - b), epsilon)
-    
+
 
     fun epsilonEqual(a: Vec2, b: Vec2, epsilon: Float, res: Vec2bool = Vec2bool()) = lessThan(abs(a - b), Vec2(epsilon), res)
     fun epsilonEqual(a: Vec2, b: Vec2, epsilon: Vec2, res: Vec2bool = Vec2bool()) = lessThan(abs(a - b), epsilon)
@@ -121,8 +121,8 @@ interface epsilon {
 
 
     fun epsilonEqual(a: Mat4, b: Mat4, epsilon: Float): Boolean {
-        for(i in 0..15)
-            if(!epsilonEqual(a.array[i], b.array[i], epsilon))
+        for (i in 0..15)
+            if (!epsilonEqual(a.array[i], b.array[i], epsilon))
                 return false
         return true
     }
@@ -148,7 +148,7 @@ interface epsilon {
 //    fun epsilonNotEqual(a: Vec1s, b: Vec1s, epsilon: Int, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), Vec1s(epsilon), res)
 //    fun epsilonNotEqual(a: Vec1s, b: Vec1s, epsilon: Vec1s, res: Vec1bool = Vec1bool()) = greaterThan(abs(a - b), epsilon)
 
-    
+
     fun epsilonNotEqual(a: Vec2, b: Vec2, epsilon: Float, res: Vec2bool = Vec2bool()) = greaterThan(abs(a - b), Vec2(epsilon), res)
     fun epsilonNotEqual(a: Vec2, b: Vec2, epsilon: Vec2, res: Vec2bool = Vec2bool()) = greaterThan(abs(a - b), epsilon)
 

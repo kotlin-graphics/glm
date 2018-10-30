@@ -230,9 +230,6 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
     }
 
 
-
-
-
     // -- Unary arithmetic operators --
 
     operator fun unaryPlus() = this
@@ -266,9 +263,11 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
     infix operator fun plusAssign(b: Uint) {
         plus(this, this, b, b, b, b)
     }
+
     infix operator fun plusAssign(b: Int) {
         plus(this, this, b, b, b, b)
     }
+
     infix operator fun plusAssign(b: Vec4ui) {
         plus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -289,9 +288,11 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
     infix operator fun minusAssign(b: Uint) {
         minus(this, this, b, b, b, b)
     }
+
     infix operator fun minusAssign(b: Int) {
         minus(this, this, b, b, b, b)
     }
+
     infix operator fun minusAssign(b: Vec4ui) {
         minus(this, this, b.x, b.y, b.z, b.w)
     }
@@ -312,9 +313,11 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
     infix operator fun timesAssign(b: Uint) {
         times(this, this, b, b, b, b)
     }
+
     infix operator fun timesAssign(b: Int) {
         times(this, this, b, b, b, b)
     }
+
     infix operator fun timesAssign(b: Vec4ui) {
         times(this, this, b.x, b.y, b.z, b.w)
     }
@@ -335,9 +338,11 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
     infix operator fun divAssign(b: Uint) {
         div(this, this, b, b, b, b)
     }
+
     infix operator fun divAssign(b: Int) {
         div(this, this, b, b, b, b)
     }
+
     infix operator fun divAssign(b: Vec4ui) {
         div(this, this, b.x, b.y, b.z, b.w)
     }
@@ -358,9 +363,11 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
     infix operator fun remAssign(b: Uint) {
         rem(this, this, b, b, b, b)
     }
+
     infix operator fun remAssign(b: Int) {
         rem(this, this, b, b, b, b)
     }
+
     infix operator fun remAssign(b: Vec4ui) {
         rem(this, this, b.x, b.y, b.z, b.w)
     }
@@ -379,6 +386,7 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun plusAssign(b: Vec4t<out Number>) {
         plus(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -395,6 +403,7 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun minusAssign(b: Vec4t<out Number>) {
         minus(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -411,6 +420,7 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun timesAssign(b: Vec4t<out Number>) {
         times(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -427,6 +437,7 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
     infix operator fun divAssign(b: Number) {
         div(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun divAssign(b: Vec4t<out Number>) {
         div(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }
@@ -443,6 +454,7 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.i, b.i, b.i, b.i)
     }
+
     infix operator fun remAssign(b: Vec4t<out Number>) {
         rem(this, this, b.x.i, b.y.i, b.z.i, b.w.i)
     }

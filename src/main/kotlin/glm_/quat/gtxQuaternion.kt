@@ -260,7 +260,7 @@ interface gtxQuaternion {
     /** Build a look at quaternion based on the default handedness.
      *  @param direction Desired forward direction. Needs to be normalized.
      *  @param up Up vector, how the camera is oriented. Typically (0, 1, 0). */
-    fun quatLookAt(direction: Vec3, up: Vec3) = when(GLM_COORDINATE_SYSTEM) {
+    fun quatLookAt(direction: Vec3, up: Vec3) = when (GLM_COORDINATE_SYSTEM) {
         GlmCoordinateSystem.LEFT_HANDED -> quatLookAtLH(direction, up)
         else -> quatLookAtRH(direction, up)
     }

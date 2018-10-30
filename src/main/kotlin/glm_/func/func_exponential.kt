@@ -1,7 +1,6 @@
 package glm_.func
 
 import glm_.d
-import glm_.f
 import glm_.i
 import glm_.vec1.Vec1
 import glm_.vec1.Vec1d
@@ -101,7 +100,7 @@ interface func_exponential {
         return res
     }
 
-    
+
     fun pow(base: Vec4, exponent: Float, res: Vec4 = Vec4()): Vec4 {
         res.x = pow(base.x, exponent)
         res.y = pow(base.y, exponent)
@@ -136,7 +135,7 @@ interface func_exponential {
 
     fun exp(a: Double) = _exp(a)
     fun exp(a: Float) = _exp(a)
-    
+
     fun exp(a: Vec1, res: Vec1 = Vec1()): Vec1 {
         res.x = exp(a.x)
         return res
@@ -146,7 +145,7 @@ interface func_exponential {
         res.x = exp(a.x)
         return res
     }
-    
+
     fun exp(a: Vec2, res: Vec2 = Vec2()): Vec2 {
         res.x = exp(a.x)
         res.y = exp(a.y)
@@ -202,7 +201,7 @@ interface func_exponential {
         res.x = log(a.x)
         return res
     }
-    
+
     fun log(a: Vec2, res: Vec2 = Vec2()): Vec2 {
         res.x = log(a.x)
         res.y = log(a.y)
@@ -258,7 +257,7 @@ interface func_exponential {
         res.x = exp2(a.x)
         return res
     }
-    
+
     fun exp2(a: Vec2, res: Vec2 = Vec2()): Vec2 {
         res.x = exp2(a.x)
         res.y = exp2(a.y)
@@ -315,7 +314,7 @@ interface func_exponential {
         res.x = log2(a.x)
         return res
     }
-    
+
     fun log2(a: Vec2, res: Vec2 = Vec2()): Vec2 {
         res.x = log2(a.x)
         res.y = log2(a.y)
@@ -371,7 +370,7 @@ interface func_exponential {
         res.x = sqrt(a.x)
         return res
     }
-    
+
     fun sqrt(a: Vec2, res: Vec2 = Vec2()): Vec2 {
         res.x = sqrt(a.x)
         res.y = sqrt(a.y)
@@ -427,7 +426,7 @@ interface func_exponential {
         res.x = inverseSqrt(a.x)
         return res
     }
-    
+
     fun inverseSqrt(a: Vec2, res: Vec2 = Vec2()): Vec2 {
         res.x = inverseSqrt(a.x)
         res.y = inverseSqrt(a.y)

@@ -2,7 +2,6 @@ package glm_.dualQuat
 
 import glm_.mat2x4.Mat2x4d
 import glm_.mat3x4.Mat3x4d
-import glm_.quat.Quat
 import glm_.quat.QuatD
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d

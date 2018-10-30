@@ -1,6 +1,5 @@
 package glm_
 
-import glm_.glm.π
 import glm_.glm.πf
 import glm_.mat4x4.Mat4
 import glm_.vec3.Vec3
@@ -15,7 +14,7 @@ interface matrix_interpolation {
         val epsilon = 0.01f
         val epsilon2 = 0.1f
 
-        if(abs(mat[1, 0] - mat[0, 1]) < epsilon && abs(mat[2, 0] - mat[0, 2]) < epsilon && abs(mat[2, 1] - mat[1, 2]) < epsilon) {
+        if (abs(mat[1, 0] - mat[0, 1]) < epsilon && abs(mat[2, 0] - mat[0, 2]) < epsilon && abs(mat[2, 1] - mat[1, 2]) < epsilon) {
             if (abs(mat[1, 0] + mat[0, 1]) < epsilon2 && abs(mat[2, 0] + mat[0, 2]) < epsilon2 && abs(mat[2, 1] + mat[1, 2]) < epsilon2 && abs(mat[0, 0] + mat[1, 1] + mat[2, 2] - 3f) < epsilon2) {
                 axis.x = 1f
                 axis.y = 0f
@@ -37,21 +36,21 @@ interface matrix_interpolation {
                         axis.z = 0.7071f
                     }
                     else -> {
-                    axis.x = sqrt(xx)
+                        axis.x = sqrt(xx)
                         axis.y = xy / axis.x
                         axis.z = xz / axis.x
                     }
                 }
                 yy > zz -> when {
                     yy < epsilon -> {
-                    axis.x = 0.7071f
-                    axis.y = 0f
-                    axis.z = 0.7071f
+                        axis.x = 0.7071f
+                        axis.y = 0f
+                        axis.z = 0.7071f
                     }
                     else -> {
-                    axis.y = sqrt(yy)
-                    axis.x = xy / axis.y
-                    axis.z = yz / axis.y
+                        axis.y = sqrt(yy)
+                        axis.x = xy / axis.y
+                        axis.z = yz / axis.y
                     }
                 }
                 else -> when {
@@ -61,15 +60,15 @@ interface matrix_interpolation {
                         axis.z = 0f
                     }
                     else -> {
-                    axis.z = sqrt(zz)
-                    axis.x = xz / axis.z
-                    axis.y = yz / axis.z
+                        axis.z = sqrt(zz)
+                        axis.x = xz / axis.z
+                        axis.y = yz / axis.z
                     }
                 }
             }
             return angle
         }
-        var s = sqrt((mat[2,1] - mat[1,2]) * (mat[2,1] - mat[1,2]) + (mat[2,0] - mat[0,2]) * (mat[2,0] - mat[0,2]) + (mat[1,0] - mat[0,1]) * (mat[1,0] - mat[0,1]))
+        var s = sqrt((mat[2, 1] - mat[1, 2]) * (mat[2, 1] - mat[1, 2]) + (mat[2, 0] - mat[0, 2]) * (mat[2, 0] - mat[0, 2]) + (mat[1, 0] - mat[0, 1]) * (mat[1, 0] - mat[0, 1]))
         if (abs(s) < 0.001f)
             s = 1f
         val angleCos = (mat[0, 0] + mat[1, 1] + mat[2, 2] - 1f) * 0.5f
@@ -104,7 +103,7 @@ interface matrix_interpolation {
             m[2, 0], m[2, 1], m[2, 2], 0f,
             0f, 0f, 0f, 1f)
 
-    fun interpolate(m1: Mat4, m2: Mat4, delta: Float):Mat4    {
+    fun interpolate(m1: Mat4, m2: Mat4, delta: Float): Mat4 {
 
         val m1rot = extractMatrixRotation(m1)
         val dltRotation = m2 * m1rot.transpose()

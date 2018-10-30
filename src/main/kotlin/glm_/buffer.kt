@@ -1,6 +1,5 @@
 package glm_
 
-import glm_.vec4.Vec4t
 import java.nio.*
 
 /**

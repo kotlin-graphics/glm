@@ -61,12 +61,12 @@ interface gtxInteger {
     }
 
     /** Returns x raised to the y power. */
-    fun powU(x: uint, y: uint) = when(y) {
+    fun powU(x: uint, y: uint) = when (y) {
         0 -> 1
         else -> {
             var result = x
             var i = 1
-            while(i.compareUnsigned(y) < 0) {
+            while (i.compareUnsigned(y) < 0) {
                 result *= x
                 ++i
             }
@@ -80,10 +80,10 @@ interface gtxInteger {
         else -> {
             var nextTrial = x ushr 1
             var currentAnswer: Int
-            do            {
+            do {
                 currentAnswer = nextTrial
                 nextTrial = (nextTrial + x / nextTrial) ushr 1
-            } while(nextTrial < currentAnswer)
+            } while (nextTrial < currentAnswer)
             currentAnswer
         }
     }

@@ -206,7 +206,7 @@ interface gtcMatrixFrustum {
             else -> frustumRhNo(res, left, right, bottom, top, near, far)
         }
     }
-    
+
     /** Creates a frustum matrix with default handedness, using the default handedness and default near and far clip planes definition.
      *  To change default handedness use LEFT_HANDED. To change default near and far clip planes definition use ZERO_TO_ONE.
      *

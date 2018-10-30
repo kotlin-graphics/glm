@@ -1,10 +1,7 @@
 package glm_.dualQuat
 
-import glm_.glm.dot
 import glm_.dualQuat.DualQuatD.Companion.times
-import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
-import glm_.vec4.Vec4
 import glm_.vec4.Vec4d
 
 /**

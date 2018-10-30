@@ -297,17 +297,17 @@ class testCoreFuncInteger : StringSpec() {
             "last significant bit" {
 
                 val data = arrayOf(
-                        Pair(0x00000001,  0),
-                        Pair(0x00000003,  0),
-                        Pair(0x00000002,  1),
+                        Pair(0x00000001, 0),
+                        Pair(0x00000003, 0),
+                        Pair(0x00000002, 1),
                         // Pair(0x80000000, 31), // Clang generates an error with this
                         Pair(0x00010000, 16),
                         Pair(0x7FFF0000, 16),
                         Pair(0x7F000000, 24),
-                        Pair(0x7F00FF00,  8),
+                        Pair(0x7F00FF00, 8),
                         Pair(0x00000000, -1))
 
-                for(d in data)
+                for (d in data)
                     d.first.lsb shouldBe d.second
             }
         }

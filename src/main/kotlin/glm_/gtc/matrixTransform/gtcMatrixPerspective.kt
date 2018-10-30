@@ -1098,7 +1098,7 @@ interface gtcMatrixPerspective {
         res[3][2] = (ep - 2f) * near
         return res
     }
-    
+
     /** Creates a matrix for a symmetric perspective-view frustum with far plane at infinite for graphics hardware that doesn't support depth clamping.
      *
      *  Infinite projection matrix: http://www.terathon.com/gdc07_lengyel.pdf
@@ -1123,7 +1123,7 @@ interface gtcMatrixPerspective {
      */
     fun tweakedInfinitePerspective(fovY: Float, aspect: Float, near: Float, ep: Float): Mat4 = tweakedInfinitePerspective(Mat4(), fovY, aspect, near, ep)
 
-    
+
     // -----------------------------------------------------------------------------------------------------------------
     // Mat4d version
     // -----------------------------------------------------------------------------------------------------------------

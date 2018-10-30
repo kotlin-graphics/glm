@@ -2,8 +2,8 @@ package glm_.gtx
 
 import glm_.mat3x3.Mat3
 import glm_.mat4x4.Mat4
-import glm_.vec4.operators.times
 import glm_.vec3.operators.times
+import glm_.vec4.operators.times
 
 
 /*  Suggestions:
@@ -22,6 +22,7 @@ interface gtxMatrixFactorization {
 
         return out
     }
+
     /** Flips the matrix columns right and left.
      *  From GLM_GTX_matrix_factorisation extension. */
     fun flipLR(`in`: Mat4): Mat4 {
@@ -68,6 +69,7 @@ interface gtxMatrixFactorization {
                 r[j][i] = `in`[j] dot q[i]
         }
     }
+
     /** Performs RQ factorisation of a matrix.
      *  Returns 2 matrices, r and q, such that r is an upper triangular matrix, the rows of q are orthonormal and
      *  span the same subspace than those of the input matrix, and r*q=in.
@@ -82,7 +84,7 @@ interface gtxMatrixFactorization {
             and an orthogonal matrix Q. The only difference from QR decomposition is the order of these matrices.
             QR decomposition is Gram–Schmidt orthogonalization of columns of A, started from the first column.
             RQ decomposition is Gram–Schmidt orthogonalization of rows of A, started from the last row. */
-        
+
         var tin = `in`.transpose()
         tin = flipLR(tin)
 
@@ -109,6 +111,7 @@ interface gtxMatrixFactorization {
 
         return out
     }
+
     /** Flips the matrix columns right and left.
      *  From GLM_GTX_matrix_factorisation extension. */
     fun flipLR(`in`: Mat3): Mat3 {
@@ -155,6 +158,7 @@ interface gtxMatrixFactorization {
                 r[j][i] = `in`[j] dot q[i]
         }
     }
+
     /** Performs RQ factorisation of a matrix.
      *  Returns 2 matrices, r and q, such that r is an upper triangular matrix, the rows of q are orthonormal and
      *  span the same subspace than those of the input matrix, and r*q=in.

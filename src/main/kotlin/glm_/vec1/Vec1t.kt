@@ -227,5 +227,5 @@ abstract class Vec1t<T : Number>(_x: T) {
         const val length = 1
     }
 
-    override fun toString() : String = "Vect1 [$x]"
+    override fun toString(): String = "Vect1 [$x]"
 }
