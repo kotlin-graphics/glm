@@ -140,14 +140,6 @@ class Java {
     }
 }
 
-class Clojure {
-
-    companion object {
-        @JvmStatic
-        fun frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float) = glm.frustum(left, right, bottom, top, near, far)
-    }
-}
-
 typealias uint = Int
 typealias ulong = Long
 
@@ -155,5 +147,5 @@ val GLM_VERSION_MAJOR = 0
 val GLM_VERSION_MINOR = 9
 val GLM_VERSION_PATCH = 9
 val GLM_VERSION_REVISION = 0
-val GLM_VERSION_BUILD = 9
+val GLM_VERSION_BUILD = 10
 val GLM_VERSION = GLM_VERSION_MAJOR * 1_000 + GLM_VERSION_MINOR * 100 + GLM_VERSION_PATCH * 10 + GLM_VERSION_REVISION + GLM_VERSION_BUILD / 10f
