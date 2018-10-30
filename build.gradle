@@ -11,7 +11,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 
 buildscript {
 
-    ext.kotlinVersion = '1.2.70'
+    ext.kotlinVersion = '1.3.0'
 
     repositories {
         jcenter()   // shadow
@@ -30,12 +30,12 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
-    implementation 'com.github.kotlin-graphics:kotlin-unsigned:75287b442e5c25ec79ec56a741e6dc4b6f3cd479'
-    implementation 'com.github.kotlin-graphics:kool:07fad04fe49a7963dfb14725b5f689a8796f685f'
+    implementation 'com.github.kotlin-graphics:kotlin-unsigned:e94fc7976f3af402ff5db93b8cddb32f25145d18'
+    implementation 'com.github.kotlin-graphics:kool:ac6df0dc1621e5d6d54da109487b364743484aa5'
 
     testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.1.10'
 
-    ext.lwjglVersion = "3.2.0"
+    ext.lwjglVersion = "3.2.1-SNAPSHOT"
     switch (OperatingSystem.current()) {
         case OperatingSystem.WINDOWS:
             ext.lwjglNatives = "natives-windows"
