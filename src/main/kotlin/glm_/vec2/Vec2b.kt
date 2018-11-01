@@ -101,8 +101,6 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>(), ToBuffer {
         return buf
                 .put(offset + 0, array[0])
                 .put(offset + 1, array[1])
-                .put(offset + 2, array[2])
-                .put(offset + 3, array[3])
     }
 
     infix fun to(ptr: Ptr) {

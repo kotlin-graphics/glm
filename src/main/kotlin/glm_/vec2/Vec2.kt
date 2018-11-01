@@ -142,8 +142,6 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToBuffer {
         return buf
                 .putFloat(offset + 0 * Float.BYTES, array[0])
                 .putFloat(offset + 1 * Float.BYTES, array[1])
-                .putFloat(offset + 2 * Float.BYTES, array[2])
-                .putFloat(offset + 3 * Float.BYTES, array[3])
     }
 
     fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
@@ -154,8 +152,6 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToBuffer {
     fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
         buf[offset + 0] = array[0]
         buf[offset + 1] = array[1]
-        buf[offset + 2] = array[2]
-        buf[offset + 3] = array[3]
         return buf
     }
 
