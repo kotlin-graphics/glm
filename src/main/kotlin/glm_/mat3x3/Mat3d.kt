@@ -36,7 +36,7 @@ import java.util.*
  * Created by GBarbieri on 10.11.2016.
  */
 
-class Mat3d(dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
+class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var array: DoubleArray) : Mat3x3t<Double>() {
 
     // -- Constructors --
 

@@ -30,7 +30,7 @@ import java.util.*
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-class Mat2d(dummy: Int, var array: DoubleArray) : Mat2x2t<Double>() {
+class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var array: DoubleArray) : Mat2x2t<Double>() {
 
     // -- Constructors --
 

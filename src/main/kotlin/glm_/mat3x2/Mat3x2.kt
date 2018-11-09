@@ -18,7 +18,7 @@ import java.util.*
  * GLSL, column major, 3 columns, 2 rows
  */
 
-class Mat3x2(dummy: Int, var array: FloatArray) : Mat3x2t<Float>() {
+class Mat3x2(var array: FloatArray) : Mat3x2t<Float>() {
 
     // -- Accesses --
 

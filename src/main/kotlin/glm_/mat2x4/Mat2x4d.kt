@@ -16,7 +16,7 @@ import java.util.*
  * Created by GBarbieri on 09.12.2016.
  */
 
-class Mat2x4d(dummy: Int, var array: DoubleArray) : Mat2x4t<Double>() {
+class Mat2x4d(var array: DoubleArray) : Mat2x4t<Double>() {
 
     // -- Accesses --
 

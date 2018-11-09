@@ -17,7 +17,7 @@ import java.nio.DoubleBuffer
 import java.util.*
 
 
-class Mat4x3d(dummy: Int, var array: DoubleArray) : Mat4x3t<Double>() {
+class Mat4x3d(var array: DoubleArray) : Mat4x3t<Double>() {
 
     // -- Accesses --
 

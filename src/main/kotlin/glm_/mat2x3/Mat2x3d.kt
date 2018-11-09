@@ -16,7 +16,7 @@ import java.util.*
  * Created by GBarbieri on 09.12.2016.
  */
 
-class Mat2x3d(dummy: Int, var array: DoubleArray) : Mat2x3t<Double>() {
+class Mat2x3d(var array: DoubleArray) : Mat2x3t<Double>() {
 
     // -- Accesses --
 

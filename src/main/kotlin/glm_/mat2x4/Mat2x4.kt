@@ -16,7 +16,7 @@ import java.util.*
  * Created by GBarbieri on 09.12.2016.
  */
 
-class Mat2x4(dummy: Int, var array: FloatArray) : Mat2x4t<Float>() {
+class Mat2x4(var array: FloatArray) : Mat2x4t<Float>() {
 
     // -- Accesses --
 

@@ -17,7 +17,7 @@ import java.nio.FloatBuffer
 import java.util.*
 
 
-class Mat4x3(dummy: Int, var array: FloatArray) : Mat4x3t<Float>() {
+class Mat4x3(var array: FloatArray) : Mat4x3t<Float>() {
 
     // -- Accesses --
 

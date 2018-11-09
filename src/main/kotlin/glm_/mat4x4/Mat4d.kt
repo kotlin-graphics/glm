@@ -36,7 +36,7 @@ import java.util.*
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-class Mat4d(dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
+class Mat4d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var array: DoubleArray) : Mat4x4t<Double>() {
 
     // -- Constructors --
 

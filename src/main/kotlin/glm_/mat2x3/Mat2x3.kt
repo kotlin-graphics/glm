@@ -18,7 +18,7 @@ import java.util.*
  * Created by GBarbieri on 09.12.2016.
  */
 
-class Mat2x3(dummy: Int, var array: FloatArray) : Mat2x3t<Float>() {
+class Mat2x3(var array: FloatArray) : Mat2x3t<Float>() {
 
     // -- Accesses --
 
