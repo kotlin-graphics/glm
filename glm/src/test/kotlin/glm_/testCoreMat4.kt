@@ -3,9 +3,10 @@ package glm_
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.mat4x4.operators.times
+import glm_.test.*
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4d
-import io.kotlintest.shouldBe
+import io.kotlintest.*
 import io.kotlintest.specs.StringSpec
 
 /**
@@ -73,6 +74,32 @@ class testCoreMat4 : StringSpec() {
             glm.all(glm.epsilonEqual(rotate[1], Vec4(x = -0.529919, y = 0.68296707, z = 0.5027342, w = 0.0), Vec4(0.01f))) shouldBe true
             glm.all(glm.epsilonEqual(rotate[2], Vec4(x = 0.59558487, y = -0.12229471, z = 0.7939286, w = 0.0), Vec4(0.01f))) shouldBe true
             glm.all(glm.epsilonEqual(rotate[3], Vec4(x = 0.0, y = 0.0, z = 0.0, w = 1.0), Vec4(0.01f))) shouldBe true
+        }
+
+        "test multiplication" {
+
+            val m1f = Mat4(List(16){it + 1f})
+            val m2f = Mat4(List(16){it + 17f})
+
+            val m1d = Mat4d(List(16) {it + 1.0})
+            val m2d = Mat4d(List(16){it + 17.0})
+
+            val expectedF = Mat4(250f, 260f, 270f, 280f,
+                                618f, 644f, 670f, 696f,
+                                986f, 1028f, 1070f, 1112f,
+                                1354f, 1412f, 1470f, 1528f)
+            val resultF = m1f * m2f
+
+            val expectedD = Mat4d(250f, 260f, 270f, 280f,
+                                 618f, 644f, 670f, 696f,
+                                 986f, 1028f, 1070f, 1112f,
+                                 1354f, 1412f, 1470f, 1528f)
+            val resuldD = m1d * m2d
+
+            assertSoftly {
+                resultF shouldBe (expectedF plusOrMinus 0.00001f)
+                resuldD shouldBe (expectedD plusOrMinus 0.000001)
+            }
         }
 
 //        namespace cast TODO
