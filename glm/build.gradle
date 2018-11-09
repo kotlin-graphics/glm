@@ -1,0 +1,37 @@
+import org.gradle.internal.os.OperatingSystem
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+    implementation 'com.github.kotlin-graphics:kotlin-unsigned:e94fc7976f3af402ff5db93b8cddb32f25145d18'
+    implementation 'com.github.kotlin-graphics:kool:ac6df0dc1621e5d6d54da109487b364743484aa5'
+
+    testImplementation project(":glm-test")
+
+    testImplementation "io.kotlintest:kotlintest-runner-junit5:$kotlintestVersion"
+
+    ext.lwjglVersion = "3.2.1-SNAPSHOT"
+    switch (OperatingSystem.current()) {
+        case OperatingSystem.WINDOWS:
+            ext.lwjglNatives = "natives-windows"
+            break
+        case OperatingSystem.LINUX:
+            ext.lwjglNatives = "natives-linux"
+            break
+        case OperatingSystem.MAC_OS:
+            ext.lwjglNatives = "natives-macos"
+            break
+    }
+    ["", "-glfw", "-jemalloc", "-openal", "-opengl", "-stb"].each {
+        implementation "org.lwjgl:lwjgl$it:$lwjglVersion"
+        implementation "org.lwjgl:lwjgl$it:$lwjglVersion:$lwjglNatives"
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { setUrl("https://dl.bintray.com/kotlin/kotlin-eap") }
+    maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
+    maven { setUrl("https://jitpack.io") }
+}

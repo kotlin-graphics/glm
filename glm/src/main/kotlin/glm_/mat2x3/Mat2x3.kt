@@ -1,40 +1,42 @@
-package  glm_.mat3x2
+package  glm_.mat2x3
 
-import glm_.BYTES
-import glm_.f
-import glm_.set
-import glm_.vec2.Vec2
-import glm_.vec2.Vec2t
+import glm_.*
+import glm_.vec3.Vec3
+import glm_.vec3.Vec3t
+import kool.Ptr
 import kool.floatBufferBig
 import kool.pos
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryUtil.memGetFloat
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.util.*
 
 /**
  * Created by GBarbieri on 09.12.2016.
- *
- * GLSL, column major, 3 columns, 2 rows
  */
 
-class Mat3x2(var array: FloatArray) : Mat3x2t<Float>() {
+class Mat2x3(var array: FloatArray) : Mat2x3t<Float>() {
 
-    // -- Accesses --
+    constructor(list: Iterable<*>, index: Int = 0) : this(FloatArray(6) { list.elementAt(index + it)!!.toFloat })
 
-    override operator fun get(index: Int) = Vec2(index * 2, array)
-    override operator fun get(column: Int, row: Int) = array[column * 2 + row]
+            // -- Accesses --
 
-    override operator fun set(column: Int, row: Int, value: Float) = array.set(column * 2 + row, value)
+    override operator fun get(index: Int) = Vec3(index * 3, array)
+    override operator fun get(column: Int, row: Int) = array[column * 3 + row]
 
-    override operator fun set(index: Int, value: Vec2t<out Number>) {
-        array[index * 2] = value.x.f
-        array[index * 2 + 1] = value.y.f
+    override operator fun set(column: Int, row: Int, value: Float) = array.set(column * 3 + row, value)
+
+    override operator fun set(index: Int, value: Vec3t<out Number>) {
+        array[index * 3] = value.x.f
+        array[index * 3 + 1] = value.y.f
+        array[index * 3 + 2] = value.z.f
     }
 
-    operator fun set(i: Int, v: Vec2) {
-        v.to(array, i * 2)
+    operator fun set(i: Int, v: Vec3) {
+        v.to(array, i * 3)
     }
+
 
     fun toFloatArray(): FloatArray = to(FloatArray(length), 0)
     infix fun to(floats: FloatArray): FloatArray = to(floats, 0)
@@ -42,6 +44,7 @@ class Mat3x2(var array: FloatArray) : Mat3x2t<Float>() {
         System.arraycopy(array, 0, floats, index, length)
         return floats
     }
+
 
     override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
         return buf
@@ -75,31 +78,42 @@ class Mat3x2(var array: FloatArray) : Mat3x2t<Float>() {
     override var a1: Float
         get() = array[1]
         set(v) = array.set(1, v)
-
-    override var b0: Float
+    override var a2: Float
         get() = array[2]
         set(v) = array.set(2, v)
-    override var b1: Float
-        get() = array[3]
-        set(v) = array.set(3, v)
 
-    override var c0: Float
+    override var b0: Float
         get() = array[4]
         set(v) = array.set(4, v)
-    override var c1: Float
+    override var b1: Float
         get() = array[5]
         set(v) = array.set(5, v)
+    override var b2: Float
+        get() = array[6]
+        set(v) = array.set(6, v)
 
 
     companion object {
-        const val length = Mat3x2t.length
+        const val length = Mat2x3t.length
         @JvmField
         val size = length * Float.BYTES
+
+//        @JvmStatic TODO constructors first
+//        fun fromPointer(ptr: Ptr, transpose: Boolean = false): Mat2x3 {
+//            return when {
+//                transpose -> Mat2x3(
+//                        memGetFloat(ptr), memGetFloat(ptr + Float.BYTES * 2),
+//                        memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 3))
+//                else -> Mat2x3(
+//                        memGetFloat(ptr), memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 2),
+//                        memGetFloat(ptr + Float.BYTES * 3), memGetFloat(ptr + Float.BYTES * 4), memGetFloat(ptr + Float.BYTES * 5))
+//            }
+//        }
     }
 
     override fun size() = size
 
-    override fun equals(other: Any?) = other is Mat3x2 && Arrays.equals(array, other.array)
+    override fun equals(other: Any?) = other is Mat2x3 && Arrays.equals(array, other.array)
 
-    override fun hashCode() = 31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()
+    override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
 }

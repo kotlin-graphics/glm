@@ -1,8 +1,6 @@
 package  glm_.mat2x3
 
-import glm_.BYTES
-import glm_.d
-import glm_.set
+import glm_.*
 import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import kool.doubleBufferBig
@@ -17,6 +15,8 @@ import java.util.*
  */
 
 class Mat2x3d(var array: DoubleArray) : Mat2x3t<Double>() {
+
+    constructor(list: Iterable<*>, index: Int = 0) : this(DoubleArray(6) { list.elementAt(index + it)!!.toDouble })
 
     // -- Accesses --
 

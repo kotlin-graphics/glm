@@ -1,24 +1,23 @@
-package  glm_.mat2x3
-
-import glm_.BYTES
-import glm_.f
-import glm_.set
-import glm_.vec3.Vec3
-import glm_.vec3.Vec3t
-import kool.Ptr
-import kool.floatBufferBig
-import kool.pos
-import org.lwjgl.system.MemoryStack
-import org.lwjgl.system.MemoryUtil.memGetFloat
-import java.nio.ByteBuffer
-import java.nio.FloatBuffer
-import java.util.*
+package  glm_.mat4x3
 
 /**
  * Created by GBarbieri on 09.12.2016.
  */
 
-class Mat2x3(var array: FloatArray) : Mat2x3t<Float>() {
+import glm_.*
+import glm_.vec3.Vec3
+import glm_.vec3.Vec3t
+import kool.floatBufferBig
+import kool.pos
+import org.lwjgl.system.MemoryStack
+import java.nio.ByteBuffer
+import java.nio.FloatBuffer
+import java.util.*
+
+
+class Mat4x3(var array: FloatArray) : Mat4x3t<Float>() {
+
+    constructor(list: Iterable<*>, index: Int = 0) : this(FloatArray(12) { list.elementAt(index + it)!!.toFloat })
 
     // -- Accesses --
 
@@ -37,14 +36,12 @@ class Mat2x3(var array: FloatArray) : Mat2x3t<Float>() {
         v.to(array, i * 3)
     }
 
-
     fun toFloatArray(): FloatArray = to(FloatArray(length), 0)
     infix fun to(floats: FloatArray): FloatArray = to(floats, 0)
     fun to(floats: FloatArray, index: Int): FloatArray {
         System.arraycopy(array, 0, floats, index, length)
         return floats
     }
-
 
     override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
         return buf
@@ -54,6 +51,12 @@ class Mat2x3(var array: FloatArray) : Mat2x3t<Float>() {
                 .putFloat(offset + 3 * Float.BYTES, array[3])
                 .putFloat(offset + 4 * Float.BYTES, array[4])
                 .putFloat(offset + 5 * Float.BYTES, array[5])
+                .putFloat(offset + 6 * Float.BYTES, array[6])
+                .putFloat(offset + 7 * Float.BYTES, array[7])
+                .putFloat(offset + 8 * Float.BYTES, array[8])
+                .putFloat(offset + 9 * Float.BYTES, array[9])
+                .putFloat(offset + 10 * Float.BYTES, array[10])
+                .putFloat(offset + 11 * Float.BYTES, array[11])
     }
 
 
@@ -69,6 +72,12 @@ class Mat2x3(var array: FloatArray) : Mat2x3t<Float>() {
         buf[offset + 3] = array[3]
         buf[offset + 4] = array[4]
         buf[offset + 5] = array[5]
+        buf[offset + 6] = array[6]
+        buf[offset + 7] = array[7]
+        buf[offset + 8] = array[8]
+        buf[offset + 9] = array[9]
+        buf[offset + 10] = array[10]
+        buf[offset + 11] = array[11]
         return buf
     }
 
@@ -83,37 +92,45 @@ class Mat2x3(var array: FloatArray) : Mat2x3t<Float>() {
         set(v) = array.set(2, v)
 
     override var b0: Float
+        get() = array[3]
+        set(v) = array.set(3, v)
+    override var b1: Float
         get() = array[4]
         set(v) = array.set(4, v)
-    override var b1: Float
+    override var b2: Float
         get() = array[5]
         set(v) = array.set(5, v)
-    override var b2: Float
+
+    override var c0: Float
         get() = array[6]
         set(v) = array.set(6, v)
+    override var c1: Float
+        get() = array[7]
+        set(v) = array.set(7, v)
+    override var c2: Float
+        get() = array[8]
+        set(v) = array.set(8, v)
+
+    override var d0: Float
+        get() = array[9]
+        set(v) = array.set(9, v)
+    override var d1: Float
+        get() = array[10]
+        set(v) = array.set(10, v)
+    override var d2: Float
+        get() = array[11]
+        set(v) = array.set(11, v)
 
 
     companion object {
-        const val length = Mat2x3t.length
+        const val length = Mat4x3t.length
         @JvmField
         val size = length * Float.BYTES
-
-//        @JvmStatic TODO constructors first
-//        fun fromPointer(ptr: Ptr, transpose: Boolean = false): Mat2x3 {
-//            return when {
-//                transpose -> Mat2x3(
-//                        memGetFloat(ptr), memGetFloat(ptr + Float.BYTES * 2),
-//                        memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 3))
-//                else -> Mat2x3(
-//                        memGetFloat(ptr), memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 2),
-//                        memGetFloat(ptr + Float.BYTES * 3), memGetFloat(ptr + Float.BYTES * 4), memGetFloat(ptr + Float.BYTES * 5))
-//            }
-//        }
     }
 
     override fun size() = size
 
-    override fun equals(other: Any?) = other is Mat2x3 && Arrays.equals(array, other.array)
+    override fun equals(other: Any?) = other is Mat4x3 && Arrays.equals(array, other.array)
 
-    override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
+    override fun hashCode() = 31 * (31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()) + this[3].hashCode()
 }

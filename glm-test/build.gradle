@@ -1,0 +1,20 @@
+
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+repositories {
+    mavenCentral()
+    maven { setUrl('https://jitpack.io') }
+    maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
+}
+
+dependencies {
+    implementation project(":glm")
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    implementation "io.kotlintest:kotlintest-core:$kotlintestVersion"
+    implementation "io.kotlintest:kotlintest-assertions:$kotlintestVersion"
+}

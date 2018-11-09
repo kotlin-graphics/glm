@@ -1,8 +1,6 @@
-package  glm_.mat4x2
+package  glm_.mat3x2
 
-import glm_.BYTES
-import glm_.d
-import glm_.set
+import glm_.*
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import kool.doubleBufferBig
@@ -16,7 +14,9 @@ import java.util.*
  * Created by GBarbieri on 09.12.2016.
  */
 
-class Mat4x2d(var array: DoubleArray) : Mat4x2t<Double>() {
+class Mat3x2d(var array: DoubleArray) : Mat3x2t<Double>() {
+
+    constructor(list: Iterable<*>, index: Int = 0) : this(DoubleArray(6) { list.elementAt(index + it)!!.toDouble })
 
     // -- Accesses --
 
@@ -49,8 +49,6 @@ class Mat4x2d(var array: DoubleArray) : Mat4x2t<Double>() {
                 .putDouble(offset + 3 * Double.BYTES, array[3])
                 .putDouble(offset + 4 * Double.BYTES, array[4])
                 .putDouble(offset + 5 * Double.BYTES, array[5])
-                .putDouble(offset + 6 * Double.BYTES, array[6])
-                .putDouble(offset + 7 * Double.BYTES, array[7])
     }
 
 
@@ -66,8 +64,6 @@ class Mat4x2d(var array: DoubleArray) : Mat4x2t<Double>() {
         buf[offset + 3] = array[3]
         buf[offset + 4] = array[4]
         buf[offset + 5] = array[5]
-        buf[offset + 6] = array[6]
-        buf[offset + 7] = array[7]
         return buf
     }
 
@@ -92,23 +88,16 @@ class Mat4x2d(var array: DoubleArray) : Mat4x2t<Double>() {
         get() = array[5]
         set(v) = array.set(5, v)
 
-    override var d0: Double
-        get() = array[6]
-        set(v) = array.set(6, v)
-    override var d1: Double
-        get() = array[7]
-        set(v) = array.set(7, v)
-
 
     companion object {
-        const val length = Mat4x2t.length
+        const val length = Mat3x2t.length
         @JvmField
         val size = length * Double.BYTES
     }
 
     override fun size() = size
 
-    override fun equals(other: Any?) = other is Mat4x2d && Arrays.equals(array, other.array)
+    override fun equals(other: Any?) = other is Mat3x2d && Arrays.equals(array, other.array)
 
-    override fun hashCode() = 31 * (31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()) + this[3].hashCode()
+    override fun hashCode() = 31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()
 }

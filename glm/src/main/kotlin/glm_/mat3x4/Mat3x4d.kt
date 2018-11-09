@@ -1,8 +1,6 @@
-package  glm_.mat2x4
+package  glm_.mat3x4
 
-import glm_.BYTES
-import glm_.d
-import glm_.set
+import glm_.*
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
 import kool.doubleBufferBig
@@ -16,7 +14,9 @@ import java.util.*
  * Created by GBarbieri on 09.12.2016.
  */
 
-class Mat2x4d(var array: DoubleArray) : Mat2x4t<Double>() {
+class Mat3x4d(var array: DoubleArray) : Mat3x4t<Double>() {
+
+    constructor(list: Iterable<*>, index: Int = 0) : this(DoubleArray(12) { list.elementAt(index + it)!!.toDouble })
 
     // -- Accesses --
 
@@ -36,14 +36,12 @@ class Mat2x4d(var array: DoubleArray) : Mat2x4t<Double>() {
         v.to(array, i * 4)
     }
 
-
     fun toDoubleArray(): DoubleArray = to(DoubleArray(length), 0)
     infix fun to(doubles: DoubleArray): DoubleArray = to(doubles, 0)
     fun to(doubles: DoubleArray, index: Int): DoubleArray {
         System.arraycopy(array, 0, doubles, index, length)
         return doubles
     }
-
 
     override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
         return buf
@@ -55,6 +53,10 @@ class Mat2x4d(var array: DoubleArray) : Mat2x4t<Double>() {
                 .putDouble(offset + 5 * Double.BYTES, array[5])
                 .putDouble(offset + 6 * Double.BYTES, array[6])
                 .putDouble(offset + 7 * Double.BYTES, array[7])
+                .putDouble(offset + 8 * Double.BYTES, array[8])
+                .putDouble(offset + 9 * Double.BYTES, array[9])
+                .putDouble(offset + 10 * Double.BYTES, array[10])
+                .putDouble(offset + 11 * Double.BYTES, array[11])
     }
 
 
@@ -72,6 +74,10 @@ class Mat2x4d(var array: DoubleArray) : Mat2x4t<Double>() {
         buf[offset + 5] = array[5]
         buf[offset + 6] = array[6]
         buf[offset + 7] = array[7]
+        buf[offset + 8] = array[8]
+        buf[offset + 9] = array[9]
+        buf[offset + 10] = array[10]
+        buf[offset + 11] = array[11]
         return buf
     }
 
@@ -101,16 +107,29 @@ class Mat2x4d(var array: DoubleArray) : Mat2x4t<Double>() {
         get() = array[7]
         set(v) = array.set(7, v)
 
+    override var c0: Double
+        get() = array[8]
+        set(v) = array.set(8, v)
+    override var c1: Double
+        get() = array[9]
+        set(v) = array.set(9, v)
+    override var c2: Double
+        get() = array[10]
+        set(v) = array.set(10, v)
+    override var c3: Double
+        get() = array[11]
+        set(v) = array.set(11, v)
+
 
     companion object {
-        const val length = Mat2x4t.length
+        const val length = Mat3x4t.length
         @JvmField
         val size = length * Double.BYTES
     }
 
     override fun size() = size
 
-    override fun equals(other: Any?) = other is Mat2x4d && Arrays.equals(array, other.array)
+    override fun equals(other: Any?) = other is Mat3x4d && Arrays.equals(array, other.array)
 
     override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
 }

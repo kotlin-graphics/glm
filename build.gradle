@@ -1,17 +1,8 @@
-import org.gradle.internal.os.OperatingSystem
-
-apply plugin: 'kotlin'
-//apply plugin: 'java'
-
-// jitpack
-apply plugin: 'maven'
-group = 'com.github.kotlin-graphics'
-
-apply plugin: 'com.github.johnrengelman.shadow'
 
 buildscript {
 
     ext.kotlinVersion = '1.3.0'
+    ext.kotlintestVersion = "3.1.10"
 
     repositories {
         jcenter()   // shadow
@@ -26,57 +17,31 @@ buildscript {
     }
 }
 
-dependencies {
+subprojects {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    apply plugin: 'kotlin'
 
-    implementation 'com.github.kotlin-graphics:kotlin-unsigned:e94fc7976f3af402ff5db93b8cddb32f25145d18'
-    implementation 'com.github.kotlin-graphics:kool:ac6df0dc1621e5d6d54da109487b364743484aa5'
+    apply plugin: 'com.github.johnrengelman.shadow'
 
-    testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.1.10'
+    // jitpack
+    apply plugin: 'maven'
+    group = 'com.github.kotlin-graphics'
 
-    ext.lwjglVersion = "3.2.1-SNAPSHOT"
-    switch (OperatingSystem.current()) {
-        case OperatingSystem.WINDOWS:
-            ext.lwjglNatives = "natives-windows"
-            break
-        case OperatingSystem.LINUX:
-            ext.lwjglNatives = "natives-linux"
-            break
-        case OperatingSystem.MAC_OS:
-            ext.lwjglNatives = "natives-macos"
-            break
-    }
-    ["", "-glfw", "-jemalloc", "-openal", "-opengl", "-stb"].each {
-        implementation "org.lwjgl:lwjgl$it:$lwjglVersion"
-        implementation "org.lwjgl:lwjgl$it:$lwjglVersion:$lwjglNatives"
-    }
-}
-
-repositories {
-    mavenCentral()
-    maven { setUrl("https://dl.bintray.com/kotlin/kotlin-eap") }
-    maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
-    maven { setUrl("https://jitpack.io") }
-}
-
-allprojects {
     sourceCompatibility = 1.7
     targetCompatibility = 1.7
-}
 
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives sourcesJar
-    archives javadocJar
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
+    }
 }
