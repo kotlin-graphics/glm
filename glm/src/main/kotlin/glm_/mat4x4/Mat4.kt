@@ -41,11 +41,24 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     // -- Constructors --
 
+    /**
+     * Creates a identity matrix
+     */
     constructor() : this(1)
 
+    /**
+     * Creates a matrix with the diagonal set to [s]
+     */
     constructor(s: Number) : this(s, s, s, s)
 
+    /**
+     * Creates a matrix with the diagonal set to [x], [y], [z] and 1.0
+     */
     constructor(x: Number, y: Number, z: Number) : this(x, y, z, 1f)    // TODO others
+
+    /**
+     * Creates a matrix with the diagonal set to [x], [y], [z] and [w]:
+     */
     constructor(x: Number, y: Number, z: Number, w: Number) : this(
             x, 0, 0, 0,
             0, y, 0, 0,
@@ -54,16 +67,48 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     // TODO others
 
+    /**
+     * Creates a matrix with the diagonal set to [v].x, [v].y, 0 and 1:
+     */
     constructor(v: Vec2t<*>) : this(v.x, v.y, 0, 1)
+
+    /**
+     * Creates a matrix with the diagonal set to [v].x, [v].y, z and 1
+     */
     constructor(v: Vec2t<*>, z: Number) : this(v.x, v.y, z, 1)
+
+    /**
+     * Creates a matrix with the diagonal set to [v].x, [v].y, z and w
+     */
     constructor(v: Vec2t<*>, z: Number, w: Number) : this(v.x, v.y, z, w)
+
+    /**
+     * Creates a matrix with the diagonal set to [v].x, [v].y, [v].z and 1
+     */
     constructor(v: Vec3t<*>) : this(v.x, v.y, v.z, 1)
+
+    /**
+     * Creates a matrix with the diagonal set to [v].x, [v].y, [v].z and w
+     */
     constructor(v: Vec3t<*>, w: Number) : this(v.x, v.y, v.z, w)
+
+    /**
+     * Creates a matrix with the diagonal set to [v].x, [v].y, [v].z and [v].w
+     */
+    constructor(v: Vec4t<*>) : this(v.x, v.y, v.z, v.w)
+
+    /**
+     * Creates a matrix with the
+     * first column of [a] and [aW],
+     * the second [b] and [bW],
+     * the third [c] and [cW] and
+     * the last [d] and [dW]
+     */
     constructor(a: Vec3t<*>, aW: Number, b: Vec3t<*>, bW: Number, c: Vec3t<*>, cW: Number, d: Vec3t<*>, dW: Number) : this(
             a.x, a.y, a.z, aW, b.x, b.y, b.z, bW, c.x, c.y, c.z, cW, d.x, d.y, d.z, dW)
 
-    constructor(v: Vec4t<*>) : this(v.x, v.y, v.z, v.w)
 
+    // TODO(wasabi): check, either the variable names a chosen badly or the order passed to the array is wrong
     constructor(x0: Number, y0: Number, z0: Number, w0: Number,
                 x1: Number, y1: Number, z1: Number, w1: Number,
                 x2: Number, y2: Number, z2: Number, w2: Number,

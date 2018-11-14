@@ -18,7 +18,7 @@ import glm_.vec3.*
 import glm_.vec2.*
 import glm_.mat4x4.*
 
-
+// TODO use glm.epsilonEqual
 
 infix fun Mat2.plusOrMinus(epsilon: Float): Matcher<Mat2> = object : Matcher<Mat2> {
     override fun test(value: Mat2): Result {
