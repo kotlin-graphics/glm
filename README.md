@@ -52,11 +52,16 @@ fun camera(translate: Float, rotate: Vec2): Mat4 {
 - Add the dependency
 
 	    dependencies {
-	        compile 'com.github.kotlin-graphics:glm:0.01'
+	        implementation 'com.github.kotlin-graphics.glm:glm:<version>'
+	    }
+	    
+- The [kotlin-test](https://github.com/kotlintest/kotlintest) matchers can be used by adding the following dependency
+
+	    dependencies {
+	        implementation 'com.github.kotlin-graphics.glm:glm-test:<version>'
 	    }
 
-
-[Gradle, Maven, Sbt, Leiningen](https://jitpack.io/#kotlin-graphics/glm/0.01)
+[Gradle, Maven, Sbt, Leiningen](https://jitpack.io/#kotlin-graphics/glm)
 
 
 
