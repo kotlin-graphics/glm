@@ -84,21 +84,22 @@ class testCoreMat4 : StringSpec() {
             val m1d = Mat4d(List(16) {it + 1.0})
             val m2d = Mat4d(List(16){it + 17.0})
 
-            val expectedF = Mat4(250f, 260f, 270f, 280f,
-                                618f, 644f, 670f, 696f,
-                                986f, 1028f, 1070f, 1112f,
-                                1354f, 1412f, 1470f, 1528f)
+            val expectedF = Mat4(538, 612, 686, 760,
+                                 650, 740, 830, 920,
+                                 762, 868, 974, 1080,
+                                 874, 996, 1118, 1240)
+
             val resultF = m1f * m2f
 
-            val expectedD = Mat4d(250f, 260f, 270f, 280f,
-                                 618f, 644f, 670f, 696f,
-                                 986f, 1028f, 1070f, 1112f,
-                                 1354f, 1412f, 1470f, 1528f)
-            val resuldD = m1d * m2d
+            val expectedD = Mat4d(538, 612, 686, 760,
+                                  650, 740, 830, 920,
+                                  762, 868, 974, 1080,
+                                  874, 996, 1118, 1240)
+            val resultD = m1d * m2d
 
             assertSoftly {
-                resultF shouldBe (expectedF plusOrMinus 0.00001f)
-                resuldD shouldBe (expectedD plusOrMinus 0.000001)
+                resultF shouldBe (expectedF plusOrMinus 0.000001f)
+                resultD shouldBe (expectedD plusOrMinus 0.000001)
             }
         }
 
