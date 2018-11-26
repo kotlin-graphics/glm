@@ -1,13 +1,14 @@
 package  glm_.mat2x3
 
-import glm_.*
+import glm_.BYTES
+import glm_.f
+import glm_.set
+import glm_.toFloat
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
-import kool.Ptr
-import kool.floatBufferBig
+import kool.FloatBuffer
 import kool.pos
 import org.lwjgl.system.MemoryStack
-import org.lwjgl.system.MemoryUtil.memGetFloat
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.util.*
@@ -59,7 +60,7 @@ class Mat2x3(var array: FloatArray) : Mat2x3t<Float>() {
 
     fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
     infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
-    fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
+    fun toFloatBuffer(): FloatBuffer = to(FloatBuffer(length), 0)
     infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
 
     fun to(buf: FloatBuffer, offset: Int): FloatBuffer {

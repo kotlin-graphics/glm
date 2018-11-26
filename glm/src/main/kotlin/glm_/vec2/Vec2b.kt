@@ -17,7 +17,7 @@ import java.nio.*
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>(), ToBuffer {
+class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
 
     constructor(x: Byte, y: Byte) : this(0, byteArrayOf(x, y))
 

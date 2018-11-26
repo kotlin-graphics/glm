@@ -9,7 +9,7 @@ import glm_.vec3.Vec3i
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4i_operators
 import kool.Ptr
-import kool.intBufferBig
+import kool.IntBuffer
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetInt
@@ -164,7 +164,7 @@ class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>(), ToBuffer {
 
     fun toIntBufferStack(): IntBuffer = to(MemoryStack.stackPush().mallocInt(length), 0)
     infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(length), 0)
-    fun toIntBuffer(): IntBuffer = to(intBufferBig(length), 0)
+    fun toIntBuffer(): IntBuffer = to(IntBuffer(length), 0)
     infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
     fun to(buf: IntBuffer, index: Int): IntBuffer {
         buf[index] = x

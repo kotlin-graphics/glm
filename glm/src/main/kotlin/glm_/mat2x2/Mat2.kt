@@ -17,7 +17,7 @@ import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import kool.Ptr
-import kool.floatBufferBig
+import kool.FloatBuffer
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetFloat
@@ -239,7 +239,7 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
     infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
-    fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
+    fun toFloatBuffer(): FloatBuffer = to(FloatBuffer(length), 0)
     infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
 
     fun to(buf: FloatBuffer, offset: Int): FloatBuffer {

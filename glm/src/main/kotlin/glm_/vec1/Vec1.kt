@@ -8,7 +8,7 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.floatBufferBig
+import kool.FloatBuffer
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import java.nio.*
@@ -110,7 +110,7 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
     }
 
     infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
-    fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
+    fun toFloatBuffer(): FloatBuffer = to(FloatBuffer(length), 0)
     infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
 
     fun to(buf: FloatBuffer, index: Int): FloatBuffer {

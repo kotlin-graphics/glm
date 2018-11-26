@@ -8,7 +8,7 @@ import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.pos
-import kool.shortBufferBig
+import kool.ShortBuffer
 import org.lwjgl.system.MemoryStack
 import java.nio.*
 
@@ -109,7 +109,7 @@ class Vec1s(x: Short) : Vec1t<Short>(x) {
     }
 
     infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
-    fun toShortBuffer(): ShortBuffer = to(shortBufferBig(length), 0)
+    fun toShortBuffer(): ShortBuffer = to(ShortBuffer(length), 0)
     infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)
     fun to(buf: ShortBuffer, index: Int): ShortBuffer {
         buf[index] = x

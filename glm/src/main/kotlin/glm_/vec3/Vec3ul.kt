@@ -8,7 +8,7 @@ import glm_.vec3.operators.vec3ul_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.Ptr
-import kool.longBufferBig
+import kool.LongBuffer
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetLong
@@ -174,7 +174,7 @@ class Vec3ul(var ofs: Int, var array: LongArray) : Vec3t<Ulong>(), ToBuffer {
 
     fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackPush().mallocLong(length), 0)
     infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(length), 0)
-    fun toLongBuffer(): LongBuffer = to(longBufferBig(length), 0)
+    fun toLongBuffer(): LongBuffer = to(LongBuffer(length), 0)
     infix fun to(buf: LongBuffer): LongBuffer = to(buf, buf.pos)
     fun to(buf: LongBuffer, index: Int): LongBuffer {
         buf[index] = x.v

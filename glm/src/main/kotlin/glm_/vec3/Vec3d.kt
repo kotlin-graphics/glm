@@ -8,7 +8,7 @@ import glm_.vec3.operators.vec3d_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.Ptr
-import kool.doubleBufferBig
+import kool.DoubleBuffer
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetDouble
@@ -155,7 +155,7 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToBuffer {
 
     fun toDoubleBufferStack(): DoubleBuffer = to(MemoryStack.stackPush().mallocDouble(length), 0)
     infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
-    fun toDoubleBuffer(): DoubleBuffer = to(doubleBufferBig(length), 0)
+    fun toDoubleBuffer(): DoubleBuffer = to(DoubleBuffer(length), 0)
     infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
     fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
         buf[index] = x

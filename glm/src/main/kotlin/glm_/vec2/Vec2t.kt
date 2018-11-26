@@ -7,7 +7,7 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.bufferBig
+import kool.Buffer
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import java.nio.*
@@ -16,7 +16,7 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-abstract class Vec2t<T : Number> {
+abstract class Vec2t<T : Number>: ToBuffer {
 
     abstract var x: T
     abstract var y: T
@@ -33,8 +33,6 @@ abstract class Vec2t<T : Number> {
     }
 
     abstract operator fun set(index: Int, value: Number)
-
-    abstract fun size(): Int
 
     // -- infix Generic Constructors --
 

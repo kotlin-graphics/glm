@@ -3,7 +3,7 @@ package  glm_.mat3x2
 import glm_.*
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
-import kool.doubleBufferBig
+import kool.DoubleBuffer
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import java.nio.ByteBuffer
@@ -54,7 +54,7 @@ class Mat3x2d(var array: DoubleArray) : Mat3x2t<Double>() {
 
     fun toDoubleBufferStack(): DoubleBuffer = to(MemoryStack.stackGet().mallocDouble(length), 0)
     infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
-    fun toDoubleBuffer(): DoubleBuffer = to(doubleBufferBig(length), 0)
+    fun toDoubleBuffer(): DoubleBuffer = to(DoubleBuffer(length), 0)
     infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
 
     fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {

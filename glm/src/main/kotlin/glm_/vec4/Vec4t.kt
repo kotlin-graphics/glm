@@ -7,9 +7,6 @@ import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
-import kool.bufferBig
-import kool.pos
-import org.lwjgl.system.MemoryStack
 import java.nio.*
 
 // TODO other
