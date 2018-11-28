@@ -469,7 +469,14 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToBuffer {
         fun fromColor(r: Number, g: Number, b: Number, a: Number = 255f) = Vec4(r.f / 255, g.f / 255, b.f / 255f, a.f / 255)
     }
 
-    fun toColor() = Color(r * 255, g * 255, b * 255, a * 255)
+    @JvmOverloads
+    fun toColor(normalized: Boolean = false): Color = when {
+        normalized -> Color(r, g, b, w)
+        else -> {
+            val i = 1f / 255
+            Color(r * i, g * i, b * i, w * i)
+        }
+    }
 
     override fun size() = size
 

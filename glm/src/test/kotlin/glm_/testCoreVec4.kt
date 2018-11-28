@@ -11,11 +11,11 @@ import glm_.vec4.Vec4
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
-class testCoreVec3 : StringSpec() {
+class testCoreVec4 : StringSpec() {
 
     init {
 
-        "vec3 constructor" {
+        /*"vec3 constructor" {
 
             run {
                 val a = Vec3(1f, 2f, 3f)
@@ -399,13 +399,13 @@ class testCoreVec3 : StringSpec() {
             r = glm.dot(s, t); r.i shouldBe 300
             r = glm.dot(s.xyzw as Vec4, t.xyzw as Vec4); r.i shouldBe 300
             r = glm.dot(s.xyz as Vec3, t.xyz as Vec3); r.i shouldBe 140
-        }
+        }*/
 
         "toColor" {
 
-            Vec3 { it.f }.toColor(normalized = false)
-            Vec3(0f, 0.5f, 1f).toColor(1f)
-            Vec3(1f).toColor()
+            Vec4 { it.f }.toColor(normalized = false)
+            Vec4(0f, 0.5f, 1f, 1f).toColor()
+            Vec4(1f).toColor()
         }
     }
 }

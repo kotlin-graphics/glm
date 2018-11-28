@@ -449,7 +449,22 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToBuffer {
         fun fromColor(r: Number, g: Number, b: Number) = Vec3(r.f / 255, g.f / 255, b.f / 255f)
     }
 
-    fun toColor(alpha: Float = 1f) = Color(r * 255, g * 255, b * 255, alpha * 255)
+    @JvmOverloads
+    fun toColor(alpha: Float? = null, normalized: Boolean = true) = when {
+        normalized -> Color(r, g, b, alpha ?: 1f)
+        else -> {
+            val i = 1f / 255
+            Color(r * i, g * i, b * i, alpha?.times(i) ?: 1f)
+        }
+    }
+
+    fun toColor(normalized: Boolean = true) = when {
+        normalized -> Color(r, g, b, 1f)
+        else -> {
+            val i = 1f / 255
+            Color(r * i, g * i, b * i, 1f)
+        }
+    }
 
     override fun size() = size
 

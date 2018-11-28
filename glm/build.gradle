@@ -2,14 +2,14 @@ import org.gradle.internal.os.OperatingSystem
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion".toString()
 
     implementation 'com.github.kotlin-graphics:kotlin-unsigned:4c5a91c407fbcc7761f93336967820b08021aa60'
     implementation 'com.github.kotlin-graphics:kool:1c5ee046b067d6e1b01f3797bf44438d72eb91f8'
 
     testImplementation project(":glm-test")
 
-    testImplementation "io.kotlintest:kotlintest-runner-junit5:$kotlintestVersion"
+    testImplementation "io.kotlintest:kotlintest-runner-junit5:$kotlintestVersion".toString()
 
     ext.lwjglVersion = "3.2.1-SNAPSHOT"
     switch (OperatingSystem.current()) {
@@ -31,7 +31,11 @@ dependencies {
 
 repositories {
     mavenCentral()
-    maven { setUrl("https://dl.bintray.com/kotlin/kotlin-eap") }
+//    maven { setUrl("https://dl.bintray.com/kotlin/kotlin-eap") }
     maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
     maven { setUrl("https://jitpack.io") }
+}
+
+test {
+    useJUnitPlatform()
 }

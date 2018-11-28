@@ -562,7 +562,7 @@ class testPacking : StringSpec() {
 
         "test_packUnorm" {
 
-            //            val A = listOf(Vec2(1f, 0.7f), Vec2(0.5f, 0.1f))
+            val A = listOf(Vec2(1f, 0.7f), Vec2(0.5f, 0.1f))
 //TODO
 //            for (a in A) {
 //                val b = Vec2(a)
@@ -572,17 +572,17 @@ class testPacking : StringSpec() {
 //            }
         }
 
-        "test_packSnorm4x8" {
-
-            //            val A = listOf(Vec4(1f, 0f, -0.5f, -0.1f), Vec4(-0.7f, -0.1f, 0.1f, 0.7f))
-//TODO
-//            for (a in A) {
-//                val b = Vec4(a)
-//                val c = glm.packSnorm4x8(b)
-//                val d = glm.unpackSnorm4x8(c)
-//                glm.all(glm.epsilonEqual(b, d, 1f / 127f)) shouldBe true
-//            }
-        }
+//        "test_packSnorm4x8" {  TODO java.lang.reflect.InvocationTargetException
+//
+//            val A = listOf(Vec4(1f, 0f, -0.5f, -0.1f), Vec4(-0.7f, -0.1f, 0.1f, 0.7f))
+////TODO
+////            for (a in A) {
+////                val b = Vec4(a)
+////                val c = glm.packSnorm4x8(b)
+////                val d = glm.unpackSnorm4x8(c)
+////                glm.all(glm.epsilonEqual(b, d, 1f / 127f)) shouldBe true
+////            }
+//        }
 
         "test_packUnorm2x4" {
 
