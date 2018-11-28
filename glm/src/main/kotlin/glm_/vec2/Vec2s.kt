@@ -8,7 +8,7 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.Ptr
 import kool.pos
-import kool.shortBufferBig
+import kool.ShortBuffer
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetShort
 import org.lwjgl.system.MemoryUtil.memPutShort
@@ -132,7 +132,7 @@ class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>(), ToBuffer {
 
     fun toShortBufferStack(): ShortBuffer = to(MemoryStack.stackPush().mallocShort(length), 0)
     infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
-    fun toShortBuffer(): ShortBuffer = to(shortBufferBig(length), 0)
+    fun toShortBuffer(): ShortBuffer = to(ShortBuffer(length), 0)
     infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)
     fun to(buf: ShortBuffer, index: Int): ShortBuffer {
         buf[index] = x

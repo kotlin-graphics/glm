@@ -17,8 +17,8 @@ import glm_.vec2.Vec2t
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d
 import kool.Ptr
-import kool.bufferBig
-import kool.doubleBufferBig
+import kool.Buffer
+import kool.DoubleBuffer
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetDouble
@@ -237,7 +237,7 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
 
     fun toFloatBufferStack(): DoubleBuffer = to(MemoryStack.stackGet().mallocDouble(length), 0)
     infix fun toFloatBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
-    fun toFloatBuffer(): DoubleBuffer = to(doubleBufferBig(length), 0)
+    fun toFloatBuffer(): DoubleBuffer = to(DoubleBuffer(length), 0)
     infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
 
     fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {

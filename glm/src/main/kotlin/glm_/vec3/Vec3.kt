@@ -8,7 +8,7 @@ import glm_.vec3.operators.vec3_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.Ptr
-import kool.floatBufferBig
+import kool.FloatBuffer
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetFloat
@@ -156,7 +156,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToBuffer {
 
     fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackPush().mallocFloat(length), 0)
     infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
-    fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
+    fun toFloatBuffer(): FloatBuffer = to(FloatBuffer(length), 0)
     infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
     fun to(buf: FloatBuffer, index: Int): FloatBuffer {
         buf[index] = x

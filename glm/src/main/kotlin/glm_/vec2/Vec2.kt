@@ -7,7 +7,7 @@ import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.Ptr
-import kool.floatBufferBig
+import kool.FloatBuffer
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetFloat
@@ -21,7 +21,7 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToBuffer {
+class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>() {
 
     constructor(x: Float, y: Float) : this(0, floatArrayOf(x, y))
 
@@ -146,7 +146,7 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToBuffer {
 
     fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
     infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
-    fun toFloatBuffer(): FloatBuffer = to(floatBufferBig(length), 0)
+    fun toFloatBuffer(): FloatBuffer = to(FloatBuffer(length), 0)
     infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
 
     fun to(buf: FloatBuffer, offset: Int): FloatBuffer {

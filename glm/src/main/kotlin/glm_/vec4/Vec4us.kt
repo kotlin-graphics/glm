@@ -10,7 +10,7 @@ import glm_.vec3.Vec3us
 import glm_.vec4.operators.vec4us_operators
 import kool.Ptr
 import kool.pos
-import kool.shortBufferBig
+import kool.ShortBuffer
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetShort
 import unsigned.Ushort
@@ -193,7 +193,7 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
 
     fun toShortBufferStack(): ShortBuffer = to(MemoryStack.stackPush().mallocShort(length), 0)
     infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
-    fun toShortBuffer(): ShortBuffer = to(shortBufferBig(length), 0)
+    fun toShortBuffer(): ShortBuffer = to(ShortBuffer(length), 0)
     infix fun to(shorts: ShortBuffer): ShortBuffer = to(shorts, shorts.pos)
     fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
         shorts[index] = x.v

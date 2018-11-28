@@ -1,5 +1,6 @@
 package glm_.vec1
 
+import glm_.ToBuffer
 import glm_.b
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
@@ -7,7 +8,7 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.bufferBig
+import kool.Buffer
 import kool.pos
 import org.lwjgl.system.MemoryStack
 import java.nio.*
@@ -16,7 +17,7 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-abstract class Vec1t<T : Number>(_x: T) {
+abstract class Vec1t<T : Number>(_x: T) : ToBuffer {
 
     @JvmField
     var x = _x
@@ -35,8 +36,6 @@ abstract class Vec1t<T : Number>(_x: T) {
         0 -> x = value
         else -> throw IndexOutOfBoundsException()
     }
-
-    abstract fun size(): Int
 
     // -- infix Generic Constructors --
 
@@ -180,11 +179,6 @@ abstract class Vec1t<T : Number>(_x: T) {
     infix fun to(bytes: ByteArray): ByteArray = to(bytes, 0)
     fun to(bytes: ByteArray, bigEndian: Boolean): ByteArray = to(bytes, 0, bigEndian)
     abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
-
-    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.malloc(size()))
-    fun toBuffer(): ByteBuffer = to(bufferBig(size()))
-    infix fun to(buf: ByteBuffer): ByteBuffer = to(buf, buf.pos)
-    abstract fun to(buf: ByteBuffer, index: Int): ByteBuffer
 
 // TODO
 //    infix fun lessThan(b: Vec2t<out Number>) = glm.lessThan(this, b, Vec2bool())

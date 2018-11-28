@@ -7,9 +7,6 @@ import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.bufferBig
-import kool.pos
-import org.lwjgl.system.MemoryStack
 import java.nio.*
 
 abstract class Vec3t<T : Number> {
