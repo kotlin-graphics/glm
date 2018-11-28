@@ -4,8 +4,8 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion".toString()
 
-    implementation 'com.github.kotlin-graphics:kotlin-unsigned:4c5a91c407fbcc7761f93336967820b08021aa60'
-    implementation 'com.github.kotlin-graphics:kool:0487fcdfddc540c9985d8fac18e17f593c959c35'
+    api 'com.github.kotlin-graphics:kotlin-unsigned:4c5a91c407fbcc7761f93336967820b08021aa60'
+    api 'com.github.kotlin-graphics:kool:0487fcdfddc540c9985d8fac18e17f593c959c35'
 
     testImplementation project(":glm-test")
 
