@@ -1,5 +1,9 @@
 import org.gradle.internal.os.OperatingSystem
 
+plugins {
+    id 'java-library'
+}
+
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion".toString()
