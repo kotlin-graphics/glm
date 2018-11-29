@@ -1,14 +1,8 @@
 package  glm_.mat2x3
 
-import glm_.BYTES
-import glm_.f
-import glm_.set
-import glm_.toFloat
+import glm_.*
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
-import kool.FloatBuffer
-import kool.pos
-import org.lwjgl.system.MemoryStack
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.util.*
@@ -17,7 +11,7 @@ import java.util.*
  * Created by GBarbieri on 09.12.2016.
  */
 
-class Mat2x3(var array: FloatArray) : Mat2x3t<Float>() {
+class Mat2x3(var array: FloatArray) : Mat2x3t<Float>(), ToFloatBuffer {
 
     constructor(list: Iterable<*>, index: Int = 0) : this(FloatArray(6) { list.elementAt(index + it)!!.toFloat })
 
@@ -58,12 +52,7 @@ class Mat2x3(var array: FloatArray) : Mat2x3t<Float>() {
     }
 
 
-    fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
-    infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
-    fun toFloatBuffer(): FloatBuffer = to(FloatBuffer(length), 0)
-    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
-
-    fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
+    override fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
         buf[offset + 0] = array[0]
         buf[offset + 1] = array[1]
         buf[offset + 2] = array[2]
@@ -113,6 +102,8 @@ class Mat2x3(var array: FloatArray) : Mat2x3t<Float>() {
     }
 
     override fun size() = size
+
+    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Mat2x3 && Arrays.equals(array, other.array)
 

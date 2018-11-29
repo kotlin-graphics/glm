@@ -14,7 +14,7 @@ import java.util.*
  * Created by GBarbieri on 09.12.2016.
  */
 
-class Mat4x2(var array: FloatArray) : Mat4x2t<Float>() {
+class Mat4x2(var array: FloatArray) : Mat4x2t<Float>(), ToFloatBuffer {
 
     constructor(list: Iterable<*>, index: Int = 0) : this(FloatArray(8) { list.elementAt(index + it)!!.toFloat })
 
@@ -53,13 +53,7 @@ class Mat4x2(var array: FloatArray) : Mat4x2t<Float>() {
                 .putFloat(offset + 7 * Float.BYTES, array[7])
     }
 
-
-    fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
-    infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
-    fun toFloatBuffer(): FloatBuffer = to(FloatBuffer(length), 0)
-    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
-
-    fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
+    override fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
         buf[offset + 0] = array[0]
         buf[offset + 1] = array[1]
         buf[offset + 2] = array[2]
@@ -107,6 +101,8 @@ class Mat4x2(var array: FloatArray) : Mat4x2t<Float>() {
     }
 
     override fun size() = size
+
+    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Mat4x2 && Arrays.equals(array, other.array)
 

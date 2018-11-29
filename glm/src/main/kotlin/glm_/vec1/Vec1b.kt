@@ -78,7 +78,7 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer = buf.put(index, x)
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer = buf.put(offset, x)
 
     companion object { //TODO : vec2b_operators {
         const val length = Vec1t.length

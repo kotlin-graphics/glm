@@ -37,7 +37,7 @@ import java.util.*
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var array: FloatArray) : Mat4x4t<Float>() {
+class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var array: FloatArray) : Mat4x4t<Float>(), ToFloatBuffer {
 
     // -- Constructors --
 
@@ -447,13 +447,7 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
                 .putFloat(offset + 15 * Float.BYTES, array[15])
     }
 
-
-    fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
-    infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
-    fun toFloatBuffer(): FloatBuffer = to(FloatBuffer(length), 0)
-    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
-
-    fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
+    override fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
         buf[offset + 0] = array[0]
         buf[offset + 1] = array[1]
         buf[offset + 2] = array[2]
@@ -839,6 +833,8 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     }
 
     override fun size() = size
+
+    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Mat4 && Arrays.equals(array, other.array)
 

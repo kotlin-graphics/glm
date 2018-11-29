@@ -10,7 +10,7 @@ import glm_.vec3.Vec3t
 import java.nio.*
 
 // TODO other
-abstract class Vec4t<T : Number> {
+abstract class Vec4t<T : Number>: ToBuffer {
 
     abstract var x: T
     abstract var y: T
@@ -31,8 +31,6 @@ abstract class Vec4t<T : Number> {
     }
 
     abstract operator fun set(index: Int, value: Number)
-
-    abstract fun size(): Int
 
     // -- infix Generic Constructors --
 

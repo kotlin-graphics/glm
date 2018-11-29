@@ -92,7 +92,7 @@ class Vec1ub(x: Ubyte) : Vec1t<Ubyte>(x) {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer = buf.put(index, x.v)
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer = buf.put(offset, x.v)
 
 
     // -- Unary arithmetic operators --
