@@ -40,7 +40,7 @@ fun List<ToBuffer>.toBuffer(assumeConstSize: Boolean = true): ByteBuffer {
 
     if(this.isEmpty()) return Buffer(0)
 
-    val totalSize = if(assumeConstSize) this.first().size() else this.sumBy { it.size() }
+    val totalSize = if(assumeConstSize) this.first().size() * this.size else this.sumBy { it.size() }
 
     val buffer = Buffer(totalSize)
     this.to(buffer)
@@ -86,7 +86,7 @@ fun List<ToFloatBuffer>.toFloatBuffer(assumeConstSize: Boolean = true): FloatBuf
 
     if(this.isEmpty()) return FloatBuffer(0)
 
-    val totalSize = if(assumeConstSize) this.first().elementCount() else this.sumBy { it.elementCount() }
+    val totalSize = if(assumeConstSize) this.first().elementCount() * this.size else this.sumBy { it.elementCount() }
 
     val buffer = FloatBuffer(totalSize)
     this.to(buffer)
@@ -132,7 +132,7 @@ fun List<ToDoubleBuffer>.toDoubleBuffer(assumeConstSize: Boolean = true): Double
 
     if(this.isEmpty()) return DoubleBuffer(0)
 
-    val totalSize = if(assumeConstSize) this.first().elementCount() else this.sumBy { it.elementCount() }
+    val totalSize = if(assumeConstSize) this.first().elementCount() * this.size else this.sumBy { it.elementCount() }
 
     val buffer = DoubleBuffer(totalSize)
     this.to(buffer)
