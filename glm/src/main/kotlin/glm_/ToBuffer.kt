@@ -70,7 +70,7 @@ interface ToFloatBuffer : ToBuffer {
  */
 fun List<ToFloatBuffer>.to(buf: FloatBuffer): FloatBuffer {
     this.forEachIndexed { index, value ->
-        val targetOffset = buf.pos + index * value.size()
+        val targetOffset = buf.pos + index * value.elementCount()
         value.to(buf, targetOffset)
     }
     return buf
@@ -116,7 +116,7 @@ interface ToDoubleBuffer : ToBuffer {
  */
 fun List<ToDoubleBuffer>.to(buf: DoubleBuffer): DoubleBuffer {
     this.forEachIndexed { index, value ->
-        val targetOffset = buf.pos + index * value.size()
+        val targetOffset = buf.pos + index * value.elementCount()
         value.to(buf, targetOffset)
     }
     return buf
