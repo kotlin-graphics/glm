@@ -470,7 +470,7 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToBuffer {
     }
 
     @JvmOverloads
-    fun toColor(normalized: Boolean = false): Color = when {
+    fun toColor(normalized: Boolean = true): Color = when {
         normalized -> Color(r, g, b, w)
         else -> {
             val i = 1f / 255

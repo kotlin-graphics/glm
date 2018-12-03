@@ -406,6 +406,9 @@ class testCoreVec4 : StringSpec() {
             Vec4 { it.f }.toColor(normalized = false)
             Vec4(0f, 0.5f, 1f, 1f).toColor()
             Vec4(1f).toColor()
+
+            val c = floatArrayOf(0.2f, 0.2f, 0.2f, 1f)
+            Vec4(c, 0).toColor()
         }
     }
 }
