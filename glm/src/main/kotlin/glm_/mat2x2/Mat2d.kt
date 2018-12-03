@@ -30,7 +30,7 @@ import java.util.*
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var array: DoubleArray) : Mat2x2t<Double>() {
+class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var array: DoubleArray) : Mat2x2t<Double>(), ToDoubleBuffer {
 
     // -- Constructors --
 
@@ -235,12 +235,7 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
                 .putDouble(offset + 3 * Double.BYTES, array[3])
     }
 
-    fun toFloatBufferStack(): DoubleBuffer = to(MemoryStack.stackGet().mallocDouble(length), 0)
-    infix fun toFloatBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
-    fun toFloatBuffer(): DoubleBuffer = to(DoubleBuffer(length), 0)
-    infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
-
-    fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
+    override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
         buf[offset + 0] = array[0]
         buf[offset + 1] = array[1]
         buf[offset + 2] = array[2]
@@ -371,6 +366,8 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     }
 
     override fun size() = size
+
+	override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Mat2d && Arrays.equals(array, other.array)
 

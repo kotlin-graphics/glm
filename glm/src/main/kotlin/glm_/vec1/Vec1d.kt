@@ -10,14 +10,13 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.DoubleBuffer
 import kool.pos
-import org.lwjgl.system.MemoryStack
 import java.nio.*
 
 /**
  * Created by GBarbieri on 28.04.2017.
  */
 
-class Vec1d(x: Double) : Vec1t<Double>(x) {
+class Vec1d(x: Double) : Vec1t<Double>(x), ToDoubleBuffer {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -100,7 +99,7 @@ class Vec1d(x: Double) : Vec1t<Double>(x) {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer = buf.putDouble(index, x)
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer = buf.putDouble(offset, x)
 
     fun toDoubleArray(): DoubleArray = to(DoubleArray(length), 0)
     infix fun to(doubles: DoubleArray): DoubleArray = to(doubles, 0)
@@ -109,11 +108,8 @@ class Vec1d(x: Double) : Vec1t<Double>(x) {
         return doubles
     }
 
-    infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
-    fun toDoubleBuffer(): DoubleBuffer = to(DoubleBuffer(length), 0)
-    infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
-    fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
-        buf[index] = x
+    override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
+        buf[offset] = x
         return buf
     }
 
@@ -296,6 +292,8 @@ class Vec1d(x: Double) : Vec1t<Double>(x) {
     }
 
     override fun size() = size
+
+    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec1d && this[0] == other[0]
     override fun hashCode() = x.hashCode()

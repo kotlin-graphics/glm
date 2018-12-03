@@ -21,7 +21,7 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>() {
+class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer {
 
     constructor(x: Float, y: Float) : this(0, floatArrayOf(x, y))
 
@@ -144,12 +144,7 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>() {
                 .putFloat(offset + 1 * Float.BYTES, array[1])
     }
 
-    fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
-    infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
-    fun toFloatBuffer(): FloatBuffer = to(FloatBuffer(length), 0)
-    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
-
-    fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
+    override fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
         buf[offset + 0] = array[0]
         buf[offset + 1] = array[1]
         return buf
@@ -540,6 +535,8 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>() {
     }
 
     override fun size() = size
+
+    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec2 && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()

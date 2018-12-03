@@ -100,7 +100,7 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer = buf.putInt(index, x)
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer = buf.putInt(offset, x)
 
     fun toIntArray(): IntArray = to(IntArray(length), 0)
     infix fun to(ints: IntArray): IntArray = to(ints, 0)

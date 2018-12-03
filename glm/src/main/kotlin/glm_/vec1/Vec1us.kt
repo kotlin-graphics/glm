@@ -99,13 +99,13 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
         return this
     }
 
-    fun to(bytes: ByteArray, index: Int) = to(bytes, index, true)
+    fun to(bytes: ByteArray, offset: Int) = to(bytes, offset, true)
     override fun to(bytes: ByteArray, index: Int, bigEndian: Boolean): ByteArray {
         bytes.putShort(index, x.v)
         return bytes
     }
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer = buf.putShort(index, x.v)
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer = buf.putShort(offset, x.v)
 
     fun toShortArray(): ShortArray = to(ShortArray(length), 0)
     infix fun to(shorts: ShortArray): ShortArray = to(shorts, 0)

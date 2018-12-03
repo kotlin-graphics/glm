@@ -15,7 +15,7 @@ import java.util.*
  * Created by GBarbieri on 09.12.2016.
  */
 
-class Mat3x4d(var array: DoubleArray) : Mat3x4t<Double>() {
+class Mat3x4d(var array: DoubleArray) : Mat3x4t<Double>(), ToDoubleBuffer {
 
     constructor(list: Iterable<*>, index: Int = 0) : this(DoubleArray(12) { list.elementAt(index + it)!!.toDouble })
 
@@ -60,13 +60,7 @@ class Mat3x4d(var array: DoubleArray) : Mat3x4t<Double>() {
                 .putDouble(offset + 11 * Double.BYTES, array[11])
     }
 
-
-    fun toDoubleBufferStack(): DoubleBuffer = to(MemoryStack.stackGet().mallocDouble(length), 0)
-    infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
-    fun toDoubleBuffer(): DoubleBuffer = to(DoubleBuffer(length), 0)
-    infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
-
-    fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
+    override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
         buf[offset + 0] = array[0]
         buf[offset + 1] = array[1]
         buf[offset + 2] = array[2]
@@ -129,6 +123,8 @@ class Mat3x4d(var array: DoubleArray) : Mat3x4t<Double>() {
     }
 
     override fun size() = size
+
+    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Mat3x4d && Arrays.equals(array, other.array)
 

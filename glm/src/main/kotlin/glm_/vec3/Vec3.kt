@@ -8,9 +8,7 @@ import glm_.vec3.operators.vec3_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.Ptr
-import kool.FloatBuffer
 import kool.pos
-import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetFloat
 import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.awt.Color
@@ -22,7 +20,7 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToBuffer {
+class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer {
 
     constructor(x: Float, y: Float, z: Float) : this(0, floatArrayOf(x, y, z))
 
@@ -154,14 +152,10 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToBuffer {
         return buf
     }
 
-    fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackPush().mallocFloat(length), 0)
-    infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
-    fun toFloatBuffer(): FloatBuffer = to(FloatBuffer(length), 0)
-    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
-    fun to(buf: FloatBuffer, index: Int): FloatBuffer {
-        buf[index] = x
-        buf[index + 1] = y
-        buf[index + 2] = z
+    override fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
+        buf[offset] = x
+        buf[offset + 1] = y
+        buf[offset + 2] = z
         return buf
     }
 
@@ -467,6 +461,8 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToBuffer {
     }
 
     override fun size() = size
+
+    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec3 && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()

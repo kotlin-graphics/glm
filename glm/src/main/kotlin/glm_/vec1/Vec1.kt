@@ -10,14 +10,13 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.FloatBuffer
 import kool.pos
-import org.lwjgl.system.MemoryStack
 import java.nio.*
 
 /**
  * Created by GBarbieri on 28.04.2017.
  */
 
-class Vec1(x: Float) : Vec1t<Float>(x) {
+class Vec1(x: Float) : Vec1t<Float>(x), ToFloatBuffer {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -100,7 +99,7 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
     }
 
 
-    override fun to(buf: ByteBuffer, index: Int): ByteBuffer = buf.putFloat(index, x)
+    override fun to(buf: ByteBuffer, offset: Int): ByteBuffer = buf.putFloat(offset, x)
 
     fun toFloatArray(): FloatArray = to(FloatArray(length), 0)
     infix fun to(floats: FloatArray): FloatArray = to(floats, 0)
@@ -109,12 +108,8 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
         return floats
     }
 
-    infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
-    fun toFloatBuffer(): FloatBuffer = to(FloatBuffer(length), 0)
-    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
-
-    fun to(buf: FloatBuffer, index: Int): FloatBuffer {
-        buf[index] = x
+    override fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
+        buf[offset] = x
         return buf
     }
 
@@ -299,6 +294,8 @@ class Vec1(x: Float) : Vec1t<Float>(x) {
     }
 
     override fun size() = size
+
+    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec1 && this[0] == other[0]
     override fun hashCode() = x.hashCode()

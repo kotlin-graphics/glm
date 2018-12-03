@@ -1,7 +1,6 @@
 package glm_.vec1
 
-import glm_.ToBuffer
-import glm_.b
+import glm_.*
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -17,7 +16,7 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-abstract class Vec1t<T : Number>(_x: T) : ToBuffer {
+abstract class Vec1t<T : Number>(_x: T): ToBuffer {
 
     @JvmField
     var x = _x

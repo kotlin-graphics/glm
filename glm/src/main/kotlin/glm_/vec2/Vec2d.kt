@@ -9,7 +9,6 @@ import glm_.vec4.Vec4t
 import kool.Ptr
 import kool.DoubleBuffer
 import kool.pos
-import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetDouble
 import org.lwjgl.system.MemoryUtil.memPutDouble
 import java.awt.Color
@@ -21,7 +20,7 @@ import java.nio.*
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>() {
+class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuffer {
 
     constructor(x: Double, y: Double) : this(0, doubleArrayOf(x, y))
 
@@ -135,14 +134,9 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>() {
         return buf
     }
 
-    fun toDoubleBufferStack(): DoubleBuffer = to(MemoryStack.stackGet().mallocDouble(length), 0)
-    infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
-    fun toDoubleBuffer(): DoubleBuffer = to(DoubleBuffer(length), 0)
-    infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
-
-    fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
-        buf[index] = x
-        buf[index + 1] = y
+    override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
+        buf[offset] = x
+        buf[offset + 1] = y
         return buf
     }
 
@@ -415,6 +409,8 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>() {
     }
 
     override fun size() = size
+
+    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec2d && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()

@@ -15,7 +15,7 @@ import java.nio.FloatBuffer
 import java.util.*
 
 
-class Mat4x3(var array: FloatArray) : Mat4x3t<Float>() {
+class Mat4x3(var array: FloatArray) : Mat4x3t<Float>(), ToFloatBuffer {
 
     constructor(list: Iterable<*>, index: Int = 0) : this(FloatArray(12) { list.elementAt(index + it)!!.toFloat })
 
@@ -60,12 +60,7 @@ class Mat4x3(var array: FloatArray) : Mat4x3t<Float>() {
     }
 
 
-    fun toFloatBufferStack(): FloatBuffer = to(MemoryStack.stackGet().mallocFloat(length), 0)
-    infix fun toFloatBuffer(stack: MemoryStack): FloatBuffer = to(stack.mallocFloat(length), 0)
-    fun toFloatBuffer(): FloatBuffer = to(FloatBuffer(length), 0)
-    infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
-
-    fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
+    override fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
         buf[offset + 0] = array[0]
         buf[offset + 1] = array[1]
         buf[offset + 2] = array[2]
@@ -129,6 +124,8 @@ class Mat4x3(var array: FloatArray) : Mat4x3t<Float>() {
     }
 
     override fun size() = size
+
+    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Mat4x3 && Arrays.equals(array, other.array)
 

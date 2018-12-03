@@ -8,9 +8,7 @@ import glm_.vec3.operators.vec3d_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.Ptr
-import kool.DoubleBuffer
 import kool.pos
-import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetDouble
 import org.lwjgl.system.MemoryUtil.memPutDouble
 import java.awt.Color
@@ -22,7 +20,7 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToBuffer {
+class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuffer {
 
     constructor(x: Double, y: Double, z: Double) : this(0, doubleArrayOf(x, y, z))
 
@@ -153,14 +151,10 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToBuffer {
         return buf
     }
 
-    fun toDoubleBufferStack(): DoubleBuffer = to(MemoryStack.stackPush().mallocDouble(length), 0)
-    infix fun toDoubleBuffer(stack: MemoryStack): DoubleBuffer = to(stack.mallocDouble(length), 0)
-    fun toDoubleBuffer(): DoubleBuffer = to(DoubleBuffer(length), 0)
-    infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
-    fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
-        buf[index] = x
-        buf[index + 1] = y
-        buf[index + 2] = z
+    override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
+        buf[offset] = x
+        buf[offset + 1] = y
+        buf[offset + 2] = z
         return buf
     }
 
@@ -416,6 +410,8 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToBuffer {
     }
 
     override fun size() = size
+
+    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec3d && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()
