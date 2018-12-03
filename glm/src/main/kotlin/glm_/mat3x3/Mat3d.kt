@@ -24,6 +24,7 @@ import glm_.vec4.Vec4t
 import kool.Ptr
 import kool.DoubleBuffer
 import kool.pos
+import kool.set
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetDouble
 import org.lwjgl.system.MemoryUtil.memPutDouble

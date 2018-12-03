@@ -10,6 +10,7 @@ import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4b_operators
 import kool.Ptr
 import kool.pos
+import kool.set
 import org.lwjgl.system.MemoryUtil.memGetByte
 import org.lwjgl.system.MemoryUtil.memPutByte
 import java.io.PrintStream

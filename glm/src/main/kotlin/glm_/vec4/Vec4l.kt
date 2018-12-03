@@ -11,6 +11,7 @@ import glm_.vec4.operators.vec4l_operators
 import kool.Ptr
 import kool.LongBuffer
 import kool.pos
+import kool.set
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetLong
 import org.lwjgl.system.MemoryUtil.memPutLong

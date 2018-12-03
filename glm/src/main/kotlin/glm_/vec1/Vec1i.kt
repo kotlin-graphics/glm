@@ -10,6 +10,7 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.IntBuffer
 import kool.pos
+import kool.set
 import org.lwjgl.system.MemoryStack
 import java.nio.*
 

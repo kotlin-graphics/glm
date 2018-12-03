@@ -5,6 +5,7 @@ import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import kool.DoubleBuffer
 import kool.pos
+import kool.set
 import org.lwjgl.system.MemoryStack
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer

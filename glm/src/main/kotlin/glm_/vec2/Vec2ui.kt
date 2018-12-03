@@ -9,6 +9,7 @@ import glm_.vec4.Vec4t
 import kool.Ptr
 import kool.IntBuffer
 import kool.pos
+import kool.set
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetInt
 import org.lwjgl.system.MemoryUtil.memPutInt

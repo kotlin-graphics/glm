@@ -9,6 +9,7 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.pos
 import kool.ShortBuffer
+import kool.set
 import org.lwjgl.system.MemoryStack
 import unsigned.Ushort
 import java.nio.*

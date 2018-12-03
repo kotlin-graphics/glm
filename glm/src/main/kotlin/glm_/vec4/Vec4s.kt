@@ -11,6 +11,7 @@ import glm_.vec4.operators.vec4s_operators
 import kool.Ptr
 import kool.pos
 import kool.ShortBuffer
+import kool.set
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetShort
 import java.io.PrintStream

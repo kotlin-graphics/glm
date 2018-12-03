@@ -17,10 +17,7 @@ import glm_.vec2.Vec2t
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d
 import kool.Ptr
-import kool.Buffer
-import kool.DoubleBuffer
-import kool.pos
-import org.lwjgl.system.MemoryStack
+import kool.set
 import org.lwjgl.system.MemoryUtil.memGetDouble
 import java.io.PrintStream
 import java.nio.ByteBuffer

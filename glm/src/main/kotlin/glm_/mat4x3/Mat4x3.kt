@@ -9,6 +9,7 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
 import kool.FloatBuffer
 import kool.pos
+import kool.set
 import org.lwjgl.system.MemoryStack
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer

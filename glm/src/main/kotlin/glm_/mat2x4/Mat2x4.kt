@@ -5,6 +5,7 @@ import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
 import kool.FloatBuffer
 import kool.pos
+import kool.set
 import org.lwjgl.system.MemoryStack
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
