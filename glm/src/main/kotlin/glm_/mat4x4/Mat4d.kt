@@ -621,11 +621,15 @@ class Mat4d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     fun rotateAssign(angle: Double, vX: Double, vY: Double, vZ: Double) = glm.rotate(this, this, angle, vX, vY, vZ)
     fun rotateAssign(angle: Double, v: Vec3d) = glm.rotate(this, this, angle, v)
 
-
+    @JvmOverloads
     fun rotateX(angle: Double, res: Mat4d = Mat4d()) = glm.rotateX(res, this, angle)
+    @JvmOverloads
     fun rotateY(angle: Double, res: Mat4d = Mat4d()) = glm.rotateY(res, this, angle)
+    @JvmOverloads
     fun rotateZ(angle: Double, res: Mat4d = Mat4d()) = glm.rotateZ(res, this, angle)
+    @JvmOverloads
     fun rotateXYZ(angle: Vec3d, res: Mat4d = Mat4d()) = glm.rotateXYZ(res, this, angle.x, angle.y, angle.z)
+    @JvmOverloads
     fun rotateXYZ(angleX: Double, angleY: Double, angleZ: Double, res: Mat4d = Mat4d()) = glm.rotateXYZ(res, this, angleX, angleY, angleZ)
 
     fun rotateXassign(angle: Double) = glm.rotateX(this, this, angle)

@@ -468,11 +468,15 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
         div(this, this, b)
     }
 
-
+    @JvmOverloads
     fun rotateX(angle: Double, res: Mat3d = Mat3d()) = glm.rotateX(res, this, angle)
+    @JvmOverloads
     fun rotateY(angle: Double, res: Mat3d = Mat3d()) = glm.rotateY(res, this, angle)
+    @JvmOverloads
     fun rotateZ(angle: Double, res: Mat3d = Mat3d()) = glm.rotateZ(res, this, angle)
+    @JvmOverloads
     fun rotateXYZ(angle: Vec3d, res: Mat3d = Mat3d()) = glm.rotateXYZ(res, this, angle.x, angle.y, angle.z)
+    @JvmOverloads
     fun rotateXYZ(angleX: Double, angleY: Double, angleZ: Double, res: Mat3d = Mat3d()) = glm.rotateXYZ(res, this, angleX, angleY, angleZ)
 
     fun rotateXassign(angle: Double) = glm.rotateX(this, this, angle)
