@@ -418,6 +418,11 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>(), ToDoubleBuf
     override fun equals(other: Any?) = other is Vec4d && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
     override fun hashCode() = 31 * (31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()) + w.hashCode()
 
-    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y, $z, $w]")
-    override fun toString(): String = "Vec4d [$x, $y, $z, $w]"
+    @JvmOverloads
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.print("$name$this")
+
+    @JvmOverloads
+    fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
+
+    override fun toString(): String = "[$x, $y, $z, $w]"
 }

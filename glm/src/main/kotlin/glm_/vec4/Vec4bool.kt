@@ -112,6 +112,11 @@ data class Vec4bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
     override fun equals(other: Any?) = other is Vec4bool && x == other.x && y == other.y && z == other.z && w == other.w
     override fun hashCode() = 31 * (31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()) + w.hashCode()
 
-    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y, $z, $w]")
-    override fun toString(): String = "Vec4bool [$x, $y, $z, $w]"
+    @JvmOverloads
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.print("$name$this")
+
+    @JvmOverloads
+    fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
+
+    override fun toString(): String = "[$x, $y, $z, $w]"
 }

@@ -185,7 +185,7 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     infix fun put(mat2: Mat2) = System.arraycopy(mat2.array.clone(), 0, array, 0, length)
 
-    fun identity() = put(1f)
+    fun identity() = invoke(1f)
     infix fun put(s: Float) = put(s, s)
     infix fun put(v: Vec2) = put(v.x, v.y)
     infix fun put(v: Vec3) = put(v.x, v.y)
@@ -386,9 +386,13 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
 
-    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
-        $v00 $v10
-        $v01 $v11""")
+    @JvmOverloads
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.print("""$name:
+        $this""")
+
+    @JvmOverloads
+    fun println(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
+        $this""")
 
     override fun toString() = """
         $v00 $v10

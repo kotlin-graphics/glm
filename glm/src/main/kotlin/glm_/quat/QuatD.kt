@@ -10,6 +10,7 @@ import glm_.vec4.Vec4t
 import kool.Ptr
 import org.lwjgl.system.MemoryUtil.memGetDouble
 import org.lwjgl.system.MemoryUtil.memPutDouble
+import java.io.PrintStream
 import kotlin.math.abs
 import kotlin.math.sqrt
 
@@ -202,11 +203,13 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
     override fun equals(other: Any?) = other is QuatD && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
     override fun hashCode() = 31 * (31 * (31 * w.hashCode() + x.hashCode()) + y.hashCode()) + z.hashCode()
 
-    fun printErr(name: String = "") = System.err.println("$name ($w, {$x, $y, $z})")
+    @JvmOverloads
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.print("$name$this")
 
-    fun print(name: String = "") = println("$name ($w, {$x, $y, $z})")
+    @JvmOverloads
+    fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "QuatD ($w, {$x, $y, $z})"
+    override fun toString(): String = "($w, {$x, $y, $z})"
 
     @JvmOverloads
     fun vectorize(res: Vec4d = Vec4d()) = res.put(x, y, z, w)

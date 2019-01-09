@@ -19,7 +19,7 @@ interface func_matrix {
     /**
      * JVM custom
      */
-    fun cleanTranslation(m: Mat4, res: Mat4): Mat4 {
+    fun cleanTranslation(res: Mat4, m: Mat4): Mat4 {
         res put m
         res.v30 = 0f
         res.v31 = 0f

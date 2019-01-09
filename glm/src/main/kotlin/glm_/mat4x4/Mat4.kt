@@ -360,7 +360,7 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
             System.arraycopy(mat4.array, 0, array, 0, length)
     }
 
-    fun identity() = put(1f)
+    fun identity() = invoke(1f)
     infix fun put(s: Float) = put(s, s, s, s)
     infix fun put(v: Vec2) = put(v.x, v.y, 1f, 1f)
     infix fun put(v: Vec3) = put(v.x, v.y, v.z, 1f)
@@ -690,10 +690,15 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     fun transposeAssign() = transpose(this, this)
 
+    @JvmOverloads
+    fun inverseTranspose(res: Mat4 = Mat4()) = glm.inverseTranspose(res, this)
+
+    fun inverseTransposeAssign() = glm.inverseTranspose(this, this)
+
 
     fun cleanTranslationAssign() = glm.cleanTranslation(this, this)
 
-    fun cleanTranslation(res: Mat4 = Mat4()) = glm.cleanTranslation(this, res)
+    fun cleanTranslation(res: Mat4 = Mat4()) = glm.cleanTranslation(res, this)
 
 
     // TODO others
@@ -845,11 +850,13 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     override fun hashCode() = 31 * (31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()) + this[3].hashCode()
 
-    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
-        $v00 $v10 $v20 $v30
-        $v01 $v11 $v21 $v31
-        $v02 $v12 $v22 $v32
-        $v03 $v13 $v23 $v33""")
+    @JvmOverloads
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.print("""$name:
+        $this""")
+
+    @JvmOverloads
+    fun println(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
+        $this""")
 
     override fun toString() = """
         $v00 $v10 $v20 $v30

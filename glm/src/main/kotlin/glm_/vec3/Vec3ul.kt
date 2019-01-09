@@ -599,6 +599,11 @@ class Vec3ul(var ofs: Int, var array: LongArray) : Vec3t<Ulong>(), ToBuffer {
     override fun equals(other: Any?) = other is Vec3ul && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.v.hashCode() + y.v.hashCode()) + z.v.hashCode()
 
-    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [${x.v}, ${y.v}, ${z.v}]")
-    override fun toString(): String = "Vec3ul [${x.v}, ${y.v}, ${z.v}]"
+    @JvmOverloads
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.print("$name$this")
+
+    @JvmOverloads
+    fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
+
+    override fun toString(): String = "[${x.v}, ${y.v}, ${z.v}]"
 }

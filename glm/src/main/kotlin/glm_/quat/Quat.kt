@@ -15,6 +15,7 @@ import kool.Ptr
 import org.lwjgl.system.MemoryUtil.memGetFloat
 import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.io.InputStream
+import java.io.PrintStream
 import kotlin.math.abs
 import kotlin.math.sqrt
 
@@ -225,9 +226,11 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
     override fun hashCode() = 31 * (31 * (31 * w.hashCode() + x.hashCode()) + y.hashCode()) + z.hashCode()
 
-    fun printErr(name: String = "") = System.err.println("$name ($w, {$x, $y, $z})")
+    @JvmOverloads
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.print("$name$this")
 
-    fun print(name: String = "") = println("$name ($w, {$x, $y, $z})")
+    @JvmOverloads
+    fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "Quat ($w, {$x, $y, $z})"
+    override fun toString(): String = "($w, {$x, $y, $z})"
 }

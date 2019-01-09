@@ -175,14 +175,14 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
             x.d, 0.0,
             0.0, y.d)
 
-    fun invoke(a0: Double, a1: Double,
+    operator fun invoke(a0: Double, a1: Double,
                b0: Double, b1: Double): Mat2d {
 
         put(a0, a1, b0, b1)
         return this
     }
 
-    fun invoke(a0: Number, a1: Number,
+    operator fun invoke(a0: Number, a1: Number,
                b0: Number, b1: Number): Mat2d {
 
         put(a0.d, a1.d, b0.d, b1.d)
@@ -192,7 +192,7 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
 
     infix fun put(mat2: Mat2d) = System.arraycopy(mat2.array.clone(), 0, array, 0, length)
 
-    fun identity() = put(1.0)
+    fun identity() = invoke(1.0)
     infix fun put(s: Double) = put(s, s)
     infix fun put(v: Vec2d) = put(v.x, v.y)
     infix fun put(v: Vec3d) = put(v.x, v.y)
@@ -370,9 +370,13 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
 
     override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
 
-    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
-        $v00 $v10
-        $v01 $v11""")
+    @JvmOverloads
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.print("""$name:
+        $this""")
+
+    @JvmOverloads
+    fun println(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
+        $this""")
 
     override fun toString() = """
         $v00 $v10

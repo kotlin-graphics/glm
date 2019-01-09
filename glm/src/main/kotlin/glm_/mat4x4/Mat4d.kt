@@ -248,7 +248,7 @@ class Mat4d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
 
     infix fun put(mat4: Mat4d) = System.arraycopy(mat4.array.clone(), 0, array, 0, 16)
 
-    fun identity() = put(1.0)
+    fun identity() = invoke(1.0)
     infix fun put(s: Double) = put(s, s, s, s)
     infix fun put(v: Vec2d) = put(v.x, v.y, 1.0, 1.0)
     infix fun put(v: Vec3d) = put(v.x, v.y, v.z, 1.0)
@@ -578,6 +578,11 @@ class Mat4d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
 
     fun transposeAssign() = transpose(this, this)
 
+    @JvmOverloads
+    fun inverseTranspose(res: Mat4d = Mat4d()) = glm.inverseTranspose(res, this)
+
+    fun inverseTransposeAssign() = glm.inverseTranspose(this, this)
+
 
     // TODO others
     infix fun scale(scale: Vec3d) = scale(scale.x, scale.y, scale.z, Mat4d())
@@ -728,11 +733,13 @@ class Mat4d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
 
     override fun hashCode() = 31 * (31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()) + this[3].hashCode()
 
-    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
-        $v00 $v10 $v20 $v30
-        $v01 $v11 $v21 $v31
-        $v02 $v12 $v22 $v32
-        $v03 $v13 $v23 $v33""")
+    @JvmOverloads
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.print("""$name:
+        $this""")
+
+    @JvmOverloads
+    fun println(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
+        $this""")
 
     override fun toString() = """
         $v00 $v10 $v20 $v30

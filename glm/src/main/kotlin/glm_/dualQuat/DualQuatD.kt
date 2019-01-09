@@ -136,9 +136,10 @@ class DualQuatD(var real: QuatD, var dual: QuatD) {
 
     /** Set the dual quaternion as identity.
      *  @see gtx_dual_quaternion */
-    fun identity() {
+    fun identity(): DualQuatD {
         real.put(1.0, 0.0, 0.0, 0.0)
         dual.put(0.0, 0.0, 0.0, 0.0)
+        return this
     }
 
     /** Returns a new normalized quaternion.

@@ -616,6 +616,11 @@ class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>(), ToBuffer {
     override fun equals(other: Any?) = other is Vec2s && this[0] == other[0] && this[1] == other[1]
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
 
-    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y]")
-    override fun toString(): String = "Vec2s [$x, $y]"
+    @JvmOverloads
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.print("$name$this")
+
+    @JvmOverloads
+    fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
+
+    override fun toString(): String = "[$x, $y]"
 }

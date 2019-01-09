@@ -88,7 +88,11 @@ data class Vec2bool(var x: Boolean = false, var y: Boolean = false) {
 
     fun all() = glm.all(this)
 
+    @JvmOverloads
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.print("$name$this")
 
-    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y]")
-    override fun toString(): String = "Vec2bool [$x, $y]"
+    @JvmOverloads
+    fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
+
+    override fun toString(): String = "[$x, $y]"
 }

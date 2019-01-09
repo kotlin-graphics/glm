@@ -200,6 +200,11 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
 
     fun transposeAssign() = transpose(this, this)
 
+    @JvmOverloads
+    fun inverseTranspose(res: Mat3d = Mat3d()) = glm.inverseTranspose(res, this)
+
+    fun inverseTransposeAssign() = glm.inverseTranspose(this, this)
+
 
     infix operator fun invoke(s: Double) = invoke(s, s, s)
 
@@ -242,7 +247,7 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
             0.0, y.d, 0.0,
             0.0, 0.0, z.d)
 
-    fun invoke(a0: Double, a1: Double, a2: Double,
+    operator fun invoke(a0: Double, a1: Double, a2: Double,
                b0: Double, b1: Double, b2: Double,
                c0: Double, c1: Double, c2: Double): Mat3d {
 
@@ -250,7 +255,7 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
         return this
     }
 
-    fun invoke(a0: Number, a1: Number, a2: Number,
+    operator fun invoke(a0: Number, a1: Number, a2: Number,
                b0: Number, b1: Number, b2: Number,
                c0: Number, c1: Number, c2: Number): Mat3d {
 
@@ -261,7 +266,7 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
 
     infix fun put(mat3: Mat3d) = System.arraycopy(mat3.array.clone(), 0, array, 0, length)
 
-    fun identity() = put(1.0)
+    fun identity() = invoke(1.0)
     infix fun put(s: Double) = put(s, s, s)
     infix fun put(v: Vec2d) = put(v.x, v.y, 1.0)
     infix fun put(v: Vec3d) = put(v.x, v.y, v.z)
@@ -553,10 +558,13 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
 
     override fun hashCode() = 31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()
 
-    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
-        $v00 $v10 $v20
-        $v01 $v11 $v21
-        $v02 $v12 $v22""")
+    @JvmOverloads
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.print("""$name:
+        $this""")
+
+    @JvmOverloads
+    fun println(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
+        $this""")
 
     override fun toString() = """
         $v00 $v10 $v20

@@ -199,6 +199,12 @@ class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     fun transposeAssign() = transpose(this, this)
 
 
+    @JvmOverloads
+    fun inverseTranspose(res: Mat3 = Mat3()) = glm.inverseTranspose(res, this)
+
+    fun inverseTransposeAssign() = glm.inverseTranspose(this, this)
+
+
     infix operator fun invoke(s: Float) = invoke(s, s, s)
 
     infix operator fun invoke(v: Vec2) = invoke(v.x, v.y, 1f)
@@ -259,7 +265,7 @@ class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     infix fun put(mat3: Mat3) = System.arraycopy(mat3.array.clone(), 0, array, 0, length)
 
-    fun identity() = put(1f)
+    fun identity() = invoke(1f)
     infix fun put(s: Float) = put(s, s, s)
     infix fun put(v: Vec2) = put(v.x, v.y, 1f)
     infix fun put(v: Vec3) = put(v.x, v.y, v.z)
@@ -484,7 +490,6 @@ class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     fun rotateXYZassign(angle: Vec3) = glm.rotateXYZ(this, this, angle.x, angle.y, angle.z)
     fun rotateXYZassign(angleX: Float, angleY: Float, angleZ: Float) = glm.rotateXYZ(this, this, angleX, angleY, angleZ)
 
-
     infix fun isEqual(b: Mat3) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2])
 
     override var a0: Float
@@ -551,10 +556,13 @@ class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     override fun hashCode() = 31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()
 
-    fun print(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
-        $v00 $v10 $v20
-        $v01 $v11 $v21
-        $v02 $v12 $v22""")
+    @JvmOverloads
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.print("""$name:
+        $this""")
+
+    @JvmOverloads
+    fun println(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
+        $this""")
 
     override fun toString() = """
         $v00 $v10 $v20
