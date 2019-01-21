@@ -5,7 +5,7 @@ buildscript {
     ext{
         kotlin = 'org.jetbrains.kotlin:kotlin'
         kotlin_version = '1.3.11'
-        kotlintest_version = "3.1.11"
+        kotlintest_version = "3.2.0"
     }
 
     repositories {
@@ -85,12 +85,6 @@ project(":glm") {
 
         testImplementation "io.kotlintest:kotlintest-runner-junit5:$kotlintest_version".toString()
 
-        constraints {
-            testImplementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-            testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version")
-            testImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
-        }
-
         ["", "-glfw", "-jemalloc", "-openal", "-opengl", "-stb"].each {
             implementation "org.lwjgl:lwjgl$it:$lwjgl_version"
             implementation "org.lwjgl:lwjgl$it:$lwjgl_version:natives-$lwjgl_natives"
@@ -107,11 +101,5 @@ project(":glm-test") {
 
         implementation "io.kotlintest:kotlintest-core:$kotlintest_version".toString()
         implementation "io.kotlintest:kotlintest-assertions:$kotlintest_version".toString()
-
-        constraints {
-            implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-            implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version")
-            implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
-        }
     }
 }
