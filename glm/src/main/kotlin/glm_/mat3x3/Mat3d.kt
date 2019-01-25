@@ -82,6 +82,11 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
             list.elementAt(index + 3)!!.toDouble, list.elementAt(index + 4)!!.toDouble, list.elementAt(index + 5)!!.toDouble,
             list.elementAt(index + 6)!!.toDouble, list.elementAt(index + 7)!!.toDouble, list.elementAt(index + 8)!!.toDouble)
 
+    constructor(buffer: DoubleBuffer, index: Int = buffer.pos) : this(
+            buffer[index], buffer[index + 1], buffer[index + 2],
+            buffer[index + 3], buffer[index + 4], buffer[index + 5],
+            buffer[index + 6], buffer[index + 7], buffer[index + 8])
+
     // -- Matrix conversions --
 
 

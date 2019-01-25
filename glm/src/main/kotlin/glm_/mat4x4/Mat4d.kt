@@ -93,6 +93,12 @@ class Mat4d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
             list.elementAt(index + 8)!!.toDouble, list.elementAt(index + 9)!!.toDouble, list.elementAt(index + 10)!!.toDouble, list.elementAt(index + 11)!!.toDouble,
             list.elementAt(index + 12)!!.toDouble, list.elementAt(index + 13)!!.toDouble, list.elementAt(index + 14)!!.toDouble, list.elementAt(index + 15)!!.toDouble)
 
+    constructor(buffer: DoubleBuffer, index: Int = buffer.pos) : this(
+            buffer[index], buffer[index + 1], buffer[index + 2], buffer[index + 3],
+            buffer[index + 4], buffer[index + 5], buffer[index + 6], buffer[index + 7],
+            buffer[index + 8], buffer[index + 9], buffer[index + 10], buffer[index + 11],
+            buffer[index + 12], buffer[index + 13], buffer[index + 14], buffer[index + 15])
+
     // -- Matrix conversions --
 
     constructor(mat2: Mat2) : this(

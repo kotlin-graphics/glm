@@ -17,6 +17,7 @@ import glm_.vec2.Vec2t
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d
 import kool.Ptr
+import kool.pos
 import kool.set
 import org.lwjgl.system.MemoryUtil.memGetDouble
 import java.io.PrintStream
@@ -59,6 +60,10 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     constructor(list: Iterable<*>, index: Int = 0) : this(
             list.elementAt(index)!!.toDouble, list.elementAt(index + 1)!!.toDouble,
             list.elementAt(index + 2)!!.toDouble, list.elementAt(index + 3)!!.toDouble)
+
+    constructor(buffer: DoubleBuffer, index: Int = buffer.pos) : this(
+            buffer[index], buffer[index + 1],
+            buffer[index + 2], buffer[index + 3])
 
     // -- Matrix conversions --
 

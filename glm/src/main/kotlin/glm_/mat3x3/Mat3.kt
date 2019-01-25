@@ -82,6 +82,11 @@ class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
             list.elementAt(index + 3)!!.toFloat, list.elementAt(index + 4)!!.toFloat, list.elementAt(index + 5)!!.toFloat,
             list.elementAt(index + 6)!!.toFloat, list.elementAt(index + 7)!!.toFloat, list.elementAt(index + 8)!!.toFloat)
 
+    constructor(buffer: FloatBuffer, index: Int = buffer.pos) : this(
+            buffer[index], buffer[index + 1], buffer[index + 2],
+            buffer[index + 3], buffer[index + 4], buffer[index + 5],
+            buffer[index + 6], buffer[index + 7], buffer[index + 8])
+
     // -- Matrix conversions --
 
     constructor(mat2: Mat2) : this(
@@ -475,12 +480,16 @@ class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     @JvmOverloads
     fun rotateX(angle: Float, res: Mat3 = Mat3()) = glm.rotateX(res, this, angle)
+
     @JvmOverloads
     fun rotateY(angle: Float, res: Mat3 = Mat3()) = glm.rotateY(res, this, angle)
+
     @JvmOverloads
     fun rotateZ(angle: Float, res: Mat3 = Mat3()) = glm.rotateZ(res, this, angle)
+
     @JvmOverloads
     fun rotateXYZ(angle: Vec3, res: Mat3 = Mat3()) = glm.rotateXYZ(res, this, angle.x, angle.y, angle.z)
+
     @JvmOverloads
     fun rotateXYZ(angleX: Float, angleY: Float, angleZ: Float, res: Mat3 = Mat3()) = glm.rotateXYZ(res, this, angleX, angleY, angleZ)
 

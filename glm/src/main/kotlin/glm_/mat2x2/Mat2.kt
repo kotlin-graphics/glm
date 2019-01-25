@@ -17,6 +17,7 @@ import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import kool.Ptr
+import kool.pos
 import kool.set
 import org.lwjgl.system.MemoryUtil.memGetFloat
 import org.lwjgl.system.MemoryUtil.memPutFloat
@@ -62,6 +63,10 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     constructor(list: Iterable<*>, index: Int = 0) : this(
             list.elementAt(index)!!.toFloat, list.elementAt(index + 1)!!.toFloat,
             list.elementAt(index + 2)!!.toFloat, list.elementAt(index + 3)!!.toFloat)
+
+    constructor(buffer: FloatBuffer, index: Int = buffer.pos) : this(
+            buffer[index], buffer[index + 1],
+            buffer[index + 2], buffer[index + 3])
 
     // -- Matrix conversions --
 
