@@ -704,6 +704,7 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     fun cleanTranslationAssign() = glm.cleanTranslation(this, this)
 
+    @JvmOverloads
     fun cleanTranslation(res: Mat4 = Mat4()) = glm.cleanTranslation(res, this)
 
 
