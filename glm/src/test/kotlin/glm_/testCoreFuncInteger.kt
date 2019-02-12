@@ -1,12 +1,13 @@
 package glm_
 
-import glm_.Result.FAIL
-import glm_.Result.SUCCESS
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 import unsigned.toULong
+import glm_.testCoreFuncInteger.Result.*
 
 class testCoreFuncInteger : StringSpec() {
+
+    enum class Result { SUCCESS, FAIL, ASSERT, STATIC_ASSERT }
 
     init {
 
@@ -313,5 +314,3 @@ class testCoreFuncInteger : StringSpec() {
         }
     }
 }
-
-enum class Result { SUCCESS, FAIL, ASSERT, STATIC_ASSERT }

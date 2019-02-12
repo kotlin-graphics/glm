@@ -143,6 +143,7 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
             mat4x3[1, 0], mat4x3[1, 1], mat4x3[1, 2],
             mat4x3[2, 0], mat4x3[2, 1], mat4x3[2, 2])
 
+    @JvmOverloads
     constructor(doubles: DoubleArray, transpose: Boolean = false) : this(0,
             if (transpose) doubleArrayOf(
                     doubles[0], doubles[3], doubles[6],

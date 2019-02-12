@@ -233,6 +233,7 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
             mat4x3[3, 0], mat4x3[3, 1], mat4x3[3, 2], 1)
 
     // TODO others
+    @JvmOverloads
     constructor(floats: FloatArray, transpose: Boolean = false) : this(0,
             if (transpose) floatArrayOf(
                     floats[0], floats[4], floats[8], floats[12],

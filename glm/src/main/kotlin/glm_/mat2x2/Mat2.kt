@@ -97,6 +97,13 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
             mat4x2[0, 0], mat4x2[0, 1],
             mat4x2[1, 0], mat4x2[1, 1])
 
+    @JvmOverloads
+    constructor(floats: FloatArray, transpose: Boolean = false) : this(0,
+            if (transpose) floatArrayOf(
+                    floats[0], floats[3],
+                    floats[1], floats[4])
+            else floats.clone())
+
     // to
 //    fun to(mat2x2: Mat2x2t<*>) { TODO
 //        value = mutableListOf(

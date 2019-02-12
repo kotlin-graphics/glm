@@ -6,7 +6,7 @@ import glm_.vec3.Vec3
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
-class matInterpolation : StringSpec() {
+class testMatrixInterpolation : StringSpec() {
 
     init {
         "matrix interpolation" {
