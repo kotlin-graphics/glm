@@ -298,8 +298,21 @@ interface gtcMatrixRotate {
     fun rotateXYZ(mat: Mat3, angleX: Float, angleY: Float, angleZ: Float): Mat3 = rotateXYZ(Mat3(), mat, angleX, angleY, angleZ)
 
     fun rotateX(res: Mat4, mat: Mat4, angle: Float): Mat4 {
-        val sin = sin(angle)
-        val cos = cos(angle)
+        val sin: Float
+        val cos: Float
+        if (angle == glm.PIf || angle == -glm.PIf) {
+            cos = -1f
+            sin = 0f
+        } else if (angle == glm.PIf * 0.5f || angle == -glm.PIf * 1.5f) {
+            cos = 0f
+            sin = 1f
+        } else if (angle == -glm.PIf * 0.5f || angle == glm.PIf * 1.5f) {
+            cos = 0f
+            sin = -1f
+        } else {
+            sin = sin(angle)
+            cos = cos(angle)
+        }
         val rm11 = cos
         val rm12 = sin
         val rm21 = -sin
@@ -334,8 +347,21 @@ interface gtcMatrixRotate {
     fun rotateX(mat: Mat4, angle: Float): Mat4 = rotateX(Mat4(), mat, angle)
 
     fun rotateY(res: Mat4, mat: Mat4, angle: Float): Mat4 {
-        val cos = cos(angle)
-        val sin = sin(angle)
+        val sin: Float
+        val cos: Float
+        if (angle == glm.PIf || angle == -glm.PIf) {
+            cos = -1f
+            sin = 0f
+        } else if (angle == glm.PIf * 0.5f || angle == -glm.PIf * 1.5f) {
+            cos = 0f
+            sin = 1f
+        } else if (angle == -glm.PIf * 0.5f || angle == glm.PIf * 1.5f) {
+            cos = 0f
+            sin = -1f
+        } else {
+            sin = sin(angle)
+            cos = cos(angle)
+        }
         val rm00 = cos
         val rm02 = -sin
         val rm20 = sin
@@ -370,8 +396,21 @@ interface gtcMatrixRotate {
     fun rotateY(mat: Mat4, angle: Float): Mat4 = rotateY(Mat4(), mat, angle)
 
     fun rotateZ(res: Mat4, mat: Mat4, angle: Float): Mat4 {
-        val sin = sin(angle)
-        val cos = cos(angle)
+        val sin: Float
+        val cos: Float
+        if (angle == glm.PIf || angle == -glm.PIf) {
+            cos = -1f
+            sin = 0f
+        } else if (angle == glm.PIf * 0.5f || angle == -glm.PIf * 1.5f) {
+            cos = 0f
+            sin = 1f
+        } else if (angle == -glm.PIf * 0.5f || angle == glm.PIf * 1.5f) {
+            cos = 0f
+            sin = -1f
+        } else {
+            sin = sin(angle)
+            cos = cos(angle)
+        }
         val rm00 = cos
         val rm01 = sin
         val rm10 = -sin
