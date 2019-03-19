@@ -292,13 +292,13 @@ class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
         array[1] = a1
         array[2] = a2
 
-        array[4] = b0
-        array[5] = b1
-        array[6] = b2
+        array[3] = b0
+        array[4] = b1
+        array[5] = b2
 
-        array[8] = c0
-        array[9] = c1
-        array[10] = c2
+        array[6] = c0
+        array[7] = c1
+        array[8] = c2
     }
 
     // TODO others
