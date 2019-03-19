@@ -8,6 +8,7 @@ import kool.pos
 import kool.set
 import org.lwjgl.system.CallbackI
 import org.lwjgl.system.MemoryStack
+import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*

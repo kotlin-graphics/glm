@@ -6,6 +6,7 @@ package glm_.mat3x2
 
 import glm_.ToBuffer
 import glm_.vec2.Vec2t
+import java.io.PrintStream
 
 abstract class Mat3x2t<T : Number> : ToBuffer {
 
@@ -75,6 +76,18 @@ abstract class Mat3x2t<T : Number> : ToBuffer {
     companion object {
         const val length = 3 * 2
     }
+
+    @JvmOverloads
+    fun print(name: String = "", stream: PrintStream = System.out) = stream.print("""$name:
+        $this""")
+
+    @JvmOverloads
+    fun println(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
+        $this""")
+
+    override fun toString() = """
+        $v00 $v10 $v20
+        $v01 $v11 $v21"""
 
 //    override fun toString() =
 //            "| ${this[0][0]}][${this[1][0]}][${this[2][0]} |\n" +

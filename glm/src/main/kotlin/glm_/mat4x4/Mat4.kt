@@ -861,18 +861,4 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     override fun equals(other: Any?) = other is Mat4 && Arrays.equals(array, other.array)
 
     override fun hashCode() = 31 * (31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()) + this[3].hashCode()
-
-    @JvmOverloads
-    fun print(name: String = "", stream: PrintStream = System.out) = stream.print("""$name:
-        $this""")
-
-    @JvmOverloads
-    fun println(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
-        $this""")
-
-    override fun toString() = """
-        $v00 $v10 $v20 $v30
-        $v01 $v11 $v21 $v31
-        $v02 $v12 $v22 $v32
-        $v03 $v13 $v23 $v33"""
 }

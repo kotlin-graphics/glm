@@ -392,21 +392,10 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     }
 
     override fun size() = size
+
     override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Mat2 && Arrays.equals(array, other.array)
 
     override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
-
-    @JvmOverloads
-    fun print(name: String = "", stream: PrintStream = System.out) = stream.print("""$name:
-        $this""")
-
-    @JvmOverloads
-    fun println(name: String = "", stream: PrintStream = System.out) = stream.println("""$name:
-        $this""")
-
-    override fun toString() = """
-        $v00 $v10
-        $v01 $v11"""
 }
