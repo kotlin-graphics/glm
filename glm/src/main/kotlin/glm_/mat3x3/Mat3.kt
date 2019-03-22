@@ -210,6 +210,19 @@ class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     fun inverseTransposeAssign() = glm.inverseTranspose(this, this)
 
+    infix fun scale(scale: Vec3) = scale(scale.x, scale.y, scale.z, Mat3())
+
+    fun scale(scale: Vec3, res: Mat3) = scale(scale.x, scale.y, scale.z, res)
+
+    infix fun scale(scale: Float) = scale(scale, scale, scale, Mat3())
+    fun scale(scale: Float, res: Mat3) = scale(scale, scale, scale, res)
+
+    @JvmOverloads
+    fun scale(scaleX: Float, scaleY: Float, scaleZ: Float, res: Mat3 = Mat3()) = glm.scale(res, this, scaleX, scaleY, scaleZ)
+
+    infix fun scaleAssign(scale: Vec3) = scaleAssign(scale.x, scale.y, scale.z)
+    infix fun scaleAssign(scale: Float) = scaleAssign(scale, scale, scale)
+    fun scaleAssign(scaleX: Float, scaleY: Float, scaleZ: Float) = glm.scale(this, this, scaleX, scaleY, scaleZ)
 
     infix operator fun invoke(s: Float) = invoke(s, s, s)
 
