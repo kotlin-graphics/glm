@@ -244,8 +244,6 @@ class testCoreFunCommon : StringSpec() {
 
         "min" {
 
-            val a0 = glm.min(Vec1(1), Vec1(1))
-
             val b0 = glm.min(Vec2(1), Vec2(1))
             val b1 = glm.min(Vec2(1), 1f)
             val b2 = glm.all(glm.equal(b0, b1))
@@ -263,8 +261,6 @@ class testCoreFunCommon : StringSpec() {
         }
 
         "max" {
-
-            val a0 = glm.max(Vec1(1), Vec1(1))
 
             val b0 = glm.max(Vec2(1), Vec2(1))
             val b1 = glm.max(Vec2(1), 1f)
@@ -615,49 +611,52 @@ class testCoreFunCommon : StringSpec() {
 
         "is NaN" {
 
-            val zeroF = 0f
-            val zeroD = 0.0
+            val nanF = Float.NaN
+            val nanD = Double.NaN
 
             run {
-                glm.isNan(0.0 / zeroD) shouldBe true
-                glm.any(glm.isNan(Vec2d(0.0 / zeroD))) shouldBe true
-                glm.any(glm.isNan(Vec3d(0.0 / zeroD))) shouldBe true
-                glm.any(glm.isNan(Vec4d(0.0 / zeroD))) shouldBe true
+                glm.isNan(nanD) shouldBe true
+                glm.any(glm.isNan(Vec2d(nanD))) shouldBe true
+                glm.any(glm.isNan(Vec3d(nanD))) shouldBe true
+                glm.any(glm.isNan(Vec4d(nanD))) shouldBe true
             }
 
             run {
-                glm.isNan(0f / zeroF) shouldBe true
-                glm.any(glm.isNan(Vec2(0f / zeroF))) shouldBe true
-                glm.any(glm.isNan(Vec3(0f / zeroF))) shouldBe true
-                glm.any(glm.isNan(Vec4(0f / zeroF))) shouldBe true
+                glm.isNan(nanF) shouldBe true
+                glm.any(glm.isNan(Vec2(nanF))) shouldBe true
+                glm.any(glm.isNan(Vec3(nanF))) shouldBe true
+                glm.any(glm.isNan(Vec4(nanF))) shouldBe true
             }
         }
 
         "is Inf" {
 
-            val zeroF = 0f
-            val zeroD = 0.0
+            val pInfF = Float.POSITIVE_INFINITY
+            val nInfF = Float.NEGATIVE_INFINITY
+
+            val pInfD = Double.POSITIVE_INFINITY
+            val nInfD = Double.NEGATIVE_INFINITY
 
             run {
-                glm.isInf(+1.0 / zeroD) shouldBe true
-                glm.isInf(-1.0 / zeroD) shouldBe true
-                glm.any(glm.isInf(Vec2d(+1.0 / zeroD))) shouldBe true
-                glm.any(glm.isInf(Vec2d(-1.0 / zeroD))) shouldBe true
-                glm.any(glm.isInf(Vec3d(+1.0 / zeroD))) shouldBe true
-                glm.any(glm.isInf(Vec3d(-1.0 / zeroD))) shouldBe true
-                glm.any(glm.isInf(Vec4d(+1.0 / zeroD))) shouldBe true
-                glm.any(glm.isInf(Vec4d(-1.0 / zeroD))) shouldBe true
+                glm.isInf(pInfD) shouldBe true
+                glm.isInf(nInfD) shouldBe true
+                glm.any(glm.isInf(Vec2d(pInfD))) shouldBe true
+                glm.any(glm.isInf(Vec2d(nInfD))) shouldBe true
+                glm.any(glm.isInf(Vec3d(pInfD))) shouldBe true
+                glm.any(glm.isInf(Vec3d(nInfD))) shouldBe true
+                glm.any(glm.isInf(Vec4d(pInfD))) shouldBe true
+                glm.any(glm.isInf(Vec4d(nInfD))) shouldBe true
             }
 
             run {
-                glm.isInf(+1f / zeroF) shouldBe true
-                glm.isInf(-1f / zeroF) shouldBe true
-                glm.any(glm.isInf(Vec2(+1f / zeroF))) shouldBe true
-                glm.any(glm.isInf(Vec2(-1f / zeroF))) shouldBe true
-                glm.any(glm.isInf(Vec3(+1f / zeroF))) shouldBe true
-                glm.any(glm.isInf(Vec3(-1f / zeroF))) shouldBe true
-                glm.any(glm.isInf(Vec4(+1f / zeroF))) shouldBe true
-                glm.any(glm.isInf(Vec4(-1f / zeroF))) shouldBe true
+                glm.isInf(pInfF) shouldBe true
+                glm.isInf(nInfF) shouldBe true
+                glm.any(glm.isInf(Vec2(pInfF))) shouldBe true
+                glm.any(glm.isInf(Vec2(nInfF))) shouldBe true
+                glm.any(glm.isInf(Vec3(pInfF))) shouldBe true
+                glm.any(glm.isInf(Vec3(nInfF))) shouldBe true
+                glm.any(glm.isInf(Vec4(pInfF))) shouldBe true
+                glm.any(glm.isInf(Vec4(nInfF))) shouldBe true
             }
         }
 

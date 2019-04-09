@@ -326,7 +326,7 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     infix operator fun timesAssign(b: Mat2) {
         times(this, this, b)
-    } // TODO
+    }
 
     infix operator fun timesAssign(b: Float) {
         times(this, this, b)
