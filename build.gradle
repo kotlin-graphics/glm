@@ -21,6 +21,10 @@ buildscript {
     }
 }
 
+plugins {
+    id 'kotlin-multiplatform' version '1.3.21' apply false
+}
+
 ext{
     moduleName = 'com.github.kotlin_graphics.glm'
     unsigned_version = "0e3cc3ec155986f2100fee03cc143cbd3dfd0d84"
@@ -31,7 +35,6 @@ ext{
 
 subprojects {
 
-    apply plugin: 'kotlin'
     apply plugin: 'com.github.johnrengelman.shadow'
 
     // jitpack
@@ -44,61 +47,79 @@ subprojects {
         maven { setUrl("https://jitpack.io") }
     }
 
-    dependencies {
+//    task sourcesJar(type: Jar, dependsOn: classes) {
+//        archiveClassifier = 'sources'
+//        from sourceSets.main.allSource
+//    }
 
-        implementation "org.jetbrains.kotlin:kotlin-stdlib"
+//    task javadocJar(type: Jar, dependsOn: javadoc) {
+//        archiveClassifier = 'javadoc'
+//        from javadoc.destinationDir
+//    }
 
-        testImplementation "io.kotlintest:kotlintest-runner-junit5:$kotlintest_version".toString()
-    }
+//    artifacts {
+//        archives sourcesJar
+//        archives javadocJar
+//    }
 
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        archiveClassifier = 'sources'
-        from sourceSets.main.allSource
-    }
-
-    task javadocJar(type: Jar, dependsOn: javadoc) {
-        archiveClassifier = 'javadoc'
-        from javadoc.destinationDir
-    }
-
-    artifacts {
-        archives sourcesJar
-        archives javadocJar
-    }
-
-    jar {
-        inputs.property("moduleName", moduleName)
-        manifest.attributes('Automatic-Module-Name': moduleName)
-    }
+//    jar {
+//        inputs.property("moduleName", moduleName)
+//        manifest.attributes('Automatic-Module-Name': moduleName)
+//    }
 }
 
 project(":glm") {
+    apply plugin: 'kotlin-multiplatform'
+    
+    kotlin {
+        jvm() {
+            compilations.main {
+                defaultSourceSet {
+                    kotlin.srcDir("src/main/kotlin")
+                    resources.srcDir("src/main/resources")
+                    
+                    dependencies {
+                        implementation kotlin("stdlib-jdk8")
 
-    apply plugin: 'java-library'
+                        api "com.github.kotlin-graphics:kotlin-unsigned:$unsigned_version".toString()
+                        api "com.github.kotlin-graphics:kool:$kool_version".toString()
 
-    dependencies {
+                        ["", "-glfw", "-jemalloc", "-openal", "-opengl", "-stb"].each {
+                            implementation "org.lwjgl:lwjgl$it:$lwjgl_version"
+                            implementation "org.lwjgl:lwjgl$it:$lwjgl_version:natives-$lwjgl_natives"
+                        }
+                    }
+                }
+            }
+            compilations.test {
+                defaultSourceSet {
+                    kotlin.srcDir("src/test/kotlin")
+                    resources.srcDir("src/test/resources")
+                    
+                    dependencies {
+                        implementation kotlin("test")
+                        implementation kotlin("test-junit")
 
-        api "com.github.kotlin-graphics:kotlin-unsigned:$unsigned_version".toString()
-        api "com.github.kotlin-graphics:kool:$kool_version".toString()
+                        implementation project(":glm-test")
 
-        testImplementation project(":glm-test")
-
-        testImplementation "io.kotlintest:kotlintest-runner-junit5:$kotlintest_version".toString()
-
-        ["", "-glfw", "-jemalloc", "-openal", "-opengl", "-stb"].each {
-            implementation "org.lwjgl:lwjgl$it:$lwjgl_version"
-            implementation "org.lwjgl:lwjgl$it:$lwjgl_version:natives-$lwjgl_natives"
+                        implementation "io.kotlintest:kotlintest-runner-junit5:$kotlintest_version".toString()
+                    }
+                }
+            }
         }
     }
 
-    test.useJUnitPlatform()
-
-    shadowJar.archiveClassifier = 'all'
+//    shadowJar.archiveClassifier = 'all'
 }
 
 project(":glm-test") {
+    apply plugin: 'kotlin'
 
     dependencies {
+        implementation "org.jetbrains.kotlin:kotlin-stdlib"
+
+        testImplementation "io.kotlintest:kotlintest-runner-junit5:$kotlintest_version".toString()
+
         implementation project(":glm")
 
         implementation "io.kotlintest:kotlintest-core:$kotlintest_version".toString()
