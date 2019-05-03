@@ -1,9 +1,9 @@
 package glm_.gtx
 
+import glm_.compareUnsigned
+import glm_.divideUnsigned
 import glm_.glm
 import glm_.uint
-import unsigned.java_1_7.compareUnsigned
-import unsigned.java_1_7.divideUnsigned
 
 interface gtxInteger {
 

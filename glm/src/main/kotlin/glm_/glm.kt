@@ -34,6 +34,7 @@ object glm :
 
         // matrix transform
         gtcMatrixFrustum,
+        gtxMatrixOperation,
         gtcMatrixOrtho,
         gtcMatrixPerspective,
         gtcMatrixProject,
