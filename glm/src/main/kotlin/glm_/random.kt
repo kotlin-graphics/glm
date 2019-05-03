@@ -202,6 +202,9 @@ interface random {
 
     /** Generate a random 2D vector which coordinates are regulary distributed on a circle of a given radius */
     fun circularRand(radius: Float, res: Vec2 = Vec2()): Vec2 {
+
+        assert(radius > 0f)
+
         val a = linearRand(0f, 6.283185307179586476925286766559f)
         res.put(glm.cos(a), glm.sin(a))
         res *= radius
@@ -210,6 +213,9 @@ interface random {
 
     /** Generate a random 2D vector which coordinates are regulary distributed on a circle of a given radius */
     fun circularRand(radius: Double, res: Vec2d = Vec2d()): Vec2d {
+
+        assert(radius > 0.0)
+
         val a = linearRand(0.0, 6.283185307179586476925286766559)
         res.put(glm.cos(a), glm.sin(a))
         res *= radius
@@ -218,6 +224,9 @@ interface random {
 
     /** Generate a random 3D vector which coordinates are regulary distributed on a sphere of a given radius */
     fun sphericalRand(radius: Float, res: Vec3 = Vec3()): Vec3 {
+
+        assert(radius > 0f)
+
         val theta = linearRand(0f, 6.283185307179586476925286766559f)
         val phi = acos(linearRand(-1f, 1f))
 
@@ -233,6 +242,9 @@ interface random {
 
     /** Generate a random 3D vector which coordinates are regulary distributed on a sphere of a given radius */
     fun sphericalRand(radius: Double, res: Vec3d = Vec3d()): Vec3d {
+
+        assert(radius > 0.0)
+
         val theta = linearRand(0.0, 6.283185307179586476925286766559)
         val phi = acos(linearRand(-1.0, 1.0))
 
@@ -249,6 +261,8 @@ interface random {
     /** Generate a random 2D vector which coordinates are regulary distributed within the area of a disk of a given radius */
     fun diskRand(radius: Float, res: Vec2 = Vec2()): Vec2 {
 
+        assert(radius > 0f)
+
         res.x = linearRand(-radius, radius)
         res.y = linearRand(-radius, radius)
         var lenRadius = res.length()
@@ -264,6 +278,8 @@ interface random {
     /** Generate a random 2D vector which coordinates are regulary distributed within the area of a disk of a given radius */
     fun diskRand(radius: Double, res: Vec2d = Vec2d()): Vec2d {
 
+        assert(radius > 0.0)
+
         res.x = linearRand(-radius, radius)
         res.y = linearRand(-radius, radius)
         var lenRadius = res.length()
@@ -278,6 +294,8 @@ interface random {
 
     /** Generate a random 2D vector which coordinates are regulary distributed within the area of a disk of a given radius */
     fun diskRand(radius: Float, res: Vec3 = Vec3()): Vec3 {
+
+        assert(radius > 0f)
 
         res.x = linearRand(-radius, radius)
         res.y = linearRand(-radius, radius)
@@ -296,6 +314,8 @@ interface random {
     /** Generate a random 2D vector which coordinates are regulary distributed within the area of a disk of a given radius */
     fun diskRand(radius: Double, res: Vec3d = Vec3d()): Vec3d {
 
+        assert(radius > 0.0)
+
         res.x = linearRand(-radius, radius)
         res.y = linearRand(-radius, radius)
         res.z = linearRand(-radius, radius)
@@ -312,6 +332,8 @@ interface random {
 
     /** Generate a random 2D vector which coordinates are regulary distributed within the area of a disk of a given radius */
     fun diskRand(radius: Float, res: Vec4 = Vec4()): Vec4 {
+
+        assert(radius > 0f)
 
         res.x = linearRand(-radius, radius)
         res.y = linearRand(-radius, radius)
@@ -332,6 +354,8 @@ interface random {
     /** Generate a random 2D vector which coordinates are regulary distributed within the area of a disk of a given radius */
     fun diskRand(radius: Double, res: Vec4d = Vec4d()): Vec4d {
 
+        assert(radius > 0.0)
+
         res.x = linearRand(-radius, radius)
         res.y = linearRand(-radius, radius)
         res.z = linearRand(-radius, radius)
@@ -350,6 +374,9 @@ interface random {
 
     /** Generate a random 3D vector which coordinates are regulary distributed within the volume of a ball of a given radius */
     fun ballRand(radius: Float, res: Vec3 = Vec3()): Vec3 {
+
+        assert(radius > 0f)
+
         res put 0f
         var lenRadius: Float
 
@@ -363,6 +390,9 @@ interface random {
 
     /** Generate a random 3D vector which coordinates are regulary distributed within the volume of a ball of a given radius */
     fun ballRand(radius: Double, res: Vec3d = Vec3d()): Vec3d {
+
+        assert(radius > 0.0)
+
         res put 0.0
         var lenRadius: Double
 
