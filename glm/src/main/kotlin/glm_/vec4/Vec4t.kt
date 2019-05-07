@@ -240,6 +240,8 @@ abstract class Vec4t<T : Number>: ToBuffer {
 
     infix fun isEqual(b: Vec4t<out Number>) = glm.isEqual(this, b)
 
+    fun isEqual(b: Vec4t<out Number>, e: Float) = glm.isEqual(this, b,e)
+
     // components alias
 
     var r

@@ -909,6 +909,65 @@ interface func_vector3_relational {
         return res
     }
 
+    fun isEqual(a: Vec3t<out Number>, b: Vec3t<out Number>, e: Float): Boolean {
+        val A = a
+        var res = false
+        when (A) {
+            is Vec3 -> {
+                res = ((Math.abs(A.x - b.x.f) <= e)
+                        && (Math.abs(A.y - b.y.f) <= e)
+                        && (Math.abs(A.z - b.z.f) <= e))
+            }
+            is Vec3b -> {
+                res = ((Math.abs(A.x - b.x.b) <= e)
+                        && (Math.abs(A.y - b.y.b) <= e)
+                        && (Math.abs(A.z - b.z.b) <= e))
+            }
+            is Vec3d -> {
+                res = ((Math.abs(A.x - b.x.d) <= e)
+                        && (Math.abs(A.y - b.y.d) <= e)
+                        && (Math.abs(A.z - b.z.d) <= e))
+            }
+            is Vec3i -> {
+                res = ((Math.abs(A.x - b.x.i) <= e)
+                        && (Math.abs(A.y - b.y.i) <= e)
+                        && (Math.abs(A.z - b.z.i) <= e))
+            }
+            is Vec3l -> {
+                res = ((Math.abs(A.x - b.x.L) <= e)
+                        && (Math.abs(A.y - b.y.L) <= e)
+                        && (Math.abs(A.z - b.z.L) <= e))
+            }
+            is Vec3s -> {
+                res = ((Math.abs(A.x - b.x.s) <= e)
+                        && (Math.abs(A.y - b.y.s) <= e)
+                        && (Math.abs(A.z - b.z.s) <= e))
+            }
+            is Vec3ub -> {
+                res = ((Math.abs(A.x.v - b.x.b) <= e)
+                        && (Math.abs(A.y.v - b.y.b) <= e)
+                        && (Math.abs(A.z.v - b.z.b) <= e))
+            }
+            is Vec3ui -> {
+                res = ((Math.abs(A.x.v - b.x.i) <= e)
+                        && (Math.abs(A.y.v - b.y.i) <= e)
+                        && (Math.abs(A.z.v - b.z.i) <= e))
+            }
+            is Vec3ul -> {
+                res = ((Math.abs(A.x.v - b.x.L) <= e)
+                        && (Math.abs(A.y.v - b.y.L) <= e)
+                        && (Math.abs(A.z.v - b.z.L) <= e))
+            }
+            is Vec3us -> {
+                res = ((Math.abs(A.x.v - b.x.s) <= e)
+                        && (Math.abs(A.y.v - b.y.s) <= e)
+                        && (Math.abs(A.z.v - b.z.s) <= e))
+            }
+        }
+
+        return res
+    }
+
     fun any(a: Vec3bool) = a[0] || a[1] || a[2]
 
     fun all(a: Vec3bool) = a[0] && a[1] && a[2]
@@ -1388,6 +1447,75 @@ interface func_vector4_relational {
                         && (A.y.v == b.y.s)
                         && (A.z.v == b.z.s)
                         && (A.w.v == b.w.s))
+            }
+        }
+
+        return res
+    }
+
+    fun isEqual(a: Vec4t<out Number>, b: Vec4t<out Number>, e: Float): Boolean {
+        val A = a
+        var res = false
+        when (A) {
+            is Vec4 -> {
+                res = ((Math.abs(A.x - b.x.f) <= e)
+                        && (Math.abs(A.y - b.y.f) <= e)
+                        && (Math.abs(A.z - b.z.f) <= e)
+                        && (Math.abs(A.w - b.w.f)) <= e)
+            }
+            is Vec4b -> {
+                res = ((Math.abs(A.x - b.x.b) <= e)
+                        && (Math.abs(A.y - b.y.b) <= e)
+                        && (Math.abs(A.z - b.z.b) <= e)
+                        && (Math.abs(A.w - b.w.b)) <= e)
+            }
+            is Vec4d -> {
+                res = ((Math.abs(A.x - b.x.d) <= e)
+                        && (Math.abs(A.y - b.y.d) <= e)
+                        && (Math.abs(A.z - b.z.d) <= e)
+                        && (Math.abs(A.w - b.w.d)) <= e)
+            }
+            is Vec4i -> {
+                res = ((Math.abs(A.x - b.x.i) <= e)
+                        && (Math.abs(A.y - b.y.i) <= e)
+                        && (Math.abs(A.z - b.z.i) <= e)
+                        && (Math.abs(A.w - b.w.i)) <= e)
+            }
+            is Vec4l -> {
+                res = ((Math.abs(A.x - b.x.L) <= e)
+                        && (Math.abs(A.y - b.y.L) <= e)
+                        && (Math.abs(A.z - b.z.L) <= e)
+                        && (Math.abs(A.w - b.w.L)) <= e)
+            }
+            is Vec4s -> {
+                res = ((Math.abs(A.x - b.x.s) <= e)
+                        && (Math.abs(A.y - b.y.s) <= e)
+                        && (Math.abs(A.z - b.z.s) <= e)
+                        && (Math.abs(A.w - b.w.s)) <= e)
+            }
+            is Vec4ub -> {
+                res = ((Math.abs(A.x.v - b.x.b) <= e)
+                        && (Math.abs(A.y.v - b.y.b) <= e)
+                        && (Math.abs(A.z.v - b.z.b) <= e)
+                        && (Math.abs(A.w.v - b.w.b)) <= e)
+            }
+            is Vec4ui -> {
+                res = ((Math.abs(A.x.v - b.x.i) <= e)
+                        && (Math.abs(A.y.v - b.y.i) <= e)
+                        && (Math.abs(A.z.v - b.z.i) <= e)
+                        && (Math.abs(A.w.v - b.w.i)) <= e)
+            }
+            is Vec4ul -> {
+                res = ((Math.abs(A.x.v - b.x.L) <= e)
+                        && (Math.abs(A.y.v - b.y.L) <= e)
+                        && (Math.abs(A.z.v - b.z.L) <= e)
+                        && (Math.abs(A.w.v - b.w.L)) <= e)
+            }
+            is Vec4us -> {
+                res = ((Math.abs(A.x.v - b.x.s) <= e)
+                        && (Math.abs(A.y.v - b.y.s) <= e)
+                        && (Math.abs(A.z.v - b.z.s) <= e)
+                        && (Math.abs(A.w.v - b.w.s)) <= e)
             }
         }
 

@@ -222,6 +222,7 @@ abstract class Vec3t<T : Number>: ToBuffer {
     fun notEqual(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.notEqual(this, b, res)
 
     infix fun isEqual(b: Vec3t<out Number>) = glm.isEqual(this, b)
+    fun isEqual(b: Vec3t<out Number>, e: Float) = glm.isEqual(this, b,e)
 
     // components alias
     var r
