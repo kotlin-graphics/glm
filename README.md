@@ -41,7 +41,7 @@ fun camera(translate: Float, rotate: Vec2): Mat4 {
 
 ### Gradle:
 
-- Add it in your root build.gradle at the end of repositories:
+- Add it in your root `build.gradle` at the end of repositories:
 
 	    allprojects {
 		    repositories {
@@ -64,5 +64,7 @@ fun camera(translate: Float, rotate: Vec2): Mat4 {
 
 [Gradle, Maven, Sbt, Leiningen](https://jitpack.io/#kotlin-graphics/glm)
 
+Ps: we use bleeding edge lwjgl, which is available under the sonatype repository, if you are experiencing problems, just add
+`maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }` to your `build.gradle`
 
 
