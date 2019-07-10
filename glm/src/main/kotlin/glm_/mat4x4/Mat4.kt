@@ -23,14 +23,11 @@ import glm_.vec3.Vec3t
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
 import kool.Ptr
-import kool.FloatBuffer
 import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetFloat
 import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.io.InputStream
-import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.util.*
@@ -740,7 +737,7 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     fun translateAssign(translateX: Float, translateY: Float, translateZ: Float) = glm.translate(this, this, translateX, translateY, translateZ)
 
 
-    infix fun isEqual(b: Mat4) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2]) && this[3].isEqual(b[3])
+//    infix fun isEqual(b: Mat4) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2]) && this[3].isEqual(b[3])
 
     @JvmOverloads
     fun rotate(angle: Float, vX: Float, vY: Float, vZ: Float, res: Mat4 = Mat4()) = glm.rotate(res, this, angle, vX, vY, vZ)

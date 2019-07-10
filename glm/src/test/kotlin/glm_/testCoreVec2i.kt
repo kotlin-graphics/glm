@@ -26,16 +26,16 @@ class testCoreVec2i : StringSpec() {
                 (v2 != v3) shouldBe true
 
                 (v1 == v2) shouldBe true
-                v1.isEqual(v2) shouldBe true
+//                v1.isEqual(v2) shouldBe true
                 (v1 == v3) shouldBe false
-                v1.isEqual(v3) shouldBe false
+//                v1.isEqual(v3) shouldBe false
 
-                v1.equal(v2) shouldBe Vec2bool(true, true)
-                v1.equal(v3) shouldBe Vec2bool(true, false)
-                v1.notEqual(v3) shouldBe Vec2bool(false, true)
-                v3.lessThan(v1) shouldBe Vec2bool(false, true)
-                v2.greaterThan(v3) shouldBe Vec2bool(false, true)
-                v2.greaterThanEqual(v3) shouldBe Vec2bool(true, true)
+//                v1.equal(v2) shouldBe Vec2bool(true, true)
+//                v1.equal(v3) shouldBe Vec2bool(true, false)
+//                v1.notEqual(v3) shouldBe Vec2bool(false, true)
+//                v3.lessThan(v1) shouldBe Vec2bool(false, true)
+//                v2.greaterThan(v3) shouldBe Vec2bool(false, true)
+//                v2.greaterThanEqual(v3) shouldBe Vec2bool(true, true)
 
             }
 

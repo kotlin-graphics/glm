@@ -231,7 +231,7 @@ object taylorCos {
         val angle0_PI = Vec1(abs(glm.mod(x + PIf, PI2f) - PIf))
 //		return taylorSeriesRefCos(angle0_PI);
 
-        val firstQuarterPi = Vec1(lessThanEqual(angle0_PI, HPIf))
+        val firstQuarterPi = Vec1(lessThanEqual(angle0_PI, Vec1(HPIf)))
 
         val revertAngle = Vec1(mix(Vec1(PIf), Vec1(0f), firstQuarterPi))
         val returnSign = Vec1(mix(Vec1(-1), Vec1(1), firstQuarterPi))

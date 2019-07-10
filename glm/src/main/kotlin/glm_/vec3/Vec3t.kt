@@ -203,26 +203,25 @@ abstract class Vec3t<T : Number>: ToBuffer {
     abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
 
 
-    infix fun lessThan(b: Vec3t<out Number>) = glm.lessThan(this, b, Vec3bool())
-    fun lessThan(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.lessThan(this, b, res)
-
-    infix fun lessThanEqual(b: Vec3t<out Number>) = glm.lessThan(this, b, Vec3bool())
-    fun lessThanEqual(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.lessThan(this, b, res)
-
-    infix fun greaterThan(b: Vec3t<out Number>) = glm.greaterThan(this, b, Vec3bool())
-    fun greaterThan(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.greaterThan(this, b, res)
-
-    infix fun greaterThanEqual(b: Vec3t<out Number>) = glm.greaterThanEqual(this, b, Vec3bool())
-    fun greaterThanEqual(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.greaterThanEqual(this, b, res)
-
-    infix fun equal(b: Vec3t<out Number>) = glm.equal(this, b, Vec3bool())
-    fun equal(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.equal(this, b, res)
-
-    infix fun notEqual(b: Vec3t<out Number>) = glm.notEqual(this, b, Vec3bool())
-    fun notEqual(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.notEqual(this, b, res)
-
-    infix fun isEqual(b: Vec3t<out Number>) = glm.isEqual(this, b)
-    fun isEqual(b: Vec3t<out Number>, e: Float) = glm.isEqual(this, b,e)
+//    infix fun lessThan(b: Vec3t<out Number>) = glm.lessThan(this, b, Vec3bool())
+//    fun lessThan(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.lessThan(this, b, res)
+//
+//    infix fun lessThanEqual(b: Vec3t<out Number>) = glm.lessThan(this, b, Vec3bool())
+//    fun lessThanEqual(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.lessThan(this, b, res)
+//
+//    infix fun greaterThan(b: Vec3t<out Number>) = glm.greaterThan(this, b, Vec3bool())
+//    fun greaterThan(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.greaterThan(this, b, res)
+//
+//    infix fun greaterThanEqual(b: Vec3t<out Number>) = glm.greaterThanEqual(this, b, Vec3bool())
+//    fun greaterThanEqual(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.greaterThanEqual(this, b, res)
+//
+//    infix fun equal(b: Vec3t<out Number>) = glm.equal(this, b, Vec3bool())
+//    fun equal(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.equal(this, b, res)
+//
+//    infix fun notEqual(b: Vec3t<out Number>) = glm.notEqual(this, b, Vec3bool())
+//    fun notEqual(b: Vec3t<out Number>, res: Vec3bool = Vec3bool()) = glm.notEqual(this, b, res)
+//
+//    infix fun isEqual(b: Vec3t<out Number>) = glm.isEqual(this, b)
 
     // components alias
     var r

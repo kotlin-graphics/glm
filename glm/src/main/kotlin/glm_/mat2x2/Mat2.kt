@@ -351,7 +351,7 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
         div(this, this, b)
     }
 
-    infix fun isEqual(b: Mat2) = this[0].isEqual(b[0]) && this[1].isEqual(b[1])
+//    infix fun isEqual(b: Mat2) = this[0].isEqual(b[0]) && this[1].isEqual(b[1])
 
     // TODO others
     override var a0: Float

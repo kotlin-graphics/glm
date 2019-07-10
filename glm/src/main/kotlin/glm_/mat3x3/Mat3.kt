@@ -513,7 +513,7 @@ class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     fun rotateXYZassign(angle: Vec3) = glm.rotateXYZ(this, this, angle.x, angle.y, angle.z)
     fun rotateXYZassign(angleX: Float, angleY: Float, angleZ: Float) = glm.rotateXYZ(this, this, angleX, angleY, angleZ)
 
-    infix fun isEqual(b: Mat3) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2])
+//    infix fun isEqual(b: Mat3) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2])
 
     override var a0: Float
         get() = array[0]

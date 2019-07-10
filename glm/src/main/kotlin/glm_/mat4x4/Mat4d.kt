@@ -621,7 +621,7 @@ class Mat4d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     fun translateAssign(translateX: Double, translateY: Double, translateZ: Double) = glm.translate(this, this, translateX, translateY, translateZ)
 
 
-    infix fun isEqual(b: Mat4d) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2]) && this[3].isEqual(b[3])
+//    infix fun isEqual(b: Mat4d) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2]) && this[3].isEqual(b[3])
 
     @JvmOverloads
     fun rotate(angle: Double, vX: Double, vY: Double, vZ: Double, res: Mat4d = Mat4d()) = glm.rotate(res, this, angle, vX, vY, vZ)

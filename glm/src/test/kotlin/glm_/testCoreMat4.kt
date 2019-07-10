@@ -51,19 +51,17 @@ class testCoreMat4 : StringSpec() {
 
         "test operators" {
 
-            val l = Mat4(1f)
-            val m = Mat4(1f)
-            val u = Vec4(1f)
-            val v = Vec4(1f)
-            val x = 1f
-            val a = m * u
-            val b = v * m
-            val p = x * m
-            val q = m * x
-            val r = m != q
-            val s = m == l
+            val epsilon = 0.001f
 
-            (s && !r) shouldBe true
+            val m = Mat4(2f)
+            val n = Mat4(1f)
+            val u = Vec4(2f)
+
+            val p = n * 2f
+//            glm.all(glm.equal(p, m, epsilon)) shouldBe true
+
+//            glm::mat4 const Q = M / 2.0f;
+//            Error += glm::all(glm::equal(Q, N, Epsilon)) ? 0 : 1;
         }
 
         "rotate" {
@@ -78,23 +76,23 @@ class testCoreMat4 : StringSpec() {
 
         "test multiplication" {
 
-            val m1f = Mat4(List(16){it + 1f})
-            val m2f = Mat4(List(16){it + 17f})
+            val m1f = Mat4(List(16) { it + 1f })
+            val m2f = Mat4(List(16) { it + 17f })
 
-            val m1d = Mat4d(List(16) {it + 1.0})
-            val m2d = Mat4d(List(16){it + 17.0})
+            val m1d = Mat4d(List(16) { it + 1.0 })
+            val m2d = Mat4d(List(16) { it + 17.0 })
 
             val expectedF = Mat4(538, 612, 686, 760,
-                                 650, 740, 830, 920,
-                                 762, 868, 974, 1080,
-                                 874, 996, 1118, 1240)
+                    650, 740, 830, 920,
+                    762, 868, 974, 1080,
+                    874, 996, 1118, 1240)
 
             val resultF = m1f * m2f
 
             val expectedD = Mat4d(538, 612, 686, 760,
-                                  650, 740, 830, 920,
-                                  762, 868, 974, 1080,
-                                  874, 996, 1118, 1240)
+                    650, 740, 830, 920,
+                    762, 868, 974, 1080,
+                    874, 996, 1118, 1240)
             val resultD = m1d * m2d
 
             assertSoftly {

@@ -334,7 +334,7 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     }
 
 
-    infix fun isEqual(b: Mat2d) = this[0].isEqual(b[0]) && this[1].isEqual(b[1])
+//    infix fun isEqual(b: Mat2d) = this[0].isEqual(b[0]) && this[1].isEqual(b[1])
 
 
     override var a0: Double

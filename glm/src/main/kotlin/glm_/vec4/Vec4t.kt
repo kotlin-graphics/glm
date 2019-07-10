@@ -220,25 +220,25 @@ abstract class Vec4t<T : Number>: ToBuffer {
     abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
 
 
-    infix fun lessThan(b: Vec4t<out Number>) = glm.lessThan(this, b, Vec4bool())
-    fun lessThan(b: Vec4t<out Number>, res: Vec4bool = Vec4bool()) = glm.lessThan(this, b, res)
-
-    infix fun lessThanEqual(b: Vec4t<out Number>) = glm.lessThan(this, b, Vec4bool())
-    fun lessThanEqual(b: Vec4t<out Number>, res: Vec4bool = Vec4bool()) = glm.lessThan(this, b, res)
-
-    infix fun greaterThan(b: Vec4t<out Number>) = glm.greaterThan(this, b, Vec4bool())
-    fun greaterThan(b: Vec4t<out Number>, res: Vec4bool = Vec4bool()) = glm.greaterThan(this, b, res)
-
-    infix fun greaterThanEqual(b: Vec4t<out Number>) = glm.greaterThanEqual(this, b, Vec4bool())
-    fun greaterThanEqual(b: Vec4t<out Number>, res: Vec4bool = Vec4bool()) = glm.greaterThanEqual(this, b, res)
-
-    infix fun equal(b: Vec4t<out Number>) = glm.equal(this, b, Vec4bool())
-    fun equal(b: Vec4t<out Number>, res: Vec4bool = Vec4bool()) = glm.equal(this, b, res)
-
-    infix fun notEqual(b: Vec4t<out Number>) = glm.notEqual(this, b, Vec4bool())
-    fun notEqual(b: Vec4t<out Number>, res: Vec4bool = Vec4bool()) = glm.notEqual(this, b, res)
-
-    infix fun isEqual(b: Vec4t<out Number>) = glm.isEqual(this, b)
+//    infix fun lessThan(b: Vec4t<out Number>) = glm.lessThan(this, b, Vec4bool())
+//    fun lessThan(b: Vec4t<out Number>, res: Vec4bool = Vec4bool()) = glm.lessThan(this, b, res)
+//
+//    infix fun lessThanEqual(b: Vec4t<out Number>) = glm.lessThan(this, b, Vec4bool())
+//    fun lessThanEqual(b: Vec4t<out Number>, res: Vec4bool = Vec4bool()) = glm.lessThan(this, b, res)
+//
+//    infix fun greaterThan(b: Vec4t<out Number>) = glm.greaterThan(this, b, Vec4bool())
+//    fun greaterThan(b: Vec4t<out Number>, res: Vec4bool = Vec4bool()) = glm.greaterThan(this, b, res)
+//
+//    infix fun greaterThanEqual(b: Vec4t<out Number>) = glm.greaterThanEqual(this, b, Vec4bool())
+//    fun greaterThanEqual(b: Vec4t<out Number>, res: Vec4bool = Vec4bool()) = glm.greaterThanEqual(this, b, res)
+//
+//    infix fun equal(b: Vec4t<out Number>) = glm.equal(this, b, Vec4bool())
+//    fun equal(b: Vec4t<out Number>, res: Vec4bool = Vec4bool()) = glm.equal(this, b, res)
+//
+//    infix fun notEqual(b: Vec4t<out Number>) = glm.notEqual(this, b, Vec4bool())
+//    fun notEqual(b: Vec4t<out Number>, res: Vec4bool = Vec4bool()) = glm.notEqual(this, b, res)
+//
+//    infix fun isEqual(b: Vec4t<out Number>) = glm.isEqual(this, b)
 
     fun isEqual(b: Vec4t<out Number>, e: Float) = glm.isEqual(this, b,e)
 
