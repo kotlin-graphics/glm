@@ -23,7 +23,7 @@ buildscript {
 
 ext{
     moduleName = 'com.github.kotlin_graphics.glm'
-    unsigned_version = "1181ae34edb196a78b94698f0abc79ff3b2f6a8c"
+    unsigned_version = "411900ade7338489412bfbe12a45699dd100a3eb"
     kool_version = "dc615138a7eea2938516a902d0dab83a010d195b"
     lwjgl_version = "3.2.2"
     lwjgl_natives = current() == WINDOWS ? "windows" : current() == LINUX ? "linux" : "macos"
