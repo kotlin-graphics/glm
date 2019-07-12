@@ -1,4 +1,4 @@
-module com.github.kotlin_graphics.glm {
+open module com.github.kotlin_graphics.glm {
 
     requires kotlin.stdlib;
 
@@ -8,5 +8,5 @@ module com.github.kotlin_graphics.glm {
 
     requires java.desktop;
 
-    opens glm_;
+    exports glm_;
 }
