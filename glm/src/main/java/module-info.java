@@ -1,4 +1,4 @@
-open module com.github.kotlin_graphics.glm {
+module com.github.kotlin_graphics.glm {
 
     requires kotlin.stdlib;
 
