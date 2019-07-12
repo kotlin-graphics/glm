@@ -9,4 +9,5 @@ module com.github.kotlin_graphics.glm {
     requires java.desktop;
 
     exports glm_;
+    exports glm_.vec3;
 }
