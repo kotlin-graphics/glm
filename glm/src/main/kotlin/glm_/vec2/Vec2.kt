@@ -7,10 +7,8 @@ import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.Ptr
-import kool.FloatBuffer
 import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetFloat
 import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.awt.Color

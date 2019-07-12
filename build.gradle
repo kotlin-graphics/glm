@@ -4,8 +4,8 @@ buildscript {
 
     ext{
         kotlin = 'org.jetbrains.kotlin:kotlin'
-        kotlin_version = '1.3.31'
-        kotlintest_version = "3.2.1"
+        kotlin_version = '1.3.41'
+        kotlintest_version = "3.3.3"
     }
 
     repositories {
@@ -16,15 +16,15 @@ buildscript {
 
     dependencies {
         classpath "$kotlin-gradle-plugin:$kotlin_version".toString()
-        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.4'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:5.1.0'
         classpath "org.junit.platform:junit-platform-gradle-plugin:1.2.0"
     }
 }
 
 ext{
     moduleName = 'com.github.kotlin_graphics.glm'
-    unsigned_version = "411900ade7338489412bfbe12a45699dd100a3eb"
-    kool_version = "dc615138a7eea2938516a902d0dab83a010d195b"
+    unsigned_version = "da0d936cb929bdfd5c8bcc2858f6162bdfdd4433"
+    kool_version = "d4793680ebce48fa1dc690450d3ba7398e11e21c"
     lwjgl_version = "3.2.2"
     lwjgl_natives = current() == WINDOWS ? "windows" : current() == LINUX ? "linux" : "macos"
 }
@@ -63,12 +63,38 @@ subprojects {
 
     artifacts {
         archives sourcesJar
-        archives javadocJar
+//        archives javadocJar
     }
 
     jar {
         inputs.property("moduleName", moduleName)
-        manifest.attributes('Automatic-Module-Name': moduleName)
+//        manifest.attributes('Automatic-Module-Name': moduleName)
+    }
+
+    compileKotlin {
+        // Enable Kotlin compilation to Java 8 class files with method parameter name metadata
+        kotlinOptions{
+            jvmTarget = "1.8"
+//        javaParameters = true
+        }
+        // As per https://stackoverflow.com/a/47669720
+        // See also https://discuss.kotlinlang.org/t/kotlin-support-for-java-9-module-system/2499/9
+        destinationDir = compileJava.destinationDir
+    }
+
+    compileTestKotlin {
+        kotlinOptions{
+            jvmTarget = "1.8"
+//        javaParameters = true
+        }
+    }
+
+    compileJava {
+//        dependsOn(':compileKotlin')
+        doFirst {
+            options.compilerArgs = ['--module-path', classpath.asPath,]
+            classpath = files()
+        }
     }
 }
 
@@ -103,3 +129,4 @@ project(":glm-test") {
         implementation "io.kotlintest:kotlintest-assertions:$kotlintest_version".toString()
     }
 }
+
