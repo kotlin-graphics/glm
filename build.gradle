@@ -15,7 +15,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "$kotlin-gradle-plugin:$kotlin_version".toString()
+        classpath "$kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.jengelman.gradle.plugins:shadow:5.1.0'
         classpath "org.junit.platform:junit-platform-gradle-plugin:1.2.0"
     }
@@ -50,7 +50,7 @@ subprojects {
 
         implementation "org.jetbrains.kotlin:kotlin-stdlib"
 
-        testImplementation "io.kotlintest:kotlintest-runner-junit5:$kotlintest_version".toString()
+        testImplementation "io.kotlintest:kotlintest-runner-junit5:$kotlintest_version"
     }
 
     task sourcesJar(type: Jar, dependsOn: classes) {
@@ -112,7 +112,7 @@ project(":glm") {
 
         testImplementation project(":glm-test")
 
-        testImplementation "io.kotlintest:kotlintest-runner-junit5:$kotlintest_version".toString()
+        testImplementation "io.kotlintest:kotlintest-runner-junit5:$kotlintest_version"
 
         ["", "-glfw", "-jemalloc", "-openal", "-opengl", "-stb"].each {
             implementation "org.lwjgl:lwjgl$it:$lwjgl_version"
@@ -128,8 +128,8 @@ project(":glm-test") {
     dependencies {
         implementation project(":glm")
 
-        implementation "io.kotlintest:kotlintest-core:$kotlintest_version".toString()
-        implementation "io.kotlintest:kotlintest-assertions:$kotlintest_version".toString()
+        implementation "io.kotlintest:kotlintest-core:$kotlintest_version"
+        implementation "io.kotlintest:kotlintest-assertions:$kotlintest_version"
     }
 }
 
