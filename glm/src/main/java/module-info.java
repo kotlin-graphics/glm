@@ -4,7 +4,7 @@ module com.github.kotlin_graphics.glm {
 
     requires org.lwjgl;
 
-    requires com.github.kotlin_graphics.kool;
+//    requires com.github.kotlin_graphics.kool;
 
     requires java.desktop;
 

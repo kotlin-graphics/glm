@@ -104,8 +104,9 @@ project(":glm") {
 
     dependencies {
 
-        api "com.github.kotlin-graphics:kotlin-unsigned:$unsigned_version".toString()
-        api "com.github.kotlin-graphics:kool:$kool_version".toString()
+        def kx = "com.github.kotlin-graphics"
+        implementation "$kx:kotlin-unsigned:$unsigned_version".toString()
+        implementation "$kx:kool:$kool_version".toString()
 
         testImplementation project(":glm-test")
 
