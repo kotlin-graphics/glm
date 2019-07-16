@@ -98,7 +98,7 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
         this.y = y
     }
 
-    fun invoke(x: Double, y: Double): Vec2d {
+    operator fun invoke(x: Double, y: Double): Vec2d {
         this.x = x
         this.y = y
         return this
@@ -109,7 +109,7 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
         this.y = y.d
     }
 
-    override fun invoke(x: Number, y: Number): Vec2d {
+    override operator fun invoke(x: Number, y: Number): Vec2d {
         this.x = x.d
         this.y = y.d
         return this

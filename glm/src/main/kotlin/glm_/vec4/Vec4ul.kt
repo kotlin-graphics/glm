@@ -137,7 +137,7 @@ class Vec4ul(var ofs: Int, var array: LongArray) : Vec4t<Ulong>(), ToBuffer {
         this.w.v = w
     }
 
-    fun invoke(x: Ulong, y: Ulong, z: Ulong, w: Ulong): Vec4ul {
+    operator fun invoke(x: Ulong, y: Ulong, z: Ulong, w: Ulong): Vec4ul {
         this.x = x
         this.y = y
         this.z = z
@@ -145,7 +145,7 @@ class Vec4ul(var ofs: Int, var array: LongArray) : Vec4t<Ulong>(), ToBuffer {
         return this
     }
 
-    fun invoke(x: Long, y: Long, z: Long, w: Long): Vec4ul {
+    operator fun invoke(x: Long, y: Long, z: Long, w: Long): Vec4ul {
         this.x.v = x
         this.y.v = y
         this.z.v = z
@@ -160,7 +160,7 @@ class Vec4ul(var ofs: Int, var array: LongArray) : Vec4t<Ulong>(), ToBuffer {
         this.w = w.ul
     }
 
-    override fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4ul {
+    override operator fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4ul {
         this.x = x.ul
         this.y = y.ul
         this.z = z.ul

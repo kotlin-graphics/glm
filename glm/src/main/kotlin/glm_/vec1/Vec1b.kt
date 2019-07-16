@@ -58,7 +58,7 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
         this.x = x
     }
 
-    fun invoke(x: Byte): Vec1b {
+    operator fun invoke(x: Byte): Vec1b {
         this.x = x.b
         return this
     }
@@ -67,7 +67,7 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
         this.x = x.b
     }
 
-    override fun invoke(x: Number): Vec1b {
+    override operator fun invoke(x: Number): Vec1b {
         this.x = x.b
         return this
     }

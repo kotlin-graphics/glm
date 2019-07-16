@@ -103,7 +103,7 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>(), ToBuffer {
         this.y = y
     }
 
-    fun invoke(x: Uint, y: Uint): Vec2ui {
+    operator fun invoke(x: Uint, y: Uint): Vec2ui {
         this.x = x
         this.y = y
         return this
@@ -114,7 +114,7 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>(), ToBuffer {
         this.y.v = y
     }
 
-    fun invoke(x: Int, y: Int): Vec2ui {
+    operator fun invoke(x: Int, y: Int): Vec2ui {
         this.x.v = x
         this.y.v = y
         return this
@@ -125,7 +125,7 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>(), ToBuffer {
         this.y = y.ui
     }
 
-    override fun invoke(x: Number, y: Number): Vec2ui {
+    override operator fun invoke(x: Number, y: Number): Vec2ui {
         this.x = x.ui
         this.y = y.ui
         return this

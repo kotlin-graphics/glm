@@ -110,7 +110,7 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuf
         this.z = z
     }
 
-    fun invoke(x: Double, y: Double, z: Double): Vec3d {
+    operator fun invoke(x: Double, y: Double, z: Double): Vec3d {
         this.x = x
         this.y = y
         this.z = z
@@ -123,7 +123,7 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuf
         this.z = z.d
     }
 
-    override fun invoke(x: Number, y: Number, z: Number): Vec3d {
+    override operator fun invoke(x: Number, y: Number, z: Number): Vec3d {
         this.x = x.d
         this.y = y.d
         this.z = z.d

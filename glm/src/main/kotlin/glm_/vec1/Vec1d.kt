@@ -89,7 +89,7 @@ class Vec1d(x: Double) : Vec1t<Double>(x), ToDoubleBuffer {
         this.x = x.d
     }
 
-    override fun invoke(x: Number): Vec1d {
+    override operator fun invoke(x: Number): Vec1d {
         this.x = x.d
         return this
     }

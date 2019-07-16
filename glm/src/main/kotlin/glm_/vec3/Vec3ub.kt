@@ -95,7 +95,7 @@ class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>(), ToBuffer {
         this.z = z
     }
 
-    fun invoke(x: Ubyte, y: Ubyte, z: Ubyte): Vec3ub {
+    operator fun invoke(x: Ubyte, y: Ubyte, z: Ubyte): Vec3ub {
         this.x = x
         this.y = y
         this.z = z
@@ -108,7 +108,7 @@ class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>(), ToBuffer {
         this.z.v = z
     }
 
-    fun invoke(x: Byte, y: Byte, z: Byte): Vec3ub {
+    operator fun invoke(x: Byte, y: Byte, z: Byte): Vec3ub {
         this.x.v = x
         this.y.v = y
         this.z.v = z
@@ -121,7 +121,7 @@ class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>(), ToBuffer {
         this.z = z.ub
     }
 
-    override fun invoke(x: Number, y: Number, z: Number): Vec3ub {
+    override operator fun invoke(x: Number, y: Number, z: Number): Vec3ub {
         this.x = x.ub
         this.y = y.ub
         this.z = z.ub

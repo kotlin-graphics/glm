@@ -103,7 +103,7 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
         this.y = y
     }
 
-    fun invoke(x: Ulong, y: Ulong): Vec2ul {
+    operator fun invoke(x: Ulong, y: Ulong): Vec2ul {
         this.x = x
         this.y = y
         return this
@@ -114,7 +114,7 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
         this.y.v = y
     }
 
-    fun invoke(x: Long, y: Long): Vec2ul {
+    operator fun invoke(x: Long, y: Long): Vec2ul {
         this.x.v = x
         this.y.v = y
         return this
@@ -125,7 +125,7 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
         this.y = y.ul
     }
 
-    override fun invoke(x: Number, y: Number): Vec2ul {
+    override operator fun invoke(x: Number, y: Number): Vec2ul {
         this.x = x.ul
         this.y = y.ul
         return this

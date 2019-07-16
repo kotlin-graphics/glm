@@ -120,7 +120,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>(), ToDoubleBuf
         this.w = w
     }
 
-    fun invoke(x: Double, y: Double, z: Double, w: Double): Vec4d {
+    operator fun invoke(x: Double, y: Double, z: Double, w: Double): Vec4d {
         this.x = x
         this.y = y
         this.z = z
@@ -135,7 +135,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>(), ToDoubleBuf
         this.w = w.d
     }
 
-    override fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4d {
+    override operator fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4d {
         this.x = x.d
         this.y = y.d
         this.z = z.d

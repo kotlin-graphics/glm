@@ -106,7 +106,7 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
         this.y = y
     }
 
-    fun invoke(x: Float, y: Float): Vec2 {
+    operator fun invoke(x: Float, y: Float): Vec2 {
         this.x = x
         this.y = y
         return this
@@ -117,7 +117,7 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
         this.y = y.f
     }
 
-    override fun invoke(x: Number, y: Number): Vec2 {
+    override operator fun invoke(x: Number, y: Number): Vec2 {
         this.x = x.f
         this.y = y.f
         return this

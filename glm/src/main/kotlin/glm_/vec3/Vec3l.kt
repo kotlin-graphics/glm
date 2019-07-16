@@ -106,7 +106,7 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>(), ToBuffer {
         this.z = z
     }
 
-    fun invoke(x: Long, y: Long, z: Long): Vec3l {
+    operator fun invoke(x: Long, y: Long, z: Long): Vec3l {
         this.x = x
         this.y = y
         this.z = z
@@ -119,7 +119,7 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>(), ToBuffer {
         this.z = z.L
     }
 
-    override fun invoke(x: Number, y: Number, z: Number): Vec3l {
+    override operator fun invoke(x: Number, y: Number, z: Number): Vec3l {
         this.x = x.L
         this.y = y.L
         this.z = z.L

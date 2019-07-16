@@ -79,7 +79,7 @@ class Vec1(x: Float) : Vec1t<Float>(x), ToFloatBuffer {
         this.x = x
     }
 
-    fun invoke(x: Float): Vec1 {
+    operator fun invoke(x: Float): Vec1 {
         this.x = x
         return this
     }
@@ -88,7 +88,7 @@ class Vec1(x: Float) : Vec1t<Float>(x), ToFloatBuffer {
         this.x = x.f
     }
 
-    override fun invoke(x: Number): Vec1 {
+    override operator fun invoke(x: Number): Vec1 {
         this.x = x.f
         return this
     }

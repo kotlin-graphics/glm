@@ -89,7 +89,7 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>(), ToBuffer {
         this.w = w
     }
 
-    fun invoke(x: Byte, y: Byte, z: Byte, w: Byte): Vec4b {
+    operator fun invoke(x: Byte, y: Byte, z: Byte, w: Byte): Vec4b {
         this.x = x
         this.y = y
         this.z = z
@@ -104,7 +104,7 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>(), ToBuffer {
         this.w = w.b
     }
 
-    override fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4b {
+    override operator fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4b {
         this.x = x.b
         this.y = y.b
         this.z = z.b

@@ -95,7 +95,7 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
         this.x = x.us
     }
 
-    override fun invoke(x: Number): Vec1us {
+    override operator fun invoke(x: Number): Vec1us {
         this.x = x.us
         return this
     }

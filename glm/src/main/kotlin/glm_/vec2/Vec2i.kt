@@ -95,7 +95,7 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
         this.y = y
     }
 
-    fun invoke(x: Int, y: Int): Vec2i {
+    operator fun invoke(x: Int, y: Int): Vec2i {
         this.x = x
         this.y = y
         return this
@@ -106,7 +106,7 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
         this.y = y.i
     }
 
-    override fun invoke(x: Number, y: Number): Vec2i {
+    override operator fun invoke(x: Number, y: Number): Vec2i {
         this.x = x.i
         this.y = y.i
         return this

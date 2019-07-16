@@ -116,7 +116,7 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
         this.w = w
     }
 
-    fun invoke(x: Long, y: Long, z: Long, w: Long): Vec4l {
+    operator fun invoke(x: Long, y: Long, z: Long, w: Long): Vec4l {
         this.x = x
         this.y = y
         this.z = z
@@ -131,7 +131,7 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
         this.w = w.L
     }
 
-    override fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4l {
+    override operator fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4l {
         this.x = x.L
         this.y = y.L
         this.z = z.L

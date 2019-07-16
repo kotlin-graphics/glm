@@ -94,7 +94,7 @@ class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>(), ToBuffer {
         this.y = y
     }
 
-    fun invoke(x: Short, y: Short): Vec2s {
+    operator fun invoke(x: Short, y: Short): Vec2s {
         this.x = x
         this.y = y
         return this
@@ -105,7 +105,7 @@ class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>(), ToBuffer {
         this.y = y.s
     }
 
-    override fun invoke(x: Number, y: Number): Vec2s {
+    override operator fun invoke(x: Number, y: Number): Vec2s {
         this.x = x.s
         this.y = y.s
         return this

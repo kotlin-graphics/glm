@@ -89,7 +89,7 @@ class Vec1s(x: Short) : Vec1t<Short>(x) {
         this.x = x.s
     }
 
-    override fun invoke(x: Number): Vec1s {
+    override operator fun invoke(x: Number): Vec1s {
         this.x = x.s
         return this
     }

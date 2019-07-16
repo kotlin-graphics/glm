@@ -90,7 +90,7 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
         this.x = x.i
     }
 
-    override fun invoke(x: Number): Vec1i {
+    override operator fun invoke(x: Number): Vec1i {
         this.x = x.i
         return this
     }

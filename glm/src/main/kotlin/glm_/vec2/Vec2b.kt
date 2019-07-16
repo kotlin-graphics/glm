@@ -74,7 +74,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
         this.y = y
     }
 
-    fun invoke(x: Byte, y: Byte): Vec2b {
+    operator fun invoke(x: Byte, y: Byte): Vec2b {
         this.x = x
         this.y = y
         return this
@@ -85,7 +85,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
         this.y = y.b
     }
 
-    override fun invoke(x: Number, y: Number): Vec2b {
+    override operator fun invoke(x: Number, y: Number): Vec2b {
         this.x = x.b
         this.y = y.b
         return this

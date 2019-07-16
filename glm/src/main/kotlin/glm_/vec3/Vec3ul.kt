@@ -118,7 +118,7 @@ class Vec3ul(var ofs: Int, var array: LongArray) : Vec3t<Ulong>(), ToBuffer {
         this.z = z
     }
 
-    fun invoke(x: Ulong, y: Ulong, z: Ulong): Vec3ul {
+    operator fun invoke(x: Ulong, y: Ulong, z: Ulong): Vec3ul {
         this.x = x
         this.y = y
         this.z = z
@@ -131,7 +131,7 @@ class Vec3ul(var ofs: Int, var array: LongArray) : Vec3t<Ulong>(), ToBuffer {
         this.z.v = z
     }
 
-    fun invoke(x: Long, y: Long, z: Long): Vec3ul {
+    operator fun invoke(x: Long, y: Long, z: Long): Vec3ul {
         this.x.v = x
         this.y.v = y
         this.z.v = z
@@ -144,7 +144,7 @@ class Vec3ul(var ofs: Int, var array: LongArray) : Vec3t<Ulong>(), ToBuffer {
         this.z = z.ul
     }
 
-    override fun invoke(x: Number, y: Number, z: Number): Vec3ul {
+    override operator fun invoke(x: Number, y: Number, z: Number): Vec3ul {
         this.x = x.ul
         this.y = y.ul
         this.z = z.ul

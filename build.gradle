@@ -2,7 +2,7 @@ import static org.gradle.internal.os.OperatingSystem.*
 
 buildscript {
 
-    ext{
+    ext {
         kotlin = 'org.jetbrains.kotlin:kotlin'
         kotlin_version = '1.3.41'
         kotlintest_version = "3.3.3"
@@ -23,10 +23,10 @@ buildscript {
 
 group = 'com.github.kotlin_graphics'
 
-ext{
+ext {
     moduleName = "${group}.glm"
     unsigned_version = 'a530a8f63eda75a499e06beac468f0398526f5a4'
-    kool_version = '7b1e0522d1fe5a7d1a276f4d46b2e24be9e444cb'
+    kool_version = '1d9a690fd33e62621d55bcb6843042390a21ae31'
     lwjgl_version = "3.2.2"
     lwjgl_natives = current() == WINDOWS ? "windows" : current() == LINUX ? "linux" : "macos"
 }
@@ -75,7 +75,7 @@ subprojects {
 
     compileKotlin {
         // Enable Kotlin compilation to Java 8 class files with method parameter name metadata
-        kotlinOptions{
+        kotlinOptions {
             jvmTarget = "1.8"
 //        javaParameters = true
         }
@@ -85,7 +85,7 @@ subprojects {
     }
 
     compileTestKotlin {
-        kotlinOptions{
+        kotlinOptions {
             jvmTarget = "1.8"
 //        javaParameters = true
         }

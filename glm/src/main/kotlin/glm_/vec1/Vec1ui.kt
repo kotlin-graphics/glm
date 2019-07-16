@@ -77,7 +77,7 @@ class Vec1ui(x: Uint) : Vec1t<Uint>(x) {
         this.x = x
     }
 
-    fun invoke(x: Uint): Vec1ui {
+    operator fun invoke(x: Uint): Vec1ui {
         this.x = x
         return this
     }
@@ -86,7 +86,7 @@ class Vec1ui(x: Uint) : Vec1t<Uint>(x) {
         this.x.v = x
     }
 
-    fun invoke(x: Int): Vec1ui {
+    operator fun invoke(x: Int): Vec1ui {
         this.x.v = x
         return this
     }
@@ -95,7 +95,7 @@ class Vec1ui(x: Uint) : Vec1t<Uint>(x) {
         this.x = x.ui
     }
 
-    override fun invoke(x: Number): Vec1ui {
+    override operator fun invoke(x: Number): Vec1ui {
         this.x = x.ui
         return this
     }
