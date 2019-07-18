@@ -25,8 +25,8 @@ group = 'com.github.kotlin_graphics'
 
 ext {
     moduleName = "${group}.glm"
-    unsigned_version = 'a530a8f63eda75a499e06beac468f0398526f5a4'
-    kool_version = '1d9a690fd33e62621d55bcb6843042390a21ae31'
+    unsigned_version = 'ba1b5c2ab0231aabbef753df5fa0d0de98142360'
+    kool_version = 'd052c5e18a06642fcdf9f5942198ee9c4cee1a3f'
     lwjgl_version = "3.2.2"
     lwjgl_natives = current() == WINDOWS ? "windows" : current() == LINUX ? "linux" : "macos"
 }
@@ -76,7 +76,7 @@ subprojects {
     compileKotlin {
         // Enable Kotlin compilation to Java 8 class files with method parameter name metadata
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = "11"
 //        javaParameters = true
         }
         // As per https://stackoverflow.com/a/47669720
@@ -86,7 +86,7 @@ subprojects {
 
     compileTestKotlin {
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = "11"
 //        javaParameters = true
         }
     }
