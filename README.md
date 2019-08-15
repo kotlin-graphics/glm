@@ -23,14 +23,14 @@ The source code and the documentation are licensed under both the [Happy Bunny L
 Don't hesitate to contribute to the project by submitting [issues](https://github.com/kotlin-graphics/glm/issues) or [pull requests](https://github.com/kotlin-graphics/glm/pulls) for bugs and features. Any feedback is welcome at [elect86@gmail.com](mailto://elect86@gmail.com).
 
 ```kotlin
-import glm.vec2.Vec2
-import glm.vec3.Vec3
-import glm.mat4x4.Mat4
-import glm.glm
+import glm_.vec2.Vec2
+import glm_.vec3.Vec3
+import glm_.mat4x4.Mat4
+import glm_.glm
 
 fun camera(translate: Float, rotate: Vec2): Mat4 {
 
-    val projection = glm.perspective(glm.PIf * 0.25f, 4.0f / 3.0f, 0.1f, 100.`toFloat()`)
+    val projection = glm.perspective(glm.PIf * 0.25f, 4.0f / 3.0f, 0.1f, 100.0f)
     var view = glm.translate(Mat4(1.0f), Vec3(0.0f, 0.0f, -translate))
     view = glm.rotate(view, rotate.y, Vec3(-1.0f, 0.0f, 0.0f))
     view = glm.rotate(view, rotate.x, Vec3(0.0f, 1.0f, 0.0f))
