@@ -53,7 +53,7 @@ data class Vec4bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
         return this
     }
 
-    fun put(x: Boolean, y: Boolean, z: Boolean): Vec4bool {
+    fun put(x: Boolean, y: Boolean, z: Boolean, w: Boolean): Vec4bool {
         this.x = x
         this.y = y
         this.z = z
