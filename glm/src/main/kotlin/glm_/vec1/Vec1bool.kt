@@ -44,6 +44,10 @@ data class Vec1bool(var x: Boolean = false) {
         return this
     }
 
+    operator fun invoke(init: (Int) -> Boolean): Vec1bool {
+        x = init(0)
+        return this
+    }
 
 //    fun toBooleanArray(): BooleanArray = to(BooleanArray(length), 0)
 //    infix fun to(floats: BooleanArray): BooleanArray = to(floats, 0)

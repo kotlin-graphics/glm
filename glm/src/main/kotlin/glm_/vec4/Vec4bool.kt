@@ -77,6 +77,13 @@ data class Vec4bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
         return this
     }
 
+    operator fun invoke(init: (Int) -> Boolean): Vec4bool {
+        x = init(0)
+        y = init(1)
+        z = init(2)
+        w = init(3)
+        return this
+    }
 
     // -- Unary arithmetic vecOperators --
 

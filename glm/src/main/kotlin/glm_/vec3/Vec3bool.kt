@@ -62,6 +62,12 @@ data class Vec3bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
         return this
     }
 
+    operator fun invoke(init: (Int) -> Boolean): Vec3bool {
+        x = init(0)
+        y = init(1)
+        z = init(2)
+        return this
+    }
 
     // -- Unary arithmetic vecOperators --
 

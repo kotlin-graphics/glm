@@ -57,6 +57,12 @@ data class Vec2bool(var x: Boolean = false, var y: Boolean = false) {
         return this
     }
 
+    operator fun invoke(init: (Int) -> Boolean): Vec2bool {
+        x = init(0)
+        y = init(1)
+        return this
+    }
+
 
     // -- Unary arithmetic vecOperators --
 
