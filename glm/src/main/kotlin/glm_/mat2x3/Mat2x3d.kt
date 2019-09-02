@@ -96,7 +96,7 @@ class Mat2x3d(var array: DoubleArray) : Mat2x3t<Double>(), ToDoubleBuffer {
 
     override fun elementCount(): Int = length
 
-    override fun equals(other: Any?) = other is Mat2x3d && Arrays.equals(array, other.array)
+    override fun equals(other: Any?) = other is Mat2x3d && array.contentEquals(other.array)
 
     override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
 }

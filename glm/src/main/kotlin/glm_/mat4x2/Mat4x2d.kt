@@ -105,7 +105,7 @@ class Mat4x2d(var array: DoubleArray) : Mat4x2t<Double>(), ToDoubleBuffer {
 
     override fun elementCount() = length
 
-    override fun equals(other: Any?) = other is Mat4x2d && Arrays.equals(array, other.array)
+    override fun equals(other: Any?) = other is Mat4x2d && array.contentEquals(other.array)
 
     override fun hashCode() = 31 * (31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()) + this[3].hashCode()
 }

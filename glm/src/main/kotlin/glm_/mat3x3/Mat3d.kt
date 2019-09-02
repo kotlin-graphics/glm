@@ -560,7 +560,7 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
 
     override fun elementCount() = length
 
-    override fun equals(other: Any?) = other is Mat3d && Arrays.equals(array, other.array)
+    override fun equals(other: Any?) = other is Mat3d && array.contentEquals(other.array)
 
     override fun hashCode() = 31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()
 }

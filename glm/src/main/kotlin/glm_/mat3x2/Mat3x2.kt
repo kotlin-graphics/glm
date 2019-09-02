@@ -96,7 +96,7 @@ class Mat3x2(var array: FloatArray) : Mat3x2t<Float>(), ToFloatBuffer {
 
     override fun elementCount() = length
 
-    override fun equals(other: Any?) = other is Mat3x2 && Arrays.equals(array, other.array)
+    override fun equals(other: Any?) = other is Mat3x2 && array.contentEquals(other.array)
 
     override fun hashCode() = 31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()
 }
