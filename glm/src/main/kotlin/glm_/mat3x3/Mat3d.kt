@@ -17,6 +17,7 @@ import glm_.mat4x4.Mat4d
 import glm_.quat.QuatD
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
+import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4d
@@ -32,6 +33,7 @@ import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*
+import kotlin.math.abs
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -561,6 +563,27 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Mat3d && array.contentEquals(other.array)
+
+    fun equal(b: Mat3d, epsilon: Double = 0.0): Boolean {
+        for (i in 0..8)
+            if (abs(array[i] - b.array[i]) > epsilon)
+                return false
+        return true
+    }
+
+    fun equal(b: Mat3d, epsilon: Vec3d, res: Vec3bool = Vec3bool()): Vec3bool = res {
+        var equal = true
+        for (i in 0..2)
+            if(abs(array[it * 3 + i] - b.array[it * 3 + i]) > epsilon[it]) {
+                equal = false
+                break
+            }
+        equal
+    }
+
+    fun notEqual(b: Mat3d, epsilon: Double = 0.0): Boolean = !equal(b, epsilon)
+
+    fun notEqual(b: Mat3d, epsilon: Vec3d, res: Vec3bool = Vec3bool()): Vec3bool = equal(b, epsilon, res).notAssign()
 
     override fun hashCode() = 31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()
 }

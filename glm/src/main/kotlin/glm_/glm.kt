@@ -4,6 +4,7 @@
 
 package glm_
 
+import glm_.ext.ext_scalarRelational
 import glm_.func.*
 import glm_.func.common.*
 import glm_.gtc.gtcMatrixInverse
@@ -88,6 +89,8 @@ object glm :
         gxtSpline,
         gtxTexture,
         gtxVectorAngle,
+
+        ext_scalarRelational,
 
         closestPointToLines {
 

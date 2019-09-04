@@ -89,7 +89,7 @@ data class Vec4bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
 
     operator fun not(): Vec4bool = Vec4bool(!x, !y, !z, !w)
 
-    fun not_(): Vec4bool {
+    fun notAssign(): Vec4bool {
         x = !x
         y = !y
         z = !z

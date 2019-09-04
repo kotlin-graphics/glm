@@ -60,7 +60,7 @@ data class Vec1bool(var x: Boolean = false) {
 
     operator fun not(): Vec1bool = Vec1bool(!x)
 
-    fun notAss(): Vec1bool {
+    fun notAssign(): Vec1bool {
         x = !x
         return this
     }
