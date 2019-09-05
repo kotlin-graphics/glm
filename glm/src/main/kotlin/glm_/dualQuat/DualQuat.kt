@@ -271,4 +271,6 @@ class DualQuat(var real: Quat, var dual: Quat) {
 
     override fun equals(other: Any?) = other is DualQuat && real == other.real && dual == other.dual
     override fun hashCode() = 31 * real.hashCode() + dual.hashCode()
+
+    override fun toString(): String = "($real, $dual)"
 }

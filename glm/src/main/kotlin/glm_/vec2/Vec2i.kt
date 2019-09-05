@@ -15,6 +15,7 @@ import org.lwjgl.system.MemoryUtil.memGetInt
 import org.lwjgl.system.MemoryUtil.memPutInt
 import java.io.PrintStream
 import java.nio.*
+import kotlin.math.abs
 
 /**
  * Created bY GBarbieri on 06.10.2016.
@@ -564,6 +565,9 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec2i && this[0] == other[0] && this[1] == other[1]
+    fun equal(b: Vec2i, epsilon: Int = 0): Boolean = abs(x - b.x) <= epsilon && abs(y - b.y) <= epsilon
+    fun notEqual(b: Vec2i, epsilon: Int = 0): Boolean = !equal(b, epsilon)
+
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
 
     @JvmOverloads
@@ -571,6 +575,4 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
-
-    override fun toString(): String = "[$x, $y]"
 }

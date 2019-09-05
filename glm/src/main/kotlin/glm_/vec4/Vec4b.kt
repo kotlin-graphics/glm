@@ -580,5 +580,5 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>(), ToBuffer {
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "[$x, $y, $z, $w]"
+    override fun toString(): String = "($x, $y, $z, $w)"
 }

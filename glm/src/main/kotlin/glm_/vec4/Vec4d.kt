@@ -424,5 +424,5 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>(), ToDoubleBuf
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "[$x, $y, $z, $w]"
+    override fun toString(): String = "($x, $y, $z, $w)"
 }

@@ -299,9 +299,8 @@ class Vec1(x: Float) : Vec1t<Float>(x), ToFloatBuffer {
     override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec1 && this[0] == other[0]
-    override fun hashCode() = x.hashCode()
-
     fun equal(b: Vec1, epsilon: Float = 0f): Boolean = abs(x - b.x) <= epsilon
-
     fun notEqual(b: Vec1, epsilon: Float = 0f): Boolean = !equal(b, epsilon)
+
+    override fun hashCode() = x.hashCode()
 }

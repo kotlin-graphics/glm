@@ -458,9 +458,8 @@ class Vec1ui(x: Uint) : Vec1t<Uint>(x) {
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec1ui && this[0] == other[0]
-    override fun hashCode() = x.v.hashCode()
-
     fun equal(b: Vec1ui, epsilon: Int = 0): Boolean = abs(x.v - b.x.v) <= epsilon
-
     fun notEqual(b: Vec1ui, epsilon: Int = 0): Boolean = !equal(b, epsilon)
+
+    override fun hashCode() = x.v.hashCode()
 }

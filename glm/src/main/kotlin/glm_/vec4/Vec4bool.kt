@@ -125,5 +125,5 @@ data class Vec4bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "[$x, $y, $z, $w]"
+    override fun toString(): String = "($x, $y, $z, $w)"
 }

@@ -350,5 +350,5 @@ abstract class Vec3t<T : Number>: ToBuffer {
         const val length = 3
     }
 
-    override fun toString(): String = "Vect3 [$x, $y, $z]"
+    override fun toString(): String = "($x, $y, $z)"
 }

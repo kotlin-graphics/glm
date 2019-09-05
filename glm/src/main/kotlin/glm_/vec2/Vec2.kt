@@ -15,6 +15,7 @@ import java.awt.Color
 import java.io.InputStream
 import java.io.PrintStream
 import java.nio.*
+import kotlin.math.abs
 
 /**
  * Created bY GBarbieri on 05.10.2016.
@@ -538,6 +539,9 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
     override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec2 && this[0] == other[0] && this[1] == other[1]
+    fun equal(b: Vec2, epsilon: Float = 0f): Boolean = abs(x - b.x) <= epsilon && abs(y - b.y) <= epsilon
+    fun notEqual(b: Vec2, epsilon: Float = 0f): Boolean = !equal(b, epsilon)
+
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
 
     @JvmOverloads
@@ -545,6 +549,4 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
-
-    override fun toString(): String = "[$x, $y]"
 }

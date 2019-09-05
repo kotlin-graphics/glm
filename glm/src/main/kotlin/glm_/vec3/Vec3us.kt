@@ -699,5 +699,5 @@ class Vec3us(var ofs: Int, var array: ShortArray) : Vec3t<Ushort>(), ToBuffer {
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "[${x.v}, ${y.v}, ${z.v}]"
+    override fun toString(): String = "(${x.v}, ${y.v}, ${z.v})"
 }

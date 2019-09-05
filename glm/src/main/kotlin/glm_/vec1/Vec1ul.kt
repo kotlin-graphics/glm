@@ -472,6 +472,9 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec1ul && this[0] == other[0]
+    fun equal(b: Vec1ul, epsilon: Int = 0): Boolean = abs(x.v - b.x.v) <= epsilon
+    fun notEqual(b: Vec1ul, epsilon: Int = 0): Boolean = !equal(b, epsilon)
+
     override fun hashCode() = x.v.hashCode()
 
     @JvmOverloads
@@ -479,10 +482,4 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
-
-    override fun toString(): String = "[${x.v}]"
-
-    fun equal(b: Vec1ul, epsilon: Long = 0): Boolean = abs(x.v - b.x.v) <= epsilon
-
-    fun notEqual(b: Vec1ul, epsilon: Long = 0): Boolean = !equal(b, epsilon)
 }

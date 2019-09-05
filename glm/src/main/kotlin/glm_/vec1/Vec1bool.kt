@@ -86,4 +86,6 @@ data class Vec1bool(var x: Boolean = false) {
 //    fun any() = glm.any(this)
 //
 //    fun all() = glm.all(this)
+
+    override fun toString(): String = "($x)"
 }

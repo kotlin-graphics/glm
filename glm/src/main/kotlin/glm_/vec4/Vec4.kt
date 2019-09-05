@@ -486,5 +486,5 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "[$x, $y, $z, $w]"
+    override fun toString(): String = "($x, $y, $z, $w)"
 }

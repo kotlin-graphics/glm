@@ -544,5 +544,5 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>(), ToBuffer {
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "[$x, $y, $z]"
+    override fun toString(): String = "($x, $y, $z)"
 }

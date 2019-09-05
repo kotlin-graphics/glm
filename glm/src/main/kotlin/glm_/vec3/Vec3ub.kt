@@ -656,5 +656,5 @@ class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>(), ToBuffer {
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "[${x.v}, ${y.v}, ${z.v}]"
+    override fun toString(): String = "(${x.v}, ${y.v}, ${z.v})"
 }

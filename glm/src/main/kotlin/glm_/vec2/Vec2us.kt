@@ -16,6 +16,7 @@ import org.lwjgl.system.MemoryUtil.memPutShort
 import unsigned.Ushort
 import java.io.PrintStream
 import java.nio.*
+import kotlin.math.abs
 
 /**
  * Created by elect on 08/10/16.
@@ -663,6 +664,9 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec2us && this[0] == other[0] && this[1] == other[1]
+    fun equal(b: Vec2us, epsilon: Int = 0): Boolean = abs(x.v - b.x.v) <= epsilon && abs(y.v - b.y.v) <= epsilon
+    fun notEqual(b: Vec2us, epsilon: Int = 0): Boolean = !equal(b, epsilon)
+
     override fun hashCode() = 31 * x.v.hashCode() + y.v.hashCode()
 
     @JvmOverloads
@@ -670,6 +674,4 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
-
-    override fun toString(): String = "[${x.v}, ${y.v}]"
 }

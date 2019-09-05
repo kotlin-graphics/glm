@@ -660,5 +660,5 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "[${x.v}, ${y.v}, ${z.v}, ${w.v}]"
+    override fun toString(): String = "(${x.v}, ${y.v}, ${z.v}, ${w.v})"
 }

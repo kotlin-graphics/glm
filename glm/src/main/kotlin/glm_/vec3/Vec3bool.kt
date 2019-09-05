@@ -104,5 +104,5 @@ data class Vec3bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
 
 
     fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y, $z]")
-    override fun toString(): String = "Vec3bool [$x, $y, $z]"
+    override fun toString(): String = "($x, $y, $z)"
 }

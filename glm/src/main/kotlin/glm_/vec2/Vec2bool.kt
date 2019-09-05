@@ -100,5 +100,5 @@ data class Vec2bool(var x: Boolean = false, var y: Boolean = false) {
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "[$x, $y]"
+    override fun toString(): String = "($x, $y)"
 }

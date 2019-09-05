@@ -281,5 +281,5 @@ abstract class Vec2t<T : Number>: ToBuffer {
         const val length = 2
     }
 
-    override fun toString(): String = "Vect2 [$x, $y]"
+    override fun toString(): String = "($x, $y)"
 }
