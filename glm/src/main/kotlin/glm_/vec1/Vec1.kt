@@ -1,17 +1,17 @@
 package glm_.vec1
 
 import glm_.*
-import glm_.vec1.operators.vec1_operators
+import glm_.vec1.operators.opVec1
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.FloatBuffer
 import kool.pos
 import kool.set
 import java.nio.*
+import kotlin.math.abs
 
 /**
  * Created by GBarbieri on 28.04.2017.
@@ -288,7 +288,7 @@ class Vec1(x: Float) : Vec1t<Float>(x), ToFloatBuffer {
     }
 
 
-    companion object : vec1_operators {
+    companion object : opVec1 {
         const val length = Vec1t.length
         @JvmField
         val size = length * Float.BYTES
@@ -300,4 +300,8 @@ class Vec1(x: Float) : Vec1t<Float>(x), ToFloatBuffer {
 
     override fun equals(other: Any?) = other is Vec1 && this[0] == other[0]
     override fun hashCode() = x.hashCode()
+
+    fun equal(b: Vec1, epsilon: Float = 0f): Boolean = abs(x - b.x) <= epsilon
+
+    fun notEqual(b: Vec1, epsilon: Float = 0f): Boolean = !equal(b, epsilon)
 }

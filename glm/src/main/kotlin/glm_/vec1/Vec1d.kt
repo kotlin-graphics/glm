@@ -1,7 +1,7 @@
 package glm_.vec1
 
 import glm_.*
-import glm_.vec1.operators.vec1d_operators
+import glm_.vec1.operators.opVec1d
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -12,6 +12,7 @@ import kool.DoubleBuffer
 import kool.pos
 import kool.set
 import java.nio.*
+import kotlin.math.abs
 
 /**
  * Created by GBarbieri on 28.04.2017.
@@ -286,7 +287,7 @@ class Vec1d(x: Double) : Vec1t<Double>(x), ToDoubleBuffer {
     }
 
 
-    companion object : vec1d_operators {
+    companion object : opVec1d {
         const val length = Vec1t.length
         @JvmField
         val size = length * Double.BYTES
@@ -298,4 +299,8 @@ class Vec1d(x: Double) : Vec1t<Double>(x), ToDoubleBuffer {
 
     override fun equals(other: Any?) = other is Vec1d && this[0] == other[0]
     override fun hashCode() = x.hashCode()
+
+    fun equal(b: Vec1d, epsilon: Double = 0.0): Boolean = abs(x - b.x) <= epsilon
+
+    fun notEqual(b: Vec1d, epsilon: Double = 0.0): Boolean = !equal(b, epsilon)
 }

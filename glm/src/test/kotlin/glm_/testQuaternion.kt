@@ -106,7 +106,7 @@ class testQuaternion : StringSpec() {
                 }
             }
 
-            "quat eurler" {
+            "quat euler" {
 
                 run {
                     val q = Quat(1f, 0f, 0f, 1f)

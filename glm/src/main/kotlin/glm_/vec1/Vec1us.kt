@@ -1,8 +1,10 @@
 package glm_.vec1
 
 import glm_.*
+import glm_.vec1.operators.opVec1us
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
+import glm_.vec2.operators.opVec2us
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
@@ -12,6 +14,7 @@ import kool.ShortBuffer
 import kool.set
 import org.lwjgl.system.MemoryStack
 import unsigned.Ushort
+import java.lang.Math.abs
 import java.nio.*
 
 /**
@@ -24,10 +27,12 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
 
     constructor() : this(0)
 
+    constructor(v: Vec1t<out Number>) : this(v.x)
     constructor(v: Vec2t<out Number>) : this(v.x)
     constructor(v: Vec3t<out Number>) : this(v.x)
     constructor(v: Vec4t<out Number>) : this(v.x)
 
+    constructor(v: Vec1bool) : this(v.x.us)
     constructor(v: Vec2bool) : this(v.x.us)
     constructor(v: Vec3bool) : this(v.x.us)
     constructor(v: Vec4bool) : this(v.x.us)
@@ -512,7 +517,7 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
 //    fun shr(b: Vec2t<out Number>, res: Vec1us) = shr(res, this, b.x.i, b.y.i)
 
 
-    companion object /*: opVec2us*/ {
+    companion object : opVec1us {
         const val length = Vec1t.length
         @JvmField
         val size = length * Ushort.BYTES
@@ -522,4 +527,8 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
 
     override fun equals(other: Any?) = other is Vec1us && this[0] == other[0]
     override fun hashCode() = x.v.hashCode()
+
+    fun equal(b: Vec1us, epsilon: Int = 0): Boolean = abs(x.v - b.x.v) <= epsilon
+
+    fun notEqual(b: Vec1us, epsilon: Int = 0): Boolean = !equal(b, epsilon)
 }

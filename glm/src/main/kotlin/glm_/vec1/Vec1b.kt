@@ -3,6 +3,7 @@ package glm_.vec1
 import glm_.BYTES
 import glm_.b
 import glm_.toByte
+import glm_.vec1.operators.opVec1b
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -11,6 +12,7 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.pos
 import java.nio.*
+import kotlin.math.abs
 
 class Vec1b(x: Byte) : Vec1t<Byte>(x) {
 
@@ -80,7 +82,7 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
 
     override fun to(buf: ByteBuffer, offset: Int): ByteBuffer = buf.put(offset, x)
 
-    companion object { //TODO : vec2b_operators {
+    companion object : opVec1b {
         const val length = Vec1t.length
         @JvmField
         val size = length * Byte.BYTES
@@ -90,4 +92,8 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
 
     override fun equals(other: Any?) = other is Vec1b && this[0] == other[0]
     override fun hashCode() = x.hashCode()
+
+    fun equal(b: Vec1b, epsilon: Int = 0): Boolean = abs(x - b.x) <= epsilon
+
+    fun notEqual(b: Vec1b, epsilon: Int = 0): Boolean = !equal(b, epsilon)
 }

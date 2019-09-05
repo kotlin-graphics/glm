@@ -121,6 +121,8 @@ object glm :
     val epsilonF = 1.1920928955078125e-7f
     @JvmField
     val epsilon = 2.2204460492503131e-16
+    val ε = epsilon
+    val εf = epsilonF
 
     @JvmField
     val Ef = 2.71828182845904523536f

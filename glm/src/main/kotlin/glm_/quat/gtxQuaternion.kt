@@ -88,7 +88,7 @@ interface gtxQuaternion {
      *  @see gtx_quaternion */
     fun intermediate(prev: Quat, curr: Quat, next: Quat): Quat {
         val invQuat = curr.inverse()
-        return exp((log(next + invQuat) + log(prev + invQuat)) / -4f) * curr
+        return exp((log(next * invQuat) + log(prev * invQuat)) / -4f) * curr
     }
 
     /** Returns a exp of a quaternion.

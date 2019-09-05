@@ -31,7 +31,7 @@ abstract class Vec1t<T : Number>(_x: T): ToBuffer {
         else -> throw IndexOutOfBoundsException()
     }
 
-    operator fun set(index: Int, value: T) = when (index) {
+    open operator fun set(index: Int, value: T) = when (index) {
         0 -> x = value
         else -> throw IndexOutOfBoundsException()
     }

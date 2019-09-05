@@ -1,7 +1,7 @@
 package glm_.vec1
 
 import glm_.*
-import glm_.vec1.operators.vec1i_operators
+import glm_.vec1.operators.opVec1i
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -13,6 +13,7 @@ import kool.pos
 import kool.set
 import org.lwjgl.system.MemoryStack
 import java.nio.*
+import kotlin.math.abs
 
 /**
  * Created by GBarbieri on 04.04.2017.
@@ -170,7 +171,59 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     infix fun remAssign(b: Int) = rem(this, this, b)
     infix fun remAssign(b: Vec1i) = rem(this, this, b.x)
 
-    companion object : vec1i_operators {
+    
+    // -- Specific bitwise operators --
+
+    infix fun and(b: Int) = and(Vec1i(), this, b)
+    infix fun and(b: Vec1i) = and(Vec1i(), this, b.x)
+
+    fun and(b: Int, res: Vec1i) = and(res, this, b)
+    fun and(b: Vec1i, res: Vec1i) = and(res, this, b.x)
+
+    infix fun andAssign(b: Int) = and(this, this, b)
+    infix fun andAssign(b: Vec1i) = and(this, this, b.x)
+
+
+    infix fun or(b: Int) = or(Vec1i(), this, b)
+    infix fun or(b: Vec1i) = or(Vec1i(), this, b.x)
+
+    fun or(b: Int, res: Vec1i) = or(res, this, b)
+    fun or(b: Vec1i, res: Vec1i) = or(res, this, b.x)
+
+    infix fun orAssign(b: Int) = or(this, this, b)
+    infix fun orAssign(b: Vec1i) = or(this, this, b.x)
+
+
+    infix fun xor(b: Int) = xor(Vec1i(), this, b)
+    infix fun xor(b: Vec1i) = xor(Vec1i(), this, b.x)
+
+    fun xor(b: Int, res: Vec1i) = xor(res, this, b)
+    fun xor(b: Vec1i, res: Vec1i) = xor(res, this, b.x)
+
+    infix fun xorAssign(b: Int) = xor(this, this, b)
+    infix fun xorAssign(b: Vec1i) = xor(this, this, b.x)
+
+
+    infix fun shl(b: Int) = shl(Vec1i(), this, b)
+    infix fun shl(b: Vec1i) = shl(Vec1i(), this, b.x)
+
+    fun shl(b: Int, res: Vec1i) = shl(res, this, b)
+    fun shl(b: Vec1i, res: Vec1i) = shl(res, this, b.x)
+
+    infix fun shlAssign(b: Int) = shl(this, this, b)
+    infix fun shlAssign(b: Vec1i) = shl(this, this, b.x)
+
+
+    infix fun shr(b: Int) = shr(Vec1i(), this, b)
+    infix fun shr(b: Vec1i) = shr(Vec1i(), this, b.x)
+
+    fun shr(b: Int, res: Vec1i) = shr(res, this, b)
+    fun shr(b: Vec1i, res: Vec1i) = shr(res, this, b.x)
+
+    infix fun shrAssign(b: Int) = shr(this, this, b)
+    infix fun shrAssign(b: Vec1i) = shr(this, this, b.x)
+
+    companion object : opVec1i {
         const val length = Vec1t.length
         @JvmField
         val size = length * Int.BYTES
@@ -180,4 +233,8 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
 
     override fun equals(other: Any?) = other is Vec1i && this[0] == other[0]
     override fun hashCode() = x.hashCode()
+
+    fun equal(b: Vec1i, epsilon: Int = 0): Boolean = abs(x - b.x) <= epsilon
+
+    fun notEqual(b: Vec1i, epsilon: Int = 0): Boolean = !equal(b, epsilon)
 }
