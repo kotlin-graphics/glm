@@ -46,7 +46,7 @@ interface gtxInteger {
     }
 
     /** Modulus. Returns x - y * floor(x / y) for each component in x using the floating point value y. */
-    fun mod(x: Int, y: Int) = x - y * (x / y)
+    fun mod(x: Int, y: Int): Int = ((x % y) + y) % y
 
     /** Return the factorial value of a number (!12 max, integer only) */
     /** factorial (!12 max, integer only)   */
