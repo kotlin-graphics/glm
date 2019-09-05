@@ -1,6 +1,8 @@
 package glm_.vec2
 
 import glm_.*
+import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1t
 import glm_.vec2.operators.opVec2b
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
@@ -20,8 +22,6 @@ import kotlin.math.abs
 
 class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
 
-    constructor(x: Byte, y: Byte) : this(0, byteArrayOf(x, y))
-
     override var x: Byte
         get() = array[ofs]
         set(value) = array.set(ofs, value)
@@ -29,13 +29,34 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0)
+    constructor(v: Vec2b) : this(v.x, v.y)
+
+    // -- Explicit basic constructors --
+
+    constructor(x: Int, y: Int = x) : this(x.b, y.b)
+    constructor(x: Byte, y: Byte = x) : this(0, byteArrayOf(x, y))
+
+    // -- Conversion constructors --
+
+    constructor(x: Number, y: Number = x) : this(x.b, y.b)
+
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+    constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y)
     constructor(v: Vec3t<out Number>) : this(v.x, v.y)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y)
+
+    constructor(x: Boolean, y: Boolean = x) : this(x.b, y.b)
+    constructor(x: Boolean, v: Vec1bool) : this(x.b, v.x.b)
+    constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.b, y.b)
+    constructor(x: Vec1bool, y: Vec1bool) : this(x.x.b, y.x.b)
 
     constructor(v: Vec2bool) : this(v.x.b, v.y.b)
     constructor(v: Vec3bool) : this(v.x.b, v.y.b)
@@ -65,9 +86,6 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Byte) : this(block(0), block(1))
-
-    constructor(s: Number) : this(s, s)
-    constructor(x: Number, y: Number) : this(x.b, y.b)
 
 
     fun put(x: Byte, y: Byte) {

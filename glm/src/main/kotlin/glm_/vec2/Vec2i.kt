@@ -1,6 +1,8 @@
 package glm_.vec2
 
 import glm_.*
+import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1t
 import glm_.vec2.operators.opVec2i
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
@@ -23,8 +25,6 @@ import kotlin.math.abs
 
 class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
 
-    constructor(x: Int, y: Int) : this(0, intArrayOf(x, y))
-
     override var x: Int
         get() = array[ofs]
         set(value) = array.set(ofs, value)
@@ -32,13 +32,33 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0)
+    constructor(v: Vec2i) : this(v.x, v.y)
+
+    // -- Explicit basic constructors --
+
+    constructor(x: Int, y: Int = x) : this(0, intArrayOf(x, y))
+
+    // -- Conversion constructors --
+
+    constructor(x: Number, y: Number = x) : this(x.i, y.i)
+
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+    constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y)
     constructor(v: Vec3t<out Number>) : this(v.x, v.y)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y)
+
+    constructor(x: Boolean, y: Boolean = x) : this(x.i, y.i)
+    constructor(x: Boolean, v: Vec1bool) : this(x.i, v.x.i)
+    constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.i, y.i)
+    constructor(x: Vec1bool, y: Vec1bool) : this(x.x.i, y.x.i)
 
     constructor(v: Vec2bool) : this(v.x.i, v.y.i)
     constructor(v: Vec3bool) : this(v.x.i, v.y.i)
@@ -75,9 +95,8 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
 
     constructor(block: (Int) -> Int) : this(block(0), block(1))
 
-    constructor(s: Number) : this(s, s)
-    constructor(x: Number, y: Number) : this(x.i, y.i)
-    constructor(x: IntBuffer, y: IntBuffer) : this(x[0], y[0]) // TODO others
+    // for opengl
+    constructor(x: IntBuffer, y: IntBuffer) : this(x[0], y[0]) // TODO others?
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = false, bigEndian: Boolean = true) {

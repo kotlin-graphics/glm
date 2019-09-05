@@ -1,6 +1,8 @@
 package glm_.vec2
 
 import glm_.*
+import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1t
 import glm_.vec2.operators.opVec2
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
@@ -23,8 +25,6 @@ import kotlin.math.abs
 
 class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer {
 
-    constructor(x: Float, y: Float) : this(0, floatArrayOf(x, y))
-
     override var x: Float
         get() = array[ofs]
         set(value) = array.set(ofs, value)
@@ -32,12 +32,33 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
-    constructor() : this(0)
+    // -- Implicit basic constructors --
+
+    constructor() : this(0, 0)
+    constructor(v: Vec2) : this(v.x, v.y)
+
+    // -- Explicit basic constructors --
+
+    constructor(x: Float, y: Float = x) : this(0, floatArrayOf(x, y))
+
+    // -- Conversion constructors --
+
+    constructor(x: Number, y: Number = x) : this(x.f, y.f)
+
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+    constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y)
     constructor(v: Vec3t<out Number>) : this(v.x, v.y)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y)
+
+    constructor(x: Boolean, y: Boolean = x) : this(x.f, y.f)
+    constructor(x: Boolean, v: Vec1bool) : this(x.f, v.x.f)
+    constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.f, y.f)
+    constructor(x: Vec1bool, y: Vec1bool) : this(x.x.f, y.x.f)
 
     constructor(v: Vec2bool) : this(v.x.f, v.y.f)
     constructor(v: Vec3bool) : this(v.x.f, v.y.f)
@@ -73,9 +94,6 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Float) : this(block(0), block(1))
-
-    constructor(s: Number) : this(s, s)
-    constructor(x: Number, y: Number) : this(x.f, y.f)
 
     constructor(inputStream: InputStream, bigEndian: Boolean = true) : this(inputStream.float(bigEndian), inputStream.float(bigEndian))
 

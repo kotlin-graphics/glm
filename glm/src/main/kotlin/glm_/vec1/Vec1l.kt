@@ -20,9 +20,13 @@ import kotlin.math.abs
 
 class Vec1l(x: Long) : Vec1t<Long>(x) {
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0)
+    constructor(s: Number) : this(s.L)
+
+    // -- Explicit basic constructors --
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     constructor(v: Vec1t<out Number>) : this(v.x)
     constructor(v: Vec2t<out Number>) : this(v.x)
@@ -64,8 +68,6 @@ class Vec1l(x: Long) : Vec1t<Long>(x) {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index])
 
     constructor(block: (Int) -> Int) : this(block(0))
-
-    constructor(s: Number) : this(s.L)
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneLong: Boolean = false, bigEndian: Boolean = true) {

@@ -1,6 +1,8 @@
 package glm_.vec2
 
 import glm_.*
+import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1t
 import glm_.vec2.operators.opVec2ul
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
@@ -24,9 +26,6 @@ import kotlin.math.abs
 
 class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
 
-    constructor(x: Ulong, y: Ulong) : this(0, longArrayOf(x.v, y.v))
-    constructor(x: Long, y: Long) : this(0, longArrayOf(x, y))
-
     override var x: Ulong
         get() = Ulong(array[ofs])
         set(value) = array.set(ofs, value.v)
@@ -41,13 +40,34 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0)
+    constructor(v: Vec2ul) : this(v.x, v.y)
+
+    // -- Explicit basic constructors --
+
+    constructor(x: Long, y: Long = x) : this(x.ul, y.ul)
+    constructor(x: Ulong, y: Ulong = x) : this(0, longArrayOf(x.v, y.v))
+
+    // -- Conversion constructors --
+
+    constructor(x: Number, y: Number = x) : this(x.ul, y.ul)
+
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+    constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y)
     constructor(v: Vec3t<out Number>) : this(v.x, v.y)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y)
+
+    constructor(x: Boolean, y: Boolean = x) : this(x.ul, y.ul)
+    constructor(x: Boolean, v: Vec1bool) : this(x.ul, v.x.ul)
+    constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.ul, y.ul)
+    constructor(x: Vec1bool, y: Vec1bool) : this(x.x.ul, y.x.ul)
 
     constructor(v: Vec2bool) : this(v.x.ul, v.y.ul)
     constructor(v: Vec3bool) : this(v.x.ul, v.y.ul)
@@ -83,9 +103,6 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Ulong) : this(block(0), block(1))
-
-    constructor(s: Number) : this(s, s)
-    constructor(x: Number, y: Number) : this(x.ul, y.ul)
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneUlong: Boolean = false, bigEndian: Boolean = true) {

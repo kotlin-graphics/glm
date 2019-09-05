@@ -1,6 +1,8 @@
 package glm_.vec2
 
 import glm_.*
+import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1t
 import glm_.vec2.operators.opVec2d
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
@@ -24,8 +26,6 @@ import kotlin.math.abs
 
 class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuffer {
 
-    constructor(x: Double, y: Double) : this(0, doubleArrayOf(x, y))
-
     override var x: Double
         get() = array[ofs]
         set(value) = array.set(ofs, value)
@@ -33,13 +33,33 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0)
+    constructor(v: Vec2d) : this(v.x, v.y)
+
+    // -- Explicit basic constructors --
+
+    constructor(x: Double, y: Double = x) : this(0, doubleArrayOf(x, y))
+
+    // -- Conversion constructors --
+
+    constructor(x: Number, y: Number = x) : this(x.d, y.d)
+
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+    constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y)
     constructor(v: Vec3t<out Number>) : this(v.x, v.y)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y)
+
+    constructor(x: Boolean, y: Boolean = x) : this(x.d, y.d)
+    constructor(x: Boolean, v: Vec1bool) : this(x.d, v.x.d)
+    constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.d, y.d)
+    constructor(x: Vec1bool, y: Vec1bool) : this(x.x.d, y.x.d)
 
     constructor(v: Vec2bool) : this(v.x.d, v.y.d)
     constructor(v: Vec3bool) : this(v.x.d, v.y.d)
@@ -75,9 +95,6 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Double) : this(block(0), block(1))
-
-    constructor(s: Number) : this(s, s)
-    constructor(x: Number, y: Number) : this(x.d, y.d)
 
     constructor(inputStream: InputStream, bigEndian: Boolean = true) : this(inputStream.double(bigEndian), inputStream.double(bigEndian))
 

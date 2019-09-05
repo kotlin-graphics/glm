@@ -1,6 +1,8 @@
 package glm_.vec2
 
 import glm_.*
+import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1t
 import glm_.vec2.operators.opVec2l
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
@@ -23,8 +25,6 @@ import kotlin.math.abs
 
 class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
 
-    constructor(x: Long, y: Long) : this(0, longArrayOf(x, y))
-
     override var x: Long
         get() = array[ofs]
         set(value) = array.set(ofs, value)
@@ -32,13 +32,31 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0)
+    constructor(v: Vec2l) : this(v.x, v.y)
+
+    // -- Explicit basic constructors --
+
+    constructor(x: Long, y: Long = x) : this(0, longArrayOf(x, y))
+
+    // -- Conversion constructors --
+
+    constructor(x: Number, y: Number = x) : this(x.L, y.L)
+
+    constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+    constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y)
     constructor(v: Vec3t<out Number>) : this(v.x, v.y)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y)
+
+    constructor(x: Boolean, y: Boolean = x) : this(x.L, y.L)
+    constructor(x: Boolean, v: Vec1bool) : this(x.L, v.x.L)
+    constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.L, y.L)
+    constructor(x: Vec1bool, y: Vec1bool) : this(x.x.L, y.x.L)
 
     constructor(v: Vec2bool) : this(v.x.L, v.y.L)
     constructor(v: Vec3bool) : this(v.x.L, v.y.L)
@@ -75,8 +93,7 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
 
     constructor(block: (Int) -> Long) : this(block(0), block(1))
 
-    constructor(s: Number) : this(s, s)
-    constructor(x: Number, y: Number) : this(x.L, y.L)
+
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneLong: Boolean = false, bigEndian: Boolean = true) {
         x = if (oneByteOneLong) bytes[index].L else bytes.getLong(index, bigEndian)

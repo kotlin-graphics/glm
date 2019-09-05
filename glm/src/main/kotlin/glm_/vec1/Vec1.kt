@@ -19,9 +19,13 @@ import kotlin.math.abs
 
 class Vec1(x: Float) : Vec1t<Float>(x), ToFloatBuffer {
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0f)
+    constructor(v: Vec1) : this(v.x)
+
+    // -- Explicit basic constructors --
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     constructor(v: Vec1t<out Number>) : this(v.x)
     constructor(v: Vec2t<out Number>) : this(v.x)
