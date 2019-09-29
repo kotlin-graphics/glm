@@ -24,8 +24,8 @@ group = 'com.github.kotlin_graphics'
 
 ext {
     moduleName = "${group}.glm"
-    unsigned_version = 'ce9ebcbdde1d018fd3bf78c4b13b4a234249ed89'
-    kool_version = '617c3ae6a2010dd50d18ad5a391407500b21804a'
+    unsigned_version = 'jdk8-SNAPSHOT'
+    kool_version = 'jdk8-SNAPSHOT'
     lwjgl_version = "3.2.3"
     lwjgl_natives = current() == WINDOWS ? "windows" : current() == LINUX ? "linux" : "macos"
 }
@@ -92,10 +92,6 @@ subprojects {
 
     compileJava {
 //        dependsOn(':compileKotlin')
-        doFirst {
-            options.compilerArgs = ['--module-path', classpath.asPath,]
-            classpath = files()
-        }
     }
 }
 
