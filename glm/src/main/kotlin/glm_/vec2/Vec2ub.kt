@@ -44,14 +44,18 @@ class Vec2ub(var ofs: Int, var array: ByteArray) : Vec2t<Ubyte>(), ToBuffer {
 
     // -- Explicit basic constructors --
 
+    @JvmOverloads
     constructor(x: Byte, y: Byte = x) : this(x.ub, y.ub)
+    @JvmOverloads
     constructor(x: Ubyte, y: Ubyte = x) : this(0, byteArrayOf(x.v, y.v))
 
     // -- Conversion constructors --
 
+    @JvmOverloads
     constructor(x: Number, y: Number = x) : this(x.ub, y.ub)
 
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+    @JvmOverloads
     constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
     constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
@@ -59,8 +63,10 @@ class Vec2ub(var ofs: Int, var array: ByteArray) : Vec2t<Ubyte>(), ToBuffer {
     constructor(v: Vec3t<out Number>) : this(v.x, v.y)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y)
 
+    @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.ub, y.ub)
     constructor(x: Boolean, v: Vec1bool) : this(x.ub, v.x.ub)
+    @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.ub, y.ub)
     constructor(x: Vec1bool, y: Vec1bool) : this(x.x.ub, y.x.ub)
 

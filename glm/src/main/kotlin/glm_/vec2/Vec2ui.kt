@@ -47,15 +47,19 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>(), ToBuffer {
 
     // -- Explicit basic constructors --
 
+    @JvmOverloads
     constructor(x: Int, y: Int = x) : this(x.ui, y.ui)
+    @JvmOverloads
     constructor(x: Uint, y: Uint = x) : this(0, intArrayOf(x.v, y.v))
 
     // -- Conversion constructors --
 
+    @JvmOverloads
     constructor(x: Number, y: Number = x) : this(x.ui, y.ui)
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
+    @JvmOverloads
     constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
     constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
@@ -64,8 +68,10 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>(), ToBuffer {
     constructor(v: Vec3t<out Number>) : this(v.x, v.y)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y)
 
+    @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.ui, y.ui)
     constructor(x: Boolean, v: Vec1bool) : this(x.ui, v.x.ui)
+    @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.ui, y.ui)
     constructor(v: Vec1bool, y: Vec1bool) : this(v.x.ui, y.x.ui)
 

@@ -35,7 +35,7 @@ public class Test {
 
         Vec1 d = new Vec1();
         Vec1 e = new Vec1(d);
-        Vec2us f = new Vec2us((Short)3);
+//        Vec2us f = new Vec2us((Short)3);
     }
 
 

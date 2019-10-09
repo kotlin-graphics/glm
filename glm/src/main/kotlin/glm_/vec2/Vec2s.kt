@@ -39,13 +39,16 @@ class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>(), ToBuffer {
 
     // -- Explicit basic constructors --
 
+    @JvmOverloads
     constructor(x: Short, y: Short = x) : this(0, shortArrayOf(x, y))
 
     // -- Conversion constructors --
 
+    @JvmOverloads
     constructor(x: Number, y: Number = x) : this(x.s, y.s)
 
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+    @JvmOverloads
     constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
     constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
@@ -53,8 +56,10 @@ class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>(), ToBuffer {
     constructor(v: Vec3t<out Number>) : this(v.x, v.y)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y)
 
+    @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.s, y.s)
     constructor(x: Boolean, v: Vec1bool) : this(x.s, v.x.s)
+    @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.s, y.s)
     constructor(x: Vec1bool, y: Vec1bool) : this(x.x.s, y.x.s)
 

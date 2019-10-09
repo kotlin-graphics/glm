@@ -12,7 +12,7 @@ import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
 
-class testCoreVec2 : StringSpec() {
+class coreTypeVec2 : StringSpec() {
 
     init {
 
@@ -219,7 +219,7 @@ class testCoreVec2 : StringSpec() {
             }
         }
 
-        "operatorsGeneric" {
+        "operators generic" {
 
             run {
                 val a = Vec2(1f)
@@ -406,10 +406,21 @@ class testCoreVec2 : StringSpec() {
 
         "ctor" {
 
-            val a = Vec2(1)
-            val b = Vec2(a)
+            run {
+                val a = Vec2(1)
+                val b = Vec2(a)
 
-            a shouldBe b
+                a shouldBe b
+            }
+            run {
+                val A = Vec2(1f, 2f)
+                val B = A.xy as Vec2
+                val C = Vec2(A.xy as Vec2)
+                val D = Vec2(A.xy as Vec2)
+                A shouldBe B
+                A shouldBe C
+                A shouldBe D
+            }
         }
 
         "size" {

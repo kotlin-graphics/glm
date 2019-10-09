@@ -47,16 +47,20 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
 
     // -- Explicit basic constructors --
 
+    @JvmOverloads
     constructor(x: Long, y: Long = x) : this(x.ul, y.ul)
+    @JvmOverloads
     constructor(x: Ulong, y: Ulong = x) : this(0, longArrayOf(x.v, y.v))
 
     // -- Conversion constructors --
 
+    @JvmOverloads
     constructor(x: Number, y: Number = x) : this(x.ul, y.ul)
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+    @JvmOverloads
     constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
     constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
@@ -64,8 +68,10 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
     constructor(v: Vec3t<out Number>) : this(v.x, v.y)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y)
 
+    @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.ul, y.ul)
     constructor(x: Boolean, v: Vec1bool) : this(x.ul, v.x.ul)
+    @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.ul, y.ul)
     constructor(x: Vec1bool, y: Vec1bool) : this(x.x.ul, y.x.ul)
 

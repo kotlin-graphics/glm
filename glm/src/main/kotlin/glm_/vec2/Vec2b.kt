@@ -36,16 +36,20 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
 
     // -- Explicit basic constructors --
 
+    @JvmOverloads
     constructor(x: Int, y: Int = x) : this(x.b, y.b)
+    @JvmOverloads
     constructor(x: Byte, y: Byte = x) : this(0, byteArrayOf(x, y))
 
     // -- Conversion constructors --
 
+    @JvmOverloads
     constructor(x: Number, y: Number = x) : this(x.b, y.b)
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+    @JvmOverloads
     constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
     constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
@@ -53,8 +57,10 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     constructor(v: Vec3t<out Number>) : this(v.x, v.y)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y)
 
+    @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.b, y.b)
     constructor(x: Boolean, v: Vec1bool) : this(x.b, v.x.b)
+    @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.b, y.b)
     constructor(x: Vec1bool, y: Vec1bool) : this(x.x.b, y.x.b)
 
