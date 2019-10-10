@@ -6,13 +6,14 @@ package glm_
 
 import glm_.vec1.Vec1
 import glm_.vec2.Vec2
+import glm_.vec2.Vec2d
 import glm_.vec2.Vec2i
 import glm_.vec2.operators.*
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
 
-class coreTypeVec2 : StringSpec() {
+class coreVec2 : StringSpec() {
 
     init {
 
@@ -420,6 +421,32 @@ class coreTypeVec2 : StringSpec() {
                 A shouldBe B
                 A shouldBe C
                 A shouldBe D
+            }
+            run {
+                val A = Vec2(2f)
+                val B = Vec2(2f, 3f)
+                val C = Vec2(2f, 3.0)
+                //glm::vec2 D = glm::dvec2(2.0); // Build error TODO: What does the specification says?
+                val E = Vec2(Vec2d(2.0))
+                val F = Vec2(Vec2i(2))
+            }
+            run {
+                val R = Vec1(1f)
+                val S = Vec1(2f)
+                val O = Vec2(1f, 2f)
+
+                val A = Vec2(R)
+                val B = Vec2(1f)
+                A shouldBe B
+
+                val C = Vec2(R, S)
+                C shouldBe O
+
+                val D = Vec2(R, 2f)
+                D shouldBe O
+
+                val E = Vec2(1f, S)
+                E shouldBe O
             }
         }
 

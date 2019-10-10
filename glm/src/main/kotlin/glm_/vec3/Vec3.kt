@@ -1,6 +1,8 @@
 package glm_.vec3
 
 import glm_.*
+import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1t
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
@@ -23,8 +25,6 @@ import java.nio.*
 
 class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer {
 
-    constructor(x: Float, y: Float, z: Float) : this(0, floatArrayOf(x, y, z))
-
     override var x: Float
         get() = array[ofs]
         set(value) = array.set(ofs, value)
@@ -35,16 +35,30 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
-    constructor() : this(0)
+    constructor() : this(0, 0, 0)
+    constructor(v: Vec3) : this(v.x, v.y, v.z)
 
-    constructor(v: Vec2t<out Number>) : this(v, 0)
-    constructor(v: Vec2t<out Number>, z: Number) : this(v.x, v.y, z)
-    constructor(x: Number, v: Vec2t<out Number>) : this(x, v.x, v.y)
+    // -- Explicit basic constructors --
+
+    @JvmOverloads
+    constructor(x: Float, y: Float = x, z: Float = x) : this(0, floatArrayOf(x, y, z))
+
+    // -- Conversion constructors --
+
+    @JvmOverloads
+    constructor(x: Number, y: Number = x, z: Number = x) : this(x.f, y.f, z.f)
+
+    @JvmOverloads
+    constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy.x, xy.y, z)
+    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy.x, xy.y, z.x)
+    constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz.x, yz.y)
+    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x.x, yz.x, yz.y)
     constructor(v: Vec3t<out Number>) : this(v.x, v.y, v.z)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z)
 
+    constructor(v: Vec1bool) : this(v.x.f, 0, 0)
     constructor(v: Vec2bool) : this(v.x.f, v.y.f, 0)
     constructor(v: Vec3bool) : this(v.x.f, v.y.f, v.z.f)
     constructor(v: Vec4bool) : this(v.x.f, v.y.f, v.z.f)
@@ -82,9 +96,6 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
     constructor(block: (Int) -> Float) : this(block(0), block(1), block(2))
-
-    constructor(s: Number) : this(s, s, s)
-    constructor(x: Number, y: Number, z: Number) : this(x.f, y.f, z.f)
 
 
     constructor(inputStream: InputStream, bigEndian: Boolean = true) :

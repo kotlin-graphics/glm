@@ -1,6 +1,8 @@
 package glm_.vec3
 
 import glm_.*
+import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1t
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
@@ -23,8 +25,6 @@ import java.nio.*
 
 class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuffer {
 
-    constructor(x: Double, y: Double, z: Double) : this(0, doubleArrayOf(x, y, z))
-
     override var x: Double
         get() = array[ofs]
         set(value) = array.set(ofs, value)
@@ -35,16 +35,30 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuf
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
-    constructor() : this(0)
+    constructor() : this(0, 0, 0)
+    constructor(v: Vec3d) : this(v.x, v.y, v.z)
 
-    constructor(v: Vec2t<out Number>) : this(v.x, v.y, 0)
-    constructor(v: Vec2t<out Number>, z: Number) : this(v.x, v.y, z)
-    constructor(x: Number, v: Vec2t<out Number>) : this(x, v.x, v.y)
+    // -- Explicit basic constructors --
+
+    @JvmOverloads
+    constructor(x: Double, y: Double = x, z: Double = x) : this(0, doubleArrayOf(x, y, z))
+
+    // -- Conversion constructors --
+
+    @JvmOverloads
+    constructor(x: Number, y: Number = x, z: Number = x) : this(x.d, y.d, z.d)
+
+    @JvmOverloads
+    constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy.x, xy.y, z)
+    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy.x, xy.y, z.x)
+    constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz.x, yz.y)
+    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x.x, yz.x, yz.y)
     constructor(v: Vec3t<out Number>) : this(v.x, v.y, v.z)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z)
 
+    constructor(v: Vec1bool) : this(v.x.d, 0, 0)
     constructor(v: Vec2bool) : this(v.x.d, v.y.d, 0)
     constructor(v: Vec3bool) : this(v.x.d, v.y.d, v.z.d)
     constructor(v: Vec4bool) : this(v.x.d, v.y.d, v.z.d)
@@ -83,9 +97,7 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuf
 
     constructor(block: (Int) -> Double) : this(block(0), block(1), block(2))
 
-    constructor(s: Number) : this(s, s, s)
-    constructor(x: Number, y: Number, z: Number) : this(x.d, y.d, z.d)
-
+    // TODO others
     constructor(inputStream: InputStream, bigEndian: Boolean = true) :
             this(inputStream.double(bigEndian), inputStream.double(bigEndian), inputStream.double(bigEndian))
 

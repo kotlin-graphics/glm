@@ -1,6 +1,8 @@
 package glm_.vec3
 
 import glm_.*
+import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1t
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2s
 import glm_.vec2.Vec2t
@@ -23,8 +25,6 @@ import java.nio.*
 
 class Vec3s(var ofs: Int, var array: ShortArray) : Vec3t<Short>(), ToBuffer {
 
-    constructor(x: Short, y: Short, z: Short) : this(0, shortArrayOf(x, y, z))
-
     override var x: Short
         get() = array[ofs]
         set(value) = array.set(ofs, value)
@@ -35,16 +35,32 @@ class Vec3s(var ofs: Int, var array: ShortArray) : Vec3t<Short>(), ToBuffer {
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
-    constructor() : this(0)
+    constructor() : this(0, 0, 0)
+    constructor(v: Vec3s) : this(v.x, v.y, v.z)
 
-    constructor(v: Vec2t<out Number>) : this(v.x, v.y, 0)
-    constructor(v: Vec2t<out Number>, z: Number) : this(v.x, v.y, z)
-    constructor(x: Number, v: Vec2t<out Number>) : this(x, v.x, v.y)
+    // -- Explicit basic constructors --
+
+    @JvmOverloads
+    constructor(x: Short, y: Short = x, z: Short = x) : this(0, shortArrayOf(x, y, z))
+    @JvmOverloads
+    constructor(x: Int, y: Int = x, z: Int = x) : this(0, shortArrayOf(x.s, y.s, z.s))
+
+    // -- Conversion constructors --
+
+    @JvmOverloads
+    constructor(x: Number, y: Number = x, z: Number = x) : this(x.s, y.s, z.s)
+
+    @JvmOverloads
+    constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy.x, xy.y, z)
+    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy.x, xy.y, z.x)
+    constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz.x, yz.y)
+    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x.x, yz.x, yz.y)
     constructor(v: Vec3t<out Number>) : this(v.x, v.y, v.z)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z)
 
+    constructor(v: Vec1bool) : this(v.x.s, 0, 0)
     constructor(v: Vec2bool) : this(v.x.s, v.y.s, 0)
     constructor(v: Vec3bool) : this(v.x.s, v.y.s, v.z.s)
     constructor(v: Vec4bool) : this(v.x.s, v.y.s, v.z.s)
@@ -82,9 +98,6 @@ class Vec3s(var ofs: Int, var array: ShortArray) : Vec3t<Short>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
     constructor(block: (Int) -> Short) : this(block(0), block(1), block(2))
-
-    constructor(s: Number) : this(s, s, s)
-    constructor(x: Number, y: Number, z: Number) : this(x.s, y.s, z.s)
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = false, bigEndian: Boolean = true) {
