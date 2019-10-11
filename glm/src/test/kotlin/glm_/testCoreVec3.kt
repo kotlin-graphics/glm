@@ -1,5 +1,7 @@
 package glm_
 
+import glm_.vec1.Vec1
+import glm_.vec1.Vec1d
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2t
 import glm_.vec3.*
@@ -52,6 +54,64 @@ class testCoreVec3 : StringSpec() {
 
                     it shouldBe Vec3(1, 2, 3)
                 }
+            }
+
+            run {
+                val R = Vec1(1f)
+                val S = Vec1(2f)
+                val T = Vec1(3f)
+                val O = Vec3(1f, 2f, 3f)
+
+                val A = Vec3(R)
+                val B = Vec3(1.0f)
+                A shouldBe B
+
+                val C = Vec3(R, S, T)
+                C shouldBe O
+
+                val D = Vec3(R, 2.0f, 3.0f)
+                D shouldBe O
+
+                val E = Vec3(1f, S, 3f)
+                E shouldBe O
+
+                val F = Vec3(1f, S, T)
+                F shouldBe O
+
+                val G = Vec3(R, 2f, T)
+                G shouldBe O
+
+                val H = Vec3(R, S, 3f)
+                H shouldBe O
+            }
+
+            run {
+                val R = Vec1(1.0)
+                val S = Vec1d(2.0)
+                val T = Vec1(3.0)
+                val O = Vec3(1f, 2f, 3f)
+
+                val A = Vec3(R)
+                val B = Vec3(1.0)
+                A shouldBe B
+
+                val C = Vec3(R, S, T)
+                C shouldBe O
+
+                val D = Vec3(R, 2.0, 3.0)
+                D shouldBe O
+
+                val E = Vec3(1.0f, S, 3.0)
+                E shouldBe O
+
+                val F = Vec3(1.0, S, T)
+                F shouldBe O
+
+                val G = Vec3(R, 2.0, T)
+                G shouldBe O
+
+                val H = Vec3(R, S, 3.0)
+                H shouldBe O
             }
         }
 

@@ -5,6 +5,7 @@ package glm_
  */
 
 import glm_.vec1.Vec1
+import glm_.vec1.Vec1d
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2i
@@ -446,6 +447,25 @@ class coreVec2 : StringSpec() {
                 D shouldBe O
 
                 val E = Vec2(1f, S)
+                E shouldBe O
+            }
+
+            run {
+                val R = Vec1(1f)
+                val S = Vec1d(2.0)
+                val O = Vec2(1.0, 2.0)
+
+                val A = Vec2(R)
+                val B = Vec2(1.0)
+                A shouldBe B
+
+                val C = Vec2(R, S)
+                C shouldBe O
+
+                val D = Vec2(R, 2.0)
+                D shouldBe O
+
+                val E = Vec2(1.0, S)
                 E shouldBe O
             }
         }
