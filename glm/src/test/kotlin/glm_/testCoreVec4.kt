@@ -276,28 +276,26 @@ class testCoreVec4 : StringSpec() {
                 val v1_2 = Vec1(3f)
                 val v1_3 = Vec1(4f)
 
-                val v2_0 = Vec2(1f, 2f)
-                val v2_1 = Vec2(2f, 3f)
-                val v2_2 = Vec2(3f, 4f)
+                val v2 = Vec2(2f, 3f)
 
                 val v3_0 = Vec3(1f, 2f, 3f)
                 val v3_1 = Vec3(2f, 3f, 4f)
 
                 val O = Vec4(1f, 2.0, 3f, 4.0)
 
-                val A = Vec4(v1_0, v2_1, v1_3)
+                val A = Vec4(v1_0, v2, v1_3)
                 A shouldBe O
 
-                val B = Vec4(v1_0, v2_1, 4.0)
+                val B = Vec4(v1_0, v2, 4.0)
                 B shouldBe O
 
-                val C = Vec4(1.0, v2_1, v1_3)
+                val C = Vec4(1.0, v2, v1_3)
                 C shouldBe O
 
-                val D = Vec4(1f, v2_1, 4.0)
+                val D = Vec4(1f, v2, 4.0)
                 D shouldBe O
 
-                val E = Vec4(1.0, v2_1, 4f)
+                val E = Vec4(1.0, v2, 4f)
                 E shouldBe O
             }
         }
