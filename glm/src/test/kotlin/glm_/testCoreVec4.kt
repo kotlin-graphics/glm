@@ -229,6 +229,77 @@ class testCoreVec4 : StringSpec() {
                 val V = Vec4(R, S, T, U)
                 V shouldBe O
             }
+
+            run {
+                val v1_0 = Vec1(1f)
+                val v1_1 = Vec1(2f)
+                val v1_2 = Vec1(3f)
+                val v1_3 = Vec1(4f)
+
+                val v2_0 = Vec2(1f, 2f)
+                val v2_1 = Vec2(2f, 3f)
+                val v2_2 = Vec2(3f, 4f)
+
+                val v3_0 = Vec3(1f, 2f, 3f)
+                val v3_1 = Vec3(2f, 3f, 4f)
+
+                val O = Vec4(1f, 2.0, 3f, 4.0)
+
+                val A = Vec4(v1_0, v1_1, v2_2)
+                A shouldBe O
+
+                val B = Vec4(1f, 2f, v2_2)
+                B shouldBe O
+
+                val C = Vec4(v1_0, 2f, v2_2)
+                C shouldBe O
+
+                val D = Vec4(1f, v1_1, v2_2)
+                D shouldBe O
+
+                val E = Vec4(v2_0, v1_2, v1_3)
+                E shouldBe O
+
+                val F = Vec4(v2_0, 3.0, v1_3)
+                F shouldBe O
+
+                val G = Vec4(v2_0, v1_2, 4.0)
+                G shouldBe O
+
+                val H = Vec4(v2_0, 3f, 4.0)
+                H shouldBe O
+            }
+
+            run {
+                val v1_0 = Vec1(1f)
+                val v1_1 = Vec1(2f)
+                val v1_2 = Vec1(3f)
+                val v1_3 = Vec1(4f)
+
+                val v2_0 = Vec2(1f, 2f)
+                val v2_1 = Vec2(2f, 3f)
+                val v2_2 = Vec2(3f, 4f)
+
+                val v3_0 = Vec3(1f, 2f, 3f)
+                val v3_1 = Vec3(2f, 3f, 4f)
+
+                val O = Vec4(1f, 2.0, 3f, 4.0)
+
+                val A = Vec4(v1_0, v2_1, v1_3)
+                A shouldBe O
+
+                val B = Vec4(v1_0, v2_1, 4.0)
+                B shouldBe O
+
+                val C = Vec4(1.0, v2_1, v1_3)
+                C shouldBe O
+
+                val D = Vec4(1f, v2_1, 4.0)
+                D shouldBe O
+
+                val E = Vec4(1.0, v2_1, 4f)
+                E shouldBe O
+            }
         }
 
         "bvec4_ctor"        {
