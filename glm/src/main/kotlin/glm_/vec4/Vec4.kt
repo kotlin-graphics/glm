@@ -1,6 +1,8 @@
 package glm_.vec4
 
 import glm_.*
+import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1t
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
@@ -24,8 +26,6 @@ import java.nio.*
 
 class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer {
 
-    constructor(x: Float, y: Float, z: Float, w: Float) : this(0, floatArrayOf(x, y, z, w))
-
     override var x: Float
         get() = array[ofs]
         set(value) = array.set(ofs, value)
@@ -39,21 +39,55 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
         get() = array[ofs + 3]
         set(value) = array.set(ofs + 3, value)
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0)
+    constructor(v: Vec4) : this(v.x, v.y, v.z, v.w)
 
-    constructor(v: Vec2t<out Number>) : this(v.x, v.y, 0, 1)
-    constructor(a: Vec2t<out Number>, b: Vec2t<out Number>) : this(a.x, a.y, b.x, b.y)  // TODO others
-    constructor(v: Vec2t<out Number>, z: Number, w: Number) : this(v.x, v.y, z, w)
-    constructor(x: Number, v: Vec2t<out Number>, w: Number) : this(x, v.x, v.y, w)
-    constructor(x: Number, y: Number, v: Vec2t<out Number>) : this(x, y, v.x, v.y)
-    constructor(v: Vec3t<out Number>) : this(v, 1)
-    constructor(v: Vec3t<out Number>, w: Number) : this(v.x, v.y, v.z, w)
-    constructor(x: Number, v: Vec3t<out Number>) : this(x, v.x, v.y, v.z)
+    // -- Explicit basic constructors --
+
+    constructor(x: Float) : this(x, x, x, x)
+    constructor(x: Float, y: Float, z: Float, w: Float) : this(0, floatArrayOf(x, y, z, w))
+
+    // -- Conversion scalar constructors --
+
+    constructor(v: Vec1t<out Number>) : this(v.x, v.x, v.x, v.x)
+
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    constructor(x: Number) : this(x, x, x, x)
+    constructor(x: Number, y: Number, z: Number, w: Number) : this(x.f, y.f, z.f, w.f)
+
+    constructor(x: Vec1t<out Number>, y: Number, z: Number, w: Number) : this(x.x, y, z, w)
+    constructor(x: Number, y: Vec1t<out Number>, z: Number, w: Number) : this(x, y.x, z, w)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number, w: Number) : this(x.x, y.x, z, w)
+    constructor(x: Number, y: Number, z: Vec1t<out Number>, w: Number) : this(x, y, z.x, w)
+    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>, w: Number) : this(x.x, y, z.x, w)
+    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Number) : this(x, y.x, z.x, w)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Number) : this(x.x, y.x, z.x, w)
+    constructor(x: Vec1t<out Number>, y: Number, z: Number, w: Vec1t<out Number>) : this(x.x, y, z, w.x)
+    constructor(x: Number, y: Vec1t<out Number>, z: Number, w: Vec1t<out Number>) : this(x, y.x, z, w.x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number, w: Vec1t<out Number>) : this(x.x, y.x, z, w.x)
+    constructor(x: Number, y: Number, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x, y, z.x, w.x)
+    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x.x, y, z.x, w.x)
+    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x, y.x, z.x, w.x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x.x, y.x, z.x, w.x)
+
+    constructor(xy: Vec2t<out Number>, z: Number, w: Number) : this(xy.x, xy.y, z, w)
+    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(xy.x, xy.y, z.x, w.x)
+    constructor(x: Number, yz: Vec2t<out Number>, w: Number) : this(x, yz.x, yz.y, w)
+    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>, w: Vec1t<out Number>) : this(x.x, yz.x, yz.y, w.x)
+    constructor(x: Number, y: Number, zw: Vec2t<out Number>) : this(x, y, zw.x, zw.y)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, zw: Vec2t<out Number>) : this(x.x, y.x, zw.x, zw.y)
+    constructor(xyz: Vec3t<out Number>, w: Number) : this(xyz.x, xyz.y, xyz.z, w)
+    constructor(xyz: Vec3t<out Number>, w: Vec1t<out Number>) : this(xyz.x, xyz.y, xyz.z, w.x)
+    constructor(x: Number, yzw: Vec3t<out Number>) : this(x, yzw.x, yzw.y, yzw.z)
+    constructor(x: Vec1t<out Number>, yzw: Vec3t<out Number>) : this(x.x, yzw.x, yzw.y, yzw.z)
+    constructor(xy: Vec2t<out Number>, zw: Vec2t<out Number>) : this(xy.x, xy.y, zw.x, zw.y)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z, v.w)
 
-    constructor(v: Vec2bool) : this(v.x.f, v.y.f, 0, 1) // TODO scalar to main.getF
+    constructor(v: Vec1bool) : this(v.x.f, 0, 0, 1)
+    constructor(v: Vec2bool) : this(v.x.f, v.y.f, 0, 1)
     constructor(v: Vec3bool) : this(v.x.f, v.y.f, v.z.f, 1)
     constructor(v: Vec4bool) : this(v.x.f, v.y.f, v.z.f, v.w.f)
 
@@ -96,9 +130,6 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
 
     constructor(block: (Int) -> Float) : this(block(0), block(1), block(2), block(3))
 
-    constructor(s: Number) : this(s, s, s, s)
-    constructor(x: Number, y: Number, z: Number, w: Number) : this(x.f, y.f, z.f, w.f)
-
     constructor(inputStream: InputStream, bigEndian: Boolean = true) :
             this(inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian))
 
@@ -128,7 +159,7 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
         this.w = w
     }
 
-    operator  fun invoke(x: Float, y: Float, z: Float, w: Float): Vec4 {
+    operator fun invoke(x: Float, y: Float, z: Float, w: Float): Vec4 {
         this.x = x
         this.y = y
         this.z = z

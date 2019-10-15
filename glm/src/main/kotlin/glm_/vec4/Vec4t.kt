@@ -10,7 +10,7 @@ import glm_.vec3.Vec3t
 import java.nio.*
 
 // TODO other
-abstract class Vec4t<T : Number>: ToBuffer {
+abstract class Vec4t<T : Number> : ToBuffer {
 
     abstract var x: T
     abstract var y: T
@@ -290,6 +290,7 @@ abstract class Vec4t<T : Number>: ToBuffer {
 
     // swizzling
     protected abstract fun createInstance(x: T, y: T): Vec2t<out Number>
+
     protected abstract fun createInstance(x: T, y: T, z: T): Vec3t<out Number>
     protected abstract fun createInstance(x: T, y: T, z: T, w: T): Vec4t<out Number>
 
@@ -300,6 +301,18 @@ abstract class Vec4t<T : Number>: ToBuffer {
             x = value.x as T
             y = value.y as T
         }
+    var xz
+        @JvmName("xz") get() = createInstance(x, z)
+        @JvmName("xz") set(value) {
+            x = value.x as T
+            z = value.y as T
+        }
+    var xw
+        @JvmName("xw") get() = createInstance(x, w)
+        @JvmName("xw") set(value) {
+            x = value.x as T
+            w = value.y as T
+        }
     var yx
         @JvmName("yx") get() = createInstance(y, x)
         @JvmName("yx") set(value) {
@@ -307,11 +320,62 @@ abstract class Vec4t<T : Number>: ToBuffer {
             x = value.y as T
         }
     val yy @JvmName("yy") get() = createInstance(y, y)
+    var yz
+        @JvmName("yz") get() = createInstance(y, z)
+        @JvmName("yz") set(value) {
+            y = value.x as T
+            z = value.y as T
+        }
+    var yw
+        @JvmName("yw") get() = createInstance(y, w)
+        @JvmName("yw") set(value) {
+            y = value.x as T
+            w = value.y as T
+        }
+    var zx
+        @JvmName("zx") get() = createInstance(z, x)
+        @JvmName("zx") set(value) {
+            z = value.x as T
+            x = value.y as T
+        }
+    var zy
+        @JvmName("zy") get() = createInstance(z, y)
+        @JvmName("zy") set(value) {
+            z = value.x as T
+            y = value.y as T
+        }
+    val zz @JvmName("zz") get() = createInstance(z, z)
+    var zw
+        @JvmName("zw") get() = createInstance(z, w)
+        @JvmName("zw") set(value) {
+            z = value.x as T
+            w = value.y as T
+        }
+    var wx
+        @JvmName("wx") get() = createInstance(w, x)
+        @JvmName("wx") set(value) {
+            w = value.x as T
+            x = value.y as T
+        }
+    var wy
+        @JvmName("wy") get() = createInstance(w, y)
+        @JvmName("wy") set(value) {
+            w = value.x as T
+            y = value.y as T
+        }
+    var wz
+        @JvmName("wz") get() = createInstance(w, z)
+        @JvmName("wz") set(value) {
+            w = value.x as T
+            z = value.y as T
+        }
+    val ww @JvmName("ww") get() = createInstance(w, w)
 
 
     val xxx @JvmName("xxx") get() = createInstance(x, x, x)
     val xxy @JvmName("xxy") get() = createInstance(x, x, y)
     val xxz @JvmName("xxz") get() = createInstance(x, x, z)
+    val xxw @JvmName("xxw") get() = createInstance(x, x, w)
     val xyx @JvmName("xyx") get() = createInstance(x, y, x)
     val xyy @JvmName("xyy") get() = createInstance(x, y, y)
     var xyz
@@ -320,6 +384,13 @@ abstract class Vec4t<T : Number>: ToBuffer {
             x = value.x as T
             y = value.y as T
             z = value.z as T
+        }
+    var xyw
+        @JvmName("xyw") get() = createInstance(x, y, w)
+        @JvmName("xyw") set(value) {
+            x = value.x as T
+            y = value.y as T
+            w = value.z as T
         }
     val xzx @JvmName("xzx") get() = createInstance(x, z, x)
     var xzy
@@ -330,6 +401,29 @@ abstract class Vec4t<T : Number>: ToBuffer {
             y = value.z as T
         }
     val xzz @JvmName("xzz") get() = createInstance(x, z, z)
+    var xzw
+        @JvmName("xzw") get() = createInstance(x, z, w)
+        @JvmName("xzw") set(value) {
+            x = value.x as T
+            z = value.y as T
+            w = value.z as T
+        }
+    val xwx @JvmName("xwx") get() = createInstance(x, w, x)
+    var xwy
+        @JvmName("xwy") get() = createInstance(x, w, y)
+        @JvmName("xwy") set(value) {
+            x = value.x as T
+            w = value.y as T
+            y = value.z as T
+        }
+    var xwz
+        @JvmName("xwz") get() = createInstance(x, w, z)
+        @JvmName("xwz") set(value) {
+            x = value.x as T
+            w = value.y as T
+            z = value.z as T
+        }
+    val xww @JvmName("xww") get() = createInstance(x, w, w)
     val yxx @JvmName("yxx") get() = createInstance(y, x, x)
     val yxy @JvmName("yxy") get() = createInstance(y, x, y)
     var yxz
@@ -339,18 +433,33 @@ abstract class Vec4t<T : Number>: ToBuffer {
             x = value.y as T
             z = value.z as T
         }
+    var yxw
+        @JvmName("yxw") get() = createInstance(y, x, w)
+        @JvmName("yxw") set(value) {
+            y = value.x as T
+            x = value.y as T
+            w = value.z as T
+        }
     val yyx @JvmName("yyx") get() = createInstance(y, y, x)
     val yyy @JvmName("yyy") get() = createInstance(y, y, y)
     val yyz @JvmName("yyz") get() = createInstance(y, y, z)
+    val yyw @JvmName("yyw") get() = createInstance(y, y, w)
     var yzx
         @JvmName("yzx") get() = createInstance(y, z, x)
-        @JvmName("xzx") set(value) {
+        @JvmName("yzx") set(value) {
             y = value.x as T
             z = value.y as T
             x = value.z as T
         }
     val yzy @JvmName("yzy") get() = createInstance(y, z, y)
     val yzz @JvmName("yzz") get() = createInstance(y, z, z)
+    var yzw
+        @JvmName("yzw") get() = createInstance(y, z, w)
+        @JvmName("yzw") set(value) {
+            y = value.x as T
+            z = value.y as T
+            w = value.z as T
+        }
     val zxx @JvmName("zxx") get() = createInstance(z, x, x)
     var zxy
         @JvmName("zxy") get() = createInstance(z, x, y)
@@ -360,6 +469,13 @@ abstract class Vec4t<T : Number>: ToBuffer {
             y = value.z as T
         }
     val zxz @JvmName("zxz") get() = createInstance(z, x, z)
+    var zxw
+        @JvmName("zxw") get() = createInstance(z, x, w)
+        @JvmName("zxw") set(value) {
+            z = value.x as T
+            x = value.y as T
+            w = value.z as T
+        }
     var zyx
         @JvmName("zyx") get() = createInstance(z, y, x)
         @JvmName("zyx") set(value) {
@@ -369,9 +485,68 @@ abstract class Vec4t<T : Number>: ToBuffer {
         }
     val zyy @JvmName("zyy") get() = createInstance(z, y, y)
     val zyz @JvmName("zyz") get() = createInstance(z, y, z)
+    var zyw
+        @JvmName("zyw") get() = createInstance(z, y, w)
+        @JvmName("zyw") set(value) {
+            z = value.x as T
+            y = value.y as T
+            w = value.z as T
+        }
     val zzx @JvmName("zzx") get() = createInstance(z, z, x)
     val zzy @JvmName("zzy") get() = createInstance(z, z, y)
     val zzz @JvmName("zzz") get() = createInstance(z, z, z)
+    val zzw @JvmName("zzw") get() = createInstance(z, z, w)
+    val wxx @JvmName("wxx") get() = createInstance(w, x, x)
+    var wxy
+        @JvmName("wxy") get() = createInstance(w, x, y)
+        @JvmName("wxy") set(value) {
+            w = value.x as T
+            x = value.y as T
+            y = value.z as T
+        }
+    var wxz
+        @JvmName("wxz") get() = createInstance(w, x, z)
+        @JvmName("wxz") set(value) {
+            w = value.x as T
+            x = value.y as T
+            z = value.z as T
+        }
+    val wxw @JvmName("wxw") get() = createInstance(w, x, w)
+    var wyx
+        @JvmName("wyx") get() = createInstance(w, y, x)
+        @JvmName("wyx") set(value) {
+            w = value.x as T
+            y = value.y as T
+            x = value.z as T
+        }
+    val wyy @JvmName("wyy") get() = createInstance(w, y, y)
+    var wyz
+        @JvmName("wyz") get() = createInstance(w, y, z)
+        @JvmName("wyz") set(value) {
+            w = value.x as T
+            y = value.y as T
+            z = value.z as T
+        }
+    val wyw @JvmName("wyw") get() = createInstance(w, y, w)
+    var wzx
+        @JvmName("wzx") get() = createInstance(w, z, x)
+        @JvmName("wzx") set(value) {
+            w = value.x as T
+            z = value.y as T
+            x = value.z as T
+        }
+    var wzy
+        @JvmName("wzy") get() = createInstance(w, z, y)
+        @JvmName("wzy") set(value) {
+            w = value.x as T
+            z = value.y as T
+            y = value.z as T
+        }
+    val wzw @JvmName("wzw") get() = createInstance(w, z, w)
+    val wwx @JvmName("wwx") get() = createInstance(w, w, x)
+    val wwy @JvmName("wwy") get() = createInstance(w, w, y)
+    val wwz @JvmName("wwz") get() = createInstance(w, w, z)
+    val www @JvmName("www") get() = createInstance(w, w, w)
 
     val xxxx @JvmName("xxxx") get() = createInstance(x, x, x, x)
     val xxxy @JvmName("xxxy") get() = createInstance(x, x, x, y)
@@ -682,5 +857,5 @@ abstract class Vec4t<T : Number>: ToBuffer {
         const val length = 4
     }
 
-    override fun toString() : String = "($x, $y, $z, $w)"
+    override fun toString(): String = "($x, $y, $z, $w)"
 }
