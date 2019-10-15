@@ -175,7 +175,7 @@ class testCoreVec4 : StringSpec() {
 
             run {
                 val R = Vec1(1f)
-                val S = Vec1d(2f)
+                val S = Vec1d(2.0)
                 val T = Vec1(3.0)
                 val U = Vec1d(4.0)
                 val O = Vec4(1f, 2.0, 3f, 4.0)
