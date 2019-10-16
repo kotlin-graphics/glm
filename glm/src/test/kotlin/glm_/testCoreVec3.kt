@@ -417,21 +417,22 @@ class testCoreVec3 : StringSpec() {
 
         "swizzle partial" {
 
-            val a = Vec3(1, 2, 3)
-
             run {
-                val b = Vec3(a.xy, 3f)
-                a shouldBe b
+                val A = Vec3(1, 2, 3)
+                val B = Vec3(A.xy, 3f)
+                A shouldBe B
             }
 
             run {
-                val b = Vec3(1f, a.yz)
-                a shouldBe b
+                val A = Vec3(1, 2, 3)
+                val B = Vec3(1f, A.yz)
+                A shouldBe B
             }
 
             run {
-                val b = Vec3(a.xyz)
-                a shouldBe b
+                val A = Vec3(1, 2, 3)
+                val B = Vec3(A.xyz)
+                A shouldBe B
             }
         }
 
