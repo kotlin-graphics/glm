@@ -198,6 +198,9 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
 
         @JvmStatic
         fun fromPointer(ptr: Ptr) = Quat(memGetDouble(ptr), memGetDouble(ptr + Double.BYTES), memGetDouble(ptr + Double.BYTES * 2), memGetDouble(ptr + Double.BYTES * 3))
+
+        val identity: QuatD
+            get() = QuatD(1.0, 0.0, 0.0, 0.0)
     }
 
     override fun equals(other: Any?) = other is QuatD && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
@@ -213,4 +216,10 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
 
     @JvmOverloads
     fun vectorize(res: Vec4d = Vec4d()) = res.put(x, y, z, w)
+
+    fun equals(q: QuatD, epsilon: Double): Boolean =
+            x - q.x < epsilon && y - q.y < epsilon && z - q.z < epsilon && w - q.w < epsilon
+
+    fun notEquals(q: QuatD, epsilon: Double): Boolean =
+            x - q.x >= epsilon && y - q.y >= epsilon && z - q.z >= epsilon && w - q.w >= epsilon
 }

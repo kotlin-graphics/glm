@@ -220,6 +220,9 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
         @JvmStatic
         fun fromPointer(ptr: Ptr) = Quat(memGetFloat(ptr), memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 3))
+
+        val identity: Quat
+            get() = Quat(1f, 0f, 0f, 0f)
     }
 
     override fun equals(other: Any?) = other is Quat && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
@@ -233,4 +236,10 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
     override fun toString(): String = "($w, {$x, $y, $z})"
+
+    fun equals(q: Quat, epsilon: Float): Boolean =
+            x - q.x < epsilon && y - q.y < epsilon && z - q.z < epsilon && w - q.w < epsilon
+
+    fun notEquals(q: Quat, epsilon: Float): Boolean =
+            x - q.x >= epsilon && y - q.y >= epsilon && z - q.z >= epsilon && w - q.w >= epsilon
 }

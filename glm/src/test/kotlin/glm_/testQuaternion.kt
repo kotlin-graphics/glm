@@ -290,5 +290,13 @@ class testQuaternion : StringSpec() {
                 (min(length(testQuatRH - testMatRH), length(testQuatRH + testMatRH)) > epsilonF) shouldBe false
             }
         }
+
+        "identity"        {
+
+            val Q = Quat.identity
+
+            Q.equals(Quat(1, 0, 0, 0), 0.0001f) shouldBe true
+            Q.notEquals(Quat(1, 0, 0, 0), 0.0001f) shouldBe false
+        }
     }
 }
