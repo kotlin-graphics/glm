@@ -273,6 +273,49 @@ class testCoreVec3 : StringSpec() {
             Vec3d.length shouldBe 3
         }
 
+        "swizzle"        {
+
+            //            #	if GLM_SWIZZLE == GLM_ENABLE && GLM_HAS_ANONYMOUS_STRUCT
+//            {
+//                glm::vec3 A = glm::vec3(1.0f, 2.0f, 3.0f);
+//                glm::vec3 B = A.xyz;
+//                glm::vec3 C(A.xyz);
+//                glm::vec3 D(A.xyz());
+//                glm::vec3 E(A.x, A.yz);
+//                glm::vec3 F(A.x, A.yz());
+//                glm::vec3 G(A.xy, A.z);
+//                glm::vec3 H(A.xy(), A.z);
+//
+//                Error += glm::all(glm::equal(A, B)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, C)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, D)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, E)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, F)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, G)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, H)) ? 0 : 1;
+//            }
+//            #	elif GLM_SWIZZLE == GLM_ENABLE
+//                {
+            val A = Vec3(1f, 2f, 3f)
+            val B = A.xyz
+            val C = Vec3(A.xyz)
+            val D = Vec3(A.xyz)
+            val E = Vec3(A.x, A.yz)
+            val F = Vec3(A.x, A.yz)
+            val G = Vec3(A.xy, A.z)
+            val H = Vec3(A.xy, A.z)
+
+            A shouldBe B
+            A shouldBe C
+            A shouldBe D
+            A shouldBe E
+            A shouldBe F
+            A shouldBe G
+            A shouldBe H
+//        }
+//            #	endif//GLM_SWIZZLE == GLM_ENABLE
+        }
+
         "swizzle3 2" {
 
             var v = Vec3(1, 2, 3)

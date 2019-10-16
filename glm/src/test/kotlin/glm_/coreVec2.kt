@@ -505,6 +505,31 @@ class coreVec2 : StringSpec() {
             }
         }
 
+        "swizzle"        {
+
+            //            #	if GLM_SWIZZLE == GLM_ENABLE && GLM_HAS_ANONYMOUS_STRUCT
+//            {
+//                glm::vec2 A = glm::vec2(1.0f, 2.0f);
+//                glm::vec2 B = A.xy;
+//                glm::vec2 C(A.xy);
+//                glm::vec2 D(A.xy());
+//
+//                Error += glm::all(glm::equal(A, B)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, C)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, D)) ? 0 : 1;
+//            }
+//            #	elif GLM_SWIZZLE == GLM_ENABLE
+//                {
+            val A = Vec2(1f, 2f)
+            val B = Vec2(A.xy)
+            val C = Vec2(A.xy)
+
+            A shouldBe B
+            A shouldBe C
+//                }
+//            #	endif//GLM_SWIZZLE == GLM_ENABLE
+        }
+
         "swizzling" {
 
             val a = Vec2(1, 2)

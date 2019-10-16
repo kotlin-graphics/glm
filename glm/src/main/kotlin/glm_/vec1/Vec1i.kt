@@ -121,6 +121,9 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
         return buf
     }
 
+    // TODO others Vec1*
+    operator fun inc() = Vec1i(x + 1)
+    operator fun dec() = Vec1i(x - 1)
 
     // -- Specific binary arithmetic operators --
 

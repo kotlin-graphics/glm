@@ -477,6 +477,69 @@ class testCoreVec4 : StringSpec() {
             Vec4d.length shouldBe 4
         }
 
+        "swizzle"        {
+
+            //            #    if GLM_SWIZZLE == GLM_ENABLE && GLM_HAS_ANONYMOUS_STRUCT
+//            {
+//                glm::vec4 A = glm ::vec4(1.0f, 2.0f, 3.0f, 4.0f);
+//                glm::vec4 B = A . xyzw;
+//                glm::vec4 C (A.xyzw);
+//                glm::vec4 D (A.xyzw());
+//                glm::vec4 E (A.x, A.yzw);
+//                glm::vec4 F (A.x, A.yzw());
+//                glm::vec4 G (A.xyz, A.w);
+//                glm::vec4 H (A.xyz(), A.w);
+//                glm::vec4 I (A.xy, A.zw);
+//                glm::vec4 J (A.xy(), A.zw());
+//                glm::vec4 K (A.x, A.y, A.zw);
+//                glm::vec4 L (A.x, A.yz, A.w);
+//                glm::vec4 M (A.xy, A.z, A.w);
+//
+//                Error += glm::all(glm::equal(A, B)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, C)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, D)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, E)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, F)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, G)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, H)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, I)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, J)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, K)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, L)) ? 0 : 1;
+//                Error += glm::all(glm::equal(A, M)) ? 0 : 1;
+//            }
+//            #    elif GLM_SWIZZLE == GLM_ENABLE
+//                {
+            val A = Vec4(1f, 2f, 3f, 4f)
+            val B = Vec4(A.xyzw)
+            val C = Vec4(A.xyzw)
+            val D = Vec4(A.xyzw)
+            val E = Vec4(A.x, A.yzw)
+            val F = Vec4(A.x, A.yzw)
+            val G = Vec4(A.xyz, A.w)
+            val H = Vec4(A.xyz, A.w)
+            val I = Vec4(A.xy, A.zw)
+            val J = Vec4(A.xy, A.zw)
+            val K = Vec4(A.x, A.y, A.zw)
+            val L = Vec4(A.x, A.yz, A.w)
+            val M = Vec4(A.xy, A.z, A.w)
+
+            A shouldBe B
+            A shouldBe C
+            A shouldBe D
+            A shouldBe E
+            A shouldBe F
+            A shouldBe G
+            A shouldBe H
+            A shouldBe I
+            A shouldBe J
+            A shouldBe K
+            A shouldBe L
+            A shouldBe M
+        }
+//            #    endif//GLM_SWIZZLE == GLM_ENABLE && GLM_HAS_ANONYMOUS_STRUCT
+//        }
+
         "vec4 swizzle partial"        {
 
             val A = Vec4(1, 2, 3, 4)
