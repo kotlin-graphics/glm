@@ -48,15 +48,15 @@ interface gtxIntersect {
         when {
             det > epsilonF -> {
                 // calculate distance from vert0 to ray origin
-                val tVec = orig - vert0
+                val dist = orig - vert0
 
                 // calculate U parameter and test bounds
-                baryPosition.x = tVec dot p
+                baryPosition.x = dist dot p
                 if (baryPosition.x < 0 || baryPosition.x > det)
                     return null
 
                 // prepare to test V parameter
-                qVec = tVec cross edge1
+                qVec = dist cross edge1
 
                 // calculate V parameter and test bounds
                 baryPosition.y = dir dot qVec
@@ -65,15 +65,15 @@ interface gtxIntersect {
             }
             det < -epsilonF -> {
                 // calculate distance from vert0 to ray origin
-                val tVec = orig - vert0
+                val dist = orig - vert0
 
                 // calculate U parameter and test bounds
-                baryPosition.x = tVec dot p
+                baryPosition.x = dist dot p
                 if (baryPosition.x > 0 || baryPosition.x < det)
                     return null
 
                 // prepare to test V parameter
-                qVec = tVec cross edge1
+                qVec = dist cross edge1
 
                 // calculate V parameter and test bounds
                 baryPosition.y = dir dot qVec
