@@ -556,6 +556,9 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
                         memGetDouble(ptr + Double.BYTES * 6), memGetDouble(ptr + Double.BYTES * 7), memGetDouble(ptr + Double.BYTES * 8))
             }
         }
+
+        val identity: Mat3d
+            get() = Mat3d(1.0)
     }
 
     override fun size() = size

@@ -7,6 +7,7 @@ import glm_.vec2.Vec2
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3_operators
+import glm_.vec4.Vec4
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.Ptr
@@ -442,11 +443,11 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
     infix fun allLessThanEqual(f: Float) = x <= f && y <= f && z <= f
     infix fun anyLessThanEqual(f: Float) = x <= f || y <= f || z <= f
 
-    infix fun allEqual(f: Float) = x == f && y == f && z == f
-    infix fun anyEqual(f: Float) = x == f || y == f || z == f
+    fun allEqual(f: Float, epsilon: Float = 0f) = x - f < epsilon && y - f < epsilon && z - f < epsilon
+    fun anyEqual(f: Float, epsilon: Float = 0f) = x - f < epsilon || y - f < epsilon || z - f < epsilon
 
-    infix fun allNotEqual(f: Float) = x != f && y != f && z != f
-    infix fun anyNotEqual(f: Float) = x != f || y != f || z != f
+    fun allNotEqual(f: Float, epsilon: Float = 0f) = x - f >= epsilon && y - f >= epsilon && z - f >= epsilon
+    fun anyNotEqual(f: Float, epsilon: Float = 0f) = x - f >= epsilon || y - f >= epsilon || z - f >= epsilon
 
     infix fun allGreaterThan(f: Float) = x > f && y > f && z > f
     infix fun anyGreaterThan(f: Float) = x > f || y > f || z > f
@@ -502,4 +503,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
     override fun toString(): String = "($x, $y, $z)"
+
+    fun equal(v: Vec3, epsilon: Float = 0f) = x - v.x < epsilon && y - v.y < epsilon && z - v.z < epsilon
+    fun notEqual(v: Vec3, epsilon: Float = 0f) = x - v.x >= epsilon && y - v.y >= epsilon && z - v.z >= epsilon
 }

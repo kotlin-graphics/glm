@@ -571,6 +571,9 @@ class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
                         memGetFloat(ptr + Float.BYTES * 6), memGetFloat(ptr + Float.BYTES * 7), memGetFloat(ptr + Float.BYTES * 8))
             }
         }
+
+        val identity: Mat3
+            get() = Mat3(1f)
     }
 
     override fun size() = size

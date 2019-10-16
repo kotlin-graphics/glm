@@ -374,6 +374,9 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
                         memGetDouble(ptr + Double.BYTES * 2), memGetDouble(ptr + Double.BYTES * 3))
             }
         }
+
+        val identity: Mat2d
+            get() = Mat2d(1.0)
     }
 
     override fun size() = size

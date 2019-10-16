@@ -463,17 +463,18 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
     fun negateAssign() = negate(this)
 
 
+    // TODO remove, use epsilon
     infix fun allLessThan(f: Float) = x < f && y < f && z < f && w < f
     infix fun anyLessThan(f: Float) = x < f || y < f || z < f || w < f
 
     infix fun allLessThanEqual(f: Float) = x <= f && y <= f && z <= f && w <= f
     infix fun anyLessThanEqual(f: Float) = x <= f || y <= f || z <= f || w <= f
 
-    infix fun allEqual(f: Float) = x == f && y == f && z == f && w == f
-    infix fun anyEqual(f: Float) = x == f || y == f || z == f || w == f
+    fun allEqual(f: Float, epsilon: Float = 0f) = x - f < epsilon && y - f < epsilon && z - f < epsilon && w - f < epsilon
+    fun anyEqual(f: Float, epsilon: Float = 0f) = x - f < epsilon || y - f < epsilon || z - f < epsilon || w - f < epsilon
 
-    infix fun allNotEqual(f: Float) = x != f && y != f && z != f && w != f
-    infix fun anyNotEqual(f: Float) = x != f || y != f || z != f || w != f
+    fun allNotEqual(f: Float, epsilon: Float = 0f) = x - f >= epsilon && y - f >= epsilon && z - f >= epsilon && w - f >= epsilon
+    fun anyNotEqual(f: Float, epsilon: Float = 0f) = x - f >= epsilon || y - f >= epsilon || z - f >= epsilon || w - f >= epsilon
 
     infix fun allGreaterThan(f: Float) = x > f && y > f && z > f && w > f
     infix fun anyGreaterThan(f: Float) = x > f || y > f || z > f || w > f
@@ -524,4 +525,7 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
     override fun toString(): String = "($x, $y, $z, $w)"
+
+    fun equal(v: Vec4, epsilon: Float = 0f) = x - v.x < epsilon && y - v.y < epsilon && z - v.z < epsilon && w - v.w < epsilon
+    fun notEqual(v: Vec4, epsilon: Float = 0f) = x - v.x >= epsilon && y - v.y >= epsilon && z - v.z >= epsilon && w - v.w >= epsilon
 }

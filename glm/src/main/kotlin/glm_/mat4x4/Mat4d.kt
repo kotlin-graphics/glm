@@ -731,6 +731,9 @@ class Mat4d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
                         memGetDouble(ptr + Double.BYTES * 12), memGetDouble(ptr + Double.BYTES * 13), memGetDouble(ptr + Double.BYTES * 14), memGetDouble(ptr + Double.BYTES * 15))
             }
         }
+
+        val identity: Mat4d
+            get() = Mat4d(1.0)
     }
 
     override fun size() = size

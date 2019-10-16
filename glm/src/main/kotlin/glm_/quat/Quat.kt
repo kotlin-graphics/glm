@@ -237,9 +237,9 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
     override fun toString(): String = "($w, {$x, $y, $z})"
 
-    fun equals(q: Quat, epsilon: Float): Boolean =
+    fun equal(q: Quat, epsilon: Float): Boolean =
             x - q.x < epsilon && y - q.y < epsilon && z - q.z < epsilon && w - q.w < epsilon
 
-    fun notEquals(q: Quat, epsilon: Float): Boolean =
+    fun notEqual(q: Quat, epsilon: Float): Boolean =
             x - q.x >= epsilon && y - q.y >= epsilon && z - q.z >= epsilon && w - q.w >= epsilon
 }

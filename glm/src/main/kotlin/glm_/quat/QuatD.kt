@@ -217,7 +217,7 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
     @JvmOverloads
     fun vectorize(res: Vec4d = Vec4d()) = res.put(x, y, z, w)
 
-    fun equals(q: QuatD, epsilon: Double): Boolean =
+    fun equal(q: QuatD, epsilon: Double): Boolean =
             x - q.x < epsilon && y - q.y < epsilon && z - q.z < epsilon && w - q.w < epsilon
 
     fun notEquals(q: QuatD, epsilon: Double): Boolean =

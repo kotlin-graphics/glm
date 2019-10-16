@@ -295,8 +295,14 @@ class testQuaternion : StringSpec() {
 
             val Q = Quat.identity
 
-            Q.equals(Quat(1, 0, 0, 0), 0.0001f) shouldBe true
-            Q.notEquals(Quat(1, 0, 0, 0), 0.0001f) shouldBe false
+            Q.equal(Quat(1, 0, 0, 0), 0.0001f) shouldBe true
+            Q.notEqual(Quat(1, 0, 0, 0), 0.0001f) shouldBe false
+
+            val M = Mat4.identity
+            val N = Mat4(1f)
+
+            for(i in 0..3)
+                M[i].equal(N[i], 0.001f) shouldBe true
         }
     }
 }

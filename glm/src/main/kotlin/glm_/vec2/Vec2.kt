@@ -4,6 +4,7 @@ import glm_.*
 import glm_.vec1.Vec1bool
 import glm_.vec1.Vec1t
 import glm_.vec2.operators.opVec2
+import glm_.vec3.Vec3
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
@@ -52,6 +53,7 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
     @JvmOverloads
     constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+
     constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y)
@@ -60,9 +62,11 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
 
     @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.f, y.f)
+
     constructor(x: Boolean, v: Vec1bool) : this(x.f, v.x.f)
     @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.f, y.f)
+
     constructor(x: Vec1bool, y: Vec1bool) : this(x.x.f, y.x.f)
 
     constructor(v: Vec2bool) : this(v.x.f, v.y.f)
@@ -489,11 +493,11 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
     infix fun allLessThanEqual(f: Float) = x <= f && y <= f
     infix fun anyLessThanEqual(f: Float) = x <= f || y <= f
 
-    infix fun allEqual(f: Float) = x == f && y == f
-    infix fun anyEqual(f: Float) = x == f || y == f
+    fun allEqual(f: Float, epsilon: Float = 0f) = x - f < epsilon && y - f < epsilon
+    fun anyEqual(f: Float, epsilon: Float = 0f) = x - f < epsilon || y - f < epsilon
 
-    infix fun allNotEqual(f: Float) = x != f && y != f
-    infix fun anyNotEqual(f: Float) = x != f || y != f
+    fun allNotEqual(f: Float, epsilon: Float = 0f) = x - f >= epsilon && y - f >= epsilon
+    fun anyNotEqual(f: Float, epsilon: Float = 0f) = x - f >= epsilon || y - f >= epsilon
 
     infix fun allGreaterThan(f: Float) = x > f && y > f
     infix fun anyGreaterThan(f: Float) = x > f || y > f
@@ -562,8 +566,6 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
     override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec2 && this[0] == other[0] && this[1] == other[1]
-    fun equal(b: Vec2, epsilon: Float = 0f): Boolean = abs(x - b.x) <= epsilon && abs(y - b.y) <= epsilon
-    fun notEqual(b: Vec2, epsilon: Float = 0f): Boolean = !equal(b, epsilon)
 
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
 
@@ -572,4 +574,7 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
+
+    fun equal(v: Vec2, epsilon: Float = 0f) = x - v.x < epsilon && y - v.y < epsilon
+    fun notEqual(v: Vec2, epsilon: Float = 0f) = x - v.x >= epsilon && y - v.y >= epsilon
 }

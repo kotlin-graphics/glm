@@ -391,6 +391,9 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
                         memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 3))
             }
         }
+
+        val identity: Mat2
+            get() = Mat2(1f)
     }
 
     override fun size() = size
