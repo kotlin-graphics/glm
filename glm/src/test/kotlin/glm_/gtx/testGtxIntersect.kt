@@ -40,6 +40,7 @@ class testGtxIntersect : StringSpec() {
             val result = glm.intersectLineTriangle(orig, dir, vert0, vert1, vert2, position)
 
             glm.all(glm.epsilonEqual(position, Vec3(2f, 0f,0f), Float.MIN_VALUE)) shouldBe true
+            result shouldBe true
         }
 
         "ray-plane intersection" {
