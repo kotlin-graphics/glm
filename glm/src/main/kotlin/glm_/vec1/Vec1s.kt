@@ -124,54 +124,7 @@ class Vec1s(x: Short) : Vec1t<Short>(x) {
 
     // -- Specific binary arithmetic operators --
 
-//    infix operator fun plus(b: Int) = plus(Vec1s(), this, b)
-//    infix operator fun plus(b: Vec1s) = plus(Vec1s(), this, b.x)
-//
-//    fun plus(b: Int, res: Vec1s) = plus(res, this, b)
-//    fun plus(b: Vec1s, res: Vec1s) = plus(res, this, b.x)
-//
-//    infix fun plusAssign(b: Short) = plus(this, this, b)
-//    infix fun plusAssign(b: Vec1s) = plus(this, this, b.x)
-//
-//
-//    infix operator fun minus(b: Short) = minus(Vec1s(), this, b)
-//    infix operator fun minus(b: Vec1s) = minus(Vec1s(), this, b.x)
-//
-//    fun minus(b: Int, res: Vec1s) = minus(res, this, b)
-//    fun minus(b: Vec1s, res: Vec1s) = minus(res, this, b.x)
-//
-//    infix fun minusAssign(b: Short) = minus(this, this, b)
-//    infix fun minusAssign(b: Vec1s) = minus(this, this, b.x)
-//
-//
-//    infix operator fun times(b: Short) = times(Vec1s(), this, b)
-//    infix operator fun times(b: Vec1s) = times(Vec1s(), this, b.x)
-//
-//    fun times(b: Int, res: Vec1s) = times(res, this, b)
-//    fun times(b: Vec1s, res: Vec1s) = times(res, this, b.x)
-//
-//    infix fun timesAssign(b: Int) = times(this, this, b)
-//    infix fun timesAssign(b: Vec1s) = times(this, this, b.x)
-//
-//
-//    infix operator fun div(b: Int) = div(Vec1i(), this, b)
-//    infix operator fun div(b: Vec1s) = div(Vec1i(), this, b.x)
-//
-//    fun div(b: Int, res: Vec1s) = div(res, this, b)
-//    fun div(b: Vec1s, res: Vec1s) = div(res, this, b.x)
-//
-//    infix fun divAssign(b: Int) = div(this, this, b)
-//    infix fun divAssign(b: Vec1s) = div(this, this, b.x)
-//
-//
-//    infix operator fun rem(b: Int) = rem(Vec1i(), this, b)
-//    infix operator fun rem(b: Vec1s) = rem(Vec1i(), this, b.x)
-//
-//    fun rem(b: Int, res: Vec1s) = rem(res, this, b)
-//    fun rem(b: Vec1s, res: Vec1s) = rem(res, this, b.x)
-//
-//    infix fun remAssign(b: Int) = rem(this, this, b)
-//    infix fun remAssign(b: Vec1s) = rem(this, this, b.x)
+//    TODO
 
     companion object : opVec1s {
         const val length = Vec1t.length

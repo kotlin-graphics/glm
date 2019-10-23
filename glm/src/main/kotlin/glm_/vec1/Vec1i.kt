@@ -133,8 +133,12 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     fun plus(b: Int, res: Vec1i) = plus(res, this, b)
     fun plus(b: Vec1i, res: Vec1i) = plus(res, this, b.x)
 
-    infix fun plusAssign(b: Int) = plus(this, this, b)
-    infix fun plusAssign(b: Vec1i) = plus(this, this, b.x)
+    infix operator fun plusAssign(b: Int) {
+        plus(this, this, b)
+    }
+    infix operator fun plusAssign(b: Vec1i) {
+        plus(this, this, b.x)
+    }
 
 
     infix operator fun minus(b: Int) = minus(Vec1i(), this, b)
@@ -143,8 +147,12 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     fun minus(b: Int, res: Vec1i) = minus(res, this, b)
     fun minus(b: Vec1i, res: Vec1i) = minus(res, this, b.x)
 
-    infix fun minusAssign(b: Int) = minus(this, this, b)
-    infix fun minusAssign(b: Vec1i) = minus(this, this, b.x)
+    infix operator fun minusAssign(b: Int) {
+        minus(this, this, b)
+    }
+    infix operator fun minusAssign(b: Vec1i) {
+        minus(this, this, b.x)
+    }
 
 
     infix operator fun times(b: Int) = times(Vec1i(), this, b)
@@ -153,8 +161,12 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     fun times(b: Int, res: Vec1i) = times(res, this, b)
     fun times(b: Vec1i, res: Vec1i) = times(res, this, b.x)
 
-    infix fun timesAssign(b: Int) = times(this, this, b)
-    infix fun timesAssign(b: Vec1i) = times(this, this, b.x)
+    infix operator fun timesAssign(b: Int) {
+        times(this, this, b)
+    }
+    infix operator fun timesAssign(b: Vec1i) {
+        times(this, this, b.x)
+    }
 
 
     infix operator fun div(b: Int) = div(Vec1i(), this, b)
@@ -163,8 +175,12 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     fun div(b: Int, res: Vec1i) = div(res, this, b)
     fun div(b: Vec1i, res: Vec1i) = div(res, this, b.x)
 
-    infix fun divAssign(b: Int) = div(this, this, b)
-    infix fun divAssign(b: Vec1i) = div(this, this, b.x)
+    infix operator fun divAssign(b: Int) {
+        div(this, this, b)
+    }
+    infix operator fun divAssign(b: Vec1i) {
+        div(this, this, b.x)
+    }
 
 
     infix operator fun rem(b: Int) = rem(Vec1i(), this, b)
@@ -173,8 +189,12 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     fun rem(b: Int, res: Vec1i) = rem(res, this, b)
     fun rem(b: Vec1i, res: Vec1i) = rem(res, this, b.x)
 
-    infix fun remAssign(b: Int) = rem(this, this, b)
-    infix fun remAssign(b: Vec1i) = rem(this, this, b.x)
+    infix operator fun remAssign(b: Int) {
+        rem(this, this, b)
+    }
+    infix operator fun remAssign(b: Vec1i) {
+        rem(this, this, b.x)
+    }
 
     
     // -- Specific bitwise operators --

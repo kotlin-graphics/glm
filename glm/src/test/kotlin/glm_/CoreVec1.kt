@@ -6,6 +6,7 @@ import glm_.vec1.Vec1i
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2i
+import glm_.vec2.operators.timesAssign
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
@@ -15,8 +16,8 @@ class CoreVec1 : StringSpec() {
 
         "vec1 operators"        {
 
-            val A = Vec1(1f)
-            val B = Vec1(1f)
+            val A = Vec1i(1)
+            val B = Vec1i(1)
             run {
                 val R = A != B
                 val S = A == B
@@ -25,10 +26,10 @@ class CoreVec1 : StringSpec() {
             }
 
             run {
-                A *= 1f
-                B *= 1.0
-                A += 1f
-                B += 1.0
+                A *= 1
+                B *= 1
+                A += 1
+                B += 1
 
                 val R = A != B
                 val S = A == B
