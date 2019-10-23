@@ -114,7 +114,7 @@ class testCoreFunCommon : StringSpec() {
                 val i = Vec4(0f)
                 val a = glm.modf(x, i)
 
-                i shouldBe Vec4(1f)
+                Vec4i(i) shouldBe Vec4i(1f)
                 glm.all(glm.epsilonEqual(a, Vec4(0.1f, 0.2f, 0.5f, 0.7f), 0.00001f)) shouldBe true
             }
 
@@ -123,7 +123,7 @@ class testCoreFunCommon : StringSpec() {
                 val i = Vec4d(0.0)
                 val a = glm.modf(x, i)
 
-                i shouldBe Vec4d(1.0)
+                Vec4i(i) shouldBe Vec4i(1.0)
                 glm.all(glm.epsilonEqual(a, Vec4d(0.1, 0.2, 0.5, 0.7), 0.000000001)) shouldBe true
             }
 
