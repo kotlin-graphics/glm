@@ -547,6 +547,56 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>(), ToBuffer {
     fun shrAssign(bX: Number, bY: Number, bZ: Number) = shr(this, this, bX.L, bY.L, bZ.L)
 
 
+    infix fun allLessThan(L: Long): Boolean = x < L && y < L && z < L
+    infix fun anyLessThan(L: Long): Boolean = x < L || y < L || z < L
+    infix fun lessThan(L: Long): Vec3bool = Vec3bool { get(it) < L }
+
+    infix fun allLessThanEqual(L: Long): Boolean = x <= L && y <= L && z <= L
+    infix fun anyLessThanEqual(L: Long): Boolean = x <= L || y <= L || z <= L
+    infix fun lessThanEqual(L: Long): Vec3bool = Vec3bool { get(it) <= L }
+
+    infix fun allEqual(L: Long): Boolean = x == L && y == L && z == L
+    infix fun anyEqual(L: Long): Boolean = x == L || y == L || z == L
+    infix fun equal(L: Long): Vec3bool = Vec3bool { get(it) == L }
+
+    infix fun allNotEqual(L: Long): Boolean = x != L && y != L && z != L
+    infix fun anyNotEqual(L: Long): Boolean = x != L || y != L || z != L
+    infix fun notEqual(L: Long): Vec3bool = Vec3bool { get(it) != L }
+
+    infix fun allGreaterThan(L: Long): Boolean = x > L && y > L && z > L
+    infix fun anyGreaterThan(L: Long): Boolean = x > L || y > L || z > L
+    infix fun greaterThan(L: Long): Vec3bool = Vec3bool { get(it) > L }
+
+    infix fun allGreaterThanEqual(L: Long): Boolean = x >= L && y >= L && z >= L
+    infix fun anyGreaterThanEqual(L: Long): Boolean = x >= L || y >= L || z >= L
+    infix fun greaterThanEqual(L: Long): Vec3bool = Vec3bool { get(it) >= L }
+
+
+    infix fun allLessThan(v: Vec3l): Boolean = x < v.x && y < v.y && z < v.z
+    infix fun anyLessThan(v: Vec3l): Boolean = x < v.x || y < v.y || z < v.z
+    infix fun lessThan(v: Vec3l): Vec3bool = Vec3bool { get(it) < v[it] }
+
+    infix fun allLessThanEqual(v: Vec3l): Boolean = x <= v.x && y <= v.y && z <= v.z
+    infix fun anyLessThanEqual(v: Vec3l): Boolean = x <= v.x || y <= v.y || z <= v.z
+    infix fun lessThanEqual(v: Vec3l): Vec3bool = Vec3bool { get(it) <= v[it] }
+
+    infix fun allEqual(v: Vec3l): Boolean = x == v.x && y == v.y && z == v.z
+    infix fun anyEqual(v: Vec3l): Boolean = x == v.x || y == v.y || z == v.z
+    infix fun equal(v: Vec3l): Vec3bool = Vec3bool { get(it) == v[it] }
+
+    infix fun allNotEqual(v: Vec3l): Boolean = x != v.x && y != v.y && z != v.z
+    infix fun anyNotEqual(v: Vec3l): Boolean = x != v.x || y != v.y || z != v.z
+    infix fun notEqual(v: Vec3l): Vec3bool = Vec3bool { get(it) != v[it] }
+
+    infix fun allGreaterThan(v: Vec3l): Boolean = x > v.x && y > v.y && z > v.z
+    infix fun anyGreaterThan(v: Vec3l): Boolean = x > v.x || y > v.y || z > v.z
+    infix fun greaterThan(v: Vec3l): Vec3bool = Vec3bool { get(it) > v[it] }
+
+    infix fun allGreaterThanEqual(v: Vec3l): Boolean = x >= v.x && y >= v.y && z >= v.z
+    infix fun anyGreaterThanEqual(v: Vec3l): Boolean = x >= v.x || y >= v.y || z >= v.z
+    infix fun greaterThanEqual(v: Vec3l): Vec3bool = Vec3bool { get(it) >= v[it] }
+
+
     override fun createInstance(x: Long, y: Long) = Vec2l(x, y)
     override fun createInstance(x: Long, y: Long, z: Long) = Vec3l(x, y, z)
 

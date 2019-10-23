@@ -487,42 +487,73 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
     }
 
 
-    infix fun allLessThan(f: Float) = x < f && y < f
-    infix fun anyLessThan(f: Float) = x < f || y < f
+    infix fun allLessThan(f: Float): Boolean = x < f && y < f
+    infix fun anyLessThan(f: Float): Boolean = x < f || y < f
+    infix fun lessThan(f: Float): Vec2bool = Vec2bool { get(it) < f }
 
-    infix fun allLessThanEqual(f: Float) = x <= f && y <= f
-    infix fun anyLessThanEqual(f: Float) = x <= f || y <= f
+    infix fun allLessThanEqual(f: Float): Boolean = x <= f && y <= f
+    infix fun anyLessThanEqual(f: Float): Boolean = x <= f || y <= f
+    infix fun lessThanEqual(f: Float): Vec2bool = Vec2bool { get(it) <= f }
 
-    fun allEqual(f: Float, epsilon: Float = 0f) = x - f < epsilon && y - f < epsilon
-    fun anyEqual(f: Float, epsilon: Float = 0f) = x - f < epsilon || y - f < epsilon
+    fun allEqual(f: Float, epsilon: Float = 0f): Boolean = x - f < epsilon && y - f < epsilon
+    fun anyEqual(f: Float, epsilon: Float = 0f): Boolean = x - f < epsilon || y - f < epsilon
+    fun equal(f: Float, epsilon: Float = 0f): Vec2bool = Vec2bool { get(it) - f < epsilon }
 
-    fun allNotEqual(f: Float, epsilon: Float = 0f) = x - f >= epsilon && y - f >= epsilon
-    fun anyNotEqual(f: Float, epsilon: Float = 0f) = x - f >= epsilon || y - f >= epsilon
+    fun allNotEqual(f: Float, epsilon: Float = 0f): Boolean = x - f >= epsilon && y - f >= epsilon
+    fun anyNotEqual(f: Float, epsilon: Float = 0f): Boolean = x - f >= epsilon || y - f >= epsilon
+    fun notEqual(f: Float, epsilon: Float = 0f): Vec2bool = Vec2bool{ get(it) - f >= epsilon }
 
-    infix fun allGreaterThan(f: Float) = x > f && y > f
-    infix fun anyGreaterThan(f: Float) = x > f || y > f
+    infix fun allGreaterThan(f: Float): Boolean = x > f && y > f
+    infix fun anyGreaterThan(f: Float): Boolean = x > f || y > f
+    infix fun greaterThan(f: Float): Vec2bool = Vec2bool{ get(it) > f }
 
-    infix fun allGreaterThanEqual(f: Float) = x >= f && y >= f
-    infix fun anyGreaterThanEqual(f: Float) = x >= f || y >= f
+    infix fun allGreaterThanEqual(f: Float): Boolean = x >= f && y >= f
+    infix fun anyGreaterThanEqual(f: Float): Boolean = x >= f || y >= f
+    infix fun greaterThanEqual(f: Float): Vec2bool = Vec2bool{ get(it) >= f }
 
 
-    infix fun <T : Number> allLessThan(v: Vec2t<T>) = x < v.x.f && y < v.y.f
-    infix fun <T : Number> anyLessThan(v: Vec2t<T>) = x < v.x.f || y < v.y.f
+    infix fun allLessThan(v: Vec2): Boolean = x < v.x && y < v.y
+    infix fun anyLessThan(v: Vec2): Boolean = x < v.x || y < v.y
+    infix fun lessThan(v: Vec2): Vec2bool = Vec2bool { get(it) < v[it] }
 
-    infix fun <T : Number> allLessThanEqual(v: Vec2t<T>) = x <= v.x.f && y <= v.y.f
-    infix fun <T : Number> anyLessThanEqual(v: Vec2t<T>) = x <= v.x.f || y <= v.y.f
+    infix fun allLessThanEqual(v: Vec2): Boolean = x <= v.x && y <= v.y
+    infix fun anyLessThanEqual(v: Vec2): Boolean = x <= v.x || y <= v.y
+    infix fun lessThanEqual(v: Vec2): Vec2bool = Vec2bool { get(it) <= v[it] }
 
-    infix fun <T : Number> allEqual(v: Vec2t<T>) = x == v.x.f && y == v.y.f
-    infix fun <T : Number> anyEqual(v: Vec2t<T>) = x == v.x.f || y == v.y.f
+    fun allEqual(v: Vec2, epsilon: Float = 0f): Boolean = x - v.x < epsilon && y - v.y < epsilon
+    fun anyEqual(v: Vec2, epsilon: Float = 0f): Boolean = x - v.x < epsilon || y - v.y < epsilon
+    fun equal(v: Vec2, epsilon: Float = 0f): Vec2bool = Vec2bool { get(it) - v[it] < epsilon }
 
-    infix fun <T : Number> allNotEqual(v: Vec2t<T>) = x != v.x.f && y != v.y.f
-    infix fun <T : Number> anyNotEqual(v: Vec2t<T>) = x != v.x.f || y != v.y.f
+    fun allNotEqual(v: Vec2, epsilon: Float = 0f): Boolean = x - v.x >= epsilon && y - v.y >= epsilon
+    fun anyNotEqual(v: Vec2, epsilon: Float = 0f): Boolean = x - v.x >= epsilon || y - v.y >= epsilon
+    fun notEqual(v: Vec2, epsilon: Float = 0f): Vec2bool = Vec2bool{ get(it) - v[it] >= epsilon }
 
-    infix fun <T : Number> allGreaterThan(v: Vec2t<T>) = x > v.x.f && y > v.y.f
-    infix fun <T : Number> anyGreaterThan(v: Vec2t<T>) = x > v.x.f || y > v.y.f
+    infix fun allGreaterThan(v: Vec2): Boolean = x > v.x && y > v.y
+    infix fun anyGreaterThan(v: Vec2): Boolean = x > v.x || y > v.y
+    infix fun greaterThan(v: Vec2): Vec2bool = Vec2bool{ get(it) > v[it] }
 
-    infix fun <T : Number> allGreaterThanEqual(v: Vec2t<T>) = x >= v.x.f && y >= v.y.f
-    infix fun <T : Number> anyGreaterThanEqual(v: Vec2t<T>) = x >= v.x.f || y >= v.y.f
+    infix fun allGreaterThanEqual(v: Vec2): Boolean = x >= v.x && y >= v.y
+    infix fun anyGreaterThanEqual(v: Vec2): Boolean = x >= v.x || y >= v.y
+    infix fun greaterThanEqual(v: Vec2): Vec2bool = Vec2bool{ get(it) >= v[it] }
+
+
+    infix fun <T : Number> allLessThan(v: Vec2t<T>): Boolean = x < v.x.f && y < v.y.f
+    infix fun <T : Number> anyLessThan(v: Vec2t<T>): Boolean = x < v.x.f || y < v.y.f
+
+    infix fun <T : Number> allLessThanEqual(v: Vec2t<T>): Boolean = x <= v.x.f && y <= v.y.f
+    infix fun <T : Number> anyLessThanEqual(v: Vec2t<T>): Boolean = x <= v.x.f || y <= v.y.f
+
+    infix fun <T : Number> allEqual(v: Vec2t<T>): Boolean = x == v.x.f && y == v.y.f
+    infix fun <T : Number> anyEqual(v: Vec2t<T>): Boolean = x == v.x.f || y == v.y.f
+
+    infix fun <T : Number> allNotEqual(v: Vec2t<T>): Boolean = x != v.x.f && y != v.y.f
+    infix fun <T : Number> anyNotEqual(v: Vec2t<T>): Boolean = x != v.x.f || y != v.y.f
+
+    infix fun <T : Number> allGreaterThan(v: Vec2t<T>): Boolean = x > v.x.f && y > v.y.f
+    infix fun <T : Number> anyGreaterThan(v: Vec2t<T>): Boolean = x > v.x.f || y > v.y.f
+
+    infix fun <T : Number> allGreaterThanEqual(v: Vec2t<T>): Boolean = x >= v.x.f && y >= v.y.f
+    infix fun <T : Number> anyGreaterThanEqual(v: Vec2t<T>): Boolean = x >= v.x.f || y >= v.y.f
 
 
     infix fun dot(b: Vec2) = glm.dot(this, b)
@@ -574,7 +605,4 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
-
-    fun equal(v: Vec2, epsilon: Float = 0f) = x - v.x < epsilon && y - v.y < epsilon
-    fun notEqual(v: Vec2, epsilon: Float = 0f) = x - v.x >= epsilon && y - v.y >= epsilon
 }

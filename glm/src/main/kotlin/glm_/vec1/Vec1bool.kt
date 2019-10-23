@@ -16,6 +16,8 @@ data class Vec1bool(var x: Boolean = false) {
 
     constructor(ba: Array<Boolean>) : this(ba[0])
 
+    constructor(init: (Int) -> Boolean): this(init(0))
+
     // -- Component accesses --
 
     operator fun get(i: Int): Boolean = when (i) {

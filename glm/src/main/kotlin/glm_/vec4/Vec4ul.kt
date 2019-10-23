@@ -646,6 +646,56 @@ class Vec4ul(var ofs: Int, var array: LongArray) : Vec4t<Ulong>(), ToBuffer {
     fun shr(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4ul) = shr(res, this, bX.L, bY.L, bZ.L, bW.L)
 
 
+    infix fun allLessThan(ul: Ulong): Boolean = x < ul && y < ul && z < ul && w < ul
+    infix fun anyLessThan(ul: Ulong): Boolean = x < ul || y < ul || z < ul || w < ul
+    infix fun lessThan(ul: Ulong): Vec4bool = Vec4bool { get(it) < ul }
+
+    infix fun allLessThanEqual(ul: Ulong): Boolean = x <= ul && y <= ul && z <= ul && w <= ul
+    infix fun anyLessThanEqual(ul: Ulong): Boolean = x <= ul || y <= ul || z <= ul || w <= ul
+    infix fun lessThanEqual(ul: Ulong): Vec4bool = Vec4bool { get(it) <= ul }
+
+    infix fun allEqual(ul: Ulong): Boolean = x == ul && y == ul && z == ul && w == ul
+    infix fun anyEqual(ul: Ulong): Boolean = x == ul || y == ul || z == ul || w == ul
+    infix fun equal(ul: Ulong): Vec4bool = Vec4bool { get(it) == ul }
+
+    infix fun allNotEqual(ul: Ulong): Boolean = x != ul && y != ul && z != ul && w != ul
+    infix fun anyNotEqual(ul: Ulong): Boolean = x != ul || y != ul || z != ul || w != ul
+    infix fun notEqual(ul: Ulong): Vec4bool = Vec4bool { get(it) != ul }
+
+    infix fun allGreaterThan(ul: Ulong): Boolean = x > ul && y > ul && z > ul && w > ul
+    infix fun anyGreaterThan(ul: Ulong): Boolean = x > ul || y > ul || z > ul || w > ul
+    infix fun greaterThan(ul: Ulong): Vec4bool = Vec4bool { get(it) > ul }
+
+    infix fun allGreaterThanEqual(ul: Ulong): Boolean = x >= ul && y >= ul && z >= ul && w >= ul
+    infix fun anyGreaterThanEqual(ul: Ulong): Boolean = x >= ul || y >= ul || z >= ul || w >= ul
+    infix fun greaterThanEqual(ul: Ulong): Vec4bool = Vec4bool { get(it) >= ul }
+
+
+    infix fun allLessThan(v: Vec4ul): Boolean = x < v.x && y < v.y && z < v.z && w < v.w
+    infix fun anyLessThan(v: Vec4ul): Boolean = x < v.x || y < v.y || z < v.z || w < v.w
+    infix fun lessThan(v: Vec4ul): Vec4bool = Vec4bool { get(it) < v[it] }
+
+    infix fun allLessThanEqual(v: Vec4ul): Boolean = x <= v.x && y <= v.y && z <= v.z && w <= v.w
+    infix fun anyLessThanEqual(v: Vec4ul): Boolean = x <= v.x || y <= v.y || z <= v.z || w <= v.w
+    infix fun lessThanEqual(v: Vec4ul): Vec4bool = Vec4bool { get(it) <= v[it] }
+
+    infix fun allEqual(v: Vec4ul): Boolean = x == v.x && y == v.y && z == v.z && w == v.w
+    infix fun anyEqual(v: Vec4ul): Boolean = x == v.x || y == v.y || z == v.z || w == v.w
+    infix fun equal(v: Vec4ul): Vec4bool = Vec4bool { get(it) == v[it] }
+
+    infix fun allNotEqual(v: Vec4ul): Boolean = x != v.x && y != v.y && z != v.z && w != v.w
+    infix fun anyNotEqual(v: Vec4ul): Boolean = x != v.x || y != v.y || z != v.z || w != v.w
+    infix fun notEqual(v: Vec4ul): Vec4bool = Vec4bool { get(it) != v[it] }
+
+    infix fun allGreaterThan(v: Vec4ul): Boolean = x > v.x && y > v.y && z > v.z && w > v.w
+    infix fun anyGreaterThan(v: Vec4ul): Boolean = x > v.x || y > v.y || z > v.z || w > v.w
+    infix fun greaterThan(v: Vec4ul): Vec4bool = Vec4bool { get(it) > v[it] }
+
+    infix fun allGreaterThanEqual(v: Vec4ul): Boolean = x >= v.x && y >= v.y && z >= v.z && w >= v.w
+    infix fun anyGreaterThanEqual(v: Vec4ul): Boolean = x >= v.x || y >= v.y || z >= v.z || w >= v.w
+    infix fun greaterThanEqual(v: Vec4ul): Vec4bool = Vec4bool { get(it) >= v[it] }
+
+
     override fun createInstance(x: Ulong, y: Ulong) = Vec2ul(x, y)
     override fun createInstance(x: Ulong, y: Ulong, z: Ulong) = Vec3ul(x, y, z)
     override fun createInstance(x: Ulong, y: Ulong, z: Ulong, w: Ulong) = Vec4ul(x, y, z, w)

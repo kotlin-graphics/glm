@@ -21,6 +21,8 @@ data class Vec4bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
 
     constructor(ba: Array<Boolean>) : this(ba[0], ba[1], ba[2], ba[3])
 
+    constructor(init: (Int) -> Boolean): this(init(0), init(1), init(2), init(3))
+
     // TODO others
     constructor(ints: IntBuffer, position: Int = ints.pos) : this(ints[position], ints[position + 1], ints[position + 2], ints[position + 3])
 

@@ -639,6 +639,56 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>(), ToBuffer {
     fun shrAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(this, this, bX.s, bY.s, bZ.s, bW.s)
 
 
+    infix fun allLessThan(s: Short): Boolean = x < s && y < s && z < s && w < s
+    infix fun anyLessThan(s: Short): Boolean = x < s || y < s || z < s || w < s
+    infix fun lessThan(s: Short): Vec4bool = Vec4bool { get(it) < s }
+
+    infix fun allLessThanEqual(s: Short): Boolean = x <= s && y <= s && z <= s && w <= s
+    infix fun anyLessThanEqual(s: Short): Boolean = x <= s || y <= s || z <= s || w <= s
+    infix fun lessThanEqual(s: Short): Vec4bool = Vec4bool { get(it) <= s }
+
+    infix fun allEqual(s: Short): Boolean = x == s && y == s && z == s && w == s
+    infix fun anyEqual(s: Short): Boolean = x == s || y == s || z == s || w == s
+    infix fun equal(s: Short): Vec4bool = Vec4bool { get(it) == s }
+
+    infix fun allNotEqual(s: Short): Boolean = x != s && y != s && z != s && w != s
+    infix fun anyNotEqual(s: Short): Boolean = x != s || y != s || z != s || w != s
+    infix fun notEqual(s: Short): Vec4bool = Vec4bool { get(it) != s }
+
+    infix fun allGreaterThan(s: Short): Boolean = x > s && y > s && z > s && w > s
+    infix fun anyGreaterThan(s: Short): Boolean = x > s || y > s || z > s || w > s
+    infix fun greaterThan(s: Short): Vec4bool = Vec4bool { get(it) > s }
+
+    infix fun allGreaterThanEqual(s: Short): Boolean = x >= s && y >= s && z >= s && w >= s
+    infix fun anyGreaterThanEqual(s: Short): Boolean = x >= s || y >= s || z >= s || w >= s
+    infix fun greaterThanEqual(s: Short): Vec4bool = Vec4bool { get(it) >= s }
+
+
+    infix fun allLessThan(v: Vec4s): Boolean = x < v.x && y < v.y && z < v.z && w < v.w
+    infix fun anyLessThan(v: Vec4s): Boolean = x < v.x || y < v.y || z < v.z || w < v.w
+    infix fun lessThan(v: Vec4s): Vec4bool = Vec4bool { get(it) < v[it] }
+
+    infix fun allLessThanEqual(v: Vec4s): Boolean = x <= v.x && y <= v.y && z <= v.z && w <= v.w
+    infix fun anyLessThanEqual(v: Vec4s): Boolean = x <= v.x || y <= v.y || z <= v.z || w <= v.w
+    infix fun lessThanEqual(v: Vec4s): Vec4bool = Vec4bool { get(it) <= v[it] }
+
+    infix fun allEqual(v: Vec4s): Boolean = x == v.x && y == v.y && z == v.z && w == v.w
+    infix fun anyEqual(v: Vec4s): Boolean = x == v.x || y == v.y || z == v.z || w == v.w
+    infix fun equal(v: Vec4s): Vec4bool = Vec4bool { get(it) == v[it] }
+
+    infix fun allNotEqual(v: Vec4s): Boolean = x != v.x && y != v.y && z != v.z && w != v.w
+    infix fun anyNotEqual(v: Vec4s): Boolean = x != v.x || y != v.y || z != v.z || w != v.w
+    infix fun notEqual(v: Vec4s): Vec4bool = Vec4bool { get(it) != v[it] }
+
+    infix fun allGreaterThan(v: Vec4s): Boolean = x > v.x && y > v.y && z > v.z && w > v.w
+    infix fun anyGreaterThan(v: Vec4s): Boolean = x > v.x || y > v.y || z > v.z || w > v.w
+    infix fun greaterThan(v: Vec4s): Vec4bool = Vec4bool { get(it) > v[it] }
+
+    infix fun allGreaterThanEqual(v: Vec4s): Boolean = x >= v.x && y >= v.y && z >= v.z && w >= v.w
+    infix fun anyGreaterThanEqual(v: Vec4s): Boolean = x >= v.x || y >= v.y || z >= v.z || w >= v.w
+    infix fun greaterThanEqual(v: Vec4s): Vec4bool = Vec4bool { get(it) >= v[it] }
+
+
     override fun createInstance(x: Short, y: Short) = Vec2s(x, y)
     override fun createInstance(x: Short, y: Short, z: Short) = Vec3s(x, y, z)
     override fun createInstance(x: Short, y: Short, z: Short, w: Short) = Vec4s(x, y, z, w)

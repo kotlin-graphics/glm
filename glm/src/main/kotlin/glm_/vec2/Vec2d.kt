@@ -396,6 +396,56 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
     }
 
 
+    infix fun allLessThan(d: Double): Boolean = x < d && y < d
+    infix fun anyLessThan(d: Double): Boolean = x < d || y < d
+    infix fun lessThan(d: Double): Vec2bool = Vec2bool { get(it) < d }
+
+    infix fun allLessThanEqual(d: Double): Boolean = x <= d && y <= d
+    infix fun anyLessThanEqual(d: Double): Boolean = x <= d || y <= d
+    infix fun lessThanEqual(d: Double): Vec2bool = Vec2bool { get(it) <= d }
+
+    fun allEqual(d: Double, epsilon: Double = 0.0): Boolean = x - d < epsilon && y - d < epsilon
+    fun anyEqual(d: Double, epsilon: Double = 0.0): Boolean = x - d < epsilon || y - d < epsilon
+    fun equal(d: Double, epsilon: Double = 0.0): Vec2bool = Vec2bool { get(it) - d < epsilon }
+
+    fun allNotEqual(d: Double, epsilon: Double = 0.0): Boolean = x - d >= epsilon && y - d >= epsilon
+    fun anyNotEqual(d: Double, epsilon: Double = 0.0): Boolean = x - d >= epsilon || y - d >= epsilon
+    fun notEqual(d: Double, epsilon: Double = 0.0): Vec2bool = Vec2bool{ get(it) - d >= epsilon }
+
+    infix fun allGreaterThan(d: Double): Boolean = x > d && y > d
+    infix fun anyGreaterThan(d: Double): Boolean = x > d || y > d
+    infix fun greaterThan(d: Double): Vec2bool = Vec2bool{ get(it) > d }
+
+    infix fun allGreaterThanEqual(d: Double): Boolean = x >= d && y >= d
+    infix fun anyGreaterThanEqual(d: Double): Boolean = x >= d || y >= d
+    infix fun greaterThanEqual(d: Double): Vec2bool = Vec2bool{ get(it) >= d }
+
+
+    infix fun allLessThan(v: Vec2d): Boolean = x < v.x && y < v.y
+    infix fun anyLessThan(v: Vec2d): Boolean = x < v.x || y < v.y
+    infix fun lessThan(v: Vec2d): Vec2bool = Vec2bool { get(it) < v[it] }
+
+    infix fun allLessThanEqual(v: Vec2d): Boolean = x <= v.x && y <= v.y
+    infix fun anyLessThanEqual(v: Vec2d): Boolean = x <= v.x || y <= v.y
+    infix fun lessThanEqual(v: Vec2d): Vec2bool = Vec2bool { get(it) <= v[it] }
+
+    fun allEqual(v: Vec2d, epsilon: Double = 0.0): Boolean = x - v.x < epsilon && y - v.y < epsilon
+    fun anyEqual(v: Vec2d, epsilon: Double = 0.0): Boolean = x - v.x < epsilon || y - v.y < epsilon
+    fun equal(v: Vec2d, epsilon: Double = 0.0): Vec2bool = Vec2bool { get(it) - v[it] < epsilon }
+
+    fun allNotEqual(v: Vec2d, epsilon: Double = 0.0): Boolean = x - v.x >= epsilon && y - v.y >= epsilon
+    fun anyNotEqual(v: Vec2d, epsilon: Double = 0.0): Boolean = x - v.x >= epsilon || y - v.y >= epsilon
+    fun notEqual(v: Vec2d, epsilon: Double = 0.0): Vec2bool = Vec2bool{ get(it) - v[it] >= epsilon }
+
+    infix fun allGreaterThan(v: Vec2d): Boolean = x > v.x && y > v.y
+    infix fun anyGreaterThan(v: Vec2d): Boolean = x > v.x || y > v.y
+    infix fun greaterThan(v: Vec2d): Vec2bool = Vec2bool{ get(it) > v[it] }
+
+    infix fun allGreaterThanEqual(v: Vec2d): Boolean = x >= v.x && y >= v.y
+    infix fun anyGreaterThanEqual(v: Vec2d): Boolean = x >= v.x || y >= v.y
+    infix fun greaterThanEqual(v: Vec2d): Vec2bool = Vec2bool{ get(it) >= v[it] }
+
+
     // -- functions --
 
     infix fun dot(b: Vec2d) = glm.dot(this, b)
@@ -437,8 +487,6 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
     override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec2d && this[0] == other[0] && this[1] == other[1]
-    fun equal(b: Vec2d, epsilon: Double = 0.0): Boolean = abs(x - b.x) <= epsilon && abs(y - b.y) <= epsilon
-    fun notEqual(b: Vec2d, epsilon: Double = 0.0): Boolean = !equal(b, epsilon)
 
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
 

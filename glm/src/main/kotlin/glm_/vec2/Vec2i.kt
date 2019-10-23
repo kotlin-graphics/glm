@@ -52,6 +52,7 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
     @JvmOverloads
     constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+
     constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y)
@@ -60,9 +61,11 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
 
     @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.i, y.i)
+
     constructor(x: Boolean, v: Vec1bool) : this(x.i, v.x.i)
     @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.i, y.i)
+
     constructor(x: Vec1bool, y: Vec1bool) : this(x.x.i, y.x.i)
 
     constructor(v: Vec2bool) : this(v.x.i, v.y.i)
@@ -547,23 +550,60 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
     fun shrAssign(bX: Number, bY: Number) = shr(this, this, bX.i, bY.i)
 
 
-    infix fun allLessThan(i: Int) = x < i && y < i
-    infix fun anyLessThan(i: Int) = x < i || y < i
+    infix fun allLessThan(i: Int): Boolean = x < i && y < i
+    infix fun anyLessThan(i: Int): Boolean = x < i || y < i
+    infix fun lessThan(i: Int): Vec2bool = Vec2bool { get(it) < i }
 
-    infix fun allLessThanEqual(i: Int) = x <= i && y <= i
-    infix fun anyLessThanEqual(i: Int) = x <= i || y <= i
+    infix fun allLessThanEqual(i: Int): Boolean = x <= i && y <= i
+    infix fun anyLessThanEqual(i: Int): Boolean = x <= i || y <= i
+    infix fun lessThanEqual(i: Int): Vec2bool = Vec2bool { get(it) <= i }
 
-    infix fun allEqual(i: Int) = x == i && y == i
-    infix fun anyEqual(i: Int) = x == i || y == i
+    infix fun allEqual(i: Int): Boolean = x == i && y == i
+    infix fun anyEqual(i: Int): Boolean = x == i || y == i
+    infix fun equal(i: Int): Vec2bool = Vec2bool { get(it) == i }
 
-    infix fun allNotEqual(i: Int) = x != i && y != i
-    infix fun anyNotEqual(i: Int) = x != i || y != i
+    infix fun allNotEqual(i: Int): Boolean = x != i && y != i
+    infix fun anyNotEqual(i: Int): Boolean = x != i || y != i
+    infix fun notEqual(i: Int): Vec2bool = Vec2bool { get(it) != i }
 
-    infix fun allGreaterThan(i: Int) = x > i && y > i
-    infix fun anyGreaterThan(i: Int) = x > i || y > i
+    infix fun allGreaterThan(i: Int): Boolean = x > i && y > i
+    infix fun anyGreaterThan(i: Int): Boolean = x > i || y > i
+    infix fun greaterThan(i: Int): Vec2bool = Vec2bool { get(it) > i }
 
-    infix fun allGreaterThanEqual(i: Int) = x >= i && y >= i
-    infix fun anyGreaterThanEqual(i: Int) = x >= i || y >= i
+    infix fun allGreaterThanEqual(i: Int): Boolean = x >= i && y >= i
+    infix fun anyGreaterThanEqual(i: Int): Boolean = x >= i || y >= i
+    infix fun greaterThanEqual(i: Int): Vec2bool = Vec2bool { get(it) >= i }
+
+
+    infix fun allLessThan(v: Vec2i): Boolean = x < v.x && y < v.y
+    infix fun anyLessThan(v: Vec2i): Boolean = x < v.x || y < v.y
+    infix fun lessThan(v: Vec2i): Vec2bool = Vec2bool { get(it) < v[it] }
+
+    infix fun allLessThanEqual(v: Vec2i): Boolean = x <= v.x && y <= v.y
+    infix fun anyLessThanEqual(v: Vec2i): Boolean = x <= v.x || y <= v.y
+    infix fun lessThanEqual(v: Vec2i): Vec2bool = Vec2bool { get(it) <= v[it] }
+
+    infix fun allEqual(v: Vec2i): Boolean = x == v.x && y == v.y
+    infix fun anyEqual(v: Vec2i): Boolean = x == v.x || y == v.y
+    infix fun equal(v: Vec2i): Vec2bool = Vec2bool { get(it) == v[it] }
+
+    infix fun allNotEqual(v: Vec2i): Boolean = x != v.x && y != v.y
+    infix fun anyNotEqual(v: Vec2i): Boolean = x != v.x || y != v.y
+    infix fun notEqual(v: Vec2i): Vec2bool = Vec2bool { get(it) != v[it] }
+
+    infix fun allGreaterThan(v: Vec2i): Boolean = x > v.x && y > v.y
+    infix fun anyGreaterThan(v: Vec2i): Boolean = x > v.x || y > v.y
+    infix fun greaterThan(v: Vec2i): Vec2bool = Vec2bool { get(it) > v[it] }
+
+    infix fun allGreaterThanEqual(v: Vec2i): Boolean = x >= v.x && y >= v.y
+    infix fun anyGreaterThanEqual(v: Vec2i): Boolean = x >= v.x || y >= v.y
+    infix fun greaterThanEqual(v: Vec2i): Vec2bool = Vec2bool { get(it) >= v[it] }
+
+//    operator fun compareTo(b: Vec2i): Int = when { TODO evaluate
+//        x < b.x && y < b.y -> -1
+//        x > b.x && y > b.y -> +1
+//        else -> 0
+//    }
 
 
     infix fun clamp(int: Int) {
@@ -571,7 +611,9 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
         if (y < int) y = int
     }
 
-    val aspect get() = x.f / y
+    /** for perspective matrix for example */
+    val aspect: Float
+        get() = x.f / y
 
 
     override fun createInstance(x: Int, y: Int) = Vec2i(x, y)

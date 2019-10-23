@@ -433,6 +433,56 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>(), ToDoubleBuf
     }
 
 
+    infix fun allLessThan(d: Double): Boolean = x < d && y < d && z < d && w < d
+    infix fun anyLessThan(d: Double): Boolean = x < d || y < d || z < d || w < d
+    infix fun lessThan(d: Double): Vec4bool = Vec4bool { get(it) < d }
+
+    infix fun allLessThanEqual(d: Double): Boolean = x <= d && y <= d && z <= d && w <= d
+    infix fun anyLessThanEqual(d: Double): Boolean = x <= d || y <= d || z <= d || w <= d
+    infix fun lessThanEqual(d: Double): Vec4bool = Vec4bool { get(it) <= d }
+
+    fun allEqual(d: Double, epsilon: Double = 0.0): Boolean = x - d < epsilon && y - d < epsilon && z - d < epsilon && w - d < epsilon
+    fun anyEqual(d: Double, epsilon: Double = 0.0): Boolean = x - d < epsilon || y - d < epsilon || z - d < epsilon || w - d < epsilon
+    fun equal(d: Double, epsilon: Double = 0.0): Vec4bool = Vec4bool { get(it) - d < epsilon }
+
+    fun allNotEqual(d: Double, epsilon: Double = 0.0): Boolean = x - d >= epsilon && y - d >= epsilon && z - d >= epsilon && w - d >= epsilon
+    fun anyNotEqual(d: Double, epsilon: Double = 0.0): Boolean = x - d >= epsilon || y - d >= epsilon || z - d >= epsilon || w - d >= epsilon
+    fun notEqual(d: Double, epsilon: Double = 0.0): Vec4bool = Vec4bool{ get(it) - d >= epsilon }
+
+    infix fun allGreaterThan(d: Double): Boolean = x > d && y > d && z > d && w > d
+    infix fun anyGreaterThan(d: Double): Boolean = x > d || y > d || z > d || w > d
+    infix fun greaterThan(d: Double): Vec4bool = Vec4bool{ get(it) > d }
+
+    infix fun allGreaterThanEqual(d: Double): Boolean = x >= d && y >= d && z >= d && w >= d
+    infix fun anyGreaterThanEqual(d: Double): Boolean = x >= d || y >= d || z >= d || w >= d
+    infix fun greaterThanEqual(d: Double): Vec4bool = Vec4bool{ get(it) >= d }
+
+
+    infix fun allLessThan(v: Vec4d): Boolean = x < v.x && y < v.y && z < v.z && w < v.w
+    infix fun anyLessThan(v: Vec4d): Boolean = x < v.x || y < v.y || z < v.z || w < v.w
+    infix fun lessThan(v: Vec4d): Vec4bool = Vec4bool { get(it) < v[it] }
+
+    infix fun allLessThanEqual(v: Vec4d): Boolean = x <= v.x && y <= v.y && z <= v.z && w <= v.w
+    infix fun anyLessThanEqual(v: Vec4d): Boolean = x <= v.x || y <= v.y || z <= v.z || w <= v.w
+    infix fun lessThanEqual(v: Vec4d): Vec4bool = Vec4bool { get(it) <= v[it] }
+
+    fun allEqual(v: Vec4d, epsilon: Double = 0.0): Boolean = x - v.x < epsilon && y - v.y < epsilon && z - v.z < epsilon && w - v.w < epsilon
+    fun anyEqual(v: Vec4d, epsilon: Double = 0.0): Boolean = x - v.x < epsilon || y - v.y < epsilon || z - v.z < epsilon || w - v.w < epsilon
+    fun equal(v: Vec4d, epsilon: Double = 0.0): Vec4bool = Vec4bool { get(it) - v[it] < epsilon }
+
+    fun allNotEqual(v: Vec4d, epsilon: Double = 0.0): Boolean = x - v.x >= epsilon && y - v.y >= epsilon && z - v.z >= epsilon && w - v.w >= epsilon
+    fun anyNotEqual(v: Vec4d, epsilon: Double = 0.0): Boolean = x - v.x >= epsilon || y - v.y >= epsilon || z - v.z >= epsilon || w - v.w >= epsilon
+    fun notEqual(v: Vec4d, epsilon: Double = 0.0): Vec4bool = Vec4bool{ get(it) - v[it] >= epsilon }
+
+    infix fun allGreaterThan(v: Vec4d): Boolean = x > v.x && y > v.y && z > v.z && w > v.w
+    infix fun anyGreaterThan(v: Vec4d): Boolean = x > v.x || y > v.y || z > v.z || w > v.w
+    infix fun greaterThan(v: Vec4d): Vec4bool = Vec4bool{ get(it) > v[it] }
+
+    infix fun allGreaterThanEqual(v: Vec4d): Boolean = x >= v.x && y >= v.y && z >= v.z && w >= v.w
+    infix fun anyGreaterThanEqual(v: Vec4d): Boolean = x >= v.x || y >= v.y || z >= v.z || w >= v.w
+    infix fun greaterThanEqual(v: Vec4d): Vec4bool = Vec4bool{ get(it) >= v[it] }
+
+
     infix fun dot(b: Vec4d) = glm.dot(this, b)   // TODO others
 
     fun length() = glm.length(this)

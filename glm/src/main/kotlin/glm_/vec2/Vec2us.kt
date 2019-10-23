@@ -672,6 +672,56 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
     fun shr(b: Vec2t<out Number>, res: Vec2us) = shr(res, this, b.x.i, b.y.i)
 
 
+    infix fun allLessThan(us: Ushort): Boolean = x < us && y < us
+    infix fun anyLessThan(us: Ushort): Boolean = x < us || y < us
+    infix fun lessThan(us: Ushort): Vec2bool = Vec2bool { get(it) < us }
+
+    infix fun allLessThanEqual(us: Ushort): Boolean = x <= us && y <= us
+    infix fun anyLessThanEqual(us: Ushort): Boolean = x <= us || y <= us
+    infix fun lessThanEqual(us: Ushort): Vec2bool = Vec2bool { get(it) <= us }
+
+    infix fun allEqual(us: Ushort): Boolean = x == us && y == us
+    infix fun anyEqual(us: Ushort): Boolean = x == us || y == us
+    infix fun equal(us: Ushort): Vec2bool = Vec2bool { get(it) == us }
+
+    infix fun allNotEqual(us: Ushort): Boolean = x != us && y != us
+    infix fun anyNotEqual(us: Ushort): Boolean = x != us || y != us
+    infix fun notEqual(us: Ushort): Vec2bool = Vec2bool { get(it) != us }
+
+    infix fun allGreaterThan(us: Ushort): Boolean = x > us && y > us
+    infix fun anyGreaterThan(us: Ushort): Boolean = x > us || y > us
+    infix fun greaterThan(us: Ushort): Vec2bool = Vec2bool { get(it) > us }
+
+    infix fun allGreaterThanEqual(us: Ushort): Boolean = x >= us && y >= us
+    infix fun anyGreaterThanEqual(us: Ushort): Boolean = x >= us || y >= us
+    infix fun greaterThanEqual(us: Ushort): Vec2bool = Vec2bool { get(it) >= us }
+
+
+    infix fun allLessThan(v: Vec2us): Boolean = x < v.x && y < v.y
+    infix fun anyLessThan(v: Vec2us): Boolean = x < v.x || y < v.y
+    infix fun lessThan(v: Vec2us): Vec2bool = Vec2bool { get(it) < v[it] }
+
+    infix fun allLessThanEqual(v: Vec2us): Boolean = x <= v.x && y <= v.y
+    infix fun anyLessThanEqual(v: Vec2us): Boolean = x <= v.x || y <= v.y
+    infix fun lessThanEqual(v: Vec2us): Vec2bool = Vec2bool { get(it) <= v[it] }
+
+    infix fun allEqual(v: Vec2us): Boolean = x == v.x && y == v.y
+    infix fun anyEqual(v: Vec2us): Boolean = x == v.x || y == v.y
+    infix fun equal(v: Vec2us): Vec2bool = Vec2bool { get(it) == v[it] }
+
+    infix fun allNotEqual(v: Vec2us): Boolean = x != v.x && y != v.y
+    infix fun anyNotEqual(v: Vec2us): Boolean = x != v.x || y != v.y
+    infix fun notEqual(v: Vec2us): Vec2bool = Vec2bool { get(it) != v[it] }
+
+    infix fun allGreaterThan(v: Vec2us): Boolean = x > v.x && y > v.y
+    infix fun anyGreaterThan(v: Vec2us): Boolean = x > v.x || y > v.y
+    infix fun greaterThan(v: Vec2us): Vec2bool = Vec2bool { get(it) > v[it] }
+
+    infix fun allGreaterThanEqual(v: Vec2us): Boolean = x >= v.x && y >= v.y
+    infix fun anyGreaterThanEqual(v: Vec2us): Boolean = x >= v.x || y >= v.y
+    infix fun greaterThanEqual(v: Vec2us): Vec2bool = Vec2bool { get(it) >= v[it] }
+
+
     override fun createInstance(x: Ushort, y: Ushort) = Vec2us(x, y)
 
 
@@ -687,8 +737,6 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec2us && this[0] == other[0] && this[1] == other[1]
-    fun equal(b: Vec2us, epsilon: Int = 0): Boolean = abs(x.v - b.x.v) <= epsilon && abs(y.v - b.y.v) <= epsilon
-    fun notEqual(b: Vec2us, epsilon: Int = 0): Boolean = !equal(b, epsilon)
 
     override fun hashCode() = 31 * x.v.hashCode() + y.v.hashCode()
 

@@ -639,6 +639,56 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>(), ToBuffer {
     fun shrAssign(bX: Number, bY: Number) = shr(this, this, bX.i, bY.i)
 
 
+    infix fun allLessThan(ui: Uint): Boolean = x < ui && y < ui
+    infix fun anyLessThan(ui: Uint): Boolean = x < ui || y < ui
+    infix fun lessThan(ui: Uint): Vec2bool = Vec2bool { get(it) < ui }
+
+    infix fun allLessThanEqual(ui: Uint): Boolean = x <= ui && y <= ui
+    infix fun anyLessThanEqual(ui: Uint): Boolean = x <= ui || y <= ui
+    infix fun lessThanEqual(ui: Uint): Vec2bool = Vec2bool { get(it) <= ui }
+
+    infix fun allEqual(ui: Uint): Boolean = x == ui && y == ui
+    infix fun anyEqual(ui: Uint): Boolean = x == ui || y == ui
+    infix fun equal(ui: Uint): Vec2bool = Vec2bool { get(it) == ui }
+
+    infix fun allNotEqual(ui: Uint): Boolean = x != ui && y != ui
+    infix fun anyNotEqual(ui: Uint): Boolean = x != ui || y != ui
+    infix fun notEqual(ui: Uint): Vec2bool = Vec2bool { get(it) != ui }
+
+    infix fun allGreaterThan(ui: Uint): Boolean = x > ui && y > ui
+    infix fun anyGreaterThan(ui: Uint): Boolean = x > ui || y > ui
+    infix fun greaterThan(ui: Uint): Vec2bool = Vec2bool { get(it) > ui }
+
+    infix fun allGreaterThanEqual(ui: Uint): Boolean = x >= ui && y >= ui
+    infix fun anyGreaterThanEqual(ui: Uint): Boolean = x >= ui || y >= ui
+    infix fun greaterThanEqual(ui: Uint): Vec2bool = Vec2bool { get(it) >= ui }
+
+
+    infix fun allLessThan(v: Vec2ui): Boolean = x < v.x && y < v.y
+    infix fun anyLessThan(v: Vec2ui): Boolean = x < v.x || y < v.y
+    infix fun lessThan(v: Vec2ui): Vec2bool = Vec2bool { get(it) < v[it] }
+
+    infix fun allLessThanEqual(v: Vec2ui): Boolean = x <= v.x && y <= v.y
+    infix fun anyLessThanEqual(v: Vec2ui): Boolean = x <= v.x || y <= v.y
+    infix fun lessThanEqual(v: Vec2ui): Vec2bool = Vec2bool { get(it) <= v[it] }
+
+    infix fun allEqual(v: Vec2ui): Boolean = x == v.x && y == v.y
+    infix fun anyEqual(v: Vec2ui): Boolean = x == v.x || y == v.y
+    infix fun equal(v: Vec2ui): Vec2bool = Vec2bool { get(it) == v[it] }
+
+    infix fun allNotEqual(v: Vec2ui): Boolean = x != v.x && y != v.y
+    infix fun anyNotEqual(v: Vec2ui): Boolean = x != v.x || y != v.y
+    infix fun notEqual(v: Vec2ui): Vec2bool = Vec2bool { get(it) != v[it] }
+
+    infix fun allGreaterThan(v: Vec2ui): Boolean = x > v.x && y > v.y
+    infix fun anyGreaterThan(v: Vec2ui): Boolean = x > v.x || y > v.y
+    infix fun greaterThan(v: Vec2ui): Vec2bool = Vec2bool { get(it) > v[it] }
+
+    infix fun allGreaterThanEqual(v: Vec2ui): Boolean = x >= v.x && y >= v.y
+    infix fun anyGreaterThanEqual(v: Vec2ui): Boolean = x >= v.x || y >= v.y
+    infix fun greaterThanEqual(v: Vec2ui): Vec2bool = Vec2bool { get(it) >= v[it] }
+
+
     override fun createInstance(x: Uint, y: Uint) = Vec2ui(x, y)
 
 
@@ -654,8 +704,6 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>(), ToBuffer {
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec2ui && this[0] == other[0] && this[1] == other[1]
-    fun equal(b: Vec2ui, epsilon: Int = 0): Boolean = abs(x.v - b.x.v) <= epsilon && abs(y.v - b.y.v) <= epsilon
-    fun notEqual(b: Vec2ui, epsilon: Int = 0): Boolean = !equal(b, epsilon)
 
     override fun hashCode() = 31 * x.v.hashCode() + y.v.hashCode()
 

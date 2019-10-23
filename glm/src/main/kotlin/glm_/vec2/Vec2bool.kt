@@ -18,6 +18,8 @@ data class Vec2bool(var x: Boolean = false, var y: Boolean = false) {
 
     constructor(ba: Array<Boolean>) : this(ba[0], ba[1])
 
+    constructor(init: (Int) -> Boolean): this(init(0), init(1))
+
     // -- Component accesses --
 
     operator fun get(i: Int): Boolean = when (i) {

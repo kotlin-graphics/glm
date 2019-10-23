@@ -572,6 +572,56 @@ class Vec3b(var ofs: Int, var array: ByteArray) : Vec3t<Byte>(), ToBuffer {
     fun shrAssign(bX: Number, bY: Number, bZ: Number) = shr(this, this, bX.b, bY.b, bZ.b)
 
 
+    infix fun allLessThan(b: Byte): Boolean = x < b && y < b && z < b
+    infix fun anyLessThan(b: Byte): Boolean = x < b || y < b || z < b
+    infix fun lessThan(b: Byte): Vec3bool = Vec3bool { get(it) < b }
+
+    infix fun allLessThanEqual(b: Byte): Boolean = x <= b && y <= b && z <= b
+    infix fun anyLessThanEqual(b: Byte): Boolean = x <= b || y <= b || z <= b
+    infix fun lessThanEqual(b: Byte): Vec3bool = Vec3bool { get(it) <= b }
+
+    infix fun allEqual(b: Byte): Boolean = x == b && y == b && z == b
+    infix fun anyEqual(b: Byte): Boolean = x == b || y == b || z == b
+    infix fun equal(b: Byte): Vec3bool = Vec3bool { get(it) == b }
+
+    infix fun allNotEqual(b: Byte): Boolean = x != b && y != b && z != b
+    infix fun anyNotEqual(b: Byte): Boolean = x != b || y != b || z != b
+    infix fun notEqual(b: Byte): Vec3bool = Vec3bool { get(it) != b }
+
+    infix fun allGreaterThan(b: Byte): Boolean = x > b && y > b && z > b
+    infix fun anyGreaterThan(b: Byte): Boolean = x > b || y > b || z > b
+    infix fun greaterThan(b: Byte): Vec3bool = Vec3bool { get(it) > b }
+
+    infix fun allGreaterThanEqual(b: Byte): Boolean = x >= b && y >= b && z >= b
+    infix fun anyGreaterThanEqual(b: Byte): Boolean = x >= b || y >= b || z >= b
+    infix fun greaterThanEqual(b: Byte): Vec3bool = Vec3bool { get(it) >= b }
+
+
+    infix fun allLessThan(v: Vec3b): Boolean = x < v.x && y < v.y && z < v.z
+    infix fun anyLessThan(v: Vec3b): Boolean = x < v.x || y < v.y || z < v.z
+    infix fun lessThan(v: Vec3b): Vec3bool = Vec3bool { get(it) < v[it] }
+
+    infix fun allLessThanEqual(v: Vec3b): Boolean = x <= v.x && y <= v.y && z <= v.z
+    infix fun anyLessThanEqual(v: Vec3b): Boolean = x <= v.x || y <= v.y || z <= v.z
+    infix fun lessThanEqual(v: Vec3b): Vec3bool = Vec3bool { get(it) <= v[it] }
+
+    infix fun allEqual(v: Vec3b): Boolean = x == v.x && y == v.y && z == v.z
+    infix fun anyEqual(v: Vec3b): Boolean = x == v.x || y == v.y || z == v.z
+    infix fun equal(v: Vec3b): Vec3bool = Vec3bool { get(it) == v[it] }
+
+    infix fun allNotEqual(v: Vec3b): Boolean = x != v.x && y != v.y && z != v.z
+    infix fun anyNotEqual(v: Vec3b): Boolean = x != v.x || y != v.y || z != v.z
+    infix fun notEqual(v: Vec3b): Vec3bool = Vec3bool { get(it) != v[it] }
+
+    infix fun allGreaterThan(v: Vec3b): Boolean = x > v.x && y > v.y && z > v.z
+    infix fun anyGreaterThan(v: Vec3b): Boolean = x > v.x || y > v.y || z > v.z
+    infix fun greaterThan(v: Vec3b): Vec3bool = Vec3bool { get(it) > v[it] }
+
+    infix fun allGreaterThanEqual(v: Vec3b): Boolean = x >= v.x && y >= v.y && z >= v.z
+    infix fun anyGreaterThanEqual(v: Vec3b): Boolean = x >= v.x || y >= v.y || z >= v.z
+    infix fun greaterThanEqual(v: Vec3b): Vec3bool = Vec3bool { get(it) >= v[it] }
+
+
     override fun createInstance(x: Byte, y: Byte) = Vec2b(x, y)
     override fun createInstance(x: Byte, y: Byte, z: Byte) = Vec3b(x, y, z)
 

@@ -17,6 +17,8 @@ data class Vec3bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
 
     constructor(ba: Array<Boolean>) : this(ba[0], ba[1], ba[2])
 
+    constructor(init: (Int) -> Boolean): this(init(0), init(1), init(2))
+
     // -- Component accesses --
 
     operator fun get(i: Int): Boolean = when (i) {

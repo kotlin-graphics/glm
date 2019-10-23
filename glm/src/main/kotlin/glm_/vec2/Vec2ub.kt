@@ -687,6 +687,56 @@ class Vec2ub(var ofs: Int, var array: ByteArray) : Vec2t<Ubyte>(), ToBuffer {
     fun shrAssign(bX: Number, bY: Number) = shr(this, this, bX.i, bY.i)
 
 
+    infix fun allLessThan(ub: Ubyte): Boolean = x < ub && y < ub
+    infix fun anyLessThan(ub: Ubyte): Boolean = x < ub || y < ub
+    infix fun lessThan(ub: Ubyte): Vec2bool = Vec2bool { get(it) < ub }
+
+    infix fun allLessThanEqual(ub: Ubyte): Boolean = x <= ub && y <= ub
+    infix fun anyLessThanEqual(ub: Ubyte): Boolean = x <= ub || y <= ub
+    infix fun lessThanEqual(ub: Ubyte): Vec2bool = Vec2bool { get(it) <= ub }
+
+    infix fun allEqual(ub: Ubyte): Boolean = x == ub && y == ub
+    infix fun anyEqual(ub: Ubyte): Boolean = x == ub || y == ub
+    infix fun equal(ub: Ubyte): Vec2bool = Vec2bool { get(it) == ub }
+
+    infix fun allNotEqual(ub: Ubyte): Boolean = x != ub && y != ub
+    infix fun anyNotEqual(ub: Ubyte): Boolean = x != ub || y != ub
+    infix fun notEqual(ub: Ubyte): Vec2bool = Vec2bool { get(it) != ub }
+
+    infix fun allGreaterThan(ub: Ubyte): Boolean = x > ub && y > ub
+    infix fun anyGreaterThan(ub: Ubyte): Boolean = x > ub || y > ub
+    infix fun greaterThan(ub: Ubyte): Vec2bool = Vec2bool { get(it) > ub }
+
+    infix fun allGreaterThanEqual(ub: Ubyte): Boolean = x >= ub && y >= ub
+    infix fun anyGreaterThanEqual(ub: Ubyte): Boolean = x >= ub || y >= ub
+    infix fun greaterThanEqual(ub: Ubyte): Vec2bool = Vec2bool { get(it) >= ub }
+
+
+    infix fun allLessThan(v: Vec2ub): Boolean = x < v.x && y < v.y
+    infix fun anyLessThan(v: Vec2ub): Boolean = x < v.x || y < v.y
+    infix fun lessThan(v: Vec2ub): Vec2bool = Vec2bool { get(it) < v[it] }
+
+    infix fun allLessThanEqual(v: Vec2ub): Boolean = x <= v.x && y <= v.y
+    infix fun anyLessThanEqual(v: Vec2ub): Boolean = x <= v.x || y <= v.y
+    infix fun lessThanEqual(v: Vec2ub): Vec2bool = Vec2bool { get(it) <= v[it] }
+
+    infix fun allEqual(v: Vec2ub): Boolean = x == v.x && y == v.y
+    infix fun anyEqual(v: Vec2ub): Boolean = x == v.x || y == v.y
+    infix fun equal(v: Vec2ub): Vec2bool = Vec2bool { get(it) == v[it] }
+
+    infix fun allNotEqual(v: Vec2ub): Boolean = x != v.x && y != v.y
+    infix fun anyNotEqual(v: Vec2ub): Boolean = x != v.x || y != v.y
+    infix fun notEqual(v: Vec2ub): Vec2bool = Vec2bool { get(it) != v[it] }
+
+    infix fun allGreaterThan(v: Vec2ub): Boolean = x > v.x && y > v.y
+    infix fun anyGreaterThan(v: Vec2ub): Boolean = x > v.x || y > v.y
+    infix fun greaterThan(v: Vec2ub): Vec2bool = Vec2bool { get(it) > v[it] }
+
+    infix fun allGreaterThanEqual(v: Vec2ub): Boolean = x >= v.x && y >= v.y
+    infix fun anyGreaterThanEqual(v: Vec2ub): Boolean = x >= v.x || y >= v.y
+    infix fun greaterThanEqual(v: Vec2ub): Vec2bool = Vec2bool { get(it) >= v[it] }
+
+
     override fun createInstance(x: Ubyte, y: Ubyte) = Vec2ub(x, y)
 
 
