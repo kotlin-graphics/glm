@@ -41,9 +41,9 @@ class testCoreMat3 : StringSpec() {
                 val inverse = matrix.inverse()
                 val identity = matrix * inverse
 
-                glm.all(glm.epsilonEqual(identity[0], Vec3(1f, 0f, 0f), Vec3(0.01f))) shouldBe true
-                glm.all(glm.epsilonEqual(identity[1], Vec3(0f, 1f, 0f), Vec3(0.01f))) shouldBe true
-                glm.all(glm.epsilonEqual(identity[2], Vec3(0f, 0f, 1f), Vec3(0.01f))) shouldBe true
+                glm.all(glm.equal(identity[0], Vec3(1f, 0f, 0f), Vec3(0.01f))) shouldBe true
+                glm.all(glm.equal(identity[1], Vec3(0f, 1f, 0f), Vec3(0.01f))) shouldBe true
+                glm.all(glm.equal(identity[2], Vec3(0f, 0f, 1f), Vec3(0.01f))) shouldBe true
             }
             run {
                 val matrix = Mat3(
@@ -52,9 +52,9 @@ class testCoreMat3 : StringSpec() {
                         0.3f, 0.5f, 0.7f)
                 val identity = matrix / matrix
 
-                glm.all(glm.epsilonEqual(identity[0], Vec3(1f, 0f, 0f), Vec3(0.01f))) shouldBe true
-                glm.all(glm.epsilonEqual(identity[1], Vec3(0f, 1f, 0f), Vec3(0.01f))) shouldBe true
-                glm.all(glm.epsilonEqual(identity[2], Vec3(0f, 0f, 1f), Vec3(0.01f))) shouldBe true
+                glm.all(glm.equal(identity[0], Vec3(1f, 0f, 0f), Vec3(0.01f))) shouldBe true
+                glm.all(glm.equal(identity[1], Vec3(0f, 1f, 0f), Vec3(0.01f))) shouldBe true
+                glm.all(glm.equal(identity[2], Vec3(0f, 0f, 1f), Vec3(0.01f))) shouldBe true
             }
         }
 

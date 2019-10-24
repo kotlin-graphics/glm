@@ -29,10 +29,10 @@ class testCoreMat4 : StringSpec() {
 
             matrix.print("mat")
 
-            glm.all(glm.epsilonEqual(identity[0], Vec4(1f, 0f, 0f, 0f), Vec4(0.01f))) shouldBe true
-            glm.all(glm.epsilonEqual(identity[1], Vec4(0f, 1f, 0f, 0f), Vec4(0.01f))) shouldBe true
-            glm.all(glm.epsilonEqual(identity[2], Vec4(0f, 0f, 1f, 0f), Vec4(0.01f))) shouldBe true
-            glm.all(glm.epsilonEqual(identity[3], Vec4(0f, 0f, 0f, 1f), Vec4(0.01f))) shouldBe true
+            glm.all(glm.equal(identity[0], Vec4(1f, 0f, 0f, 0f), Vec4(0.01f))) shouldBe true
+            glm.all(glm.equal(identity[1], Vec4(0f, 1f, 0f, 0f), Vec4(0.01f))) shouldBe true
+            glm.all(glm.equal(identity[2], Vec4(0f, 0f, 1f, 0f), Vec4(0.01f))) shouldBe true
+            glm.all(glm.equal(identity[3], Vec4(0f, 0f, 0f, 1f), Vec4(0.01f))) shouldBe true
         }
 
         "inverse mat4d" {
@@ -43,10 +43,10 @@ class testCoreMat4 : StringSpec() {
                     0.4, 0.3, 0.2, 0.6)
             val identity = matrix / matrix
 
-            glm.all(glm.epsilonEqual(identity[0], Vec4d(1.0, 0.0, 0.0, 0.0), Vec4d(0.01))) shouldBe true
-            glm.all(glm.epsilonEqual(identity[1], Vec4d(0.0, 1.0, 0.0, 0.0), Vec4d(0.01))) shouldBe true
-            glm.all(glm.epsilonEqual(identity[2], Vec4d(0.0, 0.0, 1.0, 0.0), Vec4d(0.01))) shouldBe true
-            glm.all(glm.epsilonEqual(identity[3], Vec4d(0.0, 0.0, 0.0, 1.0), Vec4d(0.01))) shouldBe true
+            glm.all(glm.equal(identity[0], Vec4d(1.0, 0.0, 0.0, 0.0), Vec4d(0.01))) shouldBe true
+            glm.all(glm.equal(identity[1], Vec4d(0.0, 1.0, 0.0, 0.0), Vec4d(0.01))) shouldBe true
+            glm.all(glm.equal(identity[2], Vec4d(0.0, 0.0, 1.0, 0.0), Vec4d(0.01))) shouldBe true
+            glm.all(glm.equal(identity[3], Vec4d(0.0, 0.0, 0.0, 1.0), Vec4d(0.01))) shouldBe true
         }
 
         "test operators" {
@@ -68,10 +68,10 @@ class testCoreMat4 : StringSpec() {
 
             val rotate = glm.rotate(Mat4(), 1f, 2f, 3f, 4f)
 
-            glm.all(glm.epsilonEqual(rotate[0], Vec4(x = 0.60370886, y = 0.7201388, z = -0.34195852, w = 0.0), Vec4(0.01f))) shouldBe true
-            glm.all(glm.epsilonEqual(rotate[1], Vec4(x = -0.529919, y = 0.68296707, z = 0.5027342, w = 0.0), Vec4(0.01f))) shouldBe true
-            glm.all(glm.epsilonEqual(rotate[2], Vec4(x = 0.59558487, y = -0.12229471, z = 0.7939286, w = 0.0), Vec4(0.01f))) shouldBe true
-            glm.all(glm.epsilonEqual(rotate[3], Vec4(x = 0.0, y = 0.0, z = 0.0, w = 1.0), Vec4(0.01f))) shouldBe true
+            glm.all(glm.equal(rotate[0], Vec4(x = 0.60370886, y = 0.7201388, z = -0.34195852, w = 0.0), Vec4(0.01f))) shouldBe true
+            glm.all(glm.equal(rotate[1], Vec4(x = -0.529919, y = 0.68296707, z = 0.5027342, w = 0.0), Vec4(0.01f))) shouldBe true
+            glm.all(glm.equal(rotate[2], Vec4(x = 0.59558487, y = -0.12229471, z = 0.7939286, w = 0.0), Vec4(0.01f))) shouldBe true
+            glm.all(glm.equal(rotate[3], Vec4(x = 0.0, y = 0.0, z = 0.0, w = 1.0), Vec4(0.01f))) shouldBe true
         }
 
         "test multiplication" {
@@ -113,7 +113,7 @@ class testCoreMat4 : StringSpec() {
 //                        glm::mat4x4 Identity(1.0f);
 //
 //                        for(glm::length_t i = 0, length = B.length(); i < length; ++i)
-//                        Error += glm::all(glm::epsilonEqual(B[i], Identity[i], glm::epsilon<float>())) ? 0 : 1;
+//                        Error += glm::all(glm::equal(B[i], Identity[i], glm::epsilon<float>())) ? 0 : 1;
 //
 //                        return Error;
 //                    }

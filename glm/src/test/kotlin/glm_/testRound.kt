@@ -22,7 +22,7 @@ class testRound : StringSpec() {
             data.forEach {
 
                 val result = glm.ceilMultiple(it.source, it.multiple)
-                glm.epsilonEqual(it.return_, result, it.epsilon) shouldBe true
+                glm.equal(it.return_, result, it.epsilon) shouldBe true
             }
         }
 

@@ -9,7 +9,7 @@ import io.kotlintest.specs.StringSpec
  * Created by fschaefers on 09.02.2017.
  */
 
-class testCoreVec2i : StringSpec() {
+class coreVec2i : StringSpec() {
     init {
         "operatorsSpecific" {
             run {

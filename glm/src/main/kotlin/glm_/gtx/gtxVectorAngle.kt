@@ -30,7 +30,7 @@ interface gtxVectorAngle {
 
         val angle = acos(glm.clamp(x dot y, -1f, 1f))
 
-        return if (glm.all(glm.epsilonEqual(y, x rotate angle, 0.0001f)))
+        return if (glm.all(glm.equal(y, x rotate angle, 0.0001f)))
             angle
         else -angle
     }

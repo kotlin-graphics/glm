@@ -43,9 +43,9 @@ class testGtxDualQuat : StringSpec() {
                 val dst3 = DualQuat(src1)
                 dst3 *= 2f
                 val dstCmp = DualQuat(srcQ1 * 2f, srcQ2 * 2f)
-                (glm.epsilonEqual(dst1.real, dstCmp.real, epsilon).all && glm.epsilonEqual(dst1.dual, dstCmp.dual, epsilon).all) shouldBe true
-                (glm.epsilonEqual(dst2.real, dstCmp.real, epsilon).all && glm.epsilonEqual(dst2.dual, dstCmp.dual, epsilon).all) shouldBe true
-                (glm.epsilonEqual(dst3.real, dstCmp.real, epsilon).all && glm.epsilonEqual(dst3.dual, dstCmp.dual, epsilon).all) shouldBe true
+                (glm.equal(dst1.real, dstCmp.real, epsilon).all && glm.equal(dst1.dual, dstCmp.dual, epsilon).all) shouldBe true
+                (glm.equal(dst2.real, dstCmp.real, epsilon).all && glm.equal(dst2.dual, dstCmp.dual, epsilon).all) shouldBe true
+                (glm.equal(dst3.real, dstCmp.real, epsilon).all && glm.equal(dst3.dual, dstCmp.dual, epsilon).all) shouldBe true
             }
 
             run {
@@ -53,8 +53,8 @@ class testGtxDualQuat : StringSpec() {
                 val dst2 = DualQuat(src1)
                 dst2 /= 2f
                 val dstCmp = DualQuat(srcQ1 / 2f, srcQ2 / 2f)
-                (glm.epsilonEqual(dst1.real, dstCmp.real, epsilon).all && glm.epsilonEqual(dst1.dual, dstCmp.dual, epsilon).all) shouldBe true
-                (glm.epsilonEqual(dst2.real, dstCmp.real, epsilon).all && glm.epsilonEqual(dst2.dual, dstCmp.dual, epsilon).all) shouldBe true
+                (glm.equal(dst1.real, dstCmp.real, epsilon).all && glm.equal(dst1.dual, dstCmp.dual, epsilon).all) shouldBe true
+                (glm.equal(dst2.real, dstCmp.real, epsilon).all && glm.equal(dst2.dual, dstCmp.dual, epsilon).all) shouldBe true
             }
         }
 
@@ -83,15 +83,15 @@ class testGtxDualQuat : StringSpec() {
                 val r1 = invDq * dq
                 val r2 = dq * invDq
 
-                (glm.epsilonEqual(r1.real, dqId.real, epsilon).all && glm.epsilonEqual(r1.dual, dqId.dual, epsilon).all) shouldBe true
-                (glm.epsilonEqual(r2.real, dqId.real, epsilon).all && glm.epsilonEqual(r2.dual, dqId.dual, epsilon).all) shouldBe true
+                (glm.equal(r1.real, dqId.real, epsilon).all && glm.equal(r1.dual, dqId.dual, epsilon).all) shouldBe true
+                (glm.equal(r2.real, dqId.real, epsilon).all && glm.equal(r2.dual, dqId.dual, epsilon).all) shouldBe true
 
                 // testing commutative property
                 val r = DualQuat(Quat(myfrand() * glm.PIf * 2f, myfrand(), myfrand(), myfrand()), Vec3 { myfrand() * 10 })
                 val riq = (r * invDq) * dq
                 val rqi = (r * dq) * invDq
 
-                (glm.epsilonEqual(riq.real, rqi.real, epsilon).all && glm.epsilonEqual(riq.dual, rqi.dual, epsilon).all) shouldBe true
+                (glm.equal(riq.real, rqi.real, epsilon).all && glm.equal(riq.dual, rqi.dual, epsilon).all) shouldBe true
             }
         }
 
@@ -136,10 +136,10 @@ class testGtxDualQuat : StringSpec() {
                     val `dst * m4_i` = m4.inverse() * srcPt
                     val `dst * dq4_i` = srcPt * dq4
 
-                    glm.epsilonEqual(`dst * m3`, `dst * dq3`, epsilon).all shouldBe true
-                    glm.epsilonEqual(`dst * m4`, `dst * dq4`, epsilon).all shouldBe true
-                    glm.epsilonEqual(`dst * m3_i`, `dst * dq3_i`, epsilon).all shouldBe true
-                    glm.epsilonEqual(`dst * m4_i`, `dst * dq4_i`, epsilon).all shouldBe true
+                    glm.equal(`dst * m3`, `dst * dq3`, epsilon).all shouldBe true
+                    glm.equal(`dst * m4`, `dst * dq4`, epsilon).all shouldBe true
+                    glm.equal(`dst * m3_i`, `dst * dq3_i`, epsilon).all shouldBe true
+                    glm.equal(`dst * m4_i`, `dst * dq4_i`, epsilon).all shouldBe true
                 }
             }
         }

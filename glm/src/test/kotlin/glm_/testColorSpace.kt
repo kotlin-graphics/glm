@@ -17,13 +17,13 @@ class testColorSpace : StringSpec() {
             run {
                 val colorSRGB = glm.convertLinearToSRGB(colorSourceRGB)
                 val colorRGB = glm.convertSRGBToLinear(colorSRGB)
-                glm.all(glm.epsilonEqual(colorSourceRGB, colorRGB, 0.00001f)) shouldBe true
+                glm.all(glm.equal(colorSourceRGB, colorRGB, 0.00001f)) shouldBe true
             }
 
             run {
                 val colorSRGB = glm.convertLinearToSRGB(colorSourceRGB, 2.8f)
                 val colorRGB = glm.convertSRGBToLinear(colorSRGB, 2.8f)
-                glm.all(glm.epsilonEqual(colorSourceRGB, colorRGB, 0.00001f)) shouldBe true
+                glm.all(glm.equal(colorSourceRGB, colorRGB, 0.00001f)) shouldBe true
             }
 
             val colorSourceRGBA = Vec4(1.0f, 0.5f, 0.0f, 1.0f)
@@ -31,13 +31,13 @@ class testColorSpace : StringSpec() {
             run {
                 val colorSRGB = glm.convertLinearToSRGB(colorSourceRGBA)
                 val colorRGB = glm.convertSRGBToLinear(colorSRGB)
-                glm.all(glm.epsilonEqual(colorSourceRGBA, colorRGB, 0.00001f)) shouldBe true
+                glm.all(glm.equal(colorSourceRGBA, colorRGB, 0.00001f)) shouldBe true
             }
 
             run {
                 val colorSRGB = glm.convertLinearToSRGB(colorSourceRGBA, 2.8f)
                 val colorRGB = glm.convertSRGBToLinear(colorSRGB, 2.8f)
-                glm.all(glm.epsilonEqual(colorSourceRGBA, colorRGB, 0.00001f)) shouldBe true
+                glm.all(glm.equal(colorSourceRGBA, colorRGB, 0.00001f)) shouldBe true
             }
 
             val a = Vec2()

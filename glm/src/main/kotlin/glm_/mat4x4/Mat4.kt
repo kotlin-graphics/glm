@@ -1,7 +1,6 @@
 package  glm_.mat4x4
 
 import glm_.*
-import glm_.glm.epsilonF
 import glm_.glm.inverse
 import glm_.glm.transpose
 import glm_.mat2x2.Mat2
@@ -32,7 +31,6 @@ import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.io.InputStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
-import java.util.*
 import kotlin.math.abs
 
 /**
@@ -863,13 +861,6 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     override fun equals(other: Any?) = other is Mat4 && array.contentEquals(other.array)
 
-    fun equal(b: Mat4, epsilon: Float = 0f): Boolean {
-        for (i in 0..15)
-            if (abs(array[i] - b.array[i]) > epsilon)
-                return false
-        return true
-    }
-
     fun equal(b: Mat4, epsilon: Vec4, res: Vec4bool = Vec4bool()): Vec4bool = res {
         var equal = true
         for (i in 0..3)
@@ -880,9 +871,16 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
         equal
     }
 
-    fun notEqual(b: Mat4, epsilon: Float = 0f): Boolean = !equal(b, epsilon)
+    fun allEqual(b: Mat4, epsilon: Float = 0f): Boolean {
+        for (i in 0..15)
+            if (abs(array[i] - b.array[i]) > epsilon)
+                return false
+        return true
+    }
 
-    fun notEqual(b: Mat4, epsilon: Vec4, res: Vec4bool = Vec4bool()): Vec4bool = equal(b, epsilon, res).notAssign()
+    fun notEqual(b: Mat4, epsilon: Vec4, res: Vec4bool = Vec4bool()): Vec4bool = equal(b, epsilon, res)
+
+    fun anyNotEqual(b: Mat4, epsilon: Float = 0f): Boolean = !allEqual(b, epsilon)
 
     override fun hashCode() = 31 * (31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()) + this[3].hashCode()
 }

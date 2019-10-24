@@ -4,6 +4,7 @@ package glm_
  * Created by GBarbieri on 05.10.2016.
  */
 
+import glm_.glm.εf
 import glm_.vec1.Vec1
 import glm_.vec1.Vec1d
 import glm_.vec2.Vec2
@@ -28,23 +29,23 @@ class coreVec2 : StringSpec() {
             }
             run {
                 val a = Vec2 { it + 1f }
-                a shouldBe Vec2(1, 2)
+                a shouldEqual Vec2(1, 2)
             }
 
             run {
                 val a = Vec2(1f)
                 val b = Vec2(1f)
 
-                a shouldBe b
-                (a != b) shouldBe false
+                assert(a == b)
+                assert(!(a != b))
             }
             run {
                 val a = Vec2(1f)
                 val c = a + 1f
                 a += 1f
 
-                a shouldBe Vec2(2f)
-                a shouldBe c
+                a shouldEqual Vec2(2f)
+                a shouldEqual c
             }
             run {
                 val a = Vec2(1f)
@@ -52,172 +53,172 @@ class coreVec2 : StringSpec() {
                 val c = a + b
                 a += b
 
-                a shouldBe Vec2(3f, 0f)
-                a shouldBe c
+                a shouldEqual Vec2(3f, 0f)
+                a shouldEqual c
             }
             run {
                 val a = Vec2(1f)
                 val c = a - 1f
                 a -= 1f
 
-                a shouldBe Vec2()
-                a shouldBe c
+                a shouldEqual Vec2()
+                a shouldEqual c
             }
             run {
                 val a = Vec2(1f)
                 val b = Vec2(2f, -1f)
                 val c = a - b
                 a -= b
-                a shouldBe Vec2(-1f, 2f)
-                a shouldBe c
+                a shouldEqual Vec2(-1f, 2f)
+                a shouldEqual c
             }
             run {
                 val a = Vec2(1f)
                 val c = a * 2f
                 a *= 2f
 
-                a shouldBe Vec2(2f)
-                a shouldBe c
+                a shouldEqual Vec2(2f)
+                a shouldEqual c
             }
             run {
                 val a = Vec2(2f)
                 val b = Vec2(2f)
                 val c = a / b
                 a /= b
-                a shouldBe Vec2(1f)
-                a shouldBe c
+                a shouldEqual Vec2(1f)
+                a shouldEqual c
             }
             run {
                 val a = Vec2(1f, 2f)
                 val b = Vec2(4f, 5f)
 
                 val c = a + b
-                c shouldBe Vec2(5f, 7f)
+                c shouldEqual Vec2(5f, 7f)
 
                 val d = b - a
-                d shouldBe Vec2(3f)
+                d shouldEqual Vec2(3f)
 
                 val e = a * b
-                e shouldBe Vec2(4f, 10f)
+                e shouldEqual Vec2(4f, 10f)
 
                 val f = b / a
-                f shouldBe Vec2(4f, 2.5f)
+                f shouldEqual Vec2(4f, 2.5f)
 
                 val g = a + 1f
-                g shouldBe Vec2(2f, 3f)
+                g shouldEqual Vec2(2f, 3f)
 
                 val h = b - 1f
-                h shouldBe Vec2(3f, 4f)
+                h shouldEqual Vec2(3f, 4f)
 
                 val i = a * 2f
-                i shouldBe Vec2(2f, 4f)
+                i shouldEqual Vec2(2f, 4f)
 
                 val j = b / 2f
-                j shouldBe Vec2(2f, 2.5f)
+                j shouldEqual Vec2(2f, 2.5f)
 
                 val k = 1f + a
-                k shouldBe Vec2(2f, 3f)
+                k shouldEqual Vec2(2f, 3f)
 
                 val l = 1f - b
-                l shouldBe Vec2(-3f, -4f)
+                l shouldEqual Vec2(-3f, -4f)
 
                 val m = 2f * a
-                m shouldBe Vec2(2f, 4f)
+                m shouldEqual Vec2(2f, 4f)
 
                 val n = 2f / b
-                n shouldBe Vec2(.5f, 2f / 5f)
+                n shouldEqual Vec2(.5f, 2f / 5f)
             }
             run {
                 val a = Vec2(1f, 2f)
                 val b = Vec2(4f, 5f)
 
                 a += b
-                a shouldBe Vec2(5f, 7f)
+                a shouldEqual Vec2(5f, 7f)
 
                 a += 1f
-                a shouldBe Vec2(6f, 8f)
+                a shouldEqual Vec2(6f, 8f)
             }
             run {
-                val a = Vec2(1f, 2f)
-                val b = Vec2(4f, 5f)
+                val a = Vec2i(1f, 2f)
+                val b = Vec2i(4f, 5f)
 
                 b -= a
-                b shouldBe Vec2(3f)
+                b shouldEqual Vec2i(3f)
 
                 b -= 1f
-                b shouldBe Vec2(2f)
+                b shouldEqual Vec2i(2f)
             }
             run {
-                val a = Vec2(1f, 2f)
-                val b = Vec2(4f, 5f)
+                val a = Vec2i(1f, 2f)
+                val b = Vec2i(4f, 5f)
 
                 a *= b
-                a shouldBe Vec2(4f, 10f)
+                a shouldEqual Vec2i(4f, 10f)
 
                 a *= 2f
-                a shouldBe Vec2(8f, 20f)
+                a shouldEqual Vec2i(8f, 20f)
             }
             run {
-                val a = Vec2(1f, 2f)
-                val b = Vec2(4f, 5f)
+                val a = Vec2i(1f, 2f)
+                val b = Vec2i(4f, 16f)
 
                 b /= a
-                b shouldBe Vec2(4f, 2.5f)
+                b shouldEqual Vec2i(4f, 8f)
 
                 b /= 2f
-                b shouldBe Vec2(2f, 1.25f)
+                b shouldEqual Vec2i(2f, 4f)
             }
             run {
-                val b = Vec2(2f)
+                val b = Vec2i(2)
 
                 b /= b.y
-                b shouldBe Vec2(1f)
+                b shouldEqual Vec2i(1)
             }
             run {
-                val a = Vec2(1f, 2f)
+                val a = Vec2i(1f, 2f)
                 val b = -a
 
-                b shouldBe Vec2(-1f, -2f)
+                b shouldEqual Vec2i(-1f, -2f)
             }
             run {
-                var a = Vec2(1f, 2f)
+                var a = Vec2i(1f, 2f)
                 val b = --a
 
-                b shouldBe Vec2(0f, 1f)
+                b shouldEqual Vec2i(0f, 1f)
             }
             run {
-                var a = Vec2(1f, 2f)
+                var a = Vec2i(1f, 2f)
                 val b = a--
 
-                b shouldBe Vec2(1f, 2f)
-                a shouldBe Vec2(0f, 1f)
+                b shouldEqual Vec2i(1f, 2f)
+                a shouldEqual Vec2i(0f, 1f)
             }
             run {
-                var a = Vec2(1f, 2f)
+                var a = Vec2i(1f, 2f)
                 val b = ++a
 
-                b shouldBe Vec2(2f, 3f)
+                b shouldEqual Vec2i(2f, 3f)
             }
             run {
-                var a = Vec2(1f, 2f)
+                var a = Vec2i(1f, 2f)
                 val b = a++
 
-                b shouldBe Vec2(1f, 2f)
-                a shouldBe Vec2(2f, 3f)
+                b shouldEqual Vec2i(1f, 2f)
+                a shouldEqual Vec2i(2f, 3f)
             }
             // custom
             run {
                 val a = Vec2(1f, 2f)
                 a += 1f
 
-                a shouldBe Vec2(2f, 3f)
+                a shouldEqual Vec2(2f, 3f)
             }
             run {
                 val a = Vec2(1f, 2f)
                 val b = Vec2(3f, 4f)
                 a += b
 
-                a shouldBe Vec2(4f, 6f)
+                a shouldEqual Vec2(4f, 6f)
             }
         }
 
@@ -228,8 +229,8 @@ class coreVec2 : StringSpec() {
                 val c = a + 1
                 a += 1L
 
-                a shouldBe Vec2(2f)
-                a shouldBe c
+                a shouldEqual Vec2(2f)
+                a shouldEqual c
             }
             run {
                 val a = Vec2(1f)
@@ -237,191 +238,191 @@ class coreVec2 : StringSpec() {
                 val c = a + b
                 a += b
 
-                a shouldBe Vec2(3f, 0f)
-                a shouldBe c
+                a shouldEqual Vec2(3f, 0f)
+                a shouldEqual c
             }
             run {
                 val a = Vec2(1f)
                 val c = a - 1f
                 a -= 1f
 
-                a shouldBe Vec2()
-                a shouldBe c
+                a shouldEqual Vec2()
+                a shouldEqual c
             }
             run {
                 val a = Vec2(1f)
                 val b = Vec2(2f, -1f)
                 val c = a - b
                 a -= b
-                a shouldBe Vec2(-1f, 2f)
-                a shouldBe c
+                a shouldEqual Vec2(-1f, 2f)
+                a shouldEqual c
             }
             run {
                 val a = Vec2(1f)
                 val c = a * 2f
                 a *= 2f
 
-                a shouldBe Vec2(2f)
-                a shouldBe c
+                a shouldEqual Vec2(2f)
+                a shouldEqual c
             }
             run {
                 val a = Vec2(2f)
                 val b = Vec2(2f)
                 val c = a / b
                 a /= b
-                a shouldBe Vec2(1f)
-                a shouldBe c
+                a shouldEqual Vec2(1f)
+                a shouldEqual c
             }
             run {
                 val a = Vec2(1f, 2f)
                 val b = Vec2(4f, 5f)
 
                 val c = a + b
-                c shouldBe Vec2(5f, 7f)
+                c shouldEqual Vec2(5f, 7f)
 
                 val d = b - a
-                d shouldBe Vec2(3f)
+                d shouldEqual Vec2(3f)
 
                 val e = a * b
-                e shouldBe Vec2(4f, 10f)
+                e shouldEqual Vec2(4f, 10f)
 
                 val f = b / a
-                f shouldBe Vec2(4f, 2.5f)
+                f shouldEqual Vec2(4f, 2.5f)
 
                 val g = a + 1f
-                g shouldBe Vec2(2f, 3f)
+                g shouldEqual Vec2(2f, 3f)
 
                 val h = b - 1f
-                h shouldBe Vec2(3f, 4f)
+                h shouldEqual Vec2(3f, 4f)
 
                 val i = a * 2f
-                i shouldBe Vec2(2f, 4f)
+                i shouldEqual Vec2(2f, 4f)
 
                 val j = b / 2f
-                j shouldBe Vec2(2f, 2.5f)
+                j shouldEqual Vec2(2f, 2.5f)
 
                 val k = 1f + a
-                k shouldBe Vec2(2f, 3f)
+                k shouldEqual Vec2(2f, 3f)
 
                 val l = 1f - b
-                l shouldBe Vec2(-3f, -4f)
+                l shouldEqual Vec2(-3f, -4f)
 
                 val m = 2f * a
-                m shouldBe Vec2(2f, 4f)
+                m shouldEqual Vec2(2f, 4f)
 
                 val n = 2f / b
-                n shouldBe Vec2(.5f, 2f / 5f)
+                n shouldEqual Vec2(.5f, 2f / 5f)
             }
             run {
                 val a = Vec2(1f, 2f)
                 val b = Vec2(4f, 5f)
 
                 a += b
-                a shouldBe Vec2(5f, 7f)
+                a shouldEqual Vec2(5f, 7f)
 
                 a += 1f
-                a shouldBe Vec2(6f, 8f)
+                a shouldEqual Vec2(6f, 8f)
             }
             run {
                 val a = Vec2(1f, 2f)
                 val b = Vec2(4f, 5f)
 
                 b -= a
-                b shouldBe Vec2(3f)
+                b shouldEqual Vec2(3f)
 
                 b -= 1f
-                b shouldBe Vec2(2f)
+                b shouldEqual Vec2(2f)
             }
             run {
                 val a = Vec2(1f, 2f)
                 val b = Vec2(4f, 5f)
 
                 a *= b
-                a shouldBe Vec2(4f, 10f)
+                a shouldEqual Vec2(4f, 10f)
 
                 a *= 2f
-                a shouldBe Vec2(8f, 20f)
+                a shouldEqual Vec2(8f, 20f)
             }
             run {
                 val a = Vec2(1f, 2f)
                 val b = Vec2(4f, 5f)
 
                 b /= a
-                b shouldBe Vec2(4f, 2.5f)
+                b shouldEqual Vec2(4f, 2.5f)
 
                 b /= 2f
-                b shouldBe Vec2(2f, 1.25f)
+                b shouldEqual Vec2(2f, 1.25f)
             }
             run {
                 val b = Vec2(2f)
 
                 b /= b.y
-                b shouldBe Vec2(1f)
+                b shouldEqual Vec2(1f)
             }
             run {
                 val a = Vec2(1f, 2f)
                 val b = -a
 
-                b shouldBe Vec2(-1f, -2f)
+                b shouldEqual Vec2(-1f, -2f)
             }
             run {
                 var a = Vec2(1f, 2f)
                 val b = --a
 
-                b shouldBe Vec2(0f, 1f)
+                b shouldEqual Vec2(0f, 1f)
             }
             run {
                 var a = Vec2(1f, 2f)
                 val b = a--
 
-                b shouldBe Vec2(1f, 2f)
-                a shouldBe Vec2(0f, 1f)
+                b shouldEqual Vec2(1f, 2f)
+                a shouldEqual Vec2(0f, 1f)
             }
             run {
                 var a = Vec2(1f, 2f)
                 val b = ++a
 
-                b shouldBe Vec2(2f, 3f)
+                b shouldEqual Vec2(2f, 3f)
             }
             run {
                 var a = Vec2(1f, 2f)
                 val b = a++
 
-                b shouldBe Vec2(1f, 2f)
-                a shouldBe Vec2(2f, 3f)
+                b shouldEqual Vec2(1f, 2f)
+                a shouldEqual Vec2(2f, 3f)
             }
             // custom
             run {
                 val a = Vec2(1f, 2f)
                 a += 1f
 
-                a shouldBe Vec2(2f, 3f)
+                a shouldEqual Vec2(2f, 3f)
             }
             run {
                 val a = Vec2(1f, 2f)
                 val b = Vec2(3f, 4f)
                 a += b
 
-                a shouldBe Vec2(4f, 6f)
+                a shouldEqual Vec2(4f, 6f)
             }
         }
 
         "ctor" {
 
             run {
-                val a = Vec2(1)
-                val b = Vec2(a)
+                val a = Vec2i(1)
+                val b = Vec2i(a)
 
-                a shouldBe b
+                a shouldEqual b
             }
             run {
                 val A = Vec2(1f, 2f)
                 val B = A.xy as Vec2
                 val C = Vec2(A.xy as Vec2)
                 val D = Vec2(A.xy as Vec2)
-                A shouldBe B
-                A shouldBe C
-                A shouldBe D
+                A shouldEqual B
+                A shouldEqual C
+                A shouldEqual D
             }
             run {
                 val A = Vec2(2f)
@@ -438,16 +439,16 @@ class coreVec2 : StringSpec() {
 
                 val A = Vec2(R)
                 val B = Vec2(1f)
-                A shouldBe B
+                A shouldEqual B
 
                 val C = Vec2(R, S)
-                C shouldBe O
+                C shouldEqual O
 
                 val D = Vec2(R, 2f)
-                D shouldBe O
+                D shouldEqual O
 
                 val E = Vec2(1f, S)
-                E shouldBe O
+                E shouldEqual O
             }
 
             run {
@@ -457,30 +458,30 @@ class coreVec2 : StringSpec() {
 
                 val A = Vec2(R)
                 val B = Vec2(1.0)
-                A shouldBe B
+                A shouldEqual B
 
                 val C = Vec2(R, S)
-                C shouldBe O
+                C shouldEqual O
 
                 val D = Vec2(R, 2.0)
-                D shouldBe O
+                D shouldEqual O
 
                 val E = Vec2(1.0, S)
-                E shouldBe O
+                E shouldEqual O
             }
         }
 
         "size" {
 
-            //            Vec2.length shouldBe 2 TODO
-//            Vec2d().length() shouldBe 2
+            //            Vec2.length shouldEqual 2 TODO
+//            Vec2d().length() shouldEqual 2
         }
 
         "generic" {
 
             val a = 1L + Vec2(4)
 
-            a shouldBe Vec2(5)
+            a shouldEqual Vec2(5)
         }
 
         "operator_increment" {
@@ -524,8 +525,8 @@ class coreVec2 : StringSpec() {
             val B = Vec2(A.xy)
             val C = Vec2(A.xy)
 
-            A shouldBe B
-            A shouldBe C
+            A shouldEqual B
+            A shouldEqual C
 //                }
 //            #	endif//GLM_SWIZZLE == GLM_ENABLE
         }
@@ -539,16 +540,16 @@ class coreVec2 : StringSpec() {
 
 //            val c = b.xy as Vec2
 
-            b shouldBe Vec2(1, 2)
+            b shouldEqual Vec2(1, 2)
 
             a.yx = b
 
-            a shouldBe Vec2(2, 1)
-            b shouldBe Vec2(1, 2)
+            a shouldEqual Vec2(2, 1)
+            b shouldEqual Vec2(1, 2)
 
             a.yx = b.yx
 
-            a shouldBe Vec2(1, 2)
+            a shouldEqual Vec2(1, 2)
         }
     }
 }

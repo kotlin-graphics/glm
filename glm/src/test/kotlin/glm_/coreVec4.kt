@@ -15,7 +15,7 @@ import glm_.vec4.operators.times
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
-class testCoreVec4 : StringSpec() {
+class coreVec4 : StringSpec() {
 
     init {
 

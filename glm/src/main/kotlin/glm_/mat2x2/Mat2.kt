@@ -402,13 +402,6 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     override fun equals(other: Any?) = other is Mat2 && array.contentEquals(other.array)
 
-    fun equal(b: Mat2, epsilon: Float = 0f): Boolean {
-        for (i in 0..3)
-            if (abs(array[i] - b.array[i]) > epsilon)
-                return false
-        return true
-    }
-
     fun equal(b: Mat2, epsilon: Vec2, res: Vec2bool = Vec2bool()): Vec2bool = res {
         var equal = true
         for (i in 0..1)
@@ -419,9 +412,16 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
         equal
     }
 
-    fun notEqual(b: Mat2, epsilon: Float = 0f): Boolean = !equal(b, epsilon)
+    fun allEqual(b: Mat2, epsilon: Float = 0f): Boolean {
+        for (i in 0..3)
+            if (abs(array[i] - b.array[i]) > epsilon)
+                return false
+        return true
+    }
 
-    fun notEqual(b: Mat2, epsilon: Vec2, res: Vec2bool = Vec2bool()): Vec2bool = equal(b, epsilon, res).notAssign()
+    fun notEqual(b: Mat2, epsilon: Vec2, res: Vec2bool = Vec2bool()): Vec2bool = equal(b, epsilon, res)
+
+    fun anyNotEqual(b: Mat2, epsilon: Float = 0f): Boolean = !allEqual(b, epsilon)
 
     override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
 }

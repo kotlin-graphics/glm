@@ -27,11 +27,11 @@ class testQuaternion : StringSpec() {
                     val n = q.normalize()
                     val l = n.length()
 
-                    epsilonEqual(l, 1f, .01f) shouldBe true
+                    equal(l, 1f, .01f) shouldBe true
 
                     val a = n.angle()
 
-                    epsilonEqual(a, PIf * .25f, .01f) shouldBe true
+                    equal(a, PIf * .25f, .01f) shouldBe true
                 }
 
                 run {
@@ -40,11 +40,11 @@ class testQuaternion : StringSpec() {
                     val n = q.normalize()
                     val l = n.length()
 
-                    epsilonEqual(l, 1f, .01f) shouldBe true
+                    equal(l, 1f, .01f) shouldBe true
 
                     val a = n.angle()
 
-                    epsilonEqual(a, PIf * .25f, .01f) shouldBe true
+                    equal(a, PIf * .25f, .01f) shouldBe true
                 }
 
                 run {
@@ -53,11 +53,11 @@ class testQuaternion : StringSpec() {
                     val n = q.normalize()
                     val l = n.length()
 
-                    epsilonEqual(l, 1f, .01f) shouldBe true
+                    equal(l, 1f, .01f) shouldBe true
 
                     val a = n.angle()
 
-                    epsilonEqual(a, PIf * .25f, .01f) shouldBe true
+                    equal(a, PIf * .25f, .01f) shouldBe true
                 }
             }
 
@@ -68,7 +68,7 @@ class testQuaternion : StringSpec() {
                 val c = glm.mix(a, b, .5f, Quat())
                 val d = Quat().angleAxis(PIf * .25f, Vec3(0, 0, 1))
 
-                all(epsilonEqual(c, d, .01f)) shouldBe true
+                all(equal(c, d, .01f)) shouldBe true
             }
 
             "quat mix" {
@@ -78,7 +78,7 @@ class testQuaternion : StringSpec() {
                 val c = glm.mix(a, b, .5f, Quat())
                 val d = Quat().angleAxis(PIf * .25f, Vec3(0, 0, 1))
 
-                all(epsilonEqual(c, d, .01f)) shouldBe true
+                all(equal(c, d, .01f)) shouldBe true
             }
 
             "quat normalize" {
@@ -88,21 +88,21 @@ class testQuaternion : StringSpec() {
                     val n = q.normalize()
                     val l = n.length()
 
-                    epsilonEqual(l, 1f, .000001f) shouldBe true
+                    equal(l, 1f, .000001f) shouldBe true
                 }
                 run {
                     val q = Quat().angleAxis(PIf * .25f, Vec3(0, 0, 2))
                     val n = q.normalize()
                     val l = n.length()
 
-                    epsilonEqual(l, 1f, .000001f) shouldBe true
+                    equal(l, 1f, .000001f) shouldBe true
                 }
                 run {
                     val q = Quat().angleAxis(PIf * .25f, Vec3(1, 2, 3))
                     val n = q.normalize()
                     val l = n.length()
 
-                    epsilonEqual(l, 1f, .000001f) shouldBe true
+                    equal(l, 1f, .000001f) shouldBe true
                 }
             }
 
@@ -133,52 +133,52 @@ class testQuaternion : StringSpec() {
                 // Testing a == 0
                 // Must be id
                 val id2 = id.slerp(y90rot, .0f)
-                all(epsilonEqual(id, id2, epsilon)) shouldBe true
+                all(equal(id, id2, epsilon)) shouldBe true
 
                 // Testing a == 1
                 // Must be 90° rotation on Y : 0 0.7 0 0.7
                 val y90rot2 = id.slerp(y90rot, 1f)
-                all(epsilonEqual(y90rot, y90rot2, epsilon)) shouldBe true
+                all(equal(y90rot, y90rot2, epsilon)) shouldBe true
 
                 // Testing standard, easy case
                 // Must be 45° rotation on Y : 0 0.38 0 0.92
                 val y45rot1 = id.slerp(y90rot, .5f)
-                all(epsilonEqual(y45rot1, Quat(.92f, 0f, .38f, 0f), .01f)) shouldBe true
+                all(equal(y45rot1, Quat(.92f, 0f, .38f, 0f), .01f)) shouldBe true
 
                 // Testing reverse case
                 // Must be 45° rotation on Y : 0 0.38 0 0.92
                 val ym45rot2 = id.slerp(y90rot, .5f)
-                all(epsilonEqual(ym45rot2, Quat(.92f, 0f, .38f, 0f), .01f)) shouldBe true
+                all(equal(ym45rot2, Quat(.92f, 0f, .38f, 0f), .01f)) shouldBe true
 
                 // Testing against full circle around the sphere instead of shortest path
                 // Must be 45° rotation on Y
                 // certainly not a 135° rotation
                 val y45rot3 = id.slerp(-y90rot, .5f)
                 val y45angle3 = y45rot3.angle()
-                epsilonEqual(y45angle3, PIf * .25f, epsilon) shouldBe true
-                all(epsilonEqual(ym45rot2, y45rot3, epsilon)) shouldBe true
+                equal(y45angle3, PIf * .25f, epsilon) shouldBe true
+                all(equal(ym45rot2, y45rot3, epsilon)) shouldBe true
 
                 // Same, but inverted
                 // Must also be 45° rotation on Y :  0 0.38 0 0.92
                 // -0 -0.38 -0 -0.92 is ok too
                 val y45rot4 = slerp(-y90rot, id, 0.5f, Quat())
-                all(epsilonEqual(ym45rot2, -y45rot4, epsilon)) shouldBe true
+                all(equal(ym45rot2, -y45rot4, epsilon)) shouldBe true
 
                 // Testing q1 = q2
                 // Must be 90° rotation on Y : 0 0.7 0 0.7
                 val y90rot3 = y90rot.slerp(y90rot, .5f)
-                all(epsilonEqual(y90rot, y90rot3, epsilon)) shouldBe true
+                all(equal(y90rot, y90rot3, epsilon)) shouldBe true
 
                 // Testing 180° rotation
                 // Must be 90° rotation on almost any axis that is on the XZ plane
                 val xz90rot = id.slerp(-y90rot, .5f)
                 val xz90angle = xz90rot.angle() // Must be PI/4 = 0.78
-                epsilonEqual(xz90angle, PIf * .25f, epsilon) shouldBe true
+                equal(xz90angle, PIf * .25f, epsilon) shouldBe true
 
                 // Testing almost equal quaternions (this test should pass through the linear interpolation)
                 // Must be 0 0.00X 0 0.99999
                 val almostid = id.slerp(angleAxis(.1f, Vec3(0f, 1f, 0f)), .5f, Quat())
-                all(epsilonEqual(almostid, Quat(.99968f, 0.f, .02499f, 0f), epsilon)) shouldBe true
+                all(equal(almostid, Quat(.99968f, 0.f, .02499f, 0f), epsilon)) shouldBe true
 
                 // Testing quaternions with opposite sign
                 run {
@@ -189,7 +189,7 @@ class testQuaternion : StringSpec() {
 
                     val b = id dot result
                     val c = pow(id dot result, 2f)
-                    epsilonEqual(pow(id dot result, 2f), 1f, .01f) shouldBe true
+                    equal(pow(id dot result, 2f), 1f, .01f) shouldBe true
                 }
             }
 
@@ -212,10 +212,10 @@ class testQuaternion : StringSpec() {
                 val C = fastMix(A, B, 0.5f)
                 val D = angleAxis(PIf * 0.25f, Vec3(0, 0, 1))
 
-                epsilonEqual(C.x, D.x, 0.01f) shouldBe true
-                epsilonEqual(C.y, D.y, 0.01f) shouldBe true
-                epsilonEqual(C.z, D.z, 0.01f) shouldBe true
-                epsilonEqual(C.w, D.w, 0.01f) shouldBe true
+                equal(C.x, D.x, 0.01f) shouldBe true
+                equal(C.y, D.y, 0.01f) shouldBe true
+                equal(C.z, D.z, 0.01f) shouldBe true
+                equal(C.w, D.w, 0.01f) shouldBe true
             }
 
             "quat shortMix" {
@@ -225,10 +225,10 @@ class testQuaternion : StringSpec() {
                 val C = shortMix(A, B, 0.5f)
                 val D = angleAxis(PIf * 0.25f, Vec3(0, 0, 1))
 
-                epsilonEqual(C.x, D.x, 0.01f) shouldBe true
-                epsilonEqual(C.y, D.y, 0.01f) shouldBe true
-                epsilonEqual(C.z, D.z, 0.01f) shouldBe true
-                epsilonEqual(C.w, D.w, 0.01f) shouldBe true
+                equal(C.x, D.x, 0.01f) shouldBe true
+                equal(C.y, D.y, 0.01f) shouldBe true
+                equal(C.z, D.z, 0.01f) shouldBe true
+                equal(C.w, D.w, 0.01f) shouldBe true
             }
 
             "orientation" {
@@ -236,19 +236,19 @@ class testQuaternion : StringSpec() {
                 run {
                     val q = Quat(1f, 0f, 0f, 1f)
                     val p = roll(q)
-                    epsilonEqual(p, PIf * 0.5f, 0.0001f) shouldBe true
+                    equal(p, PIf * 0.5f, 0.0001f) shouldBe true
                 }
 
                 run {
                     val q = Quat(1f, 0f, 0f, 1f)
                     val p = pitch(q)
-                    epsilonEqual(p, 0f, 0.0001f) shouldBe true
+                    equal(p, 0f, 0.0001f) shouldBe true
                 }
 
                 run {
                     val q = Quat(1f, 0f, 0f, 1f)
                     val p = yaw(q)
-                    epsilonEqual(p, 0f, 0.0001f) shouldBe true
+                    equal(p, 0f, 0.0001f) shouldBe true
                 }
             }
 
@@ -302,7 +302,7 @@ class testQuaternion : StringSpec() {
             val N = Mat4(1f)
 
             for(i in 0..3)
-                M[i].equal(N[i], 0.001f) shouldBe true
+                M[i].allEqual(N[i], 0.001f) shouldBe true
         }
     }
 }

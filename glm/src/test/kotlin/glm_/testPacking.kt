@@ -97,7 +97,7 @@ class testPacking : StringSpec() {
 
 
             repeat(bytes.size) {
-                glm.epsilonEqual(glm.unpackUnorm1x8(bytes[it]), res[it], 0.000001f) shouldBe true
+                glm.equal(glm.unpackUnorm1x8(bytes[it]), res[it], 0.000001f) shouldBe true
             }
         }
 
@@ -121,7 +121,7 @@ class testPacking : StringSpec() {
 
             repeat(res.size) {
                 glm.all(
-                        glm.epsilonEqual(
+                        glm.equal(
                                 glm.unpackUnorm2x8(shorts[it]),
                                 res[it],
                                 0.000001f)) shouldBe true
@@ -146,7 +146,7 @@ class testPacking : StringSpec() {
             val res = floatArrayOf(0.000000f, 0.007874f, -0.047244f, -0.007874f)
 
             repeat(res.size) {
-                glm.epsilonEqual(glm.unpackSnorm1x8(bytes[it]), res[it], 0.000001f) shouldBe true
+                glm.equal(glm.unpackSnorm1x8(bytes[it]), res[it], 0.000001f) shouldBe true
             }
         }
 
@@ -170,7 +170,7 @@ class testPacking : StringSpec() {
 
             repeat(shorts.size) {
                 glm.all(
-                        glm.epsilonEqual(
+                        glm.equal(
                                 glm.unpackSnorm2x8(shorts[it]),
                                 res[it],
                                 1f / 127f)) shouldBe true
@@ -207,7 +207,7 @@ class testPacking : StringSpec() {
 
             repeat(res.size) {
                 glm.all(
-                        glm.epsilonEqual(
+                        glm.equal(
                                 glm.unpackUnorm4x16(longs[it]),
                                 res[it],
                                 0.00001f)) shouldBe true
@@ -232,7 +232,7 @@ class testPacking : StringSpec() {
             val res = floatArrayOf(0.000000f, 0.000031f, -0.000061f, 0.305185f, -0.610370f)
 
             repeat(res.size) {
-                glm.epsilonEqual(
+                glm.equal(
                         glm.unpackSnorm1x16(shorts[it]),
                         res[it],
                         0.000001f) shouldBe true
@@ -258,7 +258,7 @@ class testPacking : StringSpec() {
 
             repeat(longs.size) {
                 glm.all(
-                        glm.epsilonEqual(
+                        glm.equal(
                                 glm.unpackSnorm4x16(longs[it]),
                                 res[it],
                                 0.000001f))
@@ -283,7 +283,7 @@ class testPacking : StringSpec() {
             val res = floatArrayOf(0f, 1f, -1f, 2f, -2f, 1.9f)
 
             repeat(shorts.size) {
-                glm.epsilonEqual(glm.unpackHalf1x16(shorts[it]), res[it], 0.000001f)
+                glm.equal(glm.unpackHalf1x16(shorts[it]), res[it], 0.000001f)
             }
         }
 
@@ -355,7 +355,7 @@ class testPacking : StringSpec() {
                 val p1 = glm.packSnorm3x10_1x2(v0)
                 val v1 = glm.unpackSnorm3x10_1x2(p1)
 
-                glm.all(glm.epsilonEqual(v0, v1, 0.01f)) shouldBe true
+                glm.all(glm.equal(v0, v1, 0.01f)) shouldBe true
             }
         }
 
@@ -370,7 +370,7 @@ class testPacking : StringSpec() {
                 val p1 = glm.packUnorm3x10_1x2(v0)
                 val v1 = glm.unpackUnorm3x10_1x2(p1)
 
-                glm.all(glm.epsilonEqual(v0, v1, 0.001f)) shouldBe true
+                glm.all(glm.equal(v0, v1, 0.001f)) shouldBe true
             }
         }
 
@@ -398,7 +398,7 @@ class testPacking : StringSpec() {
                 val v0 = glm.unpackF3x9_E1x5(p0)
                 val p1 = glm.packF3x9_E1x5(v0)
                 val v1 = glm.unpackF3x9_E1x5(p1)
-                glm.all(glm.epsilonEqual(v0, v1, 0.01f)) shouldBe true
+                glm.all(glm.equal(v0, v1, 0.01f)) shouldBe true
             }
         }
 
@@ -409,7 +409,7 @@ class testPacking : StringSpec() {
                 val rgbm = glm.packRGBM(color)
                 val result = glm.unpackRGBM(rgbm)
 
-                glm.all(glm.epsilonEqual(color, result, 0.01f)) shouldBe true
+                glm.all(glm.equal(color, result, 0.01f)) shouldBe true
             }
         }
 
@@ -421,7 +421,7 @@ class testPacking : StringSpec() {
                 val b = Vec1(a)
                 val c = glm.packUnorm1x16(b.x)
                 val d = Vec1(glm.unpackUnorm1x16(c))
-                glm.epsilonEqual(b.x, d.x, 1f / 65535f) shouldBe true
+                glm.equal(b.x, d.x, 1f / 65535f) shouldBe true
             }
         }
 
@@ -433,7 +433,7 @@ class testPacking : StringSpec() {
                 val b = Vec1(a)
                 val c = glm.packSnorm1x16(b.x)
                 val d = Vec1(glm.unpackSnorm1x16(c))
-                glm.epsilonEqual(b.x, d.x, 1f / 65535f * 2f) shouldBe true
+                glm.equal(b.x, d.x, 1f / 65535f * 2f) shouldBe true
             }
         }
 
@@ -445,7 +445,7 @@ class testPacking : StringSpec() {
                 val b = Vec2(a)
                 val c = glm.packUnorm2x16(b)
                 val d = glm.unpackUnorm2x16(c)
-                glm.all(glm.epsilonEqual(b, d, 1f / 65535f)) shouldBe true
+                glm.all(glm.equal(b, d, 1f / 65535f)) shouldBe true
             }
         }
 
@@ -457,7 +457,7 @@ class testPacking : StringSpec() {
                 val b = Vec2(a)
                 val c = glm.packSnorm2x16(b)
                 val d = Vec2(glm.unpackSnorm2x16(c))
-                glm.all(glm.epsilonEqual(b, d, 1f / 32767f * 2f)) shouldBe true
+                glm.all(glm.equal(b, d, 1f / 32767f * 2f)) shouldBe true
             }
         }
 
@@ -469,7 +469,7 @@ class testPacking : StringSpec() {
                 val b = Vec4(a)
                 val c = glm.packUnorm4x16(b)
                 val d = glm.unpackUnorm4x16(c)
-                glm.all(glm.epsilonEqual(b, d, 1f / 65535f)) shouldBe true
+                glm.all(glm.equal(b, d, 1f / 65535f)) shouldBe true
             }
         }
 
@@ -484,7 +484,7 @@ class testPacking : StringSpec() {
                 val b = Vec4(a)
                 val c = glm.packSnorm4x16(b)
                 val d = Vec4(glm.unpackSnorm4x16(c))
-                glm.all(glm.epsilonEqual(b, d, 1f / 32767f * 2f)) shouldBe true
+                glm.all(glm.equal(b, d, 1f / 32767f * 2f)) shouldBe true
             }
         }
 
@@ -496,7 +496,7 @@ class testPacking : StringSpec() {
                 val b = Vec1(a)
                 val c = glm.packUnorm1x8(b.x)
                 val d = glm.unpackUnorm1x8(c)
-                glm.epsilonEqual(b.x, d, 1f / 255f) shouldBe true
+                glm.equal(b.x, d, 1f / 255f) shouldBe true
             }
         }
 
@@ -508,7 +508,7 @@ class testPacking : StringSpec() {
                 val b = Vec1(a)
                 val c = glm.packSnorm1x8(b.x)
                 val d = glm.unpackSnorm1x8(c)
-                glm.epsilonEqual(b.x, d, 1f / 127f) shouldBe true
+                glm.equal(b.x, d, 1f / 127f) shouldBe true
             }
         }
 
@@ -520,7 +520,7 @@ class testPacking : StringSpec() {
                 val b = Vec2(a)
                 val c = glm.packUnorm2x8(b)
                 val d = glm.unpackUnorm2x8(c)
-                glm.all(glm.epsilonEqual(b, d, 1f / 255f)) shouldBe true
+                glm.all(glm.equal(b, d, 1f / 255f)) shouldBe true
             }
         }
 
@@ -532,7 +532,7 @@ class testPacking : StringSpec() {
                 val b = Vec2(a)
                 val c = glm.packSnorm2x8(b)
                 val d = glm.unpackSnorm2x8(c)
-                glm.all(glm.epsilonEqual(b, d, 1f / 127f)) shouldBe true
+                glm.all(glm.equal(b, d, 1f / 127f)) shouldBe true
             }
         }
 
@@ -544,7 +544,7 @@ class testPacking : StringSpec() {
                 val b = Vec4(a)
                 val c = glm.packUnorm4x8(b)
                 val d = glm.unpackUnorm4x8(c)
-                glm.all(glm.epsilonEqual(b, d, 1f / 255f)) shouldBe true
+                glm.all(glm.equal(b, d, 1f / 255f)) shouldBe true
             }
         }
 
@@ -556,7 +556,7 @@ class testPacking : StringSpec() {
                 val b = Vec4(a)
                 val c = glm.packSnorm4x8(b)
                 val d = glm.unpackSnorm4x8(c)
-                glm.all(glm.epsilonEqual(b, d, 1f / 127f)) shouldBe true
+                glm.all(glm.equal(b, d, 1f / 127f)) shouldBe true
             }
         }
 
@@ -568,7 +568,7 @@ class testPacking : StringSpec() {
 //                val b = Vec2(a)
 //                val c = glm.packUnorm4x8(b)
 //                val d = glm.unpackUnorm4x8(c)
-//                glm.all(glm.epsilonEqual(b, d, 1f / 255f)) shouldBe true
+//                glm.all(glm.equal(b, d, 1f / 255f)) shouldBe true
 //            }
         }
 
@@ -580,7 +580,7 @@ class testPacking : StringSpec() {
 ////                val b = Vec4(a)
 ////                val c = glm.packSnorm4x8(b)
 ////                val d = glm.unpackSnorm4x8(c)
-////                glm.all(glm.epsilonEqual(b, d, 1f / 127f)) shouldBe true
+////                glm.all(glm.equal(b, d, 1f / 127f)) shouldBe true
 ////            }
 //        }
 
@@ -592,7 +592,7 @@ class testPacking : StringSpec() {
                 val b = Vec2(a)
                 val c = glm.packUnorm2x4(b)
                 val d = glm.unpackUnorm2x4(c)
-                glm.all(glm.epsilonEqual(b, d, 1f / 15f)) shouldBe true
+                glm.all(glm.equal(b, d, 1f / 15f)) shouldBe true
             }
         }
 
@@ -604,7 +604,7 @@ class testPacking : StringSpec() {
                 val b = Vec4(a)
                 val c = glm.packUnorm4x4(b)
                 val d = glm.unpackUnorm4x4(c)
-                glm.all(glm.epsilonEqual(b, d, 1f / 15f)) shouldBe true
+                glm.all(glm.equal(b, d, 1f / 15f)) shouldBe true
             }
         }
 
@@ -616,7 +616,7 @@ class testPacking : StringSpec() {
                 val b = Vec4(a)
                 val c = glm.packUnorm3x5_1x1(b)
                 val d = glm.unpackUnorm3x5_1x1(c)
-                glm.all(glm.epsilonEqual(b, d, 1f / 15f)) shouldBe true
+                glm.all(glm.equal(b, d, 1f / 15f)) shouldBe true
             }
         }
 
@@ -628,7 +628,7 @@ class testPacking : StringSpec() {
                 val b = Vec3(a)
                 val c = glm.packUnorm1x5_1x6_1x5(b)
                 val d = glm.unpackUnorm1x5_1x6_1x5(c)
-                glm.all(glm.epsilonEqual(b, d, 1f / 15f)) shouldBe true
+                glm.all(glm.equal(b, d, 1f / 15f)) shouldBe true
             }
         }
 
@@ -640,7 +640,7 @@ class testPacking : StringSpec() {
                 val b = Vec3(a)
                 val c = glm.packUnorm2x3_1x2(b)
                 val d = glm.unpackUnorm2x3_1x2(c)
-                glm.all(glm.epsilonEqual(b, d, 1f / 3f)) shouldBe true
+                glm.all(glm.equal(b, d, 1f / 3f)) shouldBe true
             }
         }
     }

@@ -14,31 +14,31 @@ class testGtxVectorAngle : StringSpec() {
         "angle" {
 
             val angleA = glm.angle(Vec2(1, 0), Vec2(1, 1).normalize())
-            glm.epsilonEqual(angleA, glm.PIf * 0.25f, 0.01f) shouldBe true
+            glm.equal(angleA, glm.PIf * 0.25f, 0.01f) shouldBe true
             val angleB = glm.angle(Vec3(1, 0, 0), Vec3(1, 1, 0).normalize())
-            glm.epsilonEqual(angleB, glm.PIf * 0.25f, 0.01f) shouldBe true
+            glm.equal(angleB, glm.PIf * 0.25f, 0.01f) shouldBe true
             val angleC = glm.angle(Vec4(1, 0, 0, 0), Vec4(1, 1, 0, 0).normalize())
-            glm.epsilonEqual(angleC, glm.PIf * 0.25f, 0.01f) shouldBe true
+            glm.equal(angleC, glm.PIf * 0.25f, 0.01f) shouldBe true
         }
 
         "oriented angle Vec2 "{
 
             val angleA = glm.orientedAngle(Vec2(1, 0), Vec2(1, 1).normalize())
-            glm.epsilonEqual(angleA, glm.PIf * 0.25f, 0.01f) shouldBe true
+            glm.equal(angleA, glm.PIf * 0.25f, 0.01f) shouldBe true
             val angleB = glm.orientedAngle(Vec2(0, 1), Vec2(1, 1).normalize())
-            glm.epsilonEqual(angleB, -glm.PIf * 0.25f, 0.01f) shouldBe true
+            glm.equal(angleB, -glm.PIf * 0.25f, 0.01f) shouldBe true
             val angleC = glm.orientedAngle(Vec2(1, 1).normalize(), Vec2(0, 1))
-            glm.epsilonEqual(angleC, glm.PIf * 0.25f, 0.01f) shouldBe true
+            glm.equal(angleC, glm.PIf * 0.25f, 0.01f) shouldBe true
         }
 
         "oriented angle Vec3"{
 
             val angleA = glm.orientedAngle(Vec3(1, 0, 0), Vec3(1, 1, 0).normalize(), Vec3(0, 0, 1))
-            glm.epsilonEqual(angleA, glm.PIf * 0.25f, 0.01f) shouldBe true
+            glm.equal(angleA, glm.PIf * 0.25f, 0.01f) shouldBe true
             val angleB = glm.orientedAngle(Vec3(0, 1, 0), Vec3(1, 1, 0).normalize(), Vec3(0, 0, 1))
-            glm.epsilonEqual(angleB, -glm.PIf * 0.25f, 0.01f) shouldBe true
+            glm.equal(angleB, -glm.PIf * 0.25f, 0.01f) shouldBe true
             val angleC = glm.orientedAngle(Vec3(1, 1, 0).normalize(), Vec3(0, 1, 0), Vec3(0, 0, 1))
-            glm.epsilonEqual(angleC, glm.PIf * 0.25f, 0.01f) shouldBe true
+            glm.equal(angleC, glm.PIf * 0.25f, 0.01f) shouldBe true
         }
     }
 }

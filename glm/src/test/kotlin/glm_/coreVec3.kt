@@ -13,7 +13,7 @@ import glm_.vec4.Vec4
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
-class testCoreVec3 : StringSpec() {
+class coreVec3 : StringSpec() {
 
     init {
 

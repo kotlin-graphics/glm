@@ -13,7 +13,7 @@ class testGauss : StringSpec() {
                     0.333225f, 0.312254f, 0.289692f, 0.266085f, 0.241971f, 0.217852f, 0.194186f, 0.171369f, 0.149727f,
                     0.129518f, 0.110921f, 0.094049f, 0.078950f, 0.065616f)
             for (i in 0 until 20)
-                glm.epsilonEqual(result[i], glm.gauss(i * 0.1f, 0.0f, 1.0f), 0.000001f)
+                glm.equal(result[i], glm.gauss(i * 0.1f, 0.0f, 1.0f), 0.000001f)
         }
         "test_gauss_2d" {
 
@@ -38,7 +38,7 @@ class testGauss : StringSpec() {
                     0.039164f,
                     0.027052f)
             for (i in 0 until 20)
-                glm.epsilonEqual(result[i], glm.gauss(Vec2(i * 0.1f), Vec2(0.0f), Vec2(1.0f)), 0.000001f)
+                glm.equal(result[i], glm.gauss(Vec2(i * 0.1f), Vec2(0.0f), Vec2(1.0f)), 0.000001f)
         }
     }
 }

@@ -23,16 +23,12 @@ import glm_.vec3.Vec3t
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
 import kool.Ptr
-import kool.FloatBuffer
 import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetFloat
 import org.lwjgl.system.MemoryUtil.memPutFloat
-import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
-import java.util.*
 import kotlin.math.abs
 
 /**
@@ -582,13 +578,6 @@ class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     override fun equals(other: Any?) = other is Mat3 && array.contentEquals(other.array)
 
-    fun equal(b: Mat3, epsilon: Float = 0f): Boolean {
-        for (i in 0..8)
-            if (abs(array[i] - b.array[i]) > epsilon)
-                return false
-        return true
-    }
-
     fun equal(b: Mat3, epsilon: Vec3, res: Vec3bool = Vec3bool()): Vec3bool = res {
         var equal = true
         for (i in 0..2)
@@ -599,9 +588,16 @@ class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
         equal
     }
 
-    fun notEqual(b: Mat3, epsilon: Float = 0f): Boolean = !equal(b, epsilon)
+    fun allEqual(b: Mat3, epsilon: Float = 0f): Boolean {
+        for (i in 0..8)
+            if (abs(array[i] - b.array[i]) > epsilon)
+                return false
+        return true
+    }
 
-    fun notEqual(b: Mat3, epsilon: Vec3, res: Vec3bool = Vec3bool()): Vec3bool = equal(b, epsilon, res).notAssign()
+    fun notEqual(b: Mat3, epsilon: Vec3, res: Vec3bool = Vec3bool()): Vec3bool = equal(b, epsilon, res)
+
+    fun anyNotEqual(b: Mat3, epsilon: Float = 0f): Boolean = !allEqual(b, epsilon)
 
     override fun hashCode() = 31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()
 }

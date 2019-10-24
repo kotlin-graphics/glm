@@ -118,7 +118,8 @@ object glm :
     val PI3over2f = kotlin.math.PI.f * 1.5f
 
     @JvmField
-    val epsilonF = 1.1920928955078125e-7f
+    val epsilonF = Float.MIN_VALUE
+    val _epsilonF = 1.19209290e-07f
     @JvmField
     val epsilon = 2.2204460492503131e-16
     val ε = epsilon

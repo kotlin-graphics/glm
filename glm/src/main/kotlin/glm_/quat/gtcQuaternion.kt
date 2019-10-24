@@ -1,6 +1,7 @@
 package glm_.quat
 
 import glm_.glm
+import glm_.glm._epsilonF
 import glm_.glm.abs
 import glm_.glm.acos
 import glm_.glm.asin
@@ -182,7 +183,7 @@ interface gtcQuaternion {
         }
 
         // Perform a linear interpolation when cosTheta is close to 1 to avoid side effect of sin(angle) becoming a zero denominator
-        if (cosTheta > 1f - epsilonF) {
+        if (cosTheta > 1f - _epsilonF) {
             // Linear interpolation
             res.w = mix(a.w, zW, interp)
             res.x = mix(a.x, zX, interp)
