@@ -317,7 +317,7 @@ class coreVec4 : StringSpec() {
             H shouldBe true
         }
 
-        "vec4 operators"        {
+        "vec4 operators" {
 
             run {
                 val A = Vec4i(1)
@@ -450,7 +450,7 @@ class coreVec4 : StringSpec() {
             }
         }
 
-        "vec4 equal"        {
+        "vec4 equal" {
 
             run {
                 val A = Vec4ui(1, 2, 3, 4)
@@ -467,7 +467,7 @@ class coreVec4 : StringSpec() {
             }
         }
 
-        "vec4 size"        {
+        "vec4 size" {
 
             Vec4.size shouldBe 4 * Float.BYTES
             Vec4d.size shouldBe 4 * Double.BYTES
@@ -475,7 +475,7 @@ class coreVec4 : StringSpec() {
             Vec4d.length shouldBe 4
         }
 
-        "swizzle partial"        {
+        "swizzle partial" {
 
             val A = Vec4(1, 2, 3, 4)
 
@@ -494,9 +494,9 @@ class coreVec4 : StringSpec() {
 //            #	endif//GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR || GLM_SWIZZLE == GLM_SWIZZLE_FUNCTION
         }
 
-        "swizzle"        {
+        "swizzle" {
 
-//            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
+            //            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
             run {
                 val A = Vec4(1f, 2f, 3f, 4f)
                 val B = A.xyzw
@@ -536,12 +536,12 @@ class coreVec4 : StringSpec() {
                 val E = Vec4(A.x, A.yzw)
                 val F = Vec4(A.x, A.yzw)
                 val G = Vec4(A.xyz, A.w)
-                val H= Vec4(A.xyz, A.w)
-                val I= Vec4(A.xy, A.zw)
-                val J= Vec4(A.xy, A.zw)
-                val K= Vec4(A.x, A.y, A.zw)
-                val L= Vec4(A.x, A.yz, A.w)
-                val M= Vec4(A.xy, A.z, A.w)
+                val H = Vec4(A.xyz, A.w)
+                val I = Vec4(A.xy, A.zw)
+                val J = Vec4(A.xy, A.zw)
+                val K = Vec4(A.x, A.y, A.zw)
+                val L = Vec4(A.x, A.yz, A.w)
+                val M = Vec4(A.xy, A.z, A.w)
 
                 A shouldEqual B
                 A shouldEqual C

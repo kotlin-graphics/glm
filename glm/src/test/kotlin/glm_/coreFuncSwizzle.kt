@@ -137,7 +137,7 @@ class coreFuncSwizzle : StringSpec() {
             val C = Vec4(B.wzyx)
 
             assert(A != B)
-            A shouldBe C
+            A shouldEqual C
 
             val D = glm.dot(C.wzyx, C.xyzw)
             D.equal(20f, 0.01f) shouldBe true
