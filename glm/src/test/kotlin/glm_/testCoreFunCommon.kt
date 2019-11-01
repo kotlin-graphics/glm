@@ -693,7 +693,7 @@ class testCoreFunCommon : StringSpec() {
                     Type(Vec4(-3), Vec4(-1)))
                     .forEach {
                         val result = glm.sign(it.value)
-                        glm.all(glm.equal(it.return_, result)) shouldBe true
+                        it.return_ shouldEqual result
                     }
         }
 
@@ -703,15 +703,15 @@ class testCoreFunCommon : StringSpec() {
                 val x = Vec1(1024)
                 val exp = Vec1i()
                 val a = glm.frexp(x, exp)
-                glm.all(glm.equal(a, Vec1(1), 0.00001f)) shouldBe true
-                glm.all(glm.equal(exp, Vec1i(10))) shouldBe true
+                a shouldEqual Vec1(1)
+                exp shouldEqual Vec1i(10)
             }
 
             run {
                 val x = Vec2(1024, 0.24)
                 val exp = Vec2i()
                 val a = glm.frexp(x, exp)
-                glm.all(glm.equal(a, Vec2(1, 0.96), 0.00001f)) shouldBe true
+                a shouldEqual Vec2(1, 0.96)
                 glm.all(glm.equal(exp, Vec2i(10, -2))) shouldBe true
             }
 
@@ -719,7 +719,7 @@ class testCoreFunCommon : StringSpec() {
                 val x = Vec3(1024, 0.24, 0)
                 val exp = Vec3i()
                 val a = glm.frexp(x, exp)
-                glm.all(glm.equal(a, Vec3(1, 0.96, 0.0), 0.00001f)) shouldBe true
+                a shouldEqual Vec3(1, 0.96, 0.0)
                 glm.all(glm.equal(exp, Vec3i(10, -2, 0))) shouldBe true
             }
 
@@ -727,7 +727,7 @@ class testCoreFunCommon : StringSpec() {
                 val x = Vec4(1024, 0.24, 0, -1.33)
                 val exp = Vec4i()
                 val a = glm.frexp(x, exp)
-                glm.all(glm.equal(a, Vec4(1, 0.96, 0.0, -0.665), 0.00001f)) shouldBe true
+                a shouldEqual Vec4(1, 0.96, 0.0, -0.665)
                 glm.all(glm.equal(exp, Vec4i(10, -2, 0, 1))) shouldBe true
             }
         }
