@@ -43,6 +43,8 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>(), ToDoubleBuf
 
     constructor() : this(0)
     constructor(v: Vec4d) : this(v.x, v.y, v.z, v.w)
+    constructor(v: Vec3d) : this(v.x, v.y, v.z, 0.0)
+    constructor(v: Vec2d) : this(v.x, v.y, 0.0, 0.0)
 
     // -- Explicit basic constructors --
 
@@ -487,11 +489,6 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>(), ToDoubleBuf
 
     fun length() = glm.length(this)
     fun length2() = glm.length2(this)
-
-
-    override fun createInstance(x: Double, y: Double) = Vec2d(x, y)
-    override fun createInstance(x: Double, y: Double, z: Double) = Vec3d(x, y, z)
-    override fun createInstance(x: Double, y: Double, z: Double, w: Double) = Vec4d(x, y, z, w)
 
 
     companion object : vec4d_operators {

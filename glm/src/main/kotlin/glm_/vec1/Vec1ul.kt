@@ -459,9 +459,6 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
     infix fun shrAssign(b: Number) = shr(this, this, b.L)
 
 
-//    override fun createInstance(x: Ulong) = Vec1ul(x)
-
-
     companion object : opVec1ul {
         const val length = Vec1t.length
         @JvmField

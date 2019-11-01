@@ -39,6 +39,7 @@ class Vec3i(var ofs: Int, var array: IntArray) : Vec3t<Int>(), ToBuffer {
 
     constructor() : this(0, 0, 0)
     constructor(v: Vec3i) : this(v.x, v.y, v.z)
+    constructor(v: Vec2i) : this(v.x, v.y, 0)
 
     // -- Explicit basic constructors --
 
@@ -68,6 +69,7 @@ class Vec3i(var ofs: Int, var array: IntArray) : Vec3t<Int>(), ToBuffer {
 
     @JvmOverloads
     constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy.x, xy.y, z)
+
     constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy.x, xy.y, z.x)
     constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz.x, yz.y)
     constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x.x, yz.x, yz.y)
@@ -599,10 +601,6 @@ class Vec3i(var ofs: Int, var array: IntArray) : Vec3t<Int>(), ToBuffer {
     infix fun allGreaterThanEqual(v: Vec3i): Boolean = x >= v.x && y >= v.y && z >= v.z
     infix fun anyGreaterThanEqual(v: Vec3i): Boolean = x >= v.x || y >= v.y || z >= v.z
     infix fun greaterThanEqual(v: Vec3i): Vec3bool = Vec3bool { get(it) >= v[it] }
-
-
-    override fun createInstance(x: Int, y: Int) = Vec2i(x, y)
-    override fun createInstance(x: Int, y: Int, z: Int) = Vec3i(x, y, z)
 
 
     companion object : vec3i_operators {

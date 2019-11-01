@@ -244,39 +244,6 @@ abstract class Vec2t<T : Number>: ToBuffer {
             y = value
         }
 
-    // swizzling
-    protected abstract fun createInstance(x: T, y: T): Vec2t<out Number>
-
-    val xx @JvmName("xx") get() = createInstance(x, x)
-    var xy
-        @JvmName("xy") get() = createInstance(x, y)
-        @JvmName("xy") set(value) = put(value.x, value.y)
-
-    var yx
-        @JvmName("yx") get() = createInstance(y, x)
-        @JvmName("yx") set(value) = put(value.y, value.x)
-    val yy @JvmName("yy") get() = createInstance(y, y)
-
-
-    val rr @JvmName("rr") get() = createInstance(r, r)
-    var rg
-        @JvmName("rg") get() = createInstance(r, g)
-        @JvmName("rg") set(value) = put(value.r, value.g)
-    var gr
-        @JvmName("gr") get() = createInstance(g, r)
-        @JvmName("gr") set(value) = put(value.g, value.r)
-    val gg @JvmName("gg") get() = createInstance(g, g)
-
-
-    val ss @JvmName("ss") get() = createInstance(s, s)
-    var st
-        @JvmName("st") get() = createInstance(s, t)
-        @JvmName("st") set(value) = put(value.s, value.t)
-    var ts
-        @JvmName("ts") get() = createInstance(t, s)
-        @JvmName("ts") set(value) = put(value.t, value.s)
-    val tt @JvmName("tt") get() = createInstance(t, t)
-
     companion object {
         const val length = 2
     }

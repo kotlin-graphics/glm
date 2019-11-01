@@ -38,6 +38,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
 
     @JvmOverloads
     constructor(x: Int, y: Int = x) : this(x.b, y.b)
+
     @JvmOverloads
     constructor(x: Byte, y: Byte = x) : this(0, byteArrayOf(x, y))
 
@@ -51,6 +52,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
     @JvmOverloads
     constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+
     constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y)
@@ -59,9 +61,11 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
 
     @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.b, y.b)
+
     constructor(x: Boolean, v: Vec1bool) : this(x.b, v.x.b)
     @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.b, y.b)
+
     constructor(x: Vec1bool, y: Vec1bool) : this(x.x.b, y.x.b)
 
     constructor(v: Vec2bool) : this(v.x.b, v.y.b)
@@ -633,9 +637,6 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     infix fun allGreaterThanEqual(v: Vec2b): Boolean = x >= v.x && y >= v.y
     infix fun anyGreaterThanEqual(v: Vec2b): Boolean = x >= v.x || y >= v.y
     infix fun greaterThanEqual(v: Vec2b): Vec2bool = Vec2bool { get(it) >= v[it] }
-
-
-    override fun createInstance(x: Byte, y: Byte) = Vec2b(x, y)
 
 
     companion object : opVec2b {

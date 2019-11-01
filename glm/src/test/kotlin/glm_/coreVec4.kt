@@ -4,14 +4,12 @@ import glm_.vec1.Vec1
 import glm_.vec1.Vec1d
 import glm_.vec2.Vec2
 import glm_.vec3.Vec3
-import glm_.vec4.Vec4
-import glm_.vec4.Vec4bool
-import glm_.vec4.Vec4d
-import glm_.vec4.Vec4i
+import glm_.vec4.*
 import glm_.vec4.operators.div
 import glm_.vec4.operators.minus
 import glm_.vec4.operators.plus
 import glm_.vec4.operators.times
+import glm_.vec4.swizzle.*
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
@@ -58,7 +56,7 @@ class coreVec4 : StringSpec() {
 
             run {
                 val A = Vec4(1f, 2f, 3f, 4f)
-                val B = Vec4(A.xyzw)
+                val B = A.xyzw
                 val C = Vec4(A.xyzw)
                 val D = Vec4(A.xyzw)
                 val E = Vec4(A.x, A.yzw)
@@ -97,12 +95,12 @@ class coreVec4 : StringSpec() {
 //            }
 //            #	endif
 //
-//            {
-//                glm::vec4 A(1);
-//                glm::vec4 B(1, 1, 1, 1);
-//
-//                Error += A == B ? 0 : 1;
-//            }
+            run {
+                val A = Vec4(1)
+                val B = Vec4(1, 1, 1, 1)
+
+                A shouldEqual B
+            }
 //
             run {
                 arrayOf(
@@ -322,8 +320,8 @@ class coreVec4 : StringSpec() {
         "vec4 operators"        {
 
             run {
-                val A = Vec4(1f)
-                val B = Vec4(1f)
+                val A = Vec4i(1f)
+                val B = Vec4i(1f)
                 val R = A != B
                 val S = A == B
 
@@ -335,128 +333,128 @@ class coreVec4 : StringSpec() {
                 val B = Vec4(4f, 5f, 6f, 7f)
 
                 val C = A + B
-                C shouldBe Vec4(5, 7, 9, 11)
+                C shouldEqual Vec4(5, 7, 9, 11)
 
                 val D = B - A
-                D shouldBe Vec4(3, 3, 3, 3)
+                D shouldEqual Vec4(3, 3, 3, 3)
 
                 val E = A * B
-                E shouldBe Vec4(4, 10, 18, 28)
+                E shouldEqual Vec4(4, 10, 18, 28)
 
                 val F = B / A
-                F shouldBe Vec4(4, 2.5, 2, 7f / 4f)
+                F shouldEqual Vec4(4, 2.5, 2, 7f / 4f)
 
                 val G = A + 1f
-                G shouldBe Vec4(2, 3, 4, 5)
+                G shouldEqual Vec4(2, 3, 4, 5)
 
                 val H = B - 1f
-                H shouldBe Vec4(3, 4, 5, 6)
+                H shouldEqual Vec4(3, 4, 5, 6)
 
                 val I = A * 2f
-                I shouldBe Vec4(2, 4, 6, 8)
+                I shouldEqual Vec4(2, 4, 6, 8)
 
                 val J = B / 2f
-                J shouldBe Vec4(2, 2.5, 3, 3.5)
+                J shouldEqual Vec4(2, 2.5, 3, 3.5)
 
                 val K = 1f + A
-                K shouldBe Vec4(2, 3, 4, 5)
+                K shouldEqual Vec4(2, 3, 4, 5)
 
                 val L = 1f - B
-                L shouldBe Vec4(-3, -4, -5, -6)
+                L shouldEqual Vec4(-3, -4, -5, -6)
 
                 val M = 2f * A
-                M shouldBe Vec4(2, 4, 6, 8)
+                M shouldEqual Vec4(2, 4, 6, 8)
 
                 val N = 2f / B
-                N shouldBe Vec4(0.5, 2.0 / 5.0, 2.0 / 6.0, 2.0 / 7.0)
+                N shouldEqual Vec4(0.5, 2.0 / 5.0, 2.0 / 6.0, 2.0 / 7.0)
             }
 
             run {
-                val A = Vec4(1f, 2f, 3f, 4f)
-                val B = Vec4(4f, 5f, 6f, 7f)
+                val A = Vec4i(1f, 2f, 3f, 4f)
+                val B = Vec4i(4f, 5f, 6f, 7f)
 
                 A += B
-                A shouldBe Vec4(5, 7, 9, 11)
+                A shouldBe Vec4i(5, 7, 9, 11)
 
                 A += 1f
-                A shouldBe Vec4(6, 8, 10, 12)
+                A shouldBe Vec4i(6, 8, 10, 12)
             }
 
             run {
-                val A = Vec4(1f, 2f, 3f, 4f)
-                val B = Vec4(4f, 5f, 6f, 7f)
+                val A = Vec4i(1f, 2f, 3f, 4f)
+                val B = Vec4i(4f, 5f, 6f, 7f)
 
                 B -= A
-                B shouldBe Vec4(3, 3, 3, 3)
+                B shouldBe Vec4i(3, 3, 3, 3)
 
                 B -= 1f
-                B shouldBe Vec4(2, 2, 2, 2)
+                B shouldBe Vec4i(2, 2, 2, 2)
             }
             run {
-                val A = Vec4(1f, 2f, 3f, 4f)
-                val B = Vec4(4f, 5f, 6f, 7f)
+                val A = Vec4i(1f, 2f, 3f, 4f)
+                val B = Vec4i(4f, 5f, 6f, 7f)
 
                 A *= B
-                A shouldBe Vec4(4, 10, 18, 28)
+                A shouldBe Vec4i(4, 10, 18, 28)
 
                 A *= 2f
-                A shouldBe Vec4(8, 20, 36, 56)
+                A shouldBe Vec4i(8, 20, 36, 56)
             }
             run {
-                val A = Vec4(1f, 2f, 3f, 4f)
-                val B = Vec4(4f, 5f, 6f, 7f)
+                val A = Vec4i(1f, 2f, 2f, 4f)
+                val B = Vec4i(4f, 4f, 8f, 8f)
 
                 B /= A
-                B shouldBe Vec4(4, 2.5, 2, 7f / 4f)
+                B shouldBe Vec4i(4, 2, 4, 2)
 
                 B /= 2f
-                B shouldBe Vec4(2, 1.25, 1, 7f / 4f / 2f)
+                B shouldBe Vec4i(2, 1, 2, 1)
             }
             run {
-                val B = Vec4(2f)
+                val B = Vec4i(2f)
 
                 B /= B.y
-                B shouldBe Vec4(1f)
+                B shouldBe Vec4i(1f)
             }
 
             run {
-                val A = Vec4(1f, 2f, 3f, 4f)
+                val A = Vec4i(1f, 2f, 3f, 4f)
                 val B = -A
-                B shouldBe Vec4(-1f, -2f, -3f, -4f)
+                B shouldBe Vec4i(-1f, -2f, -3f, -4f)
             }
 
             run {
-                var A = Vec4(1f, 2f, 3f, 4f)
+                var A = Vec4i(1f, 2f, 3f, 4f)
                 val B = --A
-                B shouldBe Vec4(0f, 1f, 2f, 3f)
+                B shouldBe Vec4i(0f, 1f, 2f, 3f)
             }
 
             run {
-                var A = Vec4(1f, 2f, 3f, 4f)
+                var A = Vec4i(1f, 2f, 3f, 4f)
                 val B = A--
-                B shouldBe Vec4(1f, 2f, 3f, 4f)
-                A shouldBe Vec4(0f, 1f, 2f, 3f)
+                B shouldBe Vec4i(1f, 2f, 3f, 4f)
+                A shouldBe Vec4i(0f, 1f, 2f, 3f)
             }
 
             run {
-                var A = Vec4(1f, 2f, 3f, 4f)
+                var A = Vec4i(1f, 2f, 3f, 4f)
                 val B = ++A
-                B shouldBe Vec4(2f, 3f, 4f, 5f)
+                B shouldBe Vec4i(2f, 3f, 4f, 5f)
             }
 
             run {
-                var A = Vec4(1f, 2f, 3f, 4f)
+                var A = Vec4i(1f, 2f, 3f, 4f)
                 val B = A++
-                B shouldBe Vec4(1f, 2f, 3f, 4f)
-                A shouldBe Vec4(2f, 3f, 4f, 5f)
+                B shouldBe Vec4i(1f, 2f, 3f, 4f)
+                A shouldBe Vec4i(2f, 3f, 4f, 5f)
             }
         }
 
         "vec4 equal"        {
 
             run {
-                val A = Vec4(1, 2, 3, 4)
-                val B = Vec4(1, 2, 3, 4)
+                val A = Vec4ui(1, 2, 3, 4)
+                val B = Vec4ui(1, 2, 3, 4)
                 (A == B) shouldBe true
                 (A != B) shouldBe false
             }
@@ -477,99 +475,88 @@ class coreVec4 : StringSpec() {
             Vec4d.length shouldBe 4
         }
 
-        "swizzle"        {
-
-            //            #    if GLM_SWIZZLE == GLM_ENABLE && GLM_HAS_ANONYMOUS_STRUCT
-//            {
-//                glm::vec4 A = glm ::vec4(1.0f, 2.0f, 3.0f, 4.0f);
-//                glm::vec4 B = A . xyzw;
-//                glm::vec4 C (A.xyzw);
-//                glm::vec4 D (A.xyzw());
-//                glm::vec4 E (A.x, A.yzw);
-//                glm::vec4 F (A.x, A.yzw());
-//                glm::vec4 G (A.xyz, A.w);
-//                glm::vec4 H (A.xyz(), A.w);
-//                glm::vec4 I (A.xy, A.zw);
-//                glm::vec4 J (A.xy(), A.zw());
-//                glm::vec4 K (A.x, A.y, A.zw);
-//                glm::vec4 L (A.x, A.yz, A.w);
-//                glm::vec4 M (A.xy, A.z, A.w);
-//
-//                Error += glm::all(glm::equal(A, B)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, C)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, D)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, E)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, F)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, G)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, H)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, I)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, J)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, K)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, L)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, M)) ? 0 : 1;
-//            }
-//            #    elif GLM_SWIZZLE == GLM_ENABLE
-//                {
-            val A = Vec4(1f, 2f, 3f, 4f)
-            val B = Vec4(A.xyzw)
-            val C = Vec4(A.xyzw)
-            val D = Vec4(A.xyzw)
-            val E = Vec4(A.x, A.yzw)
-            val F = Vec4(A.x, A.yzw)
-            val G = Vec4(A.xyz, A.w)
-            val H = Vec4(A.xyz, A.w)
-            val I = Vec4(A.xy, A.zw)
-            val J = Vec4(A.xy, A.zw)
-            val K = Vec4(A.x, A.y, A.zw)
-            val L = Vec4(A.x, A.yz, A.w)
-            val M = Vec4(A.xy, A.z, A.w)
-
-            A shouldBe B
-            A shouldBe C
-            A shouldBe D
-            A shouldBe E
-            A shouldBe F
-            A shouldBe G
-            A shouldBe H
-            A shouldBe I
-            A shouldBe J
-            A shouldBe K
-            A shouldBe L
-            A shouldBe M
-        }
-//            #    endif//GLM_SWIZZLE == GLM_ENABLE && GLM_HAS_ANONYMOUS_STRUCT
-//        }
-
-        "vec4 swizzle partial"        {
+        "swizzle partial"        {
 
             val A = Vec4(1, 2, 3, 4)
 
-//            #	if GLM_HAS_UNRESTRICTED_UNIONS && defined(GLM_SWIZZLE_RELAX)
-            run {
-                val B = Vec4(A.xy, A.zw)
-                A shouldBe B
-            }
-            run {
-                val B = Vec4(A.xy, 3f, 4f)
-                A shouldBe B
-            }
-            run {
-                val B = Vec4(1f, A.yz, 4f)
-                A shouldBe B
-            }
-            run {
-                val B = Vec4(1f, 2f, A.zw)
-                A shouldBe B
-            }
+//            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
+            A shouldEqual Vec4(A.xy, A.zw)
 
+            A shouldEqual Vec4(A.xy, 3f, 4f)
+
+            A shouldEqual Vec4(1f, A.yz, 4f)
+
+            A shouldEqual Vec4(1f, 2f, A.zw)
+
+            A shouldEqual Vec4(A.xyz, 4f)
+
+            A shouldEqual Vec4(1.0f, A.yzw)
+//            #	endif//GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR || GLM_SWIZZLE == GLM_SWIZZLE_FUNCTION
+        }
+
+        "swizzle"        {
+
+//            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
             run {
-                val B = Vec4(A.xyz, 4f)
-                A shouldBe B
+                val A = Vec4(1f, 2f, 3f, 4f)
+                val B = A.xyzw
+                val C = Vec4(A.xyzw)
+                val D = Vec4(A.xyzw)
+                val E = Vec4(A.x, A.yzw)
+                val F = Vec4(A.x, A.yzw)
+                val G = Vec4(A.xyz, A.w)
+                val H = Vec4(A.xyz, A.w)
+                val I = Vec4(A.xy, A.zw)
+                val J = Vec4(A.xy, A.zw)
+                val K = Vec4(A.x, A.y, A.zw)
+                val L = Vec4(A.x, A.yz, A.w)
+                val M = Vec4(A.xy, A.z, A.w)
+
+                A shouldEqual B
+                A shouldEqual C
+                A shouldEqual D
+                A shouldEqual E
+                A shouldEqual F
+                A shouldEqual G
+                A shouldEqual H
+                A shouldEqual I
+                A shouldEqual J
+                A shouldEqual K
+                A shouldEqual L
+                A shouldEqual M
             }
+//            #	endif//GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
+
+//            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR || GLM_SWIZZLE == GLM_SWIZZLE_FUNCTION
             run {
-                val B = Vec4(1f, A.yzw)
-                A shouldBe B
+                val A = Vec4(1f, 2f, 3f, 4f)
+                val B = A.xyzw
+                val C = Vec4(A.xyzw)
+                val D = Vec4(A.xyzw)
+                val E = Vec4(A.x, A.yzw)
+                val F = Vec4(A.x, A.yzw)
+                val G = Vec4(A.xyz, A.w)
+                val H= Vec4(A.xyz, A.w)
+                val I= Vec4(A.xy, A.zw)
+                val J= Vec4(A.xy, A.zw)
+                val K= Vec4(A.x, A.y, A.zw)
+                val L= Vec4(A.x, A.yz, A.w)
+                val M= Vec4(A.xy, A.z, A.w)
+
+                A shouldEqual B
+                A shouldEqual C
+                A shouldEqual D
+                A shouldEqual E
+                A shouldEqual F
+                A shouldEqual G
+                A shouldEqual H
+                A shouldEqual I
+                A shouldEqual J
+                A shouldEqual K
+                A shouldEqual L
+                A shouldEqual M
             }
+//            #	endif//GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR || GLM_SWIZZLE == GLM_SWIZZLE_FUNCTION
         }
 
         "operator increment"        {

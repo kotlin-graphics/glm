@@ -4,9 +4,11 @@ import glm_.*
 import glm_.vec1.Vec1bool
 import glm_.vec1.Vec1t
 import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2s
 import glm_.vec2.Vec2t
 import glm_.vec2.Vec2us
 import glm_.vec3.Vec3bool
+import glm_.vec3.Vec3s
 import glm_.vec3.Vec3t
 import glm_.vec3.Vec3us
 import glm_.vec4.operators.vec4us_operators
@@ -55,7 +57,9 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
     // -- Implicit basic constructors --
 
     constructor() : this(0)
-    constructor(v: Vec4s) : this(v.x, v.y, v.z, v.w)
+    constructor(v: Vec4us) : this(v.x, v.y, v.z, v.w)
+    constructor(v: Vec3us) : this(v.x, v.y, v.z, Ushort(0))
+    constructor(v: Vec2us) : this(v.x, v.y, Ushort(0), Ushort(0))
 
     // -- Explicit basic constructors --
 
@@ -788,11 +792,6 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
     infix fun allGreaterThanEqual(v: Vec4us): Boolean = x >= v.x && y >= v.y && z >= v.z && w >= v.w
     infix fun anyGreaterThanEqual(v: Vec4us): Boolean = x >= v.x || y >= v.y || z >= v.z || w >= v.w
     infix fun greaterThanEqual(v: Vec4us): Vec4bool = Vec4bool { get(it) >= v[it] }
-
-
-    override fun createInstance(x: Ushort, y: Ushort) = Vec2us(x, y)
-    override fun createInstance(x: Ushort, y: Ushort, z: Ushort) = Vec3us(x, y, z)
-    override fun createInstance(x: Ushort, y: Ushort, z: Ushort, w: Ushort) = Vec4us(x, y, z, w)
 
 
     companion object : vec4us_operators {

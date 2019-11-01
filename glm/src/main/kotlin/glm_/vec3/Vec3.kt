@@ -40,6 +40,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
 
     constructor() : this(0, 0, 0)
     constructor(v: Vec3) : this(v.x, v.y, v.z)
+    constructor(v: Vec2) : this(v.x, v.y, 0f)
 
     // -- Explicit basic constructors --
 
@@ -69,6 +70,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
 
     @JvmOverloads
     constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy.x, xy.y, z)
+
     constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy.x, xy.y, z.x)
     constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz.x, yz.y)
     constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x.x, yz.x, yz.y)
@@ -424,15 +426,15 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
 
     fun allNotEqual(f: Float, epsilon: Float = 0f): Boolean = x - f >= epsilon && y - f >= epsilon && z - f >= epsilon
     fun anyNotEqual(f: Float, epsilon: Float = 0f): Boolean = x - f >= epsilon || y - f >= epsilon || z - f >= epsilon
-    fun notEqual(f: Float, epsilon: Float = 0f): Vec3bool = Vec3bool{ get(it) - f >= epsilon }
+    fun notEqual(f: Float, epsilon: Float = 0f): Vec3bool = Vec3bool { get(it) - f >= epsilon }
 
     infix fun allGreaterThan(f: Float): Boolean = x > f && y > f && z > f
     infix fun anyGreaterThan(f: Float): Boolean = x > f || y > f || z > f
-    infix fun greaterThan(f: Float): Vec3bool = Vec3bool{ get(it) > f }
+    infix fun greaterThan(f: Float): Vec3bool = Vec3bool { get(it) > f }
 
     infix fun allGreaterThanEqual(f: Float): Boolean = x >= f && y >= f && z >= f
     infix fun anyGreaterThanEqual(f: Float): Boolean = x >= f || y >= f || z >= f
-    infix fun greaterThanEqual(f: Float): Vec3bool = Vec3bool{ get(it) >= f }
+    infix fun greaterThanEqual(f: Float): Vec3bool = Vec3bool { get(it) >= f }
 
 
     infix fun allLessThan(v: Vec3): Boolean = x < v.x && y < v.y && z < v.z
@@ -449,15 +451,15 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
 
     fun allNotEqual(v: Vec3, epsilon: Float = 0f): Boolean = x - v.x >= epsilon && y - v.y >= epsilon && z - v.z >= epsilon
     fun anyNotEqual(v: Vec3, epsilon: Float = 0f): Boolean = x - v.x >= epsilon || y - v.y >= epsilon || z - v.z >= epsilon
-    fun notEqual(v: Vec3, epsilon: Float = 0f): Vec3bool = Vec3bool{ get(it) - v[it] >= epsilon }
+    fun notEqual(v: Vec3, epsilon: Float = 0f): Vec3bool = Vec3bool { get(it) - v[it] >= epsilon }
 
     infix fun allGreaterThan(v: Vec3): Boolean = x > v.x && y > v.y && z > v.z
     infix fun anyGreaterThan(v: Vec3): Boolean = x > v.x || y > v.y || z > v.z
-    infix fun greaterThan(v: Vec3): Vec3bool = Vec3bool{ get(it) > v[it] }
+    infix fun greaterThan(v: Vec3): Vec3bool = Vec3bool { get(it) > v[it] }
 
     infix fun allGreaterThanEqual(v: Vec3): Boolean = x >= v.x && y >= v.y && z >= v.z
     infix fun anyGreaterThanEqual(v: Vec3): Boolean = x >= v.x || y >= v.y || z >= v.z
-    infix fun greaterThanEqual(v: Vec3): Vec3bool = Vec3bool{ get(it) >= v[it] }
+    infix fun greaterThanEqual(v: Vec3): Vec3bool = Vec3bool { get(it) >= v[it] }
 
 
     // -- functions --
@@ -485,10 +487,6 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
     }
 
     fun negateAssign() = negate(this)
-
-
-    override fun createInstance(x: Float, y: Float) = Vec2(x, y)
-    override fun createInstance(x: Float, y: Float, z: Float) = Vec3(x, y, z)
 
 
     companion object : vec3_operators {

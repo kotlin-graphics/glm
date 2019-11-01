@@ -39,6 +39,7 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuf
 
     constructor() : this(0, 0, 0)
     constructor(v: Vec3d) : this(v.x, v.y, v.z)
+    constructor(v: Vec2d) : this(v.x, v.y, 0.0)
 
     // -- Explicit basic constructors --
 
@@ -68,6 +69,7 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuf
 
     @JvmOverloads
     constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy.x, xy.y, z)
+
     constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy.x, xy.y, z.x)
     constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz.x, yz.y)
     constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x.x, yz.x, yz.y)
@@ -413,15 +415,15 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuf
 
     fun allNotEqual(d: Double, epsilon: Float = 0f): Boolean = x - d >= epsilon && y - d >= epsilon && z - d >= epsilon
     fun anyNotEqual(d: Double, epsilon: Float = 0f): Boolean = x - d >= epsilon || y - d >= epsilon || z - d >= epsilon
-    fun notEqual(d: Double, epsilon: Float = 0f): Vec3bool = Vec3bool{ get(it) - d >= epsilon }
+    fun notEqual(d: Double, epsilon: Float = 0f): Vec3bool = Vec3bool { get(it) - d >= epsilon }
 
     infix fun allGreaterThan(d: Double): Boolean = x > d && y > d && z > d
     infix fun anyGreaterThan(d: Double): Boolean = x > d || y > d || z > d
-    infix fun greaterThan(d: Double): Vec3bool = Vec3bool{ get(it) > d }
+    infix fun greaterThan(d: Double): Vec3bool = Vec3bool { get(it) > d }
 
     infix fun allGreaterThanEqual(d: Double): Boolean = x >= d && y >= d && z >= d
     infix fun anyGreaterThanEqual(d: Double): Boolean = x >= d || y >= d || z >= d
-    infix fun greaterThanEqual(d: Double): Vec3bool = Vec3bool{ get(it) >= d }
+    infix fun greaterThanEqual(d: Double): Vec3bool = Vec3bool { get(it) >= d }
 
 
     infix fun allLessThan(v: Vec3d): Boolean = x < v.x && y < v.y && z < v.z
@@ -438,15 +440,15 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuf
 
     fun allNotEqual(v: Vec3d, epsilon: Double = 0.0): Boolean = x - v.x >= epsilon && y - v.y >= epsilon && z - v.z >= epsilon
     fun anyNotEqual(v: Vec3d, epsilon: Double = 0.0): Boolean = x - v.x >= epsilon || y - v.y >= epsilon || z - v.z >= epsilon
-    fun notEqual(v: Vec3d, epsilon: Double = 0.0): Vec3bool = Vec3bool{ get(it) - v[it] >= epsilon }
+    fun notEqual(v: Vec3d, epsilon: Double = 0.0): Vec3bool = Vec3bool { get(it) - v[it] >= epsilon }
 
     infix fun allGreaterThan(v: Vec3d): Boolean = x > v.x && y > v.y && z > v.z
     infix fun anyGreaterThan(v: Vec3d): Boolean = x > v.x || y > v.y || z > v.z
-    infix fun greaterThan(v: Vec3d): Vec3bool = Vec3bool{ get(it) > v[it] }
+    infix fun greaterThan(v: Vec3d): Vec3bool = Vec3bool { get(it) > v[it] }
 
     infix fun allGreaterThanEqual(v: Vec3d): Boolean = x >= v.x && y >= v.y && z >= v.z
     infix fun anyGreaterThanEqual(v: Vec3d): Boolean = x >= v.x || y >= v.y || z >= v.z
-    infix fun greaterThanEqual(v: Vec3d): Vec3bool = Vec3bool{ get(it) >= v[it] }
+    infix fun greaterThanEqual(v: Vec3d): Vec3bool = Vec3bool { get(it) >= v[it] }
 
 
     // -- functions --
@@ -473,10 +475,6 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuf
     }
 
     fun negateAssign() = negate(this)
-
-
-    override fun createInstance(x: Double, y: Double) = Vec2d(x, y)
-    override fun createInstance(x: Double, y: Double, z: Double) = Vec3d(x, y, z)
 
 
     companion object : vec3d_operators {

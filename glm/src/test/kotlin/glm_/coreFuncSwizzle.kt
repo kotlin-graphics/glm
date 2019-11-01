@@ -3,9 +3,14 @@ package glm_
 import glm_.ext.equal
 import glm_.vec1.Vec1i
 import glm_.vec2.Vec2i
+import glm_.vec2.swizzle.xy
+import glm_.vec2.swizzle.yx
 import glm_.vec3.Vec3i
+import glm_.vec3.swizzle.*
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4i
+import glm_.vec4.swizzle.wzyx
+import glm_.vec4.swizzle.xyzw
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 import kotlin.math.abs
@@ -18,7 +23,7 @@ class coreFuncSwizzle : StringSpec() {
             //            #	if GLM_SWIZZLE
             run {
                 val A = Vec2i(1, 2)
-                val B = Vec2i(A.yx)
+                val B = A.yx
                 val C = Vec2i(B.yx)
 
                 assert(A != B)
@@ -29,7 +34,7 @@ class coreFuncSwizzle : StringSpec() {
 //            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
             run {
                 val A = Vec2i(1, 2)
-                val B = Vec2i(A.yx)
+                val B = A.yx
                 val C = Vec2i(A.yx)
 
                 assert(A != B)
@@ -55,7 +60,7 @@ class coreFuncSwizzle : StringSpec() {
             //            #	if GLM_SWIZZLE == GLM_ENABLE
             run {
                 val A = Vec3i(1, 2, 3)
-                val B = Vec3i(A.zyx)
+                val B = A.zyx
                 val C = Vec3i(B.zyx)
 
                 assert(A != B)
@@ -66,7 +71,7 @@ class coreFuncSwizzle : StringSpec() {
 //            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
             run {
                 val A = Vec3i(1, 2, 3)
-                val B = Vec2i(A.yx)
+                val B = A.yx
                 val C = Vec2i(A.yx)
 
                 A.yx shouldBe B
@@ -88,16 +93,16 @@ class coreFuncSwizzle : StringSpec() {
                 E shouldBe A.xy
                 E.xy shouldBe A.xy
 
-                val F = Vec3i(A.xxx) + A.xxx
+                val F = A.xxx + A.xxx
                 F shouldBe Vec3i(2)
 
-                val G = Vec3i(A.xxx) - A.xxx
+                val G = A.xxx - A.xxx
                 G shouldBe Vec3i(0)
 
-                val H = Vec3i(A.xxx) * A.xxx
+                val H = A.xxx * A.xxx
                 H shouldBe Vec3i(1)
 
-                val I = Vec3i(A.xxx) / A.xxx
+                val I = A.xxx / A.xxx
                 I shouldBe Vec3i(1)
 
                 val J = Vec3i(1, 2, 3)
@@ -106,7 +111,7 @@ class coreFuncSwizzle : StringSpec() {
                 J shouldBe Vec3i(2, 3, 4)
 
                 val K = Vec3i(1, 2, 3)
-                K.xyz = Vec3i(A.xyz) + K.xyz
+                K.xyz = A.xyz + K.xyz
                 K shouldBe Vec3i(2, 4, 6)
             }
 //            #	endif//GLM_SWIZZLE
@@ -116,7 +121,7 @@ class coreFuncSwizzle : StringSpec() {
 
             //            #if GLM_SWIZZLE == GLM_ENABLE
             val A = Vec4i(1, 2, 3, 4)
-            val B = Vec4i(A.wzyx)
+            val B = A.wzyx
             val C = Vec4i(B.wzyx)
 
             assert(A != B)
@@ -128,13 +133,13 @@ class coreFuncSwizzle : StringSpec() {
 
             //            #if GLM_SWIZZLE == GLM_ENABLE
             val A = Vec4(1, 2, 3, 4)
-            val B = Vec4(A.wzyx)
+            val B = A.wzyx
             val C = Vec4(B.wzyx)
 
             assert(A != B)
             A shouldBe C
 
-            val D = glm.dot(Vec4(C.wzyx), Vec4(C.xyzw))
+            val D = glm.dot(C.wzyx, C.xyzw)
             D.equal(20f, 0.01f) shouldBe true
 //            #endif//GLM_SWIZZLE == GLM_ENABLE
         }

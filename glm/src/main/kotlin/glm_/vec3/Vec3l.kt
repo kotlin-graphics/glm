@@ -39,6 +39,7 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>(), ToBuffer {
 
     constructor() : this(0, 0, 0)
     constructor(v: Vec3l) : this(v.x, v.y, v.z)
+    constructor(v: Vec2l) : this(v.x, v.y, 0)
 
     // -- Explicit basic constructors --
 
@@ -68,6 +69,7 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>(), ToBuffer {
 
     @JvmOverloads
     constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy.x, xy.y, z)
+
     constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy.x, xy.y, z.x)
     constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz.x, yz.y)
     constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x.x, yz.x, yz.y)
@@ -595,10 +597,6 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>(), ToBuffer {
     infix fun allGreaterThanEqual(v: Vec3l): Boolean = x >= v.x && y >= v.y && z >= v.z
     infix fun anyGreaterThanEqual(v: Vec3l): Boolean = x >= v.x || y >= v.y || z >= v.z
     infix fun greaterThanEqual(v: Vec3l): Vec3bool = Vec3bool { get(it) >= v[it] }
-
-
-    override fun createInstance(x: Long, y: Long) = Vec2l(x, y)
-    override fun createInstance(x: Long, y: Long, z: Long) = Vec3l(x, y, z)
 
 
     companion object : vec3l_operators {

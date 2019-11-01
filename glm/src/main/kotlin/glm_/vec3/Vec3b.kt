@@ -38,11 +38,13 @@ class Vec3b(var ofs: Int, var array: ByteArray) : Vec3t<Byte>(), ToBuffer {
 
     constructor() : this(0, 0, 0)
     constructor(v: Vec3b) : this(v.x, v.y, v.z)
+    constructor(v: Vec2b) : this(v.x, v.y, 0)
 
     // -- Explicit basic constructors --
 
     @JvmOverloads
     constructor(x: Byte, y: Byte = x, z: Byte = x) : this(0, byteArrayOf(x, y, z))
+
     @JvmOverloads
     constructor(x: Int, y: Int = x, z: Int = x) : this(0, byteArrayOf(x.b, y.b, z.b))
 
@@ -69,6 +71,7 @@ class Vec3b(var ofs: Int, var array: ByteArray) : Vec3t<Byte>(), ToBuffer {
 
     @JvmOverloads
     constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy.x, xy.y, z)
+
     constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy.x, xy.y, z.x)
     constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz.x, yz.y)
     constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x.x, yz.x, yz.y)
@@ -620,10 +623,6 @@ class Vec3b(var ofs: Int, var array: ByteArray) : Vec3t<Byte>(), ToBuffer {
     infix fun allGreaterThanEqual(v: Vec3b): Boolean = x >= v.x && y >= v.y && z >= v.z
     infix fun anyGreaterThanEqual(v: Vec3b): Boolean = x >= v.x || y >= v.y || z >= v.z
     infix fun greaterThanEqual(v: Vec3b): Vec3bool = Vec3bool { get(it) >= v[it] }
-
-
-    override fun createInstance(x: Byte, y: Byte) = Vec2b(x, y)
-    override fun createInstance(x: Byte, y: Byte, z: Byte) = Vec3b(x, y, z)
 
 
     companion object : vec3b_operators {

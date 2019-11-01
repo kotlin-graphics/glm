@@ -501,15 +501,15 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
 
     fun allNotEqual(f: Float, epsilon: Float = 0f): Boolean = x - f >= epsilon && y - f >= epsilon
     fun anyNotEqual(f: Float, epsilon: Float = 0f): Boolean = x - f >= epsilon || y - f >= epsilon
-    fun notEqual(f: Float, epsilon: Float = 0f): Vec2bool = Vec2bool{ get(it) - f >= epsilon }
+    fun notEqual(f: Float, epsilon: Float = 0f): Vec2bool = Vec2bool { get(it) - f >= epsilon }
 
     infix fun allGreaterThan(f: Float): Boolean = x > f && y > f
     infix fun anyGreaterThan(f: Float): Boolean = x > f || y > f
-    infix fun greaterThan(f: Float): Vec2bool = Vec2bool{ get(it) > f }
+    infix fun greaterThan(f: Float): Vec2bool = Vec2bool { get(it) > f }
 
     infix fun allGreaterThanEqual(f: Float): Boolean = x >= f && y >= f
     infix fun anyGreaterThanEqual(f: Float): Boolean = x >= f || y >= f
-    infix fun greaterThanEqual(f: Float): Vec2bool = Vec2bool{ get(it) >= f }
+    infix fun greaterThanEqual(f: Float): Vec2bool = Vec2bool { get(it) >= f }
 
 
     infix fun allLessThan(v: Vec2): Boolean = x < v.x && y < v.y
@@ -526,15 +526,15 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
 
     fun allNotEqual(v: Vec2, epsilon: Float = 0f): Boolean = x - v.x >= epsilon && y - v.y >= epsilon
     fun anyNotEqual(v: Vec2, epsilon: Float = 0f): Boolean = x - v.x >= epsilon || y - v.y >= epsilon
-    fun notEqual(v: Vec2, epsilon: Float = 0f): Vec2bool = Vec2bool{ get(it) - v[it] >= epsilon }
+    fun notEqual(v: Vec2, epsilon: Float = 0f): Vec2bool = Vec2bool { get(it) - v[it] >= epsilon }
 
     infix fun allGreaterThan(v: Vec2): Boolean = x > v.x && y > v.y
     infix fun anyGreaterThan(v: Vec2): Boolean = x > v.x || y > v.y
-    infix fun greaterThan(v: Vec2): Vec2bool = Vec2bool{ get(it) > v[it] }
+    infix fun greaterThan(v: Vec2): Vec2bool = Vec2bool { get(it) > v[it] }
 
     infix fun allGreaterThanEqual(v: Vec2): Boolean = x >= v.x && y >= v.y
     infix fun anyGreaterThanEqual(v: Vec2): Boolean = x >= v.x || y >= v.y
-    infix fun greaterThanEqual(v: Vec2): Vec2bool = Vec2bool{ get(it) >= v[it] }
+    infix fun greaterThanEqual(v: Vec2): Vec2bool = Vec2bool { get(it) >= v[it] }
 
 
     infix fun <T : Number> allLessThan(v: Vec2t<T>): Boolean = x < v.x.f && y < v.y.f
@@ -578,9 +578,6 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
         res.y = -y
         return res
     }
-
-
-    override fun createInstance(x: Float, y: Float) = Vec2(x, y)
 
 
     companion object : opVec2 {

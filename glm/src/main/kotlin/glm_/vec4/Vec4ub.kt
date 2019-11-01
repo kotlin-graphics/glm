@@ -54,6 +54,8 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>(), ToBuffer {
 
     constructor() : this(0)
     constructor(v: Vec4ub) : this(v.x, v.y, v.z, v.w)
+    constructor(v: Vec3ub) : this(v.x, v.y, v.z, Ubyte(0))
+    constructor(v: Vec2ub) : this(v.x, v.y, Ubyte(0), Ubyte(0))
 
     // -- Explicit basic constructors --
 
@@ -740,11 +742,6 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>(), ToBuffer {
     infix fun allGreaterThanEqual(v: Vec4ub): Boolean = x >= v.x && y >= v.y && z >= v.z && w >= v.w
     infix fun anyGreaterThanEqual(v: Vec4ub): Boolean = x >= v.x || y >= v.y || z >= v.z || w >= v.w
     infix fun greaterThanEqual(v: Vec4ub): Vec4bool = Vec4bool { get(it) >= v[it] }
-
-
-    override fun createInstance(x: Ubyte, y: Ubyte) = Vec2ub(x, y)
-    override fun createInstance(x: Ubyte, y: Ubyte, z: Ubyte) = Vec3ub(x, y, z)
-    override fun createInstance(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) = Vec4(x, y, z, w)
 
 
     companion object : vec4ub_operators {

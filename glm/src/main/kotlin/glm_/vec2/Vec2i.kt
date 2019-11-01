@@ -616,9 +616,6 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
         get() = x.f / y
 
 
-    override fun createInstance(x: Int, y: Int) = Vec2i(x, y)
-
-
     companion object : opVec2i {
         const val length = Vec2t.length
         @JvmField

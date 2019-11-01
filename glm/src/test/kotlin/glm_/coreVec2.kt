@@ -4,14 +4,16 @@ package glm_
  * Created by GBarbieri on 05.10.2016.
  */
 
-import glm_.glm.εf
 import glm_.vec1.Vec1
 import glm_.vec1.Vec1d
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2i
-import glm_.vec2.operators.*
-import io.kotlintest.shouldBe
+import glm_.vec2.operators.div
+import glm_.vec2.operators.minus
+import glm_.vec2.operators.plus
+import glm_.vec2.operators.times
+import glm_.vec2.swizzle.xy
 import io.kotlintest.specs.StringSpec
 
 
@@ -417,9 +419,9 @@ class coreVec2 : StringSpec() {
             }
             run {
                 val A = Vec2(1f, 2f)
-                val B = A.xy as Vec2
-                val C = Vec2(A.xy as Vec2)
-                val D = Vec2(A.xy as Vec2)
+                val B = A.xy
+                val C = Vec2(A.xy)
+                val D = A.xy
                 A shouldEqual B
                 A shouldEqual C
                 A shouldEqual D
@@ -484,6 +486,8 @@ class coreVec2 : StringSpec() {
             a shouldEqual Vec2(5)
         }
 
+
+
         "operator_increment" {
 
             run {
@@ -506,7 +510,7 @@ class coreVec2 : StringSpec() {
             }
         }
 
-        "swizzle"        {
+        "swizzle" {
 
             //            #	if GLM_SWIZZLE == GLM_ENABLE && GLM_HAS_ANONYMOUS_STRUCT
 //            {
@@ -529,27 +533,6 @@ class coreVec2 : StringSpec() {
             A shouldEqual C
 //                }
 //            #	endif//GLM_SWIZZLE == GLM_ENABLE
-        }
-
-        "swizzling" {
-
-            val a = Vec2(1, 2)
-            val b = Vec2(3, 4)
-
-            b.xy = a
-
-//            val c = b.xy as Vec2
-
-            b shouldEqual Vec2(1, 2)
-
-            a.yx = b
-
-            a shouldEqual Vec2(2, 1)
-            b shouldEqual Vec2(1, 2)
-
-            a.yx = b.yx
-
-            a shouldEqual Vec2(1, 2)
         }
     }
 }

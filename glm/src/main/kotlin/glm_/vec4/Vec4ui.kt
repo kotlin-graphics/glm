@@ -56,6 +56,8 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
 
     constructor() : this(0)
     constructor(v: Vec4ui) : this(v.x, v.y, v.z, v.w)
+    constructor(v: Vec3ui) : this(v.x, v.y, v.z, Uint(0))
+    constructor(v: Vec2ui) : this(v.x, v.y, Uint(0), Uint(0))
 
     // -- Explicit basic constructors --
 
@@ -723,11 +725,6 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
     infix fun allGreaterThanEqual(v: Vec4ui): Boolean = x >= v.x && y >= v.y && z >= v.z && w >= v.w
     infix fun anyGreaterThanEqual(v: Vec4ui): Boolean = x >= v.x || y >= v.y || z >= v.z || w >= v.w
     infix fun greaterThanEqual(v: Vec4ui): Vec4bool = Vec4bool { get(it) >= v[it] }
-
-
-    override fun createInstance(x: Uint, y: Uint) = Vec2ui(x, y)
-    override fun createInstance(x: Uint, y: Uint, z: Uint) = Vec3ui(x, y, z)
-    override fun createInstance(x: Uint, y: Uint, z: Uint, w: Uint) = Vec4ui(x, y, z, w)
 
 
     companion object : vec4ui_operators {

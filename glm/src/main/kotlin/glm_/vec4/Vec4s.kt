@@ -42,6 +42,8 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>(), ToBuffer {
 
     constructor() : this(0)
     constructor(v: Vec4s) : this(v.x, v.y, v.z, v.w)
+    constructor(v: Vec3s) : this(v.x, v.y, v.z, 0)
+    constructor(v: Vec2s) : this(v.x, v.y, 0, 0)
 
     // -- Explicit basic constructors --
 
@@ -687,11 +689,6 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>(), ToBuffer {
     infix fun allGreaterThanEqual(v: Vec4s): Boolean = x >= v.x && y >= v.y && z >= v.z && w >= v.w
     infix fun anyGreaterThanEqual(v: Vec4s): Boolean = x >= v.x || y >= v.y || z >= v.z || w >= v.w
     infix fun greaterThanEqual(v: Vec4s): Vec4bool = Vec4bool { get(it) >= v[it] }
-
-
-    override fun createInstance(x: Short, y: Short) = Vec2s(x, y)
-    override fun createInstance(x: Short, y: Short, z: Short) = Vec3s(x, y, z)
-    override fun createInstance(x: Short, y: Short, z: Short, w: Short) = Vec4s(x, y, z, w)
 
 
     companion object : vec4s_operators {

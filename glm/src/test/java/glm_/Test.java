@@ -24,9 +24,9 @@ public class Test {
 
         Vec2 v = new Vec2(3, 4);
 
-        Vec2 a = (Vec2) v.xx();
-        a.getX();
-        a.xy(v.xy());
+//        Vec2 a = (Vec2) v.xx();
+//        a.getX();
+//        a.xy(v.xy());
         Vec1 b = new Vec1();
         int l = Vec1.length;
 //        Vec2 b = (Vec2) v.aa();

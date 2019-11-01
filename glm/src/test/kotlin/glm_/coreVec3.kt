@@ -3,13 +3,16 @@ package glm_
 import glm_.vec1.Vec1
 import glm_.vec1.Vec1d
 import glm_.vec2.Vec2
+import glm_.vec2.Vec2i
 import glm_.vec2.Vec2t
+import glm_.vec2.swizzle.xy
+import glm_.vec2.swizzle.yy
 import glm_.vec3.*
-import glm_.vec3.operators.div
-import glm_.vec3.operators.minus
-import glm_.vec3.operators.plus
-import glm_.vec3.operators.times
+import glm_.vec3.operators.*
+import glm_.vec3.swizzle.*
 import glm_.vec4.Vec4
+import glm_.vec4.swizzle.xyz
+import glm_.vec4.swizzle.xyzw
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
@@ -21,7 +24,7 @@ class coreVec3 : StringSpec() {
 
             run {
                 val a = Vec3(1f, 2f, 3f)
-                val b = a.xyz
+                val b = Vec3(a.xyz)
                 val c = Vec3(a.xyz)
                 val d = a.xyz as Vec3
                 val e = Vec3(a.x, a.yz)
@@ -29,20 +32,20 @@ class coreVec3 : StringSpec() {
                 val g = Vec3(a.xy, a.z)
                 val h = Vec3(a.xy, a.z)
 
-                a shouldBe b
-                a shouldBe c
-                a shouldBe d
-                a shouldBe e
-                a shouldBe f
-                a shouldBe g
-                a shouldBe h
+                a shouldEqual b
+                a shouldEqual c
+                a shouldEqual d
+                a shouldEqual e
+                a shouldEqual f
+                a shouldEqual g
+                a shouldEqual h
             }
 
             run {
                 val a = Vec3(1)
                 val b = Vec3(1, 1, 1)
 
-                a shouldBe b
+                a shouldEqual b
             }
 
             run {
@@ -52,7 +55,7 @@ class coreVec3 : StringSpec() {
                         Vec3(1, 2, 3),
                         Vec3(Vec4(1, 2, 3, 4))).forEach {
 
-                    it shouldBe Vec3(1, 2, 3)
+                    it shouldEqual Vec3(1, 2, 3)
                 }
             }
 
@@ -64,25 +67,25 @@ class coreVec3 : StringSpec() {
 
                 val A = Vec3(R)
                 val B = Vec3(1.0f)
-                A shouldBe B
+                A shouldEqual B
 
                 val C = Vec3(R, S, T)
-                C shouldBe O
+                C shouldEqual O
 
                 val D = Vec3(R, 2.0f, 3.0f)
-                D shouldBe O
+                D shouldEqual O
 
                 val E = Vec3(1f, S, 3f)
-                E shouldBe O
+                E shouldEqual O
 
                 val F = Vec3(1f, S, T)
-                F shouldBe O
+                F shouldEqual O
 
                 val G = Vec3(R, 2f, T)
-                G shouldBe O
+                G shouldEqual O
 
                 val H = Vec3(R, S, 3f)
-                H shouldBe O
+                H shouldEqual O
             }
 
             run {
@@ -93,25 +96,25 @@ class coreVec3 : StringSpec() {
 
                 val A = Vec3(R)
                 val B = Vec3(1.0)
-                A shouldBe B
+                A shouldEqual B
 
                 val C = Vec3(R, S, T)
-                C shouldBe O
+                C shouldEqual O
 
                 val D = Vec3(R, 2.0, 3.0)
-                D shouldBe O
+                D shouldEqual O
 
                 val E = Vec3(1.0f, S, 3.0)
-                E shouldBe O
+                E shouldEqual O
 
                 val F = Vec3(1.0, S, T)
-                F shouldBe O
+                F shouldEqual O
 
                 val G = Vec3(R, 2.0, T)
-                G shouldBe O
+                G shouldEqual O
 
                 val H = Vec3(R, S, 3.0)
-                H shouldBe O
+                H shouldEqual O
             }
         }
 
@@ -137,8 +140,8 @@ class coreVec3 : StringSpec() {
         "vec3 operators" {
 
             run {
-                val a = Vec3(1f)
-                val b = Vec3(1f)
+                val a = Vec3i(1f)
+                val b = Vec3i(1f)
                 val r = a != b
                 val s = a == b
 
@@ -150,119 +153,119 @@ class coreVec3 : StringSpec() {
                 val b = Vec3(4f, 5f, 6f)
 
                 val c = a + b
-                c shouldBe Vec3(5, 7, 9)
+                c shouldEqual Vec3(5, 7, 9)
 
                 val d = b - a
-                d shouldBe Vec3(3, 3, 3)
+                d shouldEqual Vec3(3, 3, 3)
 
                 val e = a * b
-                e shouldBe Vec3(4, 10, 18)
+                e shouldEqual Vec3(4, 10, 18)
 
                 val f = b / a
-                f shouldBe Vec3(4, 2.5, 2)
+                f shouldEqual Vec3(4, 2.5, 2)
 
                 val g = a + 1f
-                g shouldBe Vec3(2, 3, 4)
+                g shouldEqual Vec3(2, 3, 4)
 
                 val h = b - 1f
-                h shouldBe Vec3(3, 4, 5)
+                h shouldEqual Vec3(3, 4, 5)
 
                 val i = a * 2f
-                i shouldBe Vec3(2, 4, 6)
+                i shouldEqual Vec3(2, 4, 6)
 
                 val j = b / 2f
-                j shouldBe Vec3(2, 2.5, 3)
+                j shouldEqual Vec3(2, 2.5, 3)
 
                 val k = 1f + a
-                k shouldBe Vec3(2, 3, 4)
+                k shouldEqual Vec3(2, 3, 4)
 
                 val l = 1f - b
-                l shouldBe Vec3(-3, -4, -5)
+                l shouldEqual Vec3(-3, -4, -5)
 
                 val m = 2f * a
-                m shouldBe Vec3(2, 4, 6)
+                m shouldEqual Vec3(2, 4, 6)
 
                 val n = 2f / b
-                n shouldBe Vec3(0.5, 2.0 / 5.0, 2.0 / 6.0)
+                n shouldEqual Vec3(0.5, 2.0 / 5.0, 2.0 / 6.0)
             }
 
             run {
-                val a = Vec3(1f, 2f, 3f)
-                val b = Vec3(4f, 5f, 6f)
+                val a = Vec3i(1f, 2f, 3f)
+                val b = Vec3i(4f, 5f, 6f)
 
                 a += b
-                a shouldBe Vec3(5, 7, 9)
+                a shouldEqual Vec3i(5, 7, 9)
 
-                a += 1f
-                a shouldBe Vec3(6, 8, 10)
+                a += 1
+                a shouldEqual Vec3i(6, 8, 10)
             }
             run {
-                val a = Vec3(1f, 2f, 3f)
-                val b = Vec3(4f, 5f, 6f)
+                val a = Vec3i(1f, 2f, 3f)
+                val b = Vec3i(4f, 5f, 6f)
 
                 b -= a
-                b shouldBe Vec3(3, 3, 3)
+                b shouldEqual Vec3i(3, 3, 3)
 
-                b -= 1f
-                b shouldBe Vec3(2, 2, 2)
+                b -= 1
+                b shouldEqual Vec3i(2, 2, 2)
             }
             run {
-                val a = Vec3(1f, 2f, 3f)
-                val b = Vec3(4f, 5f, 6f)
+                val a = Vec3i(1f, 2f, 3f)
+                val b = Vec3i(4f, 5f, 6f)
 
                 a *= b
-                a shouldBe Vec3(4, 10, 18)
+                a shouldEqual Vec3i(4, 10, 18)
 
-                a *= 2f
-                a shouldBe Vec3(8, 20, 36)
+                a *= 2
+                a shouldEqual Vec3i(8, 20, 36)
             }
             run {
-                val a = Vec3(1f, 2f, 3f)
-                val b = Vec3(4f, 5f, 6f)
+                val a = Vec3i(1f, 2f, 3f)
+                val b = Vec3i(4f, 4f, 6f)
 
                 b /= a
-                b shouldBe Vec3(4, 2.5, 2)
+                b shouldEqual Vec3i(4, 2, 2)
 
-                b /= 2f
-                b shouldBe Vec3(2, 1.25, 1)
+                b /= 2
+                b shouldEqual Vec3i(2, 1, 1)
             }
             run {
-                val b = Vec3(2f)
+                val b = Vec3i(2f)
 
                 b /= b.y
-                b shouldBe Vec3(1f)
+                b shouldEqual Vec3i(1f)
             }
 
             run {
-                val a = Vec3(1f, 2f, 3f)
+                val a = Vec3i(1f, 2f, 3f)
                 val b = -a
-                b shouldBe Vec3(-1f, -2f, -3f)
+                b shouldEqual Vec3i(-1f, -2f, -3f)
             }
 
             run {
                 var a = Vec3(1f, 2f, 3f)
                 val b = --a
-                b shouldBe Vec3(0f, 1f, 2f)
+                b shouldEqual Vec3(0f, 1f, 2f)
             }
 
             run {
-                var a = Vec3(1f, 2f, 3f)
+                var a = Vec3i(1f, 2f, 3f)
                 val b = a--
-                b shouldBe Vec3(1f, 2f, 3f)
-                a shouldBe Vec3(0f, 1f, 2f)
+                b shouldEqual Vec3i(1f, 2f, 3f)
+                a shouldEqual Vec3i(0f, 1f, 2f)
             }
 
             run {
-                var a = Vec3(1f, 2f, 3f)
+                var a = Vec3i(1f, 2f, 3f)
                 val b = ++a
-                b shouldBe Vec3(2f, 3f, 4f)
+                b shouldEqual Vec3i(2f, 3f, 4f)
             }
 
             run {
-                var a = Vec3(1f, 2f, 3f)
+                var a = Vec3i(1f, 2f, 3f)
                 val b = a++
-                b shouldBe Vec3(1f, 2f, 3f)
-                a shouldBe Vec3(2f, 3f, 4f)
+                b shouldEqual Vec3i(1f, 2f, 3f)
+                a shouldEqual Vec3i(2f, 3f, 4f)
             }
         }
 
@@ -273,205 +276,133 @@ class coreVec3 : StringSpec() {
             Vec3d.length shouldBe 3
         }
 
-        "swizzle"        {
+        "swizzle3 2"        {
 
-            //            #	if GLM_SWIZZLE == GLM_ENABLE && GLM_HAS_ANONYMOUS_STRUCT
+            //            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
+            run {
+                var v = Vec3i(1, 2, 3)
+                var u: Vec2i
+
+                // Can not assign a vec3 swizzle to a vec2
+                //u = v.xyz;    //Illegal
+                //u = v.rgb;    //Illegal
+                //u = v.stp;    //Illegal
+
+                u = v.xx; assert(u.x == 1 && u.y == 1)
+                u = v.xy; assert(u.x == 1 && u.y == 2)
+                u = v.xz; assert(u.x == 1 && u.y == 3)
+                u = v.yx; assert(u.x == 2 && u.y == 1)
+                u = v.yy; assert(u.x == 2 && u.y == 2)
+                u = v.yz; assert(u.x == 2 && u.y == 3)
+                u = v.zx; assert(u.x == 3 && u.y == 1)
+                u = v.zy; assert(u.x == 3 && u.y == 2)
+                u = v.zz; assert(u.x == 3 && u.y == 3)
+
+                u = v.rr; assert(u.r == 1 && u.g == 1)
+                u = v.rg; assert(u.r == 1 && u.g == 2)
+                u = v.rb; assert(u.r == 1 && u.g == 3)
+                u = v.gr; assert(u.r == 2 && u.g == 1)
+                u = v.gg; assert(u.r == 2 && u.g == 2)
+                u = v.gb; assert(u.r == 2 && u.g == 3)
+                u = v.br; assert(u.r == 3 && u.g == 1)
+                u = v.bg; assert(u.r == 3 && u.g == 2)
+                u = v.bb; assert(u.r == 3 && u.g == 3)
+// TODO
+//                u = v.ss;       assert(u.s == 1 && u.t == 1)
+//                u = v.st;       assert(u.s == 1 && u.t == 2)
+//                u = v.sp;       assert(u.s == 1 && u.t == 3)
+//                u = v.ts;       assert(u.s == 2 && u.t == 1)
+//                u = v.tt;       assert(u.s == 2 && u.t == 2)
+//                u = v.tp;       assert(u.s == 2 && u.t == 3)
+//                u = v.ps;       assert(u.s == 3 && u.t == 1)
+//                u = v.pt;       assert(u.s == 3 && u.t == 2)
+//                u = v.pp;       assert(u.s == 3 && u.t == 3)
+//                // Mixed member aliases are not valid
+//                //u = v.rx;     //Illegal
+//                //u = v.sy;     //Illegal
+
+                u = Vec2i(1, 2)
+                v = Vec3i(1, 2, 3)
+                //v.xx = u;     //Illegal
+                v.xy = u; assert(v.x == 1 && v.y == 2 && v.z == 3)
+                v.xz = u; assert(v.x == 1 && v.y == 2 && v.z == 2)
+                v.yx = u; assert(v.x == 2 && v.y == 1 && v.z == 2)
+                //v.yy = u;     //Illegal
+                v.yz = u; assert(v.x == 2 && v.y == 1 && v.z == 2)
+                v.zx = u; assert(v.x == 2 && v.y == 1 && v.z == 1)
+                v.zy = u; assert(v.x == 2 && v.y == 2 && v.z == 1)
+                //v.zz = u;     //Illegal
+            }
+//            #	endif//GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
+        }
+
+        "vec3 swizzle3 3"        {
+
+            //            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
 //            {
-//                glm::vec3 A = glm::vec3(1.0f, 2.0f, 3.0f);
-//                glm::vec3 B = A.xyz;
-//                glm::vec3 C(A.xyz);
-//                glm::vec3 D(A.xyz());
-//                glm::vec3 E(A.x, A.yz);
-//                glm::vec3 F(A.x, A.yz());
-//                glm::vec3 G(A.xy, A.z);
-//                glm::vec3 H(A.xy(), A.z);
+            val v = Vec3i(1, 2, 3)
+            var u: Vec3i
+
+            u = v; assert(u.x == 1 && u.y == 2 && u.z == 3)
+
+            u = v.xyz; assert(u.x == 1 && u.y == 2 && u.z == 3)
+            u = v.zyx; assert(u.x == 3 && u.y == 2 && u.z == 1)
+            u.zyx = v; assert(u.x == 3 && u.y == 2 && u.z == 1)
+
+            // TODO
+//            u = v.rgb; assert(u.x == 1 && u.y == 2 && u.z == 3)
+//            u = v.bgr; assert(u.x == 3 && u.y == 2 && u.z == 1)
+//            u.bgr = v; assert(u.x == 3 && u.y == 2 && u.z == 1)
 //
-//                Error += glm::all(glm::equal(A, B)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, C)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, D)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, E)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, F)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, G)) ? 0 : 1;
-//                Error += glm::all(glm::equal(A, H)) ? 0 : 1;
+//            u = v.stp; assert(u.x == 1 && u.y == 2 && u.z == 3)
+//            u = v.pts; assert(u.x == 3 && u.y == 2 && u.z == 1)
+//            u.pts = v; assert(u.x == 3 && u.y == 2 && u.z == 1)
 //            }
-//            #	elif GLM_SWIZZLE == GLM_ENABLE
-//                {
-            val A = Vec3(1f, 2f, 3f)
-            val B = A.xyz
-            val C = Vec3(A.xyz)
-            val D = Vec3(A.xyz)
-            val E = Vec3(A.x, A.yz)
-            val F = Vec3(A.x, A.yz)
-            val G = Vec3(A.xy, A.z)
-            val H = Vec3(A.xy, A.z)
-
-            A shouldBe B
-            A shouldBe C
-            A shouldBe D
-            A shouldBe E
-            A shouldBe F
-            A shouldBe G
-            A shouldBe H
-//        }
-//            #	endif//GLM_SWIZZLE == GLM_ENABLE
+//            #	endif//GLM_LANG
         }
 
-        "swizzle3 2" {
+        "vec3 swizzle operators"        {
 
-            var v = Vec3(1, 2, 3)
-            var u: Vec2t<out Number>
+            val u = Vec3i(1, 2, 3)
+            val v = Vec3i(10, 20, 30)
 
-            // Can not assign a vec3 swizzle to a vec2
-            //u = v.xyz;    //Illegal
-            //u = v.rgb;    //Illegal
-            //u = v.stp;    //Illegal
-
-            u = v.xx; assert(u.x == 1f && u.y == 1f)
-            u = v.xy; assert(u.x == 1f && u.y == 2f)
-            u = v.xz; assert(u.x == 1f && u.y == 3f)
-            u = v.yx; assert(u.x == 2f && u.y == 1f)
-            u = v.yy; assert(u.x == 2f && u.y == 2f)
-            u = v.yz; assert(u.x == 2f && u.y == 3f)
-            u = v.zx; assert(u.x == 3f && u.y == 1f)
-            u = v.zy; assert(u.x == 3f && u.y == 2f)
-            u = v.zz; assert(u.x == 3f && u.y == 3f)
-
-//          TODO  u = v.rr;       assert(u.r == 1f && u.g == 1f)
-//            u = v.rg;       assert(u.r == 1f && u.g == 2f)
-//            u = v.rb;       assert(u.r == 1f && u.g == 3f)
-//            u = v.gr;       assert(u.r == 2f && u.g == 1f)
-//            u = v.gg;       assert(u.r == 2f && u.g == 2f)
-//            u = v.gb;       assert(u.r == 2f && u.g == 3f)
-//            u = v.br;       assert(u.r == 3f && u.g == 1f)
-//            u = v.bg;       assert(u.r == 3f && u.g == 2f)
-//            u = v.bb;       assert(u.r == 3f && u.g == 3f)
-//
-//            u = v.ss;       assert(u.s == 1f && u.t == 1f)
-//            u = v.st;       assert(u.s == 1f && u.t == 2f)
-//            u = v.sp;       assert(u.s == 1f && u.t == 3f)
-//            u = v.ts;       assert(u.s == 2f && u.t == 1f)
-//            u = v.tt;       assert(u.s == 2f && u.t == 2f)
-//            u = v.tp;       assert(u.s == 2f && u.t == 3f)
-//            u = v.ps;       assert(u.s == 3f && u.t == 1f)
-//            u = v.pt;       assert(u.s == 3f && u.t == 2f)
-//            u = v.pp;       assert(u.s == 3f && u.t == 3f)
-//            // Mixed member aliases are not valid
-//            //u = v.rx;     //Illegal
-//            //u = v.sy;     //Illegal
-//
-            u = Vec2(1, 2)
-            v = Vec3(1, 2, 3)
-            //v.xx = u;     //Illegal
-            v.xy = u; assert(v.x == 1f && v.y == 2f && v.z == 3f)
-            v.xz = u; assert(v.x == 1f && v.y == 2f && v.z == 2f)
-            v.yx = u; assert(v.x == 2f && v.y == 1f && v.z == 2f)
-            //v.yy = u;     //Illegal
-            v.yz = u; assert(v.x == 2f && v.y == 1f && v.z == 2f)
-            v.zx = u; assert(v.x == 2f && v.y == 1f && v.z == 1f)
-            v.zy = u; assert(v.x == 2f && v.y == 2f && v.z == 1f)
-            //v.zz = u;     //Illegal
-        }
-
-        "swizzle3 3" {
-
-            val v = Vec3(1, 2, 3)
-            var u: Vec3t<out Number>
-
-            u = v; assert(u.x == 1f && u.y == 2f && u.z == 3f)
-
-            u = v.xyz; assert(u.x == 1f && u.y == 2f && u.z == 3f)
-            u = v.zyx; assert(u.x == 3f && u.y == 2f && u.z == 1f)
-            u.zyx = v; assert(u.x == 3f && u.y == 2f && u.z == 1f)
-
-//          TODO  u = v.rgb;      assert(u.x == 1f && u.y == 2f && u.z == 3f)
-//            u = v.bgr;      assert(u.x == 3f && u.y == 2f && u.z == 1f)
-//            u.bgr = v;      assert(u.x == 3f && u.y == 2f && u.z == 1f)
-//
-//            u = v.stp;      assert(u.x == 1f && u.y == 2f && u.z == 3f)
-//            u = v.pts;      assert(u.x == 3f && u.y == 2f && u.z == 1f)
-//            u.pts = v;      assert(u.x == 3f && u.y == 2f && u.z == 1f)
-        }
-
-        "operator increment" {
-
-            val v0 = Vec3i(1)
-            var v1 = Vec3i(v0)
-            var v2 = Vec3i(v0)
-            val v3 = ++v1
-            val v4 = v2++
-
-            v0 shouldBe v4
-            v1 shouldBe v2
-            v1 shouldBe v3
-
-            val i0 = 1
-            var i1 = i0
-            var i2 = i0
-            val i3 = ++i1
-            val i4 = i2++
-
-            i0 shouldBe i4
-            i1 shouldBe i2
-            i1 shouldBe i3
-        }
-
-        "swizzle partial" {
-
-            run {
-                val A = Vec3(1, 2, 3)
-                val B = Vec3(A.xy, 3f)
-                A shouldBe B
-            }
-
-            run {
-                val A = Vec3(1, 2, 3)
-                val B = Vec3(1f, A.yz)
-                A shouldBe B
-            }
-
-            run {
-                val A = Vec3(1, 2, 3)
-                val B = Vec3(A.xyz)
-                A shouldBe B
-            }
-        }
-
-        "swizzle operators" {
-
-            val u = Vec3(1, 2, 3)
-            val v = Vec3(10, 20, 30)
-
-            var q: Vec3t<out Number>
+//            #    if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
+//            {
+            var q: Vec3i
 
             // Swizzle, swizzle binary operators
-            q = u.xyz as Vec3 + v.xyz as Vec3; q shouldBe (u + v)
-            q = (u.zyx as Vec3 + v.zyx as Vec3).zyx; q shouldBe (u + v)
-            q = u.xyz as Vec3 - v.xyz as Vec3; q shouldBe (u - v)
-            q = u.xyz as Vec3 * v.xyz as Vec3; q shouldBe (u * v)
-            q = u.xxx as Vec3 * v.xxx as Vec3; q shouldBe Vec3(u.x * v.x)
-            q = u.xyz as Vec3 / v.xyz as Vec3; q shouldBe (u / v)
+            q = u.xyz + v.xyz; assert(q == (u + v))
+            q = (u.zyx + v.zyx).zyx; assert(q == (u + v))
+            q = (u.xyz - v.xyz); assert(q == (u - v))
+            q = (u.xyz * v.xyz); assert(q == (u * v))
+            q = (u.xxx * v.xxx); assert(q == Vec3i(u.x * v.x))
+            q = (u.xyz / v.xyz); assert(q == (u / v))
 
             // vec, swizzle binary operators
-            q = u + v.xyz as Vec3; q shouldBe (u + v)
-            q = u - v.xyz as Vec3; q shouldBe (u - v)
-            q = u * v.xyz as Vec3; q shouldBe (u * v)
-            q = u * v.xxx as Vec3; q shouldBe v.x * u
-            q = u / v.xyz as Vec3; q shouldBe (u / v)
+            q = u + v.xyz; assert(q == (u + v))
+            q = (u - v.xyz); assert(q == (u - v))
+            q = (u * v.xyz); assert(q == (u * v))
+            q = (u * v.xxx); assert(q == v.x * u)
+            q = (u / v.xyz); assert(q == (u / v))
 
             // swizzle,vec binary operators
-            q = u.xyz as Vec3 + v; q shouldBe (u + v)
-            q = u.xyz as Vec3 - v; q shouldBe (u - v)
-            q = u.xyz as Vec3 * v; q shouldBe (u * v)
-            q = u.xxx as Vec3 * v; q shouldBe u.x * v
-            q = u.xyz as Vec3 / v; q shouldBe (u / v)
+            q = u.xyz + v; assert(q == (u + v))
+            q = (u.xyz - v); assert(q == (u - v))
+            q = (u.xyz * v); assert(q == (u * v))
+            q = (u.xxx * v); assert(q == u.x * v)
+            q = (u.xyz / v); assert(q == (u / v))
+//            }
+//            #    endif//GLM_LANG
 
             // Compile errors
             //q = (u.yz * v.xyz);
             //q = (u * v.xy);
         }
 
-        "swizzle functions" {
+        "vec3 swizzle functions"        {
 
+            //            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR || GLM_SWIZZLE == GLM_SWIZZLE_FUNCTION
+//            {
             // NOTE: template functions cannot pick up the implicit conversion from
             // a swizzle to the unswizzled type, therefore the operator() must be
             // used.  E.g.:
@@ -484,25 +415,50 @@ class coreVec3 : StringSpec() {
             // vec2
             val a = Vec2(1, 2)
             val b = Vec2(10, 20)
-            r = glm.dot(a, b); r.i shouldBe 50
-            r = glm.dot(Vec2(a.xy), Vec2(b.xy)); r.i shouldBe 50
-            r = glm.dot(Vec2(a.xy), Vec2(b.yy)); r.i shouldBe 60
+            r = a dot b; assert(r.i == 50)
+            r = glm.dot(a.xy, b.xy); assert(r.i == 50)
+            r = glm.dot(a.xy, b.yy); assert(r.i == 60)
 
             // vec3
             val u = Vec3(1, 2, 3)
             val v = Vec3(10, 20, 30)
-            r = glm.dot(u, v); r.i shouldBe 140
-            r = glm.dot(u.xyz as Vec3, v.zyz as Vec3); r.i shouldBe 160
-            r = glm.dot(u, v.zyx as Vec3); r.i shouldBe 100
-            r = glm.dot(u.xyz as Vec3, v); r.i shouldBe 140
-            r = glm.dot(u.xy as Vec2, v.xy as Vec2); r.i shouldBe 50
+            r = glm.dot(u, v); assert(r.i == 140)
+            r = glm.dot(u.xyz, v.zyz); assert(r.i == 160)
+            r = glm.dot(u, v.zyx); assert(r.i == 100)
+            r = glm.dot(u.xyz, v); assert(r.i == 140)
+            r = glm.dot(u.xy, v.xy); assert(r.i == 50)
 
             // vec4
             val s = Vec4(1, 2, 3, 4)
             val t = Vec4(10, 20, 30, 40)
-            r = glm.dot(s, t); r.i shouldBe 300
-            r = glm.dot(s.xyzw as Vec4, t.xyzw as Vec4); r.i shouldBe 300
-            r = glm.dot(s.xyz as Vec3, t.xyz as Vec3); r.i shouldBe 140
+            r = glm.dot(s, t); assert(r.i == 300)
+            r = glm.dot(s.xyzw, t.xyzw); assert(r.i == 300)
+            r = glm.dot(s.xyz, t.xyz); assert(r.i == 140)
+//            }
+//            #	endif//GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR || GLM_SWIZZLE == GLM_SWIZZLE_FUNCTION
+        }
+
+        "vec3 swizzle partial"        {
+
+//            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
+            run {
+                val A = Vec3i(1, 2, 3)
+                val B = Vec3i(A.xy, 3f)
+                A shouldEqual B
+            }
+
+            run {
+                val A = Vec3i(1, 2, 3)
+                val B = Vec3i(1f, A.yz)
+                A shouldEqual B
+            }
+
+            run {
+                val A = Vec3i(1, 2, 3)
+                val B = Vec3i(A.xyz)
+                A shouldEqual B
+            }
+//            #	endif//GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
         }
 
         "toColor" {

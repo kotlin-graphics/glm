@@ -53,6 +53,7 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
     @JvmOverloads
     constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+
     constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y)
@@ -61,9 +62,11 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
 
     @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.d, y.d)
+
     constructor(x: Boolean, v: Vec1bool) : this(x.d, v.x.d)
     @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.d, y.d)
+
     constructor(x: Vec1bool, y: Vec1bool) : this(x.x.d, y.x.d)
 
     constructor(v: Vec2bool) : this(v.x.d, v.y.d)
@@ -410,15 +413,15 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
 
     fun allNotEqual(d: Double, epsilon: Double = 0.0): Boolean = x - d >= epsilon && y - d >= epsilon
     fun anyNotEqual(d: Double, epsilon: Double = 0.0): Boolean = x - d >= epsilon || y - d >= epsilon
-    fun notEqual(d: Double, epsilon: Double = 0.0): Vec2bool = Vec2bool{ get(it) - d >= epsilon }
+    fun notEqual(d: Double, epsilon: Double = 0.0): Vec2bool = Vec2bool { get(it) - d >= epsilon }
 
     infix fun allGreaterThan(d: Double): Boolean = x > d && y > d
     infix fun anyGreaterThan(d: Double): Boolean = x > d || y > d
-    infix fun greaterThan(d: Double): Vec2bool = Vec2bool{ get(it) > d }
+    infix fun greaterThan(d: Double): Vec2bool = Vec2bool { get(it) > d }
 
     infix fun allGreaterThanEqual(d: Double): Boolean = x >= d && y >= d
     infix fun anyGreaterThanEqual(d: Double): Boolean = x >= d || y >= d
-    infix fun greaterThanEqual(d: Double): Vec2bool = Vec2bool{ get(it) >= d }
+    infix fun greaterThanEqual(d: Double): Vec2bool = Vec2bool { get(it) >= d }
 
 
     infix fun allLessThan(v: Vec2d): Boolean = x < v.x && y < v.y
@@ -435,15 +438,15 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
 
     fun allNotEqual(v: Vec2d, epsilon: Double = 0.0): Boolean = x - v.x >= epsilon && y - v.y >= epsilon
     fun anyNotEqual(v: Vec2d, epsilon: Double = 0.0): Boolean = x - v.x >= epsilon || y - v.y >= epsilon
-    fun notEqual(v: Vec2d, epsilon: Double = 0.0): Vec2bool = Vec2bool{ get(it) - v[it] >= epsilon }
+    fun notEqual(v: Vec2d, epsilon: Double = 0.0): Vec2bool = Vec2bool { get(it) - v[it] >= epsilon }
 
     infix fun allGreaterThan(v: Vec2d): Boolean = x > v.x && y > v.y
     infix fun anyGreaterThan(v: Vec2d): Boolean = x > v.x || y > v.y
-    infix fun greaterThan(v: Vec2d): Vec2bool = Vec2bool{ get(it) > v[it] }
+    infix fun greaterThan(v: Vec2d): Vec2bool = Vec2bool { get(it) > v[it] }
 
     infix fun allGreaterThanEqual(v: Vec2d): Boolean = x >= v.x && y >= v.y
     infix fun anyGreaterThanEqual(v: Vec2d): Boolean = x >= v.x || y >= v.y
-    infix fun greaterThanEqual(v: Vec2d): Vec2bool = Vec2bool{ get(it) >= v[it] }
+    infix fun greaterThanEqual(v: Vec2d): Vec2bool = Vec2bool { get(it) >= v[it] }
 
 
     // -- functions --
@@ -468,9 +471,6 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
     }
 
     fun negateAssign() = negate(this)
-
-
-    override fun createInstance(x: Double, y: Double) = Vec2d(x, y)
 
 
     companion object : opVec2d {

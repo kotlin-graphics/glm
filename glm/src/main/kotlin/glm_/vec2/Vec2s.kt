@@ -50,6 +50,7 @@ class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>(), ToBuffer {
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
     @JvmOverloads
     constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+
     constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y)
@@ -58,9 +59,11 @@ class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>(), ToBuffer {
 
     @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.s, y.s)
+
     constructor(x: Boolean, v: Vec1bool) : this(x.s, v.x.s)
     @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.s, y.s)
+
     constructor(x: Vec1bool, y: Vec1bool) : this(x.x.s, y.x.s)
 
     constructor(v: Vec2bool) : this(v.x.s, v.y.s)
@@ -668,9 +671,6 @@ class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>(), ToBuffer {
     infix fun allGreaterThanEqual(v: Vec2s): Boolean = x >= v.x && y >= v.y
     infix fun anyGreaterThanEqual(v: Vec2s): Boolean = x >= v.x || y >= v.y
     infix fun greaterThanEqual(v: Vec2s): Vec2bool = Vec2bool { get(it) >= v[it] }
-
-
-    override fun createInstance(x: Short, y: Short) = Vec2l(x, y)
 
 
     companion object : opVec2s {

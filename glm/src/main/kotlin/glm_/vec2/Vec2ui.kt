@@ -49,6 +49,7 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>(), ToBuffer {
 
     @JvmOverloads
     constructor(x: Int, y: Int = x) : this(x.ui, y.ui)
+
     @JvmOverloads
     constructor(x: Uint, y: Uint = x) : this(0, intArrayOf(x.v, y.v))
 
@@ -61,6 +62,7 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>(), ToBuffer {
 
     @JvmOverloads
     constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
     constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
@@ -70,9 +72,11 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>(), ToBuffer {
 
     @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.ui, y.ui)
+
     constructor(x: Boolean, v: Vec1bool) : this(x.ui, v.x.ui)
     @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.ui, y.ui)
+
     constructor(v: Vec1bool, y: Vec1bool) : this(v.x.ui, y.x.ui)
 
     constructor(v: Vec2bool) : this(v.x.ui, v.y.ui)
@@ -687,9 +691,6 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>(), ToBuffer {
     infix fun allGreaterThanEqual(v: Vec2ui): Boolean = x >= v.x && y >= v.y
     infix fun anyGreaterThanEqual(v: Vec2ui): Boolean = x >= v.x || y >= v.y
     infix fun greaterThanEqual(v: Vec2ui): Vec2bool = Vec2bool { get(it) >= v[it] }
-
-
-    override fun createInstance(x: Uint, y: Uint) = Vec2ui(x, y)
 
 
     companion object : opVec2ui {

@@ -49,6 +49,7 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
 
     @JvmOverloads
     constructor(x: Short, y: Short = x) : this(x.us, y.us)
+
     @JvmOverloads
     constructor(x: Ushort, y: Ushort = x) : this(0, shortArrayOf(x.v, y.v))
 
@@ -62,6 +63,7 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
     @JvmOverloads
     constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+
     constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y)
@@ -70,9 +72,11 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
 
     @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.us, y.us)
+
     constructor(x: Boolean, v: Vec1bool) : this(x.us, v.x.us)
     @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.us, y.us)
+
     constructor(x: Vec1bool, y: Vec1bool) : this(x.x.us, y.x.us)
 
     constructor(v: Vec2bool) : this(v.x.us, v.y.us)
@@ -720,9 +724,6 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
     infix fun allGreaterThanEqual(v: Vec2us): Boolean = x >= v.x && y >= v.y
     infix fun anyGreaterThanEqual(v: Vec2us): Boolean = x >= v.x || y >= v.y
     infix fun greaterThanEqual(v: Vec2us): Vec2bool = Vec2bool { get(it) >= v[it] }
-
-
-    override fun createInstance(x: Ushort, y: Ushort) = Vec2us(x, y)
 
 
     companion object : opVec2us {
