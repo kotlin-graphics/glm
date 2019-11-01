@@ -140,8 +140,8 @@ class coreVec3 : StringSpec() {
         "vec3 operators" {
 
             run {
-                val a = Vec3i(1f)
-                val b = Vec3i(1f)
+                val a = Vec3i(1)
+                val b = Vec3i(1)
                 val r = a != b
                 val s = a == b
 
@@ -230,10 +230,10 @@ class coreVec3 : StringSpec() {
                 b shouldEqual Vec3i(2, 1, 1)
             }
             run {
-                val b = Vec3i(2f)
+                val b = Vec3i(2)
 
                 b /= b.y
-                b shouldEqual Vec3i(1f)
+                b shouldEqual Vec3i(1)
             }
 
             run {
@@ -443,13 +443,13 @@ class coreVec3 : StringSpec() {
 //            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
             run {
                 val A = Vec3i(1, 2, 3)
-                val B = Vec3i(A.xy, 3f)
+                val B = Vec3i(A.xy, 3)
                 A shouldEqual B
             }
 
             run {
                 val A = Vec3i(1, 2, 3)
-                val B = Vec3i(1f, A.yz)
+                val B = Vec3i(1, A.yz)
                 A shouldEqual B
             }
 

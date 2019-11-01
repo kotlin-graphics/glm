@@ -320,8 +320,8 @@ class coreVec4 : StringSpec() {
         "vec4 operators"        {
 
             run {
-                val A = Vec4i(1f)
-                val B = Vec4i(1f)
+                val A = Vec4i(1)
+                val B = Vec4i(1)
                 val R = A != B
                 val S = A == B
 
@@ -411,10 +411,10 @@ class coreVec4 : StringSpec() {
                 B shouldBe Vec4i(2, 1, 2, 1)
             }
             run {
-                val B = Vec4i(2f)
+                val B = Vec4i(2)
 
                 B /= B.y
-                B shouldBe Vec4i(1f)
+                B shouldBe Vec4i(1)
             }
 
             run {
