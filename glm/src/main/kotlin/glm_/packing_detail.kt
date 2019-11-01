@@ -1,5 +1,6 @@
 package glm_
 
+import glm_.ext.equal
 import glm_.glm.clamp
 import glm_.glm.detail
 import glm_.glm.floatBitsToInt
@@ -395,7 +396,7 @@ interface packing {
 
         val expSharedP = max(-15f - 1f, floor(log2(maxColor))) + 1f + 15f
         val maxShared = floor(maxColor / pow(2f, (expSharedP - 15f - 9f)) + 0.5f)
-        val expShared = if (maxShared == pow(2f, 9f)) expSharedP + 1f else expSharedP
+        val expShared = if (maxShared.equal(pow(2f, 9f))) expSharedP + 1f else expSharedP
 
         val x = floor(colorX / pow(2f, (expShared - 15f - 9f)) + 0.5f).i
         val y = floor(colorY / pow(2f, (expShared - 15f - 9f)) + 0.5f).i

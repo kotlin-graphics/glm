@@ -4,6 +4,7 @@ import glm_.ext.equal
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.mat4x4.operators.times
+import glm_.mat4x4.operators.div
 import glm_.test.*
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4d
@@ -50,19 +51,23 @@ class testCoreMat4 : StringSpec() {
             glm.all(glm.equal(identity[3], Vec4d(0.0, 0.0, 0.0, 1.0), Vec4d(0.01))) shouldBe true
         }
 
-        "test operators" {
+        "operators" {
 
-            val epsilon = 0.001f
+            val l = Mat4(1f)
+            val m = Mat4(1f)
+            val u = Vec4(1f)
+            val v = Vec4(1f)
+            val x = 1f
+            val a = m * u
+            val b = v * m
+            val n = x / m
+            val o = m / x
+            val p = x * m
+            val q = m * x
+            val R = m.anyNotEqual(q, Float.MIN_VALUE)
+            val S = m.allEqual(l, Float.MIN_VALUE)
 
-            val m = Mat4(2f)
-            val n = Mat4(1f)
-            val u = Vec4(2f)
-
-            val p = n * 2f
-//            glm.all(glm.equal(p, m, epsilon)) shouldBe true
-
-//            glm::mat4 const Q = M / 2.0f;
-//            Error += glm::all(glm::equal(Q, N, Epsilon)) ? 0 : 1;
+            (S && !R) shouldBe true
         }
 
         "inverse"        {

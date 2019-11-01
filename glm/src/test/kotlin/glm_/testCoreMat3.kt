@@ -25,8 +25,8 @@ class testCoreMat3 : StringSpec() {
             val b = v * m
             val p = x * m
             val q = m * x
-            val R = m != q
-            val S = m == l
+            val R = m.anyNotEqual(q, Float.MIN_VALUE)
+            val S = m.allEqual(l, Float.MIN_VALUE)
 
             (S && !R) shouldBe true
         }

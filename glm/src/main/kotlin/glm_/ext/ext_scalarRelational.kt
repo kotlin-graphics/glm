@@ -19,16 +19,16 @@ interface ext_scalarRelational {
     fun notEqual(x: Short, y: Short, epsilon: Short) = glm.abs(x - y) >= epsilon
 }
 
-fun Float.equal(y: Float, epsilon: Float) = glm.abs(minus(y)) < epsilon
-fun Byte.equal(y: Byte, epsilon: Byte) = glm.abs(minus(y)) < epsilon
-fun Double.equal(y: Double, epsilon: Double) = glm.abs(minus(y)) < epsilon
-fun Int.equal(y: Int, epsilon: Int) = glm.abs(minus(y)) < epsilon
-fun Long.equal(y: Long, epsilon: Long) = glm.abs(minus(y)) < epsilon
-fun Short.equal(y: Short, epsilon: Short) = glm.abs(minus(y)) < epsilon
+fun Float.equal(y: Float, epsilon: Float = Float.MIN_VALUE) = glm.abs(minus(y)) < epsilon
+fun Byte.equal(y: Byte, epsilon: Byte = 0) = glm.abs(minus(y)) < epsilon
+fun Double.equal(y: Double, epsilon: Double = Double.MIN_VALUE) = glm.abs(minus(y)) < epsilon
+fun Int.equal(y: Int, epsilon: Int = 0) = glm.abs(minus(y)) < epsilon
+fun Long.equal(y: Long, epsilon: Long = 0) = glm.abs(minus(y)) < epsilon
+fun Short.equal(y: Short, epsilon: Short = 0) = glm.abs(minus(y)) < epsilon
 
-fun Float.notEqual(y: Float, epsilon: Float) = glm.abs(minus(y)) >= epsilon
-fun Byte.notEqual(y: Byte, epsilon: Byte) = glm.abs(minus(y)) >= epsilon
-fun Double.notEqual(y: Double, epsilon: Double) = glm.abs(minus(y)) >= epsilon
-fun Int.notEqual(y: Int, epsilon: Int) = glm.abs(minus(y)) >= epsilon
-fun Long.notEqual(y: Long, epsilon: Long) = glm.abs(minus(y)) >= epsilon
-fun Short.notEqual(y: Short, epsilon: Short) = glm.abs(minus(y)) >= epsilon
+fun Float.notEqual(y: Float, epsilon: Float = Float.MIN_VALUE) = glm.abs(minus(y)) >= epsilon
+fun Byte.notEqual(y: Byte, epsilon: Byte = 0) = glm.abs(minus(y)) >= epsilon
+fun Double.notEqual(y: Double, epsilon: Double = Double.MIN_VALUE) = glm.abs(minus(y)) >= epsilon
+fun Int.notEqual(y: Int, epsilon: Int = 0) = glm.abs(minus(y)) >= epsilon
+fun Long.notEqual(y: Long, epsilon: Long = 0) = glm.abs(minus(y)) >= epsilon
+fun Short.notEqual(y: Short, epsilon: Short = 0) = glm.abs(minus(y)) >= epsilon

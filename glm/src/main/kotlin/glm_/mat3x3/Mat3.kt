@@ -596,7 +596,7 @@ class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     }
 
     fun notEqual(b: Mat3, epsilon: Vec3, res: Vec3bool = Vec3bool()): Vec3bool = equal(b, epsilon, res)
-
+    // TODO = Float.MIN ?
     fun anyNotEqual(b: Mat3, epsilon: Float = 0f): Boolean = !allEqual(b, epsilon)
 
     override fun hashCode() = 31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()
