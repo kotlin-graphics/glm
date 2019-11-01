@@ -1,5 +1,6 @@
 package glm_
 
+import glm_.ext.equal
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.mat4x4.operators.times
@@ -62,6 +63,81 @@ class testCoreMat4 : StringSpec() {
 
 //            glm::mat4 const Q = M / 2.0f;
 //            Error += glm::all(glm::equal(Q, N, Epsilon)) ? 0 : 1;
+        }
+
+        "inverse"        {
+
+            run {
+                val matrix = Mat4(
+                        Vec4(0.6f, 0.2f, 0.3f, 0.4f),
+                        Vec4(0.2f, 0.7f, 0.5f, 0.3f),
+                        Vec4(0.3f, 0.5f, 0.7f, 0.2f),
+                        Vec4(0.4f, 0.3f, 0.2f, 0.6f))
+                val inverse = matrix.inverse()
+                val identity = matrix * inverse
+//                print(Matrix);
+//                print(Inverse);
+//                print(Identity);
+                identity[0].shouldEqual(Vec4(1f, 0f, 0f, 0f), 0.01f)
+                identity[1].shouldEqual(Vec4(0f, 1f, 0f, 0f), 0.01f)
+                identity[2].shouldEqual(Vec4(0f, 0f, 1f, 0f), 0.01f)
+                identity[3].shouldEqual(Vec4(0f, 0f, 0f, 1f), 0.01f)
+            }
+        }
+
+        "ctr"        {
+
+            //            #if GLM_HAS_TRIVIAL_QUERIES
+            //Error += std::is_trivially_default_constructible<glm::mat4>::value ? 0 : 1;
+            //Error += std::is_trivially_copy_assignable<glm::mat4>::value ? 0 : 1;
+//            Error += std::is_trivially_copyable<glm::mat4>::value ? 0 : 1;
+            //Error += std::is_copy_constructible<glm::mat4>::value ? 0 : 1;
+            //Error += std::has_trivial_copy_constructor<glm::mat4>::value ? 0 : 1;
+//            #endif
+//            #if GLM_HAS_INITIALIZER_LISTS
+            val m0 = Mat4(
+                    Vec4(0, 1, 2, 3),
+                    Vec4(4, 5, 6, 7),
+                    Vec4(8, 9, 10, 11),
+                    Vec4(12, 13, 14, 15))
+            assert(m0.size() == 4 * 4 * Float.BYTES)
+            val V = Vec4(0, 1, 2, 3)
+            val m1 = Mat4(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
+            val m2 = Mat4 { i -> i }
+
+            m0 shouldEqual m2
+            m1 shouldEqual m2
+
+            val m3 = arrayOf(
+                    Mat4(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15),
+                    Mat4(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15),
+                    Mat4(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15),
+                    Mat4(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15))
+            val m4 = Mat4(
+                    1, 0, 0, 0,
+                    0, 1, 0, 0,
+                    0, 0, 1, 0,
+                    0, 0, 0, 1)
+            m4[0][0].equal(1f, 0.0001f) shouldBe true
+            m4[3][3].equal(1f, 0.0001f) shouldBe true
+//            val v1 = arrayOf(
+//                Mat4(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15),
+//                Mat4(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15))
+//            std::vector < glm::mat4 > v2 {
+//                {
+//                    { 0, 1, 2, 3 },
+//                    { 4, 5, 6, 7 },
+//                    { 8, 9, 10, 11 },
+//                    { 12, 13, 14, 15 }
+//                },
+//                {
+//                    { 0, 1, 2, 3 },
+//                    { 4, 5, 6, 7 },
+//                    { 8, 9, 10, 11 },
+//                    { 12, 13, 14, 15 }
+//                }
+//            };
+//            #endif//GLM_HAS_INITIALIZER_LISTS
         }
 
         "rotate" {

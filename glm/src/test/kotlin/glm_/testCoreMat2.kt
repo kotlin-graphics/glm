@@ -53,9 +53,23 @@ class testCoreMat2 : StringSpec() {
 
         "constructor" {
 
-            Mat2 { i -> i } shouldBe Mat2(0, 1, 2, 3)
-            Mat2(arrayListOf(0f, 1f, 2f, 3f)) shouldBe Mat2(0, 1, 2, 3)
+            run {
+                val A = Mat2(1f)
+                val B = Mat2(A)
+                val C = Mat2(B)
 
+                A shouldEqual C
+            }
+
+
+            val m0 = Mat2(
+                    Vec2(0, 1),
+                    Vec2(2, 3))
+            val m1 = Mat2(0, 1, 2, 3)
+            val m2 = Mat2 { i -> i }
+
+            m0 shouldEqual m2
+            m1 shouldEqual m2
         }
     }
 }
