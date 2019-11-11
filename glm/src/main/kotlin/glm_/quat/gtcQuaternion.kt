@@ -1,5 +1,6 @@
 package glm_.quat
 
+import glm_.ext.equal
 import glm_.glm
 import glm_.glm._epsilonF
 import glm_.glm.abs
@@ -413,7 +414,7 @@ interface gtcQuaternion {
         val x = q.w * q.w - q.x * q.x - q.y * q.y + q.z * q.z
         return when {
             //avoid atan2(0,0) - handle singularity - Matiis
-            y == 0f && x == 0f -> 2f * atan(q.x, q.w)
+            y.equal(0f) && x.equal(0f) -> 2f * atan(q.x, q.w)
             else -> atan(y, x)
         }
     }
