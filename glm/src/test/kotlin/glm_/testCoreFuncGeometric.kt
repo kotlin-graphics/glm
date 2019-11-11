@@ -131,7 +131,7 @@ class testCoreFuncGeometric : StringSpec() {
                 val a = Vec2d(0.0, -1.0)
                 val b = Vec2d(0.0, 1.0)
                 val c = glm.refract(a, b, 0.5)
-                c shouldBe Vec2d(0.0, -1.0)
+                c shouldEqual Vec2d(0.0, -1.0)
             }
         }
     }

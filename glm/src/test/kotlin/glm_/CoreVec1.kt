@@ -119,7 +119,7 @@ class CoreVec1 : StringSpec() {
                 val C = Vec1(A.x)
 
                 //Error += glm::all(glm::equal(A, B)) ? 0 : 1;
-                A shouldBe C
+                A shouldEqual C
             }
 //            #endif//GLM_SWIZZLE == GLM_ENABLE
 

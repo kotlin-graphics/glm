@@ -6,6 +6,7 @@ import glm_.mat4x4.Mat4
 import glm_.vec1.Vec1
 import glm_.vec1.Vec1i
 import glm_.vec2.Vec2
+import glm_.vec2.Vec2d
 import glm_.vec2.Vec2i
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3i
@@ -22,6 +23,9 @@ infix fun Vec1i.shouldEqual(v: Vec1i) = x shouldBe v.x
 
 infix fun Vec2.shouldEqual(v: Vec2) = shouldEqual(v, glm.εf)
 fun Vec2.shouldEqual(v: Vec2, epsilon: Float) = allEqual(v, epsilon) shouldBe true
+
+infix fun Vec2d.shouldEqual(v: Vec2d) = shouldEqual(v, glm.ε)
+fun Vec2d.shouldEqual(v: Vec2d, epsilon: Double) = allEqual(v, epsilon) shouldBe true
 
 infix fun Vec3.shouldEqual(v: Vec3) = shouldEqual(v, glm.εf)
 fun Vec3.shouldEqual(v: Vec3, epsilon: Float) = allEqual(v, epsilon) shouldBe true
