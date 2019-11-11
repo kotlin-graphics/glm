@@ -11,6 +11,7 @@ import glm_.vec3.*
 import glm_.vec3.operators.*
 import glm_.vec3.swizzle.*
 import glm_.vec4.Vec4
+import glm_.vec4.Vec4i
 import glm_.vec4.swizzle.xyz
 import glm_.vec4.swizzle.xyzw
 import io.kotlintest.shouldBe
@@ -42,20 +43,20 @@ class coreVec3 : StringSpec() {
             }
 
             run {
-                val a = Vec3(1)
-                val b = Vec3(1, 1, 1)
+                val a = Vec3i(1)
+                val b = Vec3i(1, 1, 1)
 
                 a shouldEqual b
             }
 
             run {
                 listOf(
-                        Vec3(Vec2(1, 2), 3),
-                        Vec3(1, Vec2(2, 3)),
-                        Vec3(1, 2, 3),
-                        Vec3(Vec4(1, 2, 3, 4))).forEach {
+                        Vec3i(Vec2(1, 2), 3),
+                        Vec3i(1, Vec2(2, 3)),
+                        Vec3i(1, 2, 3),
+                        Vec3i(Vec4i(1, 2, 3, 4))).forEach {
 
-                    it shouldEqual Vec3(1, 2, 3)
+                    it shouldEqual Vec3i(1, 2, 3)
                 }
             }
 

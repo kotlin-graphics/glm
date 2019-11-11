@@ -3,7 +3,9 @@ package glm_
 import glm_.vec1.Vec1
 import glm_.vec1.Vec1d
 import glm_.vec2.Vec2
+import glm_.vec2.Vec2i
 import glm_.vec3.Vec3
+import glm_.vec3.Vec3i
 import glm_.vec4.*
 import glm_.vec4.operators.div
 import glm_.vec4.operators.minus
@@ -104,14 +106,17 @@ class coreVec4 : StringSpec() {
 //
             run {
                 arrayOf(
-                        Vec4(Vec2(1, 2), 3, 4),
-                        Vec4(1, Vec2(2, 3), 4),
-                        Vec4(1, 2, Vec2(3, 4)),
-                        Vec4(Vec3(1, 2, 3), 4),
-                        Vec4(1, Vec3(2, 3, 4)),
-                        Vec4(Vec2(1, 2), Vec2(3, 4)),
-                        Vec4(1, 2, 3, 4),
-                        Vec4(Vec4(1, 2, 3, 4))).forEach { it shouldBe Vec4(1, 2, 3, 4) }
+                        Vec4i(Vec2i(1, 2), 3, 4),
+                        Vec4i(1, Vec2i(2, 3), 4),
+                        Vec4i(1, 2, Vec2i(3, 4)),
+                        Vec4i(Vec3i(1, 2, 3), 4),
+                        Vec4i(1, Vec3i(2, 3, 4)),
+                        Vec4i(Vec2i(1, 2), Vec2i(3, 4)),
+                        Vec4i(1, 2, 3, 4),
+                        Vec4i(Vec4i(1, 2, 3, 4)))
+                        .forEach {
+                            it shouldBe Vec4i(1, 2, 3, 4)
+                        }
             }
 
             run {
@@ -123,52 +128,52 @@ class coreVec4 : StringSpec() {
 
                 val A = Vec4(R)
                 val B = Vec4(1f)
-                A shouldBe B
+                A shouldEqual B
 
                 val C = Vec4(R, S, T, U)
-                C shouldBe O
+                C shouldEqual O
 
                 val D = Vec4(R, 2f, 3f, 4f)
-                D shouldBe O
+                D shouldEqual O
 
                 val E = Vec4(1f, S, 3f, 4f)
-                E shouldBe O
+                E shouldEqual O
 
                 val F = Vec4(R, S, 3f, 4f)
-                F shouldBe O
+                F shouldEqual O
 
                 val G = Vec4(1f, 2f, T, 4f)
-                G shouldBe O
+                G shouldEqual O
 
                 val H = Vec4(R, 2f, T, 4f)
-                H shouldBe O
+                H shouldEqual O
 
                 val I = Vec4(1f, S, T, 4f)
-                I shouldBe O
+                I shouldEqual O
 
                 val J = Vec4(R, S, T, 4f)
-                J shouldBe O
+                J shouldEqual O
 
                 val K = Vec4(R, 2f, 3f, U)
-                K shouldBe O
+                K shouldEqual O
 
                 val L = Vec4(1f, S, 3f, U)
-                L shouldBe O
+                L shouldEqual O
 
                 val M = Vec4(R, S, 3f, U)
-                M shouldBe O
+                M shouldEqual O
 
                 val N = Vec4(1f, 2f, T, U)
-                N shouldBe O
+                N shouldEqual O
 
                 val P = Vec4(R, 2f, T, U)
-                P shouldBe O
+                P shouldEqual O
 
                 val Q = Vec4(1f, S, T, U)
-                Q shouldBe O
+                Q shouldEqual O
 
                 val V = Vec4(R, S, T, U)
-                V shouldBe O
+                V shouldEqual O
             }
 
             run {
@@ -180,52 +185,52 @@ class coreVec4 : StringSpec() {
 
                 val A = Vec4(R)
                 val B = Vec4(1.0)
-                A shouldBe B
+                A shouldEqual B
 
                 val C = Vec4(R, S, T, U)
-                C shouldBe O
+                C shouldEqual O
 
                 val D = Vec4(R, 2f, 3.0, 4f)
-                D shouldBe O
+                D shouldEqual O
 
                 val E = Vec4(1.0, S, 3f, 4.0)
-                E shouldBe O
+                E shouldEqual O
 
                 val F = Vec4(R, S, 3.0, 4f)
-                F shouldBe O
+                F shouldEqual O
 
                 val G = Vec4(1f, 2.0, T, 4.0)
-                G shouldBe O
+                G shouldEqual O
 
                 val H = Vec4(R, 2.0, T, 4.0)
-                H shouldBe O
+                H shouldEqual O
 
                 val I = Vec4(1.0, S, T, 4f)
-                I shouldBe O
+                I shouldEqual O
 
                 val J = Vec4(R, S, T, 4f)
-                J shouldBe O
+                J shouldEqual O
 
                 val K = Vec4(R, 2f, 3.0, U)
-                K shouldBe O
+                K shouldEqual O
 
                 val L = Vec4(1f, S, 3.0, U)
-                L shouldBe O
+                L shouldEqual O
 
                 val M = Vec4(R, S, 3.0, U)
-                M shouldBe O
+                M shouldEqual O
 
                 val N = Vec4(1f, 2.0, T, U)
-                N shouldBe O
+                N shouldEqual O
 
                 val P = Vec4(R, 2.0, T, U)
-                P shouldBe O
+                P shouldEqual O
 
                 val Q = Vec4(1f, S, T, U)
-                Q shouldBe O
+                Q shouldEqual O
 
                 val V = Vec4(R, S, T, U)
-                V shouldBe O
+                V shouldEqual O
             }
 
             run {
@@ -244,28 +249,28 @@ class coreVec4 : StringSpec() {
                 val O = Vec4(1f, 2.0, 3f, 4.0)
 
                 val A = Vec4(v1_0, v1_1, v2_2)
-                A shouldBe O
+                A shouldEqual O
 
                 val B = Vec4(1f, 2f, v2_2)
-                B shouldBe O
+                B shouldEqual O
 
                 val C = Vec4(v1_0, 2f, v2_2)
-                C shouldBe O
+                C shouldEqual O
 
                 val D = Vec4(1f, v1_1, v2_2)
-                D shouldBe O
+                D shouldEqual O
 
                 val E = Vec4(v2_0, v1_2, v1_3)
-                E shouldBe O
+                E shouldEqual O
 
                 val F = Vec4(v2_0, 3.0, v1_3)
-                F shouldBe O
+                F shouldEqual O
 
                 val G = Vec4(v2_0, v1_2, 4.0)
-                G shouldBe O
+                G shouldEqual O
 
                 val H = Vec4(v2_0, 3f, 4.0)
-                H shouldBe O
+                H shouldEqual O
             }
 
             run {
@@ -282,19 +287,19 @@ class coreVec4 : StringSpec() {
                 val O = Vec4(1f, 2.0, 3f, 4.0)
 
                 val A = Vec4(v1_0, v2, v1_3)
-                A shouldBe O
+                A shouldEqual O
 
                 val B = Vec4(v1_0, v2, 4.0)
-                B shouldBe O
+                B shouldEqual O
 
                 val C = Vec4(1.0, v2, v1_3)
-                C shouldBe O
+                C shouldEqual O
 
                 val D = Vec4(1f, v2, 4.0)
-                D shouldBe O
+                D shouldEqual O
 
                 val E = Vec4(1.0, v2, 4f)
-                E shouldBe O
+                E shouldEqual O
             }
         }
 
