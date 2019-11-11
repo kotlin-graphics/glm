@@ -503,32 +503,32 @@ class coreVec4 : StringSpec() {
 
             //            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
             run {
-                val A = Vec4(1f, 2f, 3f, 4f)
-                val B = A.xyzw
-                val C = Vec4(A.xyzw)
-                val D = Vec4(A.xyzw)
-                val E = Vec4(A.x, A.yzw)
-                val F = Vec4(A.x, A.yzw)
-                val G = Vec4(A.xyz, A.w)
-                val H = Vec4(A.xyz, A.w)
-                val I = Vec4(A.xy, A.zw)
-                val J = Vec4(A.xy, A.zw)
-                val K = Vec4(A.x, A.y, A.zw)
-                val L = Vec4(A.x, A.yz, A.w)
-                val M = Vec4(A.xy, A.z, A.w)
+                val A = Vec4i(1f, 2f, 3f, 4f)
+                val B = Vec4i(A.xyzw)
+                val C = Vec4i(A.xyzw)
+                val D = Vec4i(A.xyzw)
+                val E = Vec4i(A.x, A.yzw)
+                val F = Vec4i(A.x, A.yzw)
+                val G = Vec4i(A.xyz, A.w)
+                val H = Vec4i(A.xyz, A.w)
+                val I = Vec4i(A.xy, A.zw)
+                val J = Vec4i(A.xy, A.zw)
+                val K = Vec4i(A.x, A.y, A.zw)
+                val L = Vec4i(A.x, A.yz, A.w)
+                val M = Vec4i(A.xy, A.z, A.w)
 
-                A shouldEqual B
-                A shouldEqual C
-                A shouldEqual D
-                A shouldEqual E
-                A shouldEqual F
-                A shouldEqual G
-                A shouldEqual H
-                A shouldEqual I
-                A shouldEqual J
-                A shouldEqual K
-                A shouldEqual L
-                A shouldEqual M
+                A shouldBe B
+                A shouldBe C
+                A shouldBe D
+                A shouldBe E
+                A shouldBe F
+                A shouldBe G
+                A shouldBe H
+                A shouldBe I
+                A shouldBe J
+                A shouldBe K
+                A shouldBe L
+                A shouldBe M
             }
 //            #	endif//GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
 

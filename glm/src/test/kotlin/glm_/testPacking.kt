@@ -312,7 +312,8 @@ class testPacking : StringSpec() {
                 val v1 = glm.unpackHalf4x16(p1)
 //                val p2 = glm.packHalf(tests[it])
 //                val v2 = glm.unpackHalf(p2)
-                v0 shouldBe v1
+                v0 shouldEqual v1
+//                v0 shouldEqual v2
             }
         }
 
@@ -384,7 +385,7 @@ class testPacking : StringSpec() {
                 val v0 = glm.unpackF2x11_1x10(p0)
                 val p1 = glm.packF2x11_1x10(v0)
                 val v1 = glm.unpackF2x11_1x10(p1)
-                glm.all(glm.equal(v0, v1)) shouldBe true
+                v0 shouldEqual v1
             }
         }
 
@@ -398,7 +399,7 @@ class testPacking : StringSpec() {
                 val v0 = glm.unpackF3x9_E1x5(p0)
                 val p1 = glm.packF3x9_E1x5(v0)
                 val v1 = glm.unpackF3x9_E1x5(p1)
-                glm.all(glm.equal(v0, v1, 0.01f)) shouldBe true
+                v0 shouldEqual v1
             }
         }
 
@@ -409,7 +410,7 @@ class testPacking : StringSpec() {
                 val rgbm = glm.packRGBM(color)
                 val result = glm.unpackRGBM(rgbm)
 
-                glm.all(glm.equal(color, result, 0.01f)) shouldBe true
+                color shouldEqual result
             }
         }
 

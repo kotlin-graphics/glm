@@ -36,8 +36,8 @@ class coreVec2 : StringSpec() {
             }
 
             run {
-                val a = Vec2i(1f)
-                val b = Vec2i(1f)
+                val a = Vec2i(1)
+                val b = Vec2i(1)
 
                 assert(a == b)
                 assert(!(a != b))
