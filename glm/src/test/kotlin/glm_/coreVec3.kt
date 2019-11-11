@@ -27,7 +27,7 @@ class coreVec3 : StringSpec() {
                 val a = Vec3(1f, 2f, 3f)
                 val b = Vec3(a.xyz)
                 val c = Vec3(a.xyz)
-                val d = a.xyz as Vec3
+                val d = a.xyz
                 val e = Vec3(a.x, a.yz)
                 val f = Vec3(a.x, a.yz)
                 val g = Vec3(a.xy, a.z)
@@ -46,7 +46,7 @@ class coreVec3 : StringSpec() {
                 val a = Vec3i(1)
                 val b = Vec3i(1, 1, 1)
 
-                a shouldEqual b
+                a shouldBe b
             }
 
             run {
@@ -56,7 +56,7 @@ class coreVec3 : StringSpec() {
                         Vec3i(1, 2, 3),
                         Vec3i(Vec4i(1, 2, 3, 4))).forEach {
 
-                    it shouldEqual Vec3i(1, 2, 3)
+                    it shouldBe Vec3i(1, 2, 3)
                 }
             }
 
@@ -195,52 +195,52 @@ class coreVec3 : StringSpec() {
                 val b = Vec3i(4f, 5f, 6f)
 
                 a += b
-                a shouldEqual Vec3i(5, 7, 9)
+                a shouldBe Vec3i(5, 7, 9)
 
                 a += 1
-                a shouldEqual Vec3i(6, 8, 10)
+                a shouldBe Vec3i(6, 8, 10)
             }
             run {
                 val a = Vec3i(1f, 2f, 3f)
                 val b = Vec3i(4f, 5f, 6f)
 
                 b -= a
-                b shouldEqual Vec3i(3, 3, 3)
+                b shouldBe Vec3i(3, 3, 3)
 
                 b -= 1
-                b shouldEqual Vec3i(2, 2, 2)
+                b shouldBe Vec3i(2, 2, 2)
             }
             run {
                 val a = Vec3i(1f, 2f, 3f)
                 val b = Vec3i(4f, 5f, 6f)
 
                 a *= b
-                a shouldEqual Vec3i(4, 10, 18)
+                a shouldBe Vec3i(4, 10, 18)
 
                 a *= 2
-                a shouldEqual Vec3i(8, 20, 36)
+                a shouldBe Vec3i(8, 20, 36)
             }
             run {
                 val a = Vec3i(1f, 2f, 3f)
                 val b = Vec3i(4f, 4f, 6f)
 
                 b /= a
-                b shouldEqual Vec3i(4, 2, 2)
+                b shouldBe Vec3i(4, 2, 2)
 
                 b /= 2
-                b shouldEqual Vec3i(2, 1, 1)
+                b shouldBe Vec3i(2, 1, 1)
             }
             run {
                 val b = Vec3i(2)
 
                 b /= b.y
-                b shouldEqual Vec3i(1)
+                b shouldBe Vec3i(1)
             }
 
             run {
                 val a = Vec3i(1f, 2f, 3f)
                 val b = -a
-                b shouldEqual Vec3i(-1f, -2f, -3f)
+                b shouldBe Vec3i(-1f, -2f, -3f)
             }
 
             run {
@@ -252,21 +252,21 @@ class coreVec3 : StringSpec() {
             run {
                 var a = Vec3i(1f, 2f, 3f)
                 val b = a--
-                b shouldEqual Vec3i(1f, 2f, 3f)
-                a shouldEqual Vec3i(0f, 1f, 2f)
+                b shouldBe Vec3i(1f, 2f, 3f)
+                a shouldBe Vec3i(0f, 1f, 2f)
             }
 
             run {
                 var a = Vec3i(1f, 2f, 3f)
                 val b = ++a
-                b shouldEqual Vec3i(2f, 3f, 4f)
+                b shouldBe Vec3i(2f, 3f, 4f)
             }
 
             run {
                 var a = Vec3i(1f, 2f, 3f)
                 val b = a++
-                b shouldEqual Vec3i(1f, 2f, 3f)
-                a shouldEqual Vec3i(2f, 3f, 4f)
+                b shouldBe Vec3i(1f, 2f, 3f)
+                a shouldBe Vec3i(2f, 3f, 4f)
             }
         }
 
@@ -337,7 +337,7 @@ class coreVec3 : StringSpec() {
 //            #	endif//GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
         }
 
-        "vec3 swizzle3 3"        {
+        "swizzle3 3"        {
 
             //            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
 //            {
@@ -362,7 +362,7 @@ class coreVec3 : StringSpec() {
 //            #	endif//GLM_LANG
         }
 
-        "vec3 swizzle operators"        {
+        "swizzle operators"        {
 
             val u = Vec3i(1, 2, 3)
             val v = Vec3i(10, 20, 30)
@@ -439,28 +439,97 @@ class coreVec3 : StringSpec() {
 //            #	endif//GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR || GLM_SWIZZLE == GLM_SWIZZLE_FUNCTION
         }
 
-        "vec3 swizzle partial"        {
+        "swizzle partial"        {
 
 //            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
             run {
-                val A = Vec3i(1, 2, 3)
-                val B = Vec3i(A.xy, 3)
+                val A = Vec3(1, 2, 3)
+                val B = Vec3(A.xy, 3)
                 A shouldEqual B
             }
 
             run {
                 val A = Vec3i(1, 2, 3)
                 val B = Vec3i(1, A.yz)
-                A shouldEqual B
+                A shouldBe B
             }
 
             run {
                 val A = Vec3i(1, 2, 3)
                 val B = Vec3i(A.xyz)
-                A shouldEqual B
+                A shouldBe B
             }
 //            #	endif//GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
         }
+
+        "operator increment"        {
+
+            val v0 = Vec3i(1)
+            var v1 = Vec3i(v0)
+            var v2 = Vec3i(v0)
+            val v3 = ++v1
+            val v4 = v2++
+
+            v0 shouldBe v4
+            v1 shouldBe v2
+            v1 shouldBe v3
+
+            val i0 = 1
+            var i1 = i0
+            var i2 = i0
+            val i3 = ++i1
+            val i4 = i2++
+
+            i0 shouldBe i4
+            i1 shouldBe i2
+            i1 shouldBe i3
+        }
+
+        "swizzle"        {
+
+//            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
+            run {
+                val A = Vec3(1f, 2f, 3f)
+                val B = A.xyz
+                val C = Vec3(A.xyz)
+                val D = Vec3(A.xyz)
+                val E = Vec3(A.x, A.yz)
+                val F = Vec3(A.x, A.yz)
+                val G = Vec3(A.xy, A.z)
+                val H = Vec3(A.xy, A.z)
+
+                A shouldEqual B
+                A shouldEqual C
+                A shouldEqual D
+                A shouldEqual E
+                A shouldEqual F
+                A shouldEqual G
+                A shouldEqual H
+            }
+//            #	endif//GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
+
+//            #	if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR || GLM_SWIZZLE == GLM_SWIZZLE_FUNCTION
+            run {
+                val A = Vec3(1f, 2f, 3f)
+                val B = A.xyz
+                val C = Vec3(A.xyz)
+                val D = Vec3(A.xyz)
+                val E = Vec3(A.x, A.yz)
+                val F = Vec3(A.x, A.yz)
+                val G = Vec3(A.xy, A.z)
+                val H = Vec3(A.xy, A.z)
+
+                A shouldEqual B
+                A shouldEqual C
+                A shouldEqual D
+                A shouldEqual E
+                A shouldEqual F
+                A shouldEqual G
+                A shouldEqual H
+            }
+//            #	endif//GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR || GLM_SWIZZLE == GLM_SWIZZLE_FUNCTION
+        }
+
 
         "toColor" {
 

@@ -14,6 +14,7 @@ import glm_.vec2.operators.minus
 import glm_.vec2.operators.plus
 import glm_.vec2.operators.times
 import glm_.vec2.swizzle.xy
+import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
 
@@ -145,82 +146,82 @@ class coreVec2 : StringSpec() {
                 val b = Vec2i(4f, 5f)
 
                 b -= a
-                b shouldEqual Vec2i(3f)
+                b shouldBe Vec2i(3f)
 
                 b -= 1f
-                b shouldEqual Vec2i(2f)
+                b shouldBe Vec2i(2f)
             }
             run {
                 val a = Vec2i(1f, 2f)
                 val b = Vec2i(4f, 5f)
 
                 a *= b
-                a shouldEqual Vec2i(4f, 10f)
+                a shouldBe Vec2i(4f, 10f)
 
                 a *= 2f
-                a shouldEqual Vec2i(8f, 20f)
+                a shouldBe Vec2i(8f, 20f)
             }
             run {
                 val a = Vec2i(1f, 2f)
                 val b = Vec2i(4f, 16f)
 
                 b /= a
-                b shouldEqual Vec2i(4f, 8f)
+                b shouldBe Vec2i(4f, 8f)
 
                 b /= 2f
-                b shouldEqual Vec2i(2f, 4f)
+                b shouldBe Vec2i(2f, 4f)
             }
             run {
                 val b = Vec2i(2)
 
                 b /= b.y
-                b shouldEqual Vec2i(1)
+                b shouldBe Vec2i(1)
             }
             run {
                 val a = Vec2i(1f, 2f)
                 val b = -a
 
-                b shouldEqual Vec2i(-1f, -2f)
+                b shouldBe Vec2i(-1f, -2f)
             }
             run {
                 var a = Vec2i(1f, 2f)
                 val b = --a
 
-                b shouldEqual Vec2i(0f, 1f)
+                b shouldBe Vec2i(0f, 1f)
             }
             run {
                 var a = Vec2i(1f, 2f)
                 val b = a--
 
-                b shouldEqual Vec2i(1f, 2f)
-                a shouldEqual Vec2i(0f, 1f)
+                b shouldBe Vec2i(1f, 2f)
+                a shouldBe Vec2i(0f, 1f)
             }
             run {
                 var a = Vec2i(1f, 2f)
                 val b = ++a
 
-                b shouldEqual Vec2i(2f, 3f)
+                b shouldBe Vec2i(2f, 3f)
             }
             run {
                 var a = Vec2i(1f, 2f)
                 val b = a++
 
-                b shouldEqual Vec2i(1f, 2f)
-                a shouldEqual Vec2i(2f, 3f)
+                b shouldBe Vec2i(1f, 2f)
+                a shouldBe Vec2i(2f, 3f)
             }
             // custom
             run {
                 val a = Vec2(1f, 2f)
                 a += 1f
 
-                a shouldEqual Vec2(2f, 3f)
+                a shouldBe Vec2(2f, 3f)
             }
             run {
                 val a = Vec2(1f, 2f)
                 val b = Vec2(3f, 4f)
                 a += b
 
-                a shouldEqual Vec2(4f, 6f)
+                a shouldBe Vec2(4f, 6f)
             }
         }
 
@@ -415,7 +416,7 @@ class coreVec2 : StringSpec() {
                 val a = Vec2i(1)
                 val b = Vec2i(a)
 
-                a shouldEqual b
+                a shouldBe b
             }
             run {
                 val A = Vec2(1f, 2f)

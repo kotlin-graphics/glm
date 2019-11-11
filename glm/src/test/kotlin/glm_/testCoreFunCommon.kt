@@ -704,7 +704,7 @@ class testCoreFunCommon : StringSpec() {
                 val exp = Vec1i()
                 val a = glm.frexp(x, exp)
                 a shouldEqual Vec1(1)
-                exp shouldEqual Vec1i(10)
+                exp shouldBe Vec1i(10)
             }
 
             run {

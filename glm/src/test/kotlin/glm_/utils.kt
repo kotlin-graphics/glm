@@ -19,8 +19,6 @@ import kotlin.math.abs
 infix fun Vec1.shouldEqual(v: Vec1) = shouldEqual(v, glm.εf)
 fun Vec1.shouldEqual(v: Vec1, epsilon: Float) = abs(x - v.x) shouldBeLessThan epsilon
 
-infix fun Vec1i.shouldEqual(v: Vec1i) = x shouldBe v.x
-
 infix fun Vec2.shouldEqual(v: Vec2) = shouldEqual(v, glm.εf)
 fun Vec2.shouldEqual(v: Vec2, epsilon: Float) = allEqual(v, epsilon) shouldBe true
 
@@ -32,9 +30,6 @@ fun Vec3.shouldEqual(v: Vec3, epsilon: Float) = allEqual(v, epsilon) shouldBe tr
 
 infix fun Vec4.shouldEqual(v: Vec4) = shouldEqual(v, glm.εf)
 fun Vec4.shouldEqual(v: Vec4, epsilon: Float) = allEqual(v, epsilon) shouldBe true
-
-infix fun Vec2i.shouldEqual(v: Vec2i) = allEqual(v) shouldBe true
-infix fun Vec3i.shouldEqual(v: Vec3i) = allEqual(v) shouldBe true
 
 infix fun Mat2.shouldEqual(v: Mat2) = shouldEqual(v, glm.εf)
 fun Mat2.shouldEqual(v: Mat2, epsilon: Float) = allEqual(v, epsilon) shouldBe true
