@@ -20,8 +20,8 @@ class testCorePure : StringSpec() {
         "vec4 constructor" {
 
             run {
-                val a = Vec4(1)
-                val b = Vec4(1, 1, 1, 1)
+                val a = Vec4i(1)
+                val b = Vec4i(1, 1, 1, 1)
 
                 a shouldBe b
             }
