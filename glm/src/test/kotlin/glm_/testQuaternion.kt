@@ -195,10 +195,17 @@ class testQuaternion : StringSpec() {
 
             "quat times" {
 
-                val temp1 = Quat(1f, Vec3(0, 1, 0)).normalize()
-                val temp2 = Quat(.5f, Vec3(1, 0, 0)).normalize()
+                val temp1 = Quat(1.0f, Vec3(0.0, 1.0, 0.0)).normalize()
+                val temp2 = Quat(0.5f, Vec3(1.0, 0.0, 0.0)).normalize()
+                val transformed0 = (temp1 * Vec3(0.0, 1.0, 0.0) * temp1.inverse())
+                val temp4 = temp2 * transformed0 * temp2.inverse()
+                val temp5 = (temp1 * temp2).normalize()
+                val temp6 = temp5 * Vec3(0.0, 1.0, 0.0) * temp5.inverse()
+                val temp7 = Quat(1f, Vec3(0.0, 1.0, 0.0))
+                temp7 timesAssign temp5
+                temp7 timesAssign temp5.inverse()
 
-                val transformed0 = temp1 * Vec3(0, 1, 0) * temp1.inverse()
+                temp7.anyNotEqual(Quat(1f, Vec3(0.0, 1.0, 0.0))) shouldBe false
             }
 
             /**
@@ -295,8 +302,8 @@ class testQuaternion : StringSpec() {
 
             val Q = Quat.identity
 
-            Q.equal(Quat(1, 0, 0, 0), 0.0001f) shouldBe true
-            Q.notEqual(Quat(1, 0, 0, 0), 0.0001f) shouldBe false
+            Q.allEqual(Quat(1, 0, 0, 0), 0.0001f) shouldBe true
+            Q.anyNotEqual(Quat(1, 0, 0, 0), 0.0001f) shouldBe false
 
             val M = Mat4.identity
             val N = Mat4(1f)
