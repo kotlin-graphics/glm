@@ -301,8 +301,7 @@ class testQuaternion : StringSpec() {
             val M = Mat4.identity
             val N = Mat4(1f)
 
-            for(i in 0..3)
-                M[i].allEqual(N[i], 0.001f) shouldBe true
+            M.allEqual(N, 0.001f) shouldBe true
         }
     }
 }
