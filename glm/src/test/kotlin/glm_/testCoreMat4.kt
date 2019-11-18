@@ -19,6 +19,36 @@ class testCoreMat4 : StringSpec() {
 
     init {
 
+        val epsilon = 0.001f
+
+        "operators"         {
+
+            val M = Mat4(2f)
+            val N = Mat4(1f)
+            val U = Vec4(2f)
+
+            run {
+                val P = N * 2f
+                P.shouldEqual(M, epsilon)
+
+                val Q = M / 2f
+                Q.shouldEqual(N, epsilon)
+            }
+
+            run {
+                val V = M * U
+                V.shouldEqual(Vec4(4f), epsilon)
+
+//                val W = U / M TODO? Wtf vec4/mat4?
+//                Error += glm::all(glm::equal(V, W, Epsilon)) ? 0 : 1
+            }
+
+            run {
+                val O = M * N
+//                O.shouldEqual(Mat4(4f), epsilon) TODO check
+            }
+        }
+
         "inverse mat4" {
 
             val matrix = Mat4(
@@ -31,10 +61,7 @@ class testCoreMat4 : StringSpec() {
 
             matrix.print("mat")
 
-            glm.all(glm.equal(identity[0], Vec4(1f, 0f, 0f, 0f), Vec4(0.01f))) shouldBe true
-            glm.all(glm.equal(identity[1], Vec4(0f, 1f, 0f, 0f), Vec4(0.01f))) shouldBe true
-            glm.all(glm.equal(identity[2], Vec4(0f, 0f, 1f, 0f), Vec4(0.01f))) shouldBe true
-            glm.all(glm.equal(identity[3], Vec4(0f, 0f, 0f, 1f), Vec4(0.01f))) shouldBe true
+            identity.shouldEqual(Mat4(1f), epsilon)
         }
 
         "inverse mat4d" {
@@ -45,13 +72,10 @@ class testCoreMat4 : StringSpec() {
                     0.4, 0.3, 0.2, 0.6)
             val identity = matrix / matrix
 
-            glm.all(glm.equal(identity[0], Vec4d(1.0, 0.0, 0.0, 0.0), Vec4d(0.01))) shouldBe true
-            glm.all(glm.equal(identity[1], Vec4d(0.0, 1.0, 0.0, 0.0), Vec4d(0.01))) shouldBe true
-            glm.all(glm.equal(identity[2], Vec4d(0.0, 0.0, 1.0, 0.0), Vec4d(0.01))) shouldBe true
-            glm.all(glm.equal(identity[3], Vec4d(0.0, 0.0, 0.0, 1.0), Vec4d(0.01))) shouldBe true
+            identity.shouldEqual(Mat4d(1f), 0.01)
         }
 
-        "operators" {
+        "operators2" {
 
             val l = Mat4(1f)
             val m = Mat4(1f)
@@ -83,10 +107,7 @@ class testCoreMat4 : StringSpec() {
 //                print(Matrix);
 //                print(Inverse);
 //                print(Identity);
-                identity[0].shouldEqual(Vec4(1f, 0f, 0f, 0f), 0.01f)
-                identity[1].shouldEqual(Vec4(0f, 1f, 0f, 0f), 0.01f)
-                identity[2].shouldEqual(Vec4(0f, 0f, 1f, 0f), 0.01f)
-                identity[3].shouldEqual(Vec4(0f, 0f, 0f, 1f), 0.01f)
+                identity.shouldEqual(Mat4(1f), epsilon)
             }
         }
 

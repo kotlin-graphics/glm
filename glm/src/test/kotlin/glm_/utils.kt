@@ -3,6 +3,7 @@ package glm_
 import glm_.mat2x2.Mat2
 import glm_.mat3x3.Mat3
 import glm_.mat4x4.Mat4
+import glm_.mat4x4.Mat4d
 import glm_.vec1.Vec1
 import glm_.vec1.Vec1i
 import glm_.vec2.Vec2
@@ -39,3 +40,6 @@ fun Mat3.shouldEqual(v: Mat3, epsilon: Float) = allEqual(v, epsilon) shouldBe tr
 
 infix fun Mat4.shouldEqual(v: Mat4) = shouldEqual(v, glm.εf)
 fun Mat4.shouldEqual(v: Mat4, epsilon: Float) = allEqual(v, epsilon) shouldBe true
+
+infix fun Mat4d.shouldEqual(v: Mat4d) = shouldEqual(v, glm.ε)
+fun Mat4d.shouldEqual(v: Mat4d, epsilon: Double) = allEqual(v, epsilon) shouldBe true

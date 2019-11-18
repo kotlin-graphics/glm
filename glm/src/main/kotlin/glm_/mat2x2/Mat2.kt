@@ -401,27 +401,12 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Mat2 && array.contentEquals(other.array)
-
-    fun equal(b: Mat2, epsilon: Vec2, res: Vec2bool = Vec2bool()): Vec2bool = res {
-        var equal = true
-        for (i in 0..1)
-            if(abs(array[it * 2 + i] - b.array[it * 2 + i]) > epsilon[it]) {
-                equal = false
-                break
-            }
-        equal
-    }
-
-    fun allEqual(b: Mat2, epsilon: Float = 0f): Boolean {
-        for (i in 0..3)
-            if (abs(array[i] - b.array[i]) > epsilon)
-                return false
-        return true
-    }
-
-    fun notEqual(b: Mat2, epsilon: Vec2, res: Vec2bool = Vec2bool()): Vec2bool = equal(b, epsilon, res)
-
-    fun anyNotEqual(b: Mat2, epsilon: Float = 0f): Boolean = !allEqual(b, epsilon)
-
     override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
+
+    fun equal(b: Mat2, epsilon: Float, res: Vec2bool = Vec2bool()): Vec2bool = glm.equal(this, b, epsilon, res)
+    fun equal(b: Mat2, epsilon: Vec2, res: Vec2bool = Vec2bool()): Vec2bool = glm.equal(this, b, epsilon, res)
+    fun notEqual(b: Mat2, epsilon: Float, res: Vec2bool = Vec2bool()): Vec2bool = glm.notEqual(this, b, epsilon, res)
+    fun notEqual(b: Mat2, epsilon: Vec2, res: Vec2bool = Vec2bool()): Vec2bool = glm.notEqual(this, b, epsilon, res)
+    fun allEqual(b: Mat2, epsilon: Float = 0f): Boolean = glm.allEqual(this, b, epsilon)
+    fun anyNotEqual(b: Mat2, epsilon: Float = 0f): Boolean = glm.anyNotEqual(this, b, epsilon)
 }

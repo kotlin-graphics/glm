@@ -4,7 +4,7 @@ import glm_.glm
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
-class ext_scalarRelation: StringSpec() {
+class ext_scalarRelational: StringSpec() {
 
     init {
         "test equal"        {

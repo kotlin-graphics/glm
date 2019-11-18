@@ -43,7 +43,7 @@ interface gtxIntersect {
         // if determinant is near zero, ray lies in plane of triangle
         val det = edge1 dot p
 
-        val qVec: Vec3
+        val perpendicular: Vec3
 
         when {
             det > epsilonF -> {
@@ -56,10 +56,10 @@ interface gtxIntersect {
                     return null
 
                 // prepare to test V parameter
-                qVec = dist cross edge1
+                perpendicular = dist cross edge1
 
                 // calculate V parameter and test bounds
-                baryPosition.y = dir dot qVec
+                baryPosition.y = dir dot perpendicular
                 if (baryPosition.y < 0 || (baryPosition.x + baryPosition.y) > det)
                     return null
             }
@@ -73,10 +73,10 @@ interface gtxIntersect {
                     return null
 
                 // prepare to test V parameter
-                qVec = dist cross edge1
+                perpendicular = dist cross edge1
 
                 // calculate V parameter and test bounds
-                baryPosition.y = dir dot qVec
+                baryPosition.y = dir dot perpendicular
                 if (baryPosition.y > 0 || baryPosition.x + baryPosition.y < det)
                     return null
             }
@@ -88,7 +88,7 @@ interface gtxIntersect {
         baryPosition *= invDet
 
         // return distance, ray intersects triangle
-        return (edge2 dot qVec) * invDet
+        return (edge2 dot perpendicular) * invDet
     }
 
     /** Compute the intersection of a line and a triangle.

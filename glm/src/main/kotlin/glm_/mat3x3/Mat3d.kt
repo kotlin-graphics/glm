@@ -15,6 +15,7 @@ import glm_.mat4x3.Mat4x3t
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.quat.QuatD
+import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -256,16 +257,16 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
             0.0, 0.0, z.d)
 
     operator fun invoke(a0: Double, a1: Double, a2: Double,
-               b0: Double, b1: Double, b2: Double,
-               c0: Double, c1: Double, c2: Double): Mat3d {
+                        b0: Double, b1: Double, b2: Double,
+                        c0: Double, c1: Double, c2: Double): Mat3d {
 
         put(a0, a1, a2, b0, b1, b2, c0, c1, c2)
         return this
     }
 
     operator fun invoke(a0: Number, a1: Number, a2: Number,
-               b0: Number, b1: Number, b2: Number,
-               c0: Number, c1: Number, c2: Number): Mat3d {
+                        b0: Number, b1: Number, b2: Number,
+                        c0: Number, c1: Number, c2: Number): Mat3d {
 
         put(a0.d, a1.d, a2.d, b0.d, b1.d, b2.d, c0.d, c1.d, c2.d)
         return this
@@ -483,12 +484,16 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
 
     @JvmOverloads
     fun rotateX(angle: Double, res: Mat3d = Mat3d()) = glm.rotateX(res, this, angle)
+
     @JvmOverloads
     fun rotateY(angle: Double, res: Mat3d = Mat3d()) = glm.rotateY(res, this, angle)
+
     @JvmOverloads
     fun rotateZ(angle: Double, res: Mat3d = Mat3d()) = glm.rotateZ(res, this, angle)
+
     @JvmOverloads
     fun rotateXYZ(angle: Vec3d, res: Mat3d = Mat3d()) = glm.rotateXYZ(res, this, angle.x, angle.y, angle.z)
+
     @JvmOverloads
     fun rotateXYZ(angleX: Double, angleY: Double, angleZ: Double, res: Mat3d = Mat3d()) = glm.rotateXYZ(res, this, angleX, angleY, angleZ)
 
@@ -566,27 +571,12 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Mat3d && array.contentEquals(other.array)
-
-    fun equal(b: Mat3d, epsilon: Double = 0.0): Boolean {
-        for (i in 0..8)
-            if (abs(array[i] - b.array[i]) > epsilon)
-                return false
-        return true
-    }
-
-    fun equal(b: Mat3d, epsilon: Vec3d, res: Vec3bool = Vec3bool()): Vec3bool = res {
-        var equal = true
-        for (i in 0..2)
-            if(abs(array[it * 3 + i] - b.array[it * 3 + i]) > epsilon[it]) {
-                equal = false
-                break
-            }
-        equal
-    }
-
-    fun notEqual(b: Mat3d, epsilon: Double = 0.0): Boolean = !equal(b, epsilon)
-
-    fun notEqual(b: Mat3d, epsilon: Vec3d, res: Vec3bool = Vec3bool()): Vec3bool = equal(b, epsilon, res).notAssign()
-
     override fun hashCode() = 31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()
+
+    fun equal(b: Mat3d, epsilon: Double, res: Vec3bool = Vec3bool()): Vec3bool = glm.equal(this, b, epsilon, res)
+    fun equal(b: Mat3d, epsilon: Vec3d, res: Vec3bool = Vec3bool()): Vec3bool = glm.equal(this, b, epsilon, res)
+    fun notEqual(b: Mat3d, epsilon: Double, res: Vec3bool = Vec3bool()): Vec3bool = glm.notEqual(this, b, epsilon, res)
+    fun notEqual(b: Mat3d, epsilon: Vec3d, res: Vec3bool = Vec3bool()): Vec3bool = glm.notEqual(this, b, epsilon, res)
+    fun allEqual(b: Mat3d, epsilon: Double = 0.0): Boolean = glm.allEqual(this, b, epsilon)
+    fun anyNotEqual(b: Mat3d, epsilon: Double = 0.0): Boolean = glm.anyNotEqual(this, b, epsilon)
 }

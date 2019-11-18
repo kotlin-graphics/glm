@@ -2,7 +2,7 @@ package glm_.ext
 
 import glm_.glm
 
-interface ext_scalarRelational {
+interface extScalarRelational {
 
     fun equal(x: Float, y: Float, epsilon: Float) = glm.abs(x - y) < epsilon
     fun equal(x: Byte, y: Byte, epsilon: Byte) = glm.abs(x - y) < epsilon

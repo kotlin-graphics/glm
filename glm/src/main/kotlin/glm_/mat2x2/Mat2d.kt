@@ -12,6 +12,7 @@ import glm_.mat4x2.Mat4x2d
 import glm_.mat4x2.Mat4x2t
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
+import glm_.vec2.Vec2
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
@@ -384,27 +385,12 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
 	override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Mat2d && array.contentEquals(other.array)
-
-    fun equal(b: Mat2d, epsilon: Double = 0.0): Boolean {
-        for (i in 0..3)
-            if (abs(array[i] - b.array[i]) > epsilon)
-                return false
-        return true
-    }
-
-    fun equal(b: Mat2d, epsilon: Vec2d, res: Vec2bool = Vec2bool()): Vec2bool = res {
-        var equal = true
-        for (i in 0..1)
-            if(abs(array[it * 2 + i] - b.array[it * 2 + i]) > epsilon[it]) {
-                equal = false
-                break
-            }
-        equal
-    }
-
-    fun notEqual(b: Mat2d, epsilon: Double = 0.0): Boolean = !equal(b, epsilon)
-
-    fun notEqual(b: Mat2d, epsilon: Vec2d, res: Vec2bool = Vec2bool()): Vec2bool = equal(b, epsilon, res).notAssign()
-
     override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
+
+    fun equal(b: Mat2d, epsilon: Double, res: Vec2bool = Vec2bool()): Vec2bool = glm.equal(this, b, epsilon, res)
+    fun equal(b: Mat2d, epsilon: Vec2d, res: Vec2bool = Vec2bool()): Vec2bool = glm.equal(this, b, epsilon, res)
+    fun notEqual(b: Mat2d, epsilon: Double, res: Vec2bool = Vec2bool()): Vec2bool = glm.notEqual(this, b, epsilon, res)
+    fun notEqual(b: Mat2d, epsilon: Vec2d, res: Vec2bool = Vec2bool()): Vec2bool = glm.notEqual(this, b, epsilon, res)
+    fun allEqual(b: Mat2d, epsilon: Double = 0.0): Boolean = glm.allEqual(this, b, epsilon)
+    fun anyNotEqual(b: Mat2d, epsilon: Double = 0.0): Boolean = glm.anyNotEqual(this, b, epsilon)
 }

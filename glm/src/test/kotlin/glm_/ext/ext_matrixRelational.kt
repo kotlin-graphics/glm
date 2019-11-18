@@ -1,11 +1,12 @@
 package glm_.ext
 
 import glm_.mat4x4.Mat4
+import glm_.shouldEqual
 import glm_.vec4.Vec4
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
-class test_extMatrixRelational : StringSpec() {
+class ext_matrixRelational : StringSpec() {
 
     init {
 //        int test_equal()
@@ -31,14 +32,14 @@ class test_extMatrixRelational : StringSpec() {
 
         "test equal"        {
 
-            (Mat4(1).allEqual(Mat4(1),  0.001f)) shouldBe true
-            (Mat4(1).equal(Mat4(2), Vec4(0.001f))).all shouldBe false
+            Mat4(1) shouldEqual Mat4(1)
+            Mat4(1).allEqual(Mat4(2)) shouldBe false
         }
 
         "test notEqual"        {
 
-            (Mat4(1).allEqual(Mat4(1), 0.001f)) shouldBe true
-            (Mat4(1).equal(Mat4(2), Vec4(0.001f))).all shouldBe false
+            Mat4(1) shouldEqual Mat4(1)
+            Mat4(1).allEqual(Mat4(2)) shouldBe false
         }
     }
 }
