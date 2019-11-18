@@ -40,12 +40,12 @@ class testCoreMat4 : StringSpec() {
                 V.shouldEqual(Vec4(4f), epsilon)
 
 //                val W = U / M TODO? Wtf vec4/mat4?
-//                Error += glm::all(glm::equal(V, W, Epsilon)) ? 0 : 1
+//                Error += glm::all(glm::equal(W, vecType(1.f), Epsilon)) ? 0 : 1;
             }
 
             run {
                 val O = M * N
-//                O.shouldEqual(Mat4(4f), epsilon) TODO check
+                O.shouldEqual(Mat4(2f), epsilon)
             }
         }
 

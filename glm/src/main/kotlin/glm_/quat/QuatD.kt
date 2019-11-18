@@ -194,7 +194,10 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
     companion object : quatD_operators, gtcQuaternion {
 
         @JvmField
-        val size = 4 * Float.BYTES
+        val length = 4
+
+        @JvmField
+        val size = length * Double.BYTES
 
         @JvmStatic
         fun fromPointer(ptr: Ptr) = Quat(memGetDouble(ptr), memGetDouble(ptr + Double.BYTES), memGetDouble(ptr + Double.BYTES * 2), memGetDouble(ptr + Double.BYTES * 3))

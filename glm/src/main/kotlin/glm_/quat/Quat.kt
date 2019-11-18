@@ -216,7 +216,10 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
     companion object : quat_operators, gtcQuaternion {
         @JvmField
-        val size = 4 * Float.BYTES
+        val length = 4
+
+        @JvmField
+        val size = length * Float.BYTES
 
         @JvmStatic
         fun fromPointer(ptr: Ptr) = Quat(memGetFloat(ptr), memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 3))
