@@ -28,50 +28,12 @@ import glm_.vec4.Vec4bool
 
 interface gtcQuaternion {
 
-
-    /** Returns the length of the quaternion.   */
-    fun length(q: Quat) = sqrt(dot(q, q))
-
-    /** Returns the length of the quaternion.   */
-    fun length(q: QuatD) = sqrt(dot(q, q))
-
-
-    /** Returns the normalized quaternion.  */
-    fun normalize(q: Quat, res: Quat): Quat {
-        val len = length(q)
-        if (len <= 0f)   // Problem
-            return res.put(1f, 0f, 0f, 0f)
-        val oneOverLen = 1f / len
-        return res.put(q.w * oneOverLen, q.x * oneOverLen, q.y * oneOverLen, q.z * oneOverLen)
-    }
-
-    fun normalize(q: Quat) = normalize(q, Quat())
-
-    /** Returns the normalized quaternion.  */
-    fun normalize(q: QuatD, res: QuatD): QuatD {
-        val len = length(q)
-        if (len <= 0.0)   // Problem
-            return res.put(1.0, 0.0, 0.0, 0.0)
-        val oneOverLen = 1.0 / len
-        return res.put(q.w * oneOverLen, q.x * oneOverLen, q.y * oneOverLen, q.z * oneOverLen)
-    }
-
-    fun normalize(q: QuatD) = normalize(q, QuatD())
-
-
-    /** Returns dot product of q1 main.and q2, main.getI.e., q1[0] * q2[0] + q1[1] * q2[1] + ... */
-    fun dot(a: Quat, b: Quat) = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
-
-    /** Returns dot product of q1 main.and q2, main.getI.e., q1[0] * q2[0] + q1[1] * q2[1] + ... */
-    fun dot(a: QuatD, b: QuatD) = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
-
-
     /** Spherical linear interpolation of two quaternions.
      * The interpolation is oriented main.and the rotation is performed at constant speed.
      * For short path spherical linear interpolation, use the slerp function.     */
     fun mix(a: Quat, b: Quat, interp: Float, res: Quat): Quat {
 
-        val cosTheta = dot(a, b)
+        val cosTheta = glm.dot(a, b)
 
         // Perform a linear interpolation when cosTheta is close to 1 to avoid side effect of sin(angle) becoming a zero denominator
         if (cosTheta > 1f - epsilonF) {
@@ -102,7 +64,7 @@ interface gtcQuaternion {
      * For short path spherical linear interpolation, use the slerp function.     */
     fun mix(a: QuatD, b: QuatD, interp: Double, res: QuatD): QuatD {
 
-        val cosTheta = dot(a, b)
+        val cosTheta = glm.dot(a, b)
 
         // Perform a linear interpolation when cosTheta is close to 1 to avoid side effect of sin(angle) becoming a zero denominator
         if (cosTheta > 1.0 - epsilon) {
@@ -171,7 +133,7 @@ interface gtcQuaternion {
         var zY = b.y
         var zZ = b.z
 
-        var cosTheta = dot(a, b)
+        var cosTheta = glm.dot(a, b)
 
         // If cosTheta < 0, the interpolation will take the long way around the sphere.
         // To fix this, one quat must be negated.
@@ -216,7 +178,7 @@ interface gtcQuaternion {
         var zY = b.y
         var zZ = b.z
 
-        var cosTheta = dot(a, b)
+        var cosTheta = glm.dot(a, b)
 
         // If cosTheta < 0, the interpolation will take the long way around the sphere.
         // To fix this, one quat must be negated.
@@ -278,7 +240,7 @@ interface gtcQuaternion {
 
     /** Returns the q inverse.  */
     fun inverse(a: Quat, res: Quat): Quat {
-        val dot = dot(a, a)
+        val dot = glm.dot(a, a)
         res.w = a.w / dot
         res.x = -a.x / dot
         res.y = -a.y / dot
@@ -290,7 +252,7 @@ interface gtcQuaternion {
 
     /** Returns the q inverse.  */
     fun inverse(a: QuatD, res: QuatD): QuatD {
-        val dot = dot(a, a)
+        val dot = glm.dot(a, a)
         res.w = a.w / dot
         res.x = -a.x / dot
         res.y = -a.y / dot

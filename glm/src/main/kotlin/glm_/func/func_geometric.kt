@@ -105,18 +105,6 @@ interface func_geometric {
         return res
     }
 
-    fun cross(a: Quat, b: Quat, res: Quat = Quat()): Quat {
-        val w = a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z
-        val x = a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y
-        val y = a.w * b.y + a.y * b.w + a.z * b.x - a.x * b.z
-        val z = a.w * b.z + a.z * b.w + a.x * b.y - a.y * b.x
-        res.w = x
-        res.x = y
-        res.y = z
-        res.z = w
-        return res
-    }
-
 
     fun normalize(a: Float) = if (a < 0f) -1f else 1f
     fun normalize(a: Double) = if (a < 0.0) -1.0 else 1.0

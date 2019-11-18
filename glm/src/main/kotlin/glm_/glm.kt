@@ -4,6 +4,8 @@
 
 package glm_
 
+import glm_.ext.extQuaternionGeometric
+//import glm_.ext.extQuaternionRelational
 import glm_.ext.extScalarRelational
 import glm_.ext.matrixRelational
 import glm_.func.*
@@ -92,6 +94,8 @@ object glm :
         gtxVectorAngle,
 
         // ext
+        extQuaternionGeometric,
+//        extQuaternionRelational,
         extScalarRelational,
         matrixRelational,
 

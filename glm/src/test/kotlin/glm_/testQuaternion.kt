@@ -308,14 +308,5 @@ class testQuaternion : StringSpec() {
 
             M.allEqual(N, 0.001f) shouldBe true
         }
-
-        "size" {
-            val A = Quat.size
-            16 shouldBe A
-            val B = QuatD.size
-            32 shouldBe B
-            Quat.length shouldBe 4
-            QuatD.length shouldBe 4
-        }
     }
 }
