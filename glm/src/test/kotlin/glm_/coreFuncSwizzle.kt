@@ -12,6 +12,7 @@ import glm_.vec4.Vec4i
 import glm_.vec4.swizzle.wzyx
 import glm_.vec4.swizzle.xyzw
 import io.kotlintest.shouldBe
+import io.kotlintest.shouldNotBe
 import io.kotlintest.specs.StringSpec
 import kotlin.math.abs
 
@@ -26,7 +27,7 @@ class coreFuncSwizzle : StringSpec() {
                 val B = A.yx
                 val C = Vec2i(B.yx)
 
-                assert(A != B)
+                A shouldNotBe B
                 A shouldBe C
             }
 //            #	endif//GLM_SWIZZLE
@@ -37,7 +38,7 @@ class coreFuncSwizzle : StringSpec() {
                 val B = A.yx
                 val C = Vec2i(A.yx)
 
-                assert(A != B)
+                A shouldNotBe B
                 B shouldBe C
 
                 B.xy = B.yx
@@ -63,7 +64,7 @@ class coreFuncSwizzle : StringSpec() {
                 val B = A.zyx
                 val C = Vec3i(B.zyx)
 
-                assert(A != B)
+                A shouldNotBe B
                 A shouldBe C
             }
 //            #	endif//GLM_SWIZZLE == GLM_ENABLE
@@ -124,7 +125,7 @@ class coreFuncSwizzle : StringSpec() {
             val B = A.wzyx
             val C = Vec4i(B.wzyx)
 
-            assert(A != B)
+            A shouldNotBe B
             A shouldBe C
 //            #endif//GLM_SWIZZLE == GLM_ENABLE
         }
@@ -136,7 +137,7 @@ class coreFuncSwizzle : StringSpec() {
             val B = A.wzyx
             val C = Vec4(B.wzyx)
 
-            assert(A != B)
+            A shouldNotBe B
             A shouldEqual C
 
             val D = glm.dot(C.wzyx, C.xyzw)

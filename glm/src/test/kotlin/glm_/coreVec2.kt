@@ -39,8 +39,8 @@ class coreVec2 : StringSpec() {
                 val a = Vec2i(1)
                 val b = Vec2i(1)
 
-                assert(a == b)
-                assert(!(a != b))
+                a shouldBe b
+                !(a != b) shouldBe true
             }
             run {
                 val a = Vec2(1f)
@@ -495,12 +495,13 @@ class coreVec2 : StringSpec() {
                 val v0 = Vec2i(1)
                 var v1 = Vec2i(v0)
                 var v2 = Vec2i(v0)
-                var v3 = ++v1
-                var v4 = v2++
+                val v3 = ++v1
+                val v4 = v2++
 
                 val a = 1 + v0
 
-//        assert(v0.equals())
+                a shouldBe v3
+                v0 shouldBe v4
             }
 
             run {

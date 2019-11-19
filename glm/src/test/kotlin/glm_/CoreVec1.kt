@@ -22,7 +22,7 @@ class CoreVec1 : StringSpec() {
                 val R = A != B
                 val S = A == B
 
-                assert(S && !R)
+                (S && !R) shouldBe true
             }
 
             run {
@@ -34,7 +34,7 @@ class CoreVec1 : StringSpec() {
                 val R = A != B
                 val S = A == B
 
-                assert(S && !R)
+                (S && !R) shouldBe true
             }
         }
 

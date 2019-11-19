@@ -2,6 +2,7 @@ package glm_.gtx
 
 import glm_.glm
 import glm_.glm.epsilonF
+import glm_.shouldEqual
 import glm_.vec2.Vec2
 import glm_.vec3.Vec3
 import io.kotlintest.shouldBe
@@ -22,9 +23,7 @@ class testGtxIntersect : StringSpec() {
 
             val distance = glm.intersectRayTriangle(orig, dir, vert0, vert1, vert2, baryPosition)!!
 
-            val a = glm.equal(baryPosition, Vec2(), epsilonF)
-            val b = a.all()
-            glm.equal(baryPosition, Vec2(), epsilonF).all() shouldBe true
+            baryPosition shouldEqual Vec2()
             (glm.abs(distance - 2f) <= epsilonF) shouldBe true
         }
 
@@ -39,7 +38,7 @@ class testGtxIntersect : StringSpec() {
 
             val result = glm.intersectLineTriangle(orig, dir, vert0, vert1, vert2, position)
 
-            glm.all(glm.equal(position, Vec3(2f, 0f,0f), Float.MIN_VALUE)) shouldBe true
+            position shouldEqual Vec3(2f, 0f,0f)
             result shouldBe true
         }
 

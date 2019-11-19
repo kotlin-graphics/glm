@@ -1,6 +1,7 @@
 package glm_.gtx
 
 import glm_.glm
+import glm_.shouldEqual
 import glm_.vec3.Vec3
 import io.kotlintest.specs.StringSpec
 
@@ -16,7 +17,7 @@ class testGtxClosestPoint : StringSpec() {
             val b = Vec3(1, 0, 0)
 
             val point = glm.closestPointOnLine(origin, a, b)
-            glm.equal(point, Vec3(0.5f, 0.5f, 0f), Float.MIN_VALUE)
+            point shouldEqual Vec3(0.5f, 0.5f, 0f)
         }
     }
 }

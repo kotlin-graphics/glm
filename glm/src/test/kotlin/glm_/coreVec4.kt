@@ -330,7 +330,7 @@ class coreVec4 : StringSpec() {
                 val R = A != B
                 val S = A == B
 
-                assert(S && !R)
+                (S && !R) shouldBe true
             }
 
             run {

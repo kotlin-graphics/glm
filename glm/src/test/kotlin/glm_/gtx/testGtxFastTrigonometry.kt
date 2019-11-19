@@ -324,7 +324,7 @@ object taylorCos {
         var angle = 0f
         while (angle < 180f) {
             val modAngle = abs(angle) % 360f
-            assert(modAngle in 0f..360f)
+            (modAngle in 0f..360f) shouldBe true
             val radAngle = modAngle.rad
             val cos0 = cos(radAngle)
 

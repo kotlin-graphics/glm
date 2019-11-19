@@ -126,7 +126,7 @@ class testCoreMat4 : StringSpec() {
                     Vec4(4, 5, 6, 7),
                     Vec4(8, 9, 10, 11),
                     Vec4(12, 13, 14, 15))
-            assert(m0.size() == 4 * 4 * Float.BYTES)
+            m0.size() shouldBe 4 * 4 * Float.BYTES
             val V = Vec4(0, 1, 2, 3)
             val m1 = Mat4(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
             val m2 = Mat4 { i -> i }
@@ -170,10 +170,10 @@ class testCoreMat4 : StringSpec() {
 
             val rotate = glm.rotate(Mat4(), 1f, 2f, 3f, 4f)
 
-            glm.all(glm.equal(rotate[0], Vec4(x = 0.60370886, y = 0.7201388, z = -0.34195852, w = 0.0), Vec4(0.01f))) shouldBe true
-            glm.all(glm.equal(rotate[1], Vec4(x = -0.529919, y = 0.68296707, z = 0.5027342, w = 0.0), Vec4(0.01f))) shouldBe true
-            glm.all(glm.equal(rotate[2], Vec4(x = 0.59558487, y = -0.12229471, z = 0.7939286, w = 0.0), Vec4(0.01f))) shouldBe true
-            glm.all(glm.equal(rotate[3], Vec4(x = 0.0, y = 0.0, z = 0.0, w = 1.0), Vec4(0.01f))) shouldBe true
+            rotate[0].shouldEqual(Vec4(x = 0.60370886, y = 0.7201388, z = -0.34195852, w = 0.0), 0.01f)
+            rotate[1].shouldEqual(Vec4(x = -0.529919, y = 0.68296707, z = 0.5027342, w = 0.0), 0.01f)
+            rotate[2].shouldEqual(Vec4(x = 0.59558487, y = -0.12229471, z = 0.7939286, w = 0.0), 0.01f)
+            rotate[3].shouldEqual(Vec4(x = 0.0, y = 0.0, z = 0.0, w = 1.0), 0.01f)
         }
 
         "test multiplication" {

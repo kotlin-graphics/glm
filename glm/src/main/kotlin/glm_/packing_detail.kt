@@ -12,13 +12,12 @@ import glm_.glm.log2
 import glm_.glm.max
 import glm_.glm.pow
 import glm_.glm.round
-import glm_.vec2.Vec2
-import glm_.vec2.Vec2b
+import glm_.vec1.Vec1
+import glm_.vec1.Vec1s
+import glm_.vec2.*
 import glm_.vec3.Vec3
-import glm_.vec4.Vec4
-import glm_.vec4.Vec4i
-import unsigned.toUInt
-import unsigned.ushr
+import glm_.vec4.*
+import unsigned.*
 import kotlin.experimental.or
 
 interface packing_detail {
@@ -169,6 +168,21 @@ interface packing_detail {
 
         return intBitsToFloat(result)
     }
+
+    fun pack(v: Vec1): Vec1s = Vec1s(detail.toFloat16(v.x))
+
+//    GLM_FUNC_QUALIFIER static vec<1, float, Q> unpack(vec<1, uint16, Q> const& v)
+//    {
+//        i16vec1 Unpack;
+//        memcpy(&Unpack, &v, sizeof(Unpack));
+//        return vec<1, float, Q>(detail::toFloat32(v.x));
+//    }
+
+    fun packHalf(v: Vec4): Vec4s =
+            Vec4s(detail.toFloat16(v.x), detail.toFloat16(v.y), detail.toFloat16(v.z), detail.toFloat16(v.w))
+
+    fun unpackHalf(v: Vec4s): Vec4 =
+            Vec4(detail.toFloat32(v.x), detail.toFloat32(v.y), detail.toFloat32(v.z), detail.toFloat32(v.w))
 }
 
 interface packing {
@@ -283,7 +297,7 @@ interface packing {
         val y = detail.toFloat16(v.y)
         val z = detail.toFloat16(v.z)
         val w = detail.toFloat16(v.w)
-        return (x.L shl 48) or (y.L shl 32) or (z.L shl 16) or w.L
+        return (x.toULong() shl 48) or (y.toULong() shl 32) or (z.toULong() shl 16) or w.toULong()
     }
 
     fun unpackHalf4x16(v: Long, res: Vec4 = Vec4()): Vec4 {
@@ -314,18 +328,22 @@ interface packing {
         return res
     }
 
-    fun packU3x10_1x2(v: Vec4i): Int {
+    fun packU3x10_1x2(v: Vec4ui): Uint {
         val x = v.x shl 22
         val y = (v.y and 0b11_1111_1111) shl 12
         val z = (v.z and 0b11_1111_1111) shl 2
         val w = v.w and 0b11
+//        val x = v.x and 0b11_1111_1111
+//        val y = (v.y and 0b11_1111_1111) shl 10
+//        val z = (v.z and 0b11_1111_1111) shl 20
+//        val w = (v.w and 0b11) shl 30
         return x or y or z or w
     }
 
-    fun unpackU3x10_1x2(v: Int, res: Vec4i = Vec4i()): Vec4i {
-        res.x = v ushr 22
-        res.y = (v ushr 12) and 0b11_1111_1111
-        res.z = (v ushr 2) and 0b11_1111_1111
+    fun unpackU3x10_1x2(v: Uint, res: Vec4ui = Vec4ui()): Vec4ui {
+        res.x = v shr 22
+        res.y = (v shr 12) and 0b11_1111_1111
+        res.z = (v shr 2) and 0b11_1111_1111
         res.w = v and 0b11
         return res
     }
@@ -555,17 +573,92 @@ interface packing {
         return res
     }
 
-//    GLM_FUNC_QUALIFIER uint16 packUint2x8(u8vec2 const & v)
-//    {
-//        uint16 Pack = 0;
-//        memcpy(& Pack, &v, sizeof(Pack));
-//        return Pack;
-//    }
-//
-//    GLM_FUNC_QUALIFIER u8vec2 unpackUint2x8(uint16 p)
-//    {
-//        u8vec2 Unpack (uninitialize);
-//        memcpy(& Unpack, &p, sizeof(Unpack));
-//        return Unpack;
-//    }
+    fun packUint2x8(v: Vec2ub): Ushort =
+            Ushort((v.x.i shl 8) or v.y.i)
+
+    fun unpackUint2x8(p: Ushort, res: Vec2ub = Vec2ub()): Vec2ub {
+        res.array[0] = (p shr 8).b // TODO var Vec2ub.xV backed by the array
+        res.array[1] = p.b
+        return res
+    }
+
+    fun packInt4x8(v: Vec4b): Int =
+            (v.x.i shl 24) or (v.y.i shl 16) or (v.z.i shl 8) or v.w.i
+
+    fun unpackInt4x8(p: Int, res: Vec4b = Vec4b()): Vec4b {
+        res.x = (p shr 24).b
+        res.y = (p shr 16).b
+        res.z = (p shr 8).b
+        res.w = p.b
+        return res
+    }
+
+    fun packUint4x8(v: Vec4ub): Uint =
+            Uint((v.x.i shl 24) or (v.y.i shl 16) or (v.z.i shl 8) or v.w.i)
+
+    fun unpackUint4x8(p: Uint, res: Vec4ub = Vec4ub()): Vec4ub {
+        res.array[0] = (p shr 24).b
+        res.array[1] = (p shr 16).b
+        res.array[2] = (p shr 8).b
+        res.array[3] = p.b
+        return res
+    }
+
+    fun packInt2x16(v: Vec2s): Int =
+            (v.x.i shl 16) or v.y.i
+
+    fun unpackInt2x16(p: Int, res: Vec2s = Vec2s()): Vec2s    {
+        res.x = (p shr 16).s
+        res.y = p.s
+        return res
+    }
+
+    fun packInt4x16(v: Vec4s): Long =
+            (v.x.L shl 48) or (v.y.L shl 32) or (v.z.L shl 16) or v.w.L
+
+    fun unpackInt4x16(p: Long, res: Vec4s = Vec4s()): Vec4s    {
+        res.x = (p shr 48).s
+        res.y = (p shr 32).s
+        res.z = (p shr 16).s
+        res.w = p.s
+        return res
+    }
+
+    fun packUint2x16(v: Vec2us): Uint =
+            Uint((v.x.i shl 16) or v.y.i)
+
+    fun unpackUint2x16(p: Uint, res: Vec2us = Vec2us()): Vec2us {
+        res.array[0] = (p shr 16).s
+        res.array[1] = p.s
+        return res
+    }
+
+    fun packUint4x16(v: Vec4us): Ulong =
+            Ulong((v.x.L shl 48) or (v.y.L shl 32) or (v.z.L shl 16) or v.w.L)
+
+    fun unpackUint4x16(p: Ulong, res: Vec4us = Vec4us()): Vec4us {
+        res.array[0] = (p shr 48).s
+        res.array[1] = (p shr 32).s
+        res.array[2] = (p shr 16).s
+        res.array[3] = p.s
+        return res
+    }
+
+    fun packInt2x32(v: Vec2i): Long =
+            (v.x.L shl 32) or v.y.L
+
+    fun unpackInt2x32(p: Long, res: Vec2i = Vec2i()): Vec2i    {
+        res.x = (p shr 32).i
+        res.y = p.i
+        return res
+    }
+
+    fun packUint2x32(v: Vec2ui): Ulong =
+            Ulong((v.x.L shl 32) or v.y.L)
+
+    fun unpackUint2x32(p: Ulong, res: Vec2ui = Vec2ui()): Vec2ui {
+        res.array[0] = (p shr 32).i
+        res.array[1] = p.i
+        return res
+    }
 }

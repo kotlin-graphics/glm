@@ -33,69 +33,69 @@ class testCoreFunCommon : StringSpec() {
             run {
                 val a = 1.1f
                 val b = glm.floor(a)
-                glm.equal(b, 1f, 0.0001f) shouldBe true
+                b.shouldEqual(1f, 0.0001f)
             }
 
             run {
                 val a = 1.1
                 val b = glm.floor(a)
-                glm.equal(b, 1.0, 0.0001) shouldBe true
+                b.shouldEqual(1.0, 0.0001)
             }
 
             run {
                 val a = Vec1(1.1f)
                 val b = glm.floor(a)
 
-                glm.all(glm.equal(b, Vec1(1.0), 0.0001f)) shouldBe true
+                b.shouldEqual(Vec1(1.0), 0.0001f)
             }
 
             run {
                 val a = Vec1d(1.1)
                 val b = glm.floor(a)
 
-                glm.all(glm.equal(b, Vec1d(1.0), 0.0001)) shouldBe true
+                b.shouldEqual(Vec1d(1.0), 0.0001)
             }
 
             run {
                 val a = Vec2(1.1f)
                 val b = glm.floor(a)
 
-                glm.all(glm.equal(b, Vec2(1.0), 0.0001f)) shouldBe true
+                b.shouldEqual(Vec2(1.0), 0.0001f)
             }
 
             run {
                 val a = Vec2d(1.1)
                 val b = glm.floor(a)
 
-                glm.all(glm.equal(b, Vec2d(1.0), 0.0001)) shouldBe true
+                b.shouldEqual(Vec2d(1.0), 0.0001)
             }
 
             run {
                 val a = Vec3(1.1f)
                 val b = glm.floor(a)
 
-                glm.all(glm.equal(b, Vec3(1.0), 0.0001f)) shouldBe true
+                b.shouldEqual(Vec3(1.0), 0.0001f)
             }
 
             run {
                 val a = Vec3d(1.1)
                 val b = glm.floor(a)
 
-                glm.all(glm.equal(b, Vec3d(1.0), 0.0001)) shouldBe true
+                b.shouldEqual(Vec3d(1.0), 0.0001)
             }
 
             run {
                 val a = Vec4(1.1f)
                 val b = glm.floor(a)
 
-                glm.all(glm.equal(b, Vec4(1.0), 0.0001f)) shouldBe true
+                b.shouldEqual(Vec4(1.0), 0.0001f)
             }
 
             run {
                 val a = Vec4d(1.1)
                 val b = glm.floor(a)
 
-                glm.all(glm.equal(b, Vec4d(1.0), 0.0001)) shouldBe true
+                b.shouldEqual(Vec4d(1.0), 0.0001)
             }
         }
 
@@ -116,7 +116,7 @@ class testCoreFunCommon : StringSpec() {
                 val a = glm.modf(x, i)
 
                 Vec4i(i) shouldBe Vec4i(1)
-                glm.all(glm.equal(a, Vec4(0.1f, 0.2f, 0.5f, 0.7f), 0.00001f)) shouldBe true
+                a.shouldEqual(Vec4(0.1f, 0.2f, 0.5f, 0.7f), 0.00001f)
             }
 
             run {
@@ -125,7 +125,7 @@ class testCoreFunCommon : StringSpec() {
                 val a = glm.modf(x, i)
 
                 Vec4i(i) shouldBe Vec4i(1)
-                glm.all(glm.equal(a, Vec4d(0.1, 0.2, 0.5, 0.7), 0.000000001)) shouldBe true
+                a.shouldEqual(Vec4d(0.1, 0.2, 0.5, 0.7), 0.000000001)
             }
 
             run {
@@ -133,8 +133,8 @@ class testCoreFunCommon : StringSpec() {
                 bD = 0.0
                 val a = glm.modf(x, ::bD)
 
-                bD.equal(1.0, 0.0001) shouldBe true
-                a.equal(0.5, 0.0001) shouldBe true
+                bD.shouldEqual(1.0, 0.0001)
+                a.shouldEqual(0.5, 0.0001)
             }
         }
 
@@ -145,7 +145,7 @@ class testCoreFunCommon : StringSpec() {
                 val b = 1f
                 val c = glm.mod(a, b)
 
-                c.equal(0.5f, 0.00001f) shouldBe true
+                c.shouldEqual(0.5f, 0.00001f)
             }
 
             run {
@@ -153,7 +153,7 @@ class testCoreFunCommon : StringSpec() {
                 val b = 1f
                 val c = glm.mod(a, b)
 
-                c.equal(0.8f, 0.00001f) shouldBe true
+                c.shouldEqual(0.8f, 0.00001f)
             }
 
             run {
@@ -161,7 +161,7 @@ class testCoreFunCommon : StringSpec() {
                 val b = 2f
                 val c = glm.mod(a, b)
 
-                c.equal(1f, 0.00001f) shouldBe true
+                c.shouldEqual(1f, 0.00001f)
             }
 
             run {
@@ -169,7 +169,7 @@ class testCoreFunCommon : StringSpec() {
                 val b = 2f
                 val c = glm.mod(a, b)
 
-                c.allEqual(Vec4(1f), 0.00001f) shouldBe true
+                c.shouldEqual(Vec4(1f), 0.00001f)
             }
 
             run {
@@ -177,7 +177,7 @@ class testCoreFunCommon : StringSpec() {
                 val b = Vec4(2f)
                 val c = glm.mod(a, b)
 
-                c.allEqual(Vec4(1f), 0.00001f) shouldBe true
+                c.shouldEqual(Vec4(1f), 0.00001f)
             }
         }
 
@@ -187,28 +187,28 @@ class testCoreFunCommon : StringSpec() {
                 val a = 1f
                 val b = glm.floatBitsToInt(a)
                 val c = glm.intBitsToFloat(b)
-                a.equal(c, 0.0001f) shouldBe true
+                a.shouldEqual(c, 0.0001f)
             }
 
             run {
                 val a = Vec2(1f, 2f)
                 val b = glm.floatBitsToInt(a)
                 val c = glm.intBitsToFloat(b)
-                a.allEqual(c, 0.0001f) shouldBe true
+                a.shouldEqual(c, 0.0001f)
             }
 
             run {
                 val a = Vec3(1f, 2f, 3f)
                 val b = glm.floatBitsToInt(a)
                 val c = glm.intBitsToFloat(b)
-                a.allEqual(c, 0.0001f) shouldBe true
+                a.shouldEqual(c, 0.0001f)
             }
 
             run {
                 val a = Vec4(1f, 2f, 3f, 4f)
                 val b = glm.floatBitsToInt(a)
                 val c = glm.intBitsToFloat(b)
-                a.allEqual(c, 0.0001f) shouldBe true
+                a.shouldEqual(c, 0.0001f)
             }
         }
 
@@ -218,28 +218,28 @@ class testCoreFunCommon : StringSpec() {
                 val a = 1f
                 val b = glm.floatBitsToUint(a)
                 val c = glm.uintBitsToFloat(b)
-                glm.equal(a, c, 0.0001f) shouldBe true
+                a.shouldEqual(c, 0.0001f)
             }
 
             run {
                 val a = Vec2(1f, 2f)
                 val b = glm.floatBitsToUint(a)
                 val c = glm.uintBitsToFloat(b)
-                glm.all(glm.equal(a, c, 0.0001f)) shouldBe true
+                a.shouldEqual(c, 0.0001f)
             }
 
             run {
                 val a = Vec3(1f, 2f, 3f)
                 val b = glm.floatBitsToUint(a)
                 val c = glm.uintBitsToFloat(b)
-                glm.all(glm.equal(a, c, 0.0001f)) shouldBe true
+                a.shouldEqual(c, 0.0001f)
             }
 
             run {
                 val a = Vec4(1f, 2f, 3f, 4f)
                 val b = glm.floatBitsToUint(a)
                 val c = glm.uintBitsToFloat(b)
-                glm.all(glm.equal(a, c, 0.0001f)) shouldBe true
+                a.shouldEqual(c, 0.0001f)
             }
         }
 
@@ -342,20 +342,19 @@ class testCoreFunCommon : StringSpec() {
             // Float with bool
             for (i in 0..3) {
                 val result = glm.mix(testBool[i].x, testBool[i].y, testBool[i].a)
-                glm.equal(result, testBool[i].result, epsilonF) shouldBe true
+                result.shouldEqual(testBool[i].result)
             }
 
             // Float with float
             for (i in 0..3) {
                 val result = glm.mix(testFloat[i].x, testFloat[i].y, testFloat[i].a)
-                glm.equal(result, testFloat[i].result, epsilonF) shouldBe true
+                result shouldEqual testFloat[i].result
             }
 
             // vec2 with bool
             for (i in 0..3) {
                 val result = glm.mix(testVec2Bool[i].x, testVec2Bool[i].y, testVec2Bool[i].a)
-                glm.equal(result.x, testVec2Bool[i].result.x, epsilonF) shouldBe true
-                glm.equal(result.y, testVec2Bool[i].result.y, epsilonF) shouldBe true
+                result shouldEqual testVec2Bool[i].result
             }
 
             // vec2 with bvec2
@@ -420,25 +419,25 @@ class testCoreFunCommon : StringSpec() {
                 val edge = 2f
 
                 val a = glm.step(edge, 1f)
-                glm.equal(a, 0f, epsilonF) shouldBe true
+                a shouldEqual 0f
 
                 val b = glm.step(edge, 3f)
-                glm.equal(b, 1f, epsilonF) shouldBe true
+                b shouldEqual 1f
 
                 val c = glm.step(edge, 2f)
-                glm.equal(c, 1f, epsilonF) shouldBe true
+                c shouldEqual 1f
             }
 
             // vec4 and float
             for (i in 0..2) {
                 val result = glm.step(testVec4Scalar[i].edge, testVec4Scalar[i].x)
-                glm.all(glm.equal(result, testVec4Scalar[i].result, epsilonF)) shouldBe true
+                result shouldEqual testVec4Scalar[i].result
             }
 
             // vec4 and vec4
             for (i in 0..3) {
                 val result = glm.step(testVec4Vector[i].edge, testVec4Vector[i].x)
-                glm.all(glm.equal(result, testVec4Vector[i].result, epsilonF)) shouldBe true
+                result shouldEqual testVec4Vector[i].result
             }
         }
 
@@ -446,36 +445,36 @@ class testCoreFunCommon : StringSpec() {
 
             run {
                 val a = glm.round(0f)
-                glm.equal(a, 0f, epsilonF) shouldBe true
+                a shouldEqual 0f
                 val b = glm.round(0.5f)
-                glm.equal(b, 1f, epsilonF) shouldBe true
+                b shouldEqual 1f
                 val c = glm.round(1f)
-                glm.equal(c, 1f, epsilonF) shouldBe true
+                c shouldEqual 1f
                 val d = glm.round(0.1f)
-                glm.equal(d, 0f, epsilonF) shouldBe true
+                d shouldEqual 0f
                 val e = glm.round(0.9f)
-                glm.equal(e, 1f, epsilonF) shouldBe true
+                e shouldEqual 1f
                 val f = glm.round(1.5f)
-                glm.equal(f, 2f, epsilonF) shouldBe true
+                f shouldEqual 2f
                 val g = glm.round(1.9f)
-                glm.equal(g, 2f, epsilonF) shouldBe true
+                g shouldEqual 2f
             }
 
             run {
                 val a = glm.round(-0f)
-                glm.equal(a, 0f, epsilonF) shouldBe true
+                a shouldEqual 0f
                 val b = glm.round(-0.5f)
-                glm.equal(b, -1f, epsilonF) shouldBe true
+                b shouldEqual -1f
                 val c = glm.round(-1f)
-                glm.equal(c, -1f, epsilonF) shouldBe true
+                c shouldEqual -1f
                 val d = glm.round(-0.1f)
-                glm.equal(d, 0f, epsilonF) shouldBe true
+                d shouldEqual 0f
                 val e = glm.round(-0.9f)
-                glm.equal(e, -1f, epsilonF) shouldBe true
+                e shouldEqual -1f
                 val f = glm.round(-1.5f)
-                glm.equal(f, -2f, epsilonF) shouldBe true
+                f shouldEqual -2f
                 val g = glm.round(-1.9f)
-                glm.equal(g, -2f, epsilonF) shouldBe true
+                g shouldEqual -2f
             }
         }
 
@@ -483,134 +482,134 @@ class testCoreFunCommon : StringSpec() {
 
             run {
                 val a1 = glm.roundEven(-1.5f)
-                glm.equal(a1, -2f, 0.0001f) shouldBe true
+                a1.shouldEqual(-2f, 0.0001f)
 
                 val a2 = glm.roundEven(1.5f)
-                glm.equal(a2, 2f, 0.0001f) shouldBe true
+                a2.shouldEqual(2f, 0.0001f)
 
                 val a5 = glm.roundEven(-2.5f)
-                glm.equal(a5, -2f, 0.0001f) shouldBe true
+                a5.shouldEqual(-2f, 0.0001f)
 
                 val a6 = glm.roundEven(2.5f)
-                glm.equal(a6, 2f, 0.0001f) shouldBe true
+                a6.shouldEqual(2f, 0.0001f)
 
                 val a3 = glm.roundEven(-3.5f)
-                glm.equal(a3, -4f, 0.0001f) shouldBe true
+                a3.shouldEqual(-4f, 0.0001f)
 
                 val a4 = glm.roundEven(3.5f)
-                glm.equal(a4, 4f, 0.0001f) shouldBe true
+                a4.shouldEqual(4f, 0.0001f)
 
                 val c7 = glm.roundEven(-4.5f)
-                glm.equal(c7, -4f, 0.0001f) shouldBe true
+                c7.shouldEqual(-4f, 0.0001f)
 
                 val c8 = glm.roundEven(4.5f)
-                glm.equal(c8, 4f, 0.0001f) shouldBe true
+                c8.shouldEqual(4f, 0.0001f)
 
                 val c1 = glm.roundEven(-5.5f)
-                glm.equal(c1, -6f, 0.0001f) shouldBe true
+                c1.shouldEqual(-6f, 0.0001f)
 
                 val c2 = glm.roundEven(5.5f)
-                glm.equal(c2, 6f, 0.0001f) shouldBe true
+                c2.shouldEqual(6f, 0.0001f)
 
                 val c3 = glm.roundEven(-6.5f)
-                glm.equal(c3, -6f, 0.0001f) shouldBe true
+                c3.shouldEqual(-6f, 0.0001f)
 
                 val c4 = glm.roundEven(6.5f)
-                glm.equal(c4, 6f, 0.0001f) shouldBe true
+                c4.shouldEqual(6f, 0.0001f)
 
                 val c5 = glm.roundEven(-7.5f)
-                glm.equal(c5, -8f, 0.0001f) shouldBe true
+                c5.shouldEqual(-8f, 0.0001f)
 
                 val c6 = glm.roundEven(7.5f)
-                glm.equal(c6, 8f, 0.0001f) shouldBe true
+                c6.shouldEqual(8f, 0.0001f)
             }
 
             run {
                 val a7 = glm.roundEven(-2.4f)
-                glm.equal(a7, -2f, 0.0001f) shouldBe true
+                a7.shouldEqual( -2f, 0.0001f)
 
                 val a8 = glm.roundEven(2.4f)
-                glm.equal(a8, 2f, 0.0001f) shouldBe true
+                a8.shouldEqual( 2f, 0.0001f)
 
                 val b1 = glm.roundEven(-2.6f)
-                glm.equal(b1, -3f, 0.0001f) shouldBe true
+                b1.shouldEqual( -3f, 0.0001f)
 
                 val b2 = glm.roundEven(2.6f)
-                glm.equal(b2, 3f, 0.0001f) shouldBe true
+                b2.shouldEqual( 3f, 0.0001f)
 
                 val b3 = glm.roundEven(-2f)
-                glm.equal(b3, -2f, 0.0001f) shouldBe true
+                b3.shouldEqual( -2f, 0.0001f)
 
                 val b4 = glm.roundEven(2f)
-                glm.equal(b4, 2f, 0.0001f) shouldBe true
+                b4.shouldEqual( 2f, 0.0001f)
             }
 
             run {
                 val a = glm.roundEven(0f)
-                glm.equal(a, 0f, epsilonF) shouldBe true
+                a shouldEqual 0f
                 val b = glm.roundEven(0.5f)
-                glm.equal(b, 0f, epsilonF) shouldBe true
+                b shouldEqual 0f
                 val c = glm.roundEven(1f)
-                glm.equal(c, 1f, epsilonF) shouldBe true
+                c shouldEqual 1f
                 val d = glm.roundEven(0.1f)
-                glm.equal(d, 0f, epsilonF) shouldBe true
+                d shouldEqual 0f
                 val e = glm.roundEven(0.9f)
-                glm.equal(e, 1f, epsilonF) shouldBe true
+                e shouldEqual 1f
                 val f = glm.roundEven(1.5f)
-                glm.equal(f, 2f, epsilonF) shouldBe true
+                f shouldEqual 2f
                 val g = glm.roundEven(1.9f)
-                glm.equal(g, 2f, epsilonF) shouldBe true
+                g shouldEqual 2f
             }
 
             run {
                 val a = glm.roundEven(-0f)
-                glm.equal(a, 0f, epsilonF) shouldBe true
+                a shouldEqual  0f
                 val b = glm.roundEven(-0.5f)
-                glm.equal(b, -0f, epsilonF) shouldBe true
+                b shouldEqual  -0f
                 val c = glm.roundEven(-1f)
-                glm.equal(c, -1f, epsilonF) shouldBe true
+                c shouldEqual  -1f
                 val d = glm.roundEven(-0.1f)
-                glm.equal(d, 0f, epsilonF) shouldBe true
+                d shouldEqual  0f
                 val e = glm.roundEven(-0.9f)
-                glm.equal(e, -1f, epsilonF) shouldBe true
+                e shouldEqual  -1f
                 val f = glm.roundEven(-1.5f)
-                glm.equal(f, -2f, epsilonF) shouldBe true
+                f shouldEqual  -2f
                 val g = glm.roundEven(-1.9f)
-                glm.equal(g, -2f, epsilonF) shouldBe true
+                g shouldEqual  -2f
             }
 
             run {
                 val a = glm.roundEven(1.5f)
-                glm.equal(a, 2f, epsilonF) shouldBe true
+                a shouldEqual  2f
                 val b = glm.roundEven(2.5f)
-                glm.equal(b, 2f, epsilonF) shouldBe true
+                b shouldEqual  2f
                 val c = glm.roundEven(3.5f)
-                glm.equal(c, 4f, epsilonF) shouldBe true
+                c shouldEqual  4f
                 val d = glm.roundEven(4.5f)
-                glm.equal(d, 4f, epsilonF) shouldBe true
+                d shouldEqual  4f
                 val e = glm.roundEven(5.5f)
-                glm.equal(e, 6f, epsilonF) shouldBe true
+                e shouldEqual  6f
                 val f = glm.roundEven(6.5f)
-                glm.equal(f, 6f, epsilonF) shouldBe true
+                f shouldEqual  6f
                 val g = glm.roundEven(7.5f)
-                glm.equal(g, 8f, epsilonF) shouldBe true
+                g shouldEqual  8f
             }
 
             run {
                 val a = glm.roundEven(-1.5f)
-                glm.equal(a, -2f, epsilonF) shouldBe true
+                a shouldEqual  -2f
                 val b = glm.roundEven(-2.5f)
-                glm.equal(b, -2f, epsilonF) shouldBe true
+                b shouldEqual  -2f
                 val c = glm.roundEven(-3.5f)
-                glm.equal(c, -4f, epsilonF) shouldBe true
+                c shouldEqual  -4f
                 val d = glm.roundEven(-4.5f)
-                glm.equal(d, -4f, epsilonF) shouldBe true
+                d shouldEqual  -4f
                 val e = glm.roundEven(-5.5f)
-                glm.equal(e, -6f, epsilonF) shouldBe true
+                e shouldEqual  -6f
                 val f = glm.roundEven(-6.5f)
-                glm.equal(f, -6f, epsilonF) shouldBe true
+                f shouldEqual  -6f
                 val g = glm.roundEven(-7.5f)
-                glm.equal(g, -8f, epsilonF) shouldBe true
+                g shouldEqual  -8f
             }
         }
 
@@ -712,7 +711,7 @@ class testCoreFunCommon : StringSpec() {
                 val exp = Vec2i()
                 val a = glm.frexp(x, exp)
                 a shouldEqual Vec2(1, 0.96)
-                glm.all(glm.equal(exp, Vec2i(10, -2))) shouldBe true
+                exp shouldBe Vec2i(10, -2)
             }
 
             run {
@@ -720,7 +719,7 @@ class testCoreFunCommon : StringSpec() {
                 val exp = Vec3i()
                 val a = glm.frexp(x, exp)
                 a shouldEqual Vec3(1, 0.96, 0.0)
-                glm.all(glm.equal(exp, Vec3i(10, -2, 0))) shouldBe true
+                exp shouldBe Vec3i(10, -2, 0)
             }
 
             run {
@@ -728,7 +727,7 @@ class testCoreFunCommon : StringSpec() {
                 val exp = Vec4i()
                 val a = glm.frexp(x, exp)
                 a shouldEqual Vec4(1, 0.96, 0.0, -0.665)
-                glm.all(glm.equal(exp, Vec4i(10, -2, 0, 1))) shouldBe true
+                exp shouldBe Vec4i(10, -2, 0, 1)
             }
         }
 
@@ -738,28 +737,28 @@ class testCoreFunCommon : StringSpec() {
                 val a = Vec1(1)
                 val exp = Vec1i(10)
                 val x = glm.ldexp(a, exp)
-                glm.all(glm.equal(x, Vec1(1024), 0.00001f)) shouldBe true
+                x.shouldEqual(Vec1(1024), 0.00001f)
             }
 
             run {
                 val a = Vec2(1, 0.96)
                 val exp = Vec2i(10, -2)
                 val x = glm.ldexp(a, exp)
-                glm.all(glm.equal(x, Vec2(1024, .24), 0.00001f)) shouldBe true
+                x.shouldEqual(Vec2(1024, .24), 0.00001f)
             }
 
             run {
                 val a = Vec3(1, 0.96, 0.0)
                 val exp = Vec3i(10, -2, 0)
                 val x = glm.ldexp(a, exp)
-                glm.all(glm.equal(x, Vec3(1024, .24, 0), 0.00001f)) shouldBe true
+                x.shouldEqual(Vec3(1024, .24, 0), 0.00001f)
             }
 
             run {
                 val a = Vec4(1, 0.96, 0.0, -0.665)
                 val exp = Vec4i(10, -2, 0, 1)
                 val x = glm.ldexp(a, exp)
-                glm.all(glm.equal(x, Vec4(1024, .24, 0, -1.33), 0.00001f)) shouldBe true
+                x.shouldEqual(Vec4(1024, .24, 0, -1.33), 0.00001f)
             }
         }
     }

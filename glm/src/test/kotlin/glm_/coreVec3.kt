@@ -146,7 +146,7 @@ class coreVec3 : StringSpec() {
                 val r = a != b
                 val s = a == b
 
-                assert(s && !r)
+                (s && !r) shouldBe true
             }
 
             run {
@@ -289,25 +289,25 @@ class coreVec3 : StringSpec() {
                 //u = v.rgb;    //Illegal
                 //u = v.stp;    //Illegal
 
-                u = v.xx; assert(u.x == 1 && u.y == 1)
-                u = v.xy; assert(u.x == 1 && u.y == 2)
-                u = v.xz; assert(u.x == 1 && u.y == 3)
-                u = v.yx; assert(u.x == 2 && u.y == 1)
-                u = v.yy; assert(u.x == 2 && u.y == 2)
-                u = v.yz; assert(u.x == 2 && u.y == 3)
-                u = v.zx; assert(u.x == 3 && u.y == 1)
-                u = v.zy; assert(u.x == 3 && u.y == 2)
-                u = v.zz; assert(u.x == 3 && u.y == 3)
+                u = v.xx; (u.x == 1 && u.y == 1) shouldBe true
+                u = v.xy; (u.x == 1 && u.y == 2) shouldBe true
+                u = v.xz; (u.x == 1 && u.y == 3) shouldBe true
+                u = v.yx; (u.x == 2 && u.y == 1) shouldBe true
+                u = v.yy; (u.x == 2 && u.y == 2) shouldBe true
+                u = v.yz; (u.x == 2 && u.y == 3) shouldBe true
+                u = v.zx; (u.x == 3 && u.y == 1) shouldBe true
+                u = v.zy; (u.x == 3 && u.y == 2) shouldBe true
+                u = v.zz; (u.x == 3 && u.y == 3) shouldBe true
 
-                u = v.rr; assert(u.r == 1 && u.g == 1)
-                u = v.rg; assert(u.r == 1 && u.g == 2)
-                u = v.rb; assert(u.r == 1 && u.g == 3)
-                u = v.gr; assert(u.r == 2 && u.g == 1)
-                u = v.gg; assert(u.r == 2 && u.g == 2)
-                u = v.gb; assert(u.r == 2 && u.g == 3)
-                u = v.br; assert(u.r == 3 && u.g == 1)
-                u = v.bg; assert(u.r == 3 && u.g == 2)
-                u = v.bb; assert(u.r == 3 && u.g == 3)
+                u = v.rr; (u.r == 1 && u.g == 1) shouldBe true
+                u = v.rg; (u.r == 1 && u.g == 2) shouldBe true
+                u = v.rb; (u.r == 1 && u.g == 3) shouldBe true
+                u = v.gr; (u.r == 2 && u.g == 1) shouldBe true
+                u = v.gg; (u.r == 2 && u.g == 2) shouldBe true
+                u = v.gb; (u.r == 2 && u.g == 3) shouldBe true
+                u = v.br; (u.r == 3 && u.g == 1) shouldBe true
+                u = v.bg; (u.r == 3 && u.g == 2) shouldBe true
+                u = v.bb; (u.r == 3 && u.g == 3) shouldBe true
 // TODO
 //                u = v.ss;       assert(u.s == 1 && u.t == 1)
 //                u = v.st;       assert(u.s == 1 && u.t == 2)

@@ -30,9 +30,10 @@ interface gtxVectorAngle {
 
         val angle = acos(glm.clamp(x dot y, -1f, 1f))
 
-        return if (glm.all(glm.equal(y, x rotate angle, 0.0001f)))
-            angle
-        else -angle
+        return when {
+            y.allEqual(x rotate angle, 0.0001f) -> angle
+            else -> -angle
+        }
     }
 
     /** Returns the oriented angle between two 3d vectors based from a reference axis.

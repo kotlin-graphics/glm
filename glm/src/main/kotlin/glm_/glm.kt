@@ -133,7 +133,9 @@ object glm :
     val εf = epsilonF
 
     @JvmField
-    val Ef = 2.71828182845904523536f
+    val Ef = Math.E.f
+    @JvmField
+    val E = Math.E
 }
 
 object Detail :

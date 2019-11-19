@@ -38,15 +38,13 @@ class testCoreMat2 : StringSpec() {
                 val inverse = matrix.inverse()
                 val identity = matrix * inverse
 
-                glm.all(glm.equal(identity[0], Vec2(1.0f, 0.0f), Vec2(0.01f))) shouldBe true
-                glm.all(glm.equal(identity[1], Vec2(0.0f, 1.0f), Vec2(0.01f))) shouldBe true
+                identity.shouldEqual(Mat2(1f), 0.01f)
             }
             run {
                 val matrix = Mat2(1, 2, 3, 4)
                 val identity = matrix / matrix
 
-                glm.all(glm.equal(identity[0], Vec2(1.0f, 0.0f), Vec2(0.01f))) shouldBe true
-                glm.all(glm.equal(identity[1], Vec2(0.0f, 1.0f), Vec2(0.01f))) shouldBe true
+                identity.shouldEqual(Mat2(1f), 0.01f)
             }
         }
 
