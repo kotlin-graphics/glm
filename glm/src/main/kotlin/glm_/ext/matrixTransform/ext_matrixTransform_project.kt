@@ -1,4 +1,4 @@
-package glm_.gtc.matrixTransform
+package glm_.ext.matrixTransform
 
 import glm_.detail.GLM_DEPTH_CLIP_SPACE
 import glm_.detail.GlmDepthClipSpace
@@ -8,7 +8,7 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4i
 
-interface gtcMatrixProject {
+interface ext_matrixTransform_project {
 
     /** Map the specified object coordinates (obj.x, obj.y, obj.z) into window coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -23,7 +23,7 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluProject.xml">gluProject man page</a>
      */
-    fun projectZo(res: Vec3, obj: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 {
+    fun projectZo(obj: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i, res: Vec3): Vec3 {
         // tmp = model * Vec4(obj, 1)
         val tmpX = model[0, 0] * obj.x + model[1, 0] * obj.y + model[2, 0] * obj.z + model[3, 0]
         val tmpY = model[0, 1] * obj.x + model[1, 1] * obj.y + model[2, 1] * obj.z + model[3, 1]
@@ -57,7 +57,8 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluProject.xml">gluProject man page</a>
      */
-    fun projectZo(obj: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 = projectZo(Vec3(), obj, model, proj, viewport)
+    fun projectZo(obj: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 =
+            projectZo(obj, model, proj, viewport, Vec3())
 
     /** Map the specified object coordinates (obj.x, obj.y, obj.z) into window coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -72,7 +73,7 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluProject.xml">gluProject man page</a>
      */
-    fun projectNo(res: Vec3, obj: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 {
+    fun projectNo(obj: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i, res: Vec3): Vec3 {
         // tmp = model * Vec4(obj, 1)
         val tmpX = model[0, 0] * obj.x + model[1, 0] * obj.y + model[2, 0] * obj.z + model[3, 0]
         val tmpY = model[0, 1] * obj.x + model[1, 1] * obj.y + model[2, 1] * obj.z + model[3, 1]
@@ -107,7 +108,8 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluProject.xml">gluProject man page</a>
      */
-    fun projectNo(obj: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 = projectNo(Vec3(), obj, model, proj, viewport)
+    fun projectNo(obj: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 =
+            projectNo(obj, model, proj, viewport, Vec3())
 
     /** Map the specified object coordinates (obj.x, obj.y, obj.z) into window coordinates using default near and far clip planes definition.
      *  To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -122,10 +124,11 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluProject.xml">gluProject man page</a>
      */
-    fun project(res: Vec3, obj: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> projectZo(res, obj, model, proj, viewport)
-        else -> projectNo(res, obj, model, proj, viewport)
-    }
+    fun project(obj: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i, res: Vec3): Vec3 =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> projectZo(obj, model, proj, viewport, res)
+                else -> projectNo(obj, model, proj, viewport, res)
+            }
 
     /** Map the specified object coordinates (obj.x, obj.y, obj.z) into window coordinates using default near and far clip planes definition.
      *  To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -139,10 +142,11 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluProject.xml">gluProject man page</a>
      */
-    fun project(obj: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> projectZo(Vec3(), obj, model, proj, viewport)
-        else -> projectNo(Vec3(), obj, model, proj, viewport)
-    }
+    fun project(obj: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> projectZo(obj, model, proj, viewport, Vec3())
+                else -> projectNo(obj, model, proj, viewport, Vec3())
+            }
 
     /** Map the specified window coordinates (win.x, win.y, win.z) into object coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -157,7 +161,7 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluUnProject.xml">gluUnProject man page</a>
      */
-    fun unProjectZo(res: Vec3, win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 {
+    fun unProjectZo(win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i, res: Vec3): Vec3 {
 
         // proj * model
         val a0 = proj.array[0] * model.array[0] + proj.array[4] * model.array[1] + proj.array[8] * model.array[2] + proj.array[12] * model.array[3]
@@ -274,7 +278,8 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluUnProject.xml">gluUnProject man page</a>
      */
-    fun unProjectZo(win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 = unProjectZo(Vec3(), win, model, proj, viewport)
+    fun unProjectZo(win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 =
+            unProjectZo(win, model, proj, viewport, Vec3())
 
     /** Map the specified window coordinates (win.x, win.y, win.z) into object coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -289,7 +294,7 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluUnProject.xml">gluUnProject man page</a>
      */
-    fun unProjectNo(res: Vec3, win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 {
+    fun unProjectNo(win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i, res: Vec3): Vec3 {
 
         // proj * model
         val a0 = proj.array[0] * model.array[0] + proj.array[4] * model.array[1] + proj.array[8] * model.array[2] + proj.array[12] * model.array[3]
@@ -407,7 +412,8 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluUnProject.xml">gluUnProject man page</a>
      */
-    fun unProjectNo(win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 = unProjectNo(Vec3(), win, model, proj, viewport)
+    fun unProjectNo(win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 =
+            unProjectNo(win, model, proj, viewport, Vec3())
 
     /** Map the specified window coordinates (win.x, win.y, win.z) into object coordinates using default near and far clip planes definition.
      *  To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -421,10 +427,11 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluUnProject.xml">gluUnProject man page</a>
      */
-    fun unProject(res: Vec3, win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> unProjectZo(res, win, model, proj, viewport)
-        else -> unProjectNo(res, win, model, proj, viewport)
-    }
+    fun unProject(win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i, res: Vec3): Vec3 =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> unProjectZo(win, model, proj, viewport, res)
+                else -> unProjectNo(win, model, proj, viewport, res)
+            }
 
     /** Map the specified window coordinates (win.x, win.y, win.z) into object coordinates using default near and far clip planes definition.
      *  To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -438,10 +445,11 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluUnProject.xml">gluUnProject man page</a>
      */
-    fun unProject(win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> unProjectZo(Vec3(), win, model, proj, viewport)
-        else -> unProjectNo(Vec3(), win, model, proj, viewport)
-    }
+    fun unProject(win: Vec3, model: Mat4, proj: Mat4, viewport: Vec4i): Vec3 =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> unProjectZo(win, model, proj, viewport, Vec3())
+                else -> unProjectNo(win, model, proj, viewport, Vec3())
+            }
 
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -462,7 +470,7 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluProject.xml">gluProject man page</a>
      */
-    fun projectZo(res: Vec3d, obj: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d {
+    fun projectZo(obj: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i, res: Vec3d): Vec3d {
         // tmp = model * Vec4d(obj, 1)
         val tmpX = model[0, 0] * obj.x + model[1, 0] * obj.y + model[2, 0] * obj.z + model[3, 0]
         val tmpY = model[0, 1] * obj.x + model[1, 1] * obj.y + model[2, 1] * obj.z + model[3, 1]
@@ -496,7 +504,8 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluProject.xml">gluProject man page</a>
      */
-    fun projectZo(obj: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d = projectZo(Vec3d(), obj, model, proj, viewport)
+    fun projectZo(obj: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d =
+            projectZo(obj, model, proj, viewport, Vec3d())
 
     /** Map the specified object coordinates (obj.x, obj.y, obj.z) into window coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -511,7 +520,7 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluProject.xml">gluProject man page</a>
      */
-    fun projectNo(res: Vec3d, obj: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d {
+    fun projectNo(obj: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i, res: Vec3d): Vec3d {
         // tmp = model * Vec4d(obj, 1)
         val tmpX = model[0, 0] * obj.x + model[1, 0] * obj.y + model[2, 0] * obj.z + model[3, 0]
         val tmpY = model[0, 1] * obj.x + model[1, 1] * obj.y + model[2, 1] * obj.z + model[3, 1]
@@ -546,7 +555,8 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluProject.xml">gluProject man page</a>
      */
-    fun projectNo(obj: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d = projectNo(Vec3d(), obj, model, proj, viewport)
+    fun projectNo(obj: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d =
+            projectNo(obj, model, proj, viewport, Vec3d())
 
     /** Map the specified object coordinates (obj.x, obj.y, obj.z) into window coordinates using default near and far clip planes definition.
      *  To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -561,10 +571,11 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluProject.xml">gluProject man page</a>
      */
-    fun project(res: Vec3d, obj: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> projectZo(res, obj, model, proj, viewport)
-        else -> projectNo(res, obj, model, proj, viewport)
-    }
+    fun project(obj: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i, res: Vec3d): Vec3d =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> projectZo(obj, model, proj, viewport, res)
+                else -> projectNo(obj, model, proj, viewport, res)
+            }
 
     /** Map the specified object coordinates (obj.x, obj.y, obj.z) into window coordinates using default near and far clip planes definition.
      *  To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -578,10 +589,11 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluProject.xml">gluProject man page</a>
      */
-    fun project(obj: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> projectZo(Vec3d(), obj, model, proj, viewport)
-        else -> projectNo(Vec3d(), obj, model, proj, viewport)
-    }
+    fun project(obj: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> projectZo(obj, model, proj, viewport, Vec3d())
+                else -> projectNo(obj, model, proj, viewport, Vec3d())
+            }
 
     /** Map the specified window coordinates (win.x, win.y, win.z) into object coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -596,7 +608,7 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluUnProject.xml">gluUnProject man page</a>
      */
-    fun unProjectZo(res: Vec3d, win: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d {
+    fun unProjectZo(win: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i, res: Vec3d): Vec3d {
 
         // proj * model
         val a0 = proj.array[0] * model.array[0] + proj.array[4] * model.array[1] + proj.array[8] * model.array[2] + proj.array[12] * model.array[3]
@@ -713,7 +725,8 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluUnProject.xml">gluUnProject man page</a>
      */
-    fun unProjectZo(win: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d = unProjectZo(Vec3d(), win, model, proj, viewport)
+    fun unProjectZo(win: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d =
+            unProjectZo(win, model, proj, viewport, Vec3d())
 
     /** Map the specified window coordinates (win.x, win.y, win.z) into object coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -728,7 +741,7 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluUnProject.xml">gluUnProject man page</a>
      */
-    fun unProjectNo(res: Vec3d, win: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d {
+    fun unProjectNo(win: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i, res: Vec3d): Vec3d {
 
         // proj * model
         val a0 = proj.array[0] * model.array[0] + proj.array[4] * model.array[1] + proj.array[8] * model.array[2] + proj.array[12] * model.array[3]
@@ -846,7 +859,8 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluUnProject.xml">gluUnProject man page</a>
      */
-    fun unProjectNo(win: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d = unProjectNo(Vec3d(), win, model, proj, viewport)
+    fun unProjectNo(win: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d =
+            unProjectNo(win, model, proj, viewport, Vec3d())
 
     /** Map the specified window coordinates (win.x, win.y, win.z) into object coordinates using default near and far clip planes definition.
      *  To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -860,10 +874,11 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluUnProject.xml">gluUnProject man page</a>
      */
-    fun unProject(res: Vec3d, win: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> unProjectZo(res, win, model, proj, viewport)
-        else -> unProjectNo(res, win, model, proj, viewport)
-    }
+    fun unProject(win: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i, res: Vec3d): Vec3d =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> unProjectZo(win, model, proj, viewport, res)
+                else -> unProjectNo(win, model, proj, viewport, res)
+            }
 
     /** Map the specified window coordinates (win.x, win.y, win.z) into object coordinates using default near and far clip planes definition.
      *  To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -877,8 +892,9 @@ interface gtcMatrixProject {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluUnProject.xml">gluUnProject man page</a>
      */
-    fun unProject(win: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> unProjectZo(Vec3d(), win, model, proj, viewport)
-        else -> unProjectNo(Vec3d(), win, model, proj, viewport)
-    }
+    fun unProject(win: Vec3d, model: Mat4d, proj: Mat4d, viewport: Vec4i): Vec3d =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> unProjectZo(win, model, proj, viewport, Vec3d())
+                else -> unProjectNo(win, model, proj, viewport, Vec3d())
+            }
 }

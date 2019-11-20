@@ -1,4 +1,4 @@
-package glm_.gtc.matrixTransform
+package glm_.ext.matrixTransform
 
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
@@ -6,7 +6,7 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 
 
-interface gtcMatrixTranslate {
+interface ext_matrixTransform_translate {
 
     /** Builds a translation 4 * 4 matrix created from a vector of 3 components.
      *
@@ -30,8 +30,8 @@ interface gtcMatrixTranslate {
      *  @see - translate(v: Vec3)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml">glTranslate man page</a>
      */
-    fun translate(res: Mat4, m: Mat4, vX: Float, vY: Float, vZ: Float): Mat4 {
-        res put m
+    fun translate(m: Mat4, vX: Float, vY: Float, vZ: Float, res: Mat4): Mat4 {
+        if (res !== m) res put m
         val x = m[0, 0] * vX + m[1, 0] * vY + m[2, 0] * vZ + m[3, 0]
         val y = m[0, 1] * vX + m[1, 1] * vY + m[2, 1] * vZ + m[3, 1]
         val z = m[0, 2] * vX + m[1, 2] * vY + m[2, 2] * vZ + m[3, 2]
@@ -63,7 +63,8 @@ interface gtcMatrixTranslate {
      *  @see - translate(v: Vec3)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml">glTranslate man page</a>
      */
-    fun translate(res: Mat4, m: Mat4, v: Vec3): Mat4 = translate(res, m, v.x, v.y, v.z)
+    fun translate(m: Mat4, v: Vec3, res: Mat4): Mat4 =
+            translate(m, v.x, v.y, v.z, res)
 
     /** Builds a translation 4 * 4 matrix created from a vector of 3 components.
      *
@@ -86,7 +87,8 @@ interface gtcMatrixTranslate {
      *  @see - translate(v: Vec3)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml">glTranslate man page</a>
      */
-    fun translate(m: Mat4, vX: Float, vY: Float, vZ: Float): Mat4 = translate(Mat4(), m, vX, vY, vZ)
+    fun translate(m: Mat4, vX: Float, vY: Float, vZ: Float): Mat4 =
+            translate(m, vX, vY, vZ, Mat4())
 
     /** Builds a translation 4 * 4 matrix created from a vector of 3 components.
      *
@@ -107,7 +109,8 @@ interface gtcMatrixTranslate {
      *  @see - translate(v: Vec3)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml">glTranslate man page</a>
      */
-    fun translate(m: Mat4, v: Vec3): Mat4 = translate(Mat4(), m, v.x, v.y, v.z)
+    fun translate(m: Mat4, v: Vec3): Mat4 =
+            translate(m, v.x, v.y, v.z, Mat4())
 
     /** Builds a translation 4 * 4 matrix created from a vector of 3 components.
      *
@@ -131,8 +134,8 @@ interface gtcMatrixTranslate {
      *  @see - translate(v: Vec3)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml">glTranslate man page</a>
      */
-    fun translate(res: Mat4d, m: Mat4d, vX: Double, vY: Double, vZ: Double): Mat4d {
-        res put m
+    fun translate(m: Mat4d, vX: Double, vY: Double, vZ: Double, res: Mat4d): Mat4d {
+        if(res !== m) res put m
         val x = m[0].x * vX + m[1].x * vY + m[2].x * vZ + m[3].x
         val y = m[0].y * vX + m[1].y * vY + m[2].y * vZ + m[3].y
         val z = m[0].z * vX + m[1].z * vY + m[2].z * vZ + m[3].z
@@ -164,7 +167,8 @@ interface gtcMatrixTranslate {
      *  @see - translate(v: Vec3)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml">glTranslate man page</a>
      */
-    fun translate(res: Mat4d, m: Mat4d, v: Vec3d): Mat4d = translate(res, m, v.x, v.y, v.z)
+    fun translate(m: Mat4d, v: Vec3d, res: Mat4d): Mat4d =
+            translate(m, v.x, v.y, v.z, res)
 
     /** Builds a translation 4 * 4 matrix created from a vector of 3 components.
      *
@@ -187,7 +191,8 @@ interface gtcMatrixTranslate {
      *  @see - translate(v: Vec3)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml">glTranslate man page</a>
      */
-    fun translate(m: Mat4d, vX: Double, vY: Double, vZ: Double): Mat4d = translate(Mat4d(), m, vX, vY, vZ)
+    fun translate(m: Mat4d, vX: Double, vY: Double, vZ: Double): Mat4d =
+            translate(m, vX, vY, vZ, Mat4d())
 
     /** Builds a translation 4 * 4 matrix created from a vector of 3 components.
      *
@@ -208,5 +213,6 @@ interface gtcMatrixTranslate {
      *  @see - translate(v: Vec3)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml">glTranslate man page</a>
      */
-    fun translate(m: Mat4d, v: Vec3d): Mat4d = translate(Mat4d(), m, v.x, v.y, v.z)
+    fun translate(m: Mat4d, v: Vec3d): Mat4d =
+            translate(m, v.x, v.y, v.z, Mat4d())
 }

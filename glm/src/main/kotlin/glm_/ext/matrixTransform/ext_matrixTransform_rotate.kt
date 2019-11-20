@@ -1,4 +1,4 @@
-package glm_.gtc.matrixTransform
+package glm_.ext.matrixTransform
 
 import glm_.glm
 import glm_.mat3x3.Mat3
@@ -10,7 +10,7 @@ import glm_.vec3.Vec3d
 import kotlin.math.cos
 import kotlin.math.sin
 
-interface gtcMatrixRotate {
+interface ext_matrixTransform_rotate {
 
     /** Builds a rotation 4 * 4 matrix created from an axis vector and an angle.
      *
@@ -26,7 +26,7 @@ interface gtcMatrixRotate {
      *  @see - rotate(T angle, vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glRotate.xml">glRotate man page</a>
      */
-    fun rotate(res: Mat4, m: Mat4, angle: Float, axisX: Float, axisY: Float, axisZ: Float): Mat4 {
+    fun rotate(m: Mat4, angle: Float, axisX: Float, axisY: Float, axisZ: Float, res: Mat4): Mat4 {
 
         val c = glm.cos(angle)
         val s = glm.sin(angle)
@@ -104,7 +104,8 @@ interface gtcMatrixRotate {
      *  @see - rotate(T angle, vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glRotate.xml">glRotate man page</a>
      */
-    fun rotate(res: Mat4, m: Mat4, angle: Float, axis: Vec3): Mat4 = rotate(res, m, angle, axis.x, axis.y, axis.z)
+    fun rotate(m: Mat4, angle: Float, axis: Vec3, res: Mat4): Mat4 =
+            rotate(m, angle, axis.x, axis.y, axis.z, res)
 
     /** Builds a rotation 4 * 4 matrix created from an axis vector and an angle.
      *
@@ -119,7 +120,8 @@ interface gtcMatrixRotate {
      *  @see - rotate(T angle, vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glRotate.xml">glRotate man page</a>
      */
-    fun rotate(m: Mat4, angle: Float, axisX: Float, axisY: Float, axisZ: Float): Mat4 = rotate(Mat4(), m, angle, axisX, axisY, axisZ)
+    fun rotate(m: Mat4, angle: Float, axisX: Float, axisY: Float, axisZ: Float): Mat4 =
+            rotate(m, angle, axisX, axisY, axisZ, Mat4())
 
     /** Builds a rotation 4 * 4 matrix created from an axis vector and an angle.
      *
@@ -132,9 +134,10 @@ interface gtcMatrixRotate {
      *  @see - rotate(T angle, vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glRotate.xml">glRotate man page</a>
      */
-    fun rotate(m: Mat4, angle: Float, axis: Vec3): Mat4 = rotate(Mat4(), m, angle, axis.x, axis.y, axis.z)
+    fun rotate(m: Mat4, angle: Float, axis: Vec3): Mat4 =
+            rotate(m, angle, axis.x, axis.y, axis.z, Mat4())
 
-    fun rotateX(res: Mat3, mat: Mat3, angle: Float): Mat3 {
+    fun rotateX(mat: Mat3, angle: Float, res: Mat3): Mat3 {
         val sin: Float
         val cos: Float
         if (angle == glm.PIf || angle == -glm.PIf) {
@@ -174,9 +177,10 @@ interface gtcMatrixRotate {
         return res
     }
 
-    fun rotateX(mat: Mat3, angle: Float): Mat3 = rotateX(Mat3(), mat, angle)
+    fun rotateX(mat: Mat3, angle: Float): Mat3 =
+            rotateX(mat, angle, Mat3())
 
-    fun rotateY(res: Mat3, mat: Mat3, angle: Float): Mat3 {
+    fun rotateY(mat: Mat3, angle: Float, res: Mat3): Mat3 {
         val sin: Float
         val cos: Float
         if (angle == glm.PIf || angle == -glm.PIf) {
@@ -216,9 +220,10 @@ interface gtcMatrixRotate {
         return res
     }
 
-    fun rotateY(mat: Mat3, angle: Float): Mat3 = rotateY(Mat3(), mat, angle)
+    fun rotateY(mat: Mat3, angle: Float): Mat3 =
+            rotateY(mat, angle, Mat3())
 
-    fun rotateZ(res: Mat3, mat: Mat3, angle: Float): Mat3 {
+    fun rotateZ(mat: Mat3, angle: Float, res: Mat3): Mat3 {
         val sin: Float
         val cos: Float
         if (angle == glm.PIf || angle == -glm.PIf) {
@@ -258,9 +263,10 @@ interface gtcMatrixRotate {
         return res
     }
 
-    fun rotateZ(mat: Mat3, angle: Float): Mat3 = rotateZ(Mat3(), mat, angle)
+    fun rotateZ(mat: Mat3, angle: Float): Mat3 =
+            rotateZ(mat, angle, Mat3())
 
-    fun rotateXYZ(res: Mat3, mat: Mat3, angleX: Float, angleY: Float, angleZ: Float): Mat3 {
+    fun rotateXYZ(mat: Mat3, angleX: Float, angleY: Float, angleZ: Float, res: Mat3): Mat3 {
         val sinX = sin(angleX)
         val cosX = cos(angleX)
         val sinY = sin(angleY)
@@ -295,9 +301,10 @@ interface gtcMatrixRotate {
         return res
     }
 
-    fun rotateXYZ(mat: Mat3, angleX: Float, angleY: Float, angleZ: Float): Mat3 = rotateXYZ(Mat3(), mat, angleX, angleY, angleZ)
+    fun rotateXYZ(mat: Mat3, angleX: Float, angleY: Float, angleZ: Float): Mat3 =
+            rotateXYZ(mat, angleX, angleY, angleZ, Mat3())
 
-    fun rotateX(res: Mat4, mat: Mat4, angle: Float): Mat4 {
+    fun rotateX(mat: Mat4, angle: Float, res: Mat4): Mat4 {
         val sin: Float
         val cos: Float
         if (angle == glm.PIf || angle == -glm.PIf) {
@@ -344,9 +351,10 @@ interface gtcMatrixRotate {
         return res
     }
 
-    fun rotateX(mat: Mat4, angle: Float): Mat4 = rotateX(Mat4(), mat, angle)
+    fun rotateX(mat: Mat4, angle: Float): Mat4 =
+            rotateX(mat, angle, Mat4())
 
-    fun rotateY(res: Mat4, mat: Mat4, angle: Float): Mat4 {
+    fun rotateY(mat: Mat4, angle: Float, res: Mat4): Mat4 {
         val sin: Float
         val cos: Float
         if (angle == glm.PIf || angle == -glm.PIf) {
@@ -393,9 +401,10 @@ interface gtcMatrixRotate {
         return res
     }
 
-    fun rotateY(mat: Mat4, angle: Float): Mat4 = rotateY(Mat4(), mat, angle)
+    fun rotateY(mat: Mat4, angle: Float): Mat4 =
+            rotateY(mat, angle, Mat4())
 
-    fun rotateZ(res: Mat4, mat: Mat4, angle: Float): Mat4 {
+    fun rotateZ(mat: Mat4, angle: Float, res: Mat4): Mat4 {
         val sin: Float
         val cos: Float
         if (angle == glm.PIf || angle == -glm.PIf) {
@@ -441,9 +450,10 @@ interface gtcMatrixRotate {
         return res
     }
 
-    fun rotateZ(mat: Mat4, angle: Float): Mat4 = rotateZ(Mat4(), mat, angle)
+    fun rotateZ(mat: Mat4, angle: Float): Mat4 =
+            rotateZ(mat, angle, Mat4())
 
-    fun rotateXYZ(res: Mat4, mat: Mat4, angleX: Float, angleY: Float, angleZ: Float): Mat4 {
+    fun rotateXYZ(mat: Mat4, angleX: Float, angleY: Float, angleZ: Float, res: Mat4): Mat4 {
         val sinX = sin(angleX)
         val cosX = cos(angleX)
         val sinY = sin(angleY)
@@ -489,7 +499,8 @@ interface gtcMatrixRotate {
         return res
     }
 
-    fun rotateXYZ(mat: Mat4, angleX: Float, angleY: Float, angleZ: Float): Mat4 = rotateXYZ(Mat4(), mat, angleX, angleY, angleZ)
+    fun rotateXYZ(mat: Mat4, angleX: Float, angleY: Float, angleZ: Float): Mat4 =
+            rotateXYZ(mat, angleX, angleY, angleZ, Mat4())
 
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -511,7 +522,7 @@ interface gtcMatrixRotate {
      *  @see - rotate(T angle, vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glRotate.xml">glRotate man page</a>
      */
-    fun rotate(res: Mat4d, m: Mat4d, angle: Double, axisX: Double, axisY: Double, axisZ: Double): Mat4d {
+    fun rotate(m: Mat4d, angle: Double, axisX: Double, axisY: Double, axisZ: Double, res: Mat4d): Mat4d {
 
         val c = glm.cos(angle)
         val s = glm.sin(angle)
@@ -589,7 +600,8 @@ interface gtcMatrixRotate {
      *  @see - rotate(T angle, vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glRotate.xml">glRotate man page</a>
      */
-    fun rotate(res: Mat4d, m: Mat4d, angle: Double, axis: Vec3d): Mat4d = rotate(res, m, angle, axis.x, axis.y, axis.z)
+    fun rotate(m: Mat4d, angle: Double, axis: Vec3d, res: Mat4d): Mat4d =
+            rotate(m, angle, axis.x, axis.y, axis.z, res)
 
     /** Builds a rotation 4 * 4 matrix created from an axis vector and an angle.
      *
@@ -604,7 +616,8 @@ interface gtcMatrixRotate {
      *  @see - rotate(T angle, vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glRotate.xml">glRotate man page</a>
      */
-    fun rotate(m: Mat4d, angle: Double, axisX: Double, axisY: Double, axisZ: Double): Mat4d = rotate(Mat4d(), m, angle, axisX, axisY, axisZ)
+    fun rotate(m: Mat4d, angle: Double, axisX: Double, axisY: Double, axisZ: Double): Mat4d =
+            rotate(m, angle, axisX, axisY, axisZ, Mat4d())
 
     /** Builds a rotation 4 * 4 matrix created from an axis vector and an angle.
      *
@@ -617,9 +630,10 @@ interface gtcMatrixRotate {
      *  @see - rotate(T angle, vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glRotate.xml">glRotate man page</a>
      */
-    fun rotate(m: Mat4d, angle: Double, axis: Vec3d): Mat4d = rotate(Mat4d(), m, angle, axis.x, axis.y, axis.z)
+    fun rotate(m: Mat4d, angle: Double, axis: Vec3d): Mat4d =
+            rotate(m, angle, axis.x, axis.y, axis.z, Mat4d())
 
-    fun rotateX(res: Mat3d, mat: Mat3d, angle: Double): Mat3d {
+    fun rotateX(mat: Mat3d, angle: Double, res: Mat3d): Mat3d {
         val sin: Double
         val cos: Double
         if (angle == glm.PI || angle == -glm.PI) {
@@ -659,9 +673,10 @@ interface gtcMatrixRotate {
         return res
     }
 
-    fun rotateX(mat: Mat3d, angle: Double): Mat3d = rotateX(Mat3d(), mat, angle)
+    fun rotateX(mat: Mat3d, angle: Double): Mat3d =
+            rotateX(mat, angle, Mat3d())
 
-    fun rotateY(res: Mat3d, mat: Mat3d, angle: Double): Mat3d {
+    fun rotateY(mat: Mat3d, angle: Double, res: Mat3d): Mat3d {
         val sin: Double
         val cos: Double
         if (angle == glm.PI || angle == -glm.PI) {
@@ -701,9 +716,10 @@ interface gtcMatrixRotate {
         return res
     }
 
-    fun rotateY(mat: Mat3d, angle: Double): Mat3d = rotateY(Mat3d(), mat, angle)
+    fun rotateY(mat: Mat3d, angle: Double): Mat3d =
+            rotateY(mat, angle, Mat3d())
 
-    fun rotateZ(res: Mat3d, mat: Mat3d, angle: Double): Mat3d {
+    fun rotateZ(mat: Mat3d, angle: Double, res: Mat3d): Mat3d {
         val sin: Double
         val cos: Double
         if (angle == glm.PI || angle == -glm.PI) {
@@ -743,9 +759,10 @@ interface gtcMatrixRotate {
         return res
     }
 
-    fun rotateZ(mat: Mat3d, angle: Double): Mat3d = rotateZ(Mat3d(), mat, angle)
+    fun rotateZ(mat: Mat3d, angle: Double): Mat3d =
+            rotateZ(mat, angle, Mat3d())
 
-    fun rotateXYZ(res: Mat3d, mat: Mat3d, angleX: Double, angleY: Double, angleZ: Double): Mat3d {
+    fun rotateXYZ(mat: Mat3d, angleX: Double, angleY: Double, angleZ: Double, res: Mat3d): Mat3d {
         val sinX = sin(angleX)
         val cosX = cos(angleX)
         val sinY = sin(angleY)
@@ -780,9 +797,10 @@ interface gtcMatrixRotate {
         return res
     }
 
-    fun rotateXYZ(mat: Mat3d, angleX: Double, angleY: Double, angleZ: Double): Mat3d = rotateXYZ(Mat3d(), mat, angleX, angleY, angleZ)
+    fun rotateXYZ(mat: Mat3d, angleX: Double, angleY: Double, angleZ: Double): Mat3d =
+            rotateXYZ(mat, angleX, angleY, angleZ, Mat3d())
 
-    fun rotateX(res: Mat4d, mat: Mat4d, angle: Double): Mat4d {
+    fun rotateX(mat: Mat4d, angle: Double, res: Mat4d): Mat4d {
         val sin = sin(angle)
         val cos = cos(sin)
         val rm11 = cos
@@ -816,9 +834,10 @@ interface gtcMatrixRotate {
         return res
     }
 
-    fun rotateX(mat: Mat4d, angle: Double): Mat4d = rotateX(Mat4d(), mat, angle)
+    fun rotateX(mat: Mat4d, angle: Double): Mat4d =
+            rotateX(mat, angle, Mat4d())
 
-    fun rotateY(res: Mat4d, mat: Mat4d, angle: Double): Mat4d {
+    fun rotateY(mat: Mat4d, angle: Double, res: Mat4d): Mat4d {
         val cos = cos(angle)
         val sin = sin(angle)
         val rm00 = cos
@@ -852,9 +871,10 @@ interface gtcMatrixRotate {
         return res
     }
 
-    fun rotateY(mat: Mat4d, angle: Double): Mat4d = rotateY(Mat4d(), mat, angle)
+    fun rotateY(mat: Mat4d, angle: Double): Mat4d =
+            rotateY(mat, angle, Mat4d())
 
-    fun rotateZ(res: Mat4d, mat: Mat4d, angle: Double): Mat4d {
+    fun rotateZ(mat: Mat4d, angle: Double, res: Mat4d): Mat4d {
         val sin = sin(angle)
         val cos = cos(angle)
         val rm00 = cos
@@ -887,9 +907,10 @@ interface gtcMatrixRotate {
         return res
     }
 
-    fun rotateZ(mat: Mat4d, angle: Double): Mat4d = rotateZ(Mat4d(), mat, angle)
+    fun rotateZ(mat: Mat4d, angle: Double): Mat4d =
+            rotateZ(mat, angle, Mat4d())
 
-    fun rotateXYZ(res: Mat4d, mat: Mat4d, angleX: Double, angleY: Double, angleZ: Double): Mat4d {
+    fun rotateXYZ(mat: Mat4d, angleX: Double, angleY: Double, angleZ: Double, res: Mat4d): Mat4d {
         val sinX = sin(angleX)
         val cosX = cos(angleX)
         val sinY = sin(angleY)
@@ -935,7 +956,8 @@ interface gtcMatrixRotate {
         return res
     }
 
-    fun rotateXYZ(mat: Mat4d, angleX: Double, angleY: Double, angleZ: Double): Mat4d = rotateXYZ(Mat4d(), mat, angleX, angleY, angleZ)
+    fun rotateXYZ(mat: Mat4d, angleX: Double, angleY: Double, angleZ: Double): Mat4d =
+            rotateXYZ(mat, angleX, angleY, angleZ, Mat4d())
 
 //    fun rotateXYZ(angleX: Float, angleY: Float, angleZ: Float, res: Mat3): Mat3 { TODO?
 //        val sinX = sin(angleX)

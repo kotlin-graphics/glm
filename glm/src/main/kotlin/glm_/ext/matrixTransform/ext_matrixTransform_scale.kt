@@ -1,4 +1,4 @@
-package glm_.gtc.matrixTransform
+package glm_.ext.matrixTransform
 
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
@@ -7,7 +7,7 @@ import glm_.mat3x3.Mat3d
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 
-interface gtcMatrixScale {
+interface ext_matrixTransform_scale {
 
     /** Builds a scale 4 * 4 matrix created from 3 scalars.
      *
@@ -22,7 +22,7 @@ interface gtcMatrixScale {
      *  @see - scale(vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
      */
-    fun scale(res: Mat4, m: Mat4, vX: Float, vY: Float, vZ: Float): Mat4 {
+    fun scale(m: Mat4, vX: Float, vY: Float, vZ: Float, res: Mat4): Mat4 {
 
         res[0, 0] = m[0, 0] * vX
         res[0, 1] = m[0, 1] * vX
@@ -58,7 +58,8 @@ interface gtcMatrixScale {
      *  @see - scale(vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
      */
-    fun scale(res: Mat4, m: Mat4, v: Vec3): Mat4 = scale(res, m, v.x, v.y, v.z)
+    fun scale(m: Mat4, v: Vec3, res: Mat4): Mat4 =
+            scale(m, v.x, v.y, v.z, res)
 
     /** Builds a scale 4 * 4 matrix created from 3 scalars.
      *
@@ -72,7 +73,8 @@ interface gtcMatrixScale {
      *  @see - scale(vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
      */
-    fun scale(m: Mat4, vX: Float, vY: Float, vZ: Float): Mat4 = scale(Mat4(), m, vX, vY, vZ)
+    fun scale(m: Mat4, vX: Float, vY: Float, vZ: Float): Mat4 =
+            scale(m, vX, vY, vZ, Mat4())
 
     /** Builds a scale 4 * 4 matrix created from 3 scalars.
      *
@@ -84,7 +86,8 @@ interface gtcMatrixScale {
      *  @see - scale(vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
      */
-    fun scale(m: Mat4, v: Vec3): Mat4 = scale(Mat4(), m, v.x, v.y, v.z)
+    fun scale(m: Mat4, v: Vec3): Mat4 =
+            scale(m, v.x, v.y, v.z, Mat4())
 
     /** Builds a scale 4 * 4 matrix created from 3 scalars.
      *
@@ -99,7 +102,7 @@ interface gtcMatrixScale {
      *  @see - scale(vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
      */
-    fun scale(res: Mat4d, m: Mat4d, vX: Double, vY: Double, vZ: Double): Mat4d {
+    fun scale(m: Mat4d, vX: Double, vY: Double, vZ: Double, res: Mat4d): Mat4d {
 
         res[0, 0] = m[0, 0] * vX
         res[0, 1] = m[0, 1] * vX
@@ -135,7 +138,8 @@ interface gtcMatrixScale {
      *  @see - scale(vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
      */
-    fun scale(res: Mat4d, m: Mat4d, v: Vec3d): Mat4d = scale(res, m, v.x, v.y, v.z)
+    fun scale(m: Mat4d, v: Vec3d, res: Mat4d): Mat4d =
+            scale(m, v.x, v.y, v.z, res)
 
     /** Builds a scale 4 * 4 matrix created from 3 scalars.
      *
@@ -149,7 +153,8 @@ interface gtcMatrixScale {
      *  @see - scale(vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
      */
-    fun scale(m: Mat4d, vX: Double, vY: Double, vZ: Double): Mat4d = scale(Mat4d(), m, vX, vY, vZ)
+    fun scale(m: Mat4d, vX: Double, vY: Double, vZ: Double): Mat4d =
+            scale(m, vX, vY, vZ, Mat4d())
 
     /** Builds a scale 4 * 4 matrix created from 3 scalars.
      *
@@ -161,7 +166,8 @@ interface gtcMatrixScale {
      *  @see - scale(vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
      */
-    fun scale(m: Mat4d, v: Vec3d): Mat4d = scale(Mat4d(), m, v.x, v.y, v.z)
+    fun scale(m: Mat4d, v: Vec3d): Mat4d =
+            scale(m, v.x, v.y, v.z, Mat4d())
 
     /** Builds a scale 3 * 3 matrix created from 3 scalars.
      *
@@ -176,7 +182,7 @@ interface gtcMatrixScale {
      *  @see - scale(vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
      */
-    fun scale(res: Mat3, m: Mat3, vX: Float, vY: Float, vZ: Float): Mat3 {
+    fun scale(m: Mat3, vX: Float, vY: Float, vZ: Float, res: Mat3): Mat3 {
 
         res[0, 0] = m[0, 0] * vX
         res[0, 1] = m[0, 1] * vX
@@ -204,7 +210,8 @@ interface gtcMatrixScale {
      *  @see - scale(vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
      */
-    fun scale(res: Mat3, m: Mat3, v: Vec3): Mat3 = scale(res, m, v.x, v.y, v.z)
+    fun scale(m: Mat3, v: Vec3, res: Mat3): Mat3 =
+            scale(m, v.x, v.y, v.z, res)
 
     /** Builds a scale 3 * 3 matrix created from 3 scalars.
      *
@@ -218,7 +225,8 @@ interface gtcMatrixScale {
      *  @see - scale(vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
      */
-    fun scale(m: Mat3, vX: Float, vY: Float, vZ: Float): Mat3 = scale(Mat3(), m, vX, vY, vZ)
+    fun scale(m: Mat3, vX: Float, vY: Float, vZ: Float): Mat3 =
+            scale(m, vX, vY, vZ, Mat3())
 
     /** Builds a scale 3 * 3 matrix created from 3 scalars.
      *
@@ -230,7 +238,8 @@ interface gtcMatrixScale {
      *  @see - scale(vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
      */
-    fun scale(m: Mat3, v: Vec3): Mat3 = scale(Mat3(), m, v.x, v.y, v.z)
+    fun scale(m: Mat3, v: Vec3): Mat3 =
+            scale(m, v.x, v.y, v.z, Mat3())
 
     /** Builds a scale 3 * 3 matrix created from 3 scalars.
      *
@@ -245,7 +254,7 @@ interface gtcMatrixScale {
      *  @see - scale(vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
      */
-    fun scale(res: Mat3d, m: Mat3d, vX: Double, vY: Double, vZ: Double): Mat3d {
+    fun scale(m: Mat3d, vX: Double, vY: Double, vZ: Double, res: Mat3d): Mat3d {
 
         res[0, 0] = m[0, 0] * vX
         res[0, 1] = m[0, 1] * vX
@@ -273,7 +282,8 @@ interface gtcMatrixScale {
      *  @see - scale(vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
      */
-    fun scale(res: Mat3d, m: Mat3d, v: Vec3d): Mat3d = scale(res, m, v.x, v.y, v.z)
+    fun scale(m: Mat3d, v: Vec3d, res: Mat3d): Mat3d =
+            scale(m, v.x, v.y, v.z, res)
 
     /** Builds a scale 3 * 3 matrix created from 3 scalars.
      *
@@ -287,7 +297,8 @@ interface gtcMatrixScale {
      *  @see - scale(vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
      */
-    fun scale(m: Mat3d, vX: Double, vY: Double, vZ: Double): Mat3d = scale(Mat3d(), m, vX, vY, vZ)
+    fun scale(m: Mat3d, vX: Double, vY: Double, vZ: Double): Mat3d =
+            scale(m, vX, vY, vZ, Mat3d())
 
     /** Builds a scale 3 * 3 matrix created from 3 scalars.
      *
@@ -299,5 +310,6 @@ interface gtcMatrixScale {
      *  @see - scale(vec<3, T, Q> const& v)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
      */
-    fun scale(m: Mat3d, v: Vec3d): Mat3d = scale(Mat3d(), m, v.x, v.y, v.z)
+    fun scale(m: Mat3d, v: Vec3d): Mat3d =
+            scale(m, v.x, v.y, v.z, Mat3d())
 }

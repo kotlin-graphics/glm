@@ -19,7 +19,6 @@ import glm_.quat.Quat
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
-import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4bool
@@ -32,7 +31,6 @@ import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.io.InputStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
-import kotlin.math.abs
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -717,11 +715,11 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     fun scale(scale: Float, res: Mat4) = scale(scale, scale, scale, res)
 
     @JvmOverloads
-    fun scale(scaleX: Float, scaleY: Float, scaleZ: Float, res: Mat4 = Mat4()) = glm.scale(res, this, scaleX, scaleY, scaleZ)
+    fun scale(scaleX: Float, scaleY: Float, scaleZ: Float, res: Mat4 = Mat4()) = glm.scale(this, scaleX, scaleY, scaleZ, res)
 
     infix fun scaleAssign(scale: Vec3) = scaleAssign(scale.x, scale.y, scale.z)
     infix fun scaleAssign(scale: Float) = scaleAssign(scale, scale, scale)
-    fun scaleAssign(scaleX: Float, scaleY: Float, scaleZ: Float) = glm.scale(this, this, scaleX, scaleY, scaleZ)
+    fun scaleAssign(scaleX: Float, scaleY: Float, scaleZ: Float) = glm.scale(this, scaleX, scaleY, scaleZ, this)
 
 
     infix fun translate(translate: Vec3) = translate(translate.x, translate.y, translate.z, Mat4())
@@ -732,44 +730,44 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     @JvmOverloads
     fun translate(translateX: Float, translateY: Float, translateZ: Float, res: Mat4 = Mat4()) =
-            glm.translate(res, this, translateX, translateY, translateZ)
+            glm.translate(this, translateX, translateY, translateZ, res)
 
     infix fun translateAssign(translate: Vec3) = translateAssign(translate.x, translate.y, translate.z)
     infix fun translateAssign(translate: Float) = translateAssign(translate, translate, translate)
-    fun translateAssign(translateX: Float, translateY: Float, translateZ: Float) = glm.translate(this, this, translateX, translateY, translateZ)
+    fun translateAssign(translateX: Float, translateY: Float, translateZ: Float) = glm.translate(this, translateX, translateY, translateZ, this)
 
 
 //    infix fun isEqual(b: Mat4) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2]) && this[3].isEqual(b[3])
 
     @JvmOverloads
-    fun rotate(angle: Float, vX: Float, vY: Float, vZ: Float, res: Mat4 = Mat4()) = glm.rotate(res, this, angle, vX, vY, vZ)
+    fun rotate(angle: Float, vX: Float, vY: Float, vZ: Float, res: Mat4 = Mat4()) = glm.rotate(this, angle, vX, vY, vZ, res)
 
     @JvmOverloads
-    fun rotate(angle: Float, v: Vec3, res: Mat4 = Mat4()) = glm.rotate(res, this, angle, v)
+    fun rotate(angle: Float, v: Vec3, res: Mat4 = Mat4()) = glm.rotate(this, angle, v, res)
 
-    fun rotateAssign(angle: Float, vX: Float, vY: Float, vZ: Float) = glm.rotate(this, this, angle, vX, vY, vZ)
-    fun rotateAssign(angle: Float, v: Vec3) = glm.rotate(this, this, angle, v)
-
-    @JvmOverloads
-    fun rotateX(angle: Float, res: Mat4 = Mat4()) = glm.rotateX(res, this, angle)
+    fun rotateAssign(angle: Float, vX: Float, vY: Float, vZ: Float) = glm.rotate(this, angle, vX, vY, vZ, this)
+    fun rotateAssign(angle: Float, v: Vec3) = glm.rotate(this, angle, v, this)
 
     @JvmOverloads
-    fun rotateY(angle: Float, res: Mat4 = Mat4()) = glm.rotateY(res, this, angle)
+    fun rotateX(angle: Float, res: Mat4 = Mat4()) = glm.rotateX(this, angle, res)
 
     @JvmOverloads
-    fun rotateZ(angle: Float, res: Mat4 = Mat4()) = glm.rotateZ(res, this, angle)
+    fun rotateY(angle: Float, res: Mat4 = Mat4()) = glm.rotateY(this, angle, res)
 
     @JvmOverloads
-    fun rotateXYZ(angle: Vec3, res: Mat4 = Mat4()) = glm.rotateXYZ(res, this, angle.x, angle.y, angle.z)
+    fun rotateZ(angle: Float, res: Mat4 = Mat4()) = glm.rotateZ(this, angle, res)
 
     @JvmOverloads
-    fun rotateXYZ(angleX: Float, angleY: Float, angleZ: Float, res: Mat4 = Mat4()) = glm.rotateXYZ(res, this, angleX, angleY, angleZ)
+    fun rotateXYZ(angle: Vec3, res: Mat4 = Mat4()) = glm.rotateXYZ(this, angle.x, angle.y, angle.z, res)
 
-    fun rotateXassign(angle: Float) = glm.rotateX(this, this, angle)
-    fun rotateYassign(angle: Float) = glm.rotateY(this, this, angle)
-    fun rotateZassign(angle: Float) = glm.rotateZ(this, this, angle)
-    fun rotateXYZassign(angle: Vec3) = glm.rotateXYZ(this, this, angle.x, angle.y, angle.z)
-    fun rotateXYZassign(angleX: Float, angleY: Float, angleZ: Float) = glm.rotateXYZ(this, this, angleX, angleY, angleZ)
+    @JvmOverloads
+    fun rotateXYZ(angleX: Float, angleY: Float, angleZ: Float, res: Mat4 = Mat4()) = glm.rotateXYZ(this, angleX, angleY, angleZ, res)
+
+    fun rotateXassign(angle: Float) = glm.rotateX(this, angle, this)
+    fun rotateYassign(angle: Float) = glm.rotateY(this, angle, this)
+    fun rotateZassign(angle: Float) = glm.rotateZ(this, angle, this)
+    fun rotateXYZassign(angle: Vec3) = glm.rotateXYZ(this, angle.x, angle.y, angle.z, this)
+    fun rotateXYZassign(angleX: Float, angleY: Float, angleZ: Float) = glm.rotateXYZ(this, angleX, angleY, angleZ, this)
 
 
     override var a0: Float

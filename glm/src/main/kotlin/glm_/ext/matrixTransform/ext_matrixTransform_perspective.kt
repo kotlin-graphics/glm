@@ -1,4 +1,4 @@
-package glm_.gtc.matrixTransform
+package glm_.ext.matrixTransform
 
 import glm_.d
 import glm_.detail.GLM_COORDINATE_SYSTEM
@@ -16,7 +16,7 @@ import kotlin.math.sin
 import kotlin.math.tan
 
 
-interface gtcMatrixPerspective {
+interface ext_matrixTransform_perspective {
 
     /** Creates a matrix for a right handed, symetric perspective-view frustum.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -29,7 +29,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveRhZo(res: Mat4, fovY: Float, aspect: Float, near: Float, far: Float): Mat4 {
+    fun perspectiveRhZo(fovY: Float, aspect: Float, near: Float, far: Float, res: Mat4): Mat4 {
 
         assert(abs(aspect - Float.MIN_VALUE) > 0f)
 
@@ -54,7 +54,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveRhZo(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 = perspectiveRhZo(Mat4(), fovY, aspect, near, far)
+    fun perspectiveRhZo(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 =
+            perspectiveRhZo(fovY, aspect, near, far, Mat4())
 
     /** Creates a matrix for a right handed, symetric perspective-view frustum.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -92,7 +93,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveRhNo(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 = perspectiveRhNo(Mat4(), fovY, aspect, near, far)
+    fun perspectiveRhNo(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 =
+            perspectiveRhNo(Mat4(), fovY, aspect, near, far)
 
     /** Creates a matrix for a left handed, symetric perspective-view frustum.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -105,7 +107,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveLhZo(res: Mat4, fovY: Float, aspect: Float, near: Float, far: Float): Mat4 {
+    fun perspectiveLhZo(fovY: Float, aspect: Float, near: Float, far: Float, res: Mat4): Mat4 {
 
         assert(abs(aspect - Float.MIN_VALUE) > 0f)
 
@@ -130,7 +132,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveLhZo(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 = perspectiveLhZo(Mat4(), fovY, aspect, near, far)
+    fun perspectiveLhZo(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 =
+            perspectiveLhZo(fovY, aspect, near, far, Mat4())
 
     /** Creates a matrix for a left handed, symetric perspective-view frustum.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -143,7 +146,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveLhNo(res: Mat4, fovY: Float, aspect: Float, near: Float, far: Float): Mat4 {
+    fun perspectiveLhNo(fovY: Float, aspect: Float, near: Float, far: Float, res: Mat4): Mat4 {
 
         assert(abs(aspect - Float.MIN_VALUE) > 0f)
 
@@ -168,7 +171,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveLhNo(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 = perspectiveLhNo(Mat4(), fovY, aspect, near, far)
+    fun perspectiveLhNo(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 =
+            perspectiveLhNo(fovY, aspect, near, far, Mat4())
 
     /** Creates a matrix for a symetric perspective-view frustum using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -181,10 +185,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveZo(res: Mat4, fovY: Float, aspect: Float, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveLhZo(res, fovY, aspect, near, far)
-        else -> perspectiveRhZo(res, fovY, aspect, near, far)
-    }
+    fun perspectiveZo(fovY: Float, aspect: Float, near: Float, far: Float, res: Mat4): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveLhZo(fovY, aspect, near, far, res)
+                else -> perspectiveRhZo(fovY, aspect, near, far, res)
+            }
 
     /** Creates a matrix for a symetric perspective-view frustum using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -196,10 +201,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveZo(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveLhZo(Mat4(), fovY, aspect, near, far)
-        else -> perspectiveRhZo(Mat4(), fovY, aspect, near, far)
-    }
+    fun perspectiveZo(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveLhZo(fovY, aspect, near, far, Mat4())
+                else -> perspectiveRhZo(fovY, aspect, near, far, Mat4())
+            }
 
     /** Creates a matrix for a symetric perspective-view frustum using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -212,10 +218,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveNo(res: Mat4, fovY: Float, aspect: Float, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveLhNo(res, fovY, aspect, near, far)
-        else -> perspectiveRhNo(res, fovY, aspect, near, far)
-    }
+    fun perspectiveNo(fovY: Float, aspect: Float, near: Float, far: Float, res: Mat4): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveLhNo(fovY, aspect, near, far, res)
+                else -> perspectiveRhNo(res, fovY, aspect, near, far)
+            }
 
     /** Creates a matrix for a symetric perspective-view frustum using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -227,10 +234,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveNo(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveLhNo(Mat4(), fovY, aspect, near, far)
-        else -> perspectiveRhNo(Mat4(), fovY, aspect, near, far)
-    }
+    fun perspectiveNo(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveLhNo(fovY, aspect, near, far, Mat4())
+                else -> perspectiveRhNo(Mat4(), fovY, aspect, near, far)
+            }
 
     /** Creates a matrix for a right handed, symetric perspective-view frustum.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -244,10 +252,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveRh(res: Mat4, fovY: Float, aspect: Float, near: Float, far: Float): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveRhZo(res, fovY, aspect, near, far)
-        else -> perspectiveRhNo(res, fovY, aspect, near, far)
-    }
+    fun perspectiveRh(fovY: Float, aspect: Float, near: Float, far: Float, res: Mat4): Mat4 =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveRhZo(fovY, aspect, near, far, res)
+                else -> perspectiveRhNo(res, fovY, aspect, near, far)
+            }
 
     /** Creates a matrix for a right handed, symetric perspective-view frustum.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -260,10 +269,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveRh(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveRhZo(Mat4(), fovY, aspect, near, far)
-        else -> perspectiveRhNo(Mat4(), fovY, aspect, near, far)
-    }
+    fun perspectiveRh(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveRhZo(fovY, aspect, near, far, Mat4())
+                else -> perspectiveRhNo(Mat4(), fovY, aspect, near, far)
+            }
 
     /** Creates a matrix for a left handed, symetric perspective-view frustum.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -277,10 +287,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveLh(res: Mat4, fovY: Float, aspect: Float, near: Float, far: Float): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveLhZo(res, fovY, aspect, near, far)
-        else -> perspectiveLhNo(res, fovY, aspect, near, far)
-    }
+    fun perspectiveLh(fovY: Float, aspect: Float, near: Float, far: Float, res: Mat4): Mat4 =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveLhZo(fovY, aspect, near, far, res)
+                else -> perspectiveLhNo(fovY, aspect, near, far, res)
+            }
 
     /** Creates a matrix for a left handed, symetric perspective-view frustum.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -293,10 +304,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveLh(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveLhZo(Mat4(), fovY, aspect, near, far)
-        else -> perspectiveLhNo(Mat4(), fovY, aspect, near, far)
-    }
+    fun perspectiveLh(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveLhZo(fovY, aspect, near, far, Mat4())
+                else -> perspectiveLhNo(fovY, aspect, near, far, Mat4())
+            }
 
     /** Creates a matrix for a symetric perspective-view frustum based on the default handedness and default near and far clip planes definition.
      *  To change default handedness use LEFT_HANDED. To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -310,16 +322,17 @@ interface gtcMatrixPerspective {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluPerspective.xml">gluPerspective man page</a>
      */
-    fun perspective(res: Mat4, fovY: Float, aspect: Float, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveLhZo(res, fovY, aspect, near, far)
-            else -> perspectiveLhNo(res, fovY, aspect, near, far)
-        }
-        else -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveRhZo(res, fovY, aspect, near, far)
-            else -> perspectiveRhNo(res, fovY, aspect, near, far)
-        }
-    }
+    fun perspective(fovY: Float, aspect: Float, near: Float, far: Float, res: Mat4): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveLhZo(fovY, aspect, near, far, res)
+                    else -> perspectiveLhNo(fovY, aspect, near, far, res)
+                }
+                else -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveRhZo(fovY, aspect, near, far, res)
+                    else -> perspectiveRhNo(res, fovY, aspect, near, far)
+                }
+            }
 
     /** Creates a matrix for a symetric perspective-view frustum based on the default handedness and default near and far clip planes definition.
      *  To change default handedness use LEFT_HANDED. To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -332,16 +345,17 @@ interface gtcMatrixPerspective {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluPerspective.xml">gluPerspective man page</a>
      */
-    fun perspective(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveLhZo(Mat4(), fovY, aspect, near, far)
-            else -> perspectiveLhNo(Mat4(), fovY, aspect, near, far)
-        }
-        else -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveRhZo(Mat4(), fovY, aspect, near, far)
-            else -> perspectiveRhNo(Mat4(), fovY, aspect, near, far)
-        }
-    }
+    fun perspective(fovY: Float, aspect: Float, near: Float, far: Float): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveLhZo(fovY, aspect, near, far, Mat4())
+                    else -> perspectiveLhNo(fovY, aspect, near, far, Mat4())
+                }
+                else -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveRhZo(fovY, aspect, near, far, Mat4())
+                    else -> perspectiveRhNo(Mat4(), fovY, aspect, near, far)
+                }
+            }
 
     /** Builds a perspective projection matrix based on a field of view using right-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -355,7 +369,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRhZo(res: Mat4, fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 {
+    fun perspectiveFovRhZo(fov: Float, width: Float, height: Float, near: Float, far: Float, res: Mat4): Mat4 {
 
         assert(width > 0f && height > 0f && fov > 0f)
 
@@ -382,7 +396,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRhZo(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 = perspectiveFovRhZo(Mat4(), fov, width, height, near, far)
+    fun perspectiveFovRhZo(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 =
+            perspectiveFovRhZo(fov, width, height, near, far, Mat4())
 
     /** Builds a perspective projection matrix based on a field of view using right-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -395,7 +410,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRhZo(res: Mat4, fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = perspectiveFovRhZo(res, fov, size.x.f, size.y.f, near, far)
+    fun perspectiveFovRhZo(fov: Float, size: Vec2t<*>, near: Float, far: Float, res: Mat4): Mat4 =
+            perspectiveFovRhZo(fov, size.x.f, size.y.f, near, far, res)
 
     /** Builds a perspective projection matrix based on a field of view using right-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -407,7 +423,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRhZo(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = perspectiveFovRhZo(Mat4(), fov, size.x.f, size.y.f, near, far)
+    fun perspectiveFovRhZo(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 =
+            perspectiveFovRhZo(fov, size.x.f, size.y.f, near, far, Mat4())
 
     /** Builds a perspective projection matrix based on a field of view using right-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -421,7 +438,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRhNo(res: Mat4, fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 {
+    fun perspectiveFovRhNo(fov: Float, width: Float, height: Float, near: Float, far: Float, res: Mat4): Mat4 {
 
         assert(width > 0f && height > 0f && fov > 0f)
 
@@ -448,7 +465,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRhNo(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 = perspectiveFovRhNo(Mat4(), fov, width, height, near, far)
+    fun perspectiveFovRhNo(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 =
+            perspectiveFovRhNo(fov, width, height, near, far, Mat4())
 
     /** Builds a perspective projection matrix based on a field of view using right-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -461,7 +479,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRhNo(res: Mat4, fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = perspectiveFovRhNo(res, fov, size.x.f, size.y.f, near, far)
+    fun perspectiveFovRhNo(fov: Float, size: Vec2t<*>, near: Float, far: Float, res: Mat4): Mat4 =
+            perspectiveFovRhNo(fov, size.x.f, size.y.f, near, far, res)
 
     /** Builds a perspective projection matrix based on a field of view using right-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -473,7 +492,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRhNo(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = perspectiveFovRhNo(Mat4(), fov, size.x.f, size.y.f, near, far)
+    fun perspectiveFovRhNo(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 =
+            perspectiveFovRhNo(fov, size.x.f, size.y.f, near, far, Mat4())
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -487,7 +507,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLhZo(res: Mat4, fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 {
+    fun perspectiveFovLhZo(fov: Float, width: Float, height: Float, near: Float, far: Float, res: Mat4): Mat4 {
 
         assert(width > 0f && height > 0f && fov > 0f)
 
@@ -514,7 +534,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLhZo(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 = perspectiveFovLhZo(Mat4(), fov, width, height, near, far)
+    fun perspectiveFovLhZo(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 =
+            perspectiveFovLhZo(fov, width, height, near, far, Mat4())
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -527,7 +548,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLhZo(res: Mat4, fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = perspectiveFovLhZo(res, fov, size.x.f, size.y.f, near, far)
+    fun perspectiveFovLhZo(fov: Float, size: Vec2t<*>, near: Float, far: Float, res: Mat4): Mat4 =
+            perspectiveFovLhZo(fov, size.x.f, size.y.f, near, far, res)
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -539,7 +561,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLhZo(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = perspectiveFovLhZo(Mat4(), fov, size.x.f, size.y.f, near, far)
+    fun perspectiveFovLhZo(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 =
+            perspectiveFovLhZo(fov, size.x.f, size.y.f, near, far, Mat4())
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -553,7 +576,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLhNo(res: Mat4, fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 {
+    fun perspectiveFovLhNo(fov: Float, width: Float, height: Float, near: Float, far: Float, res: Mat4): Mat4 {
 
         assert(width > 0f && height > 0f && fov > 0f)
 
@@ -580,7 +603,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLhNo(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 = perspectiveFovLhNo(Mat4(), fov, width, height, near, far)
+    fun perspectiveFovLhNo(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 =
+            perspectiveFovLhNo(fov, width, height, near, far, Mat4())
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -593,7 +617,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLhNo(res: Mat4, fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = perspectiveFovLhNo(res, fov, size.x.f, size.y.f, near, far)
+    fun perspectiveFovLhNo(fov: Float, size: Vec2t<*>, near: Float, far: Float, res: Mat4): Mat4 =
+            perspectiveFovLhNo(fov, size.x.f, size.y.f, near, far, res)
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -605,7 +630,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLhNo(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = perspectiveFovLhNo(Mat4(), fov, size.x.f, size.y.f, near, far)
+    fun perspectiveFovLhNo(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 =
+            perspectiveFovLhNo(fov, size.x.f, size.y.f, near, far, Mat4())
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -619,10 +645,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovZo(res: Mat4, fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhZo(res, fov, width, height, near, far)
-        else -> perspectiveFovRhZo(res, fov, width, height, near, far)
-    }
+    fun perspectiveFovZo(fov: Float, width: Float, height: Float, near: Float, far: Float, res: Mat4): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhZo(fov, width, height, near, far, res)
+                else -> perspectiveFovRhZo(fov, width, height, near, far, res)
+            }
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -635,10 +662,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovZo(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhZo(Mat4(), fov, width, height, near, far)
-        else -> perspectiveFovRhZo(Mat4(), fov, width, height, near, far)
-    }
+    fun perspectiveFovZo(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhZo(fov, width, height, near, far, Mat4())
+                else -> perspectiveFovRhZo(fov, width, height, near, far, Mat4())
+            }
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -651,10 +679,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovZo(res: Mat4, fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhZo(res, fov, size.x.f, size.y.f, near, far)
-        else -> perspectiveFovRhZo(res, fov, size.x.f, size.y.f, near, far)
-    }
+    fun perspectiveFovZo(fov: Float, size: Vec2t<*>, near: Float, far: Float, res: Mat4): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhZo(fov, size.x.f, size.y.f, near, far, res)
+                else -> perspectiveFovRhZo(fov, size.x.f, size.y.f, near, far, res)
+            }
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -666,10 +695,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovZo(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhZo(Mat4(), fov, size.x.f, size.y.f, near, far)
-        else -> perspectiveFovRhZo(Mat4(), fov, size.x.f, size.y.f, near, far)
-    }
+    fun perspectiveFovZo(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhZo(fov, size.x.f, size.y.f, near, far, Mat4())
+                else -> perspectiveFovRhZo(fov, size.x.f, size.y.f, near, far, Mat4())
+            }
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -683,10 +713,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovNo(res: Mat4, fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhNo(res, fov, width, height, near, far)
-        else -> perspectiveFovRhNo(res, fov, width, height, near, far)
-    }
+    fun perspectiveFovNo(fov: Float, width: Float, height: Float, near: Float, far: Float, res: Mat4): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhNo(fov, width, height, near, far, res)
+                else -> perspectiveFovRhNo(fov, width, height, near, far, res)
+            }
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -699,10 +730,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovNo(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhNo(Mat4(), fov, width, height, near, far)
-        else -> perspectiveFovRhNo(Mat4(), fov, width, height, near, far)
-    }
+    fun perspectiveFovNo(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhNo(fov, width, height, near, far, Mat4())
+                else -> perspectiveFovRhNo(fov, width, height, near, far, Mat4())
+            }
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -715,10 +747,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovNo(res: Mat4, fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhNo(res, fov, size.x.f, size.y.f, near, far)
-        else -> perspectiveFovRhNo(res, fov, size.x.f, size.y.f, near, far)
-    }
+    fun perspectiveFovNo(fov: Float, size: Vec2t<*>, near: Float, far: Float, res: Mat4): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhNo(fov, size.x.f, size.y.f, near, far, res)
+                else -> perspectiveFovRhNo(fov, size.x.f, size.y.f, near, far, res)
+            }
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -730,10 +763,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovNo(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhNo(Mat4(), fov, size.x.f, size.y.f, near, far)
-        else -> perspectiveFovRhNo(Mat4(), fov, size.x.f, size.y.f, near, far)
-    }
+    fun perspectiveFovNo(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhNo(fov, size.x.f, size.y.f, near, far, Mat4())
+                else -> perspectiveFovRhNo(fov, size.x.f, size.y.f, near, far, Mat4())
+            }
 
     /** Builds a right handed perspective projection matrix based on a field of view.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -748,10 +782,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRh(res: Mat4, fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(res, fov, width, height, near, far)
-        else -> perspectiveFovRhNo(res, fov, width, height, near, far)
-    }
+    fun perspectiveFovRh(fov: Float, width: Float, height: Float, near: Float, far: Float, res: Mat4): Mat4 =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(fov, width, height, near, far, res)
+                else -> perspectiveFovRhNo(fov, width, height, near, far, res)
+            }
 
     /** Builds a right handed perspective projection matrix based on a field of view.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -765,10 +800,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRh(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(Mat4(), fov, width, height, near, far)
-        else -> perspectiveFovRhNo(Mat4(), fov, width, height, near, far)
-    }
+    fun perspectiveFovRh(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(fov, width, height, near, far, Mat4())
+                else -> perspectiveFovRhNo(fov, width, height, near, far, Mat4())
+            }
 
     /** Builds a right handed perspective projection matrix based on a field of view.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -782,10 +818,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRh(res: Mat4, fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(res, fov, size.x.f, size.y.f, near, far)
-        else -> perspectiveFovRhNo(res, fov, size.x.f, size.y.f, near, far)
-    }
+    fun perspectiveFovRh(fov: Float, size: Vec2t<*>, near: Float, far: Float, res: Mat4): Mat4 =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(fov, size.x.f, size.y.f, near, far, res)
+                else -> perspectiveFovRhNo(fov, size.x.f, size.y.f, near, far, res)
+            }
 
     /** Builds a right handed perspective projection matrix based on a field of view.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -798,10 +835,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRh(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(Mat4(), fov, size.x.f, size.y.f, near, far)
-        else -> perspectiveFovRhNo(Mat4(), fov, size.x.f, size.y.f, near, far)
-    }
+    fun perspectiveFovRh(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(fov, size.x.f, size.y.f, near, far, Mat4())
+                else -> perspectiveFovRhNo(fov, size.x.f, size.y.f, near, far, Mat4())
+            }
 
     /** Builds a left handed perspective projection matrix based on a field of view.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -816,10 +854,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLh(res: Mat4, fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(res, fov, width, height, near, far)
-        else -> perspectiveFovLhNo(res, fov, width, height, near, far)
-    }
+    fun perspectiveFovLh(fov: Float, width: Float, height: Float, near: Float, far: Float, res: Mat4): Mat4 =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(fov, width, height, near, far, res)
+                else -> perspectiveFovLhNo(fov, width, height, near, far, res)
+            }
 
     /** Builds a left handed perspective projection matrix based on a field of view.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -834,8 +873,8 @@ interface gtcMatrixPerspective {
      *  @see gtc_matrix_transform
      */
     fun perspectiveFovLh(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(Mat4(), fov, width, height, near, far)
-        else -> perspectiveFovLhNo(Mat4(), fov, width, height, near, far)
+        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(fov, width, height, near, far, Mat4())
+        else -> perspectiveFovLhNo(fov, width, height, near, far, Mat4())
     }
 
     /** Builds a left handed perspective projection matrix based on a field of view.
@@ -850,10 +889,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLh(res: Mat4, fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(res, fov, size.x.f, size.y.f, near, far)
-        else -> perspectiveFovLhNo(res, fov, size.x.f, size.y.f, near, far)
-    }
+    fun perspectiveFovLh(fov: Float, size: Vec2t<*>, near: Float, far: Float, res: Mat4): Mat4 =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(fov, size.x.f, size.y.f, near, far, res)
+                else -> perspectiveFovLhNo(fov, size.x.f, size.y.f, near, far, res)
+            }
 
     /** Builds a left handed perspective projection matrix based on a field of view.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -866,10 +906,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLh(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(Mat4(), fov, size.x.f, size.y.f, near, far)
-        else -> perspectiveFovLhNo(Mat4(), fov, size.x.f, size.y.f, near, far)
-    }
+    fun perspectiveFovLh(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(fov, size.x.f, size.y.f, near, far, Mat4())
+                else -> perspectiveFovLhNo(fov, size.x.f, size.y.f, near, far, Mat4())
+            }
 
     /** Builds a perspective projection matrix based on a field of view and the default handedness and default near and far clip planes definition.
      *  To change default handedness use LEFT_HANDED. To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -883,16 +924,17 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFov(res: Mat4, fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(res, fov, width, height, near, far)
-            else -> perspectiveFovLhNo(res, fov, width, height, near, far)
-        }
-        else -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(res, fov, width, height, near, far)
-            else -> perspectiveFovRhNo(res, fov, width, height, near, far)
-        }
-    }
+    fun perspectiveFov(fov: Float, width: Float, height: Float, near: Float, far: Float, res: Mat4): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(fov, width, height, near, far, res)
+                    else -> perspectiveFovLhNo(fov, width, height, near, far, res)
+                }
+                else -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(fov, width, height, near, far, res)
+                    else -> perspectiveFovRhNo(fov, width, height, near, far, res)
+                }
+            }
 
     /** Builds a perspective projection matrix based on a field of view and the default handedness and default near and far clip planes definition.
      *  To change default handedness use LEFT_HANDED. To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -905,16 +947,17 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFov(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(Mat4(), fov, width, height, near, far)
-            else -> perspectiveFovLhNo(Mat4(), fov, width, height, near, far)
-        }
-        else -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(Mat4(), fov, width, height, near, far)
-            else -> perspectiveFovRhNo(Mat4(), fov, width, height, near, far)
-        }
-    }
+    fun perspectiveFov(fov: Float, width: Float, height: Float, near: Float, far: Float): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(fov, width, height, near, far, Mat4())
+                    else -> perspectiveFovLhNo(fov, width, height, near, far, Mat4())
+                }
+                else -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(fov, width, height, near, far, Mat4())
+                    else -> perspectiveFovRhNo(fov, width, height, near, far, Mat4())
+                }
+            }
 
     /** Builds a perspective projection matrix based on a field of view and the default handedness and default near and far clip planes definition.
      *  To change default handedness use LEFT_HANDED. To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -927,16 +970,17 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFov(res: Mat4, fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(res, fov, size.x.f, size.y.f, near, far)
-            else -> perspectiveFovLhNo(res, fov, size.x.f, size.y.f, near, far)
-        }
-        else -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(res, fov, size.x.f, size.y.f, near, far)
-            else -> perspectiveFovRhNo(res, fov, size.x.f, size.y.f, near, far)
-        }
-    }
+    fun perspectiveFov(fov: Float, size: Vec2t<*>, near: Float, far: Float, res: Mat4): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(fov, size.x.f, size.y.f, near, far, res)
+                    else -> perspectiveFovLhNo(fov, size.x.f, size.y.f, near, far, res)
+                }
+                else -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(fov, size.x.f, size.y.f, near, far, res)
+                    else -> perspectiveFovRhNo(fov, size.x.f, size.y.f, near, far, res)
+                }
+            }
 
     /** Builds a perspective projection matrix based on a field of view and the default handedness and default near and far clip planes definition.
      *  To change default handedness use LEFT_HANDED. To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -948,16 +992,17 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFov(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(Mat4(), fov, size.x.f, size.y.f, near, far)
-            else -> perspectiveFovLhNo(Mat4(), fov, size.x.f, size.y.f, near, far)
-        }
-        else -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(Mat4(), fov, size.x.f, size.y.f, near, far)
-            else -> perspectiveFovRhNo(Mat4(), fov, size.x.f, size.y.f, near, far)
-        }
-    }
+    fun perspectiveFov(fov: Float, size: Vec2t<*>, near: Float, far: Float): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(fov, size.x.f, size.y.f, near, far, Mat4())
+                    else -> perspectiveFovLhNo(fov, size.x.f, size.y.f, near, far, Mat4())
+                }
+                else -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(fov, size.x.f, size.y.f, near, far, Mat4())
+                    else -> perspectiveFovRhNo(fov, size.x.f, size.y.f, near, far, Mat4())
+                }
+            }
 
     /** Creates a matrix for a left handed, symmetric perspective-view frustum with far plane at infinite.
      *
@@ -968,7 +1013,7 @@ interface gtcMatrixPerspective {
      *
      * @see gtc_matrix_transform
      */
-    fun infinitePerspectiveLh(res: Mat4, fovY: Float, aspect: Float, near: Float): Mat4 {
+    fun infinitePerspectiveLh(fovY: Float, aspect: Float, near: Float, res: Mat4): Mat4 {
 
         val range = tan(fovY / 2f) * near
         val left = -range * aspect
@@ -993,7 +1038,8 @@ interface gtcMatrixPerspective {
      *
      * @see gtc_matrix_transform
      */
-    fun infinitePerspectiveLh(fovY: Float, aspect: Float, near: Float): Mat4 = infinitePerspectiveLh(Mat4(), fovY, aspect, near)
+    fun infinitePerspectiveLh(fovY: Float, aspect: Float, near: Float): Mat4 =
+            infinitePerspectiveLh(fovY, aspect, near, Mat4())
 
     /** Creates a matrix for a right handed, symmetric perspective-view frustum with far plane at infinite.
      *
@@ -1004,7 +1050,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun infinitePerspectiveRh(res: Mat4, fovY: Float, aspect: Float, near: Float): Mat4 {
+    fun infinitePerspectiveRh(fovY: Float, aspect: Float, near: Float, res: Mat4): Mat4 {
 
         val range = tan(fovY / 2f) * near
         val left = -range * aspect
@@ -1029,7 +1075,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun infinitePerspectiveRh(fovY: Float, aspect: Float, near: Float): Mat4 = infinitePerspectiveRh(Mat4(), fovY, aspect, near)
+    fun infinitePerspectiveRh(fovY: Float, aspect: Float, near: Float): Mat4 =
+            infinitePerspectiveRh(fovY, aspect, near, Mat4())
 
     /** Creates a matrix for a symmetric perspective-view frustum with far plane at infinite with default handedness.
      *
@@ -1040,10 +1087,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun infinitePerspective(res: Mat4, fovY: Float, aspect: Float, near: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> infinitePerspectiveLh(res, fovY, aspect, near)
-        else -> infinitePerspectiveRh(res, fovY, aspect, near)
-    }
+    fun infinitePerspective(fovY: Float, aspect: Float, near: Float, res: Mat4): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> infinitePerspectiveLh(fovY, aspect, near, res)
+                else -> infinitePerspectiveRh(fovY, aspect, near, res)
+            }
 
     /** Creates a matrix for a symmetric perspective-view frustum with far plane at infinite with default handedness.
      *
@@ -1054,10 +1102,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun infinitePerspective(fovY: Float, aspect: Float, near: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> infinitePerspectiveLh(Mat4(), fovY, aspect, near)
-        else -> infinitePerspectiveRh(Mat4(), fovY, aspect, near)
-    }
+    fun infinitePerspective(fovY: Float, aspect: Float, near: Float): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> infinitePerspectiveLh(fovY, aspect, near, Mat4())
+                else -> infinitePerspectiveRh(fovY, aspect, near, Mat4())
+            }
 
     /** Creates a matrix for a symmetric perspective-view frustum with far plane at infinite for graphics hardware that doesn't support depth clamping.
      *
@@ -1070,7 +1119,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun tweakedInfinitePerspective(res: Mat4, fovY: Float, aspect: Float, near: Float): Mat4 = tweakedInfinitePerspective(res, fovY, aspect, near, glm.epsilonF)
+    fun tweakedInfinitePerspective(fovY: Float, aspect: Float, near: Float, res: Mat4): Mat4 =
+            tweakedInfinitePerspective(fovY, aspect, near, glm.epsilonF, res)
 
     /** Creates a matrix for a symmetric perspective-view frustum with far plane at infinite for graphics hardware that doesn't support depth clamping.
      *
@@ -1082,7 +1132,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun tweakedInfinitePerspective(res: Mat4, fovY: Float, aspect: Float, near: Float, ep: Float): Mat4 {
+    fun tweakedInfinitePerspective(fovY: Float, aspect: Float, near: Float, ep: Float, res: Mat4): Mat4 {
 
         val range = tan(fovY / 2f) * near
         val left = -range * aspect
@@ -1109,7 +1159,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun tweakedInfinitePerspective(fovY: Float, aspect: Float, near: Float): Mat4 = tweakedInfinitePerspective(Mat4(), fovY, aspect, near, glm.epsilonF)
+    fun tweakedInfinitePerspective(fovY: Float, aspect: Float, near: Float): Mat4 =
+            tweakedInfinitePerspective(fovY, aspect, near, glm.epsilonF, Mat4())
 
     /** Creates a matrix for a symmetric perspective-view frustum with far plane at infinite for graphics hardware that doesn't support depth clamping.
      *
@@ -1121,7 +1172,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun tweakedInfinitePerspective(fovY: Float, aspect: Float, near: Float, ep: Float): Mat4 = tweakedInfinitePerspective(Mat4(), fovY, aspect, near, ep)
+    fun tweakedInfinitePerspective(fovY: Float, aspect: Float, near: Float, ep: Float): Mat4 =
+            tweakedInfinitePerspective(fovY, aspect, near, ep, Mat4())
 
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -1140,7 +1192,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveRhZo(res: Mat4d, fovY: Double, aspect: Double, near: Double, far: Double): Mat4d {
+    fun perspectiveRhZo(fovY: Double, aspect: Double, near: Double, far: Double, res: Mat4d): Mat4d {
 
         assert(abs(aspect - Double.MIN_VALUE) > 0.0)
 
@@ -1165,7 +1217,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveRhZo(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d = perspectiveRhZo(Mat4d(), fovY, aspect, near, far)
+    fun perspectiveRhZo(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d =
+            perspectiveRhZo(fovY, aspect, near, far, Mat4d())
 
     /** Creates a matrix for a right handed, symetric perspective-view frustum.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -1178,7 +1231,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveRhNo(res: Mat4d, fovY: Double, aspect: Double, near: Double, far: Double): Mat4d {
+    fun perspectiveRhNo(fovY: Double, aspect: Double, near: Double, far: Double, res: Mat4d): Mat4d {
 
         assert(abs(aspect - Double.MIN_VALUE) > 0.0)
 
@@ -1203,7 +1256,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveRhNo(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d = perspectiveRhNo(Mat4d(), fovY, aspect, near, far)
+    fun perspectiveRhNo(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d =
+            perspectiveRhNo(fovY, aspect, near, far, Mat4d())
 
     /** Creates a matrix for a left handed, symetric perspective-view frustum.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1216,7 +1270,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveLhZo(res: Mat4d, fovY: Double, aspect: Double, near: Double, far: Double): Mat4d {
+    fun perspectiveLhZo(fovY: Double, aspect: Double, near: Double, far: Double, res: Mat4d): Mat4d {
 
         assert(abs(aspect - Double.MIN_VALUE) > 0.0)
 
@@ -1241,7 +1295,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveLhZo(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d = perspectiveLhZo(Mat4d(), fovY, aspect, near, far)
+    fun perspectiveLhZo(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d =
+            perspectiveLhZo(fovY, aspect, near, far, Mat4d())
 
     /** Creates a matrix for a left handed, symetric perspective-view frustum.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -1254,7 +1309,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveLhNo(res: Mat4d, fovY: Double, aspect: Double, near: Double, far: Double): Mat4d {
+    fun perspectiveLhNo(fovY: Double, aspect: Double, near: Double, far: Double, res: Mat4d): Mat4d {
 
         assert(abs(aspect - Double.MIN_VALUE) > 0.0)
 
@@ -1279,7 +1334,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveLhNo(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d = perspectiveLhNo(Mat4d(), fovY, aspect, near, far)
+    fun perspectiveLhNo(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d =
+            perspectiveLhNo(fovY, aspect, near, far, Mat4d())
 
     /** Creates a matrix for a symetric perspective-view frustum using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1292,10 +1348,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveZo(res: Mat4d, fovY: Double, aspect: Double, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveLhZo(res, fovY, aspect, near, far)
-        else -> perspectiveRhZo(res, fovY, aspect, near, far)
-    }
+    fun perspectiveZo(fovY: Double, aspect: Double, near: Double, far: Double, res: Mat4d): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveLhZo(fovY, aspect, near, far, res)
+                else -> perspectiveRhZo(fovY, aspect, near, far, res)
+            }
 
     /** Creates a matrix for a symetric perspective-view frustum using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1307,10 +1364,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveZo(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveLhZo(Mat4d(), fovY, aspect, near, far)
-        else -> perspectiveRhZo(Mat4d(), fovY, aspect, near, far)
-    }
+    fun perspectiveZo(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveLhZo(fovY, aspect, near, far, Mat4d())
+                else -> perspectiveRhZo(fovY, aspect, near, far, Mat4d())
+            }
 
     /** Creates a matrix for a symetric perspective-view frustum using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -1323,10 +1381,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveNo(res: Mat4d, fovY: Double, aspect: Double, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveLhNo(res, fovY, aspect, near, far)
-        else -> perspectiveRhNo(res, fovY, aspect, near, far)
-    }
+    fun perspectiveNo(fovY: Double, aspect: Double, near: Double, far: Double, res: Mat4d): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveLhNo(fovY, aspect, near, far, res)
+                else -> perspectiveRhNo(fovY, aspect, near, far, res)
+            }
 
     /** Creates a matrix for a symetric perspective-view frustum using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -1338,10 +1397,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveNo(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveLhNo(Mat4d(), fovY, aspect, near, far)
-        else -> perspectiveRhNo(Mat4d(), fovY, aspect, near, far)
-    }
+    fun perspectiveNo(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveLhNo(fovY, aspect, near, far, Mat4d())
+                else -> perspectiveRhNo(fovY, aspect, near, far, Mat4d())
+            }
 
     /** Creates a matrix for a right handed, symetric perspective-view frustum.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1355,10 +1415,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveRh(res: Mat4d, fovY: Double, aspect: Double, near: Double, far: Double): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveRhZo(res, fovY, aspect, near, far)
-        else -> perspectiveRhNo(res, fovY, aspect, near, far)
-    }
+    fun perspectiveRh(fovY: Double, aspect: Double, near: Double, far: Double, res: Mat4d): Mat4d =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveRhZo(fovY, aspect, near, far, res)
+                else -> perspectiveRhNo(fovY, aspect, near, far, res)
+            }
 
     /** Creates a matrix for a right handed, symetric perspective-view frustum.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1371,10 +1432,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveRh(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveRhZo(Mat4d(), fovY, aspect, near, far)
-        else -> perspectiveRhNo(Mat4d(), fovY, aspect, near, far)
-    }
+    fun perspectiveRh(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveRhZo(fovY, aspect, near, far, Mat4d())
+                else -> perspectiveRhNo(fovY, aspect, near, far, Mat4d())
+            }
 
     /** Creates a matrix for a left handed, symetric perspective-view frustum.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1388,10 +1450,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveLh(res: Mat4d, fovY: Double, aspect: Double, near: Double, far: Double): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveLhZo(res, fovY, aspect, near, far)
-        else -> perspectiveLhNo(res, fovY, aspect, near, far)
-    }
+    fun perspectiveLh(fovY: Double, aspect: Double, near: Double, far: Double, res: Mat4d): Mat4d =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveLhZo(fovY, aspect, near, far, res)
+                else -> perspectiveLhNo(fovY, aspect, near, far, res)
+            }
 
     /** Creates a matrix for a left handed, symetric perspective-view frustum.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1404,10 +1467,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveLh(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveLhZo(Mat4d(), fovY, aspect, near, far)
-        else -> perspectiveLhNo(Mat4d(), fovY, aspect, near, far)
-    }
+    fun perspectiveLh(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveLhZo(fovY, aspect, near, far, Mat4d())
+                else -> perspectiveLhNo(fovY, aspect, near, far, Mat4d())
+            }
 
     /** Creates a matrix for a symetric perspective-view frustum based on the default handedness and default near and far clip planes definition.
      *  To change default handedness use LEFT_HANDED. To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -1421,16 +1485,17 @@ interface gtcMatrixPerspective {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluPerspective.xml">gluPerspective man page</a>
      */
-    fun perspective(res: Mat4d, fovY: Double, aspect: Double, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveLhZo(res, fovY, aspect, near, far)
-            else -> perspectiveLhNo(res, fovY, aspect, near, far)
-        }
-        else -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveRhZo(res, fovY, aspect, near, far)
-            else -> perspectiveRhNo(res, fovY, aspect, near, far)
-        }
-    }
+    fun perspective(fovY: Double, aspect: Double, near: Double, far: Double, res: Mat4d): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveLhZo(fovY, aspect, near, far, res)
+                    else -> perspectiveLhNo(fovY, aspect, near, far, res)
+                }
+                else -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveRhZo(fovY, aspect, near, far, res)
+                    else -> perspectiveRhNo(fovY, aspect, near, far, res)
+                }
+            }
 
     /** Creates a matrix for a symetric perspective-view frustum based on the default handedness and default near and far clip planes definition.
      *  To change default handedness use LEFT_HANDED. To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -1443,16 +1508,17 @@ interface gtcMatrixPerspective {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluPerspective.xml">gluPerspective man page</a>
      */
-    fun perspective(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveLhZo(Mat4d(), fovY, aspect, near, far)
-            else -> perspectiveLhNo(Mat4d(), fovY, aspect, near, far)
-        }
-        else -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveRhZo(Mat4d(), fovY, aspect, near, far)
-            else -> perspectiveRhNo(Mat4d(), fovY, aspect, near, far)
-        }
-    }
+    fun perspective(fovY: Double, aspect: Double, near: Double, far: Double): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveLhZo(fovY, aspect, near, far, Mat4d())
+                    else -> perspectiveLhNo(fovY, aspect, near, far, Mat4d())
+                }
+                else -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveRhZo(fovY, aspect, near, far, Mat4d())
+                    else -> perspectiveRhNo(fovY, aspect, near, far, Mat4d())
+                }
+            }
 
     /** Builds a perspective projection matrix based on a field of view using right-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1466,7 +1532,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRhZo(res: Mat4d, fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d {
+    fun perspectiveFovRhZo(fov: Double, width: Double, height: Double, near: Double, far: Double, res: Mat4d): Mat4d {
 
         assert(width > 0.0 && height > 0.0 && fov > 0.0)
 
@@ -1493,7 +1559,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRhZo(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d = perspectiveFovRhZo(Mat4d(), fov, width, height, near, far)
+    fun perspectiveFovRhZo(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d =
+            perspectiveFovRhZo(fov, width, height, near, far, Mat4d())
 
     /** Builds a perspective projection matrix based on a field of view using right-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1506,7 +1573,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRhZo(res: Mat4d, fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = perspectiveFovRhZo(res, fov, size.x.d, size.y.d, near, far)
+    fun perspectiveFovRhZo(fov: Double, size: Vec2t<*>, near: Double, far: Double, res: Mat4d): Mat4d =
+            perspectiveFovRhZo(fov, size.x.d, size.y.d, near, far, res)
 
     /** Builds a perspective projection matrix based on a field of view using right-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1518,7 +1586,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRhZo(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = perspectiveFovRhZo(Mat4d(), fov, size.x.d, size.y.d, near, far)
+    fun perspectiveFovRhZo(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d =
+            perspectiveFovRhZo(fov, size.x.d, size.y.d, near, far, Mat4d())
 
     /** Builds a perspective projection matrix based on a field of view using right-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -1532,7 +1601,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRhNo(res: Mat4d, fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d {
+    fun perspectiveFovRhNo(fov: Double, width: Double, height: Double, near: Double, far: Double, res: Mat4d): Mat4d {
 
         assert(width > 0.0 && height > 0.0 && fov > 0.0)
 
@@ -1559,7 +1628,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRhNo(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d = perspectiveFovRhNo(Mat4d(), fov, width, height, near, far)
+    fun perspectiveFovRhNo(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d =
+            perspectiveFovRhNo(fov, width, height, near, far, Mat4d())
 
     /** Builds a perspective projection matrix based on a field of view using right-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -1572,7 +1642,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRhNo(res: Mat4d, fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = perspectiveFovRhNo(res, fov, size.x.d, size.y.d, near, far)
+    fun perspectiveFovRhNo(fov: Double, size: Vec2t<*>, near: Double, far: Double, res: Mat4d): Mat4d =
+            perspectiveFovRhNo(fov, size.x.d, size.y.d, near, far, res)
 
     /** Builds a perspective projection matrix based on a field of view using right-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -1584,7 +1655,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRhNo(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = perspectiveFovRhNo(Mat4d(), fov, size.x.d, size.y.d, near, far)
+    fun perspectiveFovRhNo(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d =
+            perspectiveFovRhNo(fov, size.x.d, size.y.d, near, far, Mat4d())
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1598,7 +1670,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLhZo(res: Mat4d, fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d {
+    fun perspectiveFovLhZo(fov: Double, width: Double, height: Double, near: Double, far: Double, res: Mat4d): Mat4d {
 
         assert(width > 0.0 && height > 0.0 && fov > 0.0)
 
@@ -1625,7 +1697,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLhZo(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d = perspectiveFovLhZo(Mat4d(), fov, width, height, near, far)
+    fun perspectiveFovLhZo(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d =
+            perspectiveFovLhZo(fov, width, height, near, far, Mat4d())
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1638,7 +1711,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLhZo(res: Mat4d, fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = perspectiveFovLhZo(res, fov, size.x.d, size.y.d, near, far)
+    fun perspectiveFovLhZo(fov: Double, size: Vec2t<*>, near: Double, far: Double, res: Mat4d): Mat4d =
+            perspectiveFovLhZo(fov, size.x.d, size.y.d, near, far, res)
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1650,7 +1724,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLhZo(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = perspectiveFovLhZo(Mat4d(), fov, size.x.d, size.y.d, near, far)
+    fun perspectiveFovLhZo(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d =
+            perspectiveFovLhZo(fov, size.x.d, size.y.d, near, far, Mat4d())
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -1664,7 +1739,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLhNo(res: Mat4d, fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d {
+    fun perspectiveFovLhNo(fov: Double, width: Double, height: Double, near: Double, far: Double, res: Mat4d): Mat4d {
 
         assert(width > 0.0 && height > 0.0 && fov > 0.0)
 
@@ -1691,7 +1766,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLhNo(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d = perspectiveFovLhNo(Mat4d(), fov, width, height, near, far)
+    fun perspectiveFovLhNo(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d =
+            perspectiveFovLhNo(fov, width, height, near, far, Mat4d())
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -1704,7 +1780,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLhNo(res: Mat4d, fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = perspectiveFovLhNo(res, fov, size.x.d, size.y.d, near, far)
+    fun perspectiveFovLhNo(fov: Double, size: Vec2t<*>, near: Double, far: Double, res: Mat4d): Mat4d =
+            perspectiveFovLhNo(fov, size.x.d, size.y.d, near, far, res)
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -1716,7 +1793,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLhNo(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = perspectiveFovLhNo(Mat4d(), fov, size.x.d, size.y.d, near, far)
+    fun perspectiveFovLhNo(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d =
+            perspectiveFovLhNo(fov, size.x.d, size.y.d, near, far, Mat4d())
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1730,10 +1808,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovZo(res: Mat4d, fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhZo(res, fov, width, height, near, far)
-        else -> perspectiveFovRhZo(res, fov, width, height, near, far)
-    }
+    fun perspectiveFovZo(fov: Double, width: Double, height: Double, near: Double, far: Double, res: Mat4d): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhZo(fov, width, height, near, far, res)
+                else -> perspectiveFovRhZo(fov, width, height, near, far, res)
+            }
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1746,10 +1825,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovZo(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhZo(Mat4d(), fov, width, height, near, far)
-        else -> perspectiveFovRhZo(Mat4d(), fov, width, height, near, far)
-    }
+    fun perspectiveFovZo(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhZo(fov, width, height, near, far, Mat4d())
+                else -> perspectiveFovRhZo(fov, width, height, near, far, Mat4d())
+            }
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1762,10 +1842,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovZo(res: Mat4d, fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhZo(res, fov, size.x.d, size.y.d, near, far)
-        else -> perspectiveFovRhZo(res, fov, size.x.d, size.y.d, near, far)
-    }
+    fun perspectiveFovZo(fov: Double, size: Vec2t<*>, near: Double, far: Double, res: Mat4d): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhZo(fov, size.x.d, size.y.d, near, far, res)
+                else -> perspectiveFovRhZo(fov, size.x.d, size.y.d, near, far, res)
+            }
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1777,10 +1858,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovZo(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhZo(Mat4d(), fov, size.x.d, size.y.d, near, far)
-        else -> perspectiveFovRhZo(Mat4d(), fov, size.x.d, size.y.d, near, far)
-    }
+    fun perspectiveFovZo(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhZo(fov, size.x.d, size.y.d, near, far, Mat4d())
+                else -> perspectiveFovRhZo(fov, size.x.d, size.y.d, near, far, Mat4d())
+            }
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -1794,10 +1876,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovNo(res: Mat4d, fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhNo(res, fov, width, height, near, far)
-        else -> perspectiveFovRhNo(res, fov, width, height, near, far)
-    }
+    fun perspectiveFovNo(fov: Double, width: Double, height: Double, near: Double, far: Double, res: Mat4d): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhNo(fov, width, height, near, far, res)
+                else -> perspectiveFovRhNo(fov, width, height, near, far, res)
+            }
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -1810,10 +1893,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovNo(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhNo(Mat4d(), fov, width, height, near, far)
-        else -> perspectiveFovRhNo(Mat4d(), fov, width, height, near, far)
-    }
+    fun perspectiveFovNo(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhNo(fov, width, height, near, far, Mat4d())
+                else -> perspectiveFovRhNo(fov, width, height, near, far, Mat4d())
+            }
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -1826,10 +1910,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovNo(res: Mat4d, fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhNo(res, fov, size.x.d, size.y.d, near, far)
-        else -> perspectiveFovRhNo(res, fov, size.x.d, size.y.d, near, far)
-    }
+    fun perspectiveFovNo(fov: Double, size: Vec2t<*>, near: Double, far: Double, res: Mat4d): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhNo(fov, size.x.d, size.y.d, near, far, res)
+                else -> perspectiveFovRhNo(fov, size.x.d, size.y.d, near, far, res)
+            }
 
     /** Builds a perspective projection matrix based on a field of view using left-handed coordinates if GLM_COORDINATE_SYSTEM is LEFT_HANDED or right-handed coordinates otherwise.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -1841,10 +1926,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovNo(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhNo(Mat4d(), fov, size.x.d, size.y.d, near, far)
-        else -> perspectiveFovRhNo(Mat4d(), fov, size.x.d, size.y.d, near, far)
-    }
+    fun perspectiveFovNo(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> perspectiveFovLhNo(fov, size.x.d, size.y.d, near, far, Mat4d())
+                else -> perspectiveFovRhNo(fov, size.x.d, size.y.d, near, far, Mat4d())
+            }
 
     /** Builds a right handed perspective projection matrix based on a field of view.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1859,10 +1945,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRh(res: Mat4d, fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(res, fov, width, height, near, far)
-        else -> perspectiveFovRhNo(res, fov, width, height, near, far)
-    }
+    fun perspectiveFovRh(fov: Double, width: Double, height: Double, near: Double, far: Double, res: Mat4d): Mat4d =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(fov, width, height, near, far, res)
+                else -> perspectiveFovRhNo(fov, width, height, near, far, res)
+            }
 
     /** Builds a right handed perspective projection matrix based on a field of view.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1876,10 +1963,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRh(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(Mat4d(), fov, width, height, near, far)
-        else -> perspectiveFovRhNo(Mat4d(), fov, width, height, near, far)
-    }
+    fun perspectiveFovRh(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(fov, width, height, near, far, Mat4d())
+                else -> perspectiveFovRhNo(fov, width, height, near, far, Mat4d())
+            }
 
     /** Builds a right handed perspective projection matrix based on a field of view.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1893,10 +1981,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRh(res: Mat4d, fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(res, fov, size.x.d, size.y.d, near, far)
-        else -> perspectiveFovRhNo(res, fov, size.x.d, size.y.d, near, far)
-    }
+    fun perspectiveFovRh(fov: Double, size: Vec2t<*>, near: Double, far: Double, res: Mat4d): Mat4d =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(fov, size.x.d, size.y.d, near, far, res)
+                else -> perspectiveFovRhNo(fov, size.x.d, size.y.d, near, far, res)
+            }
 
     /** Builds a right handed perspective projection matrix based on a field of view.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1909,10 +1998,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovRh(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(Mat4d(), fov, size.x.d, size.y.d, near, far)
-        else -> perspectiveFovRhNo(Mat4d(), fov, size.x.d, size.y.d, near, far)
-    }
+    fun perspectiveFovRh(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(fov, size.x.d, size.y.d, near, far, Mat4d())
+                else -> perspectiveFovRhNo(fov, size.x.d, size.y.d, near, far, Mat4d())
+            }
 
     /** Builds a left handed perspective projection matrix based on a field of view.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1927,10 +2017,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLh(res: Mat4d, fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(res, fov, width, height, near, far)
-        else -> perspectiveFovLhNo(res, fov, width, height, near, far)
-    }
+    fun perspectiveFovLh(fov: Double, width: Double, height: Double, near: Double, far: Double, res: Mat4d): Mat4d =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(fov, width, height, near, far, res)
+                else -> perspectiveFovLhNo(fov, width, height, near, far, res)
+            }
 
     /** Builds a left handed perspective projection matrix based on a field of view.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1944,10 +2035,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLh(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(Mat4d(), fov, width, height, near, far)
-        else -> perspectiveFovLhNo(Mat4d(), fov, width, height, near, far)
-    }
+    fun perspectiveFovLh(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(fov, width, height, near, far, Mat4d())
+                else -> perspectiveFovLhNo(fov, width, height, near, far, Mat4d())
+            }
 
     /** Builds a left handed perspective projection matrix based on a field of view.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1961,10 +2053,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLh(res: Mat4d, fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(res, fov, size.x.d, size.y.d, near, far)
-        else -> perspectiveFovLhNo(res, fov, size.x.d, size.y.d, near, far)
-    }
+    fun perspectiveFovLh(fov: Double, size: Vec2t<*>, near: Double, far: Double, res: Mat4d): Mat4d =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(fov, size.x.d, size.y.d, near, far, res)
+                else -> perspectiveFovLhNo(fov, size.x.d, size.y.d, near, far, res)
+            }
 
     /** Builds a left handed perspective projection matrix based on a field of view.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -1977,10 +2070,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFovLh(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(Mat4d(), fov, size.x.d, size.y.d, near, far)
-        else -> perspectiveFovLhNo(Mat4d(), fov, size.x.d, size.y.d, near, far)
-    }
+    fun perspectiveFovLh(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(fov, size.x.d, size.y.d, near, far, Mat4d())
+                else -> perspectiveFovLhNo(fov, size.x.d, size.y.d, near, far, Mat4d())
+            }
 
     /** Builds a perspective projection matrix based on a field of view and the default handedness and default near and far clip planes definition.
      *  To change default handedness use LEFT_HANDED. To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -1994,16 +2088,17 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFov(res: Mat4d, fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(res, fov, width, height, near, far)
-            else -> perspectiveFovLhNo(res, fov, width, height, near, far)
-        }
-        else -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(res, fov, width, height, near, far)
-            else -> perspectiveFovRhNo(res, fov, width, height, near, far)
-        }
-    }
+    fun perspectiveFov(fov: Double, width: Double, height: Double, near: Double, far: Double, res: Mat4d): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(fov, width, height, near, far, res)
+                    else -> perspectiveFovLhNo(fov, width, height, near, far, res)
+                }
+                else -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(fov, width, height, near, far, res)
+                    else -> perspectiveFovRhNo(fov, width, height, near, far, res)
+                }
+            }
 
     /** Builds a perspective projection matrix based on a field of view and the default handedness and default near and far clip planes definition.
      *  To change default handedness use LEFT_HANDED. To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -2016,16 +2111,17 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFov(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(Mat4d(), fov, width, height, near, far)
-            else -> perspectiveFovLhNo(Mat4d(), fov, width, height, near, far)
-        }
-        else -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(Mat4d(), fov, width, height, near, far)
-            else -> perspectiveFovRhNo(Mat4d(), fov, width, height, near, far)
-        }
-    }
+    fun perspectiveFov(fov: Double, width: Double, height: Double, near: Double, far: Double): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(fov, width, height, near, far, Mat4d())
+                    else -> perspectiveFovLhNo(fov, width, height, near, far, Mat4d())
+                }
+                else -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(fov, width, height, near, far, Mat4d())
+                    else -> perspectiveFovRhNo(fov, width, height, near, far, Mat4d())
+                }
+            }
 
     /** Builds a perspective projection matrix based on a field of view and the default handedness and default near and far clip planes definition.
      *  To change default handedness use LEFT_HANDED. To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -2038,16 +2134,17 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFov(res: Mat4d, fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(res, fov, size.x.d, size.y.d, near, far)
-            else -> perspectiveFovLhNo(res, fov, size.x.d, size.y.d, near, far)
-        }
-        else -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(res, fov, size.x.d, size.y.d, near, far)
-            else -> perspectiveFovRhNo(res, fov, size.x.d, size.y.d, near, far)
-        }
-    }
+    fun perspectiveFov(fov: Double, size: Vec2t<*>, near: Double, far: Double, res: Mat4d): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(fov, size.x.d, size.y.d, near, far, res)
+                    else -> perspectiveFovLhNo(fov, size.x.d, size.y.d, near, far, res)
+                }
+                else -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(fov, size.x.d, size.y.d, near, far, res)
+                    else -> perspectiveFovRhNo(fov, size.x.d, size.y.d, near, far, res)
+                }
+            }
 
     /** Builds a perspective projection matrix based on a field of view and the default handedness and default near and far clip planes definition.
      *  To change default handedness use LEFT_HANDED. To change default near and far clip planes definition use ZERO_TO_ONE.
@@ -2059,16 +2156,17 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun perspectiveFov(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(Mat4d(), fov, size.x.d, size.y.d, near, far)
-            else -> perspectiveFovLhNo(Mat4d(), fov, size.x.d, size.y.d, near, far)
-        }
-        else -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(Mat4d(), fov, size.x.d, size.y.d, near, far)
-            else -> perspectiveFovRhNo(Mat4d(), fov, size.x.d, size.y.d, near, far)
-        }
-    }
+    fun perspectiveFov(fov: Double, size: Vec2t<*>, near: Double, far: Double): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovLhZo(fov, size.x.d, size.y.d, near, far, Mat4d())
+                    else -> perspectiveFovLhNo(fov, size.x.d, size.y.d, near, far, Mat4d())
+                }
+                else -> when (GLM_DEPTH_CLIP_SPACE) {
+                    GlmDepthClipSpace.ZERO_TO_ONE -> perspectiveFovRhZo(fov, size.x.d, size.y.d, near, far, Mat4d())
+                    else -> perspectiveFovRhNo(fov, size.x.d, size.y.d, near, far, Mat4d())
+                }
+            }
 
     /** Creates a matrix for a left handed, symmetric perspective-view frustum with far plane at infinite.
      *
@@ -2079,7 +2177,7 @@ interface gtcMatrixPerspective {
      *
      * @see gtc_matrix_transform
      */
-    fun infinitePerspectiveLh(res: Mat4d, fovY: Double, aspect: Double, near: Double): Mat4d {
+    fun infinitePerspectiveLh(fovY: Double, aspect: Double, near: Double, res: Mat4d): Mat4d {
 
         val range = tan(fovY / 2.0) * near
         val left = -range * aspect
@@ -2104,7 +2202,8 @@ interface gtcMatrixPerspective {
      *
      * @see gtc_matrix_transform
      */
-    fun infinitePerspectiveLh(fovY: Double, aspect: Double, near: Double): Mat4d = infinitePerspectiveLh(Mat4d(), fovY, aspect, near)
+    fun infinitePerspectiveLh(fovY: Double, aspect: Double, near: Double): Mat4d =
+            infinitePerspectiveLh(fovY, aspect, near, Mat4d())
 
     /** Creates a matrix for a right handed, symmetric perspective-view frustum with far plane at infinite.
      *
@@ -2115,7 +2214,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun infinitePerspectiveRh(res: Mat4d, fovY: Double, aspect: Double, near: Double): Mat4d {
+    fun infinitePerspectiveRh(fovY: Double, aspect: Double, near: Double, res: Mat4d): Mat4d {
 
         val range = tan(fovY / 2.0) * near
         val left = -range * aspect
@@ -2140,7 +2239,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun infinitePerspectiveRh(fovY: Double, aspect: Double, near: Double): Mat4d = infinitePerspectiveRh(Mat4d(), fovY, aspect, near)
+    fun infinitePerspectiveRh(fovY: Double, aspect: Double, near: Double): Mat4d =
+            infinitePerspectiveRh(fovY, aspect, near, Mat4d())
 
     /** Creates a matrix for a symmetric perspective-view frustum with far plane at infinite with default handedness.
      *
@@ -2151,10 +2251,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun infinitePerspective(res: Mat4d, fovY: Double, aspect: Double, near: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> infinitePerspectiveLh(res, fovY, aspect, near)
-        else -> infinitePerspectiveRh(res, fovY, aspect, near)
-    }
+    fun infinitePerspective(fovY: Double, aspect: Double, near: Double, res: Mat4d): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> infinitePerspectiveLh(fovY, aspect, near, res)
+                else -> infinitePerspectiveRh(fovY, aspect, near, res)
+            }
 
     /** Creates a matrix for a symmetric perspective-view frustum with far plane at infinite with default handedness.
      *
@@ -2165,10 +2266,11 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun infinitePerspective(fovY: Double, aspect: Double, near: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> infinitePerspectiveLh(Mat4d(), fovY, aspect, near)
-        else -> infinitePerspectiveRh(Mat4d(), fovY, aspect, near)
-    }
+    fun infinitePerspective(fovY: Double, aspect: Double, near: Double): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> infinitePerspectiveLh(fovY, aspect, near, Mat4d())
+                else -> infinitePerspectiveRh(fovY, aspect, near, Mat4d())
+            }
 
     /** Creates a matrix for a symmetric perspective-view frustum with far plane at infinite for graphics hardware that doesn't support depth clamping.
      *
@@ -2181,7 +2283,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun tweakedInfinitePerspective(res: Mat4d, fovY: Double, aspect: Double, near: Double): Mat4d = tweakedInfinitePerspective(res, fovY, aspect, near, glm.epsilon)
+    fun tweakedInfinitePerspective(fovY: Double, aspect: Double, near: Double, res: Mat4d): Mat4d =
+            tweakedInfinitePerspective(fovY, aspect, near, glm.epsilon, res)
 
     /** Creates a matrix for a symmetric perspective-view frustum with far plane at infinite for graphics hardware that doesn't support depth clamping.
      *
@@ -2193,7 +2296,7 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun tweakedInfinitePerspective(res: Mat4d, fovY: Double, aspect: Double, near: Double, ep: Double): Mat4d {
+    fun tweakedInfinitePerspective(fovY: Double, aspect: Double, near: Double, ep: Double, res: Mat4d): Mat4d {
 
         val range = tan(fovY / 2.0) * near
         val left = -range * aspect
@@ -2220,7 +2323,8 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun tweakedInfinitePerspective(fovY: Double, aspect: Double, near: Double): Mat4d = tweakedInfinitePerspective(Mat4d(), fovY, aspect, near, glm.epsilon)
+    fun tweakedInfinitePerspective(fovY: Double, aspect: Double, near: Double): Mat4d =
+            tweakedInfinitePerspective(fovY, aspect, near, glm.epsilon, Mat4d())
 
     /** Creates a matrix for a symmetric perspective-view frustum with far plane at infinite for graphics hardware that doesn't support depth clamping.
      *
@@ -2232,5 +2336,6 @@ interface gtcMatrixPerspective {
      *
      *  @see gtc_matrix_transform
      */
-    fun tweakedInfinitePerspective(fovY: Double, aspect: Double, near: Double, ep: Double): Mat4d = tweakedInfinitePerspective(Mat4d(), fovY, aspect, near, ep)
+    fun tweakedInfinitePerspective(fovY: Double, aspect: Double, near: Double, ep: Double): Mat4d =
+            tweakedInfinitePerspective(fovY, aspect, near, ep, Mat4d())
 }

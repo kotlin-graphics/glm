@@ -15,7 +15,6 @@ import glm_.mat4x3.Mat4x3t
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.quat.QuatD
-import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -24,17 +23,12 @@ import glm_.vec3.Vec3t
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
 import kool.Ptr
-import kool.DoubleBuffer
 import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetDouble
 import org.lwjgl.system.MemoryUtil.memPutDouble
-import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
-import java.util.*
-import kotlin.math.abs
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -483,25 +477,25 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     }
 
     @JvmOverloads
-    fun rotateX(angle: Double, res: Mat3d = Mat3d()) = glm.rotateX(res, this, angle)
+    fun rotateX(angle: Double, res: Mat3d = Mat3d()) = glm.rotateX(this, angle, res)
 
     @JvmOverloads
-    fun rotateY(angle: Double, res: Mat3d = Mat3d()) = glm.rotateY(res, this, angle)
+    fun rotateY(angle: Double, res: Mat3d = Mat3d()) = glm.rotateY(this, angle, res)
 
     @JvmOverloads
-    fun rotateZ(angle: Double, res: Mat3d = Mat3d()) = glm.rotateZ(res, this, angle)
+    fun rotateZ(angle: Double, res: Mat3d = Mat3d()) = glm.rotateZ(this, angle, res)
 
     @JvmOverloads
-    fun rotateXYZ(angle: Vec3d, res: Mat3d = Mat3d()) = glm.rotateXYZ(res, this, angle.x, angle.y, angle.z)
+    fun rotateXYZ(angle: Vec3d, res: Mat3d = Mat3d()) = glm.rotateXYZ(this, angle.x, angle.y, angle.z, res)
 
     @JvmOverloads
-    fun rotateXYZ(angleX: Double, angleY: Double, angleZ: Double, res: Mat3d = Mat3d()) = glm.rotateXYZ(res, this, angleX, angleY, angleZ)
+    fun rotateXYZ(angleX: Double, angleY: Double, angleZ: Double, res: Mat3d = Mat3d()) = glm.rotateXYZ(this, angleX, angleY, angleZ, res)
 
-    fun rotateXassign(angle: Double) = glm.rotateX(this, this, angle)
-    fun rotateYassign(angle: Double) = glm.rotateY(this, this, angle)
-    fun rotateZassign(angle: Double) = glm.rotateZ(this, this, angle)
-    fun rotateXYZassign(angle: Vec3d) = glm.rotateXYZ(this, this, angle.x, angle.y, angle.z)
-    fun rotateXYZassign(angleX: Double, angleY: Double, angleZ: Double) = glm.rotateXYZ(this, this, angleX, angleY, angleZ)
+    fun rotateXassign(angle: Double) = glm.rotateX(this, angle, this)
+    fun rotateYassign(angle: Double) = glm.rotateY(this, angle, this)
+    fun rotateZassign(angle: Double) = glm.rotateZ(this, angle, this)
+    fun rotateXYZassign(angle: Vec3d) = glm.rotateXYZ(this, angle.x, angle.y, angle.z, this)
+    fun rotateXYZassign(angleX: Double, angleY: Double, angleZ: Double) = glm.rotateXYZ(this, angleX, angleY, angleZ, this)
 
 
 //    infix fun isEqual(b: Mat3d) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2])

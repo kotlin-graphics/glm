@@ -7,28 +7,11 @@ import glm_.shouldEqual
 import glm_.vec3.Vec3
 import io.kotlintest.specs.StringSpec
 
-class ext_quaternionGeometric : StringSpec() {
+class test_ext_quaternionGeometric : StringSpec() {
 
     init {
 
-//        float const Epsilon = 0.001f [JVM] not really useful
-
-        "test angle"        {
-
-            run {
-                val Q = Quat(Vec3(1, 0, 0), Vec3(0, 1, 0))
-                val A = glm.angle(Q).deg
-                A shouldEqual 90f
-            }
-
-            run {
-                val Q = Quat(Vec3(0, 1, 0), Vec3(1, 0, 0))
-                val A = glm.angle(Q).deg
-                A shouldEqual 90f
-            }
-        }
-
-        "test length" {
+        "length" {
 
             run {
                 val A = Quat(1, 0, 0, 0).length()
@@ -46,7 +29,7 @@ class ext_quaternionGeometric : StringSpec() {
             }
         }
 
-        "test normalize"        {
+        "normalize"        {
 
             run {
                 val A = Quat(1, 0, 0, 0)
@@ -60,5 +43,14 @@ class ext_quaternionGeometric : StringSpec() {
                 A shouldEqual N
             }
         }
+
+        "dot" {
+            val A = Quat(1, 0, 0, 0)
+            val B = Quat(1, 0, 0, 0)
+            val C = A dot B
+            C.shouldEqual(1f)
+        }
+
+        "cross" {}
     }
 }

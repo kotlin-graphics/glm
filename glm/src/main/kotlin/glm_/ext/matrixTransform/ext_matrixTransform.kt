@@ -1,4 +1,4 @@
-package glm_.gtc.matrixTransform
+package glm_.ext.matrixTransform
 
 import glm_.detail.GLM_COORDINATE_SYSTEM
 import glm_.detail.GlmCoordinateSystem
@@ -12,7 +12,7 @@ import glm_.vec4.Vec4i
 import kotlin.math.sqrt
 
 
-interface gtcMatrixTransform {
+interface ext_matrixTransform {
 
     /** Define a picking region
      *
@@ -24,7 +24,7 @@ interface gtcMatrixTransform {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluPickMatrix.xml">gluPickMatrix man page</a>
      */
-    fun pickMatrix(res: Mat4, center: Vec2, delta: Vec2, viewport: Vec4i): Mat4 {
+    fun pickMatrix(center: Vec2, delta: Vec2, viewport: Vec4i, res: Mat4): Mat4 {
 
         assert(delta.x > 0f && delta.y > 0f)
         res put 1f
@@ -69,7 +69,8 @@ interface gtcMatrixTransform {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluPickMatrix.xml">gluPickMatrix man page</a>
      */
-    fun pickMatrix(center: Vec2, delta: Vec2, viewport: Vec4i): Mat4 = pickMatrix(Mat4(), center, delta, viewport)
+    fun pickMatrix(center: Vec2, delta: Vec2, viewport: Vec4i): Mat4 =
+            pickMatrix(center, delta, viewport, Mat4())
 
     /** Build a right handed look at view matrix.
      *
@@ -81,7 +82,7 @@ interface gtcMatrixTransform {
      *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      */
-    fun lookAtRh(res: Mat4, eye: Vec3, center: Vec3, up: Vec3): Mat4 {
+    fun lookAtRh(eye: Vec3, center: Vec3, up: Vec3, res: Mat4): Mat4 {
         // f = normalize(center - eye)
         var fX = center.x - eye.x
         var fY = center.y - eye.y
@@ -131,7 +132,8 @@ interface gtcMatrixTransform {
      *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      */
-    fun lookAtRh(eye: Vec3, center: Vec3, up: Vec3): Mat4 = lookAtRh(Mat4(), eye, center, up)
+    fun lookAtRh(eye: Vec3, center: Vec3, up: Vec3): Mat4 =
+            lookAtRh(eye, center, up, Mat4())
 
     /** Build a left handed look at view matrix.
      *
@@ -143,7 +145,7 @@ interface gtcMatrixTransform {
      *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      */
-    fun lookAtLh(res: Mat4, eye: Vec3, center: Vec3, up: Vec3): Mat4 {
+    fun lookAtLh(eye: Vec3, center: Vec3, up: Vec3, res: Mat4): Mat4 {
 
         // f = normalize(center - eye)
         var fX = center.x - eye.x
@@ -194,7 +196,8 @@ interface gtcMatrixTransform {
      *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      */
-    fun lookAtLh(eye: Vec3, center: Vec3, up: Vec3): Mat4 = lookAtLh(Mat4(), eye, center, up)
+    fun lookAtLh(eye: Vec3, center: Vec3, up: Vec3): Mat4 =
+            lookAtLh(eye, center, up, Mat4())
 
     /** Build a look at view matrix based on the default handedness.
      *
@@ -207,10 +210,11 @@ interface gtcMatrixTransform {
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluLookAt.xml">gluLookAt man page</a>
      */
-    fun lookAt(res: Mat4, eye: Vec3, center: Vec3, up: Vec3): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> lookAtLh(res, eye, center, up)
-        else -> lookAtRh(res, eye, center, up)
-    }
+    fun lookAt(eye: Vec3, center: Vec3, up: Vec3, res: Mat4): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> lookAtLh(eye, center, up, res)
+                else -> lookAtRh(eye, center, up, res)
+            }
 
     /** Build a look at view matrix based on the default handedness.
      *
@@ -223,10 +227,11 @@ interface gtcMatrixTransform {
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluLookAt.xml">gluLookAt man page</a>
      */
-    fun lookAt(eye: Vec3, center: Vec3, up: Vec3): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> lookAtLh(Mat4(), eye, center, up)
-        else -> lookAtRh(Mat4(), eye, center, up)
-    }
+    fun lookAt(eye: Vec3, center: Vec3, up: Vec3): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> lookAtLh(eye, center, up, Mat4())
+                else -> lookAtRh(eye, center, up, Mat4())
+            }
 
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -244,7 +249,7 @@ interface gtcMatrixTransform {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluPickMatrix.xml">gluPickMatrix man page</a>
      */
-    fun pickMatrix(res: Mat4d, center: Vec2d, delta: Vec2d, viewport: Vec4i): Mat4d {
+    fun pickMatrix(center: Vec2d, delta: Vec2d, viewport: Vec4i, res: Mat4d): Mat4d {
 
         assert(delta.x > 0.0 && delta.y > 0.0)
         res put 1.0
@@ -289,7 +294,8 @@ interface gtcMatrixTransform {
      *  @see gtc_matrix_transform
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluPickMatrix.xml">gluPickMatrix man page</a>
      */
-    fun pickMatrix(center: Vec2d, delta: Vec2d, viewport: Vec4i): Mat4d = pickMatrix(Mat4d(), center, delta, viewport)
+    fun pickMatrix(center: Vec2d, delta: Vec2d, viewport: Vec4i): Mat4d =
+            pickMatrix(center, delta, viewport, Mat4d())
 
     /** Build a right handed look at view matrix.
      *
@@ -301,7 +307,7 @@ interface gtcMatrixTransform {
      *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      */
-    fun lookAtRh(res: Mat4d, eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d {
+    fun lookAtRh(eye: Vec3d, center: Vec3d, up: Vec3d, res: Mat4d): Mat4d {
         // f = normalize(center - eye)
         var fX = center.x - eye.x
         var fY = center.y - eye.y
@@ -351,7 +357,8 @@ interface gtcMatrixTransform {
      *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      */
-    fun lookAtRh(eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d = lookAtRh(Mat4d(), eye, center, up)
+    fun lookAtRh(eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d =
+            lookAtRh(eye, center, up, Mat4d())
 
     /** Build a left handed look at view matrix.
      *
@@ -363,7 +370,7 @@ interface gtcMatrixTransform {
      *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      */
-    fun lookAtLh(res: Mat4d, eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d {
+    fun lookAtLh(eye: Vec3d, center: Vec3d, up: Vec3d, res: Mat4d): Mat4d {
 
         // f = normalize(center - eye)
         var fX = center.x - eye.x
@@ -414,7 +421,8 @@ interface gtcMatrixTransform {
      *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      */
-    fun lookAtLh(eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d = lookAtLh(Mat4d(), eye, center, up)
+    fun lookAtLh(eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d =
+            lookAtLh(eye, center, up, Mat4d())
 
     /** Build a look at view matrix based on the default handedness.
      *
@@ -427,10 +435,11 @@ interface gtcMatrixTransform {
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluLookAt.xml">gluLookAt man page</a>
      */
-    fun lookAt(res: Mat4d, eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> lookAtLh(res, eye, center, up)
-        else -> lookAtRh(res, eye, center, up)
-    }
+    fun lookAt(eye: Vec3d, center: Vec3d, up: Vec3d, res: Mat4d): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> lookAtLh(eye, center, up, res)
+                else -> lookAtRh(eye, center, up, res)
+            }
 
     /** Build a look at view matrix based on the default handedness.
      *
@@ -443,8 +452,9 @@ interface gtcMatrixTransform {
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluLookAt.xml">gluLookAt man page</a>
      */
-    fun lookAt(eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> lookAtLh(Mat4d(), eye, center, up)
-        else -> lookAtRh(Mat4d(), eye, center, up)
-    }
+    fun lookAt(eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> lookAtLh(eye, center, up, Mat4d())
+                else -> lookAtRh(eye, center, up, Mat4d())
+            }
 }

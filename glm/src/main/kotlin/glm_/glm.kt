@@ -11,7 +11,10 @@ import glm_.ext.matrixRelational
 import glm_.func.*
 import glm_.func.common.*
 import glm_.gtc.gtcMatrixInverse
-import glm_.gtc.matrixTransform.*
+import glm_.ext.matrixTransform.*
+import glm_.ext.quaternion.ext_quaternionCommon
+import glm_.ext.quaternion.ext_quaternionTransform
+import glm_.ext.quaternion.ext_quaternionTrigonometric
 import glm_.gtx.*
 import glm_.quat.gtcQuaternion
 import glm_.quat.gtxQuaternion
@@ -37,17 +40,20 @@ object glm :
         func_trigonometric,
 
         // matrix transform
-        gtcMatrixFrustum,
+        ext_matrixTransform_frustum,
         gtxMatrixOperation,
-        gtcMatrixOrtho,
-        gtcMatrixPerspective,
-        gtcMatrixProject,
-        gtcMatrixRotate,
-        gtcMatrixScale,
-        gtcMatrixTransform,
-        gtcMatrixTranslate,
+        ext_matrixTransform_ortho,
+        ext_matrixTransform_perspective,
+        ext_matrixTransform_project,
+        ext_matrixTransform_rotate,
+        ext_matrixTransform_scale,
+        ext_matrixTransform,
+        ext_matrixTransform_translate,
 
         gtcQuaternion,
+        ext_quaternionCommon,
+        ext_quaternionTransform,
+        ext_quaternionTrigonometric,
 
         matrix_interpolation,
 

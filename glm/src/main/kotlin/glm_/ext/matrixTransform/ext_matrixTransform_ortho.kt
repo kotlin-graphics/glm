@@ -1,4 +1,4 @@
-package glm_.gtc.matrixTransform
+package glm_.ext.matrixTransform
 
 import glm_.detail.GLM_COORDINATE_SYSTEM
 import glm_.detail.GLM_DEPTH_CLIP_SPACE
@@ -7,7 +7,7 @@ import glm_.detail.GlmDepthClipSpace
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 
-interface gtcMatrixOrtho {
+interface ext_matrixTransform_ortho {
 
     /** Creates a matrix for projecting two-dimensional coordinates onto the screen.
      *
@@ -15,7 +15,7 @@ interface gtcMatrixOrtho {
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluOrtho2D.xml">gluOrtho2D man page</a>
      */
-    fun ortho(res: Mat4, left: Float, right: Float, bottom: Float, top: Float): Mat4 {
+    fun ortho(left: Float, right: Float, bottom: Float, top: Float, res: Mat4): Mat4 {
         res put 1f
         res[0, 0] = 2f / (right - left)
         res[1, 1] = 2f / (top - bottom)
@@ -31,7 +31,8 @@ interface gtcMatrixOrtho {
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluOrtho2D.xml">gluOrtho2D man page</a>
      */
-    fun ortho(left: Float, right: Float, bottom: Float, top: Float): Mat4 = ortho(Mat4(), left, right, bottom, top)
+    fun ortho(left: Float, right: Float, bottom: Float, top: Float): Mat4 =
+            ortho(left, right, bottom, top, Mat4())
 
     /** Creates a matrix for an orthographic parallel viewing volume, using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -39,7 +40,7 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float)
      */
-    fun orthoLhZo(res: Mat4, left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 {
+    fun orthoLhZo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float, res: Mat4): Mat4 {
         res put 1f
         res[0, 0] = 2f / (right - left)
         res[1, 1] = 2f / (top - bottom)
@@ -56,7 +57,8 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float)
      */
-    fun orthoLhZo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 = orthoLhZo(Mat4(), left, right, bottom, top, zNear, zFar)
+    fun orthoLhZo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 =
+            orthoLhZo(left, right, bottom, top, zNear, zFar, Mat4())
 
     /** Creates a matrix for an orthographic parallel viewing volume using right-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -64,7 +66,7 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float)
      */
-    fun orthoLhNo(res: Mat4, left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 {
+    fun orthoLhNo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float, res: Mat4): Mat4 {
         res put 1f
         res[0, 0] = 2f / (right - left)
         res[1, 1] = 2f / (top - bottom)
@@ -81,7 +83,8 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float)
      */
-    fun orthoLhNo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 = orthoLhNo(Mat4(), left, right, bottom, top, zNear, zFar)
+    fun orthoLhNo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 =
+            orthoLhNo(left, right, bottom, top, zNear, zFar, Mat4())
 
     /** Creates a matrix for an orthographic parallel viewing volume, using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -89,7 +92,7 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float)
      */
-    fun orthoRhZo(res: Mat4, left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 {
+    fun orthoRhZo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float, res: Mat4): Mat4 {
         res put 1f
         res[0, 0] = 2f / (right - left)
         res[1, 1] = 2f / (top - bottom)
@@ -106,7 +109,8 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float)
      */
-    fun orthoRhZo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 = orthoRhZo(Mat4(), left, right, bottom, top, zNear, zFar)
+    fun orthoRhZo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 =
+            orthoRhZo(left, right, bottom, top, zNear, zFar, Mat4())
 
     /** Creates a matrix for an orthographic parallel viewing volume, using right-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -114,7 +118,7 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float)
      */
-    fun orthoRhNo(res: Mat4, left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 {
+    fun orthoRhNo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float, res: Mat4): Mat4 {
         res put 1f
         res[0, 0] = 2f / (right - left)
         res[1, 1] = 2f / (top - bottom)
@@ -131,7 +135,8 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float)
      */
-    fun orthoRhNo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 = orthoRhNo(Mat4(), left, right, bottom, top, zNear, zFar)
+    fun orthoRhNo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 =
+            orthoRhNo(left, right, bottom, top, zNear, zFar, Mat4())
 
     /** Creates a matrix for an orthographic parallel viewing volume, using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -139,10 +144,11 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float)
      */
-    fun orthoZo(res: Mat4, left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> orthoLhZo(res, left, right, bottom, top, zNear, zFar)
-        else -> orthoRhZo(res, left, right, bottom, top, zNear, zFar)
-    }
+    fun orthoZo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float, res: Mat4): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> orthoLhZo(left, right, bottom, top, zNear, zFar, res)
+                else -> orthoRhZo(left, right, bottom, top, zNear, zFar, res)
+            }
 
     /** Creates a matrix for an orthographic parallel viewing volume, using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -150,10 +156,11 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float)
      */
-    fun orthoZo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> orthoLhZo(Mat4(), left, right, bottom, top, zNear, zFar)
-        else -> orthoRhZo(Mat4(), left, right, bottom, top, zNear, zFar)
-    }
+    fun orthoZo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> orthoLhZo(left, right, bottom, top, zNear, zFar, Mat4())
+                else -> orthoRhZo(left, right, bottom, top, zNear, zFar, Mat4())
+            }
 
     /** Creates a matrix for an orthographic parallel viewing volume, using left-handed coordinates if GLM_COORDINATE_SYSTEM
      *  is LEFT_HANDED or right-handed coordinates otherwise.
@@ -162,10 +169,11 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float)
      */
-    fun orthoNo(res: Mat4, left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> orthoLhNo(res, left, right, bottom, top, zNear, zFar)
-        else -> orthoRhNo(res, left, right, bottom, top, zNear, zFar)
-    }
+    fun orthoNo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float, res: Mat4): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> orthoLhNo(left, right, bottom, top, zNear, zFar, res)
+                else -> orthoRhNo(left, right, bottom, top, zNear, zFar, res)
+            }
 
     /** Creates a matrix for an orthographic parallel viewing volume, using left-handed coordinates if GLM_COORDINATE_SYSTEM
      *  is LEFT_HANDED or right-handed coordinates otherwise.
@@ -174,10 +182,11 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float)
      */
-    fun orthoNo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> orthoLhNo(Mat4(), left, right, bottom, top, zNear, zFar)
-        else -> orthoRhNo(Mat4(), left, right, bottom, top, zNear, zFar)
-    }
+    fun orthoNo(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> orthoLhNo(left, right, bottom, top, zNear, zFar, Mat4())
+                else -> orthoRhNo(left, right, bottom, top, zNear, zFar, Mat4())
+            }
 
     /** Creates a matrix for an orthographic parallel viewing volume, using left-handed coordinates.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -186,10 +195,11 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float)
      */
-    fun orthoLh(res: Mat4, left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> orthoLhZo(res, left, right, bottom, top, zNear, zFar)
-        else -> orthoLhNo(res, left, right, bottom, top, zNear, zFar)
-    }
+    fun orthoLh(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float, res: Mat4): Mat4 =
+            when (GLM_DEPTH_CLIP_SPACE) {
+                GlmDepthClipSpace.ZERO_TO_ONE -> orthoLhZo(left, right, bottom, top, zNear, zFar, res)
+                else -> orthoLhNo(left, right, bottom, top, zNear, zFar, res)
+            }
 
     /** Creates a matrix for an orthographic parallel viewing volume, using left-handed coordinates.
      *  If GLM_DEPTH_CLIP_SPACE is ZERO_TO_ONE, the near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -199,8 +209,8 @@ interface gtcMatrixOrtho {
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float)
      */
     fun orthoLh(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> orthoLhZo(Mat4(), left, right, bottom, top, zNear, zFar)
-        else -> orthoLhNo(Mat4(), left, right, bottom, top, zNear, zFar)
+        GlmDepthClipSpace.ZERO_TO_ONE -> orthoLhZo(left, right, bottom, top, zNear, zFar, Mat4())
+        else -> orthoLhNo(left, right, bottom, top, zNear, zFar, Mat4())
     }
 
     /** Creates a matrix for an orthographic parallel viewing volume, using right-handed coordinates.
@@ -210,9 +220,9 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm:ortho(left. Float, right: Float, bottom: Float, top: Float)
      */
-    fun orthoRh(res: Mat4, left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> orthoRhZo(res, left, right, bottom, top, zNear, zFar)
-        else -> orthoRhNo(res, left, right, bottom, top, zNear, zFar)
+    fun orthoRh(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float, res: Mat4): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
+        GlmDepthClipSpace.ZERO_TO_ONE -> orthoRhZo(left, right, bottom, top, zNear, zFar, res)
+        else -> orthoRhNo(left, right, bottom, top, zNear, zFar, res)
     }
 
     /** Creates a matrix for an orthographic parallel viewing volume, using right-handed coordinates.
@@ -223,8 +233,8 @@ interface gtcMatrixOrtho {
      *  @see - glm:ortho(left. Float, right: Float, bottom: Float, top: Float)
      */
     fun orthoRh(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> orthoRhZo(Mat4(), left, right, bottom, top, zNear, zFar)
-        else -> orthoRhNo(Mat4(), left, right, bottom, top, zNear, zFar)
+        GlmDepthClipSpace.ZERO_TO_ONE -> orthoRhZo(left, right, bottom, top, zNear, zFar, Mat4())
+        else -> orthoRhNo(left, right, bottom, top, zNear, zFar, Mat4())
     }
 
     /** Creates a matrix for an orthographic parallel viewing volume, using the default handedness and default near and far clip planes definition.
@@ -234,14 +244,14 @@ interface gtcMatrixOrtho {
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glOrtho.xml">glOrtho man page</a>
      */
-    fun ortho(res: Mat4, left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
+    fun ortho(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float, res: Mat4): Mat4 = when (GLM_COORDINATE_SYSTEM) {
         GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> orthoLhZo(res, left, right, bottom, top, zNear, zFar)
-            else -> orthoLhNo(res, left, right, bottom, top, zNear, zFar)
+            GlmDepthClipSpace.ZERO_TO_ONE -> orthoLhZo(left, right, bottom, top, zNear, zFar, res)
+            else -> orthoLhNo(left, right, bottom, top, zNear, zFar, res)
         }
         else -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> orthoRhZo(res, left, right, bottom, top, zNear, zFar)
-            else -> orthoRhNo(res, left, right, bottom, top, zNear, zFar)
+            GlmDepthClipSpace.ZERO_TO_ONE -> orthoRhZo(left, right, bottom, top, zNear, zFar, res)
+            else -> orthoRhNo(left, right, bottom, top, zNear, zFar, res)
         }
     }
 
@@ -254,12 +264,12 @@ interface gtcMatrixOrtho {
      */
     fun ortho(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float): Mat4 = when (GLM_COORDINATE_SYSTEM) {
         GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> orthoLhZo(Mat4(), left, right, bottom, top, zNear, zFar)
-            else -> orthoLhNo(Mat4(), left, right, bottom, top, zNear, zFar)
+            GlmDepthClipSpace.ZERO_TO_ONE -> orthoLhZo(left, right, bottom, top, zNear, zFar, Mat4())
+            else -> orthoLhNo(left, right, bottom, top, zNear, zFar, Mat4())
         }
         else -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> orthoRhZo(Mat4(), left, right, bottom, top, zNear, zFar)
-            else -> orthoRhNo(Mat4(), left, right, bottom, top, zNear, zFar)
+            GlmDepthClipSpace.ZERO_TO_ONE -> orthoRhZo(left, right, bottom, top, zNear, zFar, Mat4())
+            else -> orthoRhNo(left, right, bottom, top, zNear, zFar, Mat4())
         }
     }
 
@@ -273,7 +283,7 @@ interface gtcMatrixOrtho {
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluOrtho2D.xml">gluOrtho2D man page</a>
      */
-    fun ortho(res: Mat4d, left: Double, right: Double, bottom: Double, top: Double): Mat4d {
+    fun ortho(left: Double, right: Double, bottom: Double, top: Double, res: Mat4d): Mat4d {
         res put 1.0
         res[0, 0] = 2.0 / (right - left)
         res[1, 1] = 2.0 / (top - bottom)
@@ -288,7 +298,8 @@ interface gtcMatrixOrtho {
      *  @see - glm.ortho(left: Float, right: Float, bottom: Float, top: Float, zNear: Float, zFar: Float)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluOrtho2D.xml">gluOrtho2D man page</a>
      */
-    fun ortho(left: Double, right: Double, bottom: Double, top: Double): Mat4d = ortho(Mat4d(), left, right, bottom, top)
+    fun ortho(left: Double, right: Double, bottom: Double, top: Double): Mat4d =
+            ortho(left, right, bottom, top, Mat4d())
 
     /** Creates a matrix for an orthographic parallel viewing volume, using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -296,7 +307,7 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Double, right: Double, bottom: Double, top: Double)
      */
-    fun orthoLhZo(res: Mat4d, left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d {
+    fun orthoLhZo(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double, res: Mat4d): Mat4d {
         res put 1.0
         res[0, 0] = 2.0 / (right - left)
         res[1, 1] = 2.0 / (top - bottom)
@@ -313,7 +324,8 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Double, right: Double, bottom: Double, top: Double)
      */
-    fun orthoLhZo(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d = orthoLhZo(Mat4d(), left, right, bottom, top, zNear, zFar)
+    fun orthoLhZo(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d =
+            orthoLhZo(left, right, bottom, top, zNear, zFar, Mat4d())
 
     /** Creates a matrix for an orthographic parallel viewing volume using right-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -321,7 +333,7 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Double, right: Double, bottom: Double, top: Double)
      */
-    fun orthoLhNo(res: Mat4d, left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d {
+    fun orthoLhNo(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double, res: Mat4d): Mat4d {
         res put 1.0
         res[0, 0] = 2.0 / (right - left)
         res[1, 1] = 2.0 / (top - bottom)
@@ -338,7 +350,8 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Double, right: Double, bottom: Double, top: Double)
      */
-    fun orthoLhNo(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d = orthoLhNo(Mat4d(), left, right, bottom, top, zNear, zFar)
+    fun orthoLhNo(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d =
+            orthoLhNo(left, right, bottom, top, zNear, zFar, Mat4d())
 
     /** Creates a matrix for an orthographic parallel viewing volume, using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -346,7 +359,7 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Double, right: Double, bottom: Double, top: Double)
      */
-    fun orthoRhZo(res: Mat4d, left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d {
+    fun orthoRhZo(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double, res: Mat4d): Mat4d {
         res put 1.0
         res[0, 0] = 2.0 / (right - left)
         res[1, 1] = 2.0 / (top - bottom)
@@ -363,7 +376,8 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Double, right: Double, bottom: Double, top: Double)
      */
-    fun orthoRhZo(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d = orthoRhZo(Mat4d(), left, right, bottom, top, zNear, zFar)
+    fun orthoRhZo(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d =
+            orthoRhZo(left, right, bottom, top, zNear, zFar, Mat4d())
 
     /** Creates a matrix for an orthographic parallel viewing volume, using right-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of -1 and +1 respectively. (OpenGL clip volume definition)
@@ -371,7 +385,7 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Double, right: Double, bottom: Double, top: Double)
      */
-    fun orthoRhNo(res: Mat4d, left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d {
+    fun orthoRhNo(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double, res: Mat4d): Mat4d {
         res put 1.0
         res[0, 0] = 2.0 / (right - left)
         res[1, 1] = 2.0 / (top - bottom)
@@ -388,7 +402,8 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Double, right: Double, bottom: Double, top: Double)
      */
-    fun orthoRhNo(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d = orthoRhNo(Mat4d(), left, right, bottom, top, zNear, zFar)
+    fun orthoRhNo(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d =
+            orthoRhNo(left, right, bottom, top, zNear, zFar, Mat4d())
 
     /** Creates a matrix for an orthographic parallel viewing volume, using left-handed coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -396,9 +411,9 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Double, right: Double, bottom: Double, top: Double)
      */
-    fun orthoZo(res: Mat4d, left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> orthoLhZo(res, left, right, bottom, top, zNear, zFar)
-        else -> orthoRhZo(res, left, right, bottom, top, zNear, zFar)
+    fun orthoZo(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double, res: Mat4d): Mat4d = when (GLM_COORDINATE_SYSTEM) {
+        GlmCoordinateSystem.LEFT_HANDED -> orthoLhZo(left, right, bottom, top, zNear, zFar, res)
+        else -> orthoRhZo(left, right, bottom, top, zNear, zFar, res)
     }
 
     /** Creates a matrix for an orthographic parallel viewing volume, using left-handed coordinates.
@@ -408,8 +423,8 @@ interface gtcMatrixOrtho {
      *  @see - glm.ortho(left: Double, right: Double, bottom: Double, top: Double)
      */
     fun orthoZo(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> orthoLhZo(Mat4d(), left, right, bottom, top, zNear, zFar)
-        else -> orthoRhZo(Mat4d(), left, right, bottom, top, zNear, zFar)
+        GlmCoordinateSystem.LEFT_HANDED -> orthoLhZo(left, right, bottom, top, zNear, zFar, Mat4d())
+        else -> orthoRhZo(left, right, bottom, top, zNear, zFar, Mat4d())
     }
 
     /** Creates a matrix for an orthographic parallel viewing volume, using left-handed coordinates if GLM_COORDINATE_SYSTEM
@@ -419,9 +434,9 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Double, right: Double, bottom: Double, top: Double)
      */
-    fun orthoNo(res: Mat4d, left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> orthoLhNo(res, left, right, bottom, top, zNear, zFar)
-        else -> orthoRhNo(res, left, right, bottom, top, zNear, zFar)
+    fun orthoNo(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double, res: Mat4d): Mat4d = when (GLM_COORDINATE_SYSTEM) {
+        GlmCoordinateSystem.LEFT_HANDED -> orthoLhNo(left, right, bottom, top, zNear, zFar, res)
+        else -> orthoRhNo(left, right, bottom, top, zNear, zFar, res)
     }
 
     /** Creates a matrix for an orthographic parallel viewing volume, using left-handed coordinates if GLM_COORDINATE_SYSTEM
@@ -432,8 +447,8 @@ interface gtcMatrixOrtho {
      *  @see - glm.ortho(left: Double, right: Double, bottom: Double, top: Double)
      */
     fun orthoNo(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> orthoLhNo(Mat4d(), left, right, bottom, top, zNear, zFar)
-        else -> orthoRhNo(Mat4d(), left, right, bottom, top, zNear, zFar)
+        GlmCoordinateSystem.LEFT_HANDED -> orthoLhNo(left, right, bottom, top, zNear, zFar, Mat4d())
+        else -> orthoRhNo(left, right, bottom, top, zNear, zFar, Mat4d())
     }
 
     /** Creates a matrix for an orthographic parallel viewing volume, using left-handed coordinates.
@@ -443,9 +458,9 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm.ortho(left: Double, right: Double, bottom: Double, top: Double)
      */
-    fun orthoLh(res: Mat4d, left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> orthoLhZo(res, left, right, bottom, top, zNear, zFar)
-        else -> orthoLhNo(res, left, right, bottom, top, zNear, zFar)
+    fun orthoLh(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double, res: Mat4d): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
+        GlmDepthClipSpace.ZERO_TO_ONE -> orthoLhZo(left, right, bottom, top, zNear, zFar, res)
+        else -> orthoLhNo(left, right, bottom, top, zNear, zFar, res)
     }
 
     /** Creates a matrix for an orthographic parallel viewing volume, using left-handed coordinates.
@@ -456,8 +471,8 @@ interface gtcMatrixOrtho {
      *  @see - glm.ortho(left: Double, right: Double, bottom: Double, top: Double)
      */
     fun orthoLh(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> orthoLhZo(Mat4d(), left, right, bottom, top, zNear, zFar)
-        else -> orthoLhNo(Mat4d(), left, right, bottom, top, zNear, zFar)
+        GlmDepthClipSpace.ZERO_TO_ONE -> orthoLhZo(left, right, bottom, top, zNear, zFar, Mat4d())
+        else -> orthoLhNo(left, right, bottom, top, zNear, zFar, Mat4d())
     }
 
     /** Creates a matrix for an orthographic parallel viewing volume, using right-handed coordinates.
@@ -467,9 +482,9 @@ interface gtcMatrixOrtho {
      *  @see gtc_matrix_transform
      *  @see - glm:ortho(left. Double, right: Double, bottom: Double, top: Double)
      */
-    fun orthoRh(res: Mat4d, left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> orthoRhZo(res, left, right, bottom, top, zNear, zFar)
-        else -> orthoRhNo(res, left, right, bottom, top, zNear, zFar)
+    fun orthoRh(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double, res: Mat4d): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
+        GlmDepthClipSpace.ZERO_TO_ONE -> orthoRhZo(left, right, bottom, top, zNear, zFar, res)
+        else -> orthoRhNo(left, right, bottom, top, zNear, zFar, res)
     }
 
     /** Creates a matrix for an orthographic parallel viewing volume, using right-handed coordinates.
@@ -480,8 +495,8 @@ interface gtcMatrixOrtho {
      *  @see - glm:ortho(left. Double, right: Double, bottom: Double, top: Double)
      */
     fun orthoRh(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d = when (GLM_DEPTH_CLIP_SPACE) {
-        GlmDepthClipSpace.ZERO_TO_ONE -> orthoRhZo(Mat4d(), left, right, bottom, top, zNear, zFar)
-        else -> orthoRhNo(Mat4d(), left, right, bottom, top, zNear, zFar)
+        GlmDepthClipSpace.ZERO_TO_ONE -> orthoRhZo(left, right, bottom, top, zNear, zFar, Mat4d())
+        else -> orthoRhNo(left, right, bottom, top, zNear, zFar, Mat4d())
     }
 
     /** Creates a matrix for an orthographic parallel viewing volume, using the default handedness and default near and far clip planes definition.
@@ -491,14 +506,14 @@ interface gtcMatrixOrtho {
      *  @see - glm.ortho(left: Double, right: Double, bottom: Double, top: Double)
      *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glOrtho.xml">glOrtho man page</a>
      */
-    fun ortho(res: Mat4d, left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
+    fun ortho(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double, res: Mat4d): Mat4d = when (GLM_COORDINATE_SYSTEM) {
         GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> orthoLhZo(res, left, right, bottom, top, zNear, zFar)
-            else -> orthoLhNo(res, left, right, bottom, top, zNear, zFar)
+            GlmDepthClipSpace.ZERO_TO_ONE -> orthoLhZo(left, right, bottom, top, zNear, zFar, res)
+            else -> orthoLhNo(left, right, bottom, top, zNear, zFar, res)
         }
         else -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> orthoRhZo(res, left, right, bottom, top, zNear, zFar)
-            else -> orthoRhNo(res, left, right, bottom, top, zNear, zFar)
+            GlmDepthClipSpace.ZERO_TO_ONE -> orthoRhZo(left, right, bottom, top, zNear, zFar, res)
+            else -> orthoRhNo(left, right, bottom, top, zNear, zFar, res)
         }
     }
 
@@ -511,12 +526,12 @@ interface gtcMatrixOrtho {
      */
     fun ortho(left: Double, right: Double, bottom: Double, top: Double, zNear: Double, zFar: Double): Mat4d = when (GLM_COORDINATE_SYSTEM) {
         GlmCoordinateSystem.LEFT_HANDED -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> orthoLhZo(Mat4d(), left, right, bottom, top, zNear, zFar)
-            else -> orthoLhNo(Mat4d(), left, right, bottom, top, zNear, zFar)
+            GlmDepthClipSpace.ZERO_TO_ONE -> orthoLhZo(left, right, bottom, top, zNear, zFar, Mat4d())
+            else -> orthoLhNo(left, right, bottom, top, zNear, zFar, Mat4d())
         }
         else -> when (GLM_DEPTH_CLIP_SPACE) {
-            GlmDepthClipSpace.ZERO_TO_ONE -> orthoRhZo(Mat4d(), left, right, bottom, top, zNear, zFar)
-            else -> orthoRhNo(Mat4d(), left, right, bottom, top, zNear, zFar)
+            GlmDepthClipSpace.ZERO_TO_ONE -> orthoRhZo(left, right, bottom, top, zNear, zFar, Mat4d())
+            else -> orthoRhNo(left, right, bottom, top, zNear, zFar, Mat4d())
         }
     }
 }

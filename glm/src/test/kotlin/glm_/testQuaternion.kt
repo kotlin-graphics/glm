@@ -2,7 +2,6 @@ package glm_
 
 import glm_.mat4x4.Mat4
 import glm_.quat.Quat
-import glm_.quat.QuatD
 import glm_.quat.times
 import glm_.vec3.Vec3
 import io.kotlintest.shouldBe
@@ -279,13 +278,13 @@ class testQuaternion : StringSpec() {
 
             // Test left-handed implementation
             val testQuatLH = glm.quatLookAtLH(glm.normalize(center - eye), up)
-            val testMatLH = glm.conjugate(glm.quat_cast(glm.lookAtLh(Mat4(), eye, center, up)))
+            val testMatLH = glm.conjugate(glm.quat_cast(glm.lookAtLh(eye, center, up, Mat4())))
             (glm.abs(glm.length(testQuatLH) - 1f) > glm.εf) shouldBe false
             (glm.min(glm.length(testQuatLH - testMatLH), glm.length(testQuatLH + testMatLH)) > glm.εf) shouldBe false
 
             // Test right-handed implementation
             val testQuatRH = glm.quatLookAtRH(glm.normalize(center - eye), up)
-            val testMatRH = glm.conjugate(glm.quat_cast(glm.lookAtRh(Mat4(), eye, center, up)))
+            val testMatRH = glm.conjugate(glm.quat_cast(glm.lookAtRh(eye, center, up, Mat4())))
             (glm.abs(glm.length(testQuatRH) - 1f) > glm.εf) shouldBe false
             (glm.min(glm.length(testQuatRH - testMatRH), glm.length(testQuatRH + testMatRH)) > glm.εf) shouldBe false
         }
