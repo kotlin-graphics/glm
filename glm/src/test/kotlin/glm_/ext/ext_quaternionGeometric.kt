@@ -11,6 +11,8 @@ class ext_quaternionGeometric : StringSpec() {
 
     init {
 
+//        float const Epsilon = 0.001f [JVM] not really useful
+
         "test angle"        {
 
             run {
