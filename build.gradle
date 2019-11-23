@@ -26,7 +26,7 @@ group = 'com.github.kotlin_graphics'
 ext {
     moduleName = "${group}.glm"
     unsigned_version = 'c81c2e39fb9e10403650c1b371b8573fc745bfb4'
-    kool_version = '18f52a23e3e86b92a7551154bc542796f86aaf4e'
+    kool_version = '9aa78d4977'
     lwjgl_version = "3.2.3"
     lwjgl_natives = current() == WINDOWS ? "windows" : current() == LINUX ? "linux" : "macos"
 }
