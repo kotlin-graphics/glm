@@ -22,6 +22,7 @@ import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
+import kool.BYTES
 import kool.Ptr
 import kool.pos
 import kool.set

@@ -7,6 +7,7 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
+import kool.BYTES
 import kool.Ptr
 import org.lwjgl.system.MemoryUtil.memGetDouble
 import org.lwjgl.system.MemoryUtil.memPutDouble

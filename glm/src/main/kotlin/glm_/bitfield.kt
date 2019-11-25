@@ -4,6 +4,7 @@ import glm_.vec1.Vec1i
 import glm_.vec2.Vec2i
 import glm_.vec3.Vec3i
 import glm_.vec4.Vec4i
+import kool.BYTES
 import unsigned.toUInt
 import unsigned.toULong
 import unsigned.toUShort

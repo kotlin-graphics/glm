@@ -3,6 +3,7 @@ package  glm_.mat2x4
 import glm_.*
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
+import kool.BYTES
 import kool.DoubleBuffer
 import kool.pos
 import kool.set

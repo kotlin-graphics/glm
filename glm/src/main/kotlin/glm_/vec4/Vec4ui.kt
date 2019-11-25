@@ -10,10 +10,7 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec3.Vec3ui
 import glm_.vec4.operators.vec4ui_operators
-import kool.Ptr
-import kool.IntBuffer
-import kool.pos
-import kool.set
+import kool.*
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetInt
 import unsigned.Uint

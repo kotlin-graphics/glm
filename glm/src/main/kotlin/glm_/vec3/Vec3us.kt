@@ -9,10 +9,7 @@ import glm_.vec2.Vec2us
 import glm_.vec3.operators.vec3us_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.Ptr
-import kool.pos
-import kool.ShortBuffer
-import kool.set
+import kool.*
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetShort
 import org.lwjgl.system.MemoryUtil.memPutShort

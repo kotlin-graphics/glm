@@ -7,6 +7,7 @@ package  glm_.mat4x3
 import glm_.*
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
+import kool.BYTES
 import kool.FloatBuffer
 import kool.pos
 import kool.set

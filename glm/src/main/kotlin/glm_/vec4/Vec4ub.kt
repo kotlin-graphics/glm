@@ -10,6 +10,7 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec3.Vec3ub
 import glm_.vec4.operators.vec4ub_operators
+import kool.BYTES
 import kool.Ptr
 import kool.pos
 import kool.set

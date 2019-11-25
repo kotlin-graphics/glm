@@ -17,6 +17,7 @@ import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
+import kool.BYTES
 import kool.Ptr
 import kool.pos
 import kool.set
