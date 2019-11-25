@@ -292,18 +292,20 @@ val Double.mantissa: Double
 
 
 // Unfortunately Jetbrain went its own way: https://youtrack.jetbrains.com/issue/KT-8247 , let's keep it coherent with Java
-val Byte.Companion.BYTES: Int
-    get() = java.lang.Byte.BYTES
-val Float.Companion.BYTES: Int
-    get() = java.lang.Float.BYTES
-val Double.Companion.BYTES: Int
-    get() = java.lang.Double.BYTES
-val Int.Companion.BYTES: Int
-    get() = Integer.BYTES
-val Long.Companion.BYTES: Int
-    get() = java.lang.Long.BYTES
-val Short.Companion.BYTES: Int
-    get() = java.lang.Short.BYTES
+//val Byte.Companion.BYTES: Int -> these are in kool
+//    get() = java.lang.Byte.BYTES
+//val Float.Companion.BYTES: Int
+//    get() = java.lang.Float.BYTES
+//val Double.Companion.BYTES: Int
+//    get() = java.lang.Double.BYTES
+//val Int.Companion.BYTES: Int
+//    get() = Integer.BYTES
+//val Long.Companion.BYTES: Int
+//    get() = java.lang.Long.BYTES
+//val Short.Companion.BYTES: Int
+//    get() = java.lang.Short.BYTES
+//val Char.Companion.BYTES: Int
+//    get() = Character.BYTES
 val Ubyte.Companion.BYTES: Int
     get() = java.lang.Byte.BYTES
 val Uint.Companion.BYTES: Int
@@ -312,5 +314,3 @@ val Ulong.Companion.BYTES: Int
     get() = java.lang.Long.BYTES
 val Ushort.Companion.BYTES: Int
     get() = java.lang.Short.BYTES
-val Char.Companion.BYTES: Int
-    get() = Character.BYTES
