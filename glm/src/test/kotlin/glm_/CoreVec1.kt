@@ -9,6 +9,7 @@ import glm_.vec2.Vec2i
 import glm_.vec2.operators.timesAssign
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
+import kool.BYTES
 
 class CoreVec1 : StringSpec() {
 

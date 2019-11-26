@@ -16,7 +16,7 @@ module com.github.kotlin_graphics.glm {
     exports glm_.func;
     exports glm_.func.common;
     exports glm_.gtc;
-    exports glm_.ext.matrixTransform;
+    exports glm_.ext;
     exports glm_.gtx;
     exports glm_.mat2x2;
     exports glm_.mat2x2.operators;

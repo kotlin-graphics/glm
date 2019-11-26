@@ -16,6 +16,7 @@ import glm_.vec4.swizzle.xyz
 import glm_.vec4.swizzle.xyzw
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
+import kool.BYTES
 
 class coreVec3 : StringSpec() {
 

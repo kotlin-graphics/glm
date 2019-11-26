@@ -9,6 +9,7 @@ import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
+import kool.BYTES
 
 class ext_vectorVec1d : StringSpec() {
 

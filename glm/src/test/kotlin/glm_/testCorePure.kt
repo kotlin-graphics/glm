@@ -15,6 +15,7 @@ import glm_.vec4.operators.times
 import glm_.vec4.swizzle.*
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
+import kool.BYTES
 
 class testCorePure : StringSpec() {
 

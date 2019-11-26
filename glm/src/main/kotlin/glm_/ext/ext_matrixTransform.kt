@@ -1,16 +1,232 @@
-package glm_.ext.matrixTransform
+package glm_.ext
 
+import glm_.detail.GLM_COORDINATE_SYSTEM
+import glm_.detail.GlmCoordinateSystem
 import glm_.glm
 import glm_.mat3x3.Mat3
 import glm_.mat3x3.Mat3d
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
+import glm_.vec2.Vec2
+import glm_.vec2.Vec2d
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
+import glm_.vec4.Vec4i
 import kotlin.math.cos
 import kotlin.math.sin
+import kotlin.math.sqrt
 
-interface ext_matrixTransform_rotate {
+
+interface ext_matrixTransform {
+
+    /** Builds a translation 4 * 4 matrix created from a vector of 3 components.
+     *
+     *  @param res resulting matrix.
+     *  @param m Input matrix multiplied by this translation matrix.
+     *  @param vX X Coordinate of a translation vector.
+     *  @param vY Y Coordinate of a translation vector.
+     *  @param vZ Z Coordinate of a translation vector.
+     *
+     *  val m = glm.translate(Mat4(1f), Vec3(1f))
+     *
+     *  where m is
+     *
+     *      1  0  0  0
+     *      0  1  0  0
+     *      0  0  1  0
+     *      1  1  1  1
+     *
+     *  @see gtc_matrix_transform
+     *  @see - translate(m: Mat4, x: Float, y: Float, z: Float)
+     *  @see - translate(v: Vec3)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml">glTranslate man page</a>
+     */
+    fun translate(m: Mat4, vX: Float, vY: Float, vZ: Float, res: Mat4): Mat4 {
+        if (res !== m) res put m
+        val x = m[0, 0] * vX + m[1, 0] * vY + m[2, 0] * vZ + m[3, 0]
+        val y = m[0, 1] * vX + m[1, 1] * vY + m[2, 1] * vZ + m[3, 1]
+        val z = m[0, 2] * vX + m[1, 2] * vY + m[2, 2] * vZ + m[3, 2]
+        val w = m[0, 3] * vX + m[1, 3] * vY + m[2, 3] * vZ + m[3, 3]
+        res[3, 0] = x
+        res[3, 1] = y
+        res[3, 2] = z
+        res[3, 3] = w
+        return res
+    }
+
+    /** Builds a translation 4 * 4 matrix created from a vector of 3 components.
+     *
+     *  @param res resulting matrix.
+     *  @param m Input matrix multiplied by this translation matrix.
+     *  @param v Coordinates of a translation vector.
+     *
+     *  val m = glm.translate(Mat4(1f), Vec3(1f))
+     *
+     *  where m is
+     *
+     *      1  0  0  0
+     *      0  1  0  0
+     *      0  0  1  0
+     *      1  1  1  1
+     *
+     *  @see gtc_matrix_transform
+     *  @see - translate(m: Mat4, x: Float, y: Float, z: Float)
+     *  @see - translate(v: Vec3)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml">glTranslate man page</a>
+     */
+    fun translate(m: Mat4, v: Vec3, res: Mat4): Mat4 =
+            translate(m, v.x, v.y, v.z, res)
+
+    /** Builds a translation 4 * 4 matrix created from a vector of 3 components.
+     *
+     *  @param m Input matrix multiplied by this translation matrix.
+     *  @param vX X Coordinate of a translation vector.
+     *  @param vY Y Coordinate of a translation vector.
+     *  @param vZ Z Coordinate of a translation vector.
+     *
+     *  val m = glm.translate(Mat4(1f), Vec3(1f))
+     *
+     *  where m is
+     *
+     *      1  0  0  0
+     *      0  1  0  0
+     *      0  0  1  0
+     *      1  1  1  1
+     *
+     *  @see gtc_matrix_transform
+     *  @see - translate(m: Mat4, x: Float, y: Float, z: Float)
+     *  @see - translate(v: Vec3)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml">glTranslate man page</a>
+     */
+    fun translate(m: Mat4, vX: Float, vY: Float, vZ: Float): Mat4 =
+            translate(m, vX, vY, vZ, Mat4())
+
+    /** Builds a translation 4 * 4 matrix created from a vector of 3 components.
+     *
+     *  @param m Input matrix multiplied by this translation matrix.
+     *  @param v Coordinates of a translation vector.
+     *
+     *  val m = glm.translate(Mat4(1f), Vec3(1f))
+     *
+     *  where m is
+     *
+     *      1  0  0  0
+     *      0  1  0  0
+     *      0  0  1  0
+     *      1  1  1  1
+     *
+     *  @see gtc_matrix_transform
+     *  @see - translate(m: Mat4, x: Float, y: Float, z: Float)
+     *  @see - translate(v: Vec3)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml">glTranslate man page</a>
+     */
+    fun translate(m: Mat4, v: Vec3): Mat4 =
+            translate(m, v.x, v.y, v.z, Mat4())
+
+    /** Builds a translation 4 * 4 matrix created from a vector of 3 components.
+     *
+     *  @param res resulting matrix.
+     *  @param m Input matrix multiplied by this translation matrix.
+     *  @param vX X Coordinate of a translation vector.
+     *  @param vY Y Coordinate of a translation vector.
+     *  @param vZ Z Coordinate of a translation vector.
+     *
+     *  val m = glm.translate(Mat4(1f), Vec3(1f))
+     *
+     *  where m is
+     *
+     *      1  0  0  0
+     *      0  1  0  0
+     *      0  0  1  0
+     *      1  1  1  1
+     *
+     *  @see gtc_matrix_transform
+     *  @see - translate(m: Mat4, x: Float, y: Float, z: Float)
+     *  @see - translate(v: Vec3)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml">glTranslate man page</a>
+     */
+    fun translate(m: Mat4d, vX: Double, vY: Double, vZ: Double, res: Mat4d): Mat4d {
+        if (res !== m) res put m
+        val x = m[0].x * vX + m[1].x * vY + m[2].x * vZ + m[3].x
+        val y = m[0].y * vX + m[1].y * vY + m[2].y * vZ + m[3].y
+        val z = m[0].z * vX + m[1].z * vY + m[2].z * vZ + m[3].z
+        val w = m[0].w * vX + m[1].w * vY + m[2].w * vZ + m[3].w
+        res[3].x = x
+        res[3].y = y
+        res[3].z = z
+        res[3].w = w
+        return res
+    }
+
+    /** Builds a translation 4 * 4 matrix created from a vector of 3 components.
+     *
+     *  @param res resulting matrix.
+     *  @param m Input matrix multiplied by this translation matrix.
+     *  @param v Coordinates of a translation vector.
+     *
+     *  val m = glm.translate(Mat4(1f), Vec3(1f))
+     *
+     *  where m is
+     *
+     *      1  0  0  0
+     *      0  1  0  0
+     *      0  0  1  0
+     *      1  1  1  1
+     *
+     *  @see gtc_matrix_transform
+     *  @see - translate(m: Mat4, x: Float, y: Float, z: Float)
+     *  @see - translate(v: Vec3)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml">glTranslate man page</a>
+     */
+    fun translate(m: Mat4d, v: Vec3d, res: Mat4d): Mat4d =
+            translate(m, v.x, v.y, v.z, res)
+
+    /** Builds a translation 4 * 4 matrix created from a vector of 3 components.
+     *
+     *  @param m Input matrix multiplied by this translation matrix.
+     *  @param vX X Coordinate of a translation vector.
+     *  @param vY Y Coordinate of a translation vector.
+     *  @param vZ Z Coordinate of a translation vector.
+     *
+     *  val m = glm.translate(Mat4(1f), Vec3(1f))
+     *
+     *  where m is
+     *
+     *      1  0  0  0
+     *      0  1  0  0
+     *      0  0  1  0
+     *      1  1  1  1
+     *
+     *  @see gtc_matrix_transform
+     *  @see - translate(m: Mat4, x: Float, y: Float, z: Float)
+     *  @see - translate(v: Vec3)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml">glTranslate man page</a>
+     */
+    fun translate(m: Mat4d, vX: Double, vY: Double, vZ: Double): Mat4d =
+            translate(m, vX, vY, vZ, Mat4d())
+
+    /** Builds a translation 4 * 4 matrix created from a vector of 3 components.
+     *
+     *  @param m Input matrix multiplied by this translation matrix.
+     *  @param v Coordinates of a translation vector.
+     *
+     *  val m = glm.translate(Mat4(1f), Vec3(1f))
+     *
+     *  where m is
+     *
+     *      1  0  0  0
+     *      0  1  0  0
+     *      0  0  1  0
+     *      1  1  1  1
+     *
+     *  @see gtc_matrix_transform
+     *  @see - translate(m: Mat4, x: Float, y: Float, z: Float)
+     *  @see - translate(v: Vec3)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glTranslate.xml">glTranslate man page</a>
+     */
+    fun translate(m: Mat4d, v: Vec3d): Mat4d =
+            translate(m, v.x, v.y, v.z, Mat4d())
+
 
     /** Builds a rotation 4 * 4 matrix created from an axis vector and an angle.
      *
@@ -990,4 +1206,638 @@ interface ext_matrixTransform_rotate {
 //    }
 //
 //    fun rotateXYZ(angleX: Float, angleY: Float, angleZ: Float): Mat3 = rotateXYZ(angleX, angleY, angleZ, Mat3())
+
+
+    /** Builds a scale 4 * 4 matrix created from 3 scalars.
+     *
+     *  @param res resulting scale matrix.
+     *  @param m Input matrix multiplied by this scale matrix.
+     *  @param vX Ratio of scaling for X axis.
+     *  @param vY Ratio of scaling for Y axis.
+     *  @param vZ Ratio of scaling for Z axis.
+     *
+     *  @see gtc_matrix_transform
+     *  @see - scale(mat<4, 4, T, Q> const& m, T x, T y, T z)
+     *  @see - scale(vec<3, T, Q> const& v)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
+     */
+    fun scale(m: Mat4, vX: Float, vY: Float, vZ: Float, res: Mat4): Mat4 {
+
+        res[0, 0] = m[0, 0] * vX
+        res[0, 1] = m[0, 1] * vX
+        res[0, 2] = m[0, 2] * vX
+        res[0, 3] = m[0, 3] * vX
+
+        res[1, 0] = m[1, 0] * vY
+        res[1, 1] = m[1, 1] * vY
+        res[1, 2] = m[1, 2] * vY
+        res[1, 3] = m[1, 3] * vY
+
+        res[2, 0] = m[2, 0] * vZ
+        res[2, 1] = m[2, 1] * vZ
+        res[2, 2] = m[2, 2] * vZ
+        res[2, 3] = m[2, 3] * vZ
+
+        res[3, 0] = m[3, 0]
+        res[3, 1] = m[3, 1]
+        res[3, 2] = m[3, 2]
+        res[3, 3] = m[3, 3]
+
+        return res
+    }
+
+    /** Builds a scale 4 * 4 matrix created from 3 scalars.
+     *
+     *  @param res resulting scale matrix.
+     *  @param m Input matrix multiplied by this scale matrix.
+     *  @param v Ratio of scaling for this axis.
+     *
+     *  @see gtc_matrix_transform
+     *  @see - scale(mat<4, 4, T, Q> const& m, T x, T y, T z)
+     *  @see - scale(vec<3, T, Q> const& v)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
+     */
+    fun scale(m: Mat4, v: Vec3, res: Mat4): Mat4 =
+            scale(m, v.x, v.y, v.z, res)
+
+    /** Builds a scale 4 * 4 matrix created from 3 scalars.
+     *
+     *  @param m Input matrix multiplied by this scale matrix.
+     *  @param vX Ratio of scaling for X axis.
+     *  @param vY Ratio of scaling for Y axis.
+     *  @param vZ Ratio of scaling for Z axis.
+     *
+     *  @see gtc_matrix_transform
+     *  @see - scale(mat<4, 4, T, Q> const& m, T x, T y, T z)
+     *  @see - scale(vec<3, T, Q> const& v)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
+     */
+    fun scale(m: Mat4, vX: Float, vY: Float, vZ: Float): Mat4 =
+            scale(m, vX, vY, vZ, Mat4())
+
+    /** Builds a scale 4 * 4 matrix created from 3 scalars.
+     *
+     *  @param m Input matrix multiplied by this scale matrix.
+     *  @param v Ratio of scaling for this axis.
+     *
+     *  @see gtc_matrix_transform
+     *  @see - scale(mat<4, 4, T, Q> const& m, T x, T y, T z)
+     *  @see - scale(vec<3, T, Q> const& v)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
+     */
+    fun scale(m: Mat4, v: Vec3): Mat4 =
+            scale(m, v.x, v.y, v.z, Mat4())
+
+    /** Builds a scale 4 * 4 matrix created from 3 scalars.
+     *
+     *  @param res resulting scale matrix.
+     *  @param m Input matrix multiplied by this scale matrix.
+     *  @param vX Ratio of scaling for X axis.
+     *  @param vY Ratio of scaling for Y axis.
+     *  @param vZ Ratio of scaling for Z axis.
+     *
+     *  @see gtc_matrix_transform
+     *  @see - scale(mat<4, 4, T, Q> const& m, T x, T y, T z)
+     *  @see - scale(vec<3, T, Q> const& v)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
+     */
+    fun scale(m: Mat4d, vX: Double, vY: Double, vZ: Double, res: Mat4d): Mat4d {
+
+        res[0, 0] = m[0, 0] * vX
+        res[0, 1] = m[0, 1] * vX
+        res[0, 2] = m[0, 2] * vX
+        res[0, 3] = m[0, 3] * vX
+
+        res[1, 0] = m[1, 0] * vY
+        res[1, 1] = m[1, 1] * vY
+        res[1, 2] = m[1, 2] * vY
+        res[1, 3] = m[1, 3] * vY
+
+        res[2, 0] = m[2, 0] * vZ
+        res[2, 1] = m[2, 1] * vZ
+        res[2, 2] = m[2, 2] * vZ
+        res[2, 3] = m[2, 3] * vZ
+
+        res[3, 0] = m[3, 0]
+        res[3, 1] = m[3, 1]
+        res[3, 2] = m[3, 2]
+        res[3, 3] = m[3, 3]
+
+        return res
+    }
+
+    /** Builds a scale 4 * 4 matrix created from 3 scalars.
+     *
+     *  @param res resulting scale matrix.
+     *  @param m Input matrix multiplied by this scale matrix.
+     *  @param v Ratio of scaling for this axis.
+     *
+     *  @see gtc_matrix_transform
+     *  @see - scale(mat<4, 4, T, Q> const& m, T x, T y, T z)
+     *  @see - scale(vec<3, T, Q> const& v)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
+     */
+    fun scale(m: Mat4d, v: Vec3d, res: Mat4d): Mat4d =
+            scale(m, v.x, v.y, v.z, res)
+
+    /** Builds a scale 4 * 4 matrix created from 3 scalars.
+     *
+     *  @param m Input matrix multiplied by this scale matrix.
+     *  @param vX Ratio of scaling for X axis.
+     *  @param vY Ratio of scaling for Y axis.
+     *  @param vZ Ratio of scaling for Z axis.
+     *
+     *  @see gtc_matrix_transform
+     *  @see - scale(mat<4, 4, T, Q> const& m, T x, T y, T z)
+     *  @see - scale(vec<3, T, Q> const& v)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
+     */
+    fun scale(m: Mat4d, vX: Double, vY: Double, vZ: Double): Mat4d =
+            scale(m, vX, vY, vZ, Mat4d())
+
+    /** Builds a scale 4 * 4 matrix created from 3 scalars.
+     *
+     *  @param m Input matrix multiplied by this scale matrix.
+     *  @param v Ratio of scaling for this axis.
+     *
+     *  @see gtc_matrix_transform
+     *  @see - scale(mat<4, 4, T, Q> const& m, T x, T y, T z)
+     *  @see - scale(vec<3, T, Q> const& v)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
+     */
+    fun scale(m: Mat4d, v: Vec3d): Mat4d =
+            scale(m, v.x, v.y, v.z, Mat4d())
+
+    /** Builds a scale 3 * 3 matrix created from 3 scalars.
+     *
+     *  @param res resulting scale matrix.
+     *  @param m Input matrix multiplied by this scale matrix.
+     *  @param vX Ratio of scaling for X axis.
+     *  @param vY Ratio of scaling for Y axis.
+     *  @param vZ Ratio of scaling for Z axis.
+     *
+     *  @see gtc_matrix_transform
+     *  @see - scale(mat<3, 3, T, Q> const& m, T x, T y, T z)
+     *  @see - scale(vec<3, T, Q> const& v)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
+     */
+    fun scale(m: Mat3, vX: Float, vY: Float, vZ: Float, res: Mat3): Mat3 {
+
+        res[0, 0] = m[0, 0] * vX
+        res[0, 1] = m[0, 1] * vX
+        res[0, 2] = m[0, 2] * vX
+
+        res[1, 0] = m[1, 0] * vY
+        res[1, 1] = m[1, 1] * vY
+        res[1, 2] = m[1, 2] * vY
+
+        res[2, 0] = m[2, 0] * vZ
+        res[2, 1] = m[2, 1] * vZ
+        res[2, 2] = m[2, 2] * vZ
+
+        return res
+    }
+
+    /** Builds a scale 3 * 3 matrix created from 3 scalars.
+     *
+     *  @param res resulting scale matrix.
+     *  @param m Input matrix multiplied by this scale matrix.
+     *  @param v Ratio of scaling for this axis.
+     *
+     *  @see gtc_matrix_transform
+     *  @see - scale(mat<3, 3, T, Q> const& m, T x, T y, T z)
+     *  @see - scale(vec<3, T, Q> const& v)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
+     */
+    fun scale(m: Mat3, v: Vec3, res: Mat3): Mat3 =
+            scale(m, v.x, v.y, v.z, res)
+
+    /** Builds a scale 3 * 3 matrix created from 3 scalars.
+     *
+     *  @param m Input matrix multiplied by this scale matrix.
+     *  @param vX Ratio of scaling for X axis.
+     *  @param vY Ratio of scaling for Y axis.
+     *  @param vZ Ratio of scaling for Z axis.
+     *
+     *  @see gtc_matrix_transform
+     *  @see - scale(mat<3, 3, T, Q> const& m, T x, T y, T z)
+     *  @see - scale(vec<3, T, Q> const& v)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
+     */
+    fun scale(m: Mat3, vX: Float, vY: Float, vZ: Float): Mat3 =
+            scale(m, vX, vY, vZ, Mat3())
+
+    /** Builds a scale 3 * 3 matrix created from 3 scalars.
+     *
+     *  @param m Input matrix multiplied by this scale matrix.
+     *  @param v Ratio of scaling for this axis.
+     *
+     *  @see gtc_matrix_transform
+     *  @see - scale(mat<3, 3, T, Q> const& m, T x, T y, T z)
+     *  @see - scale(vec<3, T, Q> const& v)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
+     */
+    fun scale(m: Mat3, v: Vec3): Mat3 =
+            scale(m, v.x, v.y, v.z, Mat3())
+
+    /** Builds a scale 3 * 3 matrix created from 3 scalars.
+     *
+     *  @param res resulting scale matrix.
+     *  @param m Input matrix multiplied by this scale matrix.
+     *  @param vX Ratio of scaling for X axis.
+     *  @param vY Ratio of scaling for Y axis.
+     *  @param vZ Ratio of scaling for Z axis.
+     *
+     *  @see gtc_matrix_transform
+     *  @see - scale(mat<3, 3, T, Q> const& m, T x, T y, T z)
+     *  @see - scale(vec<3, T, Q> const& v)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
+     */
+    fun scale(m: Mat3d, vX: Double, vY: Double, vZ: Double, res: Mat3d): Mat3d {
+
+        res[0, 0] = m[0, 0] * vX
+        res[0, 1] = m[0, 1] * vX
+        res[0, 2] = m[0, 2] * vX
+
+        res[1, 0] = m[1, 0] * vY
+        res[1, 1] = m[1, 1] * vY
+        res[1, 2] = m[1, 2] * vY
+
+        res[2, 0] = m[2, 0] * vZ
+        res[2, 1] = m[2, 1] * vZ
+        res[2, 2] = m[2, 2] * vZ
+
+        return res
+    }
+
+    /** Builds a scale 3 * 3 matrix created from 3 scalars.
+     *
+     *  @param res resulting scale matrix.
+     *  @param m Input matrix multiplied by this scale matrix.
+     *  @param v Ratio of scaling for this axis.
+     *
+     *  @see gtc_matrix_transform
+     *  @see - scale(mat<3, 3, T, Q> const& m, T x, T y, T z)
+     *  @see - scale(vec<3, T, Q> const& v)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
+     */
+    fun scale(m: Mat3d, v: Vec3d, res: Mat3d): Mat3d =
+            scale(m, v.x, v.y, v.z, res)
+
+    /** Builds a scale 3 * 3 matrix created from 3 scalars.
+     *
+     *  @param m Input matrix multiplied by this scale matrix.
+     *  @param vX Ratio of scaling for X axis.
+     *  @param vY Ratio of scaling for Y axis.
+     *  @param vZ Ratio of scaling for Z axis.
+     *
+     *  @see gtc_matrix_transform
+     *  @see - scale(mat<3, 3, T, Q> const& m, T x, T y, T z)
+     *  @see - scale(vec<3, T, Q> const& v)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
+     */
+    fun scale(m: Mat3d, vX: Double, vY: Double, vZ: Double): Mat3d =
+            scale(m, vX, vY, vZ, Mat3d())
+
+    /** Builds a scale 3 * 3 matrix created from 3 scalars.
+     *
+     *  @param m Input matrix multiplied by this scale matrix.
+     *  @param v Ratio of scaling for this axis.
+     *
+     *  @see gtc_matrix_transform
+     *  @see - scale(mat<3, 3, T, Q> const& m, T x, T y, T z)
+     *  @see - scale(vec<3, T, Q> const& v)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glScale.xml">glScale man page</a>
+     */
+    fun scale(m: Mat3d, v: Vec3d): Mat3d =
+            scale(m, v.x, v.y, v.z, Mat3d())
+
+
+    /** Build a right handed look at view matrix.
+     *
+     *  @param res the resulting matrix
+     *  @param eye Position of the camera
+     *  @param center Position where the camera is looking at
+     *  @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     *  @see gtc_matrix_transform
+     *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     */
+    fun lookAtRh(eye: Vec3, center: Vec3, up: Vec3, res: Mat4): Mat4 {
+        // f = normalize(center - eye)
+        var fX = center.x - eye.x
+        var fY = center.y - eye.y
+        var fZ = center.z - eye.z
+        var inv = 1f / sqrt(fX * fX + fY * fY + fZ * fZ)
+        fX *= inv
+        fY *= inv
+        fZ *= inv
+        // s = normalize(cross(f, up))
+        var sX = fY * up.z - up.y * fZ
+        var sY = fZ * up.x - up.z * fX
+        var sZ = fX * up.y - up.x * fY
+        inv = 1f / sqrt(sX * sX + sY * sY + sZ * sZ)
+        sX *= inv
+        sY *= inv
+        sZ *= inv
+        // u = cross(s, f)
+        val uX = sY * fZ - fY * sZ
+        val uY = sZ * fX - fZ * sX
+        val uZ = sX * fY - fX * sY
+
+        res put 1f
+        res[0, 0] = sX
+        res[1, 0] = sY
+        res[2, 0] = sZ
+        res[0, 1] = uX
+        res[1, 1] = uY
+        res[2, 1] = uZ
+        res[0, 2] = -fX
+        res[1, 2] = -fY
+        res[2, 2] = -fZ
+//        res[3,0] =-dot(s, eye)
+        res[3, 0] = -(sX * eye.x + sY * eye.y + sZ * eye.z)
+//        res[3,1] =-dot(u, eye)
+        res[3, 1] = -(uX * eye.x + uY * eye.y + uZ * eye.z)
+//        res[3,2] = dot(f, eye)
+        res[3, 2] = fX * eye.x + fY * eye.y + fZ * eye.z
+        return res
+    }
+
+    /** Build a right handed look at view matrix.
+     *
+     *  @param eye Position of the camera
+     *  @param center Position where the camera is looking at
+     *  @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     *  @see gtc_matrix_transform
+     *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     */
+    fun lookAtRh(eye: Vec3, center: Vec3, up: Vec3): Mat4 =
+            lookAtRh(eye, center, up, Mat4())
+
+    /** Build a left handed look at view matrix.
+     *
+     *  @param res the resulting matrix
+     *  @param eye Position of the camera
+     *  @param center Position where the camera is looking at
+     *  @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     *  @see gtc_matrix_transform
+     *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     */
+    fun lookAtLh(eye: Vec3, center: Vec3, up: Vec3, res: Mat4): Mat4 {
+
+        // f = normalize(center - eye)
+        var fX = center.x - eye.x
+        var fY = center.y - eye.y
+        var fZ = center.z - eye.z
+        var inv = 1f / sqrt(fX * fX + fY * fY + fZ * fZ)
+        fX *= inv
+        fY *= inv
+        fZ *= inv
+        // s = normalize(cross(up, f))
+        var sX = up.y * fZ - fY * up.z
+        var sY = up.z * fX - fZ * up.x
+        var sZ = up.x * fY - fX * up.y
+        inv = 1f / sqrt(sX * sX + sY * sY + sZ * sZ)
+        sX *= inv
+        sY *= inv
+        sZ *= inv
+        // u = cross(f, s)
+        val uX = fY * sZ - sY * fZ
+        val uY = fZ * sX - sZ * fX
+        val uZ = fX * sY - sX * fY
+
+        res put 1f
+        res[0, 0] = sX
+        res[1, 0] = sY
+        res[2, 0] = sZ
+        res[0, 1] = uX
+        res[1, 1] = uY
+        res[2, 1] = uZ
+        res[0, 2] = fX
+        res[1, 2] = fY
+        res[2, 2] = fZ
+//        res[3,0] = -dot(s, eye)
+        res[3, 0] = -(sX * eye.x + sY * eye.y + sZ * eye.z)
+//        res[3,1] = -dot(u, eye)
+        res[3, 1] = -(uX * eye.x + uY * eye.y + uZ * eye.z)
+//        res[3,2] = -dot(f, eye)
+        res[3, 2] = -(fX * eye.x + fY * eye.y + fZ * eye.z)
+        return res
+    }
+
+    /** Build a left handed look at view matrix.
+     *
+     *  @param eye Position of the camera
+     *  @param center Position where the camera is looking at
+     *  @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     *  @see gtc_matrix_transform
+     *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     */
+    fun lookAtLh(eye: Vec3, center: Vec3, up: Vec3): Mat4 =
+            lookAtLh(eye, center, up, Mat4())
+
+    /** Build a look at view matrix based on the default handedness.
+     *
+     *  @param res the resulting matrix
+     *  @param eye Position of the camera
+     *  @param center Position where the camera is looking at
+     *  @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     *  @see gtc_matrix_transform
+     *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluLookAt.xml">gluLookAt man page</a>
+     */
+    fun lookAt(eye: Vec3, center: Vec3, up: Vec3, res: Mat4): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> lookAtLh(eye, center, up, res)
+                else -> lookAtRh(eye, center, up, res)
+            }
+
+    /** Build a look at view matrix based on the default handedness.
+     *
+     *  @param res the resulting matrix
+     *  @param eye Position of the camera
+     *  @param center Position where the camera is looking at
+     *  @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     *  @see gtc_matrix_transform
+     *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluLookAt.xml">gluLookAt man page</a>
+     */
+    fun lookAt(eye: Vec3, center: Vec3, up: Vec3): Mat4 =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> lookAtLh(eye, center, up, Mat4())
+                else -> lookAtRh(eye, center, up, Mat4())
+            }
+
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Mat4d version
+    // -----------------------------------------------------------------------------------------------------------------
+
+
+    /** Build a right handed look at view matrix.
+     *
+     *  @param res the resulting matrix
+     *  @param eye Position of the camera
+     *  @param center Position where the camera is looking at
+     *  @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     *  @see gtc_matrix_transform
+     *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     */
+    fun lookAtRh(eye: Vec3d, center: Vec3d, up: Vec3d, res: Mat4d): Mat4d {
+        // f = normalize(center - eye)
+        var fX = center.x - eye.x
+        var fY = center.y - eye.y
+        var fZ = center.z - eye.z
+        var inv = 1.0 / sqrt(fX * fX + fY * fY + fZ * fZ)
+        fX *= inv
+        fY *= inv
+        fZ *= inv
+        // s = normalize(cross(f, up))
+        var sX = fY * up.z - up.y * fZ
+        var sY = fZ * up.x - up.z * fX
+        var sZ = fX * up.y - up.x * fY
+        inv = 1.0 / sqrt(sX * sX + sY * sY + sZ * sZ)
+        sX *= inv
+        sY *= inv
+        sZ *= inv
+        // u = cross(s, f)
+        val uX = sY * fZ - fY * sZ
+        val uY = sZ * fX - fZ * sX
+        val uZ = sX * fY - fX * sY
+
+        res put 1.0
+        res[0, 0] = sX
+        res[1, 0] = sY
+        res[2, 0] = sZ
+        res[0, 1] = uX
+        res[1, 1] = uY
+        res[2, 1] = uZ
+        res[0, 2] = -fX
+        res[1, 2] = -fY
+        res[2, 2] = -fZ
+//        res[3,0] =-dot(s, eye)
+        res[3, 0] = -(sX * eye.x + sY * eye.y + sZ * eye.z)
+//        res[3,1] =-dot(u, eye)
+        res[3, 1] = -(uX * eye.x + uY * eye.y + uZ * eye.z)
+//        res[3,2] = dot(f, eye)
+        res[3, 2] = fX * eye.x + fY * eye.y + fZ * eye.z
+        return res
+    }
+
+    /** Build a right handed look at view matrix.
+     *
+     *  @param eye Position of the camera
+     *  @param center Position where the camera is looking at
+     *  @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     *  @see gtc_matrix_transform
+     *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     */
+    fun lookAtRh(eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d =
+            lookAtRh(eye, center, up, Mat4d())
+
+    /** Build a left handed look at view matrix.
+     *
+     *  @param res the resulting matrix
+     *  @param eye Position of the camera
+     *  @param center Position where the camera is looking at
+     *  @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     *  @see gtc_matrix_transform
+     *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     */
+    fun lookAtLh(eye: Vec3d, center: Vec3d, up: Vec3d, res: Mat4d): Mat4d {
+
+        // f = normalize(center - eye)
+        var fX = center.x - eye.x
+        var fY = center.y - eye.y
+        var fZ = center.z - eye.z
+        var inv = 1.0 / sqrt(fX * fX + fY * fY + fZ * fZ)
+        fX *= inv
+        fY *= inv
+        fZ *= inv
+        // s = normalize(cross(up, f))
+        var sX = up.y * fZ - fY * up.z
+        var sY = up.z * fX - fZ * up.x
+        var sZ = up.x * fY - fX * up.y
+        inv = 1.0 / sqrt(sX * sX + sY * sY + sZ * sZ)
+        sX *= inv
+        sY *= inv
+        sZ *= inv
+        // u = cross(f, s)
+        val uX = fY * sZ - sY * fZ
+        val uY = fZ * sX - sZ * fX
+        val uZ = fX * sY - sX * fY
+
+        res put 1.0
+        res[0, 0] = sX
+        res[1, 0] = sY
+        res[2, 0] = sZ
+        res[0, 1] = uX
+        res[1, 1] = uY
+        res[2, 1] = uZ
+        res[0, 2] = fX
+        res[1, 2] = fY
+        res[2, 2] = fZ
+//        res[3,0] = -dot(s, eye)
+        res[3, 0] = -(sX * eye.x + sY * eye.y + sZ * eye.z)
+//        res[3,1] = -dot(u, eye)
+        res[3, 1] = -(uX * eye.x + uY * eye.y + uZ * eye.z)
+//        res[3,2] = -dot(f, eye)
+        res[3, 2] = -(fX * eye.x + fY * eye.y + fZ * eye.z)
+        return res
+    }
+
+    /** Build a left handed look at view matrix.
+     *
+     *  @param eye Position of the camera
+     *  @param center Position where the camera is looking at
+     *  @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     *  @see gtc_matrix_transform
+     *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     */
+    fun lookAtLh(eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d =
+            lookAtLh(eye, center, up, Mat4d())
+
+    /** Build a look at view matrix based on the default handedness.
+     *
+     *  @param res the resulting matrix
+     *  @param eye Position of the camera
+     *  @param center Position where the camera is looking at
+     *  @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     *  @see gtc_matrix_transform
+     *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluLookAt.xml">gluLookAt man page</a>
+     */
+    fun lookAt(eye: Vec3d, center: Vec3d, up: Vec3d, res: Mat4d): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> lookAtLh(eye, center, up, res)
+                else -> lookAtRh(eye, center, up, res)
+            }
+
+    /** Build a look at view matrix based on the default handedness.
+     *
+     *  @param res the resulting matrix
+     *  @param eye Position of the camera
+     *  @param center Position where the camera is looking at
+     *  @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+     *  @see gtc_matrix_transform
+     *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluLookAt.xml">gluLookAt man page</a>
+     */
+    fun lookAt(eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d =
+            when (GLM_COORDINATE_SYSTEM) {
+                GlmCoordinateSystem.LEFT_HANDED -> lookAtLh(eye, center, up, Mat4d())
+                else -> lookAtRh(eye, center, up, Mat4d())
+            }
 }

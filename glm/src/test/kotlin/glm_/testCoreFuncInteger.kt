@@ -4,6 +4,7 @@ import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 import unsigned.toULong
 import glm_.testCoreFuncInteger.Result.*
+import kool.BYTES
 
 class testCoreFuncInteger : StringSpec() {
 

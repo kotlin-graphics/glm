@@ -4,17 +4,13 @@
 
 package glm_
 
-import glm_.ext.extQuaternionGeometric
-//import glm_.ext.extQuaternionRelational
-import glm_.ext.extScalarRelational
-import glm_.ext.matrixRelational
-import glm_.func.*
-import glm_.func.common.*
-import glm_.gtc.gtcMatrixInverse
-import glm_.ext.matrixTransform.*
+import glm_.ext.*
 import glm_.ext.quaternion.ext_quaternionCommon
 import glm_.ext.quaternion.ext_quaternionTransform
 import glm_.ext.quaternion.ext_quaternionTrigonometric
+import glm_.func.*
+import glm_.func.common.*
+import glm_.gtc.gtcMatrixInverse
 import glm_.gtx.*
 import glm_.quat.gtcQuaternion
 import glm_.quat.gtxQuaternion
@@ -40,15 +36,11 @@ object glm :
         func_trigonometric,
 
         // matrix transform
-        ext_matrixTransform_frustum,
         gtxMatrixOperation,
-        ext_matrixTransform_ortho,
-        ext_matrixTransform_perspective,
-        ext_matrixTransform_project,
-        ext_matrixTransform_rotate,
-        ext_matrixTransform_scale,
+
+        ext_matrixClipSpace,
+        ext_matrixProjection,
         ext_matrixTransform,
-        ext_matrixTransform_translate,
 
         gtcQuaternion,
         ext_quaternionCommon,

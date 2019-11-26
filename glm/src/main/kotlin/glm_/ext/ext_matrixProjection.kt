@@ -1,14 +1,16 @@
-package glm_.ext.matrixTransform
+package glm_.ext
 
 import glm_.detail.GLM_DEPTH_CLIP_SPACE
 import glm_.detail.GlmDepthClipSpace
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
+import glm_.vec2.Vec2
+import glm_.vec2.Vec2d
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4i
 
-interface ext_matrixTransform_project {
+interface ext_matrixProjection {
 
     /** Map the specified object coordinates (obj.x, obj.y, obj.z) into window coordinates.
      *  The near and far clip planes correspond to z normalized device coordinates of 0 and +1 respectively. (Direct3D clip volume definition)
@@ -897,4 +899,122 @@ interface ext_matrixTransform_project {
                 GlmDepthClipSpace.ZERO_TO_ONE -> unProjectZo(win, model, proj, viewport, Vec3d())
                 else -> unProjectNo(win, model, proj, viewport, Vec3d())
             }
+
+
+    /** Define a picking region
+     *
+     *  @param res the pick matrix
+     *  @param center Specify the center of a picking region in window coordinates.
+     *  @param delta Specify the width and height, respectively, of the picking region in window coordinates.
+     *  @param viewport Rendering viewport
+     *
+     *  @see gtc_matrix_transform
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluPickMatrix.xml">gluPickMatrix man page</a>
+     */
+    fun pickMatrix(center: Vec2, delta: Vec2, viewport: Vec4i, res: Mat4): Mat4 {
+
+        assert(delta.x > 0f && delta.y > 0f)
+        res put 1f
+
+        if (!(delta.x > 0f && delta.y > 0f))
+            throw Error()
+
+        val tmpX = (viewport[2] - 2f * (center.x - viewport[0])) / delta.x
+        val tmpY = (viewport[3] - 2f * (center.y - viewport[1])) / delta.y
+        //val tmpZ = 0f
+
+        // Translate and scale the picked region to the entire window
+        //Result = translate(Result, Temp)
+        val x = res[0, 0] * tmpX + res[1, 0] * tmpY + res[3, 0]
+        val y = res[0, 1] * tmpX + res[1, 1] * tmpY + res[3, 1]
+        val z = res[0, 2] * tmpX + res[1, 2] * tmpY + res[3, 2]
+        val w = res[0, 3] * tmpX + res[1, 3] * tmpY + res[3, 3]
+        res[3, 0] = x
+        res[3, 1] = y
+        res[3, 2] = z
+        res[3, 3] = w
+        //return scale(res, Vec3(viewport[2] / delta.x, viewport[3] / delta.y, 1f))
+        val vX = viewport[2] / delta.x
+        val vY = viewport[3] / delta.y
+        res[0, 0] *= vX
+        res[0, 1] *= vX
+        res[0, 2] *= vX
+        res[0, 3] *= vX
+        res[1, 0] *= vY
+        res[1, 1] *= vY
+        res[1, 2] *= vY
+        res[1, 3] *= vY
+        return res
+    }
+
+    /** Define a picking region
+     *
+     *  @param center Specify the center of a picking region in window coordinates.
+     *  @param delta Specify the width and height, respectively, of the picking region in window coordinates.
+     *  @param viewport Rendering viewport
+     *
+     *  @see gtc_matrix_transform
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluPickMatrix.xml">gluPickMatrix man page</a>
+     */
+    fun pickMatrix(center: Vec2, delta: Vec2, viewport: Vec4i): Mat4 =
+            pickMatrix(center, delta, viewport, Mat4())
+
+
+    /** Define a picking region
+     *
+     *  @param res the pick matrix
+     *  @param center Specify the center of a picking region in window coordinates.
+     *  @param delta Specify the width and height, respectively, of the picking region in window coordinates.
+     *  @param viewport Rendering viewport
+     *
+     *  @see gtc_matrix_transform
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluPickMatrix.xml">gluPickMatrix man page</a>
+     */
+    fun pickMatrix(center: Vec2d, delta: Vec2d, viewport: Vec4i, res: Mat4d): Mat4d {
+
+        assert(delta.x > 0.0 && delta.y > 0.0)
+        res put 1.0
+
+        if (!(delta.x > 0.0 && delta.y > 0.0))
+            throw Error()
+
+        val tmpX = (viewport[2] - 2.0 * (center.x - viewport[0])) / delta.x
+        val tmpY = (viewport[3] - 2.0 * (center.y - viewport[1])) / delta.y
+        //val tmpZ = 0.0
+
+        // Translate and scale the picked region to the entire window
+        //Result = translate(Result, Temp)
+        val x = res[0, 0] * tmpX + res[1, 0] * tmpY + res[3, 0]
+        val y = res[0, 1] * tmpX + res[1, 1] * tmpY + res[3, 1]
+        val z = res[0, 2] * tmpX + res[1, 2] * tmpY + res[3, 2]
+        val w = res[0, 3] * tmpX + res[1, 3] * tmpY + res[3, 3]
+        res[3, 0] = x
+        res[3, 1] = y
+        res[3, 2] = z
+        res[3, 3] = w
+        //return scale(res, Vec3(viewport[2] / delta.x, viewport[3] / delta.y, 1.0))
+        val vX = viewport[2] / delta.x
+        val vY = viewport[3] / delta.y
+        res[0, 0] *= vX
+        res[0, 1] *= vX
+        res[0, 2] *= vX
+        res[0, 3] *= vX
+        res[1, 0] *= vY
+        res[1, 1] *= vY
+        res[1, 2] *= vY
+        res[1, 3] *= vY
+        return res
+    }
+
+    /** Define a picking region
+     *
+     *  @param center Specify the center of a picking region in window coordinates.
+     *  @param delta Specify the width and height, respectively, of the picking region in window coordinates.
+     *  @param viewport Rendering viewport
+     *
+     *  @see gtc_matrix_transform
+     *  @see <a href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/gluPickMatrix.xml">gluPickMatrix man page</a>
+     */
+    fun pickMatrix(center: Vec2d, delta: Vec2d, viewport: Vec4i): Mat4d =
+            pickMatrix(center, delta, viewport, Mat4d())
 }

@@ -10,6 +10,7 @@ import glm_.vec4.Vec4
 import glm_.vec4.Vec4d
 import io.kotlintest.*
 import io.kotlintest.specs.StringSpec
+import kool.BYTES
 
 /**
  * Created by GBarbieri on 12.12.2016.
