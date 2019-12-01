@@ -20,6 +20,7 @@ import java.awt.Color
 import java.io.InputStream
 import java.io.PrintStream
 import java.nio.*
+import kotlin.math.abs
 
 /**
  * Created bY GBarbieri on 05.10.2016.
@@ -421,13 +422,13 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
     infix fun anyLessThanEqual(f: Float): Boolean = x <= f || y <= f || z <= f
     infix fun lessThanEqual(f: Float): Vec3bool = Vec3bool { get(it) <= f }
 
-    fun allEqual(f: Float, epsilon: Float = 0f): Boolean = x - f < epsilon && y - f < epsilon && z - f < epsilon
-    fun anyEqual(f: Float, epsilon: Float = 0f): Boolean = x - f < epsilon || y - f < epsilon || z - f < epsilon
-    fun equal(f: Float, epsilon: Float = 0f): Vec3bool = Vec3bool { get(it) - f < epsilon }
+    fun allEqual(f: Float, epsilon: Float = 0f): Boolean = abs(x - f) < epsilon && abs(y - f) < epsilon && abs(z - f) < epsilon
+    fun anyEqual(f: Float, epsilon: Float = 0f): Boolean = abs(x - f) < epsilon || abs(y - f) < epsilon || abs(z - f) < epsilon
+    fun equal(f: Float, epsilon: Float = 0f): Vec3bool = Vec3bool { abs(get(it) - f) < epsilon }
 
-    fun allNotEqual(f: Float, epsilon: Float = 0f): Boolean = x - f >= epsilon && y - f >= epsilon && z - f >= epsilon
-    fun anyNotEqual(f: Float, epsilon: Float = 0f): Boolean = x - f >= epsilon || y - f >= epsilon || z - f >= epsilon
-    fun notEqual(f: Float, epsilon: Float = 0f): Vec3bool = Vec3bool { get(it) - f >= epsilon }
+    fun allNotEqual(f: Float, epsilon: Float = 0f): Boolean = abs(x - f) >= epsilon && abs(y - f) >= epsilon && abs(z - f) >= epsilon
+    fun anyNotEqual(f: Float, epsilon: Float = 0f): Boolean = abs(x - f) >= epsilon || abs(y - f) >= epsilon || abs(z - f) >= epsilon
+    fun notEqual(f: Float, epsilon: Float = 0f): Vec3bool = Vec3bool { abs(get(it) - f) >= epsilon }
 
     infix fun allGreaterThan(f: Float): Boolean = x > f && y > f && z > f
     infix fun anyGreaterThan(f: Float): Boolean = x > f || y > f || z > f
@@ -446,13 +447,13 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
     infix fun anyLessThanEqual(v: Vec3): Boolean = x <= v.x || y <= v.y || z <= v.z
     infix fun lessThanEqual(v: Vec3): Vec3bool = Vec3bool { get(it) <= v[it] }
 
-    fun allEqual(v: Vec3, epsilon: Float = 0f): Boolean = x - v.x < epsilon && y - v.y < epsilon && z - v.z < epsilon
-    fun anyEqual(v: Vec3, epsilon: Float = 0f): Boolean = x - v.x < epsilon || y - v.y < epsilon || z - v.z < epsilon
-    fun equal(v: Vec3, epsilon: Float = 0f): Vec3bool = Vec3bool { get(it) - v[it] < epsilon }
+    fun allEqual(v: Vec3, epsilon: Float = 0f): Boolean = abs(x - v.x) < epsilon && abs(y - v.y) < epsilon && abs(z - v.z) < epsilon
+    fun anyEqual(v: Vec3, epsilon: Float = 0f): Boolean = abs(x - v.x) < epsilon || abs(y - v.y) < epsilon || abs(z - v.z) < epsilon
+    fun equal(v: Vec3, epsilon: Float = 0f): Vec3bool = Vec3bool { abs(get(it) - v[it]) < epsilon }
 
-    fun allNotEqual(v: Vec3, epsilon: Float = 0f): Boolean = x - v.x >= epsilon && y - v.y >= epsilon && z - v.z >= epsilon
-    fun anyNotEqual(v: Vec3, epsilon: Float = 0f): Boolean = x - v.x >= epsilon || y - v.y >= epsilon || z - v.z >= epsilon
-    fun notEqual(v: Vec3, epsilon: Float = 0f): Vec3bool = Vec3bool { get(it) - v[it] >= epsilon }
+    fun allNotEqual(v: Vec3, epsilon: Float = 0f): Boolean = abs(x - v.x) >= epsilon && abs(y - v.y) >= epsilon && abs(z - v.z) >= epsilon
+    fun anyNotEqual(v: Vec3, epsilon: Float = 0f): Boolean = abs(x - v.x) >= epsilon || abs(y - v.y) >= epsilon || abs(z - v.z) >= epsilon
+    fun notEqual(v: Vec3, epsilon: Float = 0f): Vec3bool = Vec3bool { abs(get(it) - v[it]) >= epsilon }
 
     infix fun allGreaterThan(v: Vec3): Boolean = x > v.x && y > v.y && z > v.z
     infix fun anyGreaterThan(v: Vec3): Boolean = x > v.x || y > v.y || z > v.z

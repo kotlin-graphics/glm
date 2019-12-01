@@ -20,6 +20,7 @@ import java.awt.Color
 import java.io.InputStream
 import java.io.PrintStream
 import java.nio.*
+import kotlin.math.abs
 
 /**
  * Created by elect on 09/10/16.
@@ -450,13 +451,13 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
     infix fun anyLessThanEqual(f: Float): Boolean = x <= f || y <= f || z <= f || w <= f
     infix fun lessThanEqual(f: Float): Vec4bool = Vec4bool { get(it) <= f }
 
-    fun allEqual(f: Float, epsilon: Float = 0f): Boolean = x - f < epsilon && y - f < epsilon && z - f < epsilon && w - f < epsilon
-    fun anyEqual(f: Float, epsilon: Float = 0f): Boolean = x - f < epsilon || y - f < epsilon || z - f < epsilon || w - f < epsilon
-    fun equal(f: Float, epsilon: Float = 0f): Vec4bool = Vec4bool { get(it) - f < epsilon }
+    fun allEqual(f: Float, epsilon: Float = 0f): Boolean = abs(x - f) < epsilon && abs(y - f) < epsilon && abs(z - f) < epsilon && abs(w - f) < epsilon
+    fun anyEqual(f: Float, epsilon: Float = 0f): Boolean = abs(x - f) < epsilon || abs(y - f) < epsilon || abs(z - f) < epsilon || abs(w - f) < epsilon
+    fun equal(f: Float, epsilon: Float = 0f): Vec4bool = Vec4bool { abs(get(it) - f) < epsilon }
 
-    fun allNotEqual(f: Float, epsilon: Float = 0f): Boolean = x - f >= epsilon && y - f >= epsilon && z - f >= epsilon && w - f >= epsilon
-    fun anyNotEqual(f: Float, epsilon: Float = 0f): Boolean = x - f >= epsilon || y - f >= epsilon || z - f >= epsilon || w - f >= epsilon
-    fun notEqual(f: Float, epsilon: Float = 0f): Vec4bool = Vec4bool{ get(it) - f >= epsilon }
+    fun allNotEqual(f: Float, epsilon: Float = 0f): Boolean = abs(x - f) >= epsilon && abs(y - f) >= epsilon && abs(z - f) >= epsilon && abs(w - f) >= epsilon
+    fun anyNotEqual(f: Float, epsilon: Float = 0f): Boolean = abs(x - f) >= epsilon || abs(y - f) >= epsilon || abs(z - f) >= epsilon || abs(w - f) >= epsilon
+    fun notEqual(f: Float, epsilon: Float = 0f): Vec4bool = Vec4bool{ abs(get(it) - f) >= epsilon }
 
     infix fun allGreaterThan(f: Float): Boolean = x > f && y > f && z > f && w > f
     infix fun anyGreaterThan(f: Float): Boolean = x > f || y > f || z > f || w > f
@@ -475,13 +476,13 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
     infix fun anyLessThanEqual(v: Vec4): Boolean = x <= v.x || y <= v.y || z <= v.z || w <= v.w
     infix fun lessThanEqual(v: Vec4): Vec4bool = Vec4bool { get(it) <= v[it] }
 
-    fun allEqual(v: Vec4, epsilon: Float = 0f): Boolean = x - v.x < epsilon && y - v.y < epsilon && z - v.z < epsilon && w - v.w < epsilon
-    fun anyEqual(v: Vec4, epsilon: Float = 0f): Boolean = x - v.x < epsilon || y - v.y < epsilon || z - v.z < epsilon || w - v.w < epsilon
-    fun equal(v: Vec4, epsilon: Float = 0f): Vec4bool = Vec4bool { get(it) - v[it] < epsilon }
+    fun allEqual(v: Vec4, epsilon: Float = 0f): Boolean = abs(x - v.x) < epsilon && abs(y - v.y) < epsilon && abs(z - v.z) < epsilon && abs(w - v.w) < epsilon
+    fun anyEqual(v: Vec4, epsilon: Float = 0f): Boolean = abs(x - v.x) < epsilon || abs(y - v.y) < epsilon || abs(z - v.z) < epsilon || abs(w - v.w) < epsilon
+    fun equal(v: Vec4, epsilon: Float = 0f): Vec4bool = Vec4bool { abs(get(it) - v[it]) < epsilon }
 
-    fun allNotEqual(v: Vec4, epsilon: Float = 0f): Boolean = x - v.x >= epsilon && y - v.y >= epsilon && z - v.z >= epsilon && w - v.w >= epsilon
-    fun anyNotEqual(v: Vec4, epsilon: Float = 0f): Boolean = x - v.x >= epsilon || y - v.y >= epsilon || z - v.z >= epsilon || w - v.w >= epsilon
-    fun notEqual(v: Vec4, epsilon: Float = 0f): Vec4bool = Vec4bool{ get(it) - v[it] >= epsilon }
+    fun allNotEqual(v: Vec4, epsilon: Float = 0f): Boolean = abs(x - v.x) >= epsilon && abs(y - v.y) >= epsilon && abs(z - v.z) >= epsilon && abs(w - v.w) >= epsilon
+    fun anyNotEqual(v: Vec4, epsilon: Float = 0f): Boolean = abs(x - v.x) >= epsilon || abs(y - v.y) >= epsilon || abs(z - v.z) >= epsilon || abs(w - v.w) >= epsilon
+    fun notEqual(v: Vec4, epsilon: Float = 0f): Vec4bool = Vec4bool{ abs(get(it) - v[it]) >= epsilon }
 
     infix fun allGreaterThan(v: Vec4): Boolean = x > v.x && y > v.y && z > v.z && w > v.w
     infix fun anyGreaterThan(v: Vec4): Boolean = x > v.x || y > v.y || z > v.z || w > v.w

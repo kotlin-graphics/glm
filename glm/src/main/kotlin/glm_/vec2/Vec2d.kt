@@ -404,13 +404,13 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
     infix fun anyLessThanEqual(d: Double): Boolean = x <= d || y <= d
     infix fun lessThanEqual(d: Double): Vec2bool = Vec2bool { get(it) <= d }
 
-    fun allEqual(d: Double, epsilon: Double = 0.0): Boolean = x - d < epsilon && y - d < epsilon
-    fun anyEqual(d: Double, epsilon: Double = 0.0): Boolean = x - d < epsilon || y - d < epsilon
-    fun equal(d: Double, epsilon: Double = 0.0): Vec2bool = Vec2bool { get(it) - d < epsilon }
+    fun allEqual(d: Double, epsilon: Double = 0.0): Boolean = abs(x - d) < epsilon && (y - d) < epsilon
+    fun anyEqual(d: Double, epsilon: Double = 0.0): Boolean = abs(x - d) < epsilon || (y - d) < epsilon
+    fun equal(d: Double, epsilon: Double = 0.0): Vec2bool = Vec2bool { abs(get(it) - d) < epsilon }
 
-    fun allNotEqual(d: Double, epsilon: Double = 0.0): Boolean = x - d >= epsilon && y - d >= epsilon
-    fun anyNotEqual(d: Double, epsilon: Double = 0.0): Boolean = x - d >= epsilon || y - d >= epsilon
-    fun notEqual(d: Double, epsilon: Double = 0.0): Vec2bool = Vec2bool { get(it) - d >= epsilon }
+    fun allNotEqual(d: Double, epsilon: Double = 0.0): Boolean = abs(x - d) >= epsilon && (y - d) >= epsilon
+    fun anyNotEqual(d: Double, epsilon: Double = 0.0): Boolean = abs(x - d) >= epsilon || (y - d) >= epsilon
+    fun notEqual(d: Double, epsilon: Double = 0.0): Vec2bool = Vec2bool { abs(get(it) - d) >= epsilon }
 
     infix fun allGreaterThan(d: Double): Boolean = x > d && y > d
     infix fun anyGreaterThan(d: Double): Boolean = x > d || y > d
@@ -429,13 +429,13 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
     infix fun anyLessThanEqual(v: Vec2d): Boolean = x <= v.x || y <= v.y
     infix fun lessThanEqual(v: Vec2d): Vec2bool = Vec2bool { get(it) <= v[it] }
 
-    fun allEqual(v: Vec2d, epsilon: Double = 0.0): Boolean = x - v.x < epsilon && y - v.y < epsilon
-    fun anyEqual(v: Vec2d, epsilon: Double = 0.0): Boolean = x - v.x < epsilon || y - v.y < epsilon
-    fun equal(v: Vec2d, epsilon: Double = 0.0): Vec2bool = Vec2bool { get(it) - v[it] < epsilon }
+    fun allEqual(v: Vec2d, epsilon: Double = 0.0): Boolean = abs(x - v.x) < epsilon && abs(y - v.y) < epsilon
+    fun anyEqual(v: Vec2d, epsilon: Double = 0.0): Boolean = abs(x - v.x) < epsilon || abs(y - v.y) < epsilon
+    fun equal(v: Vec2d, epsilon: Double = 0.0): Vec2bool = Vec2bool { abs(get(it) - v[it]) < epsilon }
 
-    fun allNotEqual(v: Vec2d, epsilon: Double = 0.0): Boolean = x - v.x >= epsilon && y - v.y >= epsilon
-    fun anyNotEqual(v: Vec2d, epsilon: Double = 0.0): Boolean = x - v.x >= epsilon || y - v.y >= epsilon
-    fun notEqual(v: Vec2d, epsilon: Double = 0.0): Vec2bool = Vec2bool { get(it) - v[it] >= epsilon }
+    fun allNotEqual(v: Vec2d, epsilon: Double = 0.0): Boolean = abs(x - v.x) >= epsilon && abs(y - v.y) >= epsilon
+    fun anyNotEqual(v: Vec2d, epsilon: Double = 0.0): Boolean = abs(x - v.x) >= epsilon || abs(y - v.y) >= epsilon
+    fun notEqual(v: Vec2d, epsilon: Double = 0.0): Vec2bool = Vec2bool { abs(get(it) - v[it]) >= epsilon }
 
     infix fun allGreaterThan(v: Vec2d): Boolean = x > v.x && y > v.y
     infix fun anyGreaterThan(v: Vec2d): Boolean = x > v.x || y > v.y
