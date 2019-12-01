@@ -17,7 +17,7 @@ class testGtxClosestPoint : StringSpec() {
             val b = Vec3(1, 0, 0)
 
             val point = glm.closestPointOnLine(origin, a, b)
-            point shouldEqual Vec3(0.5f, 0.5f, 0f)
+            point.shouldEqual(Vec3(0.5f, 0.5f, 0f), 0.00001f)
         }
     }
 }
