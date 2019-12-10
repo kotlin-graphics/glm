@@ -6,7 +6,7 @@ import io.kotlintest.specs.StringSpec
 import kotlin.system.measureNanoTime
 import kotlin.system.measureTimeMillis
 
-class perf_matrix_mul : StringSpec() {
+class perf_matrix_mul : StringSpec() { // TODO all other case
 
     init {
         "compMatMulMat" { compMatMulMat(100_000) }

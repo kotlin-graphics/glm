@@ -4,7 +4,7 @@ import glm_.glm
 import glm_.quat.Quat
 import glm_.quat.QuatD
 
-interface extQuaternionGeometric {
+interface ext_QuaternionGeometric {
 
     /** Returns the length of the quaternion.   */
     fun length(q: Quat): Float = glm.sqrt(dot(q, q))

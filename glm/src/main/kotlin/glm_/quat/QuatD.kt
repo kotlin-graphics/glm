@@ -1,8 +1,8 @@
 package glm_.quat
 
-import glm_.BYTES
 import glm_.d
 import glm_.glm
+import glm_.gtc.gtc_Quaternion
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d
@@ -192,7 +192,7 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
     fun slerpAssign(b: QuatD, interp: Double) = glm.slerp(this, b, interp, this)
 
 
-    companion object : quatD_operators, gtcQuaternion {
+    companion object : quatD_operators, gtc_Quaternion {
 
         @JvmField
         val length = 4

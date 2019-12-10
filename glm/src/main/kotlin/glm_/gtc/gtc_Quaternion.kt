@@ -1,23 +1,14 @@
-package glm_.quat
+package glm_.gtc
 
-import glm_.ext.equal
-import glm_.glm
-import glm_.glm._epsilonF
-import glm_.glm.abs
-import glm_.glm.acos
-import glm_.glm.asin
-import glm_.glm.atan
-import glm_.glm.clamp
-import glm_.glm.cos
-import glm_.glm.epsilon
-import glm_.glm.epsilonF
-import glm_.glm.mix
-import glm_.glm.sin
+import glm_.detail.GLM_COORDINATE_SYSTEM
+import glm_.detail.GlmCoordinateSystem
 import glm_.glm.sqrt
 import glm_.mat3x3.Mat3
 import glm_.mat3x3.Mat3d
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
+import glm_.quat.Quat
+import glm_.quat.QuatD
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4bool
@@ -26,7 +17,7 @@ import glm_.vec4.Vec4bool
  * Created by GBarbieri on 14.12.2016.
  */
 
-interface gtcQuaternion {
+interface gtc_Quaternion {
 
 
     /** Converts a quaternion to a 3 * 3 matrix.    */
@@ -356,4 +347,75 @@ interface gtcQuaternion {
     }
 
     fun isInf(q: Quat) = isInf(q, Vec4bool())
+
+
+    /** Build a look at quaternion based on the default handedness.
+     *  @param direction Desired forward direction. Needs to be normalized.
+     *  @param up Up vector, how the camera is oriented. Typically (0, 1, 0). */
+    fun quatLookAt(direction: Vec3, up: Vec3): Quat = when (GLM_COORDINATE_SYSTEM) {
+        GlmCoordinateSystem.LEFT_HANDED -> quatLookAtLH(direction, up)
+        else -> quatLookAtRH(direction, up)
+    }
+
+    /** Build a right-handed look at quaternion.
+     *  @param direction Desired forward direction onto which the -z-axis gets mapped. Needs to be normalized.
+     *  @param up Up vector, how the camera is oriented. Typically (0, 1, 0).   */
+    fun quatLookAtRH(direction: Vec3, up: Vec3): Quat {
+        val result = Mat3()
+
+        result[2] = -direction
+        result[0] = (up cross result[2]).normalizeAssign()
+        result[1] = result[2] cross result[0]
+
+        return result.toQuat()
+    }
+
+    /** Build a left-handed look at quaternion.
+     *  @param direction Desired forward direction onto which the +z-axis gets mapped. Needs to be normalized.
+     *  @param up Up vector, how the camera is oriented. Typically (0, 1, 0). */
+    fun quatLookAtLH(direction: Vec3, up: Vec3): Quat {
+        val result = Mat3()
+
+        result[2] = direction
+        result[0] = (up cross result[2]).normalizeAssign()
+        result[1] = result[2] cross result[0]
+
+        return result.toQuat()
+    }
+
+    // ------------------------------ QuatD ------------------------------
+
+    /** Build a look at quaternion based on the default handedness.
+     *  @param direction Desired forward direction. Needs to be normalized.
+     *  @param up Up vector, how the camera is oriented. Typically (0, 1, 0). */
+    fun quatLookAt(direction: Vec3d, up: Vec3d): QuatD = when (GLM_COORDINATE_SYSTEM) {
+        GlmCoordinateSystem.LEFT_HANDED -> quatLookAtLH(direction, up)
+        else -> quatLookAtRH(direction, up)
+    }
+
+    /** Build a right-handed look at quaternion.
+     *  @param direction Desired forward direction onto which the -z-axis gets mapped. Needs to be normalized.
+     *  @param up Up vector, how the camera is oriented. Typically (0, 1, 0).   */
+    fun quatLookAtRH(direction: Vec3d, up: Vec3d): QuatD {
+        val result = Mat3d()
+
+        result[2] = -direction
+        result[0] = (up cross result[2]).normalizeAssign()
+        result[1] = result[2] cross result[0]
+
+        return result.toQuatD()
+    }
+
+    /** Build a left-handed look at quaternion.
+     *  @param direction Desired forward direction onto which the +z-axis gets mapped. Needs to be normalized.
+     *  @param up Up vector, how the camera is oriented. Typically (0, 1, 0). */
+    fun quatLookAtLH(direction: Vec3d, up: Vec3d): QuatD {
+        val result = Mat3d()
+
+        result[2] = direction
+        result[0] = (up cross result[2]).normalizeAssign()
+        result[1] = result[2] cross result[0]
+
+        return result.toQuatD()
+    }
 }

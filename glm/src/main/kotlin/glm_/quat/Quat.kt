@@ -1,11 +1,11 @@
 package glm_.quat
 
-import glm_.BYTES
 import glm_.f
 import glm_.float
 import glm_.glm
 import glm_.glm.cos
 import glm_.glm.sin
+import glm_.gtc.gtc_Quaternion
 import glm_.mat3x3.Mat3
 import glm_.mat4x4.Mat4
 import glm_.vec3.Vec3
@@ -215,7 +215,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     fun vectorize(res: Vec4 = Vec4()) = res.put(x, y, z, w)
 
 
-    companion object : quat_operators, gtcQuaternion {
+    companion object : quat_operators, gtc_Quaternion {
         @JvmField
         val length = 4
 

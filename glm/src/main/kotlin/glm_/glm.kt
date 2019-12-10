@@ -10,9 +10,9 @@ import glm_.ext.ext_quaternionTransform
 import glm_.ext.ext_quaternionTrigonometric
 import glm_.func.*
 import glm_.func.common.*
-import glm_.gtc.gtcMatrixInverse
+import glm_.gtc.gtc_MatrixInverse
 import glm_.gtx.*
-import glm_.quat.gtcQuaternion
+import glm_.gtc.gtc_Quaternion
 import glm_.quat.gtxQuaternion
 
 object glm :
@@ -42,7 +42,7 @@ object glm :
         ext_matrixProjection,
         ext_matrixTransform,
 
-        gtcQuaternion,
+        gtc_Quaternion,
         ext_quaternionCommon,
         ext_quaternionTransform,
         ext_quaternionTrigonometric,
@@ -75,7 +75,7 @@ object glm :
 
         gradientPaint,
 
-        gtcMatrixInverse,
+        gtc_MatrixInverse,
 
         gtxClosestPoint,
         gtxEasing,
@@ -95,7 +95,7 @@ object glm :
         gtxVectorAngle,
 
         // ext
-        extQuaternionGeometric,
+        ext_QuaternionGeometric,
 //        extQuaternionRelational,
         extScalarRelational,
         matrixRelational,

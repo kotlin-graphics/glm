@@ -7,7 +7,7 @@ import glm_.mat3x3.Mat3d
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 
-interface gtcMatrixInverse {
+interface gtc_MatrixInverse {
 
 //    fun affineInverse(mat<3, 3, T, P> const & m)
 //    {
