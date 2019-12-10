@@ -263,65 +263,108 @@ interface func_geometric {
 
 
     fun refract(i: Float, n: Float, eta: Float): Float {
-        assert(eta >= -1f && eta <= 1f)
         val dot = dot(n, i)
         val k = 1f - eta * eta * (1f - dot * dot)
-        return (eta * i - (eta * dot + sqrt(k)) * n) * if (k >= 0f) 1f else 0f
+        return when {
+            k >= 0 -> eta * i - (eta * dot + sqrt(k)) * n
+            else -> 0f
+        }
     }
 
     fun refract(i: Double, n: Double, eta: Double): Double {
-        assert(eta >= -1.0 && eta <= 1.0)
         val dot = dot(n, i)
         val k = 1.0 - eta * eta * (1.0 - dot * dot)
-        return (eta * i - (eta * dot + sqrt(k)) * n) * if (k >= 0.0) 1.0 else 0.0
+        return when {
+            k >= 0 -> eta * i - (eta * dot + sqrt(k)) * n
+            else -> 0.0
+        }
     }
 
     fun refract(i: Vec2, n: Vec2, eta: Float, res: Vec2 = Vec2()): Vec2 {
-        assert(eta >= -1f && eta <= 1f)
         val dot = dot(n, i)
         val k = 1f - eta * eta * (1f - dot * dot)
-        res.x = eta * i.x - (eta * dot + sqrt(k)) * n.x * if (k >= 0f) 1f else 0f
-        res.y = eta * i.y - (eta * dot + sqrt(k)) * n.y * if (k >= 0f) 1f else 0f
+        when {
+            k >= 0 -> {
+                res.x = eta * i.x - (eta * dot + sqrt(k)) * n.x
+                res.y = eta * i.y - (eta * dot + sqrt(k)) * n.y
+            }
+            else -> {
+                res.x = 0f
+                res.y = 0f
+            }
+        }
         return res
     }
 
     fun refract(i: Vec2d, n: Vec2d, eta: Double, res: Vec2d = Vec2d()): Vec2d {
-        assert(eta >= -1.0 && eta <= 1.0)
         val dot = dot(n, i)
         val k = 1.0 - eta * eta * (1.0 - dot * dot)
-        res.x = eta * i.x - (eta * dot + sqrt(k)) * n.x * if (k >= 0.0) 1.0 else 0.0
-        res.y = eta * i.y - (eta * dot + sqrt(k)) * n.y * if (k >= 0.0) 1.0 else 0.0
+        when {
+            k >= 0 -> {
+                res.x = eta * i.x - (eta * dot + sqrt(k)) * n.x
+                res.y = eta * i.y - (eta * dot + sqrt(k)) * n.y
+            }
+            else -> {
+                res.x = 0.0
+                res.y = 0.0
+            }
+        }
         return res
     }
 
     fun refract(i: Vec3, n: Vec3, eta: Float, res: Vec3 = Vec3()): Vec3 {
-        assert(eta >= -1f && eta <= 1f)
         val dot = dot(n, i)
         val k = 1f - eta * eta * (1f - dot * dot)
-        res.x = eta * i.x - (eta * dot + sqrt(k)) * n.x * if (k >= 0f) 1f else 0f
-        res.y = eta * i.y - (eta * dot + sqrt(k)) * n.y * if (k >= 0f) 1f else 0f
-        res.z = eta * i.z - (eta * dot + sqrt(k)) * n.z * if (k >= 0f) 1f else 0f
+        when {
+            k >= 0 -> {
+                res.x = eta * i.x - (eta * dot + sqrt(k)) * n.x
+                res.y = eta * i.y - (eta * dot + sqrt(k)) * n.y
+                res.z = eta * i.z - (eta * dot + sqrt(k)) * n.z
+            }
+            else -> {
+                res.x = 0f
+                res.y = 0f
+                res.z = 0f
+            }
+        }
         return res
     }
 
     fun refract(i: Vec3d, n: Vec3d, eta: Double, res: Vec3d = Vec3d()): Vec3d {
-        assert(eta >= -1.0 && eta <= 1.0)
         val dot = dot(n, i)
         val k = 1.0 - eta * eta * (1.0 - dot * dot)
-        res.x = eta * i.x - (eta * dot + sqrt(k)) * n.x * if (k >= 0.0) 1.0 else 0.0
-        res.y = eta * i.y - (eta * dot + sqrt(k)) * n.y * if (k >= 0.0) 1.0 else 0.0
-        res.z = eta * i.z - (eta * dot + sqrt(k)) * n.z * if (k >= 0.0) 1.0 else 0.0
+        when {
+            k >= 0 -> {
+                res.x = eta * i.x - (eta * dot + sqrt(k)) * n.x
+                res.y = eta * i.y - (eta * dot + sqrt(k)) * n.y
+                res.z = eta * i.z - (eta * dot + sqrt(k)) * n.z
+            }
+            else -> {
+                res.x = 0.0
+                res.y = 0.0
+                res.z = 0.0
+            }
+        }
         return res
     }
 
     fun refract(i: Vec4, n: Vec4, eta: Float, res: Vec4 = Vec4()): Vec4 {
-        assert(eta >= -1f && eta <= 1f)
         val dot = dot(n, i)
         val k = 1f - eta * eta * (1f - dot * dot)
-        res.x = eta * i.x - (eta * dot + sqrt(k)) * n.x * if (k >= 0f) 1f else 0f
-        res.y = eta * i.y - (eta * dot + sqrt(k)) * n.y * if (k >= 0f) 1f else 0f
-        res.z = eta * i.z - (eta * dot + sqrt(k)) * n.z * if (k >= 0f) 1f else 0f
-        res.w = eta * i.w - (eta * dot + sqrt(k)) * n.w * if (k >= 0f) 1f else 0f
+        when {
+            k >= 0 -> {
+                res.x = eta * i.x - (eta * dot + sqrt(k)) * n.x
+                res.y = eta * i.y - (eta * dot + sqrt(k)) * n.y
+                res.z = eta * i.z - (eta * dot + sqrt(k)) * n.z
+                res.w = eta * i.w - (eta * dot + sqrt(k)) * n.w
+            }
+            else -> {
+                res.x = 0f
+                res.y = 0f
+                res.z = 0f
+                res.w = 0f
+            }
+        }
         return res
     }
 
@@ -329,10 +372,20 @@ interface func_geometric {
         assert(eta >= -1.0 && eta <= 1.0)
         val dot = dot(n, i)
         val k = 1.0 - eta * eta * (1.0 - dot * dot)
-        res.x = eta * i.x - (eta * dot + sqrt(k)) * n.x * if (k >= 0.0) 1.0 else 0.0
-        res.y = eta * i.y - (eta * dot + sqrt(k)) * n.y * if (k >= 0.0) 1.0 else 0.0
-        res.z = eta * i.z - (eta * dot + sqrt(k)) * n.z * if (k >= 0.0) 1.0 else 0.0
-        res.w = eta * i.w - (eta * dot + sqrt(k)) * n.w * if (k >= 0.0) 1.0 else 0.0
+        when {
+            k >= 0 -> {
+                res.x = eta * i.x - (eta * dot + sqrt(k)) * n.x
+                res.y = eta * i.y - (eta * dot + sqrt(k)) * n.y
+                res.z = eta * i.z - (eta * dot + sqrt(k)) * n.z
+                res.w = eta * i.w - (eta * dot + sqrt(k)) * n.w
+            }
+            else -> {
+                res.x = 0.0
+                res.y = 0.0
+                res.z = 0.0
+                res.w = 0.0
+            }
+        }
         return res
     }
 }
