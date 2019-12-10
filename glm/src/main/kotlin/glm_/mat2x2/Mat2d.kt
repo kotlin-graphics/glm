@@ -18,10 +18,7 @@ import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d
-import kool.BYTES
-import kool.Ptr
-import kool.pos
-import kool.set
+import kool.*
 import org.lwjgl.system.MemoryUtil.memGetDouble
 import java.io.PrintStream
 import java.nio.ByteBuffer
@@ -68,6 +65,8 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     constructor(buffer: DoubleBuffer, index: Int = buffer.pos) : this(
             buffer[index], buffer[index + 1],
             buffer[index + 2], buffer[index + 3])
+
+    constructor(ptr: DoublePtr) : this(block = { i -> ptr[i] })
 
     // -- Matrix conversions --
 

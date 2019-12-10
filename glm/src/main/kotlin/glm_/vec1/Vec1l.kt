@@ -1,6 +1,5 @@
 package glm_.vec1
 
-import glm_.BYTES
 import glm_.L
 import glm_.getLong
 import glm_.putLong
@@ -11,10 +10,7 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.BYTES
-import kool.LongBuffer
-import kool.pos
-import kool.set
+import kool.*
 import org.lwjgl.system.MemoryStack
 import java.nio.*
 import kotlin.math.abs
@@ -69,6 +65,7 @@ class Vec1l(x: Long) : Vec1t<Long>(x) {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index])
 
     constructor(block: (Int) -> Int) : this(block(0))
+//    constructor(ptr: LongPtr) : this(ptr[0]) clash, use Companion::fromPointer
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneLong: Boolean = false, bigEndian: Boolean = true) {
@@ -130,6 +127,8 @@ class Vec1l(x: Long) : Vec1t<Long>(x) {
         const val length = Vec1t.length
         @JvmField
         val size = length * Long.BYTES
+
+        fun from(ptr: LongPtr): Vec1l = Vec1l(ptr[0])
     }
 
     override fun size() = size

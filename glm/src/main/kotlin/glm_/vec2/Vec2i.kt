@@ -157,12 +157,12 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
         return buf
     }
 
-    fun toIntBufferStack(): IntBuffer = to(MemoryStack.stackPush().mallocInt(length), 0)
-    infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(length), 0)
-    fun toIntBuffer(): IntBuffer = to(IntBuffer(length), 0)
+    fun toIntBufferStack(): IntBuffer = to(MemoryStack.stackGet().mallocInt(length))
+    infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(length))
+    fun toIntBuffer(): IntBuffer = to(IntBuffer(length))
     infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
 
-    fun to(buf: IntBuffer, index: Int): IntBuffer {
+    fun to(buf: IntBuffer, index: Int = 0): IntBuffer {
         buf[index] = x
         buf[index + 1] = y
         return buf

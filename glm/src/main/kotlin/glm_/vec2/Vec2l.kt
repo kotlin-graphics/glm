@@ -10,6 +10,7 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.*
 import org.lwjgl.system.MemoryStack
+import org.lwjgl.system.MemoryStack.stackGet
 import org.lwjgl.system.MemoryUtil.memGetLong
 import org.lwjgl.system.MemoryUtil.memPutLong
 import java.io.PrintStream
@@ -97,6 +98,7 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Long) : this(block(0), block(1))
+    // constructor(ptr: LongPtr) : this(ptr[0], ptr[1]) clash, use Companion::fromPointer
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneLong: Boolean = false, bigEndian: Boolean = true) {
@@ -152,7 +154,7 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
         return buf
     }
 
-    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackPush().mallocLong(length), 0)
+    fun toLongBufferStack(): LongBuffer = to(stackGet().mallocLong(length), 0)
     infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(length), 0)
     fun toLongBuffer(): LongBuffer = to(LongBuffer(length), 0)
     infix fun to(buf: LongBuffer): LongBuffer = to(buf, buf.pos)
@@ -162,10 +164,19 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutLong(ptr, x)
-        memPutLong(ptr + Long.BYTES, y)
-    }
+//    fun toAdrStack(): ByteBuffer = to(stackGet().malloc(size()))
+//    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.malloc(size()))
+//    fun toBuffer(): ByteBuffer = to(Buffer(size()))
+//    infix fun to(buf: ByteBuffer): ByteBuffer = to(buf, buf.pos)
+//
+//    fun to(buf: ByteBuffer, offset: Int = 0): ByteBuffer
+//    infix fun to(ptr: LongPtr){
+//        ptr[0] = x
+//        ptr[1] = y
+//    }
+
+    infix fun to(ptr: Ptr) = to(LongPtr(ptr))
+    infix fun to(ptr: BytePtr) = to(LongPtr(ptr.adr))
 
     // -- Component accesses --
 

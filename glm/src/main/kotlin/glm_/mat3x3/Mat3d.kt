@@ -22,10 +22,7 @@ import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
-import kool.BYTES
-import kool.Ptr
-import kool.pos
-import kool.set
+import kool.*
 import org.lwjgl.system.MemoryUtil.memGetDouble
 import org.lwjgl.system.MemoryUtil.memPutDouble
 import java.nio.ByteBuffer
@@ -84,6 +81,8 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
             buffer[index], buffer[index + 1], buffer[index + 2],
             buffer[index + 3], buffer[index + 4], buffer[index + 5],
             buffer[index + 6], buffer[index + 7], buffer[index + 8])
+
+    constructor(ptr: DoublePtr) : this(block = { i -> ptr[i] })
 
     // -- Matrix conversions --
 

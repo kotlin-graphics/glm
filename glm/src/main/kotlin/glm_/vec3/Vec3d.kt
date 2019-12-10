@@ -9,10 +9,7 @@ import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3d_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.BYTES
-import kool.Ptr
-import kool.pos
-import kool.set
+import kool.*
 import org.lwjgl.system.MemoryUtil.memGetDouble
 import org.lwjgl.system.MemoryUtil.memPutDouble
 import java.awt.Color
@@ -116,6 +113,7 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuf
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
     constructor(block: (Int) -> Double) : this(block(0), block(1), block(2))
+    constructor(ptr: DoublePtr) : this(ptr[0], ptr[1], ptr[2])
 
     // TODO others
     constructor(inputStream: InputStream, bigEndian: Boolean = true) :

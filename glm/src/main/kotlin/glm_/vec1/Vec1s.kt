@@ -8,10 +8,7 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.BYTES
-import kool.pos
-import kool.ShortBuffer
-import kool.set
+import kool.*
 import org.lwjgl.system.MemoryStack
 import java.nio.*
 import kotlin.math.abs
@@ -70,6 +67,7 @@ class Vec1s(x: Short) : Vec1t<Short>(x) {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index])
 
     constructor(block: (Int) -> Int) : this(block(0))
+    constructor(ptr: ShortPtr) : this(ptr[0])
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = false, bigEndian: Boolean = true) {

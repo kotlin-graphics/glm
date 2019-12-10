@@ -6,17 +6,20 @@ import java.nio.*
 
 interface ToBuffer {
 
-    fun toBufferStack(): ByteBuffer = to(MemoryStack.stackGet().malloc(size()), 0)
-    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.malloc(size()), 0)
-    fun toBuffer(): ByteBuffer = to(Buffer(size()), 0)
+    fun toBufferStack(): ByteBuffer = to(MemoryStack.stackGet().malloc(size()))
+    infix fun toBuffer(stack: MemoryStack): ByteBuffer = to(stack.malloc(size()))
+    fun toBuffer(): ByteBuffer = to(Buffer(size()))
     infix fun to(buf: ByteBuffer): ByteBuffer = to(buf, buf.pos)
 
-    fun to(buf: ByteBuffer, offset: Int): ByteBuffer
+    fun to(buf: ByteBuffer, offset: Int = 0): ByteBuffer
 
     /**
      * The size of the object in bytes
      */
     fun size(): Int
+
+    val size: Int
+        get() = 0
 }
 
 /**
@@ -38,9 +41,9 @@ fun List<ToBuffer>.to(buf: ByteBuffer): ByteBuffer {
  */
 fun List<ToBuffer>.toBuffer(assumeConstSize: Boolean = true): ByteBuffer {
 
-    if(this.isEmpty()) return Buffer(0)
+    if (this.isEmpty()) return Buffer(0)
 
-    val totalSize = if(assumeConstSize) this.first().size() * this.size else this.sumBy { it.size() }
+    val totalSize = if (assumeConstSize) this.first().size() * this.size else this.sumBy { it.size() }
 
     val buffer = Buffer(totalSize)
     this.to(buffer)
@@ -84,9 +87,9 @@ fun List<ToFloatBuffer>.to(buf: FloatBuffer): FloatBuffer {
  */
 fun List<ToFloatBuffer>.toFloatBuffer(assumeConstSize: Boolean = true): FloatBuffer {
 
-    if(this.isEmpty()) return FloatBuffer(0)
+    if (this.isEmpty()) return FloatBuffer(0)
 
-    val totalSize = if(assumeConstSize) this.first().elementCount() * this.size else this.sumBy { it.elementCount() }
+    val totalSize = if (assumeConstSize) this.first().elementCount() * this.size else this.sumBy { it.elementCount() }
 
     val buffer = FloatBuffer(totalSize)
     this.to(buffer)
@@ -130,9 +133,9 @@ fun List<ToDoubleBuffer>.to(buf: DoubleBuffer): DoubleBuffer {
  */
 fun List<ToDoubleBuffer>.toDoubleBuffer(assumeConstSize: Boolean = true): DoubleBuffer {
 
-    if(this.isEmpty()) return DoubleBuffer(0)
+    if (this.isEmpty()) return DoubleBuffer(0)
 
-    val totalSize = if(assumeConstSize) this.first().elementCount() * this.size else this.sumBy { it.elementCount() }
+    val totalSize = if (assumeConstSize) this.first().elementCount() * this.size else this.sumBy { it.elementCount() }
 
     val buffer = DoubleBuffer(totalSize)
     this.to(buffer)

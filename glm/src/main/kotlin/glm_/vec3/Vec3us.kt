@@ -202,7 +202,7 @@ class Vec3us(var ofs: Int, var array: ShortArray) : Vec3t<Ushort>(), ToBuffer {
         return buf
     }
 
-    fun toShortBufferStack(): ShortBuffer = to(MemoryStack.stackPush().mallocShort(length), 0)
+    fun toShortBufferStack(): ShortBuffer = to(MemoryStack.stackGet().mallocShort(length), 0)
     infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
     fun toShortBuffer(): ShortBuffer = to(ShortBuffer(length), 0)
     infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)

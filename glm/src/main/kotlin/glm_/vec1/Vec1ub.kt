@@ -64,6 +64,7 @@ class Vec1ub(x: Ubyte) : Vec1t<Ubyte>(x) {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index])
 
     constructor(block: (Int) -> Ubyte) : this(block(0))
+    // TODO unsigned pointers
 
 
     fun put(x: Ubyte) {

@@ -10,10 +10,7 @@ import glm_.vec3.operators.vec3_operators
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.BYTES
-import kool.Ptr
-import kool.pos
-import kool.set
+import kool.*
 import org.lwjgl.system.MemoryUtil.memGetFloat
 import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.awt.Color
@@ -117,6 +114,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
     constructor(block: (Int) -> Float) : this(block(0), block(1), block(2))
+    constructor(ptr: FloatPtr) : this(ptr[0], ptr[1], ptr[2])
 
 
     constructor(inputStream: InputStream, bigEndian: Boolean = true) :
@@ -192,11 +190,14 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutFloat(ptr, x)
-        memPutFloat(ptr + Float.BYTES, y)
-        memPutFloat(ptr + Float.BYTES * 2, z)
+    infix fun to(ptr: FloatPtr){
+        ptr[0] = x
+        ptr[1] = y
+        ptr[2] = z
     }
+
+    infix fun to(ptr: Ptr) = to(FloatPtr(ptr))
+    infix fun to(ptr: BytePtr) = to(FloatPtr(ptr.adr))
 
     // -- Component accesses --
 

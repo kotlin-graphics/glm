@@ -4,17 +4,12 @@ import glm_.*
 import glm_.vec1.Vec1bool
 import glm_.vec1.Vec1t
 import glm_.vec2.operators.opVec2
-import glm_.vec3.Vec3
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.BYTES
-import kool.Ptr
-import kool.pos
-import kool.set
+import kool.*
 import org.lwjgl.system.MemoryUtil.memGetFloat
-import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.awt.Color
 import java.io.InputStream
 import java.io.PrintStream
@@ -178,10 +173,13 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutFloat(ptr, x)
-        memPutFloat(ptr + Float.BYTES, y)
+    infix fun to(ptr: FloatPtr){
+        ptr[0] = x
+        ptr[1] = y
     }
+
+    infix fun to(ptr: Ptr) = to(FloatPtr(ptr))
+    infix fun to(ptr: BytePtr) = to(FloatPtr(ptr.adr))
 
     // -- Component accesses --
 

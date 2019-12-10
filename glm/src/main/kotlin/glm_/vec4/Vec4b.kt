@@ -10,10 +10,7 @@ import glm_.vec3.Vec3b
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4b_operators
-import kool.BYTES
-import kool.Ptr
-import kool.pos
-import kool.set
+import kool.*
 import org.lwjgl.system.MemoryUtil.memGetByte
 import org.lwjgl.system.MemoryUtil.memPutByte
 import java.io.PrintStream
@@ -125,6 +122,7 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
     constructor(block: (Int) -> Byte) : this(block(0), block(1), block(2), block(3))
+    constructor(ptr: BytePtr) : this(ptr[0], ptr[1], ptr[2], ptr[3])
 
 
     fun put(x: Byte, y: Byte, z: Byte, w: Byte) {

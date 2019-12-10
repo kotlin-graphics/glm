@@ -232,7 +232,7 @@ class Vec4ul(var ofs: Int, var array: LongArray) : Vec4t<Ulong>(), ToBuffer {
         return buf
     }
 
-    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackPush().mallocLong(length), 0)
+    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackGet().mallocLong(length), 0)
     infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(length), 0)
     fun toLongBuffer(): LongBuffer = to(LongBuffer(length), 0)
     infix fun to(longs: LongBuffer): LongBuffer = to(longs, longs.pos)

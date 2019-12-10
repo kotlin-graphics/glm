@@ -23,10 +23,7 @@ import glm_.vec3.Vec3t
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.BYTES
-import kool.Ptr
-import kool.pos
-import kool.set
+import kool.*
 import org.lwjgl.system.MemoryUtil.memGetFloat
 import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.io.InputStream
@@ -164,6 +161,8 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
             buffer[index + 4], buffer[index + 5], buffer[index + 6], buffer[index + 7],
             buffer[index + 8], buffer[index + 9], buffer[index + 10], buffer[index + 11],
             buffer[index + 12], buffer[index + 13], buffer[index + 14], buffer[index + 15])
+
+    constructor(ptr: FloatPtr) : this(block = { i -> ptr[i] })
 
     // -- Matrix conversions --
 

@@ -114,6 +114,7 @@ class Vec3s(var ofs: Int, var array: ShortArray) : Vec3t<Short>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
     constructor(block: (Int) -> Short) : this(block(0), block(1), block(2))
+    constructor(ptr: ShortPtr) : this(ptr[0], ptr[1], ptr[2])
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = false, bigEndian: Boolean = true) {
@@ -177,7 +178,7 @@ class Vec3s(var ofs: Int, var array: ShortArray) : Vec3t<Short>(), ToBuffer {
         return buf
     }
 
-    fun toShortBufferStack(): ShortBuffer = to(MemoryStack.stackPush().mallocShort(length), 0)
+    fun toShortBufferStack(): ShortBuffer = to(MemoryStack.stackGet().mallocShort(length), 0)
     infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
     fun toShortBuffer(): ShortBuffer = to(ShortBuffer(length), 0)
     infix fun to(shorts: ShortBuffer): ShortBuffer = to(shorts, shorts.pos)
