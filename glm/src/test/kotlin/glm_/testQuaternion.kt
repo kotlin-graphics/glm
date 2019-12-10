@@ -270,25 +270,6 @@ class testQuaternion : StringSpec() {
             val r = glm.exp(p)
         }
 
-        "quat lookAt" {
-
-            val eye = Vec3(0f)
-            val center = Vec3(1.1f, -2f, 3.1416f)
-            val up = Vec3(-0.17f, 7.23f, -1.744f)
-
-            // Test left-handed implementation
-            val testQuatLH = glm.quatLookAtLH(glm.normalize(center - eye), up)
-            val testMatLH = glm.conjugate(glm.quat_cast(glm.lookAtLh(eye, center, up, Mat4())))
-            (glm.abs(glm.length(testQuatLH) - 1f) > glm.εf) shouldBe false
-            (glm.min(glm.length(testQuatLH - testMatLH), glm.length(testQuatLH + testMatLH)) > glm.εf) shouldBe false
-
-            // Test right-handed implementation
-            val testQuatRH = glm.quatLookAtRH(glm.normalize(center - eye), up)
-            val testMatRH = glm.conjugate(glm.quat_cast(glm.lookAtRh(eye, center, up, Mat4())))
-            (glm.abs(glm.length(testQuatRH) - 1f) > glm.εf) shouldBe false
-            (glm.min(glm.length(testQuatRH - testMatRH), glm.length(testQuatRH + testMatRH)) > glm.εf) shouldBe false
-        }
-
         "identity"        {
 
             val Q = Quat.identity

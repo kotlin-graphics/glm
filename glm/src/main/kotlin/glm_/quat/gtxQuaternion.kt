@@ -9,6 +9,7 @@ import glm_.glm.PIf
 import glm_.glm.angleAxis
 import glm_.glm.atan
 import glm_.glm.epsilonF
+import glm_.glm.exp
 import glm_.glm.log
 import glm_.glm.mix
 import glm_.glm.pow
@@ -18,6 +19,7 @@ import glm_.vec3.Vec3
 import glm_.vec3.operators.times
 import glm_.vec4.Vec4
 import kotlin.math.*
+import kotlin.math.exp
 
 /// @ref gtx_quaternion
 /// @file glm/gtx/quaternion.hpp
@@ -90,65 +92,6 @@ interface gtxQuaternion {
         val invQuat = curr.inverse()
         return exp((log(next * invQuat) + log(prev * invQuat)) / -4f) * curr
     }
-
-    /** Returns a exp of a quaternion.
-     *  @see gtx_quaternion */
-    fun exp(q: Quat): Quat {
-        val u = Vec3(q.x, q.y, q.z)
-        val angle = u.length()
-        if (angle < epsilonF) return Quat()
-        val v = u / angle
-        return Quat(angle.cos, angle.sin * v)
-    }
-
-    /** Returns a log of a quaternion.
-     *  @see gtx_quaternion */
-    fun log(q: Quat): Quat {
-        val u = Vec3(q.x, q.y, q.z)
-        val vec3Len = u.length()
-
-        return when {
-            vec3Len < epsilonF -> when {
-                q.w > 0f -> Quat(log(q.w), 0f, 0f, 0f)
-                q.w < 0f -> Quat(log(-q.w), PIf, 0f, 0f)
-                else -> Quat(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY)
-            }
-            else -> {
-                val t = atan(vec3Len, q.w) / vec3Len
-                val quatLen2 = vec3Len * vec3Len + q.w * q.w
-                Quat(0.5f * log(quatLen2), t * q.x, t * q.y, t * q.z)
-            }
-        }
-    }
-
-    /** Returns x raised to the y power.
-     *  @see gtx_quaternion */
-    fun pow(x: Quat, y: Float): Quat {
-        // Raising to the power of 0 should yield 1
-        // Needed to prevent a division by 0 error later on
-        if (y > -epsilonF && y < epsilonF) return Quat(1f, 0f, 0f, 0f)
-
-        // To deal with non-unit quaternions
-        val magnitude = sqrt(x.x * x.x + x.y * x.y + x.z * x.z + x.w * x.w)
-
-        // Equivalent to raising a real number to a power
-        // Needed to prevent a division by 0 error later on
-        if (abs(x.w / magnitude) > 1f - epsilonF && abs(x.w / magnitude) < 1 + epsilonF)
-            return Quat(pow(x.w, y), 0f, 0f, 0f)
-
-        val angle = acos(x.w / magnitude)
-        val newAngle = angle * y
-        val div = sin(newAngle) / sin(angle)
-        val mag = pow(magnitude, y - 1)
-
-        return Quat(cos(newAngle) * magnitude * mag, x.x * div * mag, x.y * div * mag, x.z * div * mag)
-    }
-
-    /** Returns quarternion square root.
-     *  @see gtx_quaternion */
-//template<typename T, qualifier Q>
-//tquat<T, Q> sqrt(
-//	tquat<T, Q> const& q);
 
     /** Rotates a 3 components vector by a quaternion.
      *  @see gtx_quaternion */
@@ -257,39 +200,7 @@ interface gtxQuaternion {
                 rotationAxis.z * invs)
     }
 
-    /** Build a look at quaternion based on the default handedness.
-     *  @param direction Desired forward direction. Needs to be normalized.
-     *  @param up Up vector, how the camera is oriented. Typically (0, 1, 0). */
-    fun quatLookAt(direction: Vec3, up: Vec3) = when (GLM_COORDINATE_SYSTEM) {
-        GlmCoordinateSystem.LEFT_HANDED -> quatLookAtLH(direction, up)
-        else -> quatLookAtRH(direction, up)
-    }
 
-    /** Build a right-handed look at quaternion.
-     *  @param direction Desired forward direction onto which the -z-axis gets mapped. Needs to be normalized.
-     *  @param up Up vector, how the camera is oriented. Typically (0, 1, 0).   */
-    fun quatLookAtRH(direction: Vec3, up: Vec3): Quat {
-        val result = Mat3()
-
-        result[2] = -direction
-        result[0] = (up cross result[2]).normalizeAssign()
-        result[1] = result[2] cross result[0]
-
-        return result.toQuat()
-    }
-
-    /** Build a left-handed look at quaternion.
-     *  @param direction Desired forward direction onto which the +z-axis gets mapped. Needs to be normalized.
-     *  @param up Up vector, how the camera is oriented. Typically (0, 1, 0). */
-    fun quatLookAtLH(direction: Vec3, up: Vec3): Quat {
-        val result = Mat3()
-
-        result[2] = direction
-        result[0] = (up cross result[2]).normalizeAssign()
-        result[1] = result[2] cross result[0]
-
-        return result.toQuat()
-    }
 
     /** Returns the squared length of x.
      *  @see gtx_quaternion */

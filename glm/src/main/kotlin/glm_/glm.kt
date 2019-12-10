@@ -5,9 +5,9 @@
 package glm_
 
 import glm_.ext.*
-import glm_.ext.quaternion.ext_quaternionCommon
-import glm_.ext.quaternion.ext_quaternionTransform
-import glm_.ext.quaternion.ext_quaternionTrigonometric
+import glm_.ext.ext_quaternionCommon
+import glm_.ext.ext_quaternionTransform
+import glm_.ext.ext_quaternionTrigonometric
 import glm_.func.*
 import glm_.func.common.*
 import glm_.gtc.gtcMatrixInverse
@@ -46,6 +46,9 @@ object glm :
         ext_quaternionCommon,
         ext_quaternionTransform,
         ext_quaternionTrigonometric,
+        ext_quaternionExponential,
+
+        ext_scalarCommon,
 
         matrix_interpolation,
 

@@ -246,5 +246,4 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
     fun anyNotEqual(q: Quat, epsilon: Float = Float.MIN_VALUE): Boolean =
             x - q.x >= epsilon || y - q.y >= epsilon || z - q.z >= epsilon || w - q.w >= epsilon
-
 }

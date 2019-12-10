@@ -29,14 +29,6 @@ import glm_.vec4.Vec4bool
 interface gtcQuaternion {
 
 
-
-
-
-
-
-
-
-
     /** Converts a quaternion to a 3 * 3 matrix.    */
     fun mat3_cast(q: Quat, res: Mat3): Mat3 {
 
@@ -131,20 +123,30 @@ interface gtcQuaternion {
 
 
     /** Converts a pure rotation 3 * 3 matrix to a quaternion.    */
-    fun quat_cast(m: Mat3, res: Quat) = quat_cast(m[0, 0], m[0, 1], m[0, 2], m[1, 0], m[1, 1], m[1, 2], m[2, 0], m[2, 1], m[2, 2], res)
+    fun quat_cast(m: Mat3, res: Quat): Quat =
+            quat_cast(m[0, 0], m[0, 1], m[0, 2], m[1, 0], m[1, 1], m[1, 2], m[2, 0], m[2, 1], m[2, 2], res)
 
-    fun quatD_cast(m: Mat3d, res: QuatD) = quatD_cast(m[0, 0], m[0, 1], m[0, 2], m[1, 0], m[1, 1], m[1, 2], m[2, 0], m[2, 1], m[2, 2], res)
+    fun quatD_cast(m: Mat3d, res: QuatD): QuatD =
+            quatD_cast(m[0, 0], m[0, 1], m[0, 2], m[1, 0], m[1, 1], m[1, 2], m[2, 0], m[2, 1], m[2, 2], res)
 
-    fun quat_cast(m: Mat3) = quat_cast(m, Quat())
-    fun quatD_cast(m: Mat3d) = quatD_cast(m, QuatD())
+    fun quat_cast(m: Mat3): Quat =
+            quat_cast(m, Quat())
+
+    fun quatD_cast(m: Mat3d): QuatD =
+            quatD_cast(m, QuatD())
 
     /** Converts a pure rotation 4 * 4 matrix to a quaternion.    */
-    fun quat_cast(m: Mat4, res: Quat) = quat_cast(m[0, 0], m[0, 1], m[0, 2], m[1, 0], m[1, 1], m[1, 2], m[2, 0], m[2, 1], m[2, 2], res)
+    fun quat_cast(m: Mat4, res: Quat): Quat =
+            quat_cast(m[0, 0], m[0, 1], m[0, 2], m[1, 0], m[1, 1], m[1, 2], m[2, 0], m[2, 1], m[2, 2], res)
 
-    fun quatD_cast(m: Mat4d, res: QuatD) = quatD_cast(m[0, 0], m[0, 1], m[0, 2], m[1, 0], m[1, 1], m[1, 2], m[2, 0], m[2, 1], m[2, 2], res)
+    fun quatD_cast(m: Mat4d, res: QuatD): QuatD =
+            quatD_cast(m[0, 0], m[0, 1], m[0, 2], m[1, 0], m[1, 1], m[1, 2], m[2, 0], m[2, 1], m[2, 2], res)
 
-    fun quat_cast(m: Mat4) = quat_cast(m, Quat())
-    fun quatD_cast(m: Mat4d) = quatD_cast(m, QuatD())
+    fun quat_cast(m: Mat4): Quat =
+            quat_cast(m, Quat())
+
+    fun quatD_cast(m: Mat4d): QuatD =
+            quatD_cast(m, QuatD())
 
 
     fun quat_cast(

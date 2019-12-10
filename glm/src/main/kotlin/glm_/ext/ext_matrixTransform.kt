@@ -7,11 +7,8 @@ import glm_.mat3x3.Mat3
 import glm_.mat3x3.Mat3d
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
-import glm_.vec2.Vec2
-import glm_.vec2.Vec2d
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
-import glm_.vec4.Vec4i
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
@@ -1523,7 +1520,7 @@ interface ext_matrixTransform {
      *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      */
-    fun lookAtRh(eye: Vec3, center: Vec3, up: Vec3, res: Mat4): Mat4 {
+    fun lookAtRH(eye: Vec3, center: Vec3, up: Vec3, res: Mat4): Mat4 {
         // f = normalize(center - eye)
         var fX = center.x - eye.x
         var fY = center.y - eye.y
@@ -1573,8 +1570,8 @@ interface ext_matrixTransform {
      *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      */
-    fun lookAtRh(eye: Vec3, center: Vec3, up: Vec3): Mat4 =
-            lookAtRh(eye, center, up, Mat4())
+    fun lookAtRH(eye: Vec3, center: Vec3, up: Vec3): Mat4 =
+            lookAtRH(eye, center, up, Mat4())
 
     /** Build a left handed look at view matrix.
      *
@@ -1586,7 +1583,7 @@ interface ext_matrixTransform {
      *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      */
-    fun lookAtLh(eye: Vec3, center: Vec3, up: Vec3, res: Mat4): Mat4 {
+    fun lookAtLH(eye: Vec3, center: Vec3, up: Vec3, res: Mat4): Mat4 {
 
         // f = normalize(center - eye)
         var fX = center.x - eye.x
@@ -1637,8 +1634,8 @@ interface ext_matrixTransform {
      *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      */
-    fun lookAtLh(eye: Vec3, center: Vec3, up: Vec3): Mat4 =
-            lookAtLh(eye, center, up, Mat4())
+    fun lookAtLH(eye: Vec3, center: Vec3, up: Vec3): Mat4 =
+            lookAtLH(eye, center, up, Mat4())
 
     /** Build a look at view matrix based on the default handedness.
      *
@@ -1653,8 +1650,8 @@ interface ext_matrixTransform {
      */
     fun lookAt(eye: Vec3, center: Vec3, up: Vec3, res: Mat4): Mat4 =
             when (GLM_COORDINATE_SYSTEM) {
-                GlmCoordinateSystem.LEFT_HANDED -> lookAtLh(eye, center, up, res)
-                else -> lookAtRh(eye, center, up, res)
+                GlmCoordinateSystem.LEFT_HANDED -> lookAtLH(eye, center, up, res)
+                else -> lookAtRH(eye, center, up, res)
             }
 
     /** Build a look at view matrix based on the default handedness.
@@ -1670,8 +1667,8 @@ interface ext_matrixTransform {
      */
     fun lookAt(eye: Vec3, center: Vec3, up: Vec3): Mat4 =
             when (GLM_COORDINATE_SYSTEM) {
-                GlmCoordinateSystem.LEFT_HANDED -> lookAtLh(eye, center, up, Mat4())
-                else -> lookAtRh(eye, center, up, Mat4())
+                GlmCoordinateSystem.LEFT_HANDED -> lookAtLH(eye, center, up, Mat4())
+                else -> lookAtRH(eye, center, up, Mat4())
             }
 
 
@@ -1690,7 +1687,7 @@ interface ext_matrixTransform {
      *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      */
-    fun lookAtRh(eye: Vec3d, center: Vec3d, up: Vec3d, res: Mat4d): Mat4d {
+    fun lookAtRH(eye: Vec3d, center: Vec3d, up: Vec3d, res: Mat4d): Mat4d {
         // f = normalize(center - eye)
         var fX = center.x - eye.x
         var fY = center.y - eye.y
@@ -1740,8 +1737,8 @@ interface ext_matrixTransform {
      *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      */
-    fun lookAtRh(eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d =
-            lookAtRh(eye, center, up, Mat4d())
+    fun lookAtRH(eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d =
+            lookAtRH(eye, center, up, Mat4d())
 
     /** Build a left handed look at view matrix.
      *
@@ -1753,7 +1750,7 @@ interface ext_matrixTransform {
      *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      */
-    fun lookAtLh(eye: Vec3d, center: Vec3d, up: Vec3d, res: Mat4d): Mat4d {
+    fun lookAtLH(eye: Vec3d, center: Vec3d, up: Vec3d, res: Mat4d): Mat4d {
 
         // f = normalize(center - eye)
         var fX = center.x - eye.x
@@ -1804,8 +1801,8 @@ interface ext_matrixTransform {
      *  @see - frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      *  frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float)
      */
-    fun lookAtLh(eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d =
-            lookAtLh(eye, center, up, Mat4d())
+    fun lookAtLH(eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d =
+            lookAtLH(eye, center, up, Mat4d())
 
     /** Build a look at view matrix based on the default handedness.
      *
@@ -1820,8 +1817,8 @@ interface ext_matrixTransform {
      */
     fun lookAt(eye: Vec3d, center: Vec3d, up: Vec3d, res: Mat4d): Mat4d =
             when (GLM_COORDINATE_SYSTEM) {
-                GlmCoordinateSystem.LEFT_HANDED -> lookAtLh(eye, center, up, res)
-                else -> lookAtRh(eye, center, up, res)
+                GlmCoordinateSystem.LEFT_HANDED -> lookAtLH(eye, center, up, res)
+                else -> lookAtRH(eye, center, up, res)
             }
 
     /** Build a look at view matrix based on the default handedness.
@@ -1837,7 +1834,7 @@ interface ext_matrixTransform {
      */
     fun lookAt(eye: Vec3d, center: Vec3d, up: Vec3d): Mat4d =
             when (GLM_COORDINATE_SYSTEM) {
-                GlmCoordinateSystem.LEFT_HANDED -> lookAtLh(eye, center, up, Mat4d())
-                else -> lookAtRh(eye, center, up, Mat4d())
+                GlmCoordinateSystem.LEFT_HANDED -> lookAtLH(eye, center, up, Mat4d())
+                else -> lookAtRH(eye, center, up, Mat4d())
             }
 }

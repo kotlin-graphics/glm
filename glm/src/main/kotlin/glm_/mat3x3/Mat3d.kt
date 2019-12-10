@@ -326,10 +326,10 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
         return res
     }
 
-    fun toMat4() = to(Mat4())
+    fun toMat4(): Mat4d = to(Mat4d())
 
-    infix fun to(res: QuatD) = glm.quatD_cast(this, res)
-    fun toQuatD() = glm.quatD_cast(this, QuatD())
+    infix fun to(res: QuatD): QuatD = glm.quatD_cast(this, res)
+    fun toQuatD(): QuatD = glm.quatD_cast(this, QuatD())
 
     fun toDoubleArray(): DoubleArray = to(DoubleArray(length), 0)
     infix fun to(doubles: DoubleArray): DoubleArray = to(doubles, 0)

@@ -5,6 +5,7 @@ import glm_.mat3x3.Mat3
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.quat.Quat
+import glm_.quat.QuatD
 import glm_.vec1.Vec1
 import glm_.vec1.Vec1d
 import glm_.vec2.Vec2
@@ -26,6 +27,9 @@ fun Double.shouldEqual(d: Double, epsilon: Double) = glm.equal(this, d, epsilon)
 
 infix fun Quat.shouldEqual(q: Quat) = shouldEqual(q, glm.εf)
 fun Quat.shouldEqual(q: Quat, epsilon: Float) = allEqual(q, epsilon) shouldBe true
+
+infix fun QuatD.shouldEqual(q: QuatD) = shouldEqual(q, glm.ε)
+fun QuatD.shouldEqual(q: QuatD, epsilon: Double) = allEqual(q, epsilon) shouldBe true
 
 infix fun Vec1.shouldEqual(v: Vec1) = shouldEqual(v, glm.εf)
 fun Vec1.shouldEqual(v: Vec1, epsilon: Float) = glm.equal(x, v.x, epsilon) shouldBe true

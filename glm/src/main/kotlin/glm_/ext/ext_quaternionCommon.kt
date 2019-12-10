@@ -1,4 +1,4 @@
-package glm_.ext.quaternion
+package glm_.ext
 
 import glm_.glm
 import glm_.quat.Quat
