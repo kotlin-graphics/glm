@@ -60,7 +60,7 @@ class test_ext_scalarCommon : StringSpec() {
             run {
                 val A = 0f
                 val B = 1f
-                val N = A / A
+                val N = Float.NaN
                 glm.isNan(glm.min(N, B)) shouldBe true
                 glm.isNan(glm.min(B, N)) shouldBe true // jvm returns always NaN if any input is NaN
 
@@ -83,7 +83,7 @@ class test_ext_scalarCommon : StringSpec() {
             run {
                 val A = 0.0
                 val B = 1.0
-                val N = A / A
+                val N = Double.NaN
                 glm.isNan(glm.min(N, B)) shouldBe true
                 glm.isNan(glm.min(B, N)) shouldBe true // jvm returns always NaN if any input is NaN
 
@@ -156,7 +156,7 @@ class test_ext_scalarCommon : StringSpec() {
             run {
                 val A = 0f
                 val B = 1f
-                val N = A / A
+                val N = Float.NaN
                 glm.isNan(glm.max(N, B)) shouldBe true
                 glm.isNan(glm.max(B, N)) shouldBe true
 
@@ -179,7 +179,7 @@ class test_ext_scalarCommon : StringSpec() {
             run {
                 val A = 0.0
                 val B = 1.0
-                val N = A / A
+                val N = Double.NaN
                 glm.isNan(glm.max(N, B)) shouldBe true
                 glm.isNan(glm.max(B, N)) shouldBe true
 
@@ -205,46 +205,48 @@ class test_ext_scalarCommon : StringSpec() {
             run {
                 val A = 0f
                 val B = 1f
-                glm.fmin(A / A, B) shouldEqual B
-                glm.fmin(B, A / A) shouldEqual B
+                val N = Float.NaN
+                glm.fmin(N, B) shouldEqual B
+                glm.fmin(B, N) shouldEqual B
 
                 val C = 2f
-                glm.fmin(A / A, B, C) shouldEqual B
-                glm.fmin(B, A / A, C) shouldEqual B
-                glm.fmin(C, A / A, B) shouldEqual B
-                glm.fmin(C, B, A / A) shouldEqual B
-                glm.fmin(B, C, A / A) shouldEqual B
-                glm.fmin(A / A, C, B) shouldEqual B
+                glm.fmin(N, B, C) shouldEqual B
+                glm.fmin(B, N, C) shouldEqual B
+                glm.fmin(C, N, B) shouldEqual B
+                glm.fmin(C, B, N) shouldEqual B
+                glm.fmin(B, C, N) shouldEqual B
+                glm.fmin(N, C, B) shouldEqual B
 
                 val D = 3f
-                glm.fmin(D, A / A, B, C) shouldEqual B
-                glm.fmin(B, D, A / A, C) shouldEqual B
-                glm.fmin(C, A / A, D, B) shouldEqual B
-                glm.fmin(C, B, D, A / A) shouldEqual B
-                glm.fmin(B, C, A / A, D) shouldEqual B
-                glm.fmin(A / A, C, B, D) shouldEqual B
+                glm.fmin(D, N, B, C) shouldEqual B
+                glm.fmin(B, D, N, C) shouldEqual B
+                glm.fmin(C, N, D, B) shouldEqual B
+                glm.fmin(C, B, D, N) shouldEqual B
+                glm.fmin(B, C, N, D) shouldEqual B
+                glm.fmin(N, C, B, D) shouldEqual B
             }
             run {
                 val A = 0.0
                 val B = 1.0
-                glm.fmin(A / A, B) shouldEqual B
-                glm.fmin(B, A / A) shouldEqual B
+                val N = Double.NaN
+                glm.fmin(N, B) shouldEqual B
+                glm.fmin(B, N) shouldEqual B
 
                 val C = 2.0
-                glm.fmin(A / A, B, C) shouldEqual B
-                glm.fmin(B, A / A, C) shouldEqual B
-                glm.fmin(C, A / A, B) shouldEqual B
-                glm.fmin(C, B, A / A) shouldEqual B
-                glm.fmin(B, C, A / A) shouldEqual B
-                glm.fmin(A / A, C, B) shouldEqual B
+                glm.fmin(N, B, C) shouldEqual B
+                glm.fmin(B, N, C) shouldEqual B
+                glm.fmin(C, N, B) shouldEqual B
+                glm.fmin(C, B, N) shouldEqual B
+                glm.fmin(B, C, N) shouldEqual B
+                glm.fmin(N, C, B) shouldEqual B
 
                 val D = 3.0
-                glm.fmin(D, A / A, B, C) shouldEqual B
-                glm.fmin(B, D, A / A, C) shouldEqual B
-                glm.fmin(C, A / A, D, B) shouldEqual B
-                glm.fmin(C, B, D, A / A) shouldEqual B
-                glm.fmin(B, C, A / A, D) shouldEqual B
-                glm.fmin(A / A, C, B, D) shouldEqual B
+                glm.fmin(D, N, B, C) shouldEqual B
+                glm.fmin(B, D, N, C) shouldEqual B
+                glm.fmin(C, N, D, B) shouldEqual B
+                glm.fmin(C, B, D, N) shouldEqual B
+                glm.fmin(B, C, N, D) shouldEqual B
+                glm.fmin(N, C, B, D) shouldEqual B
             }
         }
 
@@ -252,46 +254,48 @@ class test_ext_scalarCommon : StringSpec() {
             run {
                 val A = 0f
                 val B = 1f
-                glm.fmax(A / A, B) shouldEqual B
-                glm.fmax(B, A / A) shouldEqual B
+                val N = Float.NaN
+                glm.fmax(N, B) shouldEqual B
+                glm.fmax(B, N) shouldEqual B
 
                 val C = 2f
-                glm.fmax(A / A, B, C) shouldEqual C
-                glm.fmax(B, A / A, C) shouldEqual C
-                glm.fmax(C, A / A, B) shouldEqual C
-                glm.fmax(C, B, A / A) shouldEqual C
-                glm.fmax(B, C, A / A) shouldEqual C
-                glm.fmax(A / A, C, B) shouldEqual C
+                glm.fmax(N, B, C) shouldEqual C
+                glm.fmax(B, N, C) shouldEqual C
+                glm.fmax(C, N, B) shouldEqual C
+                glm.fmax(C, B, N) shouldEqual C
+                glm.fmax(B, C, N) shouldEqual C
+                glm.fmax(N, C, B) shouldEqual C
 
                 val D = 3f
-                glm.fmax(D, A / A, B, C) shouldEqual D
-                glm.fmax(B, D, A / A, C) shouldEqual D
-                glm.fmax(C, A / A, D, B) shouldEqual D
-                glm.fmax(C, B, D, A / A) shouldEqual D
-                glm.fmax(B, C, A / A, D) shouldEqual D
-                glm.fmax(A / A, C, B, D) shouldEqual D
+                glm.fmax(D, N, B, C) shouldEqual D
+                glm.fmax(B, D, N, C) shouldEqual D
+                glm.fmax(C, N, D, B) shouldEqual D
+                glm.fmax(C, B, D, N) shouldEqual D
+                glm.fmax(B, C, N, D) shouldEqual D
+                glm.fmax(N, C, B, D) shouldEqual D
             }
             run {
                 val A = 0.0
                 val B = 1.0
-                glm.fmax(A / A, B) shouldEqual B
-                glm.fmax(B, A / A) shouldEqual B
+                val N = Double.NaN
+                glm.fmax(N, B) shouldEqual B
+                glm.fmax(B, N) shouldEqual B
 
                 val C = 2.0
-                glm.fmax(A / A, B, C) shouldEqual C
-                glm.fmax(B, A / A, C) shouldEqual C
-                glm.fmax(C, A / A, B) shouldEqual C
-                glm.fmax(C, B, A / A) shouldEqual C
-                glm.fmax(B, C, A / A) shouldEqual C
-                glm.fmax(A / A, C, B) shouldEqual C
+                glm.fmax(N, B, C) shouldEqual C
+                glm.fmax(B, N, C) shouldEqual C
+                glm.fmax(C, N, B) shouldEqual C
+                glm.fmax(C, B, N) shouldEqual C
+                glm.fmax(B, C, N) shouldEqual C
+                glm.fmax(N, C, B) shouldEqual C
 
                 val D = 3.0
-                glm.fmax(D, A / A, B, C) shouldEqual D
-                glm.fmax(B, D, A / A, C) shouldEqual D
-                glm.fmax(C, A / A, D, B) shouldEqual D
-                glm.fmax(C, B, D, A / A) shouldEqual D
-                glm.fmax(B, C, A / A, D) shouldEqual D
-                glm.fmax(A / A, C, B, D) shouldEqual D
+                glm.fmax(D, N, B, C) shouldEqual D
+                glm.fmax(B, D, N, C) shouldEqual D
+                glm.fmax(C, N, D, B) shouldEqual D
+                glm.fmax(C, B, D, N) shouldEqual D
+                glm.fmax(B, C, N, D) shouldEqual D
+                glm.fmax(N, C, B, D) shouldEqual D
             }
         }
     }
