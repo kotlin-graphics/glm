@@ -1,11 +1,11 @@
 ![glm](glm/src/main/resources/logo-mini.png)
 
-[![Build Status](https://travis-ci.org/kotlin-graphics/glm.svg?branch=master)](https://travis-ci.org/kotlin-graphics/glm) 
-[![license](https://img.shields.io/badge/License-MIT-orange.svg)](https://github.com/kotlin-graphics/glm/wiki/0.-Licenses) 
-![](https://reposs.herokuapp.com/?path=kotlin-graphics/glm&color=yellow) 
-[![Release](https://jitpack.io/v/kotlin-graphics/glm.svg)](https://jitpack.io/#kotlin-graphics/glm)
-[![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin) 
-[![Slack Status](http://slack.kotlinlang.org/badge.svg)](http://slack.kotlinlang.org/)
+[![Build Status](https://github.com/kotlin-graphics/glm/workflows/build/badge.svg)](https://github.com/kotlin-graphics/glm/actions?workflow=build)
+[![license](https://img.shields.io/badge/License-MIT-orange.svg)](https://github.com/kotlin-graphics/glm/blob/master/LICENSE) 
+[![Release](https://jitpack.io/v/kotlin-graphics/glm.svg)](https://jitpack.io/#kotlin-graphics/glm) 
+![Size](https://github-size-badge.herokuapp.com/kotlin-graphics/glm.svg)
+[![Github All Releases](https://img.shields.io/github/downloads/kotlin-graphics/glm/total.svg)]()
+[![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
 
 This is the Kotlin port of [OpenGL Mathematics](http://glm.g-truc.net/) (*GLM*), written by [g-truc](https://github.com/Groovounet) ([repository](https://github.com/g-truc/glm)), a header only C++ mathematics library for graphics software based on the [OpenGL Shading Language (GLSL) specifications](https://www.opengl.org/registry/doc/GLSLangSpec.4.50.diff.pdf).
 
