@@ -743,6 +743,6 @@ class Mat4d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     fun equal(b: Mat4d, epsilon: Vec4d, res: Vec4bool = Vec4bool()): Vec4bool = glm.equal(this, b, epsilon, res)
     fun notEqual(b: Mat4d, epsilon: Double, res: Vec4bool = Vec4bool()): Vec4bool = glm.notEqual(this, b, epsilon, res)
     fun notEqual(b: Mat4d, epsilon: Vec4d, res: Vec4bool = Vec4bool()): Vec4bool = glm.notEqual(this, b, epsilon, res)
-    fun allEqual(b: Mat4d, epsilon: Double = 0.0): Boolean = glm.allEqual(this, b, epsilon)
-    fun anyNotEqual(b: Mat4d, epsilon: Double = 0.0): Boolean = glm.anyNotEqual(this, b, epsilon)
+    fun allEqual(b: Mat4d, epsilon: Double = glm.ε): Boolean = glm.allEqual(this, b, epsilon)
+    fun anyNotEqual(b: Mat4d, epsilon: Double = glm.ε): Boolean = glm.anyNotEqual(this, b, epsilon)
 }

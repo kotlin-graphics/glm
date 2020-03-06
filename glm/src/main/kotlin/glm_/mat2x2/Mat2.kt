@@ -408,6 +408,6 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     fun equal(b: Mat2, epsilon: Vec2, res: Vec2bool = Vec2bool()): Vec2bool = glm.equal(this, b, epsilon, res)
     fun notEqual(b: Mat2, epsilon: Float, res: Vec2bool = Vec2bool()): Vec2bool = glm.notEqual(this, b, epsilon, res)
     fun notEqual(b: Mat2, epsilon: Vec2, res: Vec2bool = Vec2bool()): Vec2bool = glm.notEqual(this, b, epsilon, res)
-    fun allEqual(b: Mat2, epsilon: Float = 0f): Boolean = glm.allEqual(this, b, epsilon)
-    fun anyNotEqual(b: Mat2, epsilon: Float = 0f): Boolean = glm.anyNotEqual(this, b, epsilon)
+    fun allEqual(b: Mat2, epsilon: Float = glm.εf): Boolean = glm.allEqual(this, b, epsilon)
+    fun anyNotEqual(b: Mat2, epsilon: Float = glm.εf): Boolean = glm.anyNotEqual(this, b, epsilon)
 }

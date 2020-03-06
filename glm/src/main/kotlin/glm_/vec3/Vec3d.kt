@@ -411,13 +411,13 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuf
     infix fun anyLessThanEqual(d: Double): Boolean = x <= d || y <= d || z <= d
     infix fun lessThanEqual(d: Double): Vec3bool = Vec3bool { get(it) <= d }
 
-    fun allEqual(d: Double, epsilon: Float = 0f): Boolean = abs(x - d) < epsilon && abs(y - d) < epsilon && abs(z - d) < epsilon
-    fun anyEqual(d: Double, epsilon: Float = 0f): Boolean = abs(x - d) < epsilon || abs(y - d) < epsilon || abs(z - d) < epsilon
-    fun equal(d: Double, epsilon: Float = 0f): Vec3bool = Vec3bool { abs(get(it) - d) < epsilon }
+    fun allEqual(d: Double, epsilon: Float = glm.εf): Boolean = abs(x - d) < epsilon && abs(y - d) < epsilon && abs(z - d) < epsilon
+    fun anyEqual(d: Double, epsilon: Float = glm.εf): Boolean = abs(x - d) < epsilon || abs(y - d) < epsilon || abs(z - d) < epsilon
+    fun equal(d: Double, epsilon: Float = glm.εf): Vec3bool = Vec3bool { abs(get(it) - d) < epsilon }
 
-    fun allNotEqual(d: Double, epsilon: Float = 0f): Boolean = abs(x - d) >= epsilon && abs(y - d) >= epsilon && abs(z - d) >= epsilon
-    fun anyNotEqual(d: Double, epsilon: Float = 0f): Boolean = abs(x - d) >= epsilon || abs(y - d) >= epsilon || abs(z - d) >= epsilon
-    fun notEqual(d: Double, epsilon: Float = 0f): Vec3bool = Vec3bool { abs(get(it) - d) >= epsilon }
+    fun allNotEqual(d: Double, epsilon: Float = glm.εf): Boolean = abs(x - d) >= epsilon && abs(y - d) >= epsilon && abs(z - d) >= epsilon
+    fun anyNotEqual(d: Double, epsilon: Float = glm.εf): Boolean = abs(x - d) >= epsilon || abs(y - d) >= epsilon || abs(z - d) >= epsilon
+    fun notEqual(d: Double, epsilon: Float = glm.εf): Vec3bool = Vec3bool { abs(get(it) - d) >= epsilon }
 
     infix fun allGreaterThan(d: Double): Boolean = x > d && y > d && z > d
     infix fun anyGreaterThan(d: Double): Boolean = x > d || y > d || z > d
@@ -436,13 +436,13 @@ class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuf
     infix fun anyLessThanEqual(v: Vec3d): Boolean = x <= v.x || y <= v.y || z <= v.z
     infix fun lessThanEqual(v: Vec3d): Vec3bool = Vec3bool { get(it) <= v[it] }
 
-    fun allEqual(v: Vec3d, epsilon: Double = 0.0): Boolean = abs(x - v.x) < epsilon && abs(y - v.y) < epsilon && abs(z - v.z) < epsilon
-    fun anyEqual(v: Vec3d, epsilon: Double = 0.0): Boolean = abs(x - v.x) < epsilon || abs(y - v.y) < epsilon || abs(z - v.z) < epsilon
-    fun equal(v: Vec3d, epsilon: Double = 0.0): Vec3bool = Vec3bool { abs(get(it) - v[it]) < epsilon }
+    fun allEqual(v: Vec3d, epsilon: Double = glm.ε): Boolean = abs(x - v.x) < epsilon && abs(y - v.y) < epsilon && abs(z - v.z) < epsilon
+    fun anyEqual(v: Vec3d, epsilon: Double = glm.ε): Boolean = abs(x - v.x) < epsilon || abs(y - v.y) < epsilon || abs(z - v.z) < epsilon
+    fun equal(v: Vec3d, epsilon: Double = glm.ε): Vec3bool = Vec3bool { abs(get(it) - v[it]) < epsilon }
 
-    fun allNotEqual(v: Vec3d, epsilon: Double = 0.0): Boolean = abs(x - v.x) >= epsilon && abs(y - v.y) >= epsilon && abs(z - v.z) >= epsilon
-    fun anyNotEqual(v: Vec3d, epsilon: Double = 0.0): Boolean = abs(x - v.x) >= epsilon || abs(y - v.y) >= epsilon || abs(z - v.z) >= epsilon
-    fun notEqual(v: Vec3d, epsilon: Double = 0.0): Vec3bool = Vec3bool { abs(get(it) - v[it]) >= epsilon }
+    fun allNotEqual(v: Vec3d, epsilon: Double = glm.ε): Boolean = abs(x - v.x) >= epsilon && abs(y - v.y) >= epsilon && abs(z - v.z) >= epsilon
+    fun anyNotEqual(v: Vec3d, epsilon: Double = glm.ε): Boolean = abs(x - v.x) >= epsilon || abs(y - v.y) >= epsilon || abs(z - v.z) >= epsilon
+    fun notEqual(v: Vec3d, epsilon: Double = glm.ε): Vec3bool = Vec3bool { abs(get(it) - v[it]) >= epsilon }
 
     infix fun allGreaterThan(v: Vec3d): Boolean = x > v.x && y > v.y && z > v.z
     infix fun anyGreaterThan(v: Vec3d): Boolean = x > v.x || y > v.y || z > v.z

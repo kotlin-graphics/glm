@@ -1,5 +1,6 @@
 package glm_.ext
 
+import glm_.glm
 import glm_.mat2x2.Mat2
 import glm_.mat2x2.Mat2d
 import glm_.mat3x3.Mat3
@@ -20,7 +21,7 @@ interface matrixRelational {
 
     /** Perform a component-wise equal-to comparison of two matrices.
      *  Return a boolean vector which components value is True if this expression is satisfied per column of the matrices. */
-    fun equal(x: Mat2, y: Mat2, epsilon: Float = 0f, res: Vec2bool = Vec2bool()): Vec2bool {
+    fun equal(x: Mat2, y: Mat2, epsilon: Float = glm.εf, res: Vec2bool = Vec2bool()): Vec2bool {
         res.x = x[0, 0].equal(y[0, 0], epsilon) && x[0, 1].equal(y[0, 1], epsilon)
         res.y = x[1, 0].equal(y[1, 0], epsilon) && x[1, 1].equal(y[1, 1], epsilon)
         return res
@@ -28,7 +29,7 @@ interface matrixRelational {
 
     /** Perform a component-wise equal-to comparison of two matrices.
      *  Return a boolean vector which components value is True if this expression is satisfied per column of the matrices. */
-    fun equal(x: Mat3, y: Mat3, epsilon: Float = 0f, res: Vec3bool = Vec3bool()): Vec3bool {
+    fun equal(x: Mat3, y: Mat3, epsilon: Float = glm.εf, res: Vec3bool = Vec3bool()): Vec3bool {
         res.x = x[0, 0].equal(y[0, 0], epsilon) && x[0, 1].equal(y[0, 1], epsilon) && x[0, 2].equal(y[0, 2], epsilon)
         res.y = x[1, 0].equal(y[1, 0], epsilon) && x[1, 1].equal(y[1, 1], epsilon) && x[1, 2].equal(y[1, 2], epsilon)
         res.z = x[2, 0].equal(y[2, 0], epsilon) && x[2, 1].equal(y[2, 1], epsilon) && x[2, 2].equal(y[2, 2], epsilon)
@@ -37,7 +38,7 @@ interface matrixRelational {
 
     /** Perform a component-wise equal-to comparison of two matrices.
      *  Return a boolean vector which components value is True if this expression is satisfied per column of the matrices. */
-    fun equal(x: Mat4, y: Mat4, epsilon: Float = 0f, res: Vec4bool = Vec4bool()): Vec4bool {
+    fun equal(x: Mat4, y: Mat4, epsilon: Float = glm.εf, res: Vec4bool = Vec4bool()): Vec4bool {
         res.x = x[0, 0].equal(y[0, 0], epsilon) && x[0, 1].equal(y[0, 1], epsilon) && x[0, 2].equal(y[0, 2], epsilon) && x[0, 3].equal(y[0, 3], epsilon)
         res.y = x[1, 0].equal(y[1, 0], epsilon) && x[1, 1].equal(y[1, 1], epsilon) && x[1, 2].equal(y[1, 2], epsilon) && x[1, 3].equal(y[1, 3], epsilon)
         res.z = x[2, 0].equal(y[2, 0], epsilon) && x[2, 1].equal(y[2, 1], epsilon) && x[2, 2].equal(y[2, 2], epsilon) && x[2, 3].equal(y[2, 3], epsilon)
@@ -74,7 +75,7 @@ interface matrixRelational {
 
     /** Perform a component-wise not-equal-to comparison of two matrices.
      *  Return a boolean vector which components value is True if this expression is satisfied per column of the matrices. */
-    fun notEqual(x: Mat2, y: Mat2, epsilon: Float = 0f, res: Vec2bool = Vec2bool()): Vec2bool {
+    fun notEqual(x: Mat2, y: Mat2, epsilon: Float = glm.εf, res: Vec2bool = Vec2bool()): Vec2bool {
         res.x = x[0, 0].notEqual(y[0, 0], epsilon) || x[0, 1].notEqual(y[0, 1], epsilon)
         res.y = x[1, 0].notEqual(y[1, 0], epsilon) || x[1, 1].notEqual(y[1, 1], epsilon)
         return res
@@ -82,7 +83,7 @@ interface matrixRelational {
 
     /** Perform a component-wise not-equal-to comparison of two matrices.
      *  Return a boolean vector which components value is True if this expression is satisfied per column of the matrices. */
-    fun notEqual(x: Mat3, y: Mat3, epsilon: Float = 0f, res: Vec3bool = Vec3bool()): Vec3bool {
+    fun notEqual(x: Mat3, y: Mat3, epsilon: Float = glm.εf, res: Vec3bool = Vec3bool()): Vec3bool {
         res.x = x[0, 0].notEqual(y[0, 0], epsilon) || x[0, 1].notEqual(y[0, 1], epsilon) || x[0, 2].notEqual(y[0, 2], epsilon)
         res.y = x[1, 0].notEqual(y[1, 0], epsilon) || x[1, 1].notEqual(y[1, 1], epsilon) || x[1, 2].notEqual(y[1, 2], epsilon)
         res.z = x[2, 0].notEqual(y[2, 0], epsilon) || x[2, 1].notEqual(y[2, 1], epsilon) || x[2, 2].notEqual(y[2, 2], epsilon)
@@ -91,7 +92,7 @@ interface matrixRelational {
 
     /** Perform a component-wise equal-to comparison of two matrices.
      *  Return a boolean vector which components value is True if this expression is satisfied per column of the matrices. */
-    fun notEqual(x: Mat4, y: Mat4, epsilon: Float = 0f, res: Vec4bool = Vec4bool()): Vec4bool {
+    fun notEqual(x: Mat4, y: Mat4, epsilon: Float = glm.εf, res: Vec4bool = Vec4bool()): Vec4bool {
         res.x = x[0, 0].notEqual(y[0, 0], epsilon) || x[0, 1].notEqual(y[0, 1], epsilon) || x[0, 2].notEqual(y[0, 2], epsilon) || x[0, 3].notEqual(y[0, 3], epsilon)
         res.y = x[1, 0].notEqual(y[1, 0], epsilon) || x[1, 1].notEqual(y[1, 1], epsilon) || x[1, 2].notEqual(y[1, 2], epsilon) || x[1, 3].notEqual(y[1, 3], epsilon)
         res.z = x[2, 0].notEqual(y[2, 0], epsilon) || x[2, 1].notEqual(y[2, 1], epsilon) || x[2, 2].notEqual(y[2, 2], epsilon) || x[2, 3].notEqual(y[2, 3], epsilon)
@@ -131,7 +132,7 @@ interface matrixRelational {
 
     /** Perform a component-wise equal-to comparison of two matrices.
      *  Return a boolean vector which components value is True if this expression is satisfied per column of the matrices. */
-    fun equal(x: Mat2d, y: Mat2d, epsilon: Double = 0.0, res: Vec2bool = Vec2bool()): Vec2bool {
+    fun equal(x: Mat2d, y: Mat2d, epsilon: Double = glm.ε, res: Vec2bool = Vec2bool()): Vec2bool {
         res.x = x[0, 0].equal(y[0, 0], epsilon) && x[0, 1].equal(y[0, 1], epsilon)
         res.y = x[1, 0].equal(y[1, 0], epsilon) && x[1, 1].equal(y[1, 1], epsilon)
         return res
@@ -139,7 +140,7 @@ interface matrixRelational {
 
     /** Perform a component-wise equal-to comparison of two matrices.
      *  Return a boolean vector which components value is True if this expression is satisfied per column of the matrices. */
-    fun equal(x: Mat3d, y: Mat3d, epsilon: Double = 0.0, res: Vec3bool = Vec3bool()): Vec3bool {
+    fun equal(x: Mat3d, y: Mat3d, epsilon: Double = glm.ε, res: Vec3bool = Vec3bool()): Vec3bool {
         res.x = x[0, 0].equal(y[0, 0], epsilon) && x[0, 1].equal(y[0, 1], epsilon) && x[0, 2].equal(y[0, 2], epsilon)
         res.y = x[1, 0].equal(y[1, 0], epsilon) && x[1, 1].equal(y[1, 1], epsilon) && x[1, 2].equal(y[1, 2], epsilon)
         res.z = x[2, 0].equal(y[2, 0], epsilon) && x[2, 1].equal(y[2, 1], epsilon) && x[2, 2].equal(y[2, 2], epsilon)
@@ -148,7 +149,7 @@ interface matrixRelational {
 
     /** Perform a component-wise equal-to comparison of two matrices.
      *  Return a boolean vector which components value is True if this expression is satisfied per column of the matrices. */
-    fun equal(x: Mat4d, y: Mat4d, epsilon: Double = 0.0, res: Vec4bool = Vec4bool()): Vec4bool {
+    fun equal(x: Mat4d, y: Mat4d, epsilon: Double = glm.ε, res: Vec4bool = Vec4bool()): Vec4bool {
         res.x = x[0, 0].equal(y[0, 0], epsilon) && x[0, 1].equal(y[0, 1], epsilon) && x[0, 2].equal(y[0, 2], epsilon) && x[0, 3].equal(y[0, 3], epsilon)
         res.y = x[1, 0].equal(y[1, 0], epsilon) && x[1, 1].equal(y[1, 1], epsilon) && x[1, 2].equal(y[1, 2], epsilon) && x[1, 3].equal(y[1, 3], epsilon)
         res.z = x[2, 0].equal(y[2, 0], epsilon) && x[2, 1].equal(y[2, 1], epsilon) && x[2, 2].equal(y[2, 2], epsilon) && x[2, 3].equal(y[2, 3], epsilon)
@@ -185,7 +186,7 @@ interface matrixRelational {
 
     /** Perform a component-wise not-equal-to comparison of two matrices.
      *  Return a boolean vector which components value is True if this expression is satisfied per column of the matrices. */
-    fun notEqual(x: Mat2d, y: Mat2d, epsilon: Double = 0.0, res: Vec2bool = Vec2bool()): Vec2bool {
+    fun notEqual(x: Mat2d, y: Mat2d, epsilon: Double = glm.ε, res: Vec2bool = Vec2bool()): Vec2bool {
         res.x = x[0, 0].notEqual(y[0, 0], epsilon) || x[0, 1].notEqual(y[0, 1], epsilon)
         res.y = x[1, 0].notEqual(y[1, 0], epsilon) || x[1, 1].notEqual(y[1, 1], epsilon)
         return res
@@ -193,7 +194,7 @@ interface matrixRelational {
 
     /** Perform a component-wise not-equal-to comparison of two matrices.
      *  Return a boolean vector which components value is True if this expression is satisfied per column of the matrices. */
-    fun notEqual(x: Mat3d, y: Mat3d, epsilon: Double = 0.0, res: Vec3bool = Vec3bool()): Vec3bool {
+    fun notEqual(x: Mat3d, y: Mat3d, epsilon: Double = glm.ε, res: Vec3bool = Vec3bool()): Vec3bool {
         res.x = x[0, 0].notEqual(y[0, 0], epsilon) || x[0, 1].notEqual(y[0, 1], epsilon) || x[0, 2].notEqual(y[0, 2], epsilon)
         res.y = x[1, 0].notEqual(y[1, 0], epsilon) || x[1, 1].notEqual(y[1, 1], epsilon) || x[1, 2].notEqual(y[1, 2], epsilon)
         res.z = x[2, 0].notEqual(y[2, 0], epsilon) || x[2, 1].notEqual(y[2, 1], epsilon) || x[2, 2].notEqual(y[2, 2], epsilon)
@@ -202,7 +203,7 @@ interface matrixRelational {
 
     /** Perform a component-wise equal-to comparison of two matrices.
      *  Return a boolean vector which components value is True if this expression is satisfied per column of the matrices. */
-    fun notEqual(x: Mat4d, y: Mat4d, epsilon: Double = 0.0, res: Vec4bool = Vec4bool()): Vec4bool {
+    fun notEqual(x: Mat4d, y: Mat4d, epsilon: Double = glm.ε, res: Vec4bool = Vec4bool()): Vec4bool {
         res.x = x[0, 0].notEqual(y[0, 0], epsilon) || x[0, 1].notEqual(y[0, 1], epsilon) || x[0, 2].notEqual(y[0, 2], epsilon) || x[0, 3].notEqual(y[0, 3], epsilon)
         res.y = x[1, 0].notEqual(y[1, 0], epsilon) || x[1, 1].notEqual(y[1, 1], epsilon) || x[1, 2].notEqual(y[1, 2], epsilon) || x[1, 3].notEqual(y[1, 3], epsilon)
         res.z = x[2, 0].notEqual(y[2, 0], epsilon) || x[2, 1].notEqual(y[2, 1], epsilon) || x[2, 2].notEqual(y[2, 2], epsilon) || x[2, 3].notEqual(y[2, 3], epsilon)
@@ -239,31 +240,31 @@ interface matrixRelational {
 
     // convenient
 
-    fun allEqual(x: Mat2, y: Mat2, epsilon: Float = 0f): Boolean =
+    fun allEqual(x: Mat2, y: Mat2, epsilon: Float = glm.εf): Boolean =
             x[0, 0].equal(y[0, 0], epsilon) && x[0, 1].equal(y[0, 1], epsilon) &&
                     x[1, 0].equal(y[1, 0], epsilon) && x[1, 1].equal(y[1, 1], epsilon)
 
-    fun allEqual(x: Mat3, y: Mat3, epsilon: Float = 0f): Boolean =
+    fun allEqual(x: Mat3, y: Mat3, epsilon: Float = glm.εf): Boolean =
             x[0, 0].equal(y[0, 0], epsilon) && x[0, 1].equal(y[0, 1], epsilon) && x[0, 2].equal(y[0, 2], epsilon) &&
                     x[1, 0].equal(y[1, 0], epsilon) && x[1, 1].equal(y[1, 1], epsilon) && x[1, 2].equal(y[1, 2], epsilon) &&
                     x[2, 0].equal(y[2, 0], epsilon) && x[2, 1].equal(y[2, 1], epsilon) && x[2, 2].equal(y[2, 2], epsilon)
 
-    fun allEqual(x: Mat4, y: Mat4, epsilon: Float = 0f): Boolean =
+    fun allEqual(x: Mat4, y: Mat4, epsilon: Float = glm.εf): Boolean =
             x[0, 0].equal(y[0, 0], epsilon) && x[0, 1].equal(y[0, 1], epsilon) && x[0, 2].equal(y[0, 2], epsilon) && x[0, 3].equal(y[0, 3], epsilon) &&
                     x[1, 0].equal(y[1, 0], epsilon) && x[1, 1].equal(y[1, 1], epsilon) && x[1, 2].equal(y[1, 2], epsilon) && x[1, 3].equal(y[1, 3], epsilon) &&
                     x[2, 0].equal(y[2, 0], epsilon) && x[2, 1].equal(y[2, 1], epsilon) && x[2, 2].equal(y[2, 2], epsilon) && x[2, 3].equal(y[2, 3], epsilon) &&
                     x[3, 0].equal(y[3, 0], epsilon) && x[3, 1].equal(y[3, 1], epsilon) && x[3, 2].equal(y[3, 2], epsilon) && x[3, 3].equal(y[3, 3], epsilon)
 
-    fun anyNotEqual(x: Mat2, y: Mat2, epsilon: Float = 0f): Boolean =
+    fun anyNotEqual(x: Mat2, y: Mat2, epsilon: Float = glm.εf): Boolean =
             x[0, 0].notEqual(y[0, 0], epsilon) || x[0, 1].notEqual(y[0, 1], epsilon) ||
                     x[1, 0].notEqual(y[1, 0], epsilon) || x[1, 1].notEqual(y[1, 1], epsilon)
 
-    fun anyNotEqual(x: Mat3, y: Mat3, epsilon: Float = 0f): Boolean =
+    fun anyNotEqual(x: Mat3, y: Mat3, epsilon: Float = glm.εf): Boolean =
             x[0, 0].notEqual(y[0, 0], epsilon) || x[0, 1].notEqual(y[0, 1], epsilon) || x[0, 2].notEqual(y[0, 2], epsilon) ||
                     x[1, 0].notEqual(y[1, 0], epsilon) || x[1, 1].notEqual(y[1, 1], epsilon) || x[1, 2].notEqual(y[1, 2], epsilon) ||
                     x[2, 0].notEqual(y[2, 0], epsilon) || x[2, 1].notEqual(y[2, 1], epsilon) || x[2, 2].notEqual(y[2, 2], epsilon)
 
-    fun anyNotEqual(x: Mat4, y: Mat4, epsilon: Float = 0f): Boolean =
+    fun anyNotEqual(x: Mat4, y: Mat4, epsilon: Float = glm.εf): Boolean =
             x[0, 0].notEqual(y[0, 0], epsilon) || x[0, 1].notEqual(y[0, 1], epsilon) || x[0, 2].notEqual(y[0, 2], epsilon) || x[0, 3].notEqual(y[0, 3], epsilon) ||
                     x[1, 0].notEqual(y[1, 0], epsilon) || x[1, 1].notEqual(y[1, 1], epsilon) || x[1, 2].notEqual(y[1, 2], epsilon) || x[1, 3].notEqual(y[1, 3], epsilon) ||
                     x[2, 0].notEqual(y[2, 0], epsilon) || x[2, 1].notEqual(y[2, 1], epsilon) || x[2, 2].notEqual(y[2, 2], epsilon) || x[2, 3].notEqual(y[2, 3], epsilon) ||
@@ -271,31 +272,31 @@ interface matrixRelational {
 
     // double
 
-    fun allEqual(x: Mat2d, y: Mat2d, epsilon: Double = 0.0): Boolean =
+    fun allEqual(x: Mat2d, y: Mat2d, epsilon: Double = glm.ε): Boolean =
             x[0, 0].equal(y[0, 0], epsilon) && x[0, 1].equal(y[0, 1], epsilon) &&
                     x[1, 0].equal(y[1, 0], epsilon) && x[1, 1].equal(y[1, 1], epsilon)
 
-    fun allEqual(x: Mat3d, y: Mat3d, epsilon: Double = 0.0): Boolean =
+    fun allEqual(x: Mat3d, y: Mat3d, epsilon: Double = glm.ε): Boolean =
             x[0, 0].equal(y[0, 0], epsilon) && x[0, 1].equal(y[0, 1], epsilon) && x[0, 2].equal(y[0, 2], epsilon) &&
                     x[1, 0].equal(y[1, 0], epsilon) && x[1, 1].equal(y[1, 1], epsilon) && x[1, 2].equal(y[1, 2], epsilon) &&
                     x[2, 0].equal(y[2, 0], epsilon) && x[2, 1].equal(y[2, 1], epsilon) && x[2, 2].equal(y[2, 2], epsilon)
 
-    fun allEqual(x: Mat4d, y: Mat4d, epsilon: Double = 0.0): Boolean =
+    fun allEqual(x: Mat4d, y: Mat4d, epsilon: Double = glm.ε): Boolean =
             x[0, 0].equal(y[0, 0], epsilon) && x[0, 1].equal(y[0, 1], epsilon) && x[0, 2].equal(y[0, 2], epsilon) && x[0, 3].equal(y[0, 3], epsilon) &&
                     x[1, 0].equal(y[1, 0], epsilon) && x[1, 1].equal(y[1, 1], epsilon) && x[1, 2].equal(y[1, 2], epsilon) && x[1, 3].equal(y[1, 3], epsilon) &&
                     x[2, 0].equal(y[2, 0], epsilon) && x[2, 1].equal(y[2, 1], epsilon) && x[2, 2].equal(y[2, 2], epsilon) && x[2, 3].equal(y[2, 3], epsilon) &&
                     x[3, 0].equal(y[3, 0], epsilon) && x[3, 1].equal(y[3, 1], epsilon) && x[3, 2].equal(y[3, 2], epsilon) && x[3, 3].equal(y[3, 3], epsilon)
 
-    fun anyNotEqual(x: Mat2d, y: Mat2d, epsilon: Double = 0.0): Boolean =
+    fun anyNotEqual(x: Mat2d, y: Mat2d, epsilon: Double = glm.ε): Boolean =
             x[0, 0].notEqual(y[0, 0], epsilon) || x[0, 1].notEqual(y[0, 1], epsilon) ||
                     x[1, 0].notEqual(y[1, 0], epsilon) || x[1, 1].notEqual(y[1, 1], epsilon)
 
-    fun anyNotEqual(x: Mat3d, y: Mat3d, epsilon: Double = 0.0): Boolean =
+    fun anyNotEqual(x: Mat3d, y: Mat3d, epsilon: Double = glm.ε): Boolean =
             x[0, 0].notEqual(y[0, 0], epsilon) || x[0, 1].notEqual(y[0, 1], epsilon) || x[0, 2].notEqual(y[0, 2], epsilon) ||
                     x[1, 0].notEqual(y[1, 0], epsilon) || x[1, 1].notEqual(y[1, 1], epsilon) || x[1, 2].notEqual(y[1, 2], epsilon) ||
                     x[2, 0].notEqual(y[2, 0], epsilon) || x[2, 1].notEqual(y[2, 1], epsilon) || x[2, 2].notEqual(y[2, 2], epsilon)
 
-    fun anyNotEqual(x: Mat4d, y: Mat4d, epsilon: Double = 0.0): Boolean =
+    fun anyNotEqual(x: Mat4d, y: Mat4d, epsilon: Double = glm.ε): Boolean =
             x[0, 0].notEqual(y[0, 0], epsilon) || x[0, 1].notEqual(y[0, 1], epsilon) || x[0, 2].notEqual(y[0, 2], epsilon) || x[0, 3].notEqual(y[0, 3], epsilon) ||
                     x[1, 0].notEqual(y[1, 0], epsilon) || x[1, 1].notEqual(y[1, 1], epsilon) || x[1, 2].notEqual(y[1, 2], epsilon) || x[1, 3].notEqual(y[1, 3], epsilon) ||
                     x[2, 0].notEqual(y[2, 0], epsilon) || x[2, 1].notEqual(y[2, 1], epsilon) || x[2, 2].notEqual(y[2, 2], epsilon) || x[2, 3].notEqual(y[2, 3], epsilon) ||

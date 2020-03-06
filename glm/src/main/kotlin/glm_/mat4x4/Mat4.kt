@@ -866,6 +866,6 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     fun equal(b: Mat4, epsilon: Vec4, res: Vec4bool = Vec4bool()): Vec4bool = glm.equal(this, b, epsilon, res)
     fun notEqual(b: Mat4, epsilon: Float, res: Vec4bool = Vec4bool()): Vec4bool = glm.notEqual(this, b, epsilon, res)
     fun notEqual(b: Mat4, epsilon: Vec4, res: Vec4bool = Vec4bool()): Vec4bool = glm.notEqual(this, b, epsilon, res)
-    fun allEqual(b: Mat4, epsilon: Float = 0f): Boolean = glm.allEqual(this, b, epsilon)
-    fun anyNotEqual(b: Mat4, epsilon: Float = 0f): Boolean = glm.anyNotEqual(this, b, epsilon)
+    fun allEqual(b: Mat4, epsilon: Float = glm.εf): Boolean = glm.allEqual(this, b, epsilon)
+    fun anyNotEqual(b: Mat4, epsilon: Float = glm.εf): Boolean = glm.anyNotEqual(this, b, epsilon)
 }

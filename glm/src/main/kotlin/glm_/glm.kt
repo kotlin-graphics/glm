@@ -127,9 +127,9 @@ object glm :
 
     @JvmField
     val epsilonF = Float.MIN_VALUE
-    val _epsilonF = 1.19209290e-07f
+    val _epsilonF = 1.19209290e-07f // FIXME, quat slerp fails with Float.MIN_VALUE
     @JvmField
-    val epsilon = 2.2204460492503131e-16
+    val epsilon = Double.MIN_VALUE
     val ε = epsilon
     val εf = epsilonF
 
