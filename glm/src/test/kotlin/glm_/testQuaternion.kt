@@ -185,8 +185,6 @@ class testQuaternion : StringSpec() {
 
                 val result = a.slerp(id, .5f)
 
-                val b = id dot result
-                val c = glm.pow(id dot result, 2f)
                 glm.pow(id dot result, 2f).shouldEqual(1f, .01f)
             }
         }
