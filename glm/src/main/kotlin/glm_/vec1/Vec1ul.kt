@@ -359,8 +359,6 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
     infix fun andAssign(b: Ulong) = and(this, this, b)
     infix fun andAssign(b: Long) = and(this, this, b)
     infix fun andAssign(b: Vec1ul) = and(this, this, b.x)
-    fun andAssign(bX: Ulong, bY: Ulong) = and(this, this, bX)
-    fun andAssign(bX: Long, bY: Long) = and(this, this, bX)
 
 
     infix fun or(b: Ulong) = or(Vec1ul(), this, b)
@@ -374,8 +372,6 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
     infix fun orAssign(b: Ulong) = or(this, this, b)
     infix fun orAssign(b: Long) = or(this, this, b)
     infix fun orAssign(b: Vec1ul) = or(this, this, b.x)
-    fun orAssign(bX: Ulong, bY: Ulong) = or(this, this, bX)
-    fun orAssign(bX: Long, bY: Long) = or(this, this, bX)
 
 
     infix fun xor(b: Ulong) = xor(Vec1ul(), this, b)

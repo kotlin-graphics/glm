@@ -241,6 +241,7 @@ val Float.mantissa: Float
 
 
 infix fun Double.compare(other: Double): Int = java.lang.Double.compare(this, other)
+@kotlin.ExperimentalUnsignedTypes
 fun Double.isEqual(other: Double, maxUlps: Int): Boolean = when {
     this == other -> true
     // Different signs means they do not match.
