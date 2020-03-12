@@ -24,8 +24,8 @@ group = 'com.github.kotlin_graphics'
 
 ext {
     moduleName = "${group}.glm"
-    unsigned_version = '821f8f3784e651bf03fae5183647977bde661248'
-    kool_version = 'ec7dbd0314120a2d5bbfc0f6a9ddbdcb06ae7994'
+    unsigned_version = '2b60945e2c17f1e20b1ee6c96f1695d0df06eed7'
+    kool_version = '2bf4b991f361a386a08762f3203d5b8ba26cd5fa'
     lwjgl_version = "3.2.3"
     lwjgl_natives = current() == WINDOWS ? "windows" : current() == LINUX ? "linux" : "macos"
 }
@@ -79,7 +79,7 @@ subprojects {
         }
         // As per https://stackoverflow.com/a/47669720
         // See also https://discuss.kotlinlang.org/t/kotlin-support-for-java-9-module-system/2499/9
-        destinationDir = compileJava.destinationDir
+//        destinationDir = compileJava.destinationDir
     }
 
     compileTestKotlin {
@@ -92,7 +92,9 @@ subprojects {
     compileJava {
 //        dependsOn(':compileKotlin')
         doFirst {
-            options.compilerArgs = ['--module-path', classpath.asPath,]
+            options.compilerArgs = [
+                    '--module-path', classpath.asPath,
+                    '--patch-module', "$moduleName=${sourceSets["main"].output.asPath}"]
             classpath = files()
         }
     }
