@@ -3,6 +3,7 @@ package glm_;
 import glm_.mat4x4.Mat4;
 import glm_.vec1.Vec1;
 import glm_.vec2.Vec2;
+import glm_.vec2.Vec2us;
 import glm_.vec3.Vec3;
 
 import static glm_.Java.glm;
@@ -23,14 +24,18 @@ public class Test {
 
         Vec2 v = new Vec2(3, 4);
 
-        Vec2 a = (Vec2) v.xx();
-        a.getX();
-        a.xy(v.xy());
+//        Vec2 a = (Vec2) v.xx();
+//        a.getX();
+//        a.xy(v.xy());
         Vec1 b = new Vec1();
         int l = Vec1.length;
 //        Vec2 b = (Vec2) v.aa();
 
         Vec2 c = Vec2.fromPointer(4L);
+
+        Vec1 d = new Vec1();
+        Vec1 e = new Vec1(d);
+//        Vec2us f = new Vec2us((Short)3);
     }
 
 

@@ -3,6 +3,7 @@ package  glm_.mat3x2
 import glm_.*
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2t
+import kool.BYTES
 import kool.FloatBuffer
 import kool.pos
 import kool.set
@@ -96,7 +97,7 @@ class Mat3x2(var array: FloatArray) : Mat3x2t<Float>(), ToFloatBuffer {
 
     override fun elementCount() = length
 
-    override fun equals(other: Any?) = other is Mat3x2 && Arrays.equals(array, other.array)
+    override fun equals(other: Any?) = other is Mat3x2 && array.contentEquals(other.array)
 
     override fun hashCode() = 31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()
 }

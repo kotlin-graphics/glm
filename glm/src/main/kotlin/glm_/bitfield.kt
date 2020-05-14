@@ -4,6 +4,7 @@ import glm_.vec1.Vec1i
 import glm_.vec2.Vec2i
 import glm_.vec3.Vec3i
 import glm_.vec4.Vec4i
+import kool.BYTES
 import unsigned.toUInt
 import unsigned.toULong
 import unsigned.toUShort
@@ -11,6 +12,14 @@ import kotlin.experimental.or
 
 interface bitfield {
 
+    /*
+        TODO
+
+        https://github.com/g-truc/glm/commit/b4981e56fab8f522fe3a3e88786037a65cef289b
+        https://github.com/g-truc/glm/commit/a772bb3fd12518daa64ce469232113c318a6a40f
+        https://github.com/g-truc/glm/commit/2a332ac0981101380f2d831619b4885bb4ba898d
+        https://github.com/g-truc/glm/commit/5da834b7256c9f425c1ab24e6101437180809b7a
+     */
     fun bitfieldInterleave(x: Byte, y: Byte): Short {
 
         var reg1 = x.toUShort()

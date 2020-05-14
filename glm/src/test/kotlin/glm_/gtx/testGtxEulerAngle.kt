@@ -3,6 +3,7 @@ package glm_.gtx
 import glm_.glm
 import glm_.mat3x3.Mat3
 import glm_.mat4x4.Mat4
+import glm_.shouldEqual
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import io.kotlintest.shouldBe
@@ -29,12 +30,12 @@ class testGtxEulerAngle : StringSpec() {
             val y5 = glm.eulerAngleXZ(angle, 0f) * y
             val y6 = glm.eulerAngleZX(0f, angle) * y
             val y7 = glm.eulerAngleYXZ(0f, angle, 0f) * y
-            glm.all(glm.epsilonEqual(y1, y2, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(y1, y3, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(y1, y4, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(y1, y5, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(y1, y6, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(y1, y7, 0.00001f)) shouldBe true
+            y1.shouldEqual(y2, 0.00001f)
+            y1.shouldEqual(y3, 0.00001f)
+            y1.shouldEqual(y4, 0.00001f)
+            y1.shouldEqual(y5, 0.00001f)
+            y1.shouldEqual(y6, 0.00001f)
+            y1.shouldEqual(y7, 0.00001f)
 
             val z = Vec4(0f, 0f, 1f, 1f)
             val z1 = glm.rotate(Mat4(1f), angle, x) * z
@@ -44,12 +45,12 @@ class testGtxEulerAngle : StringSpec() {
             val z5 = glm.eulerAngleXZ(angle, 0f) * z
             val z6 = glm.eulerAngleZX(0f, angle) * z
             val z7 = glm.eulerAngleYXZ(0f, angle, 0f) * z
-            glm.all(glm.epsilonEqual(z1, z2, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(z1, z3, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(z1, z4, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(z1, z5, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(z1, z6, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(z1, z7, 0.00001f)) shouldBe true
+            z1.shouldEqual(z2, 0.00001f)
+            z1.shouldEqual(z3, 0.00001f)
+            z1.shouldEqual(z4, 0.00001f)
+            z1.shouldEqual(z5, 0.00001f)
+            z1.shouldEqual(z6, 0.00001f)
+            z1.shouldEqual(z7, 0.00001f)
         }
 
         "eulerAngleY" {
@@ -65,12 +66,12 @@ class testGtxEulerAngle : StringSpec() {
             val x5 = glm.eulerAngleYZ(angle, 0f) * x
             val x6 = glm.eulerAngleZY(0f, angle) * x
             val x7 = glm.eulerAngleYXZ(angle, 0f, 0f) * x
-            glm.all(glm.epsilonEqual(x1, x2, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(x1, x3, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(x1, x4, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(x1, x5, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(x1, x6, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(x1, x7, 0.00001f)) shouldBe true
+            x1.shouldEqual(x2, 0.00001f)
+            x1.shouldEqual(x3, 0.00001f)
+            x1.shouldEqual(x4, 0.00001f)
+            x1.shouldEqual(x5, 0.00001f)
+            x1.shouldEqual(x6, 0.00001f)
+            x1.shouldEqual(x7, 0.00001f)
 
             val z = Vec4(0f, 0f, 1f, 1f)
             val z1 = glm.eulerAngleY(angle) * z
@@ -80,12 +81,12 @@ class testGtxEulerAngle : StringSpec() {
             val z5 = glm.eulerAngleYZ(angle, 0f) * z
             val z6 = glm.eulerAngleZY(0f, angle) * z
             val z7 = glm.eulerAngleYXZ(angle, 0f, 0f) * z
-            glm.all(glm.epsilonEqual(z1, z2, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(z1, z3, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(z1, z4, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(z1, z5, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(z1, z6, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(z1, z7, 0.00001f)) shouldBe true
+            z1.shouldEqual(z2, 0.00001f)
+            z1.shouldEqual(z3, 0.00001f)
+            z1.shouldEqual(z4, 0.00001f)
+            z1.shouldEqual(z5, 0.00001f)
+            z1.shouldEqual(z6, 0.00001f)
+            z1.shouldEqual(z7, 0.00001f)
         }
 
         "eulerAngleZ" {
@@ -101,12 +102,12 @@ class testGtxEulerAngle : StringSpec() {
             val x5 = glm.eulerAngleZY(angle, 0f) * x
             val x6 = glm.eulerAngleYZ(0f, angle) * x
             val x7 = glm.eulerAngleYXZ(0f, 0f, angle) * x
-            glm.all(glm.epsilonEqual(x1, x2, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(x1, x3, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(x1, x4, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(x1, x5, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(x1, x6, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(x1, x7, 0.00001f)) shouldBe true
+            x1.shouldEqual(x2, 0.00001f)
+            x1.shouldEqual(x3, 0.00001f)
+            x1.shouldEqual(x4, 0.00001f)
+            x1.shouldEqual(x5, 0.00001f)
+            x1.shouldEqual(x6, 0.00001f)
+            x1.shouldEqual(x7, 0.00001f)
 
             val y = Vec4(1f, 0f, 0f, 1f)
             val z1 = glm.rotate(Mat4(1f), angle, z) * y
@@ -116,12 +117,12 @@ class testGtxEulerAngle : StringSpec() {
             val z5 = glm.eulerAngleZY(angle, 0f) * y
             val z6 = glm.eulerAngleYZ(0f, angle) * y
             val z7 = glm.eulerAngleYXZ(0f, 0f, angle) * y
-            glm.all(glm.epsilonEqual(z1, z2, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(z1, z3, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(z1, z4, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(z1, z5, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(z1, z6, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(z1, z7, 0.00001f)) shouldBe true
+            z1.shouldEqual(z2, 0.00001f)
+            z1.shouldEqual(z3, 0.00001f)
+            z1.shouldEqual(z4, 0.00001f)
+            z1.shouldEqual(z5, 0.00001f)
+            z1.shouldEqual(z6, 0.00001f)
+            z1.shouldEqual(z7, 0.00001f)
         }
 
         "derivedEulerAngles" {
@@ -150,7 +151,7 @@ class testGtxEulerAngle : StringSpec() {
                     val rotMt = glm.transpose(rotationFunc(it.first))
                     val derivedRotM = testDerivedFunc(it.first, it.second)
 
-                    glm.epsilonEqual(w, derivedRotM * rotMt, 0.00001f) shouldBe true
+                    w.shouldEqual(derivedRotM * rotMt, 0.00001f)
                 }
             }
 
@@ -169,8 +170,8 @@ class testGtxEulerAngle : StringSpec() {
             val v1 = (glm.rotateX(Mat4(1f), angleX) * glm.rotateY(Mat4(1f), angleY)) * v
             val v2 = glm.eulerAngleXY(angleX, angleY) * v
             val v3 = glm.eulerAngleX(angleX) * glm.eulerAngleY(angleY) * v
-            glm.all(glm.epsilonEqual(v1, v2, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(v1, v3, 0.00001f)) shouldBe true
+            v1.shouldEqual(v2, 0.00001f)
+            v1.shouldEqual(v3, 0.00001f)
         }
 
         "eulerAngleYX" {
@@ -183,8 +184,8 @@ class testGtxEulerAngle : StringSpec() {
             val v1 = (glm.rotateY(Mat4(1f), angleY) * glm.rotateX(Mat4(1f), angleX)) * v
             val v2 = glm.eulerAngleYX(angleY, angleX) * v
             val v3 = glm.eulerAngleY(angleY) * glm.eulerAngleX(angleX) * v
-            glm.all(glm.epsilonEqual(v1, v2, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(v1, v3, 0.00001f)) shouldBe true
+            v1.shouldEqual(v2, 0.00001f)
+            v1.shouldEqual(v3, 0.00001f)
         }
 
         "eulerAngleXZ" {
@@ -197,8 +198,8 @@ class testGtxEulerAngle : StringSpec() {
             val v1 = (glm.rotateX(Mat4(1f), angleX) * glm.rotateZ(Mat4(1f), angleZ)) * v
             val v2 = glm.eulerAngleXZ(angleX, angleZ) * v
             val v3 = glm.eulerAngleX(angleX) * glm.eulerAngleZ(angleZ) * v
-            glm.all(glm.epsilonEqual(v1, v2, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(v1, v3, 0.00001f)) shouldBe true
+            v1.shouldEqual(v2, 0.00001f)
+            v1.shouldEqual(v3, 0.00001f)
         }
 
         "eulerAngleZX" {
@@ -211,8 +212,8 @@ class testGtxEulerAngle : StringSpec() {
             val v1 = (glm.rotateZ(Mat4(1f), angleZ) * glm.rotateX(Mat4(1f), angleX)) * v
             val v2 = glm.eulerAngleZX(angleZ, angleX) * v
             val v3 = glm.eulerAngleZ(angleZ) * glm.eulerAngleX(angleX) * v
-            glm.all(glm.epsilonEqual(v1, v2, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(v1, v3, 0.00001f)) shouldBe true
+            v1.shouldEqual(v2, 0.00001f)
+            v1.shouldEqual(v3, 0.00001f)
         }
 
         "eulerAngleYZ" {
@@ -225,8 +226,8 @@ class testGtxEulerAngle : StringSpec() {
             val v1 = (glm.rotateY(Mat4(1f), angleY) * glm.rotateZ(Mat4(1f), angleZ)) * v
             val v2 = glm.eulerAngleYZ(angleY, angleZ) * v
             val v3 = glm.eulerAngleY(angleY) * glm.eulerAngleZ(angleZ) * v
-            glm.all(glm.epsilonEqual(v1, v2, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(v1, v3, 0.00001f)) shouldBe true
+            v1.shouldEqual(v2, 0.00001f)
+            v1.shouldEqual(v3, 0.00001f)
         }
 
         "eulerAngleZY" {
@@ -239,8 +240,8 @@ class testGtxEulerAngle : StringSpec() {
             val v1 = (glm.rotateZ(Mat4(1f), angleZ) * glm.rotateY(Mat4(1f), angleY)) * v
             val v2 = glm.eulerAngleZY(angleZ, angleY) * v
             val v3 = glm.eulerAngleZ(angleZ) * glm.eulerAngleY(angleY) * v
-            glm.all(glm.epsilonEqual(v1, v2, 0.00001f)) shouldBe true
-            glm.all(glm.epsilonEqual(v1, v3, 0.00001f)) shouldBe true
+            v1.shouldEqual(v2, 0.00001f)
+            v1.shouldEqual(v3, 0.00001f)
         }
 
         "eulerAngleYXZ" {
@@ -319,7 +320,7 @@ class testGtxEulerAngle : StringSpec() {
                     val v1 = rotationEuler * v
                     val v2 = rotationDumb * v
 
-                    glm.all(glm.epsilonEqual(v1, v2, 0.00001f)) shouldBe true
+                    v1.shouldEqual(v2, 0.00001f)
                 }
             }
 
@@ -378,7 +379,7 @@ class testGtxEulerAngle : StringSpec() {
                     val v1 = rotation * v
                     val v2 = extractedRotation * v
 
-                    glm.all(glm.epsilonEqual(v1, v2, 0.00001f)) shouldBe true
+                    v1.shouldEqual(v2, 0.00001f)
                 }
             }
 

@@ -103,21 +103,21 @@ interface func_common {
     }
 
 
-    fun min(a: Float, b: Float) = _min(a, b)
-    fun min(a: Double, b: Double) = _min(a, b)
-    fun min(a: Byte, b: Byte) = _min(a.i, b.i).b
-    fun min(a: Int, b: Int) = _min(a, b)
-    fun min(a: Long, b: Long) = _min(a, b)
-    fun min(a: Short, b: Short) = _min(a.i, b.i).s
-    fun min(a: Char, b: Char) = if (a < b) a else b
+    fun min(a: Float, b: Float): Float = _min(a, b)
+    fun min(a: Double, b: Double): Double = _min(a, b)
+    fun min(a: Byte, b: Byte): Byte = _min(a.i, b.i).b
+    fun min(a: Int, b: Int): Int = _min(a, b)
+    fun min(a: Long, b: Long): Long = _min(a, b)
+    fun min(a: Short, b: Short): Short = _min(a.i, b.i).s
+    fun min(a: Char, b: Char): Char = if (a < b) a else b
 
-    fun max(a: Float, b: Float) = _max(a, b)
-    fun max(a: Double, b: Double) = _max(a, b)
-    fun max(a: Byte, b: Byte) = _max(a.i, b.i).b
-    fun max(a: Int, b: Int) = _max(a, b)
-    fun max(a: Long, b: Long) = _max(a, b)
-    fun max(a: Short, b: Short) = _max(a.i, b.i).s
-    fun max(a: Char, b: Char) = if (a < b) b else a
+    fun max(a: Float, b: Float): Float = _max(a, b)
+    fun max(a: Double, b: Double): Double = _max(a, b)
+    fun max(a: Byte, b: Byte): Byte = _max(a.i, b.i).b
+    fun max(a: Int, b: Int): Int = _max(a, b)
+    fun max(a: Long, b: Long): Long = _max(a, b)
+    fun max(a: Short, b: Short): Short = _max(a.i, b.i).s
+    fun max(a: Char, b: Char): Char = if (a < b) b else a
 
 
     fun clamp(a: Float, min: Float, max: Float) = min(max(a, min), max)
@@ -176,7 +176,7 @@ interface func_common {
 
     fun frexp(a: Float, exp: KMutableProperty0<Int>): Float {
 
-        val bits = a.toIntBits
+        val bits = a.asIntBits
         var realMant: Float
 
         // Test for NaN, infinity, and zero.
@@ -218,7 +218,7 @@ interface func_common {
 
     fun frexp(a: Double, exp: KMutableProperty0<Int>): Double {
 
-        val bits = a.toLongBits
+        val bits = a.asLongBits
         var realMant: Double
 
         // Test for NaN, infinity, and zero.
@@ -267,9 +267,9 @@ interface func_common {
 val Float.abs get() = this.absoluteValue
 val Double.abs get() = this.absoluteValue
 val Byte.abs get() = i.absoluteValue.b
-val Int.abs get () = this.absoluteValue
-val Long.abs get () = this.absoluteValue
-val Short.abs get () = i.absoluteValue.s
+val Int.abs get() = this.absoluteValue
+val Long.abs get() = this.absoluteValue
+val Short.abs get() = i.absoluteValue.s
 
 
 val Byte.sign get() = sign(this)
@@ -330,7 +330,7 @@ fun Float.smoothstep(edge0: Float, edge1: Float) = smoothStep(edge0, edge1, this
 fun Double.smoothstep(edge0: Double, edge1: Double) = smoothStep(edge0, edge1, this)
 
 
-val Float.isNan get () = isNan(this)
+val Float.isNan get() = isNan(this)
 val Double.isNan get() = isNan(this)
 
 val Float.isInf get() = isInf(this)

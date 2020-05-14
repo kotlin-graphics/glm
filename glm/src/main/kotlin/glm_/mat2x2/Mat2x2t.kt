@@ -70,8 +70,8 @@ abstract class Mat2x2t<T : Number> : ToBuffer {
         $this""")
 
     override fun toString() = """
-        $v00 $v10
-        $v01 $v11"""
+        |$v00 $v10
+        |$v01 $v11""".trimMargin()
 
 
 //    override fun toString() =

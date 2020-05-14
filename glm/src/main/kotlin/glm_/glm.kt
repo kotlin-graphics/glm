@@ -4,12 +4,15 @@
 
 package glm_
 
+import glm_.ext.*
+import glm_.ext.ext_quaternionCommon
+import glm_.ext.ext_quaternionTransform
+import glm_.ext.ext_quaternionTrigonometric
 import glm_.func.*
 import glm_.func.common.*
-import glm_.gtc.gtcMatrixInverse
-import glm_.gtc.matrixTransform.*
+import glm_.gtc.gtc_MatrixInverse
 import glm_.gtx.*
-import glm_.quat.gtcQuaternion
+import glm_.gtc.gtc_Quaternion
 import glm_.quat.gtxQuaternion
 
 object glm :
@@ -33,16 +36,19 @@ object glm :
         func_trigonometric,
 
         // matrix transform
-        gtcMatrixFrustum,
-        gtcMatrixOrtho,
-        gtcMatrixPerspective,
-        gtcMatrixProject,
-        gtcMatrixRotate,
-        gtcMatrixScale,
-        gtcMatrixTransform,
-        gtcMatrixTranslate,
+        gtxMatrixOperation,
 
-        gtcQuaternion,
+        ext_matrixClipSpace,
+        ext_matrixProjection,
+        ext_matrixTransform,
+
+        gtc_Quaternion,
+        ext_quaternionCommon,
+        ext_quaternionTransform,
+        ext_quaternionTrigonometric,
+        ext_quaternionExponential,
+
+        ext_scalarCommon,
 
         matrix_interpolation,
 
@@ -69,7 +75,7 @@ object glm :
 
         gradientPaint,
 
-        gtcMatrixInverse,
+        gtc_MatrixInverse,
 
         gtxClosestPoint,
         gtxEasing,
@@ -87,6 +93,12 @@ object glm :
         gxtSpline,
         gtxTexture,
         gtxVectorAngle,
+
+        // ext
+        ext_QuaternionGeometric,
+//        extQuaternionRelational,
+        extScalarRelational,
+        matrixRelational,
 
         closestPointToLines {
 
@@ -114,12 +126,17 @@ object glm :
     val PI3over2f = kotlin.math.PI.f * 1.5f
 
     @JvmField
-    val epsilonF = 1.1920928955078125e-7f
+    val epsilonF = Float.MIN_VALUE
+    val _epsilonF = 1.19209290e-07f // FIXME, quat slerp fails with Float.MIN_VALUE
     @JvmField
-    val epsilon = 2.2204460492503131e-16
+    val epsilon = Double.MIN_VALUE
+    val ε = epsilon
+    val εf = epsilonF
 
     @JvmField
-    val Ef = 2.71828182845904523536f
+    val Ef = Math.E.f
+    @JvmField
+    val E = Math.E
 }
 
 object Detail :
@@ -146,6 +163,13 @@ typealias ulong = Long
 val GLM_VERSION_MAJOR = 0
 val GLM_VERSION_MINOR = 9
 val GLM_VERSION_PATCH = 9
-val GLM_VERSION_REVISION = 0
-val GLM_VERSION_BUILD = 13
-val GLM_VERSION = GLM_VERSION_MAJOR * 1_000 + GLM_VERSION_MINOR * 100 + GLM_VERSION_PATCH * 10 + GLM_VERSION_REVISION + GLM_VERSION_BUILD / 10f
+val GLM_VERSION_REVISION = 1
+val GLM_VERSION_BUILD = 1
+val GLM_VERSION = GLM_VERSION_MAJOR * 1_000 + GLM_VERSION_MINOR * 100 + GLM_VERSION_PATCH * 10 + GLM_VERSION_REVISION
+
+/*
+    TODO:
+      Added missing equal and notEqual with epsilon for quaternion types (https://github.com/g-truc/glm/commit/8f0b7c13732b018339697d182ea3a9f437ccaa71)
+       Added *vec1 tests (https://github.com/g-truc/glm/commit/838d3fed97bd2ca6bdcec102bf918153f54f2316)
+       Fixed relational code, reduced header dependencies  (https://github.com/g-truc/glm/commit/7086d902e2780e0774830573da7473938290ea73)
+ */

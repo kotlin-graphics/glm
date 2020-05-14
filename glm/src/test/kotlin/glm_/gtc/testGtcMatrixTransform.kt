@@ -38,17 +38,17 @@ class testGtcMatrixTransform : StringSpec() {
             val projectionA = glm.tweakedInfinitePerspective(45f, 640f / 480f, 1f)
             val projectionB = glm.tweakedInfinitePerspective(45f, 640f / 480f, 1f, 0.001f)
 
-            projectionA shouldBe Mat4(
+            projectionA.allEqual(Mat4(
                     1.3444432f, 0f, 0f, 0f,
                     0f, 1.792591f, 0f, 0f,
                     0f, 0f, -0.9999999f, -1f,
-                    0f, 0f, -1.9999999f, 0f)
+                    0f, 0f, -1.9999999f, 0f), 0.001f) shouldBe true
 
-            projectionB shouldBe Mat4(
+            projectionB.allEqual(Mat4(
                     1.3444432f, 0f, 0f, 0f,
                     0f, 1.792591f, 0f, 0f,
                     0f, 0f, -0.999f, -1f,
-                    0f, 0f, -1.999f, 0f)
+                    0f, 0f, -1.999f, 0f), 0.001f) shouldBe true
         }
 
         "pick" {

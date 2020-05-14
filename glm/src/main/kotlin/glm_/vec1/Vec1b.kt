@@ -3,25 +3,34 @@ package glm_.vec1
 import glm_.BYTES
 import glm_.b
 import glm_.toByte
+import glm_.vec1.operators.opVec1b
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.BYTES
 import kool.pos
 import java.nio.*
+import kotlin.math.abs
 
 class Vec1b(x: Byte) : Vec1t<Byte>(x) {
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0)
+    constructor(x: Number) : this(x.b)
 
+    // -- Explicit basic constructors --
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    constructor(v: Vec1t<out Number>) : this(v.x)
     constructor(v: Vec2t<out Number>) : this(v.x)
     constructor(v: Vec3t<out Number>) : this(v.x)
     constructor(v: Vec4t<out Number>) : this(v.x)
 
+    constructor(v: Vec1bool) : this(v.x.b)
     constructor(v: Vec2bool) : this(v.x.b)
     constructor(v: Vec3bool) : this(v.x.b)
     constructor(v: Vec4bool) : this(v.x.b)
@@ -51,14 +60,12 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
 
     constructor(block: (Int) -> Byte) : this(block(0))
 
-    constructor(x: Number) : this(x.b)
-
 
     fun put(x: Byte) {
         this.x = x
     }
 
-    fun invoke(x: Byte): Vec1b {
+    operator fun invoke(x: Byte): Vec1b {
         this.x = x.b
         return this
     }
@@ -67,7 +74,7 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
         this.x = x.b
     }
 
-    override fun invoke(x: Number): Vec1b {
+    override operator fun invoke(x: Number): Vec1b {
         this.x = x.b
         return this
     }
@@ -80,7 +87,7 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
 
     override fun to(buf: ByteBuffer, offset: Int): ByteBuffer = buf.put(offset, x)
 
-    companion object { //TODO : vec2b_operators {
+    companion object : opVec1b {
         const val length = Vec1t.length
         @JvmField
         val size = length * Byte.BYTES
@@ -89,5 +96,8 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec1b && this[0] == other[0]
+    fun equal(b: Vec1b, epsilon: Int = 0): Boolean = abs(x - b.x) <= epsilon
+    fun notEqual(b: Vec1b, epsilon: Int = 0): Boolean = !equal(b, epsilon)
+
     override fun hashCode() = x.hashCode()
 }

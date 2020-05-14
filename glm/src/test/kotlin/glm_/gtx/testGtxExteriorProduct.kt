@@ -10,7 +10,7 @@ class testGtxExteriorProduct : StringSpec() {
     init {
         "cross" {
             val f = Vec2(1f) cross Vec2(1f)
-            glm.epsilonEqual(f, 0f, 0.001f) shouldBe true
+            glm.equal(f, 0f, 0.001f) shouldBe true
         }
     }
 }

@@ -17,6 +17,8 @@ data class Vec3bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
 
     constructor(ba: Array<Boolean>) : this(ba[0], ba[1], ba[2])
 
+    constructor(init: (Int) -> Boolean): this(init(0), init(1), init(2))
+
     // -- Component accesses --
 
     operator fun get(i: Int): Boolean = when (i) {
@@ -62,6 +64,12 @@ data class Vec3bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
         return this
     }
 
+    operator fun invoke(init: (Int) -> Boolean): Vec3bool {
+        x = init(0)
+        y = init(1)
+        z = init(2)
+        return this
+    }
 
     // -- Unary arithmetic vecOperators --
 
@@ -98,5 +106,5 @@ data class Vec3bool(var x: Boolean = false, var y: Boolean = false, var z: Boole
 
 
     fun print(name: String = "", stream: PrintStream = System.out) = stream.println("$name [$x, $y, $z]")
-    override fun toString(): String = "Vec3bool [$x, $y, $z]"
+    override fun toString(): String = "($x, $y, $z)"
 }

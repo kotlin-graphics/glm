@@ -1,8 +1,9 @@
 package glm_.gtx
 
+import glm_.ext.equal
 import glm_.glm.detail
-import glm_.glm.epsilonEqual
 import glm_.glm.epsilonF
+import glm_.glm.equal
 import glm_.mat4x4.Mat4
 import glm_.quat.Quat
 import glm_.vec3.Vec3
@@ -17,7 +18,7 @@ interface gtxMatrixDecompose {
         val localMatrix = Mat4(modelMatrix)
 
         // Normalize the matrix.
-        if (localMatrix[3, 3] epsilonEqual 0f) return false
+        if (localMatrix[3, 3].equal(0f, Float.MIN_VALUE)) return false
 
         for (i in 0..3)
             for (j in 0..3)
@@ -32,10 +33,10 @@ interface gtxMatrixDecompose {
         perspectiveMatrix[3, 3] = 1f
 
         // TODO: Fixme!
-        if (epsilonEqual(perspectiveMatrix.det, 0f, epsilonF)) return false
+        if (equal(perspectiveMatrix.det, 0f, epsilonF)) return false
 
         // First, isolate perspective.  This is the messiest.
-        if (localMatrix[0, 3] epsilonEqual 0f || localMatrix[1, 3] epsilonEqual 0f || localMatrix[2, 3] epsilonEqual 0f) {
+        if (localMatrix[0, 3].equal(0f, Float.MIN_VALUE) || localMatrix[1, 3].equal(0f, Float.MIN_VALUE) || localMatrix[2, 3].equal(0f, Float.MIN_VALUE)) {
             // rightHandSide is the right hand side of the equation.
             val rightHandSide = Vec4(localMatrix[0, 3], localMatrix[1, 3], localMatrix[2, 3], localMatrix[3, 3])
 

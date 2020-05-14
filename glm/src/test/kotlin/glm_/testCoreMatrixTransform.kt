@@ -37,25 +37,25 @@ class testCoreMatrixTransform : StringSpec() {
 
             val ep = .001f
 
-            glm.epsilonEqual(a[0, 0], 8.281f, ep) shouldBe true
-            glm.epsilonEqual(a[0, 1], 9.159f, ep) shouldBe true
-            glm.epsilonEqual(a[0, 2], 10.038f, ep) shouldBe true
-            glm.epsilonEqual(a[0, 3], 10.916f, ep) shouldBe true
+            glm.equal(a[0, 0], 8.281f, ep) shouldBe true
+            glm.equal(a[0, 1], 9.159f, ep) shouldBe true
+            glm.equal(a[0, 2], 10.038f, ep) shouldBe true
+            glm.equal(a[0, 3], 10.916f, ep) shouldBe true
 
-            glm.epsilonEqual(a[1, 0], 3.018f, ep) shouldBe true
-            glm.epsilonEqual(a[1, 1], 4.033f, ep) shouldBe true
-            glm.epsilonEqual(a[1, 2], 5.048f, ep) shouldBe true
-            glm.epsilonEqual(a[1, 3], 6.062f, ep) shouldBe true
+            glm.equal(a[1, 0], 3.018f, ep) shouldBe true
+            glm.equal(a[1, 1], 4.033f, ep) shouldBe true
+            glm.equal(a[1, 2], 5.048f, ep) shouldBe true
+            glm.equal(a[1, 3], 6.062f, ep) shouldBe true
 
-            glm.epsilonEqual(a[2, 0], 1.520f, ep) shouldBe true
-            glm.epsilonEqual(a[2, 1], 2.616f, ep) shouldBe true
-            glm.epsilonEqual(a[2, 2], 3.711f, ep) shouldBe true
-            glm.epsilonEqual(a[2, 3], 4.806f, ep) shouldBe true
+            glm.equal(a[2, 0], 1.520f, ep) shouldBe true
+            glm.equal(a[2, 1], 2.616f, ep) shouldBe true
+            glm.equal(a[2, 2], 3.711f, ep) shouldBe true
+            glm.equal(a[2, 3], 4.806f, ep) shouldBe true
 
-            glm.epsilonEqual(a[3, 0], 12f, ep) shouldBe true
-            glm.epsilonEqual(a[3, 1], 13f, ep) shouldBe true
-            glm.epsilonEqual(a[3, 2], 14f, ep) shouldBe true
-            glm.epsilonEqual(a[3, 3], 15f, ep) shouldBe true
+            glm.equal(a[3, 0], 12f, ep) shouldBe true
+            glm.equal(a[3, 1], 13f, ep) shouldBe true
+            glm.equal(a[3, 2], 14f, ep) shouldBe true
+            glm.equal(a[3, 3], 15f, ep) shouldBe true
         }
     }
 }

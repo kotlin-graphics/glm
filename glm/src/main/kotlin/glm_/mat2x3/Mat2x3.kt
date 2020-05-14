@@ -6,6 +6,7 @@ import glm_.f
 import glm_.toFloat
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
+import kool.BYTES
 import kool.set
 import java.io.PrintStream
 import java.nio.ByteBuffer
@@ -110,7 +111,7 @@ class Mat2x3(var array: FloatArray) : Mat2x3t<Float>(), ToFloatBuffer {
 
     override fun elementCount() = length
 
-    override fun equals(other: Any?) = other is Mat2x3 && Arrays.equals(array, other.array)
+    override fun equals(other: Any?) = other is Mat2x3 && array.contentEquals(other.array)
 
     override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
 }

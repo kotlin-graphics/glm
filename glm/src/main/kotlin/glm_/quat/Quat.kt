@@ -1,16 +1,17 @@
 package glm_.quat
 
-import glm_.BYTES
 import glm_.f
 import glm_.float
 import glm_.glm
 import glm_.glm.cos
 import glm_.glm.sin
+import glm_.gtc.gtc_Quaternion
 import glm_.mat3x3.Mat3
 import glm_.mat4x4.Mat4
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
+import kool.BYTES
 import kool.Ptr
 import org.lwjgl.system.MemoryUtil.memGetFloat
 import org.lwjgl.system.MemoryUtil.memPutFloat
@@ -214,12 +215,18 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     fun vectorize(res: Vec4 = Vec4()) = res.put(x, y, z, w)
 
 
-    companion object : quat_operators, gtcQuaternion {
+    companion object : quat_operators, gtc_Quaternion {
         @JvmField
-        val size = 4 * Float.BYTES
+        val length = 4
+
+        @JvmField
+        val size = length * Float.BYTES
 
         @JvmStatic
         fun fromPointer(ptr: Ptr) = Quat(memGetFloat(ptr), memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 3))
+
+        val identity: Quat
+            get() = Quat(1f, 0f, 0f, 0f)
     }
 
     override fun equals(other: Any?) = other is Quat && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
@@ -233,4 +240,10 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
     override fun toString(): String = "($w, {$x, $y, $z})"
+
+    fun allEqual(q: Quat, epsilon: Float = glm.εf): Boolean =
+            x - q.x < epsilon && y - q.y < epsilon && z - q.z < epsilon && w - q.w < epsilon
+
+    fun anyNotEqual(q: Quat, epsilon: Float = glm.εf): Boolean =
+            x - q.x >= epsilon || y - q.y >= epsilon || z - q.z >= epsilon || w - q.w >= epsilon
 }

@@ -1,7 +1,9 @@
 package glm_
 
 import glm_.vec2.Vec2
+import glm_.vec2.Vec2i
 import glm_.vec3.Vec3
+import glm_.vec3.Vec3i
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4d
@@ -10,8 +12,10 @@ import glm_.vec4.operators.div
 import glm_.vec4.operators.minus
 import glm_.vec4.operators.plus
 import glm_.vec4.operators.times
+import glm_.vec4.swizzle.*
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
+import kool.BYTES
 
 class testCorePure : StringSpec() {
 
@@ -20,27 +24,85 @@ class testCorePure : StringSpec() {
         "vec4 constructor" {
 
             run {
-                val a = Vec4(1)
-                val b = Vec4(1, 1, 1, 1)
+                val a = Vec4i(1)
+                val b = Vec4i(1, 1, 1, 1)
 
                 a shouldBe b
             }
 
+//            if GLM_SWIZZLE == GLM_SWIZZLE_OPERATOR
             run {
+                val A = Vec4i(1f, 2f, 3f, 4f)
+                val B = A.xyzw
+                val C = Vec4i(A.xyzw)
+                val D = Vec4i(A.xyzw)
+                val E = Vec4i(A.x, A.yzw)
+                val F = Vec4i(A.x, A.yzw)
+                val G = Vec4i(A.xyz, A.w)
+                val H = Vec4i(A.xyz, A.w)
+                val I = Vec4i(A.xy, A.zw)
+                val J = Vec4i(A.xy, A.zw)
+                val K = Vec4i(A.x, A.y, A.zw)
+                val L = Vec4i(A.x, A.yz, A.w)
+                val M = Vec4i(A.xy, A.z, A.w)
 
-                arrayOf(
-                        Vec4(Vec2(1, 2), 3, 4),
-                        Vec4(1, Vec2(2, 3), 4),
-                        Vec4(1, 2, Vec2(3, 4)),
-                        Vec4(Vec3(1, 2, 3), 4),
-                        Vec4(1, Vec3(2, 3, 4)),
-                        Vec4(Vec2(1, 2), Vec2(3, 4)),
-                        Vec4(1, 2, 3, 4),
-                        Vec4(Vec4(1, 2, 3, 4)))
-                        .forEach {
-                            it shouldBe Vec4(1, 2, 3, 4)
-                        }
+                A shouldBe B
+                A shouldBe C
+                A shouldBe D
+                A shouldBe E
+                A shouldBe F
+                A shouldBe G
+                A shouldBe H
+                A shouldBe I
+                A shouldBe J
+                A shouldBe K
+                A shouldBe L
+                A shouldBe M
             }
+//            #	endif
+
+//            #	if GLM_SWIZZLE
+            run {
+                val A = Vec4i(1f, 2f, 3f, 4f)
+                val B = Vec4i(A.xyzw)
+                val C = Vec4i(A.xyzw)
+                val D = Vec4i(A.xyzw)
+                val E = Vec4i(A.x, A.yzw)
+                val F = Vec4i(A.x, A.yzw)
+                val G = Vec4i(A.xyz, A.w)
+                val H = Vec4i(A.xyz, A.w)
+                val I = Vec4i(A.xy, A.zw)
+                val J = Vec4i(A.xy, A.zw)
+                val K = Vec4i(A.x, A.y, A.zw)
+                val L = Vec4i(A.x, A.yz, A.w)
+                val M = Vec4i(A.xy, A.z, A.w)
+
+                A shouldBe B
+                A shouldBe C
+                A shouldBe D
+                A shouldBe E
+                A shouldBe F
+                A shouldBe G
+                A shouldBe H
+                A shouldBe I
+                A shouldBe J
+                A shouldBe K
+                A shouldBe L
+                A shouldBe M
+            }
+
+            arrayOf(
+                    Vec4i(Vec2i(1, 2), 3, 4),
+                    Vec4i(1, Vec2i(2, 3), 4),
+                    Vec4i(1, 2, Vec2i(3, 4)),
+                    Vec4i(Vec3i(1, 2, 3), 4),
+                    Vec4i(1, Vec3i(2, 3, 4)),
+                    Vec4i(Vec2i(1, 2), Vec2i(3, 4)),
+                    Vec4i(1, 2, 3, 4),
+                    Vec4i(Vec4i(1, 2, 3, 4)))
+                    .forEach {
+                        it shouldBe Vec4i(1, 2, 3, 4)
+                    }
         }
 
         "vec4bool constructor" {

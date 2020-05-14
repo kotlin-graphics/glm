@@ -28,7 +28,7 @@ import glm_.vec1.*
 /**
  * Created by GBarbieri on 11.11.2016.
  */
-interface func_vector1_common {
+interface func_vector1_common { // TODO remove and restructure/resync
 
 
     fun abs(a: Vec1) = abs(a, Vec1())
@@ -304,6 +304,7 @@ interface func_vector1_common {
 //        return res
 //    }
 
+    // TODO fmin fmax and tests https://github.com/g-truc/glm/commit/61540a5204e12c937eef5a26e0f0530c60325d51
 
     fun clamp(a: Vec1, min: Float, max: Float) = clamp(a, min, max, Vec1())
     fun clamp(a: Vec1, min: Float, max: Float, res: Vec1): Vec1 {

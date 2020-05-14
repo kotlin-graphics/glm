@@ -13,9 +13,11 @@ import glm_.mat4x2.Mat4x2t
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.vec2.Vec2
+import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
+import kool.BYTES
 import kool.Ptr
 import kool.pos
 import kool.set
@@ -25,6 +27,7 @@ import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.util.*
+import kotlin.math.abs
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -351,7 +354,7 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
         div(this, this, b)
     }
 
-    infix fun isEqual(b: Mat2) = this[0].isEqual(b[0]) && this[1].isEqual(b[1])
+//    infix fun isEqual(b: Mat2) = this[0].isEqual(b[0]) && this[1].isEqual(b[1])
 
     // TODO others
     override var a0: Float
@@ -389,13 +392,22 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
                         memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 3))
             }
         }
+
+        val identity: Mat2
+            get() = Mat2(1f)
     }
 
     override fun size() = size
 
     override fun elementCount() = length
 
-    override fun equals(other: Any?) = other is Mat2 && Arrays.equals(array, other.array)
-
+    override fun equals(other: Any?) = other is Mat2 && array.contentEquals(other.array)
     override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
+
+    fun equal(b: Mat2, epsilon: Float, res: Vec2bool = Vec2bool()): Vec2bool = glm.equal(this, b, epsilon, res)
+    fun equal(b: Mat2, epsilon: Vec2, res: Vec2bool = Vec2bool()): Vec2bool = glm.equal(this, b, epsilon, res)
+    fun notEqual(b: Mat2, epsilon: Float, res: Vec2bool = Vec2bool()): Vec2bool = glm.notEqual(this, b, epsilon, res)
+    fun notEqual(b: Mat2, epsilon: Vec2, res: Vec2bool = Vec2bool()): Vec2bool = glm.notEqual(this, b, epsilon, res)
+    fun allEqual(b: Mat2, epsilon: Float = glm.εf): Boolean = glm.allEqual(this, b, epsilon)
+    fun anyNotEqual(b: Mat2, epsilon: Float = glm.εf): Boolean = glm.anyNotEqual(this, b, epsilon)
 }

@@ -18,6 +18,8 @@ data class Vec2bool(var x: Boolean = false, var y: Boolean = false) {
 
     constructor(ba: Array<Boolean>) : this(ba[0], ba[1])
 
+    constructor(init: (Int) -> Boolean): this(init(0), init(1))
+
     // -- Component accesses --
 
     operator fun get(i: Int): Boolean = when (i) {
@@ -54,6 +56,12 @@ data class Vec2bool(var x: Boolean = false, var y: Boolean = false) {
     fun put(ba: Array<Boolean>): Vec2bool {
         x = ba[0]
         y = ba[1]
+        return this
+    }
+
+    operator fun invoke(init: (Int) -> Boolean): Vec2bool {
+        x = init(0)
+        y = init(1)
         return this
     }
 
@@ -94,5 +102,5 @@ data class Vec2bool(var x: Boolean = false, var y: Boolean = false) {
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "[$x, $y]"
+    override fun toString(): String = "($x, $y)"
 }

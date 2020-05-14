@@ -1,17 +1,18 @@
 package glm_.vec1
 
 import glm_.*
-import glm_.vec1.operators.vec1_operators
+import glm_.vec1.operators.opVec1
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.FloatBuffer
+import kool.BYTES
 import kool.pos
 import kool.set
 import java.nio.*
+import kotlin.math.abs
 
 /**
  * Created by GBarbieri on 28.04.2017.
@@ -19,9 +20,13 @@ import java.nio.*
 
 class Vec1(x: Float) : Vec1t<Float>(x), ToFloatBuffer {
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0f)
+    constructor(v: Vec1) : this(v.x)
+
+    // -- Explicit basic constructors --
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     constructor(v: Vec1t<out Number>) : this(v.x)
     constructor(v: Vec2t<out Number>) : this(v.x)
@@ -79,7 +84,7 @@ class Vec1(x: Float) : Vec1t<Float>(x), ToFloatBuffer {
         this.x = x
     }
 
-    fun invoke(x: Float): Vec1 {
+    operator fun invoke(x: Float): Vec1 {
         this.x = x
         return this
     }
@@ -88,7 +93,7 @@ class Vec1(x: Float) : Vec1t<Float>(x), ToFloatBuffer {
         this.x = x.f
     }
 
-    override fun invoke(x: Number): Vec1 {
+    override operator fun invoke(x: Number): Vec1 {
         this.x = x.f
         return this
     }
@@ -288,7 +293,7 @@ class Vec1(x: Float) : Vec1t<Float>(x), ToFloatBuffer {
     }
 
 
-    companion object : vec1_operators {
+    companion object : opVec1 {
         const val length = Vec1t.length
         @JvmField
         val size = length * Float.BYTES
@@ -299,5 +304,8 @@ class Vec1(x: Float) : Vec1t<Float>(x), ToFloatBuffer {
     override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec1 && this[0] == other[0]
+    fun equal(b: Vec1, epsilon: Float = glm.εf): Boolean = abs(x - b.x) <= epsilon
+    fun notEqual(b: Vec1, epsilon: Float = glm.εf): Boolean = !equal(b, epsilon)
+
     override fun hashCode() = x.hashCode()
 }

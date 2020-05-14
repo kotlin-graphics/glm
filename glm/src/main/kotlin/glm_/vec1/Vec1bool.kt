@@ -16,6 +16,8 @@ data class Vec1bool(var x: Boolean = false) {
 
     constructor(ba: Array<Boolean>) : this(ba[0])
 
+    constructor(init: (Int) -> Boolean): this(init(0))
+
     // -- Component accesses --
 
     operator fun get(i: Int): Boolean = when (i) {
@@ -44,6 +46,10 @@ data class Vec1bool(var x: Boolean = false) {
         return this
     }
 
+    operator fun invoke(init: (Int) -> Boolean): Vec1bool {
+        x = init(0)
+        return this
+    }
 
 //    fun toBooleanArray(): BooleanArray = to(BooleanArray(length), 0)
 //    infix fun to(floats: BooleanArray): BooleanArray = to(floats, 0)
@@ -56,7 +62,7 @@ data class Vec1bool(var x: Boolean = false) {
 
     operator fun not(): Vec1bool = Vec1bool(!x)
 
-    fun notAss(): Vec1bool {
+    fun notAssign(): Vec1bool {
         x = !x
         return this
     }
@@ -82,4 +88,6 @@ data class Vec1bool(var x: Boolean = false) {
 //    fun any() = glm.any(this)
 //
 //    fun all() = glm.all(this)
+
+    override fun toString(): String = "($x)"
 }

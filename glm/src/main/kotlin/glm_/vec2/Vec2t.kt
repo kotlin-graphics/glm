@@ -199,25 +199,25 @@ abstract class Vec2t<T : Number>: ToBuffer {
     fun to(bytes: ByteArray, bigEndian: Boolean): ByteArray = to(bytes, 0, bigEndian)
     abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
 
-    infix fun lessThan(b: Vec2t<out Number>) = glm.lessThan(this, b, Vec2bool())
-    fun lessThan(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.lessThan(this, b, res)
-
-    infix fun lessThanEqual(b: Vec2t<out Number>) = glm.lessThan(this, b, Vec2bool())
-    fun lessThanEqual(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.lessThan(this, b, res)
-
-    infix fun greaterThan(b: Vec2t<out Number>) = glm.greaterThan(this, b, Vec2bool())
-    fun greaterThan(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.greaterThan(this, b, res)
-
-    infix fun greaterThanEqual(b: Vec2t<out Number>) = glm.greaterThanEqual(this, b, Vec2bool())
-    fun greaterThanEqual(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.greaterThanEqual(this, b, res)
-
-    infix fun equal(b: Vec2t<out Number>) = glm.equal(this, b, Vec2bool())
-    fun equal(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.equal(this, b, res)
-
-    infix fun notEqual(b: Vec2t<out Number>) = glm.notEqual(this, b, Vec2bool())
-    fun notEqual(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.notEqual(this, b, res)
-
-    infix fun isEqual(b: Vec2t<out Number>) = glm.isEqual(this, b)
+//    infix fun lessThan(b: Vec2t<out Number>) = glm.lessThan(this, b, Vec2bool())
+//    fun lessThan(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.lessThan(this, b, res)
+//
+//    infix fun lessThanEqual(b: Vec2t<out Number>) = glm.lessThan(this, b, Vec2bool())
+//    fun lessThanEqual(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.lessThan(this, b, res)
+//
+//    infix fun greaterThan(b: Vec2t<out Number>) = glm.greaterThan(this, b, Vec2bool())
+//    fun greaterThan(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.greaterThan(this, b, res)
+//
+//    infix fun greaterThanEqual(b: Vec2t<out Number>) = glm.greaterThanEqual(this, b, Vec2bool())
+//    fun greaterThanEqual(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.greaterThanEqual(this, b, res)
+//
+//    infix fun equal(b: Vec2t<out Number>) = glm.equal(this, b, Vec2bool())
+//    fun equal(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.equal(this, b, res)
+//
+//    infix fun notEqual(b: Vec2t<out Number>) = glm.notEqual(this, b, Vec2bool())
+//    fun notEqual(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.notEqual(this, b, res)
+//
+//    infix fun isEqual(b: Vec2t<out Number>) = glm.isEqual(this, b)
 
     // component alias
 
@@ -244,42 +244,9 @@ abstract class Vec2t<T : Number>: ToBuffer {
             y = value
         }
 
-    // swizzling
-    protected abstract fun createInstance(x: T, y: T): Vec2t<out Number>
-
-    val xx @JvmName("xx") get() = createInstance(x, x)
-    var xy
-        @JvmName("xy") get() = createInstance(x, y)
-        @JvmName("xy") set(value) = put(value.x, value.y)
-
-    var yx
-        @JvmName("yx") get() = createInstance(y, x)
-        @JvmName("yx") set(value) = put(value.y, value.x)
-    val yy @JvmName("yy") get() = createInstance(y, y)
-
-
-    val rr @JvmName("rr") get() = createInstance(r, r)
-    var rg
-        @JvmName("rg") get() = createInstance(r, g)
-        @JvmName("rg") set(value) = put(value.r, value.g)
-    var gr
-        @JvmName("gr") get() = createInstance(g, r)
-        @JvmName("gr") set(value) = put(value.g, value.r)
-    val gg @JvmName("gg") get() = createInstance(g, g)
-
-
-    val ss @JvmName("ss") get() = createInstance(s, s)
-    var st
-        @JvmName("st") get() = createInstance(s, t)
-        @JvmName("st") set(value) = put(value.s, value.t)
-    var ts
-        @JvmName("ts") get() = createInstance(t, s)
-        @JvmName("ts") set(value) = put(value.t, value.s)
-    val tt @JvmName("tt") get() = createInstance(t, t)
-
     companion object {
         const val length = 2
     }
 
-    override fun toString(): String = "Vect2 [$x, $y]"
+    override fun toString(): String = "($x, $y)"
 }

@@ -1,12 +1,16 @@
 package glm_.vec3
 
 import glm_.*
+import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1t
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3_operators
+import glm_.vec4.Vec4
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.BYTES
 import kool.Ptr
 import kool.pos
 import kool.set
@@ -16,14 +20,13 @@ import java.awt.Color
 import java.io.InputStream
 import java.io.PrintStream
 import java.nio.*
+import kotlin.math.abs
 
 /**
  * Created bY GBarbieri on 05.10.2016.
  */
 
 class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer {
-
-    constructor(x: Float, y: Float, z: Float) : this(0, floatArrayOf(x, y, z))
 
     override var x: Float
         get() = array[ofs]
@@ -35,16 +38,48 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
-    constructor() : this(0)
+    constructor() : this(0, 0, 0)
+    constructor(v: Vec3) : this(v.x, v.y, v.z)
+    constructor(v: Vec2) : this(v.x, v.y, 0f)
 
-    constructor(v: Vec2t<out Number>) : this(v, 0)
-    constructor(v: Vec2t<out Number>, z: Number) : this(v.x, v.y, z)
-    constructor(x: Number, v: Vec2t<out Number>) : this(x, v.x, v.y)
+    // -- Explicit basic constructors --
+
+    @JvmOverloads
+    constructor(x: Float, y: Float = x, z: Float = x) : this(0, floatArrayOf(x, y, z))
+
+    // -- Conversion scalar constructors --
+
+    constructor(v: Vec1t<out Number>) : this(v.x, v.x, v.x)
+
+    // Explicit converions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    @JvmOverloads
+    constructor(x: Number, y: Number = x, z: Number = x) : this(x.f, y.f, z.f)
+
+    constructor(x: Vec1t<out Number>, y: Number, z: Number) : this(x.x, y, z)
+    constructor(x: Number, y: Vec1t<out Number>, z: Number) : this(x, y.x, z)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number) : this(x.x, y.x, z)
+    constructor(x: Number, y: Number, z: Vec1t<out Number>) : this(x, y, z.x)
+    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>) : this(x.x, y, z.x)
+    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x, y.x, z.x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x.x, y.x, z.x)
+
+    // -- Conversion vector constructors --
+
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    @JvmOverloads
+    constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy.x, xy.y, z)
+
+    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy.x, xy.y, z.x)
+    constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz.x, yz.y)
+    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x.x, yz.x, yz.y)
     constructor(v: Vec3t<out Number>) : this(v.x, v.y, v.z)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z)
 
+    constructor(v: Vec1bool) : this(v.x.f, 0, 0)
     constructor(v: Vec2bool) : this(v.x.f, v.y.f, 0)
     constructor(v: Vec3bool) : this(v.x.f, v.y.f, v.z.f)
     constructor(v: Vec4bool) : this(v.x.f, v.y.f, v.z.f)
@@ -83,9 +118,6 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
 
     constructor(block: (Int) -> Float) : this(block(0), block(1), block(2))
 
-    constructor(s: Number) : this(s, s, s)
-    constructor(x: Number, y: Number, z: Number) : this(x.f, y.f, z.f)
-
 
     constructor(inputStream: InputStream, bigEndian: Boolean = true) :
             this(inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian))
@@ -111,7 +143,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
         this.z = z
     }
 
-    fun invoke(x: Float, y: Float, z: Float): Vec3 {
+    operator fun invoke(x: Float, y: Float, z: Float): Vec3 {
         this.x = x
         this.y = y
         this.z = z
@@ -124,7 +156,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
         this.z = z.f
     }
 
-    override fun invoke(x: Number, y: Number, z: Number): Vec3 {
+    override operator fun invoke(x: Number, y: Number, z: Number): Vec3 {
         this.x = x.f
         this.y = y.f
         this.z = z.f
@@ -382,6 +414,56 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
     }
 
 
+    infix fun allLessThan(f: Float): Boolean = x < f && y < f && z < f
+    infix fun anyLessThan(f: Float): Boolean = x < f || y < f || z < f
+    infix fun lessThan(f: Float): Vec3bool = Vec3bool { get(it) < f }
+
+    infix fun allLessThanEqual(f: Float): Boolean = x <= f && y <= f && z <= f
+    infix fun anyLessThanEqual(f: Float): Boolean = x <= f || y <= f || z <= f
+    infix fun lessThanEqual(f: Float): Vec3bool = Vec3bool { get(it) <= f }
+
+    fun allEqual(f: Float, epsilon: Float = glm.εf): Boolean = abs(x - f) < epsilon && abs(y - f) < epsilon && abs(z - f) < epsilon
+    fun anyEqual(f: Float, epsilon: Float = glm.εf): Boolean = abs(x - f) < epsilon || abs(y - f) < epsilon || abs(z - f) < epsilon
+    fun equal(f: Float, epsilon: Float = glm.εf): Vec3bool = Vec3bool { abs(get(it) - f) < epsilon }
+
+    fun allNotEqual(f: Float, epsilon: Float = glm.εf): Boolean = abs(x - f) >= epsilon && abs(y - f) >= epsilon && abs(z - f) >= epsilon
+    fun anyNotEqual(f: Float, epsilon: Float = glm.εf): Boolean = abs(x - f) >= epsilon || abs(y - f) >= epsilon || abs(z - f) >= epsilon
+    fun notEqual(f: Float, epsilon: Float = glm.εf): Vec3bool = Vec3bool { abs(get(it) - f) >= epsilon }
+
+    infix fun allGreaterThan(f: Float): Boolean = x > f && y > f && z > f
+    infix fun anyGreaterThan(f: Float): Boolean = x > f || y > f || z > f
+    infix fun greaterThan(f: Float): Vec3bool = Vec3bool { get(it) > f }
+
+    infix fun allGreaterThanEqual(f: Float): Boolean = x >= f && y >= f && z >= f
+    infix fun anyGreaterThanEqual(f: Float): Boolean = x >= f || y >= f || z >= f
+    infix fun greaterThanEqual(f: Float): Vec3bool = Vec3bool { get(it) >= f }
+
+
+    infix fun allLessThan(v: Vec3): Boolean = x < v.x && y < v.y && z < v.z
+    infix fun anyLessThan(v: Vec3): Boolean = x < v.x || y < v.y || z < v.z
+    infix fun lessThan(v: Vec3): Vec3bool = Vec3bool { get(it) < v[it] }
+
+    infix fun allLessThanEqual(v: Vec3): Boolean = x <= v.x && y <= v.y && z <= v.z
+    infix fun anyLessThanEqual(v: Vec3): Boolean = x <= v.x || y <= v.y || z <= v.z
+    infix fun lessThanEqual(v: Vec3): Vec3bool = Vec3bool { get(it) <= v[it] }
+
+    fun allEqual(v: Vec3, epsilon: Float = glm.εf): Boolean = abs(x - v.x) < epsilon && abs(y - v.y) < epsilon && abs(z - v.z) < epsilon
+    fun anyEqual(v: Vec3, epsilon: Float = glm.εf): Boolean = abs(x - v.x) < epsilon || abs(y - v.y) < epsilon || abs(z - v.z) < epsilon
+    fun equal(v: Vec3, epsilon: Float = glm.εf): Vec3bool = Vec3bool { abs(get(it) - v[it]) < epsilon }
+
+    fun allNotEqual(v: Vec3, epsilon: Float = glm.εf): Boolean = abs(x - v.x) >= epsilon && abs(y - v.y) >= epsilon && abs(z - v.z) >= epsilon
+    fun anyNotEqual(v: Vec3, epsilon: Float = glm.εf): Boolean = abs(x - v.x) >= epsilon || abs(y - v.y) >= epsilon || abs(z - v.z) >= epsilon
+    fun notEqual(v: Vec3, epsilon: Float = glm.εf): Vec3bool = Vec3bool { abs(get(it) - v[it]) >= epsilon }
+
+    infix fun allGreaterThan(v: Vec3): Boolean = x > v.x && y > v.y && z > v.z
+    infix fun anyGreaterThan(v: Vec3): Boolean = x > v.x || y > v.y || z > v.z
+    infix fun greaterThan(v: Vec3): Vec3bool = Vec3bool { get(it) > v[it] }
+
+    infix fun allGreaterThanEqual(v: Vec3): Boolean = x >= v.x && y >= v.y && z >= v.z
+    infix fun anyGreaterThanEqual(v: Vec3): Boolean = x >= v.x || y >= v.y || z >= v.z
+    infix fun greaterThanEqual(v: Vec3): Vec3bool = Vec3bool { get(it) >= v[it] }
+
+
     // -- functions --
 
     infix fun dot(b: Vec3) = glm.dot(this, b)   // TODO others
@@ -407,29 +489,6 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
     }
 
     fun negateAssign() = negate(this)
-
-
-    infix fun allLessThan(f: Float) = x < f && y < f && z < f
-    infix fun anyLessThan(f: Float) = x < f || y < f || z < f
-
-    infix fun allLessThanEqual(f: Float) = x <= f && y <= f && z <= f
-    infix fun anyLessThanEqual(f: Float) = x <= f || y <= f || z <= f
-
-    infix fun allEqual(f: Float) = x == f && y == f && z == f
-    infix fun anyEqual(f: Float) = x == f || y == f || z == f
-
-    infix fun allNotEqual(f: Float) = x != f && y != f && z != f
-    infix fun anyNotEqual(f: Float) = x != f || y != f || z != f
-
-    infix fun allGreaterThan(f: Float) = x > f && y > f && z > f
-    infix fun anyGreaterThan(f: Float) = x > f || y > f || z > f
-
-    infix fun allGreaterThanEqual(f: Float) = x >= f && y >= f && z >= f
-    infix fun anyGreaterThanEqual(f: Float) = x >= f || y >= f || z >= f
-
-
-    override fun createInstance(x: Float, y: Float) = Vec2(x, y)
-    override fun createInstance(x: Float, y: Float, z: Float) = Vec3(x, y, z)
 
 
     companion object : vec3_operators {
@@ -474,5 +533,5 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "[$x, $y, $z]"
+    override fun toString(): String = "($x, $y, $z)"
 }

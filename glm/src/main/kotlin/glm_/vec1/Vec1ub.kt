@@ -3,6 +3,7 @@ package glm_.vec1
 import glm_.BYTES
 import glm_.toByte
 import glm_.ub
+import glm_.vec1.operators.opVec1ub
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -11,7 +12,9 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.pos
 import unsigned.Ubyte
+import unsigned.Uint
 import java.nio.*
+import kotlin.math.abs
 
 /**
  * Created by elect on 07/10/16.
@@ -19,14 +22,20 @@ import java.nio.*
 
 class Vec1ub(x: Ubyte) : Vec1t<Ubyte>(x) {
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0)
+    constructor(x: Number) : this(x.ub)
 
+    // -- Explicit basic constructors --
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    constructor(v: Vec1t<out Number>) : this(v.x)
     constructor(v: Vec2t<out Number>) : this(v.x)
     constructor(v: Vec3t<out Number>) : this(v.x)
     constructor(v: Vec4t<out Number>) : this(v.x)
 
+    constructor(v: Vec1bool) : this(v.x.ub)
     constructor(v: Vec2bool) : this(v.x.ub)
     constructor(v: Vec3bool) : this(v.x.ub)
     constructor(v: Vec4bool) : this(v.x.ub)
@@ -56,8 +65,6 @@ class Vec1ub(x: Ubyte) : Vec1t<Ubyte>(x) {
 
     constructor(block: (Int) -> Ubyte) : this(block(0))
 
-    constructor(x: Number) : this(x.ub)
-
 
     fun put(x: Ubyte) {
         this.x = x
@@ -67,12 +74,12 @@ class Vec1ub(x: Ubyte) : Vec1t<Ubyte>(x) {
         this.x.v = x
     }
 
-    fun invoke(x: Ubyte): Vec1ub {
+    operator fun invoke(x: Ubyte): Vec1ub {
         this.x = x
         return this
     }
 
-    fun invoke(x: Byte): Vec1ub {
+    operator fun invoke(x: Byte): Vec1ub {
         this.x.v = x
         return this
     }
@@ -81,7 +88,7 @@ class Vec1ub(x: Ubyte) : Vec1t<Ubyte>(x) {
         this.x = x.ub
     }
 
-    override fun invoke(x: Number): Vec1ub {
+    override operator fun invoke(x: Number): Vec1ub {
         this.x = x.ub
         return this
     }
@@ -537,7 +544,7 @@ class Vec1ub(x: Ubyte) : Vec1t<Ubyte>(x) {
 //    fun shr_(bX: Number, bY: Number) = shr(this, this, bX.i, bY.i)
 
 
-    companion object /*: opVec2ub*/ {
+    companion object : opVec1ub {
         const val length = Vec1t.length
         @JvmField
         val size = length * Ubyte.BYTES
@@ -546,5 +553,8 @@ class Vec1ub(x: Ubyte) : Vec1t<Ubyte>(x) {
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec1ub && this[0] == other[0]
+    fun equal(b: Vec1ub, epsilon: Int = 0): Boolean = abs(x.v - b.x.v) <= epsilon
+    fun notEqual(b: Vec1ub, epsilon: Int = 0): Boolean = !equal(b, epsilon)
+
     override fun hashCode() = x.v.hashCode()
 }

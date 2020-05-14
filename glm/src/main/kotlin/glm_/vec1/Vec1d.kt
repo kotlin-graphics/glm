@@ -1,17 +1,19 @@
 package glm_.vec1
 
 import glm_.*
-import glm_.vec1.operators.vec1d_operators
+import glm_.vec1.operators.opVec1d
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.BYTES
 import kool.DoubleBuffer
 import kool.pos
 import kool.set
 import java.nio.*
+import kotlin.math.abs
 
 /**
  * Created by GBarbieri on 28.04.2017.
@@ -19,9 +21,13 @@ import java.nio.*
 
 class Vec1d(x: Double) : Vec1t<Double>(x), ToDoubleBuffer {
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0f)
+    constructor(s: Number) : this(s.d)
+
+    // -- Explicit basic constructors --
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     constructor(v: Vec1t<out Number>) : this(v.x)
     constructor(v: Vec2t<out Number>) : this(v.x)
@@ -64,8 +70,6 @@ class Vec1d(x: Double) : Vec1t<Double>(x), ToDoubleBuffer {
 
     constructor(block: (Int) -> Double) : this(block(0))
 
-    constructor(s: Number) : this(s.d)
-
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneDouble: Boolean = false, bigEndian: Boolean = true) {
         x = if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index, bigEndian)
@@ -89,7 +93,7 @@ class Vec1d(x: Double) : Vec1t<Double>(x), ToDoubleBuffer {
         this.x = x.d
     }
 
-    override fun invoke(x: Number): Vec1d {
+    override operator fun invoke(x: Number): Vec1d {
         this.x = x.d
         return this
     }
@@ -286,7 +290,7 @@ class Vec1d(x: Double) : Vec1t<Double>(x), ToDoubleBuffer {
     }
 
 
-    companion object : vec1d_operators {
+    companion object : opVec1d {
         const val length = Vec1t.length
         @JvmField
         val size = length * Double.BYTES
@@ -297,5 +301,8 @@ class Vec1d(x: Double) : Vec1t<Double>(x), ToDoubleBuffer {
     override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec1d && this[0] == other[0]
+    fun equal(b: Vec1d, epsilon: Double = glm.ε): Boolean = abs(x - b.x) <= epsilon
+    fun notEqual(b: Vec1d, epsilon: Double = glm.ε): Boolean = !equal(b, epsilon)
+
     override fun hashCode() = x.hashCode()
 }

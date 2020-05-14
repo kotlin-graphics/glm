@@ -1,30 +1,31 @@
 package glm_.vec2
 
 import glm_.*
+import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1t
 import glm_.vec2.operators.opVec2
+import glm_.vec3.Vec3
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.BYTES
 import kool.Ptr
-import kool.FloatBuffer
 import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetFloat
 import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.awt.Color
 import java.io.InputStream
 import java.io.PrintStream
 import java.nio.*
+import kotlin.math.abs
 
 /**
  * Created bY GBarbieri on 05.10.2016.
  */
 
 class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer {
-
-    constructor(x: Float, y: Float) : this(0, floatArrayOf(x, y))
 
     override var x: Float
         get() = array[ofs]
@@ -33,12 +34,41 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
-    constructor() : this(0)
+    // -- Implicit basic constructors --
+
+    constructor() : this(0, 0)
+    constructor(v: Vec2) : this(v.x, v.y)
+
+    // -- Explicit basic constructors --
+
+    @JvmOverloads
+    constructor(x: Float, y: Float = x) : this(0, floatArrayOf(x, y))
+
+    // -- Conversion constructors --
+
+    @JvmOverloads
+    constructor(x: Number, y: Number = x) : this(x.f, y.f)
+
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+    @JvmOverloads
+    constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y)
     constructor(v: Vec3t<out Number>) : this(v.x, v.y)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y)
+
+    @JvmOverloads
+    constructor(x: Boolean, y: Boolean = x) : this(x.f, y.f)
+
+    constructor(x: Boolean, v: Vec1bool) : this(x.f, v.x.f)
+    @JvmOverloads
+    constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.f, y.f)
+
+    constructor(x: Vec1bool, y: Vec1bool) : this(x.x.f, y.x.f)
 
     constructor(v: Vec2bool) : this(v.x.f, v.y.f)
     constructor(v: Vec3bool) : this(v.x.f, v.y.f)
@@ -75,9 +105,6 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
 
     constructor(block: (Int) -> Float) : this(block(0), block(1))
 
-    constructor(s: Number) : this(s, s)
-    constructor(x: Number, y: Number) : this(x.f, y.f)
-
     constructor(inputStream: InputStream, bigEndian: Boolean = true) : this(inputStream.float(bigEndian), inputStream.float(bigEndian))
 
     constructor(color: Color) : this(color.red / 255f, color.green / 255f)
@@ -108,7 +135,7 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
         this.y = y
     }
 
-    fun invoke(x: Float, y: Float): Vec2 {
+    operator fun invoke(x: Float, y: Float): Vec2 {
         this.x = x
         this.y = y
         return this
@@ -119,7 +146,7 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
         this.y = y.f
     }
 
-    override fun invoke(x: Number, y: Number): Vec2 {
+    override operator fun invoke(x: Number, y: Number): Vec2 {
         this.x = x.f
         this.y = y.f
         return this
@@ -461,42 +488,73 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
     }
 
 
-    infix fun allLessThan(f: Float) = x < f && y < f
-    infix fun anyLessThan(f: Float) = x < f || y < f
+    infix fun allLessThan(f: Float): Boolean = x < f && y < f
+    infix fun anyLessThan(f: Float): Boolean = x < f || y < f
+    infix fun lessThan(f: Float): Vec2bool = Vec2bool { get(it) < f }
 
-    infix fun allLessThanEqual(f: Float) = x <= f && y <= f
-    infix fun anyLessThanEqual(f: Float) = x <= f || y <= f
+    infix fun allLessThanEqual(f: Float): Boolean = x <= f && y <= f
+    infix fun anyLessThanEqual(f: Float): Boolean = x <= f || y <= f
+    infix fun lessThanEqual(f: Float): Vec2bool = Vec2bool { get(it) <= f }
 
-    infix fun allEqual(f: Float) = x == f && y == f
-    infix fun anyEqual(f: Float) = x == f || y == f
+    fun allEqual(f: Float, epsilon: Float = glm.εf): Boolean = abs(x - f) < epsilon && abs(y - f) < epsilon
+    fun anyEqual(f: Float, epsilon: Float = glm.εf): Boolean = abs(x - f) < epsilon || abs(y - f) < epsilon
+    fun equal(f: Float, epsilon: Float = glm.εf): Vec2bool = Vec2bool { abs(get(it) - f) < epsilon }
 
-    infix fun allNotEqual(f: Float) = x != f && y != f
-    infix fun anyNotEqual(f: Float) = x != f || y != f
+    fun allNotEqual(f: Float, epsilon: Float = glm.εf): Boolean = abs(x - f) >= epsilon && abs(y - f) >= epsilon
+    fun anyNotEqual(f: Float, epsilon: Float = glm.εf): Boolean = abs(x - f) >= epsilon || abs(y - f) >= epsilon
+    fun notEqual(f: Float, epsilon: Float = glm.εf): Vec2bool = Vec2bool { abs(get(it) - f) >= epsilon }
 
-    infix fun allGreaterThan(f: Float) = x > f && y > f
-    infix fun anyGreaterThan(f: Float) = x > f || y > f
+    infix fun allGreaterThan(f: Float): Boolean = x > f && y > f
+    infix fun anyGreaterThan(f: Float): Boolean = x > f || y > f
+    infix fun greaterThan(f: Float): Vec2bool = Vec2bool { get(it) > f }
 
-    infix fun allGreaterThanEqual(f: Float) = x >= f && y >= f
-    infix fun anyGreaterThanEqual(f: Float) = x >= f || y >= f
+    infix fun allGreaterThanEqual(f: Float): Boolean = x >= f && y >= f
+    infix fun anyGreaterThanEqual(f: Float): Boolean = x >= f || y >= f
+    infix fun greaterThanEqual(f: Float): Vec2bool = Vec2bool { get(it) >= f }
 
 
-    infix fun <T : Number> allLessThan(v: Vec2t<T>) = x < v.x.f && y < v.y.f
-    infix fun <T : Number> anyLessThan(v: Vec2t<T>) = x < v.x.f || y < v.y.f
+    infix fun allLessThan(v: Vec2): Boolean = x < v.x && y < v.y
+    infix fun anyLessThan(v: Vec2): Boolean = x < v.x || y < v.y
+    infix fun lessThan(v: Vec2): Vec2bool = Vec2bool { get(it) < v[it] }
 
-    infix fun <T : Number> allLessThanEqual(v: Vec2t<T>) = x <= v.x.f && y <= v.y.f
-    infix fun <T : Number> anyLessThanEqual(v: Vec2t<T>) = x <= v.x.f || y <= v.y.f
+    infix fun allLessThanEqual(v: Vec2): Boolean = x <= v.x && y <= v.y
+    infix fun anyLessThanEqual(v: Vec2): Boolean = x <= v.x || y <= v.y
+    infix fun lessThanEqual(v: Vec2): Vec2bool = Vec2bool { get(it) <= v[it] }
 
-    infix fun <T : Number> allEqual(v: Vec2t<T>) = x == v.x.f && y == v.y.f
-    infix fun <T : Number> anyEqual(v: Vec2t<T>) = x == v.x.f || y == v.y.f
+    fun allEqual(v: Vec2, epsilon: Float = glm.εf): Boolean = abs(x - v.x) < epsilon && abs(y - v.y) < epsilon
+    fun anyEqual(v: Vec2, epsilon: Float = glm.εf): Boolean = abs(x - v.x) < epsilon || abs(y - v.y) < epsilon
+    fun equal(v: Vec2, epsilon: Float = glm.εf): Vec2bool = Vec2bool { abs(get(it) - v[it]) < epsilon }
 
-    infix fun <T : Number> allNotEqual(v: Vec2t<T>) = x != v.x.f && y != v.y.f
-    infix fun <T : Number> anyNotEqual(v: Vec2t<T>) = x != v.x.f || y != v.y.f
+    fun allNotEqual(v: Vec2, epsilon: Float = glm.εf): Boolean = abs(x - v.x) >= epsilon && abs(y - v.y) >= epsilon
+    fun anyNotEqual(v: Vec2, epsilon: Float = glm.εf): Boolean = abs(x - v.x) >= epsilon || abs(y - v.y) >= epsilon
+    fun notEqual(v: Vec2, epsilon: Float = glm.εf): Vec2bool = Vec2bool { abs(get(it) - v[it]) >= epsilon }
 
-    infix fun <T : Number> allGreaterThan(v: Vec2t<T>) = x > v.x.f && y > v.y.f
-    infix fun <T : Number> anyGreaterThan(v: Vec2t<T>) = x > v.x.f || y > v.y.f
+    infix fun allGreaterThan(v: Vec2): Boolean = x > v.x && y > v.y
+    infix fun anyGreaterThan(v: Vec2): Boolean = x > v.x || y > v.y
+    infix fun greaterThan(v: Vec2): Vec2bool = Vec2bool { get(it) > v[it] }
 
-    infix fun <T : Number> allGreaterThanEqual(v: Vec2t<T>) = x >= v.x.f && y >= v.y.f
-    infix fun <T : Number> anyGreaterThanEqual(v: Vec2t<T>) = x >= v.x.f || y >= v.y.f
+    infix fun allGreaterThanEqual(v: Vec2): Boolean = x >= v.x && y >= v.y
+    infix fun anyGreaterThanEqual(v: Vec2): Boolean = x >= v.x || y >= v.y
+    infix fun greaterThanEqual(v: Vec2): Vec2bool = Vec2bool { get(it) >= v[it] }
+
+
+    infix fun <T : Number> allLessThan(v: Vec2t<T>): Boolean = x < v.x.f && y < v.y.f
+    infix fun <T : Number> anyLessThan(v: Vec2t<T>): Boolean = x < v.x.f || y < v.y.f
+
+    infix fun <T : Number> allLessThanEqual(v: Vec2t<T>): Boolean = x <= v.x.f && y <= v.y.f
+    infix fun <T : Number> anyLessThanEqual(v: Vec2t<T>): Boolean = x <= v.x.f || y <= v.y.f
+
+    infix fun <T : Number> allEqual(v: Vec2t<T>): Boolean = x == v.x.f && y == v.y.f
+    infix fun <T : Number> anyEqual(v: Vec2t<T>): Boolean = x == v.x.f || y == v.y.f
+
+    infix fun <T : Number> allNotEqual(v: Vec2t<T>): Boolean = x != v.x.f && y != v.y.f
+    infix fun <T : Number> anyNotEqual(v: Vec2t<T>): Boolean = x != v.x.f || y != v.y.f
+
+    infix fun <T : Number> allGreaterThan(v: Vec2t<T>): Boolean = x > v.x.f && y > v.y.f
+    infix fun <T : Number> anyGreaterThan(v: Vec2t<T>): Boolean = x > v.x.f || y > v.y.f
+
+    infix fun <T : Number> allGreaterThanEqual(v: Vec2t<T>): Boolean = x >= v.x.f && y >= v.y.f
+    infix fun <T : Number> anyGreaterThanEqual(v: Vec2t<T>): Boolean = x >= v.x.f || y >= v.y.f
 
 
     infix fun dot(b: Vec2) = glm.dot(this, b)
@@ -523,9 +581,6 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
     }
 
 
-    override fun createInstance(x: Float, y: Float) = Vec2(x, y)
-
-
     companion object : opVec2 {
         const val length = Vec2t.length
         @JvmField
@@ -540,6 +595,7 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
     override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec2 && this[0] == other[0] && this[1] == other[1]
+
     override fun hashCode() = 31 * x.hashCode() + y.hashCode()
 
     @JvmOverloads
@@ -547,6 +603,4 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
-
-    override fun toString(): String = "[$x, $y]"
 }

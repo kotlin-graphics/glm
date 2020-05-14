@@ -1,6 +1,8 @@
 package glm_
 
 import glm_.vec2.Vec2
+import glm_.vec2.Vec2ub
+import glm_.vec2.Vec2us
 import io.kotlintest.specs.StringSpec
 
 
@@ -15,6 +17,10 @@ class testMix : StringSpec() {
             val c = Vec2(2)
             a plusAssign b * c
             println(a)
+        }
+
+        run {
+            val a = Vec2us(3.s)
         }
     }
 }

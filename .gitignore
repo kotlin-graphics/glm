@@ -2,3 +2,10 @@
 /.nb-gradle/
 build/
 .gradle
+# Project exclude paths
+/glm/out/
+/glm/out/production/classes/
+/glm/out/test/classes/
+/glm-test/out/
+/glm-test/out/production/classes/
+/out/

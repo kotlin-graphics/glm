@@ -25,8 +25,8 @@ class testCoreMat2 : StringSpec() {
             val b = v * m
             val p = x * m
             val q = m * x
-            val R = m != q
-            val S = m == l
+            val R = m.anyNotEqual(q, Float.MIN_VALUE)
+            val S = m.allEqual(l, Float.MIN_VALUE)
 
             (S && !R) shouldBe true
         }
@@ -38,24 +38,36 @@ class testCoreMat2 : StringSpec() {
                 val inverse = matrix.inverse()
                 val identity = matrix * inverse
 
-                glm.all(glm.epsilonEqual(identity[0], Vec2(1.0f, 0.0f), Vec2(0.01f))) shouldBe true
-                glm.all(glm.epsilonEqual(identity[1], Vec2(0.0f, 1.0f), Vec2(0.01f))) shouldBe true
+                identity.shouldEqual(Mat2(1f), 0.01f)
             }
             run {
                 val matrix = Mat2(1, 2, 3, 4)
                 val identity = matrix / matrix
 
-                glm.all(glm.epsilonEqual(identity[0], Vec2(1.0f, 0.0f), Vec2(0.01f))) shouldBe true
-                glm.all(glm.epsilonEqual(identity[1], Vec2(0.0f, 1.0f), Vec2(0.01f))) shouldBe true
+                identity.shouldEqual(Mat2(1f), 0.01f)
             }
         }
 
 
         "constructor" {
 
-            Mat2 { i -> i } shouldBe Mat2(0, 1, 2, 3)
-            Mat2(arrayListOf(0f, 1f, 2f, 3f)) shouldBe Mat2(0, 1, 2, 3)
+            run {
+                val A = Mat2(1f)
+                val B = Mat2(A)
+                val C = Mat2(B)
 
+                A shouldEqual C
+            }
+
+
+            val m0 = Mat2(
+                    Vec2(0, 1),
+                    Vec2(2, 3))
+            val m1 = Mat2(0, 1, 2, 3)
+            val m2 = Mat2 { i -> i }
+
+            m0 shouldEqual m2
+            m1 shouldEqual m2
         }
     }
 }

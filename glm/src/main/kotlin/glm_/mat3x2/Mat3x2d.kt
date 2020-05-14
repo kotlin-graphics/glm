@@ -3,6 +3,7 @@ package  glm_.mat3x2
 import glm_.*
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
+import kool.BYTES
 import kool.DoubleBuffer
 import kool.pos
 import kool.set
@@ -94,7 +95,7 @@ class Mat3x2d(var array: DoubleArray) : Mat3x2t<Double>(), ToDoubleBuffer {
 
     override fun elementCount() = length
 
-    override fun equals(other: Any?) = other is Mat3x2d && Arrays.equals(array, other.array)
+    override fun equals(other: Any?) = other is Mat3x2d && array.contentEquals(other.array)
 
     override fun hashCode() = 31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()
 }

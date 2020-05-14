@@ -12,10 +12,13 @@ import glm_.mat4x2.Mat4x2d
 import glm_.mat4x2.Mat4x2t
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
+import glm_.vec2.Vec2
+import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d
+import kool.BYTES
 import kool.Ptr
 import kool.pos
 import kool.set
@@ -24,6 +27,7 @@ import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*
+import kotlin.math.abs
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -334,7 +338,7 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     }
 
 
-    infix fun isEqual(b: Mat2d) = this[0].isEqual(b[0]) && this[1].isEqual(b[1])
+//    infix fun isEqual(b: Mat2d) = this[0].isEqual(b[0]) && this[1].isEqual(b[1])
 
 
     override var a0: Double
@@ -372,13 +376,22 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
                         memGetDouble(ptr + Double.BYTES * 2), memGetDouble(ptr + Double.BYTES * 3))
             }
         }
+
+        val identity: Mat2d
+            get() = Mat2d(1.0)
     }
 
     override fun size() = size
 
 	override fun elementCount() = length
 
-    override fun equals(other: Any?) = other is Mat2d && Arrays.equals(array, other.array)
-
+    override fun equals(other: Any?) = other is Mat2d && array.contentEquals(other.array)
     override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
+
+    fun equal(b: Mat2d, epsilon: Double, res: Vec2bool = Vec2bool()): Vec2bool = glm.equal(this, b, epsilon, res)
+    fun equal(b: Mat2d, epsilon: Vec2d, res: Vec2bool = Vec2bool()): Vec2bool = glm.equal(this, b, epsilon, res)
+    fun notEqual(b: Mat2d, epsilon: Double, res: Vec2bool = Vec2bool()): Vec2bool = glm.notEqual(this, b, epsilon, res)
+    fun notEqual(b: Mat2d, epsilon: Vec2d, res: Vec2bool = Vec2bool()): Vec2bool = glm.notEqual(this, b, epsilon, res)
+    fun allEqual(b: Mat2d, epsilon: Double = glm.ε): Boolean = glm.allEqual(this, b, epsilon)
+    fun anyNotEqual(b: Mat2d, epsilon: Double = glm.ε): Boolean = glm.anyNotEqual(this, b, epsilon)
 }

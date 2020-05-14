@@ -100,14 +100,14 @@ class testCoreFuncGeometric : StringSpec() {
                 val a = Vec2(1f, -1f)
                 val b = Vec2(0f, 1f)
                 val c = glm.reflect(a, b)
-                c shouldBe Vec2(1f)
+                c.shouldEqual(Vec2(1f), 0.0001f)
             }
 
             run {
                 val a = Vec2d(1.0, -1.0)
                 val b = Vec2d(0.0, 1.0)
                 val c = glm.reflect(a, b)
-                c shouldBe Vec2d(1.0)
+                c.shouldEqual(Vec2d(1.0), 0.0001)
             }
         }
 
@@ -117,21 +117,21 @@ class testCoreFuncGeometric : StringSpec() {
                 val a = -1f
                 val b = 1f
                 val c = glm.refract(a, b, 0.5f)
-                glm.epsilonEqual(c, -1f, 0.0001f) shouldBe true
+                c.shouldEqual(-1f, 0.0001f)
             }
 
             run {
                 val a = Vec2(0f, -1f)
                 val b = Vec2(0f, 1f)
                 val c = glm.refract(a, b, 0.5f)
-                glm.all(glm.epsilonEqual(c, Vec2(0, -1), 0.0001f)) shouldBe true
+                c.shouldEqual(Vec2(0, -1), 0.0001f)
             }
 
             run {
                 val a = Vec2d(0.0, -1.0)
                 val b = Vec2d(0.0, 1.0)
                 val c = glm.refract(a, b, 0.5)
-                c shouldBe Vec2d(0.0, -1.0)
+                c shouldEqual Vec2d(0.0, -1.0)
             }
         }
     }

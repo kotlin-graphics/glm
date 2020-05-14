@@ -7,6 +7,7 @@ package  glm_.mat4x3
 import glm_.*
 import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
+import kool.BYTES
 import kool.DoubleBuffer
 import kool.pos
 import kool.set
@@ -127,7 +128,7 @@ class Mat4x3d(var array: DoubleArray) : Mat4x3t<Double>(), ToDoubleBuffer {
 
     override fun elementCount() = length
 
-    override fun equals(other: Any?) = other is Mat4x3d && Arrays.equals(array, other.array)
+    override fun equals(other: Any?) = other is Mat4x3d && array.contentEquals(other.array)
 
     override fun hashCode() = 31 * (31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()) + this[3].hashCode()
 }

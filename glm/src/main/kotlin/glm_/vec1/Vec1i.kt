@@ -1,18 +1,20 @@
 package glm_.vec1
 
 import glm_.*
-import glm_.vec1.operators.vec1i_operators
+import glm_.vec1.operators.opVec1i
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.BYTES
 import kool.IntBuffer
 import kool.pos
 import kool.set
 import org.lwjgl.system.MemoryStack
 import java.nio.*
+import kotlin.math.abs
 
 /**
  * Created by GBarbieri on 04.04.2017.
@@ -20,9 +22,13 @@ import java.nio.*
 
 class Vec1i(x: Int) : Vec1t<Int>(x) {
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0)
+    constructor(s: Number) : this(s.i)
+
+    // -- Explicit basic constructors --
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     constructor(v: Vec1t<out Number>) : this(v.x)
     constructor(v: Vec2t<out Number>) : this(v.x)
@@ -65,8 +71,6 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
 
     constructor(block: (Int) -> Int) : this(block(0))
 
-    constructor(s: Number) : this(s.i)
-
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = false, bigEndian: Boolean = true) {
         x = if (oneByteOneInt) bytes[index].i else bytes.getInt(index, bigEndian)
@@ -90,7 +94,7 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
         this.x = x.i
     }
 
-    override fun invoke(x: Number): Vec1i {
+    override operator fun invoke(x: Number): Vec1i {
         this.x = x.i
         return this
     }
@@ -118,6 +122,9 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
         return buf
     }
 
+    // TODO others Vec1*
+    operator fun inc() = Vec1i(x + 1)
+    operator fun dec() = Vec1i(x - 1)
 
     // -- Specific binary arithmetic operators --
 
@@ -127,8 +134,12 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     fun plus(b: Int, res: Vec1i) = plus(res, this, b)
     fun plus(b: Vec1i, res: Vec1i) = plus(res, this, b.x)
 
-    infix fun plusAssign(b: Int) = plus(this, this, b)
-    infix fun plusAssign(b: Vec1i) = plus(this, this, b.x)
+    infix operator fun plusAssign(b: Int) {
+        plus(this, this, b)
+    }
+    infix operator fun plusAssign(b: Vec1i) {
+        plus(this, this, b.x)
+    }
 
 
     infix operator fun minus(b: Int) = minus(Vec1i(), this, b)
@@ -137,8 +148,12 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     fun minus(b: Int, res: Vec1i) = minus(res, this, b)
     fun minus(b: Vec1i, res: Vec1i) = minus(res, this, b.x)
 
-    infix fun minusAssign(b: Int) = minus(this, this, b)
-    infix fun minusAssign(b: Vec1i) = minus(this, this, b.x)
+    infix operator fun minusAssign(b: Int) {
+        minus(this, this, b)
+    }
+    infix operator fun minusAssign(b: Vec1i) {
+        minus(this, this, b.x)
+    }
 
 
     infix operator fun times(b: Int) = times(Vec1i(), this, b)
@@ -147,8 +162,12 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     fun times(b: Int, res: Vec1i) = times(res, this, b)
     fun times(b: Vec1i, res: Vec1i) = times(res, this, b.x)
 
-    infix fun timesAssign(b: Int) = times(this, this, b)
-    infix fun timesAssign(b: Vec1i) = times(this, this, b.x)
+    infix operator fun timesAssign(b: Int) {
+        times(this, this, b)
+    }
+    infix operator fun timesAssign(b: Vec1i) {
+        times(this, this, b.x)
+    }
 
 
     infix operator fun div(b: Int) = div(Vec1i(), this, b)
@@ -157,8 +176,12 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     fun div(b: Int, res: Vec1i) = div(res, this, b)
     fun div(b: Vec1i, res: Vec1i) = div(res, this, b.x)
 
-    infix fun divAssign(b: Int) = div(this, this, b)
-    infix fun divAssign(b: Vec1i) = div(this, this, b.x)
+    infix operator fun divAssign(b: Int) {
+        div(this, this, b)
+    }
+    infix operator fun divAssign(b: Vec1i) {
+        div(this, this, b.x)
+    }
 
 
     infix operator fun rem(b: Int) = rem(Vec1i(), this, b)
@@ -167,10 +190,66 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     fun rem(b: Int, res: Vec1i) = rem(res, this, b)
     fun rem(b: Vec1i, res: Vec1i) = rem(res, this, b.x)
 
-    infix fun remAssign(b: Int) = rem(this, this, b)
-    infix fun remAssign(b: Vec1i) = rem(this, this, b.x)
+    infix operator fun remAssign(b: Int) {
+        rem(this, this, b)
+    }
+    infix operator fun remAssign(b: Vec1i) {
+        rem(this, this, b.x)
+    }
 
-    companion object : vec1i_operators {
+    
+    // -- Specific bitwise operators --
+
+    infix fun and(b: Int) = and(Vec1i(), this, b)
+    infix fun and(b: Vec1i) = and(Vec1i(), this, b.x)
+
+    fun and(b: Int, res: Vec1i) = and(res, this, b)
+    fun and(b: Vec1i, res: Vec1i) = and(res, this, b.x)
+
+    infix fun andAssign(b: Int) = and(this, this, b)
+    infix fun andAssign(b: Vec1i) = and(this, this, b.x)
+
+
+    infix fun or(b: Int) = or(Vec1i(), this, b)
+    infix fun or(b: Vec1i) = or(Vec1i(), this, b.x)
+
+    fun or(b: Int, res: Vec1i) = or(res, this, b)
+    fun or(b: Vec1i, res: Vec1i) = or(res, this, b.x)
+
+    infix fun orAssign(b: Int) = or(this, this, b)
+    infix fun orAssign(b: Vec1i) = or(this, this, b.x)
+
+
+    infix fun xor(b: Int) = xor(Vec1i(), this, b)
+    infix fun xor(b: Vec1i) = xor(Vec1i(), this, b.x)
+
+    fun xor(b: Int, res: Vec1i) = xor(res, this, b)
+    fun xor(b: Vec1i, res: Vec1i) = xor(res, this, b.x)
+
+    infix fun xorAssign(b: Int) = xor(this, this, b)
+    infix fun xorAssign(b: Vec1i) = xor(this, this, b.x)
+
+
+    infix fun shl(b: Int) = shl(Vec1i(), this, b)
+    infix fun shl(b: Vec1i) = shl(Vec1i(), this, b.x)
+
+    fun shl(b: Int, res: Vec1i) = shl(res, this, b)
+    fun shl(b: Vec1i, res: Vec1i) = shl(res, this, b.x)
+
+    infix fun shlAssign(b: Int) = shl(this, this, b)
+    infix fun shlAssign(b: Vec1i) = shl(this, this, b.x)
+
+
+    infix fun shr(b: Int) = shr(Vec1i(), this, b)
+    infix fun shr(b: Vec1i) = shr(Vec1i(), this, b.x)
+
+    fun shr(b: Int, res: Vec1i) = shr(res, this, b)
+    fun shr(b: Vec1i, res: Vec1i) = shr(res, this, b.x)
+
+    infix fun shrAssign(b: Int) = shr(this, this, b)
+    infix fun shrAssign(b: Vec1i) = shr(this, this, b.x)
+
+    companion object : opVec1i {
         const val length = Vec1t.length
         @JvmField
         val size = length * Int.BYTES
@@ -179,5 +258,8 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec1i && this[0] == other[0]
+    fun equal(b: Vec1i, epsilon: Int = 0): Boolean = abs(x - b.x) <= epsilon
+    fun notEqual(b: Vec1i, epsilon: Int = 0): Boolean = !equal(b, epsilon)
+
     override fun hashCode() = x.hashCode()
 }

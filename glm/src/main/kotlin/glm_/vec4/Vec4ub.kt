@@ -1,6 +1,8 @@
 package glm_.vec4
 
 import glm_.*
+import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1t
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec2.Vec2ub
@@ -8,6 +10,7 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec3.Vec3ub
 import glm_.vec4.operators.vec4ub_operators
+import kool.BYTES
 import kool.Ptr
 import kool.pos
 import kool.set
@@ -21,9 +24,6 @@ import java.nio.*
  */
 
 class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>(), ToBuffer {
-
-    constructor(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : this(0, byteArrayOf(x.v, y.v, z.v, w.v))
-    constructor(x: Byte, y: Byte, z: Byte, w: Byte) : this(0, byteArrayOf(x, y, z, w))
 
     override var x: Ubyte
         get() = Ubyte(array[ofs])
@@ -51,17 +51,64 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>(), ToBuffer {
         get() = array[ofs + 3]
         set(value) = array.set(ofs + 3, value)
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0)
+    constructor(v: Vec4ub) : this(v.x, v.y, v.z, v.w)
+    constructor(v: Vec3ub) : this(v.x, v.y, v.z, Ubyte(0))
+    constructor(v: Vec2ub) : this(v.x, v.y, Ubyte(0), Ubyte(0))
 
-    constructor(v: Vec2t<out Number>) : this(v.x, v.y, 0, 1)
-    constructor(v: Vec2t<out Number>, z: Number, w: Number) : this(v.x, v.y, z, w)
-    constructor(v: Vec3t<out Number>) : this(v, 1)
-    constructor(v: Vec3t<out Number>, w: Number) : this(v.x, v.y, v.z, w)
-    constructor(x: Number, v: Vec3t<out Number>) : this(x, v.x, v.y, v.z)
+    // -- Explicit basic constructors --
+
+    constructor(x: Ubyte) : this(x, x, x, x)
+    constructor(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) : this(0, byteArrayOf(x.v, y.v, z.v, w.v))
+    constructor(x: Int) : this(x, x, x, x)
+    constructor(x: Int, y: Int, z: Int, w: Int) : this(0, byteArrayOf(x.b, y.b, z.b, w.b))
+
+    // -- Conversion scalar constructors --
+
+    constructor(v: Vec1t<out Number>) : this(v.x, v.x, v.x, v.x)
+
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    constructor(x: Number) : this(x, x, x, x)
+    constructor(x: Number, y: Number, z: Number, w: Number) : this(x.ub, y.ub, z.ub, w.ub)
+
+    constructor(x: Vec1t<out Number>, y: Number, z: Number, w: Number) : this(x.x, y, z, w)
+    constructor(x: Number, y: Vec1t<out Number>, z: Number, w: Number) : this(x, y.x, z, w)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number, w: Number) : this(x.x, y.x, z, w)
+    constructor(x: Number, y: Number, z: Vec1t<out Number>, w: Number) : this(x, y, z.x, w)
+    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>, w: Number) : this(x.x, y, z.x, w)
+    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Number) : this(x, y.x, z.x, w)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Number) : this(x.x, y.x, z.x, w)
+    constructor(x: Vec1t<out Number>, y: Number, z: Number, w: Vec1t<out Number>) : this(x.x, y, z, w.x)
+    constructor(x: Number, y: Vec1t<out Number>, z: Number, w: Vec1t<out Number>) : this(x, y.x, z, w.x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number, w: Vec1t<out Number>) : this(x.x, y.x, z, w.x)
+    constructor(x: Number, y: Number, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x, y, z.x, w.x)
+    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x.x, y, z.x, w.x)
+    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x, y.x, z.x, w.x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x.x, y.x, z.x, w.x)
+
+    constructor(xy: Vec2t<out Number>, z: Number, w: Number) : this(xy.x, xy.y, z, w)
+    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>, w: Number) : this(xy.x, xy.y, z.x, w)
+    constructor(xy: Vec2t<out Number>, z: Number, w: Vec1t<out Number>) : this(xy.x, xy.y, z, w.x)
+    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(xy.x, xy.y, z.x, w.x)
+    constructor(x: Number, yz: Vec2t<out Number>, w: Number) : this(x, yz.x, yz.y, w)
+    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>, w: Number) : this(x.x, yz.x, yz.y, w)
+    constructor(x: Number, yz: Vec2t<out Number>, w: Vec1t<out Number>) : this(x, yz.x, yz.y, w.x)
+    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>, w: Vec1t<out Number>) : this(x.x, yz.x, yz.y, w.x)
+    constructor(x: Number, y: Number, zw: Vec2t<out Number>) : this(x, y, zw.x, zw.y)
+    constructor(x: Vec1t<out Number>, y: Number, zw: Vec2t<out Number>) : this(x.x, y, zw.x, zw.y)
+    constructor(x: Number, y: Vec1t<out Number>, zw: Vec2t<out Number>) : this(x, y, zw.x, zw.y)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, zw: Vec2t<out Number>) : this(x.x, y.x, zw.x, zw.y)
+    constructor(xyz: Vec3t<out Number>, w: Number) : this(xyz.x, xyz.y, xyz.z, w)
+    constructor(xyz: Vec3t<out Number>, w: Vec1t<out Number>) : this(xyz.x, xyz.y, xyz.z, w.x)
+    constructor(x: Number, yzw: Vec3t<out Number>) : this(x, yzw.x, yzw.y, yzw.z)
+    constructor(x: Vec1t<out Number>, yzw: Vec3t<out Number>) : this(x.x, yzw.x, yzw.y, yzw.z)
+    constructor(xy: Vec2t<out Number>, zw: Vec2t<out Number>) : this(xy.x, xy.y, zw.x, zw.y)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z, v.w)
 
+    constructor(v: Vec1bool) : this(v.x.ub, 0, 0, 1)
     constructor(v: Vec2bool) : this(v.x.ub, v.y.ub, 0, 1)
     constructor(v: Vec3bool) : this(v.x.ub, v.y.ub, v.z.ub, 1)
     constructor(v: Vec4bool) : this(v.x.ub, v.y.ub, v.z.ub, v.w.ub)
@@ -92,9 +139,6 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>(), ToBuffer {
 
     constructor(block: (Int) -> Ubyte) : this(block(0), block(1), block(2), block(3))
 
-    constructor(s: Number) : this(s, s, s, s)
-    constructor(x: Number, y: Number, z: Number, w: Number) : this(x.ub, y.ub, z.ub, w.ub)
-
 
     fun put(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) {
         this.x = x
@@ -110,7 +154,7 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>(), ToBuffer {
         this.w.v = w
     }
 
-    fun invoke(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte): Vec4ub {
+    operator fun invoke(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte): Vec4ub {
         this.x = x
         this.y = y
         this.z = z
@@ -118,7 +162,7 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>(), ToBuffer {
         return this
     }
 
-    fun invoke(x: Byte, y: Byte, z: Byte, w: Byte): Vec4ub {
+    operator fun invoke(x: Byte, y: Byte, z: Byte, w: Byte): Vec4ub {
         this.x.v = x
         this.y.v = y
         this.z.v = z
@@ -133,7 +177,7 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>(), ToBuffer {
         this.w = w.ub
     }
 
-    override fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4ub {
+    override operator fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4ub {
         this.x = x.ub
         this.y = y.ub
         this.z = z.ub
@@ -651,9 +695,54 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>(), ToBuffer {
     fun shrAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = shr(this, this, bX.i, bY.i, bZ.i, bW.i)
 
 
-    override fun createInstance(x: Ubyte, y: Ubyte) = Vec2ub(x, y)
-    override fun createInstance(x: Ubyte, y: Ubyte, z: Ubyte) = Vec3ub(x, y, z)
-    override fun createInstance(x: Ubyte, y: Ubyte, z: Ubyte, w: Ubyte) = Vec4(x, y, z, w)
+    infix fun allLessThan(ub: Ubyte): Boolean = x < ub && y < ub && z < ub && w < ub
+    infix fun anyLessThan(ub: Ubyte): Boolean = x < ub || y < ub || z < ub || w < ub
+    infix fun lessThan(ub: Ubyte): Vec4bool = Vec4bool { get(it) < ub }
+
+    infix fun allLessThanEqual(ub: Ubyte): Boolean = x <= ub && y <= ub && z <= ub && w <= ub
+    infix fun anyLessThanEqual(ub: Ubyte): Boolean = x <= ub || y <= ub || z <= ub || w <= ub
+    infix fun lessThanEqual(ub: Ubyte): Vec4bool = Vec4bool { get(it) <= ub }
+
+    infix fun allEqual(ub: Ubyte): Boolean = x == ub && y == ub && z == ub && w == ub
+    infix fun anyEqual(ub: Ubyte): Boolean = x == ub || y == ub || z == ub || w == ub
+    infix fun equal(ub: Ubyte): Vec4bool = Vec4bool { get(it) == ub }
+
+    infix fun allNotEqual(ub: Ubyte): Boolean = x != ub && y != ub && z != ub && w != ub
+    infix fun anyNotEqual(ub: Ubyte): Boolean = x != ub || y != ub || z != ub || w != ub
+    infix fun notEqual(ub: Ubyte): Vec4bool = Vec4bool { get(it) != ub }
+
+    infix fun allGreaterThan(ub: Ubyte): Boolean = x > ub && y > ub && z > ub && w > ub
+    infix fun anyGreaterThan(ub: Ubyte): Boolean = x > ub || y > ub || z > ub || w > ub
+    infix fun greaterThan(ub: Ubyte): Vec4bool = Vec4bool { get(it) > ub }
+
+    infix fun allGreaterThanEqual(ub: Ubyte): Boolean = x >= ub && y >= ub && z >= ub && w >= ub
+    infix fun anyGreaterThanEqual(ub: Ubyte): Boolean = x >= ub || y >= ub || z >= ub || w >= ub
+    infix fun greaterThanEqual(ub: Ubyte): Vec4bool = Vec4bool { get(it) >= ub }
+
+
+    infix fun allLessThan(v: Vec4ub): Boolean = x < v.x && y < v.y && z < v.z && w < v.w
+    infix fun anyLessThan(v: Vec4ub): Boolean = x < v.x || y < v.y || z < v.z || w < v.w
+    infix fun lessThan(v: Vec4ub): Vec4bool = Vec4bool { get(it) < v[it] }
+
+    infix fun allLessThanEqual(v: Vec4ub): Boolean = x <= v.x && y <= v.y && z <= v.z && w <= v.w
+    infix fun anyLessThanEqual(v: Vec4ub): Boolean = x <= v.x || y <= v.y || z <= v.z || w <= v.w
+    infix fun lessThanEqual(v: Vec4ub): Vec4bool = Vec4bool { get(it) <= v[it] }
+
+    infix fun allEqual(v: Vec4ub): Boolean = x == v.x && y == v.y && z == v.z && w == v.w
+    infix fun anyEqual(v: Vec4ub): Boolean = x == v.x || y == v.y || z == v.z || w == v.w
+    infix fun equal(v: Vec4ub): Vec4bool = Vec4bool { get(it) == v[it] }
+
+    infix fun allNotEqual(v: Vec4ub): Boolean = x != v.x && y != v.y && z != v.z && w != v.w
+    infix fun anyNotEqual(v: Vec4ub): Boolean = x != v.x || y != v.y || z != v.z || w != v.w
+    infix fun notEqual(v: Vec4ub): Vec4bool = Vec4bool { get(it) != v[it] }
+
+    infix fun allGreaterThan(v: Vec4ub): Boolean = x > v.x && y > v.y && z > v.z && w > v.w
+    infix fun anyGreaterThan(v: Vec4ub): Boolean = x > v.x || y > v.y || z > v.z || w > v.w
+    infix fun greaterThan(v: Vec4ub): Vec4bool = Vec4bool { get(it) > v[it] }
+
+    infix fun allGreaterThanEqual(v: Vec4ub): Boolean = x >= v.x && y >= v.y && z >= v.z && w >= v.w
+    infix fun anyGreaterThanEqual(v: Vec4ub): Boolean = x >= v.x || y >= v.y || z >= v.z || w >= v.w
+    infix fun greaterThanEqual(v: Vec4ub): Vec4bool = Vec4bool { get(it) >= v[it] }
 
 
     companion object : vec4ub_operators {
@@ -677,5 +766,5 @@ class Vec4ub(var ofs: Int, var array: ByteArray) : Vec4t<Ubyte>(), ToBuffer {
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "[${x.v}, ${y.v}, ${z.v}, ${w.v}]"
+    override fun toString(): String = "(${x.v}, ${y.v}, ${z.v}, ${w.v})"
 }

@@ -3,6 +3,7 @@ package  glm_.mat2x4
 import glm_.*
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
+import kool.BYTES
 import kool.DoubleBuffer
 import kool.pos
 import kool.set
@@ -109,7 +110,7 @@ class Mat2x4d(var array: DoubleArray) : Mat2x4t<Double>(), ToDoubleBuffer {
 
     override fun elementCount() = length
 
-    override fun equals(other: Any?) = other is Mat2x4d && Arrays.equals(array, other.array)
+    override fun equals(other: Any?) = other is Mat2x4d && array.contentEquals(other.array)
 
     override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()
 }

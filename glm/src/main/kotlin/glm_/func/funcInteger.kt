@@ -1,6 +1,7 @@
 package glm_.func
 
 import glm_.*
+import kool.BYTES
 import unsigned.toULong
 
 /**

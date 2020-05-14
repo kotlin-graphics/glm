@@ -49,6 +49,7 @@ val Char.us get() = toUshort()
 
 
 infix fun Char.shl(bits: Int) = i shl bits
+infix fun Char.shr(bits: Int) = i shr bits
 operator fun Char.compareTo(other: Int) = i.compareTo(other)
 operator fun Int.plus(b: Char) = this + b.i
 operator fun Int.minus(b: Char) = this - b.i
@@ -57,9 +58,9 @@ infix fun Int.xor(b: Char) = this xor b.i
 
 val Int.uc get() = (this % 256).c // TODO others
 
-fun ByteArray.getFloat(index: Int, bigEndian: Boolean = true) = getInt(index, bigEndian).bitsToFloat
+fun ByteArray.getFloat(index: Int, bigEndian: Boolean = true) = getInt(index, bigEndian).bitsAsFloat
 
-fun ByteArray.getDouble(index: Int, bigEndian: Boolean = true) = getLong(index, bigEndian).bitsToDouble
+fun ByteArray.getDouble(index: Int, bigEndian: Boolean = true) = getLong(index, bigEndian).bitsAsDouble
 
 fun ByteArray.getShort(index: Int, bigEndian: Boolean = true): Short {
     val a: Int
@@ -124,9 +125,9 @@ fun ByteArray.getLong(index: Int, bigEndian: Boolean = true): Long {
     return a or b or c or d or e or f or g or h
 }
 
-fun ByteArray.putFloat(index: Int, float: Float, bigEndian: Boolean = true) = putInt(index, float.toRawIntBits, bigEndian)
+fun ByteArray.putFloat(index: Int, float: Float, bigEndian: Boolean = true) = putInt(index, float.asRawIntBits, bigEndian)
 
-fun ByteArray.putDouble(index: Int, double: Double, bigEndian: Boolean = true) = putLong(index, double.toRawLongBits, bigEndian)
+fun ByteArray.putDouble(index: Int, double: Double, bigEndian: Boolean = true) = putLong(index, double.asRawLongBits, bigEndian)
 
 fun ByteArray.putShort(index: Int, short: Short, bigEndian: Boolean = true) {
     val int = short.i
@@ -247,8 +248,8 @@ fun InputStream.short(bigEndian: Boolean = true): Int {
 
 fun InputStream.byte() = read().b
 
-fun InputStream.float(bigEndian: Boolean = true) = int(bigEndian).bitsToFloat
-fun InputStream.double(bigEndian: Boolean = true) = long(bigEndian).bitsToDouble
+fun InputStream.float(bigEndian: Boolean = true) = int(bigEndian).bitsAsFloat
+fun InputStream.double(bigEndian: Boolean = true) = long(bigEndian).bitsAsDouble
 
 fun InputStream.long(bigEndian: Boolean = true): Long {
     val a = int(bigEndian)

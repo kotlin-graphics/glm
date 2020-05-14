@@ -2,6 +2,7 @@ package glm_.gtx
 
 import glm_.glm
 import glm_.mat3x3.Mat3
+import io.kotlintest.matchers.floats.shouldBeLessThanOrEqual
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 import kotlin.math.abs
@@ -23,16 +24,15 @@ class testGtxMatrixFactorization : StringSpec() {
             val err = tm - m
 
             for (i in 0..2)
-                for (j in 0..2) {
-                    assert(abs(err[i][j]) <= 1e-5)
-                }
+                for (j in 0..2)
+                    abs(err[i][j]) shouldBeLessThanOrEqual 1e-5f
 
             //Test if the columns of q are orthonormal
             for (i in 0..2) {
-                assert((q[i].length() - 1) <= 1e-5)
+                (q[i].length() - 1) shouldBeLessThanOrEqual 1e-5f
 
                 for (j in 0 until i)
-                    assert(abs((q[i] dot q[j])) <= 1e-5)
+                    abs((q[i] dot q[j])) shouldBeLessThanOrEqual 1e-5f
             }
 
             //Test if the matrix r is upper triangular
@@ -58,16 +58,16 @@ class testGtxMatrixFactorization : StringSpec() {
 
             for (i in 0..2)
                 for (j in 0..2)
-                    assert(abs(err[i][j]) <= 1e-4)
+                    abs(err[i][j]) shouldBeLessThanOrEqual 1e-4f
 
             //Test if the rows of q are orthonormal
             val tq = q.transpose()
 
             for (i in 0..2) {
-                assert((tq[i].length() - 1) <= 1e-5)
+                (tq[i].length() - 1) shouldBeLessThanOrEqual 1e-5f
 
                 for (j in 0 until i)
-                    assert(abs((tq[i] dot tq[j])) <= 1e-5)
+                    abs((tq[i] dot tq[j])) shouldBeLessThanOrEqual 1e-5f
             }
 
             //Test if the matrix r is upper triangular

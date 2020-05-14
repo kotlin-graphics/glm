@@ -6,6 +6,7 @@ import glm_.vec4.Vec4b
 import glm_.vec4.Vec4i
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
+import kool.BYTES
 import unsigned.toUInt
 import unsigned.toULong
 import kotlin.system.measureNanoTime

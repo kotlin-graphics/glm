@@ -1,17 +1,18 @@
 package glm_.vec4
 
 import glm_.*
+import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1t
 import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2s
 import glm_.vec2.Vec2t
 import glm_.vec2.Vec2us
 import glm_.vec3.Vec3bool
+import glm_.vec3.Vec3s
 import glm_.vec3.Vec3t
 import glm_.vec3.Vec3us
 import glm_.vec4.operators.vec4us_operators
-import kool.Ptr
-import kool.pos
-import kool.ShortBuffer
-import kool.set
+import kool.*
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetShort
 import unsigned.Ushort
@@ -23,9 +24,6 @@ import java.nio.*
  */
 
 class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
-
-    constructor(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : this(0, shortArrayOf(x.v, y.v, z.v, w.v))
-    constructor(x: Short, y: Short, z: Short, w: Short) : this(0, shortArrayOf(x, y, z, w))
 
     override var x: Ushort
         get() = Ushort(array[ofs])
@@ -53,17 +51,64 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
         get() = array[ofs + 3]
         set(value) = array.set(ofs + 3, value)
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0)
+    constructor(v: Vec4us) : this(v.x, v.y, v.z, v.w)
+    constructor(v: Vec3us) : this(v.x, v.y, v.z, Ushort(0))
+    constructor(v: Vec2us) : this(v.x, v.y, Ushort(0), Ushort(0))
 
-    constructor(v: Vec2t<out Number>) : this(v.x, v.y, 0, 1)
-    constructor(v: Vec2t<out Number>, z: Number, w: Number) : this(v.x, v.y, z, w)
-    constructor(v: Vec3t<out Number>) : this(v, 1)
-    constructor(v: Vec3t<out Number>, w: Number) : this(v.x, v.y, v.z, w)
-    constructor(x: Number, v: Vec3t<out Number>) : this(x, v.x, v.y, v.z)
+    // -- Explicit basic constructors --
+
+    constructor(x: Ushort) : this(x, x, x, x)
+    constructor(x: Ushort, y: Ushort, z: Ushort, w: Ushort) : this(0, shortArrayOf(x.v, y.v, z.v, w.v))
+    constructor(x: Short) : this(x, x, x, x)
+    constructor(x: Short, y: Short, z: Short, w: Short) : this(0, shortArrayOf(x, y, z, w))
+
+    // -- Conversion scalar constructors --
+
+    constructor(v: Vec1t<out Number>) : this(v.x, v.x, v.x, v.x)
+
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    constructor(x: Number) : this(x, x, x, x)
+    constructor(x: Number, y: Number, z: Number, w: Number) : this(x.us, y.us, z.us, w.us)
+
+    constructor(x: Vec1t<out Number>, y: Number, z: Number, w: Number) : this(x.x, y, z, w)
+    constructor(x: Number, y: Vec1t<out Number>, z: Number, w: Number) : this(x, y.x, z, w)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number, w: Number) : this(x.x, y.x, z, w)
+    constructor(x: Number, y: Number, z: Vec1t<out Number>, w: Number) : this(x, y, z.x, w)
+    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>, w: Number) : this(x.x, y, z.x, w)
+    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Number) : this(x, y.x, z.x, w)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Number) : this(x.x, y.x, z.x, w)
+    constructor(x: Vec1t<out Number>, y: Number, z: Number, w: Vec1t<out Number>) : this(x.x, y, z, w.x)
+    constructor(x: Number, y: Vec1t<out Number>, z: Number, w: Vec1t<out Number>) : this(x, y.x, z, w.x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number, w: Vec1t<out Number>) : this(x.x, y.x, z, w.x)
+    constructor(x: Number, y: Number, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x, y, z.x, w.x)
+    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x.x, y, z.x, w.x)
+    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x, y.x, z.x, w.x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x.x, y.x, z.x, w.x)
+
+    constructor(xy: Vec2t<out Number>, z: Number, w: Number) : this(xy.x, xy.y, z, w)
+    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>, w: Number) : this(xy.x, xy.y, z.x, w)
+    constructor(xy: Vec2t<out Number>, z: Number, w: Vec1t<out Number>) : this(xy.x, xy.y, z, w.x)
+    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(xy.x, xy.y, z.x, w.x)
+    constructor(x: Number, yz: Vec2t<out Number>, w: Number) : this(x, yz.x, yz.y, w)
+    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>, w: Number) : this(x.x, yz.x, yz.y, w)
+    constructor(x: Number, yz: Vec2t<out Number>, w: Vec1t<out Number>) : this(x, yz.x, yz.y, w.x)
+    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>, w: Vec1t<out Number>) : this(x.x, yz.x, yz.y, w.x)
+    constructor(x: Number, y: Number, zw: Vec2t<out Number>) : this(x, y, zw.x, zw.y)
+    constructor(x: Vec1t<out Number>, y: Number, zw: Vec2t<out Number>) : this(x.x, y, zw.x, zw.y)
+    constructor(x: Number, y: Vec1t<out Number>, zw: Vec2t<out Number>) : this(x, y, zw.x, zw.y)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, zw: Vec2t<out Number>) : this(x.x, y.x, zw.x, zw.y)
+    constructor(xyz: Vec3t<out Number>, w: Number) : this(xyz.x, xyz.y, xyz.z, w)
+    constructor(xyz: Vec3t<out Number>, w: Vec1t<out Number>) : this(xyz.x, xyz.y, xyz.z, w.x)
+    constructor(x: Number, yzw: Vec3t<out Number>) : this(x, yzw.x, yzw.y, yzw.z)
+    constructor(x: Vec1t<out Number>, yzw: Vec3t<out Number>) : this(x.x, yzw.x, yzw.y, yzw.z)
+    constructor(xy: Vec2t<out Number>, zw: Vec2t<out Number>) : this(xy.x, xy.y, zw.x, zw.y)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z, v.w)
 
+    constructor(v: Vec1bool) : this(v.x.us, 0, 0, 1)
     constructor(v: Vec2bool) : this(v.x.us, v.y.us, 0, 1)
     constructor(v: Vec3bool) : this(v.x.us, v.y.us, v.z.us, 1)
     constructor(v: Vec4bool) : this(v.x.us, v.y.us, v.z.us, v.w.us)
@@ -104,9 +149,6 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
 
     constructor(block: (Int) -> Ushort) : this(block(0), block(1), block(2), block(3))
 
-    constructor(s: Number) : this(s, s, s, s)
-    constructor(x: Number, y: Number, z: Number, w: Number) : this(x.us, y.us, z.us, w.us)
-
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = false, bigEndian: Boolean = true) {
         x.v = if (oneByteOneShort) bytes[index].s else bytes.getShort(index, bigEndian)
@@ -137,7 +179,7 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
         this.w.v = w
     }
 
-    fun invoke(x: Ushort, y: Ushort, z: Ushort, w: Ushort): Vec4us {
+    operator fun invoke(x: Ushort, y: Ushort, z: Ushort, w: Ushort): Vec4us {
         this.x = x
         this.y = y
         this.z = z
@@ -145,7 +187,7 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
         return this
     }
 
-    fun invoke(x: Short, y: Short, z: Short, w: Short): Vec4us {
+    operator fun invoke(x: Short, y: Short, z: Short, w: Short): Vec4us {
         this.x.v = x
         this.y.v = y
         this.z.v = z
@@ -160,7 +202,7 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
         this.w = w.us
     }
 
-    override fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4us {
+    override operator fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4us {
         this.x = x.us
         this.y = y.us
         this.z = z.us
@@ -699,9 +741,54 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
     fun shr(b: Vec4t<out Number>, res: Vec4us) = shr(res, this, b.x.i, b.y.i, b.z.i, b.w.i)
 
 
-    override fun createInstance(x: Ushort, y: Ushort) = Vec2us(x, y)
-    override fun createInstance(x: Ushort, y: Ushort, z: Ushort) = Vec3us(x, y, z)
-    override fun createInstance(x: Ushort, y: Ushort, z: Ushort, w: Ushort) = Vec4us(x, y, z, w)
+    infix fun allLessThan(us: Ushort): Boolean = x < us && y < us && z < us && w < us
+    infix fun anyLessThan(us: Ushort): Boolean = x < us || y < us || z < us || w < us
+    infix fun lessThan(us: Ushort): Vec4bool = Vec4bool { get(it) < us }
+
+    infix fun allLessThanEqual(us: Ushort): Boolean = x <= us && y <= us && z <= us && w <= us
+    infix fun anyLessThanEqual(us: Ushort): Boolean = x <= us || y <= us || z <= us || w <= us
+    infix fun lessThanEqual(us: Ushort): Vec4bool = Vec4bool { get(it) <= us }
+
+    infix fun allEqual(us: Ushort): Boolean = x == us && y == us && z == us && w == us
+    infix fun anyEqual(us: Ushort): Boolean = x == us || y == us || z == us || w == us
+    infix fun equal(us: Ushort): Vec4bool = Vec4bool { get(it) == us }
+
+    infix fun allNotEqual(us: Ushort): Boolean = x != us && y != us && z != us && w != us
+    infix fun anyNotEqual(us: Ushort): Boolean = x != us || y != us || z != us || w != us
+    infix fun notEqual(us: Ushort): Vec4bool = Vec4bool { get(it) != us }
+
+    infix fun allGreaterThan(us: Ushort): Boolean = x > us && y > us && z > us && w > us
+    infix fun anyGreaterThan(us: Ushort): Boolean = x > us || y > us || z > us || w > us
+    infix fun greaterThan(us: Ushort): Vec4bool = Vec4bool { get(it) > us }
+
+    infix fun allGreaterThanEqual(us: Ushort): Boolean = x >= us && y >= us && z >= us && w >= us
+    infix fun anyGreaterThanEqual(us: Ushort): Boolean = x >= us || y >= us || z >= us || w >= us
+    infix fun greaterThanEqual(us: Ushort): Vec4bool = Vec4bool { get(it) >= us }
+
+
+    infix fun allLessThan(v: Vec4us): Boolean = x < v.x && y < v.y && z < v.z && w < v.w
+    infix fun anyLessThan(v: Vec4us): Boolean = x < v.x || y < v.y || z < v.z || w < v.w
+    infix fun lessThan(v: Vec4us): Vec4bool = Vec4bool { get(it) < v[it] }
+
+    infix fun allLessThanEqual(v: Vec4us): Boolean = x <= v.x && y <= v.y && z <= v.z && w <= v.w
+    infix fun anyLessThanEqual(v: Vec4us): Boolean = x <= v.x || y <= v.y || z <= v.z || w <= v.w
+    infix fun lessThanEqual(v: Vec4us): Vec4bool = Vec4bool { get(it) <= v[it] }
+
+    infix fun allEqual(v: Vec4us): Boolean = x == v.x && y == v.y && z == v.z && w == v.w
+    infix fun anyEqual(v: Vec4us): Boolean = x == v.x || y == v.y || z == v.z || w == v.w
+    infix fun equal(v: Vec4us): Vec4bool = Vec4bool { get(it) == v[it] }
+
+    infix fun allNotEqual(v: Vec4us): Boolean = x != v.x && y != v.y && z != v.z && w != v.w
+    infix fun anyNotEqual(v: Vec4us): Boolean = x != v.x || y != v.y || z != v.z || w != v.w
+    infix fun notEqual(v: Vec4us): Vec4bool = Vec4bool { get(it) != v[it] }
+
+    infix fun allGreaterThan(v: Vec4us): Boolean = x > v.x && y > v.y && z > v.z && w > v.w
+    infix fun anyGreaterThan(v: Vec4us): Boolean = x > v.x || y > v.y || z > v.z || w > v.w
+    infix fun greaterThan(v: Vec4us): Vec4bool = Vec4bool { get(it) > v[it] }
+
+    infix fun allGreaterThanEqual(v: Vec4us): Boolean = x >= v.x && y >= v.y && z >= v.z && w >= v.w
+    infix fun anyGreaterThanEqual(v: Vec4us): Boolean = x >= v.x || y >= v.y || z >= v.z || w >= v.w
+    infix fun greaterThanEqual(v: Vec4us): Vec4bool = Vec4bool { get(it) >= v[it] }
 
 
     companion object : vec4us_operators {
@@ -725,5 +812,5 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "[${x.v}, ${y.v}, ${z.v}, ${w.v}]"
+    override fun toString(): String = "(${x.v}, ${y.v}, ${z.v}, ${w.v})"
 }

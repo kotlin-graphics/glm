@@ -1,16 +1,15 @@
 package glm_.vec3
 
 import glm_.*
+import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1t
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec2.Vec2ui
 import glm_.vec3.operators.vec3ui_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.Ptr
-import kool.IntBuffer
-import kool.pos
-import kool.set
+import kool.*
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetInt
 import org.lwjgl.system.MemoryUtil.memPutInt
@@ -23,9 +22,6 @@ import java.nio.*
  */
 
 class Vec3ui(var ofs: Int, var array: IntArray) : Vec3t<Uint>(), ToBuffer {
-
-    constructor(x: Uint, y: Uint, z: Uint) : this(0, intArrayOf(x.v, y.v, z.v))
-    constructor(x: Int, y: Int, z: Int) : this(0, intArrayOf(x, y, z))
 
     override var x: Uint
         get() = Uint(array[ofs])
@@ -47,16 +43,51 @@ class Vec3ui(var ofs: Int, var array: IntArray) : Vec3t<Uint>(), ToBuffer {
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
-    constructor() : this(0)
+    constructor() : this(0, 0, 0)
+    constructor(v: Vec3ui) : this(v.x, v.y, v.z)
+    constructor(v: Vec2ui) : this(v.x, v.y, Uint(0))
 
-    constructor(v: Vec2t<out Number>) : this(v.x, v.y, 0)
-    constructor(v: Vec2t<out Number>, z: Number) : this(v.x, v.y, z)
-    constructor(x: Number, v: Vec2t<out Number>) : this(x, v.x, v.y)
+    // -- Explicit basic constructors --
+
+    @JvmOverloads
+    constructor(x: Uint, y: Uint = x, z: Uint = x) : this(0, intArrayOf(x.i, y.i, z.i))
+
+    @JvmOverloads
+    constructor(x: Int, y: Int = x, z: Int = x) : this(0, intArrayOf(x, y, z))
+
+    // -- Conversion scalar constructors --
+
+    constructor(v: Vec1t<out Number>) : this(v.x, v.x, v.x)
+
+    // Explicit converions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    @JvmOverloads
+    constructor(x: Number, y: Number = x, z: Number = x) : this(x.ui, y.ui, z.ui)
+
+    constructor(x: Vec1t<out Number>, y: Number, z: Number) : this(x.x, y, z)
+    constructor(x: Number, y: Vec1t<out Number>, z: Number) : this(x, y.x, z)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number) : this(x.x, y.x, z)
+    constructor(x: Number, y: Number, z: Vec1t<out Number>) : this(x, y, z.x)
+    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>) : this(x.x, y, z.x)
+    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x, y.x, z.x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x.x, y.x, z.x)
+
+    // -- Conversion vector constructors --
+
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    @JvmOverloads
+    constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy.x, xy.y, z)
+
+    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy.x, xy.y, z.x)
+    constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz.x, yz.y)
+    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x.x, yz.x, yz.y)
     constructor(v: Vec3t<out Number>) : this(v.x, v.y, v.z)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z)
 
+    constructor(v: Vec1bool) : this(v.x.ui, 0, 0)
     constructor(v: Vec2bool) : this(v.x.ui, v.y.ui, 0)
     constructor(v: Vec3bool) : this(v.x.ui, v.y.ui, v.z.ui)
     constructor(v: Vec4bool) : this(v.x.ui, v.y.ui, v.z.ui)
@@ -95,9 +126,6 @@ class Vec3ui(var ofs: Int, var array: IntArray) : Vec3t<Uint>(), ToBuffer {
 
     constructor(block: (Int) -> Uint) : this(block(0), block(1), block(2))
 
-    constructor(s: Number) : this(s, s, s)
-    constructor(x: Number, y: Number, z: Number) : this(x.ui, y.ui, z.ui)
-
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneUint: Boolean = false, bigEndian: Boolean = true) {
         x.v = if (oneByteOneUint) bytes[index].i else bytes.getInt(index, bigEndian)
@@ -118,7 +146,7 @@ class Vec3ui(var ofs: Int, var array: IntArray) : Vec3t<Uint>(), ToBuffer {
         this.z = z
     }
 
-    fun invoke(x: Uint, y: Uint, z: Uint): Vec3ui {
+    operator fun invoke(x: Uint, y: Uint, z: Uint): Vec3ui {
         this.x = x
         this.y = y
         this.z = z
@@ -131,7 +159,7 @@ class Vec3ui(var ofs: Int, var array: IntArray) : Vec3t<Uint>(), ToBuffer {
         this.z.v = z
     }
 
-    fun invoke(x: Int, y: Int, z: Int): Vec3ui {
+    operator fun invoke(x: Int, y: Int, z: Int): Vec3ui {
         this.x.v = x
         this.y.v = y
         this.z.v = z
@@ -144,7 +172,7 @@ class Vec3ui(var ofs: Int, var array: IntArray) : Vec3t<Uint>(), ToBuffer {
         this.z = z.ui
     }
 
-    override fun invoke(x: Number, y: Number, z: Number): Vec3ui {
+    override operator fun invoke(x: Number, y: Number, z: Number): Vec3ui {
         this.x = x.ui
         this.y = y.ui
         this.z = z.ui
@@ -610,8 +638,54 @@ class Vec3ui(var ofs: Int, var array: IntArray) : Vec3t<Uint>(), ToBuffer {
     fun shrAssign(bX: Number, bY: Number, bZ: Number) = shr(this, this, bX.i, bY.i, bZ.i)
 
 
-    override fun createInstance(x: Uint, y: Uint) = Vec2ui(x, y)
-    override fun createInstance(x: Uint, y: Uint, z: Uint) = Vec3ui(x, y, z)
+    infix fun allLessThan(ui: Uint): Boolean = x < ui && y < ui && z < ui
+    infix fun anyLessThan(ui: Uint): Boolean = x < ui || y < ui || z < ui
+    infix fun lessThan(ui: Uint): Vec3bool = Vec3bool { get(it) < ui }
+
+    infix fun allLessThanEqual(ui: Uint): Boolean = x <= ui && y <= ui && z <= ui
+    infix fun anyLessThanEqual(ui: Uint): Boolean = x <= ui || y <= ui || z <= ui
+    infix fun lessThanEqual(ui: Uint): Vec3bool = Vec3bool { get(it) <= ui }
+
+    infix fun allEqual(ui: Uint): Boolean = x == ui && y == ui && z == ui
+    infix fun anyEqual(ui: Uint): Boolean = x == ui || y == ui || z == ui
+    infix fun equal(ui: Uint): Vec3bool = Vec3bool { get(it) == ui }
+
+    infix fun allNotEqual(ui: Uint): Boolean = x != ui && y != ui && z != ui
+    infix fun anyNotEqual(ui: Uint): Boolean = x != ui || y != ui || z != ui
+    infix fun notEqual(ui: Uint): Vec3bool = Vec3bool { get(it) != ui }
+
+    infix fun allGreaterThan(ui: Uint): Boolean = x > ui && y > ui && z > ui
+    infix fun anyGreaterThan(ui: Uint): Boolean = x > ui || y > ui || z > ui
+    infix fun greaterThan(ui: Uint): Vec3bool = Vec3bool { get(it) > ui }
+
+    infix fun allGreaterThanEqual(ui: Uint): Boolean = x >= ui && y >= ui && z >= ui
+    infix fun anyGreaterThanEqual(ui: Uint): Boolean = x >= ui || y >= ui || z >= ui
+    infix fun greaterThanEqual(ui: Uint): Vec3bool = Vec3bool { get(it) >= ui }
+
+
+    infix fun allLessThan(v: Vec3ui): Boolean = x < v.x && y < v.y && z < v.z
+    infix fun anyLessThan(v: Vec3ui): Boolean = x < v.x || y < v.y || z < v.z
+    infix fun lessThan(v: Vec3ui): Vec3bool = Vec3bool { get(it) < v[it] }
+
+    infix fun allLessThanEqual(v: Vec3ui): Boolean = x <= v.x && y <= v.y && z <= v.z
+    infix fun anyLessThanEqual(v: Vec3ui): Boolean = x <= v.x || y <= v.y || z <= v.z
+    infix fun lessThanEqual(v: Vec3ui): Vec3bool = Vec3bool { get(it) <= v[it] }
+
+    infix fun allEqual(v: Vec3ui): Boolean = x == v.x && y == v.y && z == v.z
+    infix fun anyEqual(v: Vec3ui): Boolean = x == v.x || y == v.y || z == v.z
+    infix fun equal(v: Vec3ui): Vec3bool = Vec3bool { get(it) == v[it] }
+
+    infix fun allNotEqual(v: Vec3ui): Boolean = x != v.x && y != v.y && z != v.z
+    infix fun anyNotEqual(v: Vec3ui): Boolean = x != v.x || y != v.y || z != v.z
+    infix fun notEqual(v: Vec3ui): Vec3bool = Vec3bool { get(it) != v[it] }
+
+    infix fun allGreaterThan(v: Vec3ui): Boolean = x > v.x && y > v.y && z > v.z
+    infix fun anyGreaterThan(v: Vec3ui): Boolean = x > v.x || y > v.y || z > v.z
+    infix fun greaterThan(v: Vec3ui): Vec3bool = Vec3bool { get(it) > v[it] }
+
+    infix fun allGreaterThanEqual(v: Vec3ui): Boolean = x >= v.x && y >= v.y && z >= v.z
+    infix fun anyGreaterThanEqual(v: Vec3ui): Boolean = x >= v.x || y >= v.y || z >= v.z
+    infix fun greaterThanEqual(v: Vec3ui): Vec3bool = Vec3bool { get(it) >= v[it] }
 
 
     companion object : vec3ui_operators {
@@ -634,5 +708,5 @@ class Vec3ui(var ofs: Int, var array: IntArray) : Vec3t<Uint>(), ToBuffer {
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "[${x.v}, ${y.v}, ${z.v}]"
+    override fun toString(): String = "(${x.v}, ${y.v}, ${z.v})"
 }

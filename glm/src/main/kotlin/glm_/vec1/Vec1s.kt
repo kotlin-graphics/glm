@@ -1,17 +1,20 @@
 package glm_.vec1
 
 import glm_.*
+import glm_.vec1.operators.opVec1s
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import kool.BYTES
 import kool.pos
 import kool.ShortBuffer
 import kool.set
 import org.lwjgl.system.MemoryStack
 import java.nio.*
+import kotlin.math.abs
 
 /**
  * Created by GBarbieri on 04.04.2017.
@@ -19,9 +22,13 @@ import java.nio.*
 
 class Vec1s(x: Short) : Vec1t<Short>(x) {
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0)
+    constructor(s: Number) : this(s.s)
+
+    // -- Explicit basic constructors --
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     constructor(v: Vec1t<out Number>) : this(v.x)
     constructor(v: Vec2t<out Number>) : this(v.x)
@@ -64,8 +71,6 @@ class Vec1s(x: Short) : Vec1t<Short>(x) {
 
     constructor(block: (Int) -> Int) : this(block(0))
 
-    constructor(s: Number) : this(s.s)
-
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = false, bigEndian: Boolean = true) {
         x = if (oneByteOneInt) bytes[index].s else bytes.getShort(index, bigEndian)
@@ -89,7 +94,7 @@ class Vec1s(x: Short) : Vec1t<Short>(x) {
         this.x = x.s
     }
 
-    override fun invoke(x: Number): Vec1s {
+    override operator fun invoke(x: Number): Vec1s {
         this.x = x.s
         return this
     }
@@ -120,56 +125,9 @@ class Vec1s(x: Short) : Vec1t<Short>(x) {
 
     // -- Specific binary arithmetic operators --
 
-//    infix operator fun plus(b: Int) = plus(Vec1s(), this, b)
-//    infix operator fun plus(b: Vec1s) = plus(Vec1s(), this, b.x)
-//
-//    fun plus(b: Int, res: Vec1s) = plus(res, this, b)
-//    fun plus(b: Vec1s, res: Vec1s) = plus(res, this, b.x)
-//
-//    infix fun plusAssign(b: Short) = plus(this, this, b)
-//    infix fun plusAssign(b: Vec1s) = plus(this, this, b.x)
-//
-//
-//    infix operator fun minus(b: Short) = minus(Vec1s(), this, b)
-//    infix operator fun minus(b: Vec1s) = minus(Vec1s(), this, b.x)
-//
-//    fun minus(b: Int, res: Vec1s) = minus(res, this, b)
-//    fun minus(b: Vec1s, res: Vec1s) = minus(res, this, b.x)
-//
-//    infix fun minusAssign(b: Short) = minus(this, this, b)
-//    infix fun minusAssign(b: Vec1s) = minus(this, this, b.x)
-//
-//
-//    infix operator fun times(b: Short) = times(Vec1s(), this, b)
-//    infix operator fun times(b: Vec1s) = times(Vec1s(), this, b.x)
-//
-//    fun times(b: Int, res: Vec1s) = times(res, this, b)
-//    fun times(b: Vec1s, res: Vec1s) = times(res, this, b.x)
-//
-//    infix fun timesAssign(b: Int) = times(this, this, b)
-//    infix fun timesAssign(b: Vec1s) = times(this, this, b.x)
-//
-//
-//    infix operator fun div(b: Int) = div(Vec1i(), this, b)
-//    infix operator fun div(b: Vec1s) = div(Vec1i(), this, b.x)
-//
-//    fun div(b: Int, res: Vec1s) = div(res, this, b)
-//    fun div(b: Vec1s, res: Vec1s) = div(res, this, b.x)
-//
-//    infix fun divAssign(b: Int) = div(this, this, b)
-//    infix fun divAssign(b: Vec1s) = div(this, this, b.x)
-//
-//
-//    infix operator fun rem(b: Int) = rem(Vec1i(), this, b)
-//    infix operator fun rem(b: Vec1s) = rem(Vec1i(), this, b.x)
-//
-//    fun rem(b: Int, res: Vec1s) = rem(res, this, b)
-//    fun rem(b: Vec1s, res: Vec1s) = rem(res, this, b.x)
-//
-//    infix fun remAssign(b: Int) = rem(this, this, b)
-//    infix fun remAssign(b: Vec1s) = rem(this, this, b.x)
+//    TODO
 
-    companion object /*: vec1s_operators*/ {
+    companion object : opVec1s {
         const val length = Vec1t.length
         @JvmField
         val size = length * Short.BYTES
@@ -178,5 +136,8 @@ class Vec1s(x: Short) : Vec1t<Short>(x) {
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec1s && this[0] == other[0]
+    fun equal(b: Vec1s, epsilon: Int = 0): Boolean = abs(x - b.x) <= epsilon
+    fun notEqual(b: Vec1s, epsilon: Int = 0): Boolean = !equal(b, epsilon)
+
     override fun hashCode() = x.hashCode()
 }

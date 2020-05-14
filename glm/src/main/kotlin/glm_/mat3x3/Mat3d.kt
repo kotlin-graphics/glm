@@ -17,21 +17,19 @@ import glm_.mat4x4.Mat4d
 import glm_.quat.QuatD
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
+import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
+import kool.BYTES
 import kool.Ptr
-import kool.DoubleBuffer
 import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetDouble
 import org.lwjgl.system.MemoryUtil.memPutDouble
-import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
-import java.util.*
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -254,16 +252,16 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
             0.0, 0.0, z.d)
 
     operator fun invoke(a0: Double, a1: Double, a2: Double,
-               b0: Double, b1: Double, b2: Double,
-               c0: Double, c1: Double, c2: Double): Mat3d {
+                        b0: Double, b1: Double, b2: Double,
+                        c0: Double, c1: Double, c2: Double): Mat3d {
 
         put(a0, a1, a2, b0, b1, b2, c0, c1, c2)
         return this
     }
 
     operator fun invoke(a0: Number, a1: Number, a2: Number,
-               b0: Number, b1: Number, b2: Number,
-               c0: Number, c1: Number, c2: Number): Mat3d {
+                        b0: Number, b1: Number, b2: Number,
+                        c0: Number, c1: Number, c2: Number): Mat3d {
 
         put(a0.d, a1.d, a2.d, b0.d, b1.d, b2.d, c0.d, c1.d, c2.d)
         return this
@@ -328,10 +326,10 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
         return res
     }
 
-    fun toMat4() = to(Mat4())
+    fun toMat4(): Mat4d = to(Mat4d())
 
-    infix fun to(res: QuatD) = glm.quatD_cast(this, res)
-    fun toQuatD() = glm.quatD_cast(this, QuatD())
+    infix fun to(res: QuatD): QuatD = glm.quatD_cast(this, res)
+    fun toQuatD(): QuatD = glm.quatD_cast(this, QuatD())
 
     fun toDoubleArray(): DoubleArray = to(DoubleArray(length), 0)
     infix fun to(doubles: DoubleArray): DoubleArray = to(doubles, 0)
@@ -480,24 +478,28 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     }
 
     @JvmOverloads
-    fun rotateX(angle: Double, res: Mat3d = Mat3d()) = glm.rotateX(res, this, angle)
-    @JvmOverloads
-    fun rotateY(angle: Double, res: Mat3d = Mat3d()) = glm.rotateY(res, this, angle)
-    @JvmOverloads
-    fun rotateZ(angle: Double, res: Mat3d = Mat3d()) = glm.rotateZ(res, this, angle)
-    @JvmOverloads
-    fun rotateXYZ(angle: Vec3d, res: Mat3d = Mat3d()) = glm.rotateXYZ(res, this, angle.x, angle.y, angle.z)
-    @JvmOverloads
-    fun rotateXYZ(angleX: Double, angleY: Double, angleZ: Double, res: Mat3d = Mat3d()) = glm.rotateXYZ(res, this, angleX, angleY, angleZ)
+    fun rotateX(angle: Double, res: Mat3d = Mat3d()) = glm.rotateX(this, angle, res)
 
-    fun rotateXassign(angle: Double) = glm.rotateX(this, this, angle)
-    fun rotateYassign(angle: Double) = glm.rotateY(this, this, angle)
-    fun rotateZassign(angle: Double) = glm.rotateZ(this, this, angle)
-    fun rotateXYZassign(angle: Vec3d) = glm.rotateXYZ(this, this, angle.x, angle.y, angle.z)
-    fun rotateXYZassign(angleX: Double, angleY: Double, angleZ: Double) = glm.rotateXYZ(this, this, angleX, angleY, angleZ)
+    @JvmOverloads
+    fun rotateY(angle: Double, res: Mat3d = Mat3d()) = glm.rotateY(this, angle, res)
+
+    @JvmOverloads
+    fun rotateZ(angle: Double, res: Mat3d = Mat3d()) = glm.rotateZ(this, angle, res)
+
+    @JvmOverloads
+    fun rotateXYZ(angle: Vec3d, res: Mat3d = Mat3d()) = glm.rotateXYZ(this, angle.x, angle.y, angle.z, res)
+
+    @JvmOverloads
+    fun rotateXYZ(angleX: Double, angleY: Double, angleZ: Double, res: Mat3d = Mat3d()) = glm.rotateXYZ(this, angleX, angleY, angleZ, res)
+
+    fun rotateXassign(angle: Double) = glm.rotateX(this, angle, this)
+    fun rotateYassign(angle: Double) = glm.rotateY(this, angle, this)
+    fun rotateZassign(angle: Double) = glm.rotateZ(this, angle, this)
+    fun rotateXYZassign(angle: Vec3d) = glm.rotateXYZ(this, angle.x, angle.y, angle.z, this)
+    fun rotateXYZassign(angleX: Double, angleY: Double, angleZ: Double) = glm.rotateXYZ(this, angleX, angleY, angleZ, this)
 
 
-    infix fun isEqual(b: Mat3d) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2])
+//    infix fun isEqual(b: Mat3d) = this[0].isEqual(b[0]) && this[1].isEqual(b[1]) && this[2].isEqual(b[2])
 
     // TODO others
     override var a0: Double
@@ -554,13 +556,22 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
                         memGetDouble(ptr + Double.BYTES * 6), memGetDouble(ptr + Double.BYTES * 7), memGetDouble(ptr + Double.BYTES * 8))
             }
         }
+
+        val identity: Mat3d
+            get() = Mat3d(1.0)
     }
 
     override fun size() = size
 
     override fun elementCount() = length
 
-    override fun equals(other: Any?) = other is Mat3d && Arrays.equals(array, other.array)
-
+    override fun equals(other: Any?) = other is Mat3d && array.contentEquals(other.array)
     override fun hashCode() = 31 * (31 * this[0].hashCode() + this[1].hashCode()) + this[2].hashCode()
+
+    fun equal(b: Mat3d, epsilon: Double, res: Vec3bool = Vec3bool()): Vec3bool = glm.equal(this, b, epsilon, res)
+    fun equal(b: Mat3d, epsilon: Vec3d, res: Vec3bool = Vec3bool()): Vec3bool = glm.equal(this, b, epsilon, res)
+    fun notEqual(b: Mat3d, epsilon: Double, res: Vec3bool = Vec3bool()): Vec3bool = glm.notEqual(this, b, epsilon, res)
+    fun notEqual(b: Mat3d, epsilon: Vec3d, res: Vec3bool = Vec3bool()): Vec3bool = glm.notEqual(this, b, epsilon, res)
+    fun allEqual(b: Mat3d, epsilon: Double = glm.ε): Boolean = glm.allEqual(this, b, epsilon)
+    fun anyNotEqual(b: Mat3d, epsilon: Double = glm.ε): Boolean = glm.anyNotEqual(this, b, epsilon)
 }

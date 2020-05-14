@@ -25,8 +25,8 @@ class testCoreMat3 : StringSpec() {
             val b = v * m
             val p = x * m
             val q = m * x
-            val R = m != q
-            val S = m == l
+            val R = m.anyNotEqual(q, Float.MIN_VALUE)
+            val S = m.allEqual(l, Float.MIN_VALUE)
 
             (S && !R) shouldBe true
         }
@@ -41,9 +41,9 @@ class testCoreMat3 : StringSpec() {
                 val inverse = matrix.inverse()
                 val identity = matrix * inverse
 
-                glm.all(glm.epsilonEqual(identity[0], Vec3(1f, 0f, 0f), Vec3(0.01f))) shouldBe true
-                glm.all(glm.epsilonEqual(identity[1], Vec3(0f, 1f, 0f), Vec3(0.01f))) shouldBe true
-                glm.all(glm.epsilonEqual(identity[2], Vec3(0f, 0f, 1f), Vec3(0.01f))) shouldBe true
+                identity[0].shouldEqual(Vec3(1f, 0f, 0f), 0.01f)
+                identity[1].shouldEqual(Vec3(0f, 1f, 0f), 0.01f)
+                identity[2].shouldEqual(Vec3(0f, 0f, 1f), 0.01f)
             }
             run {
                 val matrix = Mat3(
@@ -52,26 +52,26 @@ class testCoreMat3 : StringSpec() {
                         0.3f, 0.5f, 0.7f)
                 val identity = matrix / matrix
 
-                glm.all(glm.epsilonEqual(identity[0], Vec3(1f, 0f, 0f), Vec3(0.01f))) shouldBe true
-                glm.all(glm.epsilonEqual(identity[1], Vec3(0f, 1f, 0f), Vec3(0.01f))) shouldBe true
-                glm.all(glm.epsilonEqual(identity[2], Vec3(0f, 0f, 1f), Vec3(0.01f))) shouldBe true
+                identity[0].shouldEqual(Vec3(1f, 0f, 0f), 0.01f)
+                identity[1].shouldEqual(Vec3(0f, 1f, 0f), 0.01f)
+                identity[2].shouldEqual(Vec3(0f, 0f, 1f), 0.01f)
             }
         }
 
 
         "constructor" {
 
-            Mat3 { i -> i } shouldBe Mat3(
-                    0, 1, 2,
-                    3, 4, 5,
-                    6, 7, 8)
-            Mat3(arrayListOf(
-                    0f, 1f, 2f,
-                    3f, 4f, 5f,
-                    6f, 7f, 8f)) shouldBe Mat3(
-                    0, 1, 2,
-                    3, 4, 5,
-                    6, 7, 8)
+            val m0 = Mat3(
+                    Vec3(0, 1, 2),
+                    Vec3(3, 4, 5),
+                    Vec3(6, 7, 8))
+
+            val m1 = Mat3 (0, 1, 2, 3, 4, 5, 6, 7, 8 )
+
+            val m2 = Mat3 { i -> i }
+
+            m0 shouldEqual m2
+            m1 shouldEqual m2
         }
     }
 }

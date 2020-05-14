@@ -1,30 +1,27 @@
 package glm_.vec2
 
 import glm_.*
+import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1t
 import glm_.vec2.operators.opVec2ul
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.Ptr
-import kool.LongBuffer
-import kool.pos
-import kool.set
+import kool.*
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetLong
 import org.lwjgl.system.MemoryUtil.memPutLong
 import unsigned.Ulong
 import java.io.PrintStream
 import java.nio.*
+import kotlin.math.abs
 
 /**
  * Created by elect on 08/10/16.
  */
 
 class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
-
-    constructor(x: Ulong, y: Ulong) : this(0, longArrayOf(x.v, y.v))
-    constructor(x: Long, y: Long) : this(0, longArrayOf(x, y))
 
     override var x: Ulong
         get() = Ulong(array[ofs])
@@ -40,13 +37,44 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
 
-    // -- Explicit basic, conversion other main.and conversion vector constructors --
+    // -- Implicit basic constructors --
 
     constructor() : this(0)
+    constructor(v: Vec2ul) : this(v.x, v.y)
+
+    // -- Explicit basic constructors --
+
+    @JvmOverloads
+    constructor(x: Long, y: Long = x) : this(x.ul, y.ul)
+
+    @JvmOverloads
+    constructor(x: Ulong, y: Ulong = x) : this(0, longArrayOf(x.v, y.v))
+
+    // -- Conversion constructors --
+
+    @JvmOverloads
+    constructor(x: Number, y: Number = x) : this(x.ul, y.ul)
+
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+    @JvmOverloads
+    constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
 
     constructor(v: Vec2t<out Number>) : this(v.x, v.y)
     constructor(v: Vec3t<out Number>) : this(v.x, v.y)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y)
+
+    @JvmOverloads
+    constructor(x: Boolean, y: Boolean = x) : this(x.ul, y.ul)
+
+    constructor(x: Boolean, v: Vec1bool) : this(x.ul, v.x.ul)
+    @JvmOverloads
+    constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.ul, y.ul)
+
+    constructor(x: Vec1bool, y: Vec1bool) : this(x.x.ul, y.x.ul)
 
     constructor(v: Vec2bool) : this(v.x.ul, v.y.ul)
     constructor(v: Vec3bool) : this(v.x.ul, v.y.ul)
@@ -83,9 +111,6 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
 
     constructor(block: (Int) -> Ulong) : this(block(0), block(1))
 
-    constructor(s: Number) : this(s, s)
-    constructor(x: Number, y: Number) : this(x.ul, y.ul)
-
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneUlong: Boolean = false, bigEndian: Boolean = true) {
         x.v = if (oneByteOneUlong) bytes[index].L else bytes.getLong(index, bigEndian)
@@ -103,7 +128,7 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
         this.y = y
     }
 
-    fun invoke(x: Ulong, y: Ulong): Vec2ul {
+    operator fun invoke(x: Ulong, y: Ulong): Vec2ul {
         this.x = x
         this.y = y
         return this
@@ -114,7 +139,7 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
         this.y.v = y
     }
 
-    fun invoke(x: Long, y: Long): Vec2ul {
+    operator fun invoke(x: Long, y: Long): Vec2ul {
         this.x.v = x
         this.y.v = y
         return this
@@ -125,7 +150,7 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
         this.y = y.ul
     }
 
-    override fun invoke(x: Number, y: Number): Vec2ul {
+    override operator fun invoke(x: Number, y: Number): Vec2ul {
         this.x = x.ul
         this.y = y.ul
         return this
@@ -589,7 +614,54 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
     fun shrAssign(bX: Number, bY: Number) = shr(this, this, bX.L, bY.L)
 
 
-    override fun createInstance(x: Ulong, y: Ulong) = Vec2ul(x, y)
+    infix fun allLessThan(ul: Ulong): Boolean = x < ul && y < ul
+    infix fun anyLessThan(ul: Ulong): Boolean = x < ul || y < ul
+    infix fun lessThan(ul: Ulong): Vec2bool = Vec2bool { get(it) < ul }
+
+    infix fun allLessThanEqual(ul: Ulong): Boolean = x <= ul && y <= ul
+    infix fun anyLessThanEqual(ul: Ulong): Boolean = x <= ul || y <= ul
+    infix fun lessThanEqual(ul: Ulong): Vec2bool = Vec2bool { get(it) <= ul }
+
+    infix fun allEqual(ul: Ulong): Boolean = x == ul && y == ul
+    infix fun anyEqual(ul: Ulong): Boolean = x == ul || y == ul
+    infix fun equal(ul: Ulong): Vec2bool = Vec2bool { get(it) == ul }
+
+    infix fun allNotEqual(ul: Ulong): Boolean = x != ul && y != ul
+    infix fun anyNotEqual(ul: Ulong): Boolean = x != ul || y != ul
+    infix fun notEqual(ul: Ulong): Vec2bool = Vec2bool { get(it) != ul }
+
+    infix fun allGreaterThan(ul: Ulong): Boolean = x > ul && y > ul
+    infix fun anyGreaterThan(ul: Ulong): Boolean = x > ul || y > ul
+    infix fun greaterThan(ul: Ulong): Vec2bool = Vec2bool { get(it) > ul }
+
+    infix fun allGreaterThanEqual(ul: Ulong): Boolean = x >= ul && y >= ul
+    infix fun anyGreaterThanEqual(ul: Ulong): Boolean = x >= ul || y >= ul
+    infix fun greaterThanEqual(ul: Ulong): Vec2bool = Vec2bool { get(it) >= ul }
+
+
+    infix fun allLessThan(v: Vec2ul): Boolean = x < v.x && y < v.y
+    infix fun anyLessThan(v: Vec2ul): Boolean = x < v.x || y < v.y
+    infix fun lessThan(v: Vec2ul): Vec2bool = Vec2bool { get(it) < v[it] }
+
+    infix fun allLessThanEqual(v: Vec2ul): Boolean = x <= v.x && y <= v.y
+    infix fun anyLessThanEqual(v: Vec2ul): Boolean = x <= v.x || y <= v.y
+    infix fun lessThanEqual(v: Vec2ul): Vec2bool = Vec2bool { get(it) <= v[it] }
+
+    infix fun allEqual(v: Vec2ul): Boolean = x == v.x && y == v.y
+    infix fun anyEqual(v: Vec2ul): Boolean = x == v.x || y == v.y
+    infix fun equal(v: Vec2ul): Vec2bool = Vec2bool { get(it) == v[it] }
+
+    infix fun allNotEqual(v: Vec2ul): Boolean = x != v.x && y != v.y
+    infix fun anyNotEqual(v: Vec2ul): Boolean = x != v.x || y != v.y
+    infix fun notEqual(v: Vec2ul): Vec2bool = Vec2bool { get(it) != v[it] }
+
+    infix fun allGreaterThan(v: Vec2ul): Boolean = x > v.x && y > v.y
+    infix fun anyGreaterThan(v: Vec2ul): Boolean = x > v.x || y > v.y
+    infix fun greaterThan(v: Vec2ul): Vec2bool = Vec2bool { get(it) > v[it] }
+
+    infix fun allGreaterThanEqual(v: Vec2ul): Boolean = x >= v.x && y >= v.y
+    infix fun anyGreaterThanEqual(v: Vec2ul): Boolean = x >= v.x || y >= v.y
+    infix fun greaterThanEqual(v: Vec2ul): Vec2bool = Vec2bool { get(it) >= v[it] }
 
 
     companion object : opVec2ul {
@@ -604,6 +676,7 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
     override fun size() = size
 
     override fun equals(other: Any?) = other is Vec2ul && this[0] == other[0] && this[1] == other[1]
+
     override fun hashCode() = 31 * x.v.hashCode() + y.v.hashCode()
 
     @JvmOverloads
@@ -611,6 +684,4 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
-
-    override fun toString(): String = "[${x.v}, ${y.v}]"
 }
