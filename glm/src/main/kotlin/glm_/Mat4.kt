@@ -1,3 +1,4 @@
 package glm_
 
-object glm
+class Mat4 {
+}
