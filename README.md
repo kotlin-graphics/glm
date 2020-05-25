@@ -1,4 +1,4 @@
-![glm](glm/src/main/resources/logo-mini.png)
+![glm](src/main/resources/logo-mini.png)
 
 [![Build Status](https://github.com/kotlin-graphics/glm/workflows/build/badge.svg)](https://github.com/kotlin-graphics/glm/actions?workflow=build)
 [![license](https://img.shields.io/badge/License-MIT-orange.svg)](https://github.com/kotlin-graphics/glm/blob/master/LICENSE) 
@@ -26,7 +26,7 @@ Don't hesitate to contribute to the project by submitting [issues](https://githu
 import glm_.vec2.Vec2
 import glm_.vec3.Vec3
 import glm_.mat4x4.Mat4
-import glm_.glm
+import glm
 
 fun camera(translate: Float, rotate: Vec2): Mat4 {
 

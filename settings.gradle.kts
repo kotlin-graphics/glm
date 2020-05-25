@@ -8,7 +8,7 @@ pluginManagement {
 	}
 }
 
-rootProject.buildFileName = 'build.gradle'
+rootProject.name = "glm"
 
-include "glm"
-include "glm-test"
+//include "glm"
+//include "glm-test"
