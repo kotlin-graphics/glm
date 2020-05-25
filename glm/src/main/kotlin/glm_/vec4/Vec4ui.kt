@@ -232,7 +232,7 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
         return buf
     }
 
-    fun toIntBufferStack(): IntBuffer = to(MemoryStack.stackPush().mallocInt(length), 0)
+    fun toIntBufferStack(): IntBuffer = to(MemoryStack.stackGet().mallocInt(length), 0)
     infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(length), 0)
     fun toIntBuffer(): IntBuffer = to(IntBuffer(length), 0)
     infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)

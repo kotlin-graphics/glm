@@ -11,6 +11,8 @@ import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.BYTES
+import kool.BytePtr
+import kool.FloatPtr
 import kool.pos
 import java.nio.*
 import kotlin.math.abs
@@ -59,6 +61,7 @@ class Vec1b(x: Byte) : Vec1t<Byte>(x) {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index])
 
     constructor(block: (Int) -> Byte) : this(block(0))
+    constructor(ptr: BytePtr) : this(ptr[0])
 
 
     fun put(x: Byte) {

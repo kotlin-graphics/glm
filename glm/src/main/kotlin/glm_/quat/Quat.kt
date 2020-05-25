@@ -12,6 +12,7 @@ import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
 import kool.BYTES
+import kool.FloatPtr
 import kool.Ptr
 import org.lwjgl.system.MemoryUtil.memGetFloat
 import org.lwjgl.system.MemoryUtil.memPutFloat
@@ -78,6 +79,8 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
     constructor(inputStream: InputStream, bigEndian: Boolean = true) :
             this(inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian))
+
+    constructor(ptr: FloatPtr) : this(block = { i -> ptr[i] })
 
     infix fun to(res: Mat3) = glm.mat3_cast(this, res)
     fun toMat3() = glm.mat3_cast(this, Mat3())

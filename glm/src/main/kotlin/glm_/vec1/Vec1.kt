@@ -8,9 +8,7 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.BYTES
-import kool.pos
-import kool.set
+import kool.*
 import java.nio.*
 import kotlin.math.abs
 
@@ -68,6 +66,7 @@ class Vec1(x: Float) : Vec1t<Float>(x), ToFloatBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index])
 
     constructor(block: (Int) -> Float) : this(block(0))
+    constructor(ptr: FloatPtr) : this(ptr[0])
 
     constructor(s: Number) : this(s.f)
 
@@ -118,6 +117,13 @@ class Vec1(x: Float) : Vec1t<Float>(x), ToFloatBuffer {
         buf[offset] = x
         return buf
     }
+
+    infix fun to(ptr: FloatPtr){
+        ptr[0] = x
+    }
+
+    infix fun to(ptr: Ptr) = to(FloatPtr(ptr))
+    infix fun to(ptr: BytePtr) = to(FloatPtr(ptr.adr))
 
     // -- Unary arithmetic operators --
 

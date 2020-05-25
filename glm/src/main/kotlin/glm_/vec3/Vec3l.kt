@@ -111,6 +111,7 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
     constructor(block: (Int) -> Long) : this(block(0), block(1), block(2))
+    // constructor(ptr: LongPtr) : this(ptr[0], ptr[1], ptr[2]) clash, use Companion::fromPointer
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneLong: Boolean = false, bigEndian: Boolean = true) {
@@ -174,7 +175,7 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>(), ToBuffer {
         return buf
     }
 
-    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackPush().mallocLong(length), 0)
+    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackGet().mallocLong(length), 0)
     infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(length), 0)
     fun toLongBuffer(): LongBuffer = to(LongBuffer(length), 0)
     infix fun to(buf: LongBuffer): LongBuffer = to(buf, buf.pos)

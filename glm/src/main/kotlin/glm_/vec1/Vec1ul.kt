@@ -128,7 +128,7 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
         return buf
     }
 
-    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackPush().mallocLong(length), 0)
+    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackGet().mallocLong(length), 0)
     infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(length), 0)
     fun toLongBuffer(): LongBuffer = to(LongBuffer(length), 0)
     infix fun to(buf: LongBuffer): LongBuffer = to(buf, buf.pos)

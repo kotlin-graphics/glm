@@ -131,6 +131,7 @@ class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 2])
 
     constructor(block: (Int) -> Int) : this(block(0), block(1), block(2), block(3))
+    constructor(ptr: IntPtr) : this(ptr[0], ptr[1], ptr[2], ptr[3])
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = false, bigEndian: Boolean = true) {
@@ -202,7 +203,7 @@ class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>(), ToBuffer {
         return buf
     }
 
-    fun toIntBufferStack(): IntBuffer = to(MemoryStack.stackPush().mallocInt(length), 0)
+    fun toIntBufferStack(): IntBuffer = to(MemoryStack.stackGet().mallocInt(length), 0)
     infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(length), 0)
     fun toIntBuffer(): IntBuffer = to(IntBuffer(length), 0)
     infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)

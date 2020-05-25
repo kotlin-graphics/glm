@@ -8,6 +8,7 @@ import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
 import kool.BYTES
+import kool.DoublePtr
 import kool.Ptr
 import org.lwjgl.system.MemoryUtil.memGetDouble
 import org.lwjgl.system.MemoryUtil.memPutDouble
@@ -81,6 +82,8 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
     constructor(q: QuatD) : this(q.w.d, q.x.d, q.y.d, q.z.d)
     constructor(w: Number, x: Number, y: Number, z: Number) : this(w.d, x.d, y.d, z.d)
     constructor(vec4: Vec4t<*>) : this(vec4.w.d, vec4.x.d, vec4.y.d, vec4.z.d)
+
+    constructor(ptr: DoublePtr) : this(block = { i -> ptr[i] })
 
 
     fun put(w: Double, x: Double, y: Double, z: Double): QuatD {

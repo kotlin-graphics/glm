@@ -17,10 +17,7 @@ import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
-import kool.BYTES
-import kool.Ptr
-import kool.pos
-import kool.set
+import kool.*
 import org.lwjgl.system.MemoryUtil.memGetFloat
 import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.io.PrintStream
@@ -70,6 +67,8 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     constructor(buffer: FloatBuffer, index: Int = buffer.pos) : this(
             buffer[index], buffer[index + 1],
             buffer[index + 2], buffer[index + 3])
+
+    constructor(ptr: FloatPtr) : this(block = { i -> ptr[i] })
 
     // -- Matrix conversions --
 
@@ -398,6 +397,9 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     }
 
     override fun size() = size
+
+    override val size: Int
+        get() = Companion.size
 
     override fun elementCount() = length
 
