@@ -1,4 +1,0 @@
-rootProject.buildFileName = 'build.gradle'
-
-include "glm"
-include "glm-test"

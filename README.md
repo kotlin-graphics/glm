@@ -1,4 +1,4 @@
-![glm](glm/src/main/resources/logo-mini.png)
+![glm](src/main/resources/logo-mini.png)
 
 [![Build Status](https://github.com/kotlin-graphics/glm/workflows/build/badge.svg)](https://github.com/kotlin-graphics/glm/actions?workflow=build)
 [![license](https://img.shields.io/badge/License-MIT-orange.svg)](https://github.com/kotlin-graphics/glm/blob/master/LICENSE) 
