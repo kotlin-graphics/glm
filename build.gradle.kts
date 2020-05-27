@@ -1,4 +1,3 @@
-import org.gradle.api.attributes.LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE
 import org.gradle.api.attributes.java.TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE
 import org.gradle.internal.os.OperatingSystem.*
 import org.jetbrains.dokka.gradle.DokkaTask
@@ -17,8 +16,8 @@ val kotestVersion = "4.0.5"
 
 
 val kx = "com.github.kotlin-graphics"
-val unsignedVersion = "0af6fae4"
-val koolVersion = "3962a0be"
+val unsignedVersion = "87630c4d"
+val koolVersion = "3be0cc2f"
 val lwjglVersion = "3.2.3"
 val lwjglNatives = when (current()) {
     WINDOWS -> "windows"
@@ -33,7 +32,6 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
     implementation(kotlin("stdlib-jdk8"))
 
     implementation("$kx:kotlin-unsigned:$unsignedVersion")
@@ -44,17 +42,9 @@ dependencies {
         implementation("org.lwjgl:lwjgl$it:$lwjglVersion:natives-$lwjglNatives")
     }
 
-    attributesSchema.attribute(LIBRARY_ELEMENTS_ATTRIBUTE).compatibilityRules.add(ModularJarCompatibilityRule::class)
-    components { withModule<ModularKotlinRule>(kotlin("stdlib")) }
-    components { withModule<ModularKotlinRule>(kotlin("stdlib-jdk8")) }
-
     listOf("runner-junit5", "assertions-core", "runner-console"/*, "property"*/).forEach {
         testImplementation("io.kotest:kotest-$it-jvm:$kotestVersion")
     }
-}
-
-java {
-    modularity.inferModulePath.set(true)
 }
 
 tasks {
@@ -65,20 +55,15 @@ tasks {
 
     compileKotlin {
         kotlinOptions {
-            jvmTarget = "11"
+            jvmTarget = "1.8"
             freeCompilerArgs = listOf("-XXLanguage:+InlineClasses")
         }
-        sourceCompatibility = "11"
+        sourceCompatibility = "1.8"
     }
 
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "11"
-        sourceCompatibility = "11"
-    }
-
-    compileJava {
-        // this is needed because we have a separate compile step in this example with the 'module-info.java' is in 'main/java' and the Kotlin code is in 'main/kotlin'
-        options.compilerArgs = listOf("--patch-module", "$moduleName=${sourceSets.main.get().output.asPath}")
+        kotlinOptions.jvmTarget = "1.8"
+        sourceCompatibility = "1.8"
     }
 
     withType<Test> { useJUnitPlatform() }
@@ -104,41 +89,5 @@ artifacts {
 
 // == Add access to the 'modular' variant of kotlin("stdlib"): Put this into a buildSrc plugin and reuse it in all your subprojects
 configurations.all {
-    attributes.attribute(TARGET_JVM_VERSION_ATTRIBUTE, 11)
-    val n = name.toLowerCase()
-    if (n.endsWith("compileclasspath") || n.endsWith("runtimeclasspath"))
-        attributes.attribute(LIBRARY_ELEMENTS_ATTRIBUTE, objects.named("modular-jar"))
-    if (n.endsWith("compile") || n.endsWith("runtime"))
-        isCanBeConsumed = false
-}
-
-abstract class ModularJarCompatibilityRule : AttributeCompatibilityRule<LibraryElements> {
-    override fun execute(details: CompatibilityCheckDetails<LibraryElements>): Unit = details.run {
-        if (producerValue?.name == LibraryElements.JAR && consumerValue?.name == "modular-jar")
-            compatible()
-    }
-}
-
-abstract class ModularKotlinRule : ComponentMetadataRule {
-
-    @javax.inject.Inject
-    abstract fun getObjects(): ObjectFactory
-
-    override fun execute(ctx: ComponentMetadataContext) {
-        val id = ctx.details.id
-        listOf("compile", "runtime").forEach { baseVariant ->
-            ctx.details.addVariant("${baseVariant}Modular", baseVariant) {
-                attributes {
-                    attribute(LIBRARY_ELEMENTS_ATTRIBUTE, getObjects().named("modular-jar"))
-                }
-                withFiles {
-                    removeAllFiles()
-                    addFile("${id.name}-${id.version}-modular.jar")
-                }
-                withDependencies {
-                    clear() // 'kotlin-stdlib-common' and  'annotations' are not modules and are also not needed
-                }
-            }
-        }
-    }
+    attributes.attribute(TARGET_JVM_VERSION_ATTRIBUTE, 8)
 }
