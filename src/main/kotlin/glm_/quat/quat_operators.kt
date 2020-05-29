@@ -59,7 +59,7 @@ interface quat_operators {
     }
 
     fun times(res: Vec3, a: Vec3, b: Quat): Vec3 {
-        val dot = dot(a, a)
+        val dot = dot(b, b)
         val iW = b.w / dot
         val iX = -b.x / dot
         val iY = -b.y / dot
