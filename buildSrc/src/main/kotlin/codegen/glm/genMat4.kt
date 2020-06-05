@@ -12,14 +12,7 @@ fun genMat4(): FileSpec =
 
             buildClass("Mat4") {
 
-                property {
-                    name = "storage"
-                    type = FLOAT_ARRAY
-                    initializer = "FloatArray(16)"
-                }
-//                property("storage", FLOAT_ARRAY, KModifier.PRIVATE)
-//
-//
+                `val`("storage", FLOAT_ARRAY,"FloatArray(16)")
 //
 //                mutableProperty("x", FLOAT) {
 //                    getter {

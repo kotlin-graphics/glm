@@ -11,7 +11,7 @@ fun genVec2(): FileSpec =
             indent("\t")
 
             buildClass("Vec2") {
-                property("storage", FLOAT_ARRAY, KModifier.PRIVATE)
+                property(KModifier.PRIVATE,"storage", FLOAT_ARRAY)
 
                 mutableProperty("x", FLOAT) {
                     getter {

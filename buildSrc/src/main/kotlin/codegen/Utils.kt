@@ -193,6 +193,18 @@ inline fun TypeSpec.Builder.property(
 }
 
 @KotlinPoetDsl
+inline fun TypeSpec.Builder.`val`(
+        name: String,
+        type: TypeName,
+        initializer: String? = null,
+        block: PropertySpec.Builder.() -> Unit = {}
+): PropertySpec = PropertySpec.builder(name, type)
+        .apply(block)
+        .apply { initializer?.let(::initializer) }
+        .build()
+        .also { addProperty(it) }
+
+@KotlinPoetDsl
 fun PropertySpec.Builder.modifiers(vararg modifiers: KModifier) {
     addModifiers(*modifiers)
 }
