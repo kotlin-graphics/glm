@@ -1,5 +1,8 @@
 package codegen.dsl
 
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.FunSpec
+
 /*
     Here’s a HelloWorld file:
 
@@ -16,7 +19,7 @@ package codegen.dsl
 
 fun example1() =
         cd("examples", touch = "Greeter") {
-            val greeterClass = Clazz("Greeter")(`val`("name".String)) {
+            val greeterClass = Clazz("Greeter")(`val`("name").String) {
                 fn("greet") {
                     "println(%P)"("Hello, \$name")
                 }
@@ -78,23 +81,20 @@ fun example5() =
         cd("examples", touch = "Example5") {
 
             fun whatsMyNameYo(name: String) =
-                    fn(name).String {
-                        "return %S"(name)
-                    }
+                    fn(name).String `=` "return %S"(name)
 
             Clazz("HelloWorld") {
-//                whatsMyNameYo("slimShady")
-//                whatsMyNameYo("eminem")
-//                whatsMyNameYo("marshallMathers")
+                whatsMyNameYo("slimShady")
+                whatsMyNameYo("eminem")
+                whatsMyNameYo("marshallMathers")
             }
         }
 
 fun example6() =
         cd("examples", touch = "Example6") {
-
-            val amount = 50
-            val stringWithADollar = "Your total is " + "$" + "amount"
-            fn("printTotal").String {
-                "return %P"(stringWithADollar)
-            }
+            val stringWithADollar = "Your total is " + "$" + "50"
+            fn("printTotal").String `=` "return %S"(stringWithADollar)
+            `val`("amount") `=` 50
+            val stringWithADollar2 = "Your total is " + "$" + "amount"
+            fn("printTotal2").String `=` "return %P"(stringWithADollar2)
         }

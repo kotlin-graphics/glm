@@ -22,9 +22,9 @@ class Floats(size: Int) : Assign() {
 
 abstract class Prop(
         val name: String,
+        val clazz: KClass<*>,
         val modifiers: ArrayList<KModifier> = arrayListOf()
 ) {
-    var clazz: KClass<*>? = null
 
     abstract val mutable: Boolean
     infix fun `=`(assign: Assign) {
@@ -35,37 +35,56 @@ abstract class Prop(
     }
 }
 
-class Val(name: String, modifiers: ArrayList<KModifier> = arrayListOf()) : Prop(name, modifiers) {
+class ValBase(val name: String, val modifiers: ArrayList<KModifier> = arrayListOf()) {
+
+    val String: Val
+        get() = Val(name, kotlin.String::class, modifiers)
+}
+
+class Val(name: String, clazz: KClass<*>, modifiers: ArrayList<KModifier> = arrayListOf()) :
+        Prop(name, clazz, modifiers) {
+
     override val mutable: Boolean
         get() = false
 
-    constructor(param: Param) : this(param.name) {
-        clazz = param.clazz
-    }
+//    constructor(param: Param) : this(param.name) {
+//        clazz = param.clazz
+//    }
 }
 
-class Var(name: String, modifiers: ArrayList<KModifier> = arrayListOf()) : Prop(name, modifiers) {
+class Var(name: String, clazz: KClass<*>, modifiers: ArrayList<KModifier> = arrayListOf()) :
+        Prop(name, clazz, modifiers) {
+
     override val mutable: Boolean
         get() = true
 
-    constructor(param: Param) : this(param.name) {
-        clazz = param.clazz
-    }
+//    constructor(param: Param) : this(param.name) {
+//        clazz = param.clazz
+//    }
 }
 
-class VarArg(name: String, modifiers: ArrayList<KModifier> = arrayListOf()) : Prop(name, modifiers) {
-    override val mutable: Boolean
-        get() = false
-
-    constructor(param: Param) : this(param.name) {
-        clazz = param.clazz
-    }
-}
+//class VarArg(name: String, clazz: KClass<*>, modifiers: ArrayList<KModifier> = arrayListOf()) :
+//        Prop(name, clazz, modifiers) {
+//
+//    override val mutable: Boolean
+//        get() = false
+//
+//    constructor(param: Param) : this(param.name) {
+//        clazz = param.clazz
+//    }
+//}
 
 class FnRet(val clazz: KClass<*>? = null) : Fn() {
 
-    infix fun `=`(statement: String) {
+    // same as invoke without block()
+    infix fun `=`(any: Any) {
         clazz?.let(funBuilder::returns)
+        val fb = funBuilder.build()
+        typeStack.pop()
+        if (typeStack.last() == Type.file)
+            fileBuilder.addFunction(fb)
+        else
+            classBuilder.addFunction(fb)
     }
 
     operator fun invoke(block: Fn.() -> Unit) {
@@ -97,8 +116,9 @@ open class Fn {
 
     fun code(code: String) = funBuilder.addCode(code)
     fun stm(statement: String) = funBuilder.addStatement(statement)
-    fun stm(statement: String, vararg args: Any) = funBuilder.addStatement(statement, *args)
 
+    // same as class KtFile
+    fun stm(statement: String, vararg args: Any) = funBuilder.addStatement(statement, *args)
     operator fun String.invoke(block: () -> Unit) {
         funBuilder.beginControlFlow(this)
         block()
@@ -108,7 +128,7 @@ open class Fn {
     operator fun String.invoke(vararg args_: Any) {
         val args = Array(args_.size) {
             when (val arg = args_[it]) {
-                is Clazz -> ClassName("", arg.name)
+                is Clazz -> ClassName(arg.dir, arg.name)
                 else -> arg
             }
         }
@@ -122,7 +142,7 @@ open class Fn {
     }
 }
 
-class Clazz(val name: String) {
+class Clazz(val name: String, val dir: String) {
 
     fun `val`(name: String) = Val(name)
 
@@ -180,8 +200,11 @@ class Param(val name: String, val clazz: KClass<*>)
 
 class KtFile(val dir: String, val name: String) {
 
-    fun `val`(param: Param) = Val(param)
+    fun `val`(name: String) = ValBase(name)
     fun vararg(param: Param) = VarArg(param)
+
+
+    fun Clazz(name: String) = Clazz(name, dir)
 
     fun Clazz(name: String, block: Clazz.() -> Unit) {
         Clazz(name).block()
@@ -230,6 +253,24 @@ class KtFile(val dir: String, val name: String) {
 
     val String.String: Param
         get() = Param(this, kotlin.String::class)
+
+    // same as class Fn
+    fun stm(statement: String, vararg args: Any) = funBuilder.addStatement(statement, *args)
+    operator fun String.invoke(block: () -> Unit) {
+        funBuilder.beginControlFlow(this)
+        block()
+        funBuilder.endControlFlow()
+    }
+
+    operator fun String.invoke(vararg args_: Any) {
+        val args = Array(args_.size) {
+            when (val arg = args_[it]) {
+                is Clazz -> ClassName("", arg.name)
+                else -> arg
+            }
+        }
+        stm(this, *args)
+    }
 }
 
 //lateinit var builder: FileSpec.Builder

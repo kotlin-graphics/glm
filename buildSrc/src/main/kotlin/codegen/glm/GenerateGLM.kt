@@ -23,7 +23,7 @@ open class GenerateGLM : DefaultTask() {
                 ::example4,
                 ::example5,
                 ::example6,
-				::genVec2,
+                ::genVec2,
                 ::genMat4)
                 .forEach { it().writeTo(commonDir.get().asFile) }
     }
