@@ -1,18 +1,18 @@
 package codegen.glm
 
-import codegen.*
-import com.squareup.kotlinpoet.FLOAT
-import com.squareup.kotlinpoet.FLOAT_ARRAY
+import codegen.dsl.Floats
+import codegen.dsl.cd
 import com.squareup.kotlinpoet.FileSpec
-import com.squareup.kotlinpoet.KModifier
 
 fun genMat4(): FileSpec =
-        buildFile("glm", "Mat4") {
-            indent("\t")
+        cd("glm", touch = "Mat4") {
+//            indent("\t")
 
-            buildClass("Mat4") {
+//            Clazz("Mat4") {
+//
+//                `val`("storage") `=` Floats(16)
 
-                `val`("storage", FLOAT_ARRAY,"FloatArray(16)")
+//                fn("set", "x".`:`<Int>)
 //
 //                mutableProperty("x", FLOAT) {
 //                    getter {
@@ -38,5 +38,5 @@ fun genMat4(): FileSpec =
 //                    parameter("y", FLOAT)
 //                    statement("storage = floatArrayOf(x, y)")
 //                }
-            }
+//            }
         }
