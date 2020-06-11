@@ -128,12 +128,15 @@ class Clazz(val name: String) {
 
     init {
         classBuilder = TypeSpec.classBuilder(name)
+        typeStack += Type.clazz
     }
 
     fun fn(name: String, block: Fn.() -> Unit) {
         funBuilder = FunSpec.builder(name)
+        typeStack += Type.func
         Fn().block()
         classBuilder.addFunction(funBuilder.build())
+        assert(typeStack.pop() == Type.func) { "Clazz::fn failed" }
     }
 
     operator fun invoke(vararg params: Any, block: Clazz.() -> Unit): Clazz {
@@ -158,6 +161,7 @@ class Clazz(val name: String) {
         block()
 
         fileBuilder.addType(classBuilder.build())
+        assert(typeStack.pop() == Type.clazz) { "Clazz::invoke failed" }
         return this
     }
 }
