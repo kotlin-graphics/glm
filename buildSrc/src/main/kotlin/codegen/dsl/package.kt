@@ -1,16 +1,19 @@
 package codegen.dsl
 
+import codegen.KotlinPoetDsl
 import com.squareup.kotlinpoet.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.reflect.KClass
 
 
+@KotlinPoetDsl
 abstract class Assign {
     abstract val type: TypeName
     var initializer: String? = null
 }
 
+@KotlinPoetDsl
 class Floats(size: Int) : Assign() {
     override val type: ClassName
         get() = FLOAT_ARRAY
@@ -20,6 +23,7 @@ class Floats(size: Int) : Assign() {
     }
 }
 
+@KotlinPoetDsl
 abstract class Prop(
         val name: String,
         val clazz: KClass<*>,
@@ -35,12 +39,14 @@ abstract class Prop(
     }
 }
 
+@KotlinPoetDsl
 class ValBase(val name: String, val modifiers: ArrayList<KModifier> = arrayListOf()) {
 
     val String: Val
         get() = Val(name, kotlin.String::class, modifiers)
 }
 
+@KotlinPoetDsl
 class Val(name: String, clazz: KClass<*>, modifiers: ArrayList<KModifier> = arrayListOf()) :
         Prop(name, clazz, modifiers) {
 
@@ -52,6 +58,7 @@ class Val(name: String, clazz: KClass<*>, modifiers: ArrayList<KModifier> = arra
 //    }
 }
 
+@KotlinPoetDsl
 class Var(name: String, clazz: KClass<*>, modifiers: ArrayList<KModifier> = arrayListOf()) :
         Prop(name, clazz, modifiers) {
 
@@ -74,6 +81,7 @@ class Var(name: String, clazz: KClass<*>, modifiers: ArrayList<KModifier> = arra
 //    }
 //}
 
+@KotlinPoetDsl
 class FnRet(val clazz: KClass<*>? = null) : Fn() {
 
     // same as invoke without block()
@@ -99,6 +107,7 @@ class FnRet(val clazz: KClass<*>? = null) : Fn() {
     }
 }
 
+@KotlinPoetDsl
 class FnArg : Fn() {
 
     fun ret(clazz: KClass<*>) = FnRet(clazz)
@@ -112,6 +121,7 @@ class FnArg : Fn() {
     operator fun invoke(block: Fn.() -> Unit) = FnRet()(block)
 }
 
+@KotlinPoetDsl
 open class Fn {
 
     fun code(code: String) = funBuilder.addCode(code)
@@ -142,6 +152,7 @@ open class Fn {
     }
 }
 
+@KotlinPoetDsl
 class Clazz(val name: String, val dir: String) {
 
     fun `val`(name: String) = Val(name)
@@ -186,6 +197,7 @@ class Clazz(val name: String, val dir: String) {
     }
 }
 
+@KotlinPoetDsl
 class Param(val name: String, val clazz: KClass<*>)
 
 //class Constructor(vararg val params: Any) {
@@ -198,10 +210,11 @@ class Param(val name: String, val clazz: KClass<*>)
 //    }
 //}
 
+@KotlinPoetDsl
 class KtFile(val dir: String, val name: String) {
 
     fun `val`(name: String) = ValBase(name)
-    fun vararg(param: Param) = VarArg(param)
+//    fun vararg(param: Param) = VarArg(param)
 
 
     fun Clazz(name: String) = Clazz(name, dir)
@@ -273,8 +286,7 @@ class KtFile(val dir: String, val name: String) {
     }
 }
 
-//lateinit var builder: FileSpec.Builder
-
+@KotlinPoetDsl
 class Package(val dir: String) {
 
     fun touch(file: String, block: KtFile.() -> Unit): FileSpec =
