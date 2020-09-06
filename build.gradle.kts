@@ -12,8 +12,8 @@ plugins {
 }
 
 group = "com.github.kotlin_graphics"
-val kotestVersion = "4.2.0"
 
+val kotestVersion = "4.2.0"
 val kx = "com.github.kotlin-graphics"
 val unsignedVersion = "2e1fd0d7"
 val koolVersion = "946105d1"
@@ -52,11 +52,9 @@ tasks {
         dokkaSourceSets.configureEach {
             sourceLink {
                 localDirectory.set(file("src/main/kotlin"))
-                remoteUrl.set(URL("https://github.com/kotlin-graphics/kool/tree/master/src/main/kotlin"))
+                remoteUrl.set(URL("https://github.com/kotlin-graphics/glm/tree/master/src/main/kotlin"))
                 remoteLineSuffix.set("#L")
             }
-            val root = "$rootDir/src/test/kotlin/kool/buffers"
-            samples.from("$root/Collections.kt", "$root/Arrays.kt", "$root/Iterables.kt", "$root/Sequences.kt")
         }
     }
 
