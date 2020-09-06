@@ -18,7 +18,7 @@ val moduleName = "$group.glm"
 val kotestVersion = "4.2.0"
 val kx = "com.github.kotlin-graphics"
 val unsignedVersion = "81ff91a5"
-val koolVersion = "1b6f0e25"
+val koolVersion = "57defa7d"
 val lwjglVersion = "3.2.3"
 val lwjglNatives = "natives-" + when (current()) {
     WINDOWS -> "windows"
@@ -45,7 +45,7 @@ dependencies {
 
     implementation(platform("org.lwjgl:lwjgl-bom:$lwjglVersion"))
     listOf("", "-glfw", "-jemalloc", "-openal", "-opengl", "-stb").forEach {
-        implementation("org.lwjgl", "lwjgl$it", classifier = lwjglNatives)
+        implementation("org.lwjgl", "lwjgl$it")
         runtimeOnly("org.lwjgl", "lwjgl$it", classifier = lwjglNatives)
     }
 
