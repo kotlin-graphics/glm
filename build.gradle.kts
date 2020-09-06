@@ -14,9 +14,8 @@ plugins {
 
 group = "com.github.kotlin_graphics"
 val moduleName = "$group.glm"
+
 val kotestVersion = "4.2.0"
-
-
 val kx = "com.github.kotlin-graphics"
 val unsignedVersion = "81ff91a5"
 val koolVersion = "1b6f0e25"
@@ -62,7 +61,7 @@ tasks {
         dokkaSourceSets.configureEach {
             sourceLink {
                 localDirectory.set(file("src/main/kotlin"))
-                remoteUrl.set(URL("https://github.com/kotlin-graphics/kool/tree/master/src/main/kotlin"))
+                remoteUrl.set(URL("https://github.com/kotlin-graphics/glm/tree/master/src/main/kotlin"))
                 remoteLineSuffix.set("#L")
             }
             val root = "$rootDir/src/test/kotlin/kool/buffers"
