@@ -64,8 +64,6 @@ tasks {
                 remoteUrl.set(URL("https://github.com/kotlin-graphics/glm/tree/master/src/main/kotlin"))
                 remoteLineSuffix.set("#L")
             }
-            val root = "$rootDir/src/test/kotlin/kool/buffers"
-            samples.from("$root/Collections.kt", "$root/Arrays.kt", "$root/Iterables.kt", "$root/Sequences.kt")
         }
     }
 
