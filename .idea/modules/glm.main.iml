@@ -8,6 +8,7 @@
         </compilerSettings>
         <compilerArguments>
           <option name="destination" value="$MODULE_DIR$/../../build/classes/kotlin/main" />
+          <option name="classpath" value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.4.0/6438f775e6111372eb120af57cac7ec1f97a5d07/kotlin-stdlib-1.4.0-modular.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.4.0/d24958ce7ac2b169484df5216b3973cfb979551e/kotlin-stdlib-jdk8-1.4.0-modular.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/com.github.kotlin-graphics/kotlin-unsigned/81ff91a5/c1222c9fd25f835edfdf19b38a49631bba4fefd/kotlin-unsigned-81ff91a5.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/com.github.kotlin-graphics/kool/1b6f0e25/469e6fefa89d3ceb0ceeaee9abdc3ea115f4c6a4/kool-1b6f0e25.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.2.3/b4d8a3477cdc2edcf7a5f1e822926be846223f54/lwjgl-glfw-3.2.3-natives-windows.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.2.3/3423fd0d4c7c1916c8f46b2075c4c2df02f22675/lwjgl-jemalloc-3.2.3-natives-windows.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.2.3/ec898e8ce11b5886f4f532a1536283ef2817758d/lwjgl-openal-3.2.3-natives-windows.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.2.3/e81cfc73ec8708e5e791ed770e4ec3edfc1bbab1/lwjgl-opengl-3.2.3-natives-windows.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-stb/3.2.3/817b21ec286f0ba3dcedb56a3bd275e6a9345be9/lwjgl-stb-3.2.3-natives-windows.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.2.3/27f32cd35349684745951e04388e8e00d681cdcd/lwjgl-3.2.3-natives-windows.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.2.3/17a59ba0fe8d474ec9dbe0d5db40d2cfe59c4c08/lwjgl-3.2.3.jar" />
           <option name="noStdlib" value="true" />
           <option name="noReflect" value="true" />
           <option name="moduleName" value="glm" />
@@ -48,6 +49,7 @@
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:modular:1.4.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:modular:1.4.0" level="project" />
     <orderEntry type="library" name="Gradle: com.github.kotlin-graphics:kotlin-unsigned:81ff91a5" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.kotlin-graphics:kool:1b6f0e25" level="project" />
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-glfw:natives-windows:3.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-windows:3.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-openal:natives-windows:3.2.3" level="project" />
@@ -55,14 +57,6 @@
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-stb:natives-windows:3.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl:3.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl:natives-windows:3.2.3" level="project" />
-    <orderEntry type="module-library">
-      <library name="Gradle: com.github.kotlin-graphics:kool:1b6f0e25">
-        <CLASSES>
-          <root url="file://$APPLICATION_HOME_DIR$/jbr/bin/Could not resolve com.github.kotlin-graphics:kool:1b6f0e25." />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.lwjgl:lwjgl-jemalloc:3.2.3" level="project" />
   </component>
 </module>
