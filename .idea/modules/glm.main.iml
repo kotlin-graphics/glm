@@ -8,6 +8,7 @@
         </compilerSettings>
         <compilerArguments>
           <option name="destination" value="$MODULE_DIR$/../../build/classes/kotlin/main" />
+          <option name="classpath" value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.4.0/6438f775e6111372eb120af57cac7ec1f97a5d07/kotlin-stdlib-1.4.0-modular.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.4.0/d24958ce7ac2b169484df5216b3973cfb979551e/kotlin-stdlib-jdk8-1.4.0-modular.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/com.github.kotlin-graphics/kotlin-unsigned/81ff91a5/c1222c9fd25f835edfdf19b38a49631bba4fefd/kotlin-unsigned-81ff91a5.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/com.github.kotlin-graphics/kool/57defa7d/2e94622ee738c17071b02ce6543fc58f4e39aa78/kool-57defa7d.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.2.3/5e520d5c290c8b012545a8d34fa5db5ab051ea53/lwjgl-glfw-3.2.3.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.2.3/b6fd0932171ba3f2eaa4547beddca3a3e645342d/lwjgl-jemalloc-3.2.3.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.2.3/106742e805803ab9eab8e343f0fb31a3d263903c/lwjgl-openal-3.2.3.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.2.3/bdd534a323d0c8f54969b95e424b6ac8984f7d6e/lwjgl-opengl-3.2.3.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-stb/3.2.3/40eccaa4fa86fc815f2e17946a392fb5fdcc286a/lwjgl-stb-3.2.3.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.2.3/17a59ba0fe8d474ec9dbe0d5db40d2cfe59c4c08/lwjgl-3.2.3.jar" />
           <option name="noStdlib" value="true" />
           <option name="noReflect" value="true" />
           <option name="moduleName" value="glm" />
@@ -45,31 +46,16 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-glfw:natives-windows:3.2.3" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.lwjgl:lwjgl-jemalloc:3.2.3" level="project" />
-    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-windows:3.2.3" level="project" />
-    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-openal:natives-windows:3.2.3" level="project" />
-    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-opengl:natives-windows:3.2.3" level="project" />
-    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-stb:natives-windows:3.2.3" level="project" />
-    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl:natives-windows:3.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:modular:1.4.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:modular:1.4.0" level="project" />
     <orderEntry type="library" name="Gradle: com.github.kotlin-graphics:kotlin-unsigned:81ff91a5" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.kotlin-graphics:kool:57defa7d" level="project" />
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-glfw:3.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-jemalloc:3.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-openal:3.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-opengl:3.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-stb:3.2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl:3.2.3" level="project" />
-    <orderEntry type="module-library">
-      <library name="Gradle: com.github.kotlin-graphics:kool:57defa7d">
-        <CLASSES>
-          <root url="file://$APPLICATION_HOME_DIR$/jbr/bin/Could not resolve com.github.kotlin-graphics:kool:57defa7d." />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.lwjgl:lwjgl-glfw:natives-windows:3.2.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-windows:3.2.3" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.lwjgl:lwjgl-openal:natives-windows:3.2.3" level="project" />
