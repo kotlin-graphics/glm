@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="glm-jdk8:test" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="com.github.kotlin_graphics" external.system.module.type="sourceSet" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="kotlin-language" name="Kotlin">
+      <configuration version="3" platform="JVM 1.8" allPlatforms="JVM [1.8]" useProjectSettings="false">
+        <compilerSettings>
+          <option name="additionalArguments" value="-Xallow-no-source-files -Xinline-classes -Xopt-in=kotlin.RequiresOptIn" />
+        </compilerSettings>
+        <compilerArguments>
+          <option name="destination" value="$MODULE_DIR$/../../build/classes/kotlin/test" />
+          <option name="classpath" value="$MODULE_DIR$/../../build/classes/java/main;C:/Users/elect/IdeaProjects/glm/build/classes/kotlin/main;C:/Users/elect/IdeaProjects/glm/build/resources/main;C:/Users/elect/.gradle/caches/modules-2/files-2.1/io.kotest/kotest-runner-junit5-jvm/4.2.0/174611f5da36841d47e28d96ee9fe44005b5b7ef/kotest-runner-junit5-jvm-4.2.0.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/io.kotest/kotest-assertions-core-jvm/4.2.0/98a91ba896d9f1f33b49a87c614b878c65480b43/kotest-assertions-core-jvm-4.2.0.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/io.kotest/kotest-framework-api-jvm/4.2.0/9adba7106c4a55e453d9ddbcc576f4568797cbc2/kotest-framework-api-jvm-4.2.0.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/io.kotest/kotest-common-jvm/4.2.0/ef04b047282ed591bd43f5a8a5eb12d8ea3abf73/kotest-common-jvm-4.2.0.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/io.kotest/kotest-framework-engine-jvm/4.2.0/e7e67f91a87ecaca369b31564ab4954d78edff05/kotest-framework-engine-jvm-4.2.0.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/io.kotest/kotest-framework-discovery-jvm/4.2.0/3fc9efe23b83157ac19e8de49fd927d085eed3c4/kotest-framework-discovery-jvm-4.2.0.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/io.kotest/kotest-extensions-jvm/4.2.0/27205548099f70195655784a931807dd56fdca00/kotest-extensions-jvm-4.2.0.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/io.kotest/kotest-assertions-shared-jvm/4.2.0/46b32071350918ff4228d94237db5d8b7acb8055/kotest-assertions-shared-jvm-4.2.0.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/io.kotest/kotest-assertions-api-jvm/4.2.0/b09ec1a83295f155444fb0e39737ffd820465b01/kotest-assertions-api-jvm-4.2.0.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.4.0/e3765b66f0610afc92053ff1a93a87a544fca2b/kotlin-stdlib-jdk8-1.4.0.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/com.github.kotlin-graphics/kotlin-unsigned/2e1fd0d7/e7452e7a419c56d8b0a04708a75bac76c3659cd/kotlin-unsigned-2e1fd0d7.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/com.github.kotlin-graphics/kool/946105d1/a6ca5567826d31a61da74c5aa3aa94f9ac34b5a8/kool-946105d1.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-glfw/3.2.3/b4d8a3477cdc2edcf7a5f1e822926be846223f54/lwjgl-glfw-3.2.3-natives-windows.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-jemalloc/3.2.3/3423fd0d4c7c1916c8f46b2075c4c2df02f22675/lwjgl-jemalloc-3.2.3-natives-windows.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-openal/3.2.3/ec898e8ce11b5886f4f532a1536283ef2817758d/lwjgl-openal-3.2.3-natives-windows.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-opengl/3.2.3/e81cfc73ec8708e5e791ed770e4ec3edfc1bbab1/lwjgl-opengl-3.2.3-natives-windows.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-stb/3.2.3/817b21ec286f0ba3dcedb56a3bd275e6a9345be9/lwjgl-stb-3.2.3-natives-windows.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.2.3/27f32cd35349684745951e04388e8e00d681cdcd/lwjgl-3.2.3-natives-windows.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl/3.2.3/17a59ba0fe8d474ec9dbe0d5db40d2cfe59c4c08/lwjgl-3.2.3.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.4.0/9cc187c3dfaf6e4001bdf962e3cdadff7690261b/kotlin-stdlib-jdk7-1.4.0.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core-jvm/1.3.9/4be434f5e86c1998a273e7f19a7286440894f0b0/kotlinx-coroutines-core-jvm-1.3.9.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.4.0/63e75298e93d4ae0b299bb869cf0c627196f8843/kotlin-stdlib-1.4.0.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-suite-api/1.6.2/36796f8e82db47f0a09580be1fb68449b3b8ee6f/junit-platform-suite-api-1.6.2.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.junit.jupiter/junit-jupiter-api/5.6.2/c9ba885abfe975cda123bf6f8f0a69a1b46956d0/junit-jupiter-api-5.6.2.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-commons/1.6.2/7644a14b329e76b5fe487628b50fb5eab6ba7d26/junit-platform-commons-1.6.2.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-launcher/1.6.2/d866de2950859ca1c7996351d7b3d97428083cd0/junit-platform-launcher-1.6.2.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-engine/1.6.2/1752cad2579e20c2b224602fe846fc660fb35805/junit-platform-engine-1.6.2.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.4.0/1c752cce0ead8d504ccc88a4fed6471fd83ab0dd/kotlin-stdlib-common-1.4.0.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.apiguardian/apiguardian-api/1.1.0/fc9dff4bb36d627bdc553de77e1f17efd790876c/apiguardian-api-1.1.0.jar;C:/Users/elect/.gradle/caches/modules-2/files-2.1/org.opentest4j/opentest4j/1.2.0/28c11eb91f9b6d8e200631d46e20a7f407f2a046/opentest4j-1.2.0.jar" />
+          <option name="noStdlib" value="true" />
+          <option name="noReflect" value="true" />
+          <option name="moduleName" value="glm-jdk8" />
+          <option name="jvmTarget" value="1.8" />
+          <option name="friendPaths">
+            <array>
+              <option value="$MODULE_DIR$/../../build/classes/java/main" />
+              <option value="$MODULE_DIR$/../../build/classes/kotlin/main" />
+              <option value="$MODULE_DIR$/../../build/libs/glm-jdk8.jar" />
+            </array>
+          </option>
+          <option name="languageVersion" value="1.4" />
+          <option name="apiVersion" value="1.4" />
+          <option name="pluginOptions">
+            <array />
+          </option>
+          <option name="pluginClasspaths">
+            <array>
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.4.0/52ac54a56c9121f54fcca387c5a0f441d1af9be8/kotlin-script-runtime-1.4.0.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-common/1.4.0/9c5c5503c8f96b477661789168b3f4a3c61a6c6e/kotlin-scripting-common-1.4.0.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-scripting-jvm/1.4.0/d807bf2ab36765af04b29319989322efd5ad1401/kotlin-scripting-jvm-1.4.0.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.4.0/1c752cce0ead8d504ccc88a4fed6471fd83ab0dd/kotlin-stdlib-common-1.4.0.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.4.0/63e75298e93d4ae0b299bb869cf0c627196f8843/kotlin-stdlib-1.4.0.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core/1.3.7/8e2eb78158638b33793d204ffef0b65c4a578e1c/kotlinx-coroutines-core-1.3.7.jar" />
+              <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar" />
+            </array>
+          </option>
+          <option name="errors">
+            <ArgumentParseErrors />
+          </option>
+        </compilerArguments>
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager">
+    <output-test url="file://$MODULE_DIR$/../../build/classes/java/test" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../src/test">
+      <sourceFolder url="file://$MODULE_DIR$/../../src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../src/test/kotlin" isTestSource="true" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="glm-jdk8.main" />
+    <orderEntry type="library" name="Gradle: io.kotest:kotest-runner-junit5-jvm:4.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: io.kotest:kotest-assertions-core-jvm:4.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.kotlin-graphics:kotlin-unsigned:2e1fd0d7" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.kotlin-graphics:kool:946105d1" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-glfw:natives-windows:3.2.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-jemalloc:natives-windows:3.2.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-openal:natives-windows:3.2.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-opengl:natives-windows:3.2.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl-stb:natives-windows:3.2.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl:3.2.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.lwjgl:lwjgl:natives-windows:3.2.3" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.3.9" level="project" />
+    <orderEntry type="library" name="Gradle: org.junit.platform:junit-platform-suite-api:1.6.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.junit.jupiter:junit-jupiter-api:5.6.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.junit.platform:junit-platform-launcher:1.6.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.junit.platform:junit-platform-engine:1.6.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.4.0" level="project" />
+    <orderEntry type="library" name="Gradle: io.kotest:kotest-framework-api-jvm:4.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: io.kotest:kotest-common-jvm:4.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: io.kotest:kotest-framework-engine-jvm:4.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: io.kotest:kotest-framework-discovery-jvm:4.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: io.kotest:kotest-extensions-jvm:4.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.apiguardian:apiguardian-api:1.1.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.junit.platform:junit-platform-commons:1.6.2" level="project" />
+    <orderEntry type="library" name="Gradle: org.opentest4j:opentest4j:1.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: io.kotest:kotest-assertions-shared-jvm:4.2.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
+    <orderEntry type="library" name="Gradle: io.kotest:kotest-assertions-api-jvm:4.2.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.lwjgl:lwjgl-jemalloc:3.2.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.4.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.3.9" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.github.java-diff-utils:java-diff-utils:4.5" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.univocity:univocity-parsers:2.8.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.mifmif:generex:1.0.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: dk.brics.automaton:automaton:1.11-8" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.mockk:mockk:1.9.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: commons-io:commons-io:2.6" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.ajalt:mordant:1.2.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.ajalt:clikt:2.7.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.github.classgraph:classgraph:4.8.87" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.mockk:mockk-dsl-jvm:1.9.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.mockk:mockk-common:1.9.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.mockk:mockk-agent-jvm:1.9.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.ajalt:colormath:1.2.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.mockk:mockk-dsl:1.9.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.mockk:mockk-agent-common:1.9.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.mockk:mockk-agent-api:1.9.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: org.objenesis:objenesis:3.0.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: net.bytebuddy:byte-buddy:1.9.10" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Gradle: net.bytebuddy:byte-buddy-agent:1.9.10" level="project" />
+  </component>
+  <component name="TestModuleProperties" production-module="glm-jdk8.main" />
+</module>

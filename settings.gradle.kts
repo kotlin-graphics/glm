@@ -1,1 +1,1 @@
-rootProject.name = "glm"
+rootProject.name = "glm-jdk8"

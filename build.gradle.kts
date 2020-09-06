@@ -15,8 +15,8 @@ group = "com.github.kotlin_graphics"
 val kotestVersion = "4.2.0"
 
 val kx = "com.github.kotlin-graphics"
-val unsignedVersion = "0af6fae4"
-val koolVersion = "3962a0be"
+val unsignedVersion = "2e1fd0d7"
+val koolVersion = "946105d1"
 val lwjglVersion = "3.2.3"
 val lwjglNatives = "natives-" + when (current()) {
     WINDOWS -> "windows"
