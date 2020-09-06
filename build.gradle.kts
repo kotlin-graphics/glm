@@ -1,26 +1,27 @@
 import org.gradle.api.attributes.LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE
 import org.gradle.api.attributes.java.TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE
 import org.gradle.internal.os.OperatingSystem.*
-import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URL
 
 plugins {
     java
-    kotlin("jvm") version "1.3.72"
-    maven
-    id("org.jetbrains.dokka") version "0.10.1"
-    id("com.github.johnrengelman.shadow").version("5.2.0")
+    kotlin("jvm") version "1.4.0"
+    `maven-publish`
+    id("org.jetbrains.dokka") version "1.4.0"
+    id("com.github.johnrengelman.shadow").version("6.0.0")
 }
 
-val group = "com.github.kotlin_graphics"
+group = "com.github.kotlin_graphics"
 val moduleName = "$group.glm"
-val kotestVersion = "4.0.5"
+val kotestVersion = "4.2.0"
 
 
 val kx = "com.github.kotlin-graphics"
-val unsignedVersion = "0af6fae4"
-val koolVersion = "3962a0be"
+val unsignedVersion = "81ff91a5"
+val koolVersion = "1b6f0e25"
 val lwjglVersion = "3.2.3"
-val lwjglNatives = when (current()) {
+val lwjglNatives = "natives-" + when (current()) {
     WINDOWS -> "windows"
     LINUX -> "linux"
     else -> "macos"
@@ -29,77 +30,98 @@ val lwjglNatives = when (current()) {
 repositories {
     mavenCentral()
     jcenter()
-    maven { url = uri("https://jitpack.io") }
+    maven("https://jitpack.io")
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(kotlin("stdlib-jdk8"))
 
-    implementation("$kx:kotlin-unsigned:$unsignedVersion")
-    implementation("$kx:kool:$koolVersion")
-
-    listOf("", "-glfw", "-jemalloc", "-openal", "-opengl", "-stb").forEach {
-        implementation("org.lwjgl:lwjgl$it:$lwjglVersion")
-        implementation("org.lwjgl:lwjgl$it:$lwjglVersion:natives-$lwjglNatives")
-    }
-
     attributesSchema.attribute(LIBRARY_ELEMENTS_ATTRIBUTE).compatibilityRules.add(ModularJarCompatibilityRule::class)
     components { withModule<ModularKotlinRule>(kotlin("stdlib")) }
     components { withModule<ModularKotlinRule>(kotlin("stdlib-jdk8")) }
 
-    listOf("runner-junit5", "assertions-core", "runner-console"/*, "property"*/).forEach {
-        testImplementation("io.kotest:kotest-$it-jvm:$kotestVersion")
+    implementation("$kx:kotlin-unsigned:$unsignedVersion")
+    implementation("$kx:kool:$koolVersion")
+
+    implementation(platform("org.lwjgl:lwjgl-bom:$lwjglVersion"))
+    listOf("", "-glfw", "-jemalloc", "-openal", "-opengl", "-stb").forEach {
+        implementation("org.lwjgl", "lwjgl$it", classifier = lwjglNatives)
+        runtimeOnly("org.lwjgl", "lwjgl$it", classifier = lwjglNatives)
     }
+
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:$kotestVersion")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion")
 }
 
-java {
-    modularity.inferModulePath.set(true)
-}
+java { modularity.inferModulePath.set(true) }
 
 tasks {
-    val dokka by getting(DokkaTask::class) {
-        outputFormat = "html"
-        outputDirectory = "$buildDir/dokka"
+
+    dokkaHtml {
+        dokkaSourceSets.configureEach {
+            sourceLink {
+                localDirectory.set(file("src/main/kotlin"))
+                remoteUrl.set(URL("https://github.com/kotlin-graphics/kool/tree/master/src/main/kotlin"))
+                remoteLineSuffix.set("#L")
+            }
+            val root = "$rootDir/src/test/kotlin/kool/buffers"
+            samples.from("$root/Collections.kt", "$root/Arrays.kt", "$root/Iterables.kt", "$root/Sequences.kt")
+        }
     }
 
-    compileKotlin {
+    withType<KotlinCompile>().all {
         kotlinOptions {
             jvmTarget = "11"
-            freeCompilerArgs = listOf("-XXLanguage:+InlineClasses")
+            freeCompilerArgs += listOf("-Xinline-classes", "-Xopt-in=kotlin.RequiresOptIn")
         }
         sourceCompatibility = "11"
     }
 
-    compileTestKotlin {
-        kotlinOptions.jvmTarget = "11"
-        sourceCompatibility = "11"
-    }
-
-    compileJava {
-        // this is needed because we have a separate compile step in this example with the 'module-info.java' is in 'main/java' and the Kotlin code is in 'main/kotlin'
+    compileJava { // this is needed because we have a separate compile step in this example with the 'module-info.java' is in 'main/java' and the Kotlin code is in 'main/kotlin'
         options.compilerArgs = listOf("--patch-module", "$moduleName=${sourceSets.main.get().output.asPath}")
     }
 
     withType<Test> { useJUnitPlatform() }
 }
 
-val dokkaJar by tasks.creating(Jar::class) {
-    group = JavaBasePlugin.DOCUMENTATION_GROUP
-    description = "Assembles Kotlin docs with Dokka"
+val dokkaJavadocJar by tasks.register<Jar>("dokkaJavadocJar") {
+    dependsOn(tasks.dokkaJavadoc)
+    from(tasks.dokkaJavadoc.get().outputDirectory.get())
     archiveClassifier.set("javadoc")
-    from(tasks.dokka)
+}
+
+val dokkaHtmlJar by tasks.register<Jar>("dokkaHtmlJar") {
+    dependsOn(tasks.dokkaHtml)
+    from(tasks.dokkaHtml.get().outputDirectory.get())
+    archiveClassifier.set("html-doc")
 }
 
 val sourceJar = task("sourceJar", Jar::class) {
-    dependsOn(tasks["classes"])
+    dependsOn(tasks.classes)
     archiveClassifier.set("sources")
     from(sourceSets.main.get().allSource)
 }
 
 artifacts {
+    archives(dokkaJavadocJar)
+    archives(dokkaHtmlJar)
     archives(sourceJar)
-    archives(dokkaJar)
+}
+
+publishing {
+    publications.create<MavenPublication>("mavenJava") {
+        from(components["java"])
+        artifact(sourceJar)
+    }
+    repositories.maven {
+        name = "GitHubPackages"
+        url = uri("https://maven.pkg.github.com/kotlin-graphics/glm")
+        credentials {
+            username = System.getenv("GITHUB_ACTOR")
+            password = System.getenv("GITHUB_TOKEN")
+        }
+    }
 }
 
 // == Add access to the 'modular' variant of kotlin("stdlib"): Put this into a buildSrc plugin and reuse it in all your subprojects
