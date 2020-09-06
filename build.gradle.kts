@@ -38,7 +38,7 @@ dependencies {
 
     implementation(platform("org.lwjgl:lwjgl-bom:$lwjglVersion"))
     listOf("", "-glfw", "-jemalloc", "-openal", "-opengl", "-stb").forEach {
-        implementation("org.lwjgl", "lwjgl$it", classifier = lwjglNatives)
+        implementation("org.lwjgl", "lwjgl$it")
         runtimeOnly("org.lwjgl", "lwjgl$it", classifier = lwjglNatives)
     }
 
