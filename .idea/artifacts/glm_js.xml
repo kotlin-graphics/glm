@@ -1,6 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="glm-js">
-    <output-path>C:\Users\elect\IdeaProjects\glm\build\libs</output-path>
-    <root id="archive" name="glm-js.jar" />
-  </artifact>
-</component>
