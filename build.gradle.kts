@@ -1,4 +1,3 @@
-import org.gradle.api.attributes.LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE
 import org.gradle.api.attributes.java.TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE
 import org.gradle.internal.os.OperatingSystem.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -6,19 +5,19 @@ import java.net.URL
 
 plugins {
     java
-    kotlin("jvm") version "1.4.0"
+    kotlin("jvm") version "1.4.10"
     `maven-publish`
-    id("org.jetbrains.dokka") version "1.4.0"
-    id("com.github.johnrengelman.shadow").version("6.0.0")
+    id("org.jetbrains.dokka") version "1.4.10"
+    id("com.github.johnrengelman.shadow").version("6.1.0")
 }
 
 group = "com.github.kotlin_graphics"
 val moduleName = "$group.glm"
 
-val kotestVersion = "4.2.0"
+val kotestVersion = "4.2.5"
 val kx = "com.github.kotlin-graphics"
-val unsignedVersion = "1e2fda82"
-val koolVersion = "b393e4c2"
+val unsignedVersion = "f029dcbd"
+val koolVersion = "c670e9cf"
 val lwjglVersion = "3.2.3"
 val lwjglNatives = "natives-" + when (current()) {
     WINDOWS -> "windows"
@@ -35,10 +34,6 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(kotlin("stdlib-jdk8"))
-
-    attributesSchema.attribute(LIBRARY_ELEMENTS_ATTRIBUTE).compatibilityRules.add(ModularJarCompatibilityRule::class)
-    components { withModule<ModularKotlinRule>(kotlin("stdlib")) }
-    components { withModule<ModularKotlinRule>(kotlin("stdlib-jdk8")) }
 
     implementation("$kx:kotlin-unsigned:$unsignedVersion")
     implementation("$kx:kool:$koolVersion")
@@ -122,42 +117,4 @@ publishing {
 }
 
 // == Add access to the 'modular' variant of kotlin("stdlib"): Put this into a buildSrc plugin and reuse it in all your subprojects
-configurations.all {
-    attributes.attribute(TARGET_JVM_VERSION_ATTRIBUTE, 11)
-    val n = name.toLowerCase()
-    if (n.endsWith("compileclasspath") || n.endsWith("runtimeclasspath"))
-        attributes.attribute(LIBRARY_ELEMENTS_ATTRIBUTE, objects.named("modular-jar"))
-    if (n.endsWith("compile") || n.endsWith("runtime"))
-        isCanBeConsumed = false
-}
-
-abstract class ModularJarCompatibilityRule : AttributeCompatibilityRule<LibraryElements> {
-    override fun execute(details: CompatibilityCheckDetails<LibraryElements>): Unit = details.run {
-        if (producerValue?.name == LibraryElements.JAR && consumerValue?.name == "modular-jar")
-            compatible()
-    }
-}
-
-abstract class ModularKotlinRule : ComponentMetadataRule {
-
-    @javax.inject.Inject
-    abstract fun getObjects(): ObjectFactory
-
-    override fun execute(ctx: ComponentMetadataContext) {
-        val id = ctx.details.id
-        listOf("compile", "runtime").forEach { baseVariant ->
-            ctx.details.addVariant("${baseVariant}Modular", baseVariant) {
-                attributes {
-                    attribute(LIBRARY_ELEMENTS_ATTRIBUTE, getObjects().named("modular-jar"))
-                }
-                withFiles {
-                    removeAllFiles()
-                    addFile("${id.name}-${id.version}-modular.jar")
-                }
-                withDependencies {
-                    clear() // 'kotlin-stdlib-common' and  'annotations' are not modules and are also not needed
-                }
-            }
-        }
-    }
-}
+configurations.all { attributes.attribute(TARGET_JVM_VERSION_ATTRIBUTE, 11) }
