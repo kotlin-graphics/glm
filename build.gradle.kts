@@ -17,7 +17,7 @@ val moduleName = "$group.glm"
 val kotestVersion = "4.2.5"
 val kx = "com.github.kotlin-graphics"
 val unsignedVersion = "f029dcbd"
-val koolVersion = "c670e9cf"
+val koolVersion = "b4ff3661"
 val lwjglVersion = "3.2.3"
 val lwjglNatives = "natives-" + when (current()) {
     WINDOWS -> "windows"
@@ -32,7 +32,6 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
     implementation(kotlin("stdlib-jdk8"))
 
     implementation("$kx:kotlin-unsigned:$unsignedVersion")
