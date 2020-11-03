@@ -16,7 +16,7 @@ val moduleName = "$group.glm"
 
 val kotestVersion = "4.2.5"
 val kx = "com.github.kotlin-graphics"
-val unsignedVersion = "f029dcbd"
+val unsignedVersion = "f2cd9c97"
 val koolVersion = "b4ff3661"
 val lwjglVersion = "3.2.3"
 val lwjglNatives = "natives-" + when (current()) {
