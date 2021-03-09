@@ -64,7 +64,22 @@ fun camera(translate: Float, rotate: Vec2): Mat4 {
 
 [Gradle, Maven, Sbt, Leiningen](https://jitpack.io/#kotlin-graphics/glm)
 
-Ps: we use bleeding edge lwjgl, which is available under the sonatype repository, if you are experiencing problems, just add
-`maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }` to your `build.gradle`
+
+### Build-logic and platform dependencies
+
+The build logic has been extracted in dedicated [plugins](https://github.com/elect86/build-logic), as well as the versioning in specific platform [plugins](https://github.com/elect86/platforms).
+
+In order to import kool you need then to add the repository where these plugins are getting published for the time being.
+
+In Gradle KTS you can do that by adding the following to your `settings.gradle.kts`:
+
+```kotlin
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven("https://repo.repsy.io/mvn/elect/kx")
+    }
+}
+```
 
 
