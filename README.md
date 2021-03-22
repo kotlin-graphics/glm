@@ -39,47 +39,6 @@ fun camera(translate: Float, rotate: Vec2): Mat4 {
 }
 ```
 
-### Gradle:
+### How to retrieve it:
 
-- Add it in your root `build.gradle` at the end of repositories:
-
-	    allprojects {
-		    repositories {
-			        ...
-			        maven { url 'https://jitpack.io' }
-		    }
-	    }
-    
-- Add the dependency
-
-	    dependencies {
-	        implementation 'com.github.kotlin-graphics.glm:glm:<version>'
-	    }
-	    
-- The [kotlin-test](https://github.com/kotlintest/kotlintest) matchers can be used by adding the following dependency
-
-	    dependencies {
-	        implementation 'com.github.kotlin-graphics.glm:glm-test:<version>'
-	    }
-
-[Gradle, Maven, Sbt, Leiningen](https://jitpack.io/#kotlin-graphics/glm)
-
-
-### Build-logic and platform dependencies
-
-The build logic has been extracted in dedicated [plugins](https://github.com/elect86/build-logic), as well as the versioning in specific platform [plugins](https://github.com/elect86/platforms).
-
-In order to import glm you need then to add the repository where these plugins are getting published for the time being.
-
-In Gradle KTS you can do that by adding the following to your `settings.gradle.kts`:
-
-```kotlin
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        maven("https://repo.repsy.io/mvn/elect/kx")
-    }
-}
-```
-
-
+You can find all the instructions by [mary](https://github.com/kotlin-graphics/mary)
