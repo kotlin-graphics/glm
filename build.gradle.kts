@@ -12,7 +12,7 @@ plugins {
     java
 }
 
-version = "0.9.9.1-3+02"
+version = "0.9.9.1-3+20"
 
 repositories {
     maven("https://raw.githubusercontent.com/kotlin-graphics/mary/master")
