@@ -20,35 +20,39 @@ data class Vec1bool(var x: Boolean = false) {
 
     // -- Component accesses --
 
-    operator fun get(i: Int): Boolean = when (i) {
+    operator fun get(i: Int): Boolean = TODO()/*when (i) {
         0 -> x
         else -> throw IndexOutOfBoundsException()
-    }
+    }*/
 
-    operator fun set(i: Int, b: Boolean) = when (i) {
+    operator fun set(i: Int, b: Boolean): Nothing = TODO()/*when (i) {
         0 -> x = b
         else -> throw IndexOutOfBoundsException()
-    }
+    }*/
 
 
     fun put(b: Boolean): Vec1bool {
-        x = b
-        return this
+//        x = b
+//        return this
+        TODO()
     }
 
     fun put(ba: BooleanArray): Vec1bool {
-        x = ba[0]
-        return this
+//        x = ba[0]
+//        return this
+        TODO()
     }
 
     fun put(ba: Array<Boolean>): Vec1bool {
-        x = ba[0]
-        return this
+//        x = ba[0]
+//        return this
+        TODO()
     }
 
     operator fun invoke(init: (Int) -> Boolean): Vec1bool {
-        x = init(0)
-        return this
+//        x = init(0)
+//        return this
+        TODO()
     }
 
 //    fun toBooleanArray(): BooleanArray = to(BooleanArray(length), 0)
@@ -60,22 +64,24 @@ data class Vec1bool(var x: Boolean = false) {
 
     // -- Unary arithmetic vecOperators --
 
-    operator fun not(): Vec1bool = Vec1bool(!x)
+    operator fun not(): Vec1bool = TODO()//Vec1bool(!x)
 
     fun notAssign(): Vec1bool {
-        x = !x
-        return this
+//        x = !x
+//        return this
+        TODO()
     }
 
     infix fun not(res: Vec1bool): Vec1bool {
-        res.x = !x
-        return this
+//        res.x = !x
+//        return this
+        TODO()
     }
 
     // -- relational --
 
     val all: Boolean
-        get() = glm.all(this)
+        get() = TODO()//glm.all(this)
 
     // TODO
 //    infix fun equal(b: Vec2bool) = glm.equal(this, b)
@@ -89,5 +95,5 @@ data class Vec1bool(var x: Boolean = false) {
 //
 //    fun all() = glm.all(this)
 
-    override fun toString(): String = "($x)"
+    override fun toString(): String = TODO()//"($x)"
 }

@@ -1,6 +1,7 @@
 package glm_.func
 
 import glm_.*
+import glm_.ext.equal
 import glm_.vec1.*
 import glm_.vec2.*
 import glm_.vec3.*
@@ -202,7 +203,7 @@ interface func_vector1_relational {
     }
 
     fun equal(a: Vec1, b: Vec1, res: Vec1bool = Vec1bool()): Vec1bool {
-        res.x = a.x == b.x
+        res.x = a.x.equals(b.x)
         return res
     }
 
