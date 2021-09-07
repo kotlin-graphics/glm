@@ -36,12 +36,12 @@ val Boolean.ul get() = if (this) 1.ul else 0.ul
 val Boolean.us get() = if (this) 1.us else 0.us
 
 
-val Char.f get() = toFloat()
-val Char.b get() = toByte()
-val Char.d get() = toDouble()
-val Char.i get() = toInt()
-val Char.L get() = toLong()
-val Char.s get() = toShort()
+val Char.f get() = code.toFloat()
+val Char.b get() = code.toByte()
+val Char.d get() = code.toDouble()
+val Char.i get() = code
+val Char.L get() = code.toLong()
+val Char.s get() = code.toShort()
 val Char.ub get() = toUbyte()
 val Char.ui get() = toUint()
 val Char.ul get() = toUlong()

@@ -203,16 +203,16 @@ interface func_vector1_relational {
     }
 
     fun equal(a: Vec1, b: Vec1, res: Vec1bool = Vec1bool()): Vec1bool {
-        res.x = a.x.equals(b.x)
+        res.x = a.x.equals(b.x) // TODO https://youtrack.jetbrains.com/issue/KT-48648
         return res
     }
 
     fun notEqual(a: Vec1, b: Vec1, res: Vec1bool = Vec1bool()): Vec1bool {
-        res.x = a.x != b.x
+        res.x = !a.x.equals(b.x) // TODO https://youtrack.jetbrains.com/issue/KT-48648
         return res
     }
 
-    fun isEqual(a: Vec1, b: Vec1): Boolean = a.x == b.x
+    fun isEqual(a: Vec1, b: Vec1): Boolean = a.x.equals(b.x) // TODO https://youtrack.jetbrains.com/issue/KT-48648
 
     fun any(a: Vec1): Boolean = a[0] != 0f
 
@@ -245,16 +245,16 @@ interface func_vector1_relational {
     }
 
     fun equal(a: Vec1d, b: Vec1d, res: Vec1bool = Vec1bool()): Vec1bool {
-        res.x = a.x == b.x
+        res.x = a.x.equals(b.x)// TODO https://youtrack.jetbrains.com/issue/KT-48648
         return res
     }
 
     fun notEqual(a: Vec1d, b: Vec1d, res: Vec1bool = Vec1bool()): Vec1bool {
-        res.x = a.x != b.x
+        res.x = !a.x.equals(b.x)// TODO https://youtrack.jetbrains.com/issue/KT-48648
         return res
     }
 
-    fun isEqual(a: Vec1d, b: Vec1d): Boolean = a.x == b.x
+    fun isEqual(a: Vec1d, b: Vec1d): Boolean = a.x.equals(b.x)// TODO https://youtrack.jetbrains.com/issue/KT-48648
 
     fun any(a: Vec1d): Boolean = a[0] != 0.0
 

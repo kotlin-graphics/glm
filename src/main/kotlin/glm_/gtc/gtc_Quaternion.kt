@@ -303,10 +303,10 @@ interface gtc_Quaternion {
 
     /** Returns the component-wise comparison of result x == y. */
     fun equal(a: Quat, b: Quat, res: Vec4bool): Vec4bool {
-        res.x = a.x == b.x
-        res.y = a.y == b.y
-        res.z = a.z == b.z
-        res.w = a.w == b.w
+        res.x = a.x.equals(b.x)// TODO https://youtrack.jetbrains.com/issue/KT-48648
+        res.y = a.y.equals(b.y)
+        res.z = a.z.equals(b.z)
+        res.w = a.w.equals(b.w)
         return res
     }
 
@@ -315,10 +315,10 @@ interface gtc_Quaternion {
 
     /** Returns the component-wise comparison of result x != y. */
     fun notEqual(a: Quat, b: Quat, res: Vec4bool): Vec4bool {
-        res.x = a.x != b.x
-        res.y = a.y != b.y
-        res.z = a.z != b.z
-        res.w = a.w != b.w
+        res.x = !a.x.equals(b.x)// TODO https://youtrack.jetbrains.com/issue/KT-48648
+        res.y = !a.y.equals(b.y)
+        res.z = !a.z.equals(b.z)
+        res.w = !a.w.equals(b.w)
         return res
     }
 

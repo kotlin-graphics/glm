@@ -18,7 +18,7 @@ import java.nio.*
 
 abstract class Vec1t<T : Number>(_x: T): ToBuffer {
 
-    @JvmField
+//    @JvmField TODO bug
     var x = _x
 
     fun component1() = x
