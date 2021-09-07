@@ -5,10 +5,10 @@ pluginManagement {
         gradlePluginPortal()
         maven("https://raw.githubusercontent.com/kotlin-graphics/mary/master")
     }
-    includeBuild("../build-logic")
+//    includeBuild("../build-logic")
 }
 
 gradle.rootProject {
     group = "kotlin.graphics"
-    version = "0.9.9.1-3+24"
+    version = "0.9.9.1-3+25"
 }
