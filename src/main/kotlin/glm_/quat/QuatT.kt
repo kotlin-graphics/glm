@@ -4,16 +4,12 @@ package glm_.quat
  * Created by GBarbieri on 08.11.2016.
  */
 
-abstract class QuatT<T : Number>(_w: T, _x: T, _y: T, _z: T) {
+abstract class QuatT<T : Number> {
 
-    @JvmField
-    var w = _w
-    @JvmField
-    var x = _x
-    @JvmField
-    var y = _y
-    @JvmField
-    var z = _z
+    abstract var w: T
+    abstract var x: T
+    abstract var y: T
+    abstract var z: T
 
     operator fun component1() = x
     operator fun component2() = y

@@ -20,7 +20,10 @@ import kotlin.math.sqrt
 /**
  * Created by GBarbieri on 15.11.2016. TODO array
  */
-class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y, z) {
+class QuatD(override var w: Double,
+            override var x: Double,
+            override var y: Double,
+            override var z: Double) : QuatT<Double>() {
 
     // -- Implicit basic constructors --
 

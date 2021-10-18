@@ -24,7 +24,10 @@ import kotlin.math.sqrt
 /**
  * Created by GBarbieri on 15.11.2016. TODO array
  */
-class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
+class Quat(override var w: Float,
+           override var x: Float,
+           override var y: Float,
+           override var z: Float) : QuatT<Float>() {
 
 
     // -- Implicit basic constructors --
