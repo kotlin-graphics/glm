@@ -5,17 +5,12 @@
 package glm_
 
 import glm_.ext.*
-import glm_.ext.ext_quaternionCommon
-import glm_.ext.ext_quaternionTransform
-import glm_.ext.ext_quaternionTrigonometric
 import glm_.func.*
 import glm_.func.common.*
 import glm_.gtc.gtc_MatrixInverse
-import glm_.gtx.*
 import glm_.gtc.gtc_Quaternion
-import glm_.quat.Quat
+import glm_.gtx.*
 import glm_.quat.gtx_quaternion
-import glm_.vec2.Vec2
 
 object glm :
 
@@ -174,7 +169,3 @@ val GLM_VERSION = GLM_VERSION_MAJOR * 1_000 + GLM_VERSION_MINOR * 100 + GLM_VERS
       Added missing equal and notEqual with epsilon for quaternion types (https://github.com/g-truc/glm/commit/8f0b7c13732b018339697d182ea3a9f437ccaa71)
        Fixed relational code, reduced header dependencies  (https://github.com/g-truc/glm/commit/7086d902e2780e0774830573da7473938290ea73)
  */
-
-fun main() {
-    println(Quat().x)
-}
