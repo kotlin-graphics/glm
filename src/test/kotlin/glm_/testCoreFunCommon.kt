@@ -1,3 +1,4 @@
+@file:Suppress("DIVISION_BY_ZERO")
 package glm_
 
 import glm_.ext.equal
