@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="workload-jvm-1.0-SNAPSHOT">
+    <output-path>$PROJECT_DIR$/workload/build/libs</output-path>
+    <root id="archive" name="workload-jvm-1.0-SNAPSHOT.jar">
+      <element id="module-output" name="glm.workload.jvmMain" />
+    </root>
+  </artifact>
+</component>

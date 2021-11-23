@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="test-processor-jvm-1.0-SNAPSHOT">
+    <output-path>$PROJECT_DIR$/test-processor/build/libs</output-path>
+    <root id="archive" name="test-processor-jvm-1.0-SNAPSHOT.jar">
+      <element id="module-output" name="glm.test-processor.jvmMain" />
+    </root>
+  </artifact>
+</component>
