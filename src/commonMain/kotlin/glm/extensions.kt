@@ -19,6 +19,19 @@ val Number.ul get() = toLong().toULong()
 val Number.c get() = toChar()
 val Number.bool get() = i != 0
 
+val UByte.us get() = toUShort()
+val UByte.ui get() = toUInt()
+val UByte.ul get() = toULong()
+val UShort.ub get() = toUByte()
+val UShort.ui get() = toUInt()
+val UShort.ul get() = toULong()
+val UInt.ub get() = toUByte()
+val UInt.us get() = toUShort()
+val UInt.ul get() = toULong()
+val ULong.ub get() = toUByte()
+val ULong.us get() = toUShort()
+val ULong.ui get() = toUInt()
+
 
 val Boolean.b get() = if (this) 1.b else 0.b
 val Boolean.s get() = if (this) 1.s else 0.s
