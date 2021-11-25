@@ -330,3 +330,20 @@ infix fun Int.pow(exponent: Int) = f.pow(exponent).i
 infix fun Int.pow(exponent: Float) = f.pow(exponent).i
 infix fun Float.pow(exponent: Int) = pow(exponent)
 infix fun Float.pow(exponent: Float) = pow(exponent)
+
+
+// Unfortunately Jetbrain went its own way: https://youtrack.jetbrains.com/issue/KT-8247 , let's keep it coherent with Java
+val Byte.Companion.BYTES: Int
+    get() = 1
+val Short.Companion.BYTES: Int
+    get() = 2
+val Int.Companion.BYTES: Int
+    get() = 4
+val Long.Companion.BYTES: Int
+    get() = 8
+val Float.Companion.BYTES: Int
+    get() = 4
+val Double.Companion.BYTES: Int
+    get() = 8
+//val Char.Companion.BYTES: Int
+//    get() = Character.BYTES

@@ -84,6 +84,9 @@ fun vects() {
             xyzw { i, c -> +"$i -> { $c = value }" }
             +"else -> throw IndexOutOfBoundsException()"
         }
+        "companion object" {
+            +"const val length = $ordinal"
+        }
     }
 }
 
@@ -285,5 +288,11 @@ fun vecs(type: String, T: String) {
             }
         }
         "override fun equals(other: Any?) = other is Vec${ordinal}$T && ${xyzwJoint(" && ") { c -> "$c == other.$c" }}"()
+
+        "companion object" {
+            +"const val length = Vec${ordinal}T.length"
+            if (type.numeric)
+                +"const val size = length * $type.SIZE_BYTES"
+        }
     }
 }

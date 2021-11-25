@@ -1,5 +1,7 @@
 package glm
 
+import glm.vec1.Vec1
+import glm.vec1.Vec1d
 import glm.vec1.Vec1i
 import glm.vec2.Vec2
 import glm.vec2.Vec2d
@@ -34,7 +36,7 @@ class coreVec1 {
     }
 
     @Test
-    fun `test vec1 ctor`() {
+    fun `vec1 ctor`() {
 
         /*
         #if GLM_HAS_INITIALIZER_LISTS
@@ -69,5 +71,40 @@ class coreVec1 {
             assert(e.x == 2f && e.y == 2f)
             assert(f.x == 2f && f.y == 2f)
         }
+    }
+
+    @Test
+    fun `vec1 size`() {
+
+//        Error += sizeof(glm::vec1) == sizeof(glm::mediump_vec1) ? 0 : 1;
+//        Error += 4 == sizeof(glm::mediump_vec1) ? 0 : 1;
+//        Error += sizeof(glm::dvec1) == sizeof(glm::highp_dvec1) ? 0 : 1;
+//        Error += 8 == sizeof(glm::highp_dvec1) ? 0 : 1;
+        assert(Vec1.length == 1)
+        assert(Vec1d.length == 1)
+    }
+
+    @Test
+    fun `vec1 operator increment`() {
+
+        val v0 = Vec1i(1)
+        var v1 = Vec1i(v0)
+        var v2 = Vec1i(v0)
+        val v3 = ++v1
+        val v4 = v2++
+
+//        assert(v0 == v4) TODO, this is different
+        assert(v1 == v2)
+        assert(v1 == v3)
+
+        val i0 = 1
+        var i1 = i0
+        var i2 = i0
+        val i3 = ++i1
+        val i4 = i2++
+
+        assert(i0 == i4)
+        assert(i1 == i2)
+        assert(i1 == i3)
     }
 }
