@@ -51,7 +51,7 @@ fun xyzw(block: (Char) -> Any) {
 }
 
 fun xyzwJoint(block: (Int, Char) -> String) = (0 until ordinal).joinToString { block(it, xyzw[it]) }
-fun xyzwJoint(block: (Char) -> String) = (0 until ordinal).joinToString { block(xyzw[it]) }
+fun xyzwJoint(separator: String = ", ", block: (Char) -> String) = (0 until ordinal).joinToString(separator) { block(xyzw[it]) }
 
 fun vects() {
 
@@ -112,10 +112,18 @@ fun vecs(type: String, T: String) {
         val arrayOf = "${type.lowercase()}ArrayOf"
         val a = "x" * ordinal
         "constructor(x: $type) : this(${if (ordinal == 1) "$arrayOf($a)" else a})"()
+        "constructor(x: Number) : this(x.${type.c})"()
+        if (type == "UByte" || type == "UShort") {
+            +"constructor(x: UInt) : this(x.${type.c})"
+            +"constructor(x: ULong) : this(x.${type.c})"
+        }
 
-        +"constructor(x: Number) : this(x.${type.c})"
         if (ordinal != 1) {
             +"constructor(${xyzwJoint { c -> "$c: $type" }}) : this($arrayOf(${xyzwJoint { c -> "$c" }}))"
+            if (type == "UByte" || type == "UShort") {
+                +"constructor(${xyzwJoint { c -> "$c: UInt" }}) : this(${xyzwJoint { c -> "$c.${type.c}" }})"
+                +"constructor(${xyzwJoint { c -> "$c: ULong" }}) : this(${xyzwJoint { c -> "$c.${type.c}" }})"
+            }
 
             +"// Conversion scalar constructors"
             +"constructor(v: Vec1T<out Number>) : this(v.x.${type.c})"
@@ -210,10 +218,16 @@ fun vecs(type: String, T: String) {
                         }
                     }
                 }
-                if ("Byte" in type || "Short" in type)
+                if ("Byte" in type || "Short" in type) {
                     "operator fun ${t}Assign(scalar: ${if (type[0] == 'U') "UInt" else "Int"})" {
                         xyzw { c -> +"$c = ($c $s scalar).${type.c}" }
                     }
+                    if (type.uns)
+                        +"operator fun ${t}Assign(scalar: ULong) = ${t}Assign(scalar.${type.c})"
+                } else if (type.uns)
+                    if (type == "UInt")
+                        +"operator fun ${t}Assign(scalar: ULong) = ${t}Assign(scalar.ui)"
+                    else +"operator fun ${t}Assign(scalar: UInt) = ${t}Assign(scalar.ul)"
                 "operator fun ${t}Assign(v: $V1)" {
                     xyzw { c ->
                         if ("Byte" in type || "Short" in type)
@@ -260,6 +274,15 @@ fun vecs(type: String, T: String) {
             if (!type.uns)
                 +"operator fun unaryMinus(): Vec${ordinal}$T = Vec${ordinal}$T(${xyzwJoint { c -> "-$c" }})"
             "// Binary operators"()
+            for (o in op) {
+                val s = o.first
+                val t = o.second
+                +"operator fun $t(scalar: $type) = Vec${ordinal}$T(${xyzwJoint { c -> "$c $s scalar" }})"
+                +"operator fun $t(v: Vec1$T) = Vec${ordinal}$T(${xyzwJoint { c -> "$c $s v.x" }})"
+                if (ordinal != 1)
+                    +"operator fun $t(v: Vec${ordinal}$T) = Vec${ordinal}$T(${xyzwJoint { c -> "$c $s v.$c" }})"
+            }
         }
+        "override fun equals(other: Any?) = other is Vec${ordinal}$T && ${xyzwJoint(" && ") { c -> "$c == other.$c" }}"()
     }
 }

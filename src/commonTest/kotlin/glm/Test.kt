@@ -1,4 +1,0 @@
-package glm
-
-class Test {
-}

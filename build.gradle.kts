@@ -47,7 +47,7 @@ kotlin {
             }
         }
         val commonTest by getting {
-//            kotlin.srcDir("build/generated/ksp/test/kotlin")
+            //            kotlin.srcDir("build/generated/ksp/test/kotlin")
             dependencies {
                 implementation(kotlin("test"))
             }
@@ -75,9 +75,11 @@ dependencies {
 kotlin.sourceSets.commonMain {
     kotlin.srcDir("build/generated/ksp/commonMain/kotlin")
 }
-tasks.withType<KotlinCompile<*>>().all {
-    if (name != "kspKotlinMetadata")
-        dependsOn("kspKotlinMetadata")
+tasks {
+    withType<KotlinCompile<*>>().all {
+        if (name != "kspKotlinMetadata")
+            dependsOn("kspKotlinMetadata")
+    }
 }
 
 //kotlin {
