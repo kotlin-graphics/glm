@@ -93,6 +93,7 @@ fun vects() {
 val xyzw = listOf('x', 'y', 'z', 'w')
 val rgba = listOf('r', 'g', 'b', 'a')
 val stpq = listOf('s', 't', 'p', 'q')
+val op = listOf('+' to "plus", '-' to "minus", '*' to "times", '/' to "div")
 
 fun vecs(type: String, T: String) {
 
@@ -204,10 +205,7 @@ fun vecs(type: String, T: String) {
 
         if (type.numeric) {
             +"// Unary arithmetic operators"
-            val op = listOf('+' to "plus", '-' to "minus", '*' to "times", '/' to "div")
-            for (o in op) {
-                val s = o.first
-                val t = o.second
+            for ((s, t) in op) {
                 if ("Byte" in type || "Short" in type)
                     for (scalar in listOf(N, type))
                         +"operator fun ${t}Assign(scalar: $scalar) = ${t}Assign(scalar.${if (type.uns) "u" else ""}i)"
@@ -278,9 +276,7 @@ fun vecs(type: String, T: String) {
             if (!type.uns)
                 +"operator fun unaryMinus(): Vec${ordinal}$T = Vec${ordinal}$T(${xyzwJoint { c -> "-$c" }})"
             "// Binary operators"()
-            for (o in op) {
-                val s = o.first
-                val t = o.second
+            for ((s, t) in op) {
                 +"operator fun $t(scalar: $type) = Vec${ordinal}$T(${xyzwJoint { c -> "$c $s scalar" }})"
                 +"operator fun $t(v: Vec1$T) = Vec${ordinal}$T(${xyzwJoint { c -> "$c $s v.x" }})"
                 if (ordinal != 1)
@@ -289,10 +285,25 @@ fun vecs(type: String, T: String) {
         }
         "override fun equals(other: Any?) = other is Vec${ordinal}$T && ${xyzwJoint(" && ") { c -> "$c == other.$c" }}"()
 
+        if (type == "Boolean") {
+            +"// Boolean operators"
+            val vec = "Vec${ordinal}${type.c}"
+            +"infix fun and(v: $vec) = $vec(${xyzwJoint { c -> "$c && v.$c" }})"
+            +"infix fun or(v: $vec) = $vec(${xyzwJoint { c -> "$c || v.$c" }})"
+        }
+
         "companion object" {
             +"const val length = Vec${ordinal}T.length"
             if (type.numeric)
                 +"const val size = length * $type.SIZE_BYTES"
+        }
+    }
+    "// Binary operators"()
+    if (type.numeric) {
+        for ((s, t) in op) {
+            "operator fun $type.$t(v: Vec$ordinal$T) = Vec$ordinal$T(${xyzwJoint { c -> "this $s v.$c" }})"()
+            if (ordinal != 1)
+                "operator fun Vec1$T.$t(v: Vec$ordinal$T) = Vec$ordinal$T(${xyzwJoint { c -> "x $s v.$c" }})"()
         }
     }
 }
