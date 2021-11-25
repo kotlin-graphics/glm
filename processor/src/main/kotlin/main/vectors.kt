@@ -98,10 +98,11 @@ fun vecs(type: String, T: String) {
     repeat(4) { +"import glm.vec${it + 1}.*" }
     val vec_ = "Vec$ordinal"
     "class $vec_$T(var array: ${type}Array, var ofs: Int = 0) : ${vec_}T<$type>()/*, ToBuffer*/" {
-        xyzw { c ->
+        xyzw { i, c ->
+            val delta = if (i == 0) "" else " + $i"
             "override var $c: $type"(
-                "get() = array[ofs]",
-                "set(value) { array[ofs] = value }")
+                "get() = array[ofs$delta]",
+                "set(value) { array[ofs$delta] = value }")
         }
 
         "// Implicit basic constructors"()
