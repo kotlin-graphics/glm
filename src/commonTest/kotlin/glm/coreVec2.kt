@@ -3,6 +3,7 @@ package glm
 import glm.vec1.Vec1
 import glm.vec1.Vec1d
 import glm.vec2.*
+import glm.vec4.xy
 import kotlin.test.Test
 import kotlin.test.assertFalse
 
@@ -303,5 +304,20 @@ class coreVec2 {
         assert(i0 == i4)
         assert(i1 == i2)
         assert(i1 == i3)
+    }
+
+    @Test
+    fun swizzle() {
+
+        run {
+            val a = Vec2(1f, 2f)
+            val b = a.xy
+            val c = Vec2(a.xy)
+//            val d = Vec2(a.xy())
+
+            assert(a == b)
+            assert(a == c)
+//            Error += glm::all(glm::equal(A, D, 0.0001f)) ? 0 : 1
+        }
     }
 }

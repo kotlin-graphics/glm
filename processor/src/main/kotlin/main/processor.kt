@@ -32,6 +32,7 @@ class Processor(private val codeGenerator: CodeGenerator,
         //        }
 
         vecs(codeGenerator)
+        swizzle(codeGenerator)
 
         return emptyList()
     }
