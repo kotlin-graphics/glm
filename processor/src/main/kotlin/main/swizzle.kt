@@ -6,7 +6,7 @@ import com.google.devtools.ksp.processing.Dependencies
 
 fun swizzle(generator: CodeGenerator) {
 
-    for (o in 2..4) {
+    for (o in 2..2) {
         ord = o
         for (i in types.indices) {
             type = types[i]
