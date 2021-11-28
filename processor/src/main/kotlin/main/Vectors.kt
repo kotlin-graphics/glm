@@ -85,7 +85,7 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
     repeat(4) { +"import glm.vec${it + 1}.*" }
     
     val vec = "Vec$ordinal"
-    "class $vec$id(var array: ${type}Array, var ofs: Int = 0) : ${vec}T<$type>()" {
+    "open class $vec$id(var array: ${type}Array, var ofs: Int = 0) : ${vec}T<$type>()" {
         xyzw(ordinal) { i, c ->
             val delta = if (i == 0) "" else " + $i"
             
@@ -198,7 +198,7 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
             }
         }
         
-        if (type !in numberTypes) {
+        if (type in numberTypes) {
             +"// Unary arithmetic operators"
             for ((s, t) in operators) {
                 if ("Byte" in type || "Short" in type)
@@ -289,12 +289,12 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
         
         "companion object" {
             +"const val length = Vec${ordinal}T.length"
-            if (type !in numberTypes)
+            if (type in numberTypes)
                 +"const val size = length * $type.SIZE_BYTES"
         }
     }
-    +"// Binary operators"
-    if (type !in numberTypes) {
+    if (type in numberTypes) {
+        +"// Binary operators"
         for ((s, t) in operators) {
             +"operator fun $type.$t(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "this $s v.$c" }})"
             if (ordinal != 1)
