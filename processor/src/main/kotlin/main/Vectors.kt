@@ -3,12 +3,13 @@ package main
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.Dependencies
 
-fun vecs(generator: CodeGenerator) {
-    
+fun vectors(generator: CodeGenerator) {
     for (i in 1..4)
         generator.createNewFile(dependencies = Dependencies(false), packageName = "glm.vec$i", fileName = "Vec${i}T").use {
             text.clear()
-            vects(i)
+            
+            vectorsT(i)
+            
             it.write(text.toString().toByteArray())
         }
     
@@ -20,7 +21,9 @@ fun vecs(generator: CodeGenerator) {
         for (i in 1..4) {
             generator.createNewFile(dependencies = Dependencies(false), packageName = "glm.vec$i", fileName = "Vec$i$id").use {
                 text.clear()
-                vecs(i, type, extension, id)
+                
+                vectors(i, type, extension, id)
+                
                 it.write(text.toString().toByteArray())
             }
         }
@@ -29,29 +32,35 @@ fun vecs(generator: CodeGenerator) {
 
 private val operators = listOf('+' to "plus", '-' to "minus", '*' to "times", '/' to "div")
 
-private fun vects(ordinal: Int) {
+private fun vectorsT(ordinal: Int) {
+    +"package glm.vec$ordinal"
     
-    "package glm.vec$ordinal"()
-    "abstract class Vec${ordinal}T<T>/*: ToBuffer*/" {
+    "abstract class Vec${ordinal}T<T>" {
         xyzw(ordinal) { c -> +"abstract var $c: T" }
-        xyzw(ordinal) { i, c -> +"fun component$i() = $c" }
+        xyzw(ordinal) { i, c -> +"operator fun component${i + 1}() = $c" }
         
-        "// aliases"()
+        +"// -- Aliases --"
         
         xyzw(ordinal) { i, c ->
-            "var ${rgba[i]}: T"(
-                "get() = $c",
-                "set(value) { $c = value }"
-            )
+            +"var ${rgba[i]}: T"
+            indent {
+                +"get() = $c"
+                "set(value)" {
+                    +"$c = value"
+                }
+            }
         }
         xyzw(ordinal) { i, c ->
-            "var ${stpq[i]}: T"(
-                "get() = $c",
-                "set(value) { $c = value }"
-            )
+            +"var ${stpq[i]}: T"
+            indent {
+                +"get() = $c"
+                "set(value)" {
+                    +"$c = value"
+                }
+            }
         }
         
-        "// -- Component accesses --"()
+        +"// -- Component accesses --"
         
         "operator fun get(index: Int): T = when (index)" {
             xyzw(ordinal) { i, c -> +"$i -> $c" }
@@ -68,38 +77,43 @@ private fun vects(ordinal: Int) {
     }
 }
 
-private fun vecs(ordinal: Int, type: String, extension: String, id: String) {
+private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
+    +"package glm.vec$ordinal"
     
-    "package glm.vec$ordinal"()
-    "import glm.*"()
-    "import glm.extensions.*"()
+    +"import glm.*"
+    +"import glm.extensions.*"
     repeat(4) { +"import glm.vec${it + 1}.*" }
+    
     val vec = "Vec$ordinal"
-    "class $vec$id(var array: ${type}Array, var ofs: Int = 0) : ${vec}T<$type>()/*, ToBuffer*/" {
+    "class $vec$id(var array: ${type}Array, var ofs: Int = 0) : ${vec}T<$type>()" {
         xyzw(ordinal) { i, c ->
             val delta = if (i == 0) "" else " + $i"
-            "override var $c: $type"(
-                "get() = array[ofs$delta]",
-                "set(value) { array[ofs$delta] = value }"
-            )
+            
+            +"override var $c: $type"
+            indent {
+                +"get() = array[ofs$delta]"
+                "set(value)" {
+                    +"array[ofs$delta] = value"
+                }
+            }
         }
         
-        "// Implicit basic constructors"()
-        "constructor() : this(${type}Array($ordinal))"()
-        "constructor(v: $vec$id) : this(${xyzwJoint(ordinal) { c -> "v.$c" }})"()
+        +"// Implicit basic constructors"
+        +"constructor() : this(${type}Array($ordinal))"
+        +"constructor(v: $vec$id) : this(${xyzwJoint(ordinal) { c -> "v.$c" }})"
         
-        "// Explicit basic constructors"()
+        +"// Explicit basic constructors"
         val arrayOf = "${type.lowercase()}ArrayOf"
         val a = "x" * ordinal
-        "constructor(x: $type) : this(${if (ordinal == 1) "$arrayOf($a)" else a})"()
-        "constructor(x: Number) : this(x.$extension)"()
+        +"constructor(x: $type) : this(${if (ordinal == 1) "$arrayOf($a)" else a})"
+        +"constructor(x: Number) : this(x.$extension)"
         if (type == "UByte" || type == "UShort") {
             +"constructor(x: UInt) : this(x.$extension)"
             +"constructor(x: ULong) : this(x.$extension)"
         }
         
         if (ordinal != 1) {
-            +"constructor(${xyzwJoint(ordinal) { c -> "$c: $type" }}) : this($arrayOf(${xyzwJoint(ordinal) { c -> "$c" }}))"
+            +"constructor(${xyzwJoint(ordinal) { c -> "$c: $type" }}) : this($arrayOf(${xyzwJoint(ordinal) { c -> c }}))"
             if (type == "UByte" || type == "UShort") {
                 +"constructor(${xyzwJoint(ordinal) { c -> "$c: UInt" }}) : this(${xyzwJoint(ordinal) { c -> "$c.$extension" }})"
                 +"constructor(${xyzwJoint(ordinal) { c -> "$c: ULong" }}) : this(${xyzwJoint(ordinal) { c -> "$c.$extension" }})"
@@ -116,19 +130,25 @@ private fun vecs(ordinal: Int, type: String, extension: String, id: String) {
                 +"constructor(${a.joinToString()}) : this(${a.joinToString { "${par(it)}$postfix" }})"
                 postfix = ""
             }
-            for (x in range('x'))
-                for (y in range('y'))
-                    if (ordinal > 2)
+            for (x in range('x')) {
+                for (y in range('y')) {
+                    if (ordinal > 2) {
                         for (z in range('z'))
-                            if (ordinal == 4)
+                            if (ordinal == 4) {
                                 for (w in range('w'))
                                     constructor(x, y, z, w)
-                            else constructor(x, y, z)
-                    else constructor(x, y)
+                            } else {
+                                constructor(x, y, z)
+                            }
+                    } else {
+                        constructor(x, y)
+                    }
+                }
+            }
         }
         
-        "// Conversion vector constructors"()
-        "// Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)"()
+        +"// Conversion vector constructors"
+        +"// Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)"
         
         infix fun String.to(b: String) = +"constructor($this) : this($b)"
         val V1 = "Vec1T<out Number>"
@@ -185,7 +205,7 @@ private fun vecs(ordinal: Int, type: String, extension: String, id: String) {
                     for (scalar in listOf(N, type))
                         +"operator fun ${t}Assign(scalar: $scalar) = ${t}Assign(scalar.${if (type in unsignedTypes) "u" else ""}i)"
                 else {
-                    "operator fun ${t}Assign(scalar: $N) = ${t}Assign(scalar.$extension)"()
+                    +"operator fun ${t}Assign(scalar: $N) = ${t}Assign(scalar.$extension)"
                     "operator fun ${t}Assign(scalar: $type)" {
                         xyzw(ordinal) { c ->
                             when {
@@ -236,7 +256,7 @@ private fun vecs(ordinal: Int, type: String, extension: String, id: String) {
                     }
                 }
             }
-            "// Increment and decrement operators"()
+            +"// Increment and decrement operators"
             "operator fun inc(): Vec$ordinal$id" {
                 xyzw(ordinal) { c -> +"$c++" }
                 +"return this"
@@ -245,12 +265,12 @@ private fun vecs(ordinal: Int, type: String, extension: String, id: String) {
                 xyzw(ordinal) { c -> +"$c--" }
                 +"return this"
             }
-            "// Unary bit operators TODO"()
-            "// Unary operators"()
-            "operator fun unaryPlus(): Vec$ordinal$id = this"()
+            +"// Unary bit operators TODO"
+            +"// Unary operators"
+            +"operator fun unaryPlus(): Vec$ordinal$id = this"
             if (type !in unsignedTypes)
                 +"operator fun unaryMinus(): Vec$ordinal$id = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "-$c" }})"
-            "// Binary operators"()
+            +"// Binary operators"
             for ((s, t) in operators) {
                 +"operator fun $t(scalar: $type) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $s scalar" }})"
                 +"operator fun $t(v: Vec1$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $s v.x" }})"
@@ -258,7 +278,7 @@ private fun vecs(ordinal: Int, type: String, extension: String, id: String) {
                     +"operator fun $t(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $s v.$c" }})"
             }
         }
-        "override fun equals(other: Any?) = other is Vec$ordinal$id && ${xyzwJoint(ordinal, " && ") { c -> "$c == other.$c" }}"()
+        +"override fun equals(other: Any?) = other is Vec$ordinal$id && ${xyzwJoint(ordinal, " && ") { c -> "$c == other.$c" }}"
         
         if (type == "Boolean") {
             +"// Boolean operators"
@@ -273,12 +293,12 @@ private fun vecs(ordinal: Int, type: String, extension: String, id: String) {
                 +"const val size = length * $type.SIZE_BYTES"
         }
     }
-    "// Binary operators"()
+    +"// Binary operators"
     if (type !in numberTypes) {
         for ((s, t) in operators) {
-            "operator fun $type.$t(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "this $s v.$c" }})"()
+            +"operator fun $type.$t(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "this $s v.$c" }})"
             if (ordinal != 1)
-                "operator fun Vec1$id.$t(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "x $s v.$c" }})"()
+                +"operator fun Vec1$id.$t(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "x $s v.$c" }})"
         }
     }
 }
