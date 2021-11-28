@@ -30,8 +30,10 @@ class Processor(private val codeGenerator: CodeGenerator,
         //                writer.write("}\n")
         //            }
         //        }
-
+    
+        primitiveExtensions(codeGenerator)
         vecs(codeGenerator)
+        swizzles(codeGenerator)
 
         return emptyList()
     }

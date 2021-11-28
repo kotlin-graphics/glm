@@ -2,7 +2,8 @@ package main
 
 
 val text = StringBuilder()
-var indentation = ""
+private var indentation = ""
+
 operator fun String.invoke(vararg strings: String) {
     +this
     indent {
@@ -35,7 +36,3 @@ operator fun StringBuilder.plusAssign(char: Char) {
 }
 
 operator fun String.times(i: Int) = (1..i).joinToString { this }
-
-val String.integer: Boolean
-    get() = this == "Byte" || this == "Short" || this == "Int" || this == "Long" ||
-            this == "UByte" || this == "UShort" || this == "UInt" || this == "ULong"
