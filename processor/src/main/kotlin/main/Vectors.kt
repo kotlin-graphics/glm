@@ -72,9 +72,18 @@ private fun vectorsT(ordinal: Int) {
             }
             +"else -> throw IndexOutOfBoundsException()"
         }
+        
+        
         "companion object" {
             +"const val length = $ordinal"
         }
+    }
+    
+    "infix fun <N : Number> Vec${ordinal}T<N>.dot(v: Vec${ordinal}T<out Number>): N = when (this)" {
+        for ((_, _, _, id) in numberTypeInformation - unsignedTypes) {
+            +"is Vec$ordinal$id -> this.dot(v) as N"
+        }
+        +"else -> throw ArithmeticException(\"Can't get dot product of non-number vectors!\")"
     }
 }
 
@@ -260,6 +269,7 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                     }
                 }
             }
+            
             +"// Increment and decrement operators"
             "operator fun inc(): Vec$ordinal$id" {
                 xyzw(ordinal) { c -> +"$c++" }
@@ -269,19 +279,27 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                 xyzw(ordinal) { c -> +"$c--" }
                 +"return this"
             }
+            
             +"// Unary bit operators TODO"
             +"// Unary operators"
             +"operator fun unaryPlus(): Vec$ordinal$id = this"
             if (type !in unsignedTypes)
                 +"operator fun unaryMinus(): Vec$ordinal$id = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "-$c" }})"
+            
             +"// Binary operators"
-            for ((s, t) in operators) {
-                +"operator fun $t(scalar: $type) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $s scalar" }})"
-                +"operator fun $t(v: Vec1$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $s v.x" }})"
+            for ((operatorChar, operatorName) in operators) {
+                +"operator fun $operatorName(scalar: $type) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $operatorChar scalar" }})"
+                +"operator fun $operatorName(v: Vec1$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $operatorChar v.x" }})"
                 if (ordinal != 1)
-                    +"operator fun $t(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $s v.$c" }})"
+                    +"operator fun $operatorName(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $operatorChar v.$c" }})"
             }
         }
+    
+        if (type in numberTypes) {
+            +"// Dot products"
+            +"fun dot(v: Vec${ordinal}T<out Number>) = (${xyzwJoint(ordinal, " + ") { c -> "$c * v.$c.$extension" }}).$extension"
+        }
+        
         +"override fun equals(other: Any?) = other is Vec$ordinal$id && ${xyzwJoint(ordinal, " && ") { c -> "$c == other.$c" }}"
         
         if (type == "Boolean") {
@@ -300,10 +318,10 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
     
     +"// Binary operators"
     if (type in numberTypes) {
-        for ((s, t) in operators) {
-            +"operator fun $type.$t(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "this $s v.$c" }})"
+        for ((operatorChar, operatorName) in operators) {
+            +"operator fun $type.$operatorName(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "this $operatorChar v.$c" }})"
             if (ordinal != 1)
-                +"operator fun Vec1$id.$t(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "x $s v.$c" }})"
+                +"operator fun Vec1$id.$operatorName(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "x $operatorChar v.$c" }})"
         }
     }
 }
