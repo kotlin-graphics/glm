@@ -1,26 +1,43 @@
 package main
 
-val numberTypes = mapOf(
-    "Byte" to ("b" to "toByte"),
-    "Short" to ("s" to "toShort"),
-    "Int" to ("i" to "toInt"),
-    "Long" to ("L" to "toLong"),
-    "UByte" to ("ub" to "toUByte"),
-    "UShort" to ("us" to "toUShort"),
-    "UInt" to ("ui" to "toUInt"),
-    "ULong" to ("ul" to "toULong"),
-    "Float" to ("f" to "toFloat"),
-    "Double" to ("d" to "toDouble")
+val numberTypeInformation = listOf(
+    TypeInformation("Byte","b", "toByte"),
+    TypeInformation("Short","s", "toShort"),
+    TypeInformation("Int", "i", "toInt"),
+    TypeInformation("Long", "L", "toLong"),
+    TypeInformation("UByte", "ub", "toUByte"),
+    TypeInformation("UShort", "us", "toUShort"),
+    TypeInformation("UInt", "ui", "toUInt"),
+    TypeInformation("ULong", "ul", "toULong"),
+    TypeInformation("Float", "f", "toFloat"),
+    TypeInformation("Double", "d", "toDouble")
 )
-val extensionsToType = numberTypes.map { (k, v) ->
-    v.first to k
-}.toMap()
+val extensionsToInformation = numberTypeInformation.associateBy {
+    it.extension
+}
+val typeToInformation = numberTypeInformation.associateBy {
+    it.type
+}
+
+val numberTypes = numberTypeInformation.map {
+    it.type
+}
 val unsignedTypes = listOf("UByte", "UShort", "UInt", "ULong")
 val floatingPointTypes = listOf("Float", "Double")
 
-val vectorTypes = numberTypes + ("Boolean" to ("bool" to ""))
+val vectorTypes = numberTypeInformation + TypeInformation("Boolean", "bool", "")
 
-val String.unsingedToSigned get() = replace("U", "")
+val String.unsignedToSigned get() = replace("U", "")
+
+
+data class TypeInformation(val type: String, val extension: String, val conversionFunction: String) {
+    val id: String
+        get() = if (type == "Float") "" else extension
+    
+    operator fun component4() = id
+}
+
+operator fun Iterable<TypeInformation>.minus(types: Iterable<String>) = types.toSet().let { typeSet -> this.filter { it.type !in typeSet } }
 
 
 val xyzw = listOf("x", "y", "z", "w")

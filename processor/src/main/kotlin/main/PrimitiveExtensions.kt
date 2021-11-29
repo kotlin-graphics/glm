@@ -16,7 +16,7 @@ fun primitiveExtensions(generator: CodeGenerator) {
 private fun numbers() {
     +"package glm.extensions"
     
-    for ((extension, function) in numberTypes.values + ("c" to "toChar")) {
+    for ((_, extension, function) in numberTypeInformation + TypeInformation("Char", "c", "toChar")) {
         if (extension == "c") {
             +"val Number.$extension get() = toInt().$function()"
             
@@ -24,7 +24,7 @@ private fun numbers() {
                 +"val $utype.$extension get() = toInt().$function()"
             }
         } else {
-            +"val Number.$extension get() = ${if ("U" in function) "${function.unsingedToSigned}().$function()" else "$function()"}"
+            +"val Number.$extension get() = ${if ("U" in function) "${function.unsignedToSigned}().$function()" else "$function()"}"
             
             for (utype in unsignedTypes) {
                 +"val $utype.$extension get() = $function()"
@@ -39,8 +39,8 @@ private fun numbers() {
             +"val Char.$extension get() = code.$function()"
         }
         
-        extensionsToType[extension]?.let { type ->
-            if (type in floatingPointTypes) {
+        extensionsToInformation[extension]?.let { information ->
+            if (information.type in floatingPointTypes) {
                 +"val String.$extension get() = $function()"
             } else {
                 +"val String.$extension get() = if (startsWith(\"0x\")) substring(2).$function(16) else $function()"
@@ -56,14 +56,12 @@ private fun numbers() {
     }
     
     
-    val binaryTypes = numberTypes - floatingPointTypes
+    val binaryTypes = numberTypeInformation - floatingPointTypes
     val skip = listOf("Int" to "Int")
     val skipWithInt = listOf("Long", "UInt", "ULong")
     val operations = listOf("shl" to true, "shr" to true, "ushr" to true, "and" to false, "or" to false, "xor" to false)
     
-    for ((typeLeft, v) in binaryTypes) {
-        val (keyLeft, _) = v
-        
+    for ((typeLeft, keyLeft) in binaryTypes) {
         for ((typeRight, _) in binaryTypes - listOf("Long", "ULong")) {
             if ((typeLeft to typeRight) in skip) continue
             if (typeRight == "Int" && typeLeft in skipWithInt) continue
@@ -83,9 +81,7 @@ private fun numbers() {
     
     val matchingTypes = listOf("Number", "Char", "Boolean", "String") + unsignedTypes
     
-    for ((type, v) in numberTypes) {
-        val (extension, function) = v
-        
+    for ((type, extension, function) in numberTypeInformation) {
         +"internal val Any.$function: $type"
         indent {
             "get() = when (this)" {
@@ -99,7 +95,7 @@ private fun numbers() {
     }
     
     
-    for (type in numberTypes.keys) {
+    for ((type) in numberTypeInformation) {
         +"val $type.Companion.BYTES: Int"
         indent {
             +"get() = SIZE_BYTES"

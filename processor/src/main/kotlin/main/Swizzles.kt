@@ -5,8 +5,7 @@ import com.google.devtools.ksp.processing.Dependencies
 
 fun swizzles(generator: CodeGenerator) {
     for (i in 2..4) {
-        for ((type, v) in vectorTypes) {
-            val (extension, _) = v
+        for ((type, extension) in vectorTypes) {
             val id = if (type == "Float") "" else extension
     
             generator.createNewFile(dependencies = Dependencies(false), packageName = "glm.extensions.swizzle.vec$i", fileName = "Vec$i$id").use {
