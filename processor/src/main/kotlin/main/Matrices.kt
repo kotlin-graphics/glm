@@ -232,24 +232,25 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
             "operator fun ${operation}Assign(scalar: $type)" {
                 abcd(width, height) { s -> +"$s $char= scalar" }
             }
-            "operator fun ${operation}Assign(m: Mat${matrixSizeString(width, height)})" {
+            "operator fun ${operation}Assign(m: Mat${matrixSizeString(width, height)}$id)" {
                 abcd(width, height) { s -> +"$s $char= m.$s" }
             }
         }
-        +"// -- Increment and decrement operators --"
-        "operator fun inc(): Mat${matrixSizeString(width, height)}" {
-            abcd(width, height) { s -> +"$s++" }
-            +"return this"
-        }
-        "operator fun dec(): Mat${matrixSizeString(width, height)}" {
-            abcd(width, height) { s -> +"$s--" }
-            +"return this"
-        }
-        +"// -- Unary arithmetic operators --"
+        
         +"operator fun unaryPlus() = this"
         +"operator fun unaryMinus() = $mat$id("
         indent {
-            +(abcdJoint(width, height, ",\n$indentation") { c -> c } + ")")
+            +(abcdJoint(width, height, ",\n$indentation") { c -> "-$c" } + ")")
+        }
+        
+        +"// -- Increment and decrement operators --"
+        "operator fun inc(): Mat${matrixSizeString(width, height)}$id" {
+            abcd(width, height) { s -> +"$s++" }
+            +"return this"
+        }
+        "operator fun dec(): Mat${matrixSizeString(width, height)}$id" {
+            abcd(width, height) { s -> +"$s--" }
+            +"return this"
         }
 
 
