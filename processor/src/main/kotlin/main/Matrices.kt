@@ -242,6 +242,17 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
                 abcd(width, height) { s -> +"$s $char= m.$s" }
             }
         }
+        +"// -- Increment and decrement operators --"
+        "operator fun inc(): Mat${matrixSizeString(width, height)}" {
+            abcd(width, height) { s -> +"$s++" }
+            +"return this"
+        }
+        "operator fun dec(): Mat${matrixSizeString(width, height)}" {
+            abcd(width, height) { s -> +"$s--" }
+            +"return this"
+        }
+
+
         +"override val isIdentity: Boolean"
         indent {
             if (width != height) {
