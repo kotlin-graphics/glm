@@ -39,7 +39,7 @@ private fun matricesT(width: Int, height: Int) {
 
     +"import glm.vec$height.*"
     +"import glm.vec$width.*"
-
+//    abcd(3, 3) { c, r, s -> +"import glm.mat${matrixSizeString(c + 2, r + 2)}.*" }
     for (i in 2..4) {
         +"import glm.mat${matrixSizeString(i, width)}.*"
         +"import glm.mat${matrixSizeString(i, height)}.*"
@@ -97,11 +97,7 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
     +"import glm.*"
     +"import glm.extensions.*"
     repeat(4) { +"import glm.vec${it + 1}.*" }
-//    abcd(3, 3) { c, r, s -> +"import glm.mat${sizeId(c + 2, r + 2)}.*" }
-    for (i in 2..4) {
-        +"import glm.mat${matrixSizeString(i, width)}.*"
-        +"import glm.mat${matrixSizeString(i, height)}.*"
-    }
+    abcd(3, 3) { c, r, s -> +"import glm.mat${matrixSizeString(c + 2, r + 2)}.*" }
 
     val mat = "Mat${matrixSizeString(width, height)}"
     "class $mat$id private constructor(var array: ${type}Array) : ${mat}T<$type, Vec$height$id>()" {
