@@ -148,9 +148,9 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
         }
 
         +"// -- Matrix conversions --"
-        abcd(3, 3) { c, r, s ->
-            val c = c + 2
-            val r = r + 2
+        abcd(3, 3) { i, j, _ ->
+            val c = i + 2
+            val r = j + 2
             if (c != width || r != height) {
                 val sep = ",\n\t\t\t\t\t\t\t\t" + if (c != r) "  " else ""
                 val args = abcdJoint(width, height, sep) { col, row, text -> if (row < r && col < c) "m.$text" else "0" }
@@ -206,7 +206,7 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
 
         +"// Matrix multiplication"
         for (k in 2..4) {
-            +"override infix operator fun times(other: Mat${matrixSizeString(k, width)}T<$type, out Vec${width}T<$type>>) = Mat${matrixSizeString(width, height)}Operations.times(Mat${matrixSizeString(k, height)}$id(${type}Array(${k * height})), this, other)"
+            +"override infix operator fun times(other: Mat${matrixSizeString(k, width)}T<$type, out Vec${width}T<$type>>) = Operations.times(Mat${matrixSizeString(k, height)}$id(${type}Array(${k * height})), this, other)"
             +"override fun times(other: Mat${matrixSizeString(k, width)}T<$type, out Vec${width}T<$type>>, res: Mat${matrixSizeString(k, height)}T<$type, out Vec${height}T<$type>>) = Operations.times(res, this, other)"
         }
         if (width == height) {

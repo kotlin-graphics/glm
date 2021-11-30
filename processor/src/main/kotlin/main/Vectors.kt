@@ -2,6 +2,7 @@ package main
 
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.Dependencies
+import kotlin.math.pow
 
 fun vectors(generator: CodeGenerator) {
     for (i in 1..4) {
@@ -29,6 +30,12 @@ fun vectors(generator: CodeGenerator) {
 
 private fun vectorsT(ordinal: Int) {
     +"package glm.vec$ordinal"
+    
+    if (ordinal > 1) {
+        +"import glm.extensions.swizzle.*"
+        +"import glm.extensions.*"
+        +"import kotlin.jvm.*"
+    }
     
     "abstract class Vec${ordinal}T<T>" {
         xyzw(ordinal) { c -> +"abstract var $c: T" }
@@ -77,11 +84,23 @@ private fun vectorsT(ordinal: Int) {
         }
     }
     
-    "infix fun <N : Number> Vec${ordinal}T<N>.dot(v: Vec${ordinal}T<out Number>): N = when (this)" {
-        for ((_, _, _, id) in numberTypeInformation - unsignedTypes) {
-            +"is Vec$ordinal$id -> this.dot(v) as N"
+    if (ordinal > 1) {
+        for (unsigned in (unsignedTypes + "out Number")) {
+            +"@Suppress(\"UNCHECKED_CAST\")"
+            if (unsigned != "out Number") +"@JvmName(\"dot$unsigned\")"
+            "infix fun <N> Vec${ordinal}T<N>.dot(v: Vec${ordinal}T<$unsigned>): N = when (this)" {
+                for ((_, _, _, id) in numberTypeInformation) {
+                    +"is Vec$ordinal$id -> this.dot(v) as N"
+                }
+                "is Vec${ordinal}Impl -> when (x)" {
+                    for ((type, extension) in numberTypeInformation) {
+                        +"is $type -> (${xyzwJoint(ordinal, " + ") { c -> "($c as $type) * v.$c.$extension" }}).$extension as N"
+                    }
+                    +"else -> throw IllegalArgumentException(\"Can't compute dot product of non-number vectors!\")"
+                }
+                +"else -> throw ArithmeticException(\"Can't compute dot product of non-number vectors!\")"
+            }
         }
-        +"else -> throw ArithmeticException(\"Can't get dot product of non-number vectors!\")"
     }
 }
 
@@ -90,6 +109,7 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
     
     +"import glm.*"
     +"import glm.extensions.*"
+    +"import kotlin.jvm.*"
     repeat(4) { +"import glm.vec${it + 1}.*" }
     
     val vec = "Vec$ordinal"
@@ -292,13 +312,17 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                     +"operator fun $operatorName(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $operatorChar v.$c" }})"
             }
         }
-    
-        if (type in numberTypes) {
+        
+        if (ordinal > 1 && type in numberTypes) {
             +"// Dot products"
-            +"fun dot(v: Vec${ordinal}T<out Number>) = (${xyzwJoint(ordinal, " + ") { c -> "$c * v.$c.$extension" }}).$extension"
+            for (unsigned in (unsignedTypes + "out Number")) {
+                if (unsigned != "out Number") +"@JvmName(\"dot$unsigned\")"
+                +"fun dot(v: Vec${ordinal}T<$unsigned>) = (${xyzwJoint(ordinal, " + ") { c -> "$c * v.$c.$extension" }}).$extension"
+            }
         }
         
         +"override fun equals(other: Any?) = other is Vec$ordinal$id && ${xyzwJoint(ordinal, " && ") { c -> "$c == other.$c" }}"
+        +"override fun hashCode() = ${xyzwJoint(ordinal, " + ") { i, c -> "${31f.pow(i).toInt()} * $c.hashCode()" }}"
         
         if (type == "Boolean") {
             +"// Boolean operators"

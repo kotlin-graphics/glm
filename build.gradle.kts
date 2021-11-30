@@ -79,6 +79,10 @@ tasks {
     withType<KotlinCompile<*>>().all {
         if (name != "kspKotlinMetadata")
             dependsOn("kspKotlinMetadata")
+        
+        kotlinOptions {
+            freeCompilerArgs += "-Xopt-in=kotlin.ExperimentalUnsignedTypes"
+        }
     }
 }
 
