@@ -97,7 +97,7 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
     +"import glm.*"
     +"import glm.extensions.*"
     repeat(4) { +"import glm.vec${it + 1}.*" }
-    abcd(3, 3) { c, r, s -> +"import glm.mat${matrixSizeString(c + 2, r + 2)}.*" }
+    abcd(3, 3) { c, r, _ -> +"import glm.mat${matrixSizeString(c + 2, r + 2)}.*" }
 
     val mat = "Mat${matrixSizeString(width, height)}"
     "class $mat$id private constructor(var array: ${type}Array) : ${mat}T<$type, Vec$height$id>()" {
@@ -200,12 +200,6 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
                     +"m.array.copyInto(array, 0, 0, length)"
                 }
             }
-
-            +"// Unary operators"
-            +"operator fun unaryMinus() = $mat$id("
-            indent {
-                +(abcdJoint(width, height, ",\n$indentation") { c -> c } + ")")
-            }
         }
 
         +"// Matrix multiplication"
@@ -250,6 +244,12 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
         "operator fun dec(): Mat${matrixSizeString(width, height)}" {
             abcd(width, height) { s -> +"$s--" }
             +"return this"
+        }
+        +"// -- Unary arithmetic operators --"
+        +"operator fun unaryPlus() = this"
+        +"operator fun unaryMinus() = $mat$id("
+        indent {
+            +(abcdJoint(width, height, ",\n$indentation") { c -> c } + ")")
         }
 
 
