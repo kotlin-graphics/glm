@@ -233,7 +233,7 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
                 abcd(width, height) { s -> +"$s = ($s $char scalar.$extension).$extension" }
             }
             "operator fun ${operation}Assign(m: Mat${matrixSizeString(width, height)}$id)" {
-                abcd(width, height) { s -> +"$s = (§$s $char m.$s).$extension" }
+                abcd(width, height) { s -> +"$s = ($s $char m.$s).$extension" }
             }
         }
         
