@@ -68,7 +68,8 @@ private fun matricesT(width: Int, height: Int) {
             }
         }
 
-        +"abstract val isIdentity: Boolean"
+        if (width == height)
+            +"abstract val isIdentity: Boolean"
 
         "companion object" {
             +"const val length = $width * $height"
@@ -87,6 +88,7 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
     +"import glm.*"
     +"import glm.extensions.*"
     repeat(4) { +"import glm.vec${it + 1}.*" }
+    abcd(3, 3) { c, r, s -> +"import glm.mat${sizeId(c + 2, r + 2)}.*" }
 
     val mat = "Mat${sizeId(width, height)}"
     "class $mat$id private constructor(@Suppress(\"UNUSED_PARAMETER\") dummy: Int, var array: ${type}Array) : ${mat}T<$type>()" {
@@ -102,24 +104,31 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
             }
         }
 
-        if (width == height && type != "Boolean") {
-            +"// Implicit basic constructors"
+        if (type != "Boolean") {
+            +"// Implicit-basic and Matrix-conversions constructors"
             +"constructor() : this(1)"
-            +"constructor(m: $mat$id) : this(${abcdJoint(width, height) { c -> "m.$c" }})"
+            abcd(3, 3) { c, r, s ->
+                +"constructor(m: Mat${sizeId(c + 2, r + 2)}) : this("
+                +"\t${abcdJoint(width, height, ",\n\t\t") { col, row, text -> if(row < r + 2 && col < c + 2) "m.$text" else "0" }}"
+//                +"\t${abcdJoint(width, height, ",\n\t\t") { col, row, text -> "$col $row $text $c $r $s" }}"
+                text.deleteAt(text.lastIndex).appendLine(')')
+            }
+            val args = (0 until width).joinToString { "v$it: Vec$height$id" }
+            val unroll = (0 until width).joinToString { n -> (0 until height).joinToString { "v$n.${xyzw[it]}" } }
+            +"constructor($args) : this($unroll)"
 
             +"// Explicit basic constructors"
             val arrayOf = "${type.lowercase()}ArrayOf"
             for (t in (unsignedTypes + "Number")) {
-                +"constructor(s: $t) : this(${"s" * width})"
-                if (width > 2) {
+                +"constructor(s: $t) : this(${"s" * width * height})"
+                if (width > 2 && width == height)
                     +"constructor(${xyzwJoint(width - 1) { c -> "$c: $t" }}) : this(${xyzwJoint(width - 1) { c -> "$c.$extension" }}, 1.$extension)"
+                if (width == height) {
+                    +"constructor(${xyzwJoint(width) { c -> "$c: $t" }}) : this("
+                    indent {
+                        +(abcdJoint(width, height, ",\n$indentation") { i, j, _ -> if (i == j) "${xyzw[i]}.$extension" else "0.$extension" } + ")")
+                    }
                 }
-
-                +"constructor(${xyzwJoint(width) { c -> "$c: $t" }}) : this("
-                indent {
-                    +(abcdJoint(width, height, ",\n$indentation") { i, j, _ -> if (i == j) "${xyzw[i]}.$extension" else "0.$extension" } + ")")
-                }
-
                 +"constructor(${abcdJoint(width, height, ",\n$indentation\t\t\t") { i, j, _ -> "${xyzw[i]}$j: $t" }}) : this(0, $arrayOf("
                 indent {
                     +(abcdJoint(width, height, ",\n$indentation") { i, j, _ -> "${xyzw[i]}$j.$extension" } + "))")
@@ -146,9 +155,11 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
         }
         +"override operator fun set(column: Int, row: Int, value: $type) = array.set(column * $height + row, value)"
 
-        +"override val isIdentity: Boolean"
-        indent {
-            +("get() =" + abcdJoint(width, height, " &&\n$indentation\t\t", " && ") { i, j, _ -> if (i == j) "this[$i, $j] == 1.$extension" else "this[$i, $j] == 0.$extension" })
+        if (width == height) {
+            +"override val isIdentity: Boolean"
+            indent {
+                +("get() =" + abcdJoint(width, height, " &&\n$indentation\t\t", " && ") { i, j, _ -> if (i == j) "this[$i, $j] == 1.$extension" else "this[$i, $j] == 0.$extension" })
+            }
         }
 
         "companion object" {

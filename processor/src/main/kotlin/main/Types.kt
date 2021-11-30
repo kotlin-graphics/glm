@@ -64,5 +64,7 @@ fun abcd(width: Int, height: Int, block: (String) -> Unit) {
     }
 }
 
-fun abcdJoint(width: Int, height: Int, rowSeparator: String = ", ", columnSeparator: String = ", ", block: (Int, Int, String) -> String) = (0 until width).joinToString(rowSeparator) { i -> (0 until height).joinToString(columnSeparator) { j -> block(i, j, abcdN(i, j)) } }
-fun abcdJoint(width: Int, height: Int, rowSeparator: String = ", ", columnSeparator: String = ", ", block: (String) -> String) = (0 until width).joinToString(rowSeparator) { i -> (0 until height).joinToString(columnSeparator) { j -> block(abcdN(i, j)) } }
+fun abcdJoint(width: Int, height: Int, rowSeparator: String = ", ", columnSeparator: String = ", ", block: (Int, Int, String) -> String) =
+    (0 until width).joinToString(rowSeparator) { i -> (0 until height).joinToString(columnSeparator) { j -> block(i, j, abcdN(i, j)) } }
+fun abcdJoint(width: Int, height: Int, rowSeparator: String = ", ", columnSeparator: String = ", ", block: (String) -> String) =
+    (0 until width).joinToString(rowSeparator) { i -> (0 until height).joinToString(columnSeparator) { j -> block(abcdN(i, j)) } }

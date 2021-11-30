@@ -4,7 +4,7 @@ import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.Dependencies
 
 fun swizzles(generator: CodeGenerator) {
-    for (i in 2..4) {
+    for (i in 2..2) {
         for ((type, v) in vectorTypes) {
             val (extension, _) = v
             val id = if (type == "Float") "" else extension
