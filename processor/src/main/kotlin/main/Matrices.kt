@@ -122,6 +122,10 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
         val arrayOf = "${type.lowercase()}ArrayOf"
         text += ") : this($arrayOf(${abcdJoint(width, height) { text -> text }}))"
 
+        +"constructor(${(0 until width).joinToString(",\n\t\t\t\t") { "v$it: Vec$height" }}"
+        text.deleteAt(text.lastIndex)
+        text += ") : this($arrayOf(${(0 until width).joinToString { i -> xyzwJoint(height) { _, s -> "v$i.$s" } }}))"
+
         +"constructor(s: Number) : this(${"s" * width})"
         if (width > 2) {
             +"constructor(${xyzwJoint(width - 1) { c -> "$c: Number" }}) : this(${xyzwJoint(width - 1) { c -> c }}, 1)"
