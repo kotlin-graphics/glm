@@ -39,7 +39,7 @@ private fun matricesT(width: Int, height: Int) {
 
     +"import glm.vec$height.*"
     +"import glm.vec$width.*"
-//    abcd(3, 3) { c, r, s -> +"import glm.mat${matrixSizeString(c + 2, r + 2)}.*" }
+    //    abcd(3, 3) { c, r, s -> +"import glm.mat${matrixSizeString(c + 2, r + 2)}.*" }
     for (i in 2..4) {
         +"import glm.mat${matrixSizeString(i, width)}.*"
         +"import glm.mat${matrixSizeString(i, height)}.*"
@@ -64,7 +64,7 @@ private fun matricesT(width: Int, height: Int) {
             +"abstract infix operator fun times(other: Mat${matrixSizeString(k, width)}T<N, out Vec${width}T<N>>)"
             +"fun times(other: Mat${matrixSizeString(k, width)}T<N, out Vec${width}T<N>>, res: Mat${matrixSizeString(k, height)}T<N, out Vec${height}T<N>>) = Mat${matrixSizeString(width, height)}Operations.times(res, this, other)"
         }
-//        +"infix operator fun timesAssign(other: Mat${matrixSizeString(height, width)}T<N, out Vec${width}T<N>>) = Mat${matrixSizeString(width, height)}Operations.times(this, this, other)"
+        //        +"infix operator fun timesAssign(other: Mat${matrixSizeString(height, width)}T<N, out Vec${width}T<N>>) = Mat${matrixSizeString(width, height)}Operations.times(this, this, other)"
 
         +"// -- Aliases --"
 
@@ -113,27 +113,28 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
             }
         }
 
+        +"// -- Constructors --"
+        +"constructor() : this(1)"
+        +"constructor(m: $mat$id) : this(${abcdJoint(width, height) { c -> "m.$c" }})"
+        +"constructor(scalar: $type) : this(${"scalar" * width * height})"
+        +"constructor(${abcdJoint(width, height, ",\n\t\t\t\t") { text -> "$text: $type" }}"
+        text.deleteAt(text.lastIndex)
         val arrayOf = "${type.lowercase()}ArrayOf"
-        if (width == height) {
-            +"// Implicit basic constructors"
-            +"constructor() : this(1)"
-            +"constructor(m: $mat$id) : this(${abcdJoint(width, height) { c -> "m.$c" }})"
+        text += ") : this($arrayOf(${abcdJoint(width, height) { text -> text }}))"
 
-            +"// Explicit basic constructors"
-            +"constructor(s: Number) : this(${"s" * width})"
-            if (width > 2) {
-                +"constructor(${xyzwJoint(width - 1) { c -> "$c: Number" }}) : this(${xyzwJoint(width - 1) { c -> c }}, 1)"
-            }
+        +"constructor(s: Number) : this(${"s" * width})"
+        if (width > 2) {
+            +"constructor(${xyzwJoint(width - 1) { c -> "$c: Number" }}) : this(${xyzwJoint(width - 1) { c -> c }}, 1)"
+        }
 
-            +"constructor(${xyzwJoint(width) { c -> "$c: Number" }}) : this("
-            indent {
-                +(abcdJoint(width, height, ",\n$indentation") { i, j, _ -> if (i == j) xyzw[i] else "0" } + ")")
-            }
+        +"constructor(${xyzwJoint(width) { c -> "$c: Number" }}) : this("
+        indent {
+            +(abcdJoint(width, height, ",\n$indentation") { i, j, _ -> if (i == j) xyzw[i] else "0" } + ")")
+        }
 
-            +"constructor(${abcdJoint(width, height, ",\n$indentation\t\t\t") { i, j, _ -> "${xyzw[i]}$j: Number" }}) : this($arrayOf("
-            indent {
-                +(abcdJoint(width, height, ",\n$indentation") { i, j, _ -> "${xyzw[i]}$j.$extension" } + "))")
-            }
+        +"constructor(${abcdJoint(width, height, ",\n$indentation\t\t\t") { i, j, _ -> "${xyzw[i]}$j: Number" }}) : this($arrayOf("
+        indent {
+            +(abcdJoint(width, height, ",\n$indentation") { i, j, _ -> "${xyzw[i]}$j.$extension" } + "))")
         }
 
         +"constructor(array: ${type}Array, transpose: Boolean = false) : this("
