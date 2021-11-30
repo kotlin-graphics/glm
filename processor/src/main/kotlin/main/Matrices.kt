@@ -64,7 +64,7 @@ private fun matricesT(width: Int, height: Int) {
             +"abstract infix operator fun times(other: Mat${matrixSizeString(k, width)}T<N, out Vec${width}T<N>>)"
             +"fun times(other: Mat${matrixSizeString(k, width)}T<N, out Vec${width}T<N>>, res: Mat${matrixSizeString(k, height)}T<N, out Vec${height}T<N>>) = Mat${matrixSizeString(width, height)}Operations.times(res, this, other)"
         }
-        +"infix operator fun timesAssign(other: Mat${matrixSizeString(height, width)}T<N, out Vec${width}T<N>>) = Mat${matrixSizeString(width, height)}Operations.times(this, this, other)"
+//        +"infix operator fun timesAssign(other: Mat${matrixSizeString(height, width)}T<N, out Vec${width}T<N>>) = Mat${matrixSizeString(width, height)}Operations.times(this, this, other)"
 
         +"// -- Aliases --"
 
