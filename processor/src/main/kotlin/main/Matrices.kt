@@ -62,9 +62,11 @@ private fun matricesT(width: Int, height: Int) {
 
         for (k in 2..4) {
             +"abstract infix operator fun times(other: Mat${matrixSizeString(k, width)}T<N, out Vec${width}T<N>>)"
-            +"fun times(other: Mat${matrixSizeString(k, width)}T<N, out Vec${width}T<N>>, res: Mat${matrixSizeString(k, height)}T<N, out Vec${height}T<N>>) = Mat${matrixSizeString(width, height)}Operations.times(res, this, other)"
+            +"abstract fun times(other: Mat${matrixSizeString(k, width)}T<N, out Vec${width}T<N>>, res: Mat${matrixSizeString(k, height)}T<N, out Vec${height}T<N>>)"
         }
-        //        +"infix operator fun timesAssign(other: Mat${matrixSizeString(height, width)}T<N, out Vec${width}T<N>>) = Mat${matrixSizeString(width, height)}Operations.times(this, this, other)"
+        if (width == height) {
+            +"abstract infix operator fun timesAssign(other: Mat${matrixSizeString(height, width)}T<N, out Vec${width}T<N>>)"
+        }
 
         +"// -- Aliases --"
 
@@ -100,7 +102,7 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
     abcd(3, 3) { c, r, _ -> +"import glm.mat${matrixSizeString(c + 2, r + 2)}.*" }
 
     val mat = "Mat${matrixSizeString(width, height)}"
-    "class $mat$id private constructor(var array: ${type}Array) : ${mat}T<$type, Vec$height$id>()" {
+    "open class $mat$id private constructor(var array: ${type}Array) : ${mat}T<$type, Vec$height$id>()" {
         abcd(width, height) { i, j, c ->
             val ofs = i * height + j
 
@@ -205,6 +207,10 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
         +"// Matrix multiplication"
         for (k in 2..4) {
             +"override infix operator fun times(other: Mat${matrixSizeString(k, width)}T<$type, out Vec${width}T<$type>>) = Mat${matrixSizeString(width, height)}Operations.times(Mat${matrixSizeString(k, height)}$id(${type}Array(${k * height})), this, other)"
+            +"override fun times(other: Mat${matrixSizeString(k, width)}T<$type, out Vec${width}T<$type>>, res: Mat${matrixSizeString(k, height)}T<$type, out Vec${height}T<$type>>) = Operations.times(res, this, other)"
+        }
+        if (width == height) {
+            +"override infix operator fun timesAssign(other: Mat${matrixSizeString(height, width)}T<$type, out Vec${width}T<$type>>) = Operations.times(this, this, other)"
         }
 
         +"// -- Accesses --"
@@ -275,5 +281,24 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
         +"fun elementCount() = length"
 
         +"override fun equals(other: Any?) = other is $mat$id && array.contentEquals(other.array)"
+    
+        
+        "object Operations" {
+            for (k in 2..4) {
+                "fun times(res: Mat${matrixSizeString(k, height)}T<$type, out Vec${height}T<$type>>, a: Mat${matrixSizeString(width, height)}T<$type, out Vec${height}T<$type>>, b: Mat${matrixSizeString(k, width)}T<$type, out Vec${width}T<$type>>)" {
+                    for (x in 0 until k) {
+                        for (y in 0 until height) {
+                            +"val v$x$y = a.row($x) dot b[$y]"
+                        }
+                    }
+                
+                    for (x in 0 until k) {
+                        for (y in 0 until height) {
+                            +"res[$x, $y] = v$x$y"
+                        }
+                    }
+                }
+            }
+        }
     }
 }
