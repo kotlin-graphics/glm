@@ -229,11 +229,11 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
 
         +"// -- Unary arithmetic operators --"
         for ((char, operation) in operators) {
-            "operator fun ${operation}Assign(scalar: $type)" {
-                abcd(width, height) { s -> +"$s $char= scalar" }
+            "operator fun ${operation}Assign(scalar: Number)" {
+                abcd(width, height) { s -> +"($s $char= scalar.$extension).$extension" }
             }
-            "operator fun ${operation}Assign(m: Mat${matrixSizeString(width, height)}$id)" {
-                abcd(width, height) { s -> +"$s $char= m.$s" }
+            "operator fun ${operation}Assign(m: Mat${matrixSizeString(width, height)}T<out Number>)" {
+                abcd(width, height) { s -> +"($s $char= m.$s.$extension).$extension" }
             }
         }
         
