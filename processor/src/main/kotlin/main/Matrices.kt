@@ -129,14 +129,16 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
         // -- Conversions --
         +"constructor(s: Number) : this(s.$extension)"
         +"constructor(m: Mat${matrixSizeString(width, height)}T<*, Vec${height}T<*>>) : this(${abcdJoint(width, height) { c -> "m.$c" }})"
-        //        if (width > 2) {
-        //            +"constructor(${xyzwJoint(width - 1) { c -> "$c: Number" }}) : this(${xyzwJoint(width - 1) { c -> c }}, 1)"
-        //        }
-        //
-        //        +"constructor(${xyzwJoint(width) { c -> "$c: Number" }}) : this("
-        //        indent {
-        //            +(abcdJoint(width, height, ",\n$indentation") { i, j, _ -> if (i == j) xyzw[i] else "0" } + ")")
-        //        }
+
+        if (width == height) {
+            if (width > 2) {
+                +"constructor(${xyzwJoint(width - 1) { c -> "$c: Number" }}) : this(${xyzwJoint(width - 1) { c -> c }}, 1)"
+            }
+            +"constructor(${xyzwJoint(width) { c -> "$c: Number" }}) : this("
+            indent {
+                +(abcdJoint(width, height, ",\n$indentation") { i, j, _ -> if (i == j) xyzw[i] else "0" } + ")")
+            }
+        }
 
         +"constructor(${abcdJoint(width, height, ",\n$indentation\t\t\t") { i, j, _ -> "${xyzw[i]}$j: Number" }}) : this($arrayOf("
         indent {
