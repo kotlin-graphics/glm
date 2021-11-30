@@ -35,8 +35,10 @@ class Processor(private val codeGenerator: CodeGenerator,
         
         vectors(codeGenerator)
         swizzles(codeGenerator)
+        vectorOperations(codeGenerator)
         
         matrices(codeGenerator)
+        matrixOperations(codeGenerator)
 
         return emptyList()
     }
