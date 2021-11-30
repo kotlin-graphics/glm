@@ -230,10 +230,10 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
         +"// -- Unary arithmetic operators --"
         for ((char, operation) in operators) {
             "operator fun ${operation}Assign(scalar: Number)" {
-                abcd(width, height) { s -> +"($s $char= scalar.$extension).$extension" }
+                abcd(width, height) { s -> +"$s $char= scalar.$extension" }
             }
-            "operator fun ${operation}Assign(m: Mat${matrixSizeString(width, height)}T<out Number>)" {
-                abcd(width, height) { s -> +"($s $char= m.$s.$extension).$extension" }
+            "operator fun ${operation}Assign(m: Mat${matrixSizeString(width, height)}$id)" {
+                abcd(width, height) { s -> +"$s $char= m.$s" }
             }
         }
         
@@ -245,11 +245,11 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
         
         +"// -- Increment and decrement operators --"
         "operator fun inc(): Mat${matrixSizeString(width, height)}$id" {
-            abcd(width, height) { s -> +"$s++" }
+            abcd(width, height) { s -> +"$s = ($s + 1.$extension).$extension" }
             +"return this"
         }
         "operator fun dec(): Mat${matrixSizeString(width, height)}$id" {
-            abcd(width, height) { s -> +"$s--" }
+            abcd(width, height) { s -> +"$s = ($s - 1.$extension).$extension" }
             +"return this"
         }
 
