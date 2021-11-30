@@ -27,8 +27,6 @@ fun vectors(generator: CodeGenerator) {
     }
 }
 
-private val operators = listOf("+" to "plus", "-" to "minus", "*" to "times", "/" to "div")
-
 private fun vectorsT(ordinal: Int) {
     +"package glm.vec$ordinal"
     

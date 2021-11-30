@@ -22,3 +22,5 @@ operator fun StringBuilder.plusAssign(text: String) {
 }
 
 operator fun String.times(i: Int) = (1..i).joinToString { this }
+
+val operators = listOf("+" to "plus", "-" to "minus", "*" to "times", "/" to "div")
