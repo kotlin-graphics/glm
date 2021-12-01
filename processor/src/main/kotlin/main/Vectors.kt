@@ -8,20 +8,20 @@ fun vectors(generator: CodeGenerator) {
     for (i in 1..4) {
         generator.createNewFile(dependencies = Dependencies(false), packageName = "glm.vec$i", fileName = "Vec${i}T").use {
             text.clear()
-        
+
             vectorsT(i)
-        
+
             it.write(text.toString().toByteArray())
         }
     }
-    
+
     for ((type, extension, _, id) in vectorTypes) {
         for (i in 1..4) {
             generator.createNewFile(dependencies = Dependencies(false), packageName = "glm.vec$i", fileName = "Vec$i$id").use {
                 text.clear()
-                
+
                 vectors(i, type, extension, id)
-                
+
                 it.write(text.toString().toByteArray())
             }
         }
@@ -30,19 +30,18 @@ fun vectors(generator: CodeGenerator) {
 
 private fun vectorsT(ordinal: Int) {
     +"package glm.vec$ordinal"
-    
     if (ordinal > 1) {
         +"import glm.extensions.swizzle.*"
         +"import glm.extensions.*"
         +"import kotlin.jvm.*"
     }
-    
+
     "abstract class Vec${ordinal}T<T>" {
         xyzw(ordinal) { c -> +"abstract var $c: T" }
         xyzw(ordinal) { i, c -> +"operator fun component${i + 1}() = $c" }
-        
+
         +"// -- Aliases --"
-        
+
         xyzw(ordinal) { i, c ->
             +"var ${rgba[i]}: T"
             indent {
@@ -61,14 +60,14 @@ private fun vectorsT(ordinal: Int) {
                 }
             }
         }
-        
+
         +"// -- Component accesses --"
-        
+
         "operator fun get(index: Int): T = when (index)" {
             xyzw(ordinal) { i, c -> +"$i -> $c" }
             +"else -> throw IndexOutOfBoundsException()"
         }
-        
+
         "operator fun set(index: Int, value: T) = when(index)" {
             xyzw(ordinal) { i, c ->
                 "$i ->" {
@@ -77,13 +76,13 @@ private fun vectorsT(ordinal: Int) {
             }
             +"else -> throw IndexOutOfBoundsException()"
         }
-        
-        
+
+
         "companion object" {
             +"const val length = $ordinal"
         }
     }
-    
+
     if (ordinal > 1) {
         for (unsigned in (unsignedTypes + "out Number")) {
             +"@Suppress(\"UNCHECKED_CAST\")"
@@ -106,17 +105,18 @@ private fun vectorsT(ordinal: Int) {
 
 private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
     +"package glm.vec$ordinal"
-    
+
     +"import glm.*"
     +"import glm.extensions.*"
     +"import kotlin.jvm.*"
     repeat(4) { +"import glm.vec${it + 1}.*" }
-    
+    abcd(3, 3) { c, r, _ -> +"import glm.mat${matrixSizeString(c + 2, r + 2)}.*" }
+
     val vec = "Vec$ordinal"
     "open class $vec$id(var array: ${type}Array, var ofs: Int = 0) : ${vec}T<$type>()" {
         xyzw(ordinal) { i, c ->
             val delta = if (i == 0) "" else " + $i"
-            
+
             +"override var $c: $type"
             indent {
                 +"get() = array[ofs$delta]"
@@ -125,11 +125,11 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                 }
             }
         }
-        
+
         +"// Implicit basic constructors"
         +"constructor() : this(${type}Array($ordinal))"
         +"constructor(v: $vec$id) : this(${xyzwJoint(ordinal) { c -> "v.$c" }})"
-        
+
         +"// Explicit basic constructors"
         val arrayOf = "${type.lowercase()}ArrayOf"
         val a = "x" * ordinal
@@ -139,17 +139,17 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
             +"constructor(x: UInt) : this(x.$extension)"
             +"constructor(x: ULong) : this(x.$extension)"
         }
-        
+
         if (ordinal != 1) {
             +"constructor(${xyzwJoint(ordinal) { c -> "$c: $type" }}) : this($arrayOf(${xyzwJoint(ordinal) { c -> c }}))"
             if (type == "UByte" || type == "UShort") {
                 +"constructor(${xyzwJoint(ordinal) { c -> "$c: UInt" }}) : this(${xyzwJoint(ordinal) { c -> "$c.$extension" }})"
                 +"constructor(${xyzwJoint(ordinal) { c -> "$c: ULong" }}) : this(${xyzwJoint(ordinal) { c -> "$c.$extension" }})"
             }
-            
+
             +"// Conversion scalar constructors"
             +"constructor(v: Vec1T<out Number>) : this(v.x.$extension)"
-            
+
             +"// Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)"
             fun oneTypes(comp: String) = listOf("$comp: Number", "$comp: Vec1T<out Number>")
             fun value(p: String) = if (p.last() == '>') "${p[0]}.x" else p[0]
@@ -176,10 +176,10 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                 }
             }
         }
-        
+
         +"// Conversion vector constructors"
         +"// Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)"
-        
+
         infix fun String.args(b: String) = +"constructor($this) : this($b)"
         val V1 = "Vec1T<out Number>"
         val V2 = "Vec2T<out Number>"
@@ -227,7 +227,7 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                 "v: $V4" args "v.x, v.y, v.z, v.w"
             }
         }
-        
+
         if (type in numberTypes) {
             +"// Unary arithmetic operators"
             for ((operatorChar, operatorName) in operators) {
@@ -241,7 +241,7 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                         xyzw(ordinal) { c ->
                             when {
                                 "Byte" in type || "Short" in type -> +"$c = ($c $operatorChar scalar).$extension"
-                                else                              -> +"$c $operatorChar= scalar"
+                                else -> +"$c $operatorChar= scalar"
                             }
                         }
                     }
@@ -287,7 +287,7 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                     }
                 }
             }
-            
+
             +"// Increment and decrement operators"
             "operator fun inc(): Vec$ordinal$id" {
                 xyzw(ordinal) { c -> +"$c++" }
@@ -297,22 +297,30 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                 xyzw(ordinal) { c -> +"$c--" }
                 +"return this"
             }
-            
+
             +"// Unary bit operators TODO"
             +"// Unary operators"
             +"operator fun unaryPlus(): Vec$ordinal$id = this"
             if (type !in unsignedTypes)
                 +"operator fun unaryMinus(): Vec$ordinal$id = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "-$c" }})"
-            
+
             +"// Binary operators"
             for ((operatorChar, operatorName) in operators) {
                 +"operator fun $operatorName(scalar: $type) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $operatorChar scalar" }})"
                 +"operator fun $operatorName(v: Vec1$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $operatorChar v.x" }})"
-                if (ordinal != 1)
+                if (ordinal != 1) {
                     +"operator fun $operatorName(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $operatorChar v.$c" }})"
+                    if (operatorChar == "*" && type[0] != 'U')
+                        for (i in 2..4) {
+                            val args = xyzwJoint(i, ",\n\t\t\t\t\t\t\t\t\t") { j, _ ->
+                                (0 until ordinal).joinToString(" + ") { "${xyzw[it]} * m.${abcd[j]}$it" }
+                            }
+                            +"operator fun times(m: Mat${matrixSizeString(i, ordinal)}$id) = Vec$i$id($args)"
+                        }
+                }
             }
         }
-        
+
         if (ordinal > 1 && type in numberTypes) {
             +"// Dot products"
             for (unsigned in (unsignedTypes + "out Number")) {
@@ -320,24 +328,24 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                 +"fun dot(v: Vec${ordinal}T<$unsigned>) = (${xyzwJoint(ordinal, " + ") { c -> "$c * v.$c.$extension" }}).$extension"
             }
         }
-        
+
         +"override fun equals(other: Any?) = other is Vec$ordinal$id && ${xyzwJoint(ordinal, " && ") { c -> "$c == other.$c" }}"
         +"override fun hashCode() = ${xyzwJoint(ordinal, " + ") { i, c -> "${31f.pow(i).toInt()} * $c.hashCode()" }}"
-        
+
         if (type == "Boolean") {
             +"// Boolean operators"
             val vec_ = "Vec$ordinal$extension"
             +"infix fun and(v: $vec_) = $vec_(${xyzwJoint(ordinal) { c -> "$c && v.$c" }})"
             +"infix fun or(v: $vec_) = $vec_(${xyzwJoint(ordinal) { c -> "$c || v.$c" }})"
         }
-        
+
         "companion object" {
             +"const val length = Vec${ordinal}T.length"
             if (type in numberTypes)
                 +"const val size = length * $type.SIZE_BYTES"
         }
     }
-    
+
     +"// Binary operators"
     if (type in numberTypes) {
         for ((operatorChar, operatorName) in operators) {

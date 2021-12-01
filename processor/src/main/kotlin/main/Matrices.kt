@@ -61,7 +61,7 @@ private fun matricesT(width: Int, height: Int) {
         +"abstract fun row(row: Int, value: Vec${width}T<out Number>)"
 
         +"// -- Matrix multiplications --"
-        
+
         for (k in 2..4) {
             +"abstract infix operator fun times(other: Mat${matrixSizeString(k, width)}T<N, out Vec${width}T<N>>)"
             +"abstract fun times(other: Mat${matrixSizeString(k, width)}T<N, out Vec${width}T<N>>, res: Mat${matrixSizeString(k, height)}T<N, out Vec${height}T<N>>)"
@@ -71,7 +71,7 @@ private fun matricesT(width: Int, height: Int) {
         }
         +"abstract infix operator fun times(v: Vec${width}T<N>)"
         +"abstract fun times(v: Vec${width}T<N>, res: Vec${height}T<N>)"
-        
+
         +"// -- Aliases --"
 
         abcd(width, height) { i, j, c ->
@@ -134,7 +134,7 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
 
         // -- Conversions --
         +"constructor(s: Number) : this(s.$extension)"
-        +"constructor(m: Mat${matrixSizeString(width, height)}T<*, Vec${height}T<*>>) : this(${abcdJoint(width, height) { c -> "m.$c" }})"
+        +"constructor(m: ${mat}T<*, Vec${height}T<*>>) : this(${abcdJoint(width, height) { c -> "m.$c" }})"
 
         if (width == height) {
             if (width > 2) {
@@ -244,27 +244,44 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
             "operator fun ${operation}Assign(scalar: Number)" {
                 abcd(width, height) { s -> +"$s = ($s $char scalar.$extension).$extension" }
             }
-            "operator fun ${operation}Assign(m: Mat${matrixSizeString(width, height)}$id)" {
+            "operator fun ${operation}Assign(m: $mat$id)" {
                 abcd(width, height) { s -> +"$s = ($s $char m.$s).$extension" }
             }
         }
-        
+
         +"operator fun unaryPlus() = this"
         +"operator fun unaryMinus() = $mat$id("
         indent {
             +(abcdJoint(width, height, ",\n$indentation") { c -> "-$c" } + ")")
         }
-        
+
         +"// -- Increment and decrement operators --"
-        "operator fun inc(): Mat${matrixSizeString(width, height)}$id" {
+        "operator fun inc(): $mat$id" {
             abcd(width, height) { s -> +"$s = ($s + 1.$extension).$extension" }
             +"return this"
         }
-        "operator fun dec(): Mat${matrixSizeString(width, height)}$id" {
+        "operator fun dec(): $mat$id" {
             abcd(width, height) { s -> +"$s = ($s - 1.$extension).$extension" }
             +"return this"
         }
 
+        +"// -- Binary operators --"
+        for ((char, operation) in operators) {
+            val sep = ",\n\t\t\t\t\t\t\t\t\t"
+            var args = abcdJoint(width, height, sep) { s -> "$s $char scalar" }
+            +"operator fun $operation(scalar: $type) = $mat$id($args)"
+            if (char == "*" || char == "/") {
+                if (width == height) {
+                    args = xyzwJoint(height, sep) { i, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$i $char v.${xyzw[it]}" } }
+                    +"operator fun $operation(v: Vec$width$id) = Vec$height$id($args)"
+                    args = abcdJoint(width, height, sep, sep) { c, r, s -> (0 until width).joinToString(" + ") { "${abcd[it]}$r* m.${abcd[c]}$it" } }
+                    +"operator fun $operation(m: $mat$id) = $mat$id($args)"
+                } // else TODO
+            } else {
+                args = abcdJoint(width, height, sep) { s -> "$s $char m.$s" }
+                +"operator fun $operation(m: $mat$id) = $mat$id($args)"
+            }
+        }
 
         +"override val isIdentity: Boolean"
         indent {
@@ -287,8 +304,8 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
         +"fun elementCount() = length"
 
         +"override fun equals(other: Any?) = other is $mat$id && array.contentEquals(other.array)"
-    
-        
+
+
         "object Operations" {
             for (k in 2..4) {
                 "fun times(res: Mat${matrixSizeString(k, height)}T<$type, out Vec${height}T<$type>>, a: Mat${matrixSizeString(width, height)}T<$type, out Vec${height}T<$type>>, b: Mat${matrixSizeString(k, width)}T<$type, out Vec${width}T<$type>>)" {
@@ -297,7 +314,7 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
                             +"val v$x$y = a.row($x) dot b[$y]"
                         }
                     }
-                
+
                     for (x in 0 until k) {
                         for (y in 0 until height) {
                             +"res[$x, $y] = v$x$y"
@@ -305,32 +322,37 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
                     }
                 }
             }
-    
+
             "fun times(res: Vec${height}T<$type>, a: Mat${matrixSizeString(width, height)}T<$type, out Vec${height}T<$type>>, b: Vec${width}T<$type>)" {
                 for (x in 0 until height) {
                     +"val v$x = a.row($x) dot b"
                 }
-                
+
                 for (x in 0 until height) {
                     +"res[$x] = v$x"
                 }
             }
-            
+
             "fun times(res: Vec${width}T<$type>, a: Vec${height}T<$type>, b: Mat${matrixSizeString(width, height)}T<$type, out Vec${height}T<$type>>)" {
                 for (x in 0 until width) {
                     +"val v$x = a dot b[$x]"
                 }
-                
+
                 for (x in 0 until width) {
                     +"res[$x] = v$x"
                 }
             }
         }
     }
-    
+
     +"infix operator fun Vec${height}T<$type>.times(m: Mat${matrixSizeString(width, height)}T<$type, out Vec${height}T<$type>>) = $mat$id.Operations.times(Vec$width$id(), this, m)"
     +"fun Vec${height}T<$type>.times(m: Mat${matrixSizeString(width, height)}T<$type, out Vec${height}T<$type>>, res: Vec${width}T<$type>) = $mat$id.Operations.times(res, this, m)"
     if (width == height) {
         +"infix operator fun Vec${height}T<$type>.timesAssign(m: Mat${matrixSizeString(width, height)}T<$type, out Vec${height}T<$type>>) = $mat$id.Operations.times(this, this, m)"
+    }
+    +"// -- Binary operators --"
+    for ((char, operation) in operators) {
+        val args = abcdJoint(width, height, ",\n\t\t\t\t\t\t\t\t\t") { s -> "this $char m.$s" }
+        +"operator fun $type.$operation(m: $mat$id) = $mat$id($args)"
     }
 }
