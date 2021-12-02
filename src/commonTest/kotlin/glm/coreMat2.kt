@@ -13,15 +13,15 @@ class coreMat2 {
         val u = Vec2(1f)
         val v = Vec2(1f)
         val x = 1f
-//        val a = m * u
-//        val b = v * m
-//        glm::mat2x2 n = x / m
+        val a = m * u
+        val b = v * m
+        val n = x / m
 //        glm::mat2x2 o = m / x
 //        glm::mat2x2 p = x * m
 //        glm::mat2x2 q = m * x
 //        bool R = glm::any(glm::notEqual(m, q, glm::epsilon<float>()))
 //        bool S = glm::all(glm::equal(m, l, glm::epsilon<float>()))
-//
-//        return (S && !R) ? 0 : 1
+
+//        assert (S && !R) ? 0 : 1
     }
 }
