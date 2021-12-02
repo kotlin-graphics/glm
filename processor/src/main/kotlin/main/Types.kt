@@ -26,6 +26,7 @@ val unsignedTypes = listOf("UByte", "UShort", "UInt", "ULong")
 val floatingPointTypes = listOf("Float", "Double")
 
 val vectorTypes = numberTypeInformation + TypeInformation("Boolean", "bool", "")
+val matrixTypes = numberTypeInformation.filter { it.type in listOf("Float", "Double", "Int"/*, "UInt"*/) }
 
 val String.unsignedToSigned get() = replace("U", "")
 

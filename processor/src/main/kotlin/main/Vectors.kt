@@ -310,7 +310,7 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                 +"operator fun $operatorName(v: Vec1$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $operatorChar v.x" }})"
                 if (ordinal != 1) {
                     +"operator fun $operatorName(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $operatorChar v.$c" }})"
-                    if (operatorChar == "*" && type[0] != 'U')
+                    if (operatorChar == "*" && type in matrixTypes.map { it.type })
                         for (i in 2..4) {
                             val args = xyzwJoint(i, ",\n\t\t\t\t\t\t\t\t\t") { j, _ ->
                                 (0 until ordinal).joinToString(" + ") { "${xyzw[it]} * m.${abcd[j]}$it" }

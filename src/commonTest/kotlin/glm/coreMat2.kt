@@ -16,12 +16,31 @@ class coreMat2 {
         val a = m * u
         val b = v * m
         val n = x / m
-//        glm::mat2x2 o = m / x
-//        glm::mat2x2 p = x * m
-//        glm::mat2x2 q = m * x
-//        bool R = glm::any(glm::notEqual(m, q, glm::epsilon<float>()))
-//        bool S = glm::all(glm::equal(m, l, glm::epsilon<float>()))
+        //        glm::mat2x2 o = m / x
+        val p = x * m
+        val q = m * x
+        val r = m.anyNotEqual(q)
+        val s = m.allEqual(l)
 
-//        assert (S && !R) ? 0 : 1
+        assert(s && !r)
+    }
+
+    @Test
+    fun inverse() {
+
+        run {
+            val matrix = Mat2(1, 2, 3, 4)
+            val inverse = matrix.inverse()
+            val identity = matrix * inverse
+
+            assert(identity.allEqual(Mat2(1f), 0.01f))
+        }
+
+        run {
+            val matrix = Mat2(1, 2, 3, 4)
+            val identity = matrix / matrix
+
+            assert(identity.allEqual(Mat2(1f), 0.01f))
+        }
     }
 }
