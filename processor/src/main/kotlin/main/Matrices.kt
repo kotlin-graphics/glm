@@ -272,9 +272,9 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
             +"operator fun $operation(scalar: $type) = $mat$id($args)"
             if (char == "*" /*|| char == "/"*/) {
                 if (width == height) {
-                    args = xyzwJoint(height, sep) { i, _ -> (0 until width).joinToString(" + ") { "${abcd[it]} $i $char v.${xyzw[it]}" } }
+                    args = xyzwJoint(height, sep) { i, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$i $char v.${xyzw[it]}" } }
                     +"operator fun $operation(v: Vec$width$id) = Vec$height$id($args)"
-                    args = abcdJoint(width, height, sep, sep) { c, r, s -> (0 until width).joinToString(" + ") { "${abcd[it]}$r* m.${abcd[c]}$it" } }
+                    args = abcdJoint(width, height, sep, sep) { c, r, s -> (0 until width).joinToString(" + ") { "${abcd[it]}$r * m.${abcd[c]}$it" } }
                     +"operator fun $operation(m: $mat$id) = $mat$id($args)"
                 } // else TODO
             } else {
