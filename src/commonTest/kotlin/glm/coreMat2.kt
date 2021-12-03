@@ -16,7 +16,7 @@ class coreMat2 {
         val a = m * u
         val b = v * m
         val n = x / m
-        //        glm::mat2x2 o = m / x
+        val o = m / x
         val p = x * m
         val q = m * x
         val r = m.anyNotEqual(q)

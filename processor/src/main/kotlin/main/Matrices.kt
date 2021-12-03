@@ -123,7 +123,7 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
         +"// -- Constructors --"
         +"constructor() : this(1)"
         +"constructor(m: $mat$id) : this(${abcdJoint(width, height) { c -> "m.$c" }})"
-        +"constructor(scalar: $type) : this(${"scalar" * width * height})"
+        +"constructor(scalar: $type) : this(${abcdJoint(width, height) { c, r, s -> if (c == r) "scalar" else "0" }})"
         +"constructor(${abcdJoint(width, height, ",\n\t\t\t\t") { text -> "$text: $type" }}"
         text.deleteAt(text.lastIndex)
         val arrayOf = "${type.lowercase()}ArrayOf"
@@ -277,13 +277,122 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
             lateinit var args: String
             +"infix operator fun $operation(scalar: $type): $mat$id = $operation(scalar, $mat$id())"
             +"fun $operation(scalar: $type, res: $mat$id): $mat$id = res(${abcdJoint(width, height, sep) { s -> "$s $char scalar" }})"
-            if (char == "*" /*|| char == "/"*/) {
+            if (char == "*" || char == "/") {
                 if (width == height) {
                     args = xyzwJoint(height, sep) { i, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$i $char v.${xyzw[it]}" } }
                     +"infix operator fun $operation(v: Vec$width$id): Vec$width$id = Vec$height$id($args)"
                     +"infix operator fun $operation(m: $mat$id): $mat$id = $operation(m, $mat$id())"
-                    args = abcdJoint(width, height, sep) { c, r, s -> (0 until width).joinToString(" + ") { "${abcd[it]}$r * m.${abcd[c]}$it" } }
-                    +"fun $operation(m: $mat$id, res: $mat$id): $mat$id = res($args)"
+                    if (char == "*") {
+                        args = abcdJoint(width, height, sep) { c, r, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$r * m.${abcd[c]}$it" } }
+                        +"fun $operation(m: $mat$id, res: $mat$id): $mat$id = res($args)"
+                    } else
+                        "fun $operation(m: $mat$id, res: $mat$id): $mat$id" {
+                            val one = when (type) {
+                                "Float" -> "1f"
+                                "Double" -> "1.0"
+                                else -> "1"
+                            }
+                            if (width == 4) {
+                                +"val coef00 = m.c2 * m.d3 - m.d2 * m.c3"
+                                +"val coef02 = m.b2 * m.d3 - m.d2 * m.b3"
+                                +"val coef03 = m.b2 * m.c3 - m.c2 * m.b3"
+                                +"val coef04 = m.c1 * m.d3 - m.d1 * m.c3"
+                                +"val coef06 = m.b1 * m.d3 - m.d1 * m.b3"
+                                +"val coef07 = m.b1 * m.c3 - m.c1 * m.b3"
+                                +"val coef08 = m.c1 * m.d2 - m.d1 * m.c2"
+                                +"val coef10 = m.b1 * m.d2 - m.d1 * m.b2"
+                                +"val coef11 = m.b1 * m.c2 - m.c1 * m.b2"
+                                +"val coef12 = m.c0 * m.d3 - m.d0 * m.c3"
+                                +"val coef14 = m.b0 * m.d3 - m.d0 * m.b3"
+                                +"val coef15 = m.b0 * m.c3 - m.c0 * m.b3"
+                                +"val coef16 = m.c0 * m.d2 - m.d0 * m.c2"
+                                +"val coef18 = m.b0 * m.d2 - m.d0 * m.b2"
+                                +"val coef19 = m.b0 * m.c2 - m.c0 * m.b2"
+                                +"val coef20 = m.c0 * m.d1 - m.d0 * m.c1"
+                                +"val coef22 = m.b0 * m.d1 - m.d0 * m.b1"
+                                +"val coef23 = m.b0 * m.c1 - m.c0 * m.b1"
+                                +"var i00 = + m.b1 * coef00 - m.b2 * coef04 + m.b3 * coef08"
+                                +"var i10 = - m.a1 * coef00 + m.a2 * coef04 - m.a3 * coef08"
+                                +"var i20 = + m.a1 * coef02 - m.a2 * coef06 + m.a3 * coef10"
+                                +"var i30 = - m.a1 * coef03 + m.a2 * coef07 - m.a3 * coef11"
+                                +"var i01 = - m.b0 * coef00 + m.b2 * coef12 - m.b3 * coef16"
+                                +"var i11 = + m.a0 * coef00 - m.a2 * coef12 + m.a3 * coef16"
+                                +"var i21 = - m.a0 * coef02 + m.a2 * coef14 - m.a3 * coef18"
+                                +"var i31 = + m.a0 * coef03 - m.a2 * coef15 + m.a3 * coef19"
+                                +"var i02 = + m.b0 * coef04 - m.b1 * coef12 + m.b3 * coef20"
+                                +"var i12 = - m.a0 * coef04 + m.a1 * coef12 - m.a3 * coef20"
+                                +"var i22 = + m.a0 * coef06 - m.a1 * coef14 + m.a3 * coef22"
+                                +"var i32 = - m.a0 * coef07 + m.a1 * coef15 - m.a3 * coef23"
+                                +"var i03 = - m.b0 * coef08 + m.b1 * coef16 - m.b2 * coef20"
+                                +"var i13 = + m.a0 * coef08 - m.a1 * coef16 + m.a2 * coef20"
+                                +"var i23 = - m.a0 * coef10 + m.a1 * coef18 - m.a2 * coef22"
+                                +"var i33 = + m.a0 * coef11 - m.a1 * coef19 + m.a2 * coef23"
+                            }
+                            +"val oneOverDeterminant = $one / ("
+                            when (width) {
+                                2 -> {
+                                    +"\t+ m.a0 * m.b1"
+                                    +"\t- m.b0 * m.a1)"
+                                }
+                                3 -> {
+                                    +"\t+ m.a0 * (m.b1 * m.c2 - m.c1 * m.b2)"
+                                    +"\t- m.b0 * (m.a1 * m.c2 - m.c1 * m.a2)"
+                                    +"\t+ m.c0 * (m.a1 * m.b2 - m.b1 * m.a2))"
+                                }
+                                else -> text += "\tm.a0 * i00 + m.a1 * i10 + m.a2 * i20 + m.a3 * i30)"
+                            }
+
+                            when (width) {
+                                2 -> {
+                                    +"val i00 = + m.b1 * oneOverDeterminant"
+                                    +"val i10 = - m.a1 * oneOverDeterminant"
+                                    +"val i01 = - m.b0 * oneOverDeterminant"
+                                    +"val i11 = + m.a0 * oneOverDeterminant"
+//                                    +"return res(a0 * i00 + b0 * i01,"
+//                                    +"\t\ta1 * i00 + b1 * i01,"
+//                                    +"\t\ta0 * i10 + b0 * i11,"
+//                                    +"\t\ta1 * i10 + b1 * i11)"
+                                }
+                                3 -> {
+                                    +"val i00 = + (m.b1 * m.c2 - m.c1 * m.b2) * oneOverDeterminant"
+                                    +"val i10 = - (m.a1 * m.c2 - m.c1 * m.a2) * oneOverDeterminant"
+                                    +"val i20 = + (m.a1 * m.b2 - m.b1 * m.a2) * oneOverDeterminant"
+                                    +"val i01 = - (m.b0 * m.c2 - m.c0 * m.b2) * oneOverDeterminant"
+                                    +"val i11 = + (m.a0 * m.c2 - m.c0 * m.a2) * oneOverDeterminant"
+                                    +"val i21 = - (m.a0 * m.b2 - m.b0 * m.a2) * oneOverDeterminant"
+                                    +"val i02 = + (m.b0 * m.c1 - m.c0 * m.b1) * oneOverDeterminant"
+                                    +"val i12 = - (m.a0 * m.c1 - m.c0 * m.a1) * oneOverDeterminant"
+                                    +"val i22 = + (m.a0 * m.b1 - m.b0 * m.a1) * oneOverDeterminant"
+//                                    +"return res(a[0] * m2[0][0] + b[0] * m2[0][1],"
+//                                    +"\t\t\ta[1] * m2[0][0] + b[1] * m2[0][1],"
+//                                    +"\t\t\ta[0] * m2[1][0] + b[0] * m2[1][1],"
+//                                    +"\t\t\ta[1] * m2[1][0] + b[1] * m2[1][1],"
+//                                    +"\t\t\ta[0] * m2[2][0] + b[0] * m2[2][1],"
+//                                    +"\t\t\ta[1] * m2[2][0] + b[1] * m2[2][1]"
+                                }
+                                4 -> {
+                                    +"i00 *= oneOverDeterminant"
+                                    +"i10 *= oneOverDeterminant"
+                                    +"i20 *= oneOverDeterminant"
+                                    +"i30 *= oneOverDeterminant"
+                                    +"i01 *= oneOverDeterminant"
+                                    +"i11 *= oneOverDeterminant"
+                                    +"i21 *= oneOverDeterminant"
+                                    +"i31 *= oneOverDeterminant"
+                                    +"i02 *= oneOverDeterminant"
+                                    +"i12 *= oneOverDeterminant"
+                                    +"i22 *= oneOverDeterminant"
+                                    +"i32 *= oneOverDeterminant"
+                                    +"i03 *= oneOverDeterminant"
+                                    +"i13 *= oneOverDeterminant"
+                                    +"i23 *= oneOverDeterminant"
+                                    +"i33 *= oneOverDeterminant"
+                                }
+                            }
+                            args = abcdJoint(width, height, ",\n\t\t\t\t") { c, r, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$r * i$c$it" } }
+//                            args = abcdJoint(width, height, ",\n\t\t\t\t") { c, r, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$r * i$c$it" } }
+                            +"return res($args)"
+                        }
                 } // else TODO
             } else {
                 args = abcdJoint(width, height, sep) { s -> "$s $char m.$s" }
@@ -321,10 +430,10 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
                     +"val y = a1"
                     +"val z = a2"
                     +"val w = a3"
-                    +"val inverse = res(+b1 * coef00 - b2 * coef04 + b3 * coef08, -a1 * coef00 + a2 * coef04 - a3 * coef08, +a1 * coef02 - a2 * coef06 + a3 * coef10, -a1 * coef03 + a2 * coef07 - a3 * coef11,"
-                    +"\t\t\t-b0 * coef00 + b2 * coef12 - b3 * coef16, +a0 * coef00 - a2 * coef12 + a3 * coef16, -a0 * coef02 + a2 * coef14 - a3 * coef18, +a0 * coef03 - a2 * coef15 + a3 * coef19,"
-                    +"\t\t\t+b0 * coef04 - b1 * coef12 + b3 * coef20, -a0 * coef04 + a1 * coef12 - a3 * coef20, +a0 * coef06 - a1 * coef14 + a3 * coef22, -a0 * coef07 + a1 * coef15 - a3 * coef23,"
-                    +"\t\t\t-b0 * coef08 + b1 * coef16 - b2 * coef20, +a0 * coef08 - a1 * coef16 + a2 * coef20, -a0 * coef10 + a1 * coef18 - a2 * coef22, +a0 * coef11 - a1 * coef19 + a2 * coef23)"
+                    +"val inverse = res(+ b1 * coef00 - b2 * coef04 + b3 * coef08, - a1 * coef00 + a2 * coef04 - a3 * coef08, + a1 * coef02 - a2 * coef06 + a3 * coef10, - a1 * coef03 + a2 * coef07 - a3 * coef11,"
+                    +"\t\t\t- b0 * coef00 + b2 * coef12 - b3 * coef16, + a0 * coef00 - a2 * coef12 + a3 * coef16, - a 0 * coef02 + a2 * coef14 - a3 * coef18, + a0 * coef03 - a2 * coef15 + a3 * coef19,"
+                    +"\t\t\t+ b0 * coef04 - b1 * coef12 + b3 * coef20, - a0 * coef04 + a1 * coef12 - a3 * coef20, + a 0 * coef06 - a1 * coef14 + a3 * coef22, - a0 * coef07 + a1 * coef15 - a3 * coef23,"
+                    +"\t\t\t- b0 * coef08 + b1 * coef16 - b2 * coef20, + a0 * coef08 - a1 * coef16 + a2 * coef20, - a 0 * coef10 + a1 * coef18 - a2 * coef22, + a0 * coef11 - a1 * coef19 + a2 * coef23)"
                 }
                 +"val oneOverDeterminant = $one / ("
                 when (width) {
@@ -337,10 +446,10 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
                         +"\t- b0 * (a1 * c2 - c1 * a2)"
                         +"\t+ c0 * (a1 * b2 - b1 * a2))"
                     }
-                    else -> +"\tx * inverse.a0 + y * inverse.b0 + z * inverse.c0 + w * inverse.d0)"
+                    else -> text += "x * inverse.a0 + y * inverse.b0 + z * inverse.c0 + w * inverse.d0)"
                 }
 
-                when(width) {
+                when (width) {
                     2 -> {
                         +"return res("
                         +"\t+ b1 * oneOverDeterminant,"
@@ -350,17 +459,17 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
                     }
                     3 -> {
                         +"return res("
-                        +"\t+ (b1 * c2 - c1 * b2) * oneOverDeterminant"
-                        +"\t- (a1 * c2 - c1 * a2) * oneOverDeterminant"
-                        +"\t+ (a1 * b2 - b1 * a2) * oneOverDeterminant"
-                        +"\t- (b0 * c2 - c0 * b2) * oneOverDeterminant"
-                        +"\t+ (a0 * c2 - c0 * a2) * oneOverDeterminant"
-                        +"\t- (a0 * b2 - b0 * a2) * oneOverDeterminant"
-                        +"\t+ (b0 * c1 - c0 * b1) * oneOverDeterminant"
-                        +"\t- (a0 * c1 - c0 * a1) * oneOverDeterminant"
+                        +"\t+ (b1 * c2 - c1 * b2) * oneOverDeterminant,"
+                        +"\t- (a1 * c2 - c1 * a2) * oneOverDeterminant,"
+                        +"\t+ (a1 * b2 - b1 * a2) * oneOverDeterminant,"
+                        +"\t- (b0 * c2 - c0 * b2) * oneOverDeterminant,"
+                        +"\t+ (a0 * c2 - c0 * a2) * oneOverDeterminant,"
+                        +"\t- (a0 * b2 - b0 * a2) * oneOverDeterminant,"
+                        +"\t+ (b0 * c1 - c0 * b1) * oneOverDeterminant,"
+                        +"\t- (a0 * c1 - c0 * a1) * oneOverDeterminant,"
                         +"\t+ (a0 * b1 - b0 * a1) * oneOverDeterminant)"
                     }
-                    4 -> {
+                    else -> {
                         +"inverse *= oneOverDeterminant"
                         +"return inverse"
                     }
