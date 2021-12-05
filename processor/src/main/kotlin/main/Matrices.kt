@@ -345,8 +345,8 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
                             when (width) {
                                 2 -> {
                                     +"val i00 = + m.b1 * oneOverDeterminant"
-                                    +"val i10 = - m.a1 * oneOverDeterminant"
-                                    +"val i01 = - m.b0 * oneOverDeterminant"
+                                    +"val i01 = - m.a1 * oneOverDeterminant"
+                                    +"val i10 = - m.b0 * oneOverDeterminant"
                                     +"val i11 = + m.a0 * oneOverDeterminant"
 //                                    +"return res(a0 * i00 + b0 * i01,"
 //                                    +"\t\ta1 * i00 + b1 * i01,"
@@ -431,9 +431,9 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
                     +"val z = a2"
                     +"val w = a3"
                     +"val inverse = res(+ b1 * coef00 - b2 * coef04 + b3 * coef08, - a1 * coef00 + a2 * coef04 - a3 * coef08, + a1 * coef02 - a2 * coef06 + a3 * coef10, - a1 * coef03 + a2 * coef07 - a3 * coef11,"
-                    +"\t\t\t- b0 * coef00 + b2 * coef12 - b3 * coef16, + a0 * coef00 - a2 * coef12 + a3 * coef16, - a 0 * coef02 + a2 * coef14 - a3 * coef18, + a0 * coef03 - a2 * coef15 + a3 * coef19,"
-                    +"\t\t\t+ b0 * coef04 - b1 * coef12 + b3 * coef20, - a0 * coef04 + a1 * coef12 - a3 * coef20, + a 0 * coef06 - a1 * coef14 + a3 * coef22, - a0 * coef07 + a1 * coef15 - a3 * coef23,"
-                    +"\t\t\t- b0 * coef08 + b1 * coef16 - b2 * coef20, + a0 * coef08 - a1 * coef16 + a2 * coef20, - a 0 * coef10 + a1 * coef18 - a2 * coef22, + a0 * coef11 - a1 * coef19 + a2 * coef23)"
+                    +"\t\t\t- b0 * coef00 + b2 * coef12 - b3 * coef16, + a0 * coef00 - a2 * coef12 + a3 * coef16, - a0 * coef02 + a2 * coef14 - a3 * coef18, + a0 * coef03 - a2 * coef15 + a3 * coef19,"
+                    +"\t\t\t+ b0 * coef04 - b1 * coef12 + b3 * coef20, - a0 * coef04 + a1 * coef12 - a3 * coef20, + a0 * coef06 - a1 * coef14 + a3 * coef22, - a0 * coef07 + a1 * coef15 - a3 * coef23,"
+                    +"\t\t\t- b0 * coef08 + b1 * coef16 - b2 * coef20, + a0 * coef08 - a1 * coef16 + a2 * coef20, - a0 * coef10 + a1 * coef18 - a2 * coef22, + a0 * coef11 - a1 * coef19 + a2 * coef23)"
                 }
                 +"val oneOverDeterminant = $one / ("
                 when (width) {
@@ -446,7 +446,7 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
                         +"\t- b0 * (a1 * c2 - c1 * a2)"
                         +"\t+ c0 * (a1 * b2 - b1 * a2))"
                     }
-                    else -> text += "x * inverse.a0 + y * inverse.b0 + z * inverse.c0 + w * inverse.d0)"
+                    else -> text.deleteAt(text.lastIndex).appendLine("x * inverse.a0 + y * inverse.b0 + z * inverse.c0 + w * inverse.d0)")
                 }
 
                 when (width) {
