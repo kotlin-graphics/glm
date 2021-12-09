@@ -123,13 +123,13 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
         +"// -- Constructors --"
         +"constructor() : this(1)"
         +"constructor(m: $mat$id) : this(${abcdJoint(width, height) { c -> "m.$c" }})"
-        +"constructor(scalar: $type) : this(${abcdJoint(width, height) { c, r, s -> if (c == r) "scalar" else "0" }})"
+        +"constructor(scalar: $type) : this(${abcdJoint(width, height) { c, r, _ -> if (c == r) "scalar" else "0" }})"
         +"constructor(${abcdJoint(width, height, ",\n\t\t\t\t") { text -> "$text: $type" }}"
         text.deleteAt(text.lastIndex)
         val arrayOf = "${type.lowercase()}ArrayOf"
         text += ") : this($arrayOf(${abcdJoint(width, height) { text -> text }}))"
 
-        +"constructor(${(0 until width).joinToString(",\n\t\t\t\t") { "v$it: Vec$height" }}"
+        +"constructor(${(0 until width).joinToString(",\n\t\t\t\t") { "v$it: Vec$height$id" }}"
         text.deleteAt(text.lastIndex)
         text += ") : this(${(0 until width).joinToString { i -> xyzwJoint(height) { _, s -> "v$i.$s" } }})"
 
@@ -158,7 +158,13 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
             val r = j + 2
             if (c != width || r != height) {
                 val sep = ",\n\t\t\t\t\t\t\t\t" + if (c != r) "  " else ""
-                val args = abcdJoint(width, height, sep) { col, row, text -> if (row < r && col < c) "m.$text" else "0" }
+                val args = abcdJoint(width, height, sep) { col, row, text ->
+                    when {
+                        row < r && col < c -> "m.$text"
+                        col == row -> "1"
+                        else -> "0"
+                    }
+                }
                 +"constructor(m: Mat${matrixSizeString(c, r)}) : this($args)"
             }
         }
@@ -277,10 +283,13 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
             lateinit var args: String
             +"infix operator fun $operation(scalar: $type): $mat$id = $operation(scalar, $mat$id())"
             +"fun $operation(scalar: $type, res: $mat$id): $mat$id = res(${abcdJoint(width, height, sep) { s -> "$s $char scalar" }})"
+            if (char == "*") {
+                args = xyzwJoint(height, sep) { i, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$i $char v.${xyzw[it]}" } }
+                +"infix operator fun times(v: Vec$width$id): Vec$height$id = times(v, Vec$height$id())"
+                +"fun times(v: Vec$width$id, res: Vec$height$id): Vec$height$id = Vec$height$id($args)"
+            }
             if (char == "*" || char == "/") {
                 if (width == height) {
-                    args = xyzwJoint(height, sep) { i, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$i $char v.${xyzw[it]}" } }
-                    +"infix operator fun $operation(v: Vec$width$id): Vec$width$id = Vec$height$id($args)"
                     +"infix operator fun $operation(m: $mat$id): $mat$id = $operation(m, $mat$id())"
                     if (char == "*") {
                         args = abcdJoint(width, height, sep) { c, r, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$r * m.${abcd[c]}$it" } }
@@ -348,10 +357,10 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
                                     +"val i01 = - m.a1 * oneOverDeterminant"
                                     +"val i10 = - m.b0 * oneOverDeterminant"
                                     +"val i11 = + m.a0 * oneOverDeterminant"
-//                                    +"return res(a0 * i00 + b0 * i01,"
-//                                    +"\t\ta1 * i00 + b1 * i01,"
-//                                    +"\t\ta0 * i10 + b0 * i11,"
-//                                    +"\t\ta1 * i10 + b1 * i11)"
+                                    //                                    +"return res(a0 * i00 + b0 * i01,"
+                                    //                                    +"\t\ta1 * i00 + b1 * i01,"
+                                    //                                    +"\t\ta0 * i10 + b0 * i11,"
+                                    //                                    +"\t\ta1 * i10 + b1 * i11)"
                                 }
                                 3 -> {
                                     +"val i00 = + (m.b1 * m.c2 - m.c1 * m.b2) * oneOverDeterminant"
@@ -363,12 +372,12 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
                                     +"val i02 = + (m.b0 * m.c1 - m.c0 * m.b1) * oneOverDeterminant"
                                     +"val i12 = - (m.a0 * m.c1 - m.c0 * m.a1) * oneOverDeterminant"
                                     +"val i22 = + (m.a0 * m.b1 - m.b0 * m.a1) * oneOverDeterminant"
-//                                    +"return res(a[0] * m2[0][0] + b[0] * m2[0][1],"
-//                                    +"\t\t\ta[1] * m2[0][0] + b[1] * m2[0][1],"
-//                                    +"\t\t\ta[0] * m2[1][0] + b[0] * m2[1][1],"
-//                                    +"\t\t\ta[1] * m2[1][0] + b[1] * m2[1][1],"
-//                                    +"\t\t\ta[0] * m2[2][0] + b[0] * m2[2][1],"
-//                                    +"\t\t\ta[1] * m2[2][0] + b[1] * m2[2][1]"
+                                    //                                    +"return res(a[0] * m2[0][0] + b[0] * m2[0][1],"
+                                    //                                    +"\t\t\ta[1] * m2[0][0] + b[1] * m2[0][1],"
+                                    //                                    +"\t\t\ta[0] * m2[1][0] + b[0] * m2[1][1],"
+                                    //                                    +"\t\t\ta[1] * m2[1][0] + b[1] * m2[1][1],"
+                                    //                                    +"\t\t\ta[0] * m2[2][0] + b[0] * m2[2][1],"
+                                    //                                    +"\t\t\ta[1] * m2[2][0] + b[1] * m2[2][1]"
                                 }
                                 4 -> {
                                     +"i00 *= oneOverDeterminant"
@@ -390,10 +399,9 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
                                 }
                             }
                             args = abcdJoint(width, height, ",\n\t\t\t\t") { c, r, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$r * i$c$it" } }
-//                            args = abcdJoint(width, height, ",\n\t\t\t\t") { c, r, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$r * i$c$it" } }
                             +"return res($args)"
                         }
-                } // else TODO
+                }
             } else {
                 args = abcdJoint(width, height, sep) { s -> "$s $char m.$s" }
                 +"infix operator fun $operation(m: $mat$id): $mat$id = $mat$id($args)"
