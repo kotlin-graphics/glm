@@ -109,6 +109,7 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
     +"import glm.*"
     +"import glm.extensions.*"
     +"import kotlin.jvm.*"
+    +"import kotlin.math.abs"
     repeat(4) { +"import glm.vec${it + 1}.*" }
     abcd(3, 3) { c, r, _ -> +"import glm.mat${matrixSizeString(c + 2, r + 2)}.*" }
 
@@ -298,6 +299,11 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                 +"return this"
             }
 
+            "operator fun invoke(${xyzwJoint(ordinal) { c -> "$c: $type" }}): $vec$id" {
+                xyzw(ordinal) { c -> +"this.$c = $c" }
+                +"return this"
+            }
+
             +"// Unary bit operators TODO"
             +"// Unary operators"
             +"operator fun unaryPlus(): Vec$ordinal$id = this"
@@ -306,18 +312,24 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
 
             +"// Binary operators"
             for ((operatorChar, operatorName) in operators) {
-                +"operator fun $operatorName(scalar: $type) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $operatorChar scalar" }})"
-                +"operator fun $operatorName(v: Vec1$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $operatorChar v.x" }})"
+                +"operator fun $operatorName(scalar: $type): $vec$id = $operatorName(${xyzwJoint(ordinal) { _, _ -> "scalar" }}, $vec$id())"
+                +"fun $operatorName(scalar: $type, res: $vec$id): $vec$id = $operatorName(${xyzwJoint(ordinal) { _, _ -> "scalar" }}, res)"
+                +"operator fun $operatorName(v: Vec1$id): $vec$id = $operatorName(${xyzwJoint(ordinal) { _ -> "v.x" }}, $vec$id())"
+                +"fun $operatorName(v: Vec1$id, res: $vec$id): $vec$id = $operatorName(${xyzwJoint(ordinal) { _ -> "v.x" }}, res)"
                 if (ordinal != 1) {
-                    +"operator fun $operatorName(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "$c $operatorChar v.$c" }})"
+                    +"operator fun $operatorName(v: Vec$ordinal$id): $vec$id = $operatorName(${xyzwJoint(ordinal) { c -> "v.$c" }}, $vec$id())"
+                    +"fun $operatorName(v: Vec$ordinal$id, res: $vec$id): $vec$id = $operatorName(${xyzwJoint(ordinal) { c -> "v.$c" }}, res)"
                     if (operatorChar == "*" && type in matrixTypes.map { it.type })
                         for (i in 2..4) {
-                            val args = xyzwJoint(i, ",\n\t\t\t\t\t\t\t\t\t") { j, _ ->
+                            val args = xyzwJoint(i, ",\n\t\t\t\t\t\t\t\t\t\t") { j, _ ->
                                 (0 until ordinal).joinToString(" + ") { "${xyzw[it]} * m.${abcd[j]}$it" }
                             }
-                            +"operator fun times(m: Mat${matrixSizeString(i, ordinal)}$id) = Vec$i$id($args)"
+                            +"operator fun times(m: Mat${matrixSizeString(i, ordinal)}$id) = times(m, Vec$i$id())"
+                            +"fun times(m: Mat${matrixSizeString(i, ordinal)}$id, res: Vec$i$id) = res($args)"
                         }
                 }
+                val args = xyzwJoint(ordinal) { c -> "this.$c $operatorChar $c" }
+                +"fun $operatorName(${xyzwJoint(ordinal) { c -> "$c: $type" }}, res: $vec$id): $vec$id = res($args)"
             }
         }
 
@@ -331,6 +343,28 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
 
         +"override fun equals(other: Any?) = other is Vec$ordinal$id && ${xyzwJoint(ordinal, " && ") { c -> "$c == other.$c" }}"
         +"override fun hashCode() = ${xyzwJoint(ordinal, " + ") { i, c -> "${31f.pow(i).toInt()} * $c.hashCode()" }}"
+
+        if (type == "Float" || type == "Double") {
+            +"fun equal(v: $vec$id, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[it] - v.array[it]) <= epsilon }"
+            +"fun notEqual(v: $vec$id, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[it] - v.array[it]) > epsilon }"
+            "fun allEqual(v: $vec$id, epsilon: $type = $type.MIN_VALUE): Boolean" {
+                +"for (i in 0 until length)"
+                +"\tif(abs(array[i] - v.array[i]) > epsilon)"
+                +"\t\treturn false"
+                +"return true"
+            }
+            "fun anyNotEqual(v: $vec$id, epsilon: $type = $type.MIN_VALUE): Boolean" {
+                +"for (i in 0 until length)"
+                +"\tif(abs(array[i] - v.array[i]) > epsilon)"
+                +"\t\treturn true"
+                +"return false"
+            }
+        } else {
+            +"infix fun equal(v: $vec$id) = BooleanArray(length) { array[it] == m.array[it] }"
+            +"infix fun notEqual(v: $vec$id) = BooleanArray(length) { array[it] != m.array[it] }"
+            +"fun allEqual(v: $vec$id): Boolean = array.contentEquals(m.array)"
+            +"fun anyNotEqual(v: $vec$id): Boolean = !array.contentEquals(m.array)"
+        }
 
         if (type == "Boolean") {
             +"// Boolean operators"
