@@ -303,6 +303,13 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                 xyzw(ordinal) { c -> +"this.$c = $c" }
                 +"return this"
             }
+            if (type in listOf("Byte", "Short", "UByte", "UShort")) {
+                val t = if (type[0] == 'U') "UInt" else "Int"
+                "operator fun invoke(${xyzwJoint(ordinal) { c -> "$c: $t" }}): $vec$id" {
+                    xyzw(ordinal) { c -> +"this.$c = $c.$extension" }
+                    +"return this"
+                }
+            }
 
             +"// Unary bit operators TODO"
             +"// Unary operators"
@@ -313,31 +320,53 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
             +"// Binary operators"
             for ((operatorChar, operatorName) in operators) {
                 +"operator fun $operatorName(scalar: $type): $vec$id = $operatorName(${xyzwJoint(ordinal) { _, _ -> "scalar" }}, $vec$id())"
-                +"fun $operatorName(scalar: $type, res: $vec$id): $vec$id = $operatorName(${xyzwJoint(ordinal) { _, _ -> "scalar" }}, res)"
+                if (ordinal != 1)
+                    +"fun $operatorName(scalar: $type, res: $vec$id): $vec$id = $operatorName(${xyzwJoint(ordinal) { _, _ -> "scalar" }}, res)"
                 +"operator fun $operatorName(v: Vec1$id): $vec$id = $operatorName(${xyzwJoint(ordinal) { _ -> "v.x" }}, $vec$id())"
                 +"fun $operatorName(v: Vec1$id, res: $vec$id): $vec$id = $operatorName(${xyzwJoint(ordinal) { _ -> "v.x" }}, res)"
                 if (ordinal != 1) {
                     +"operator fun $operatorName(v: Vec$ordinal$id): $vec$id = $operatorName(${xyzwJoint(ordinal) { c -> "v.$c" }}, $vec$id())"
                     +"fun $operatorName(v: Vec$ordinal$id, res: $vec$id): $vec$id = $operatorName(${xyzwJoint(ordinal) { c -> "v.$c" }}, res)"
-                    if (operatorChar == "*" && type in matrixTypes.map { it.type })
-                        for (i in 2..4) {
-                            val args = xyzwJoint(i, ",\n\t\t\t\t\t\t\t\t\t\t") { j, _ ->
-                                (0 until ordinal).joinToString(" + ") { "${xyzw[it]} * m.${abcd[j]}$it" }
+                    if (type in matrixTypes.map { it.type }) {
+                        if (operatorChar == "*")
+                            for (i in 2..4) {
+                                +"operator fun times(m: Mat${matrixSizeString(i, ordinal)}$id): Vec$i$id = times(m, Vec$i$id())"
+                                val args = xyzwJoint(i, ",\n\t\t\t\t\t\t\t\t\t\t") { j, _ ->
+                                    (0 until ordinal).joinToString(" + ") { "${xyzw[it]} * m.${abcd[j]}$it" }
+                                }
+                                +"fun times(m: Mat${matrixSizeString(i, ordinal)}$id, res: Vec$i$id): Vec$i$id = res($args)"
                             }
-                            +"operator fun times(m: Mat${matrixSizeString(i, ordinal)}$id) = times(m, Vec$i$id())"
-                            +"fun times(m: Mat${matrixSizeString(i, ordinal)}$id, res: Vec$i$id) = res($args)"
+                        else if (operatorChar == "/") {
+                            +"operator fun div(m: Mat${matrixSizeString(ordinal, ordinal)}$id): $vec$id = div(m, $vec$id())"
+                            val args = xyzwJoint(ordinal, ",\n\t\t\t\t\t") { j, _ ->
+                                (0 until ordinal).joinToString(" + ") { "${xyzw[it]} * i$j$it" }
+                            }
+                            "fun div(m: Mat${matrixSizeString(ordinal, ordinal)}$id, res: $vec$id): $vec$id" {
+                                invertMatrix(ordinal, type)
+                                +"return res($args)"
+                            }
                         }
+                    }
                 }
                 val args = xyzwJoint(ordinal) { c -> "this.$c $operatorChar $c" }
                 +"fun $operatorName(${xyzwJoint(ordinal) { c -> "$c: $type" }}, res: $vec$id): $vec$id = res($args)"
             }
         }
 
+        +"// geometric"
+        if (type in floatingPointTypes) {
+            docs("""|Returns the dot product of [x] and [y], i.e., `result = x * y`.
+                    |@see [GLSL dot man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/dot.xml)
+                    |@see [GLSL 4.20.8 specification, section 8.5 Geometric Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin())
+//            "infix fun dot(b: $vec$id): $type"{
+//
+//            }
+        }
         if (ordinal > 1 && type in numberTypes) {
             +"// Dot products"
             for (unsigned in (unsignedTypes + "out Number")) {
                 if (unsigned != "out Number") +"@JvmName(\"dot$unsigned\")"
-                +"fun dot(v: Vec${ordinal}T<$unsigned>) = (${xyzwJoint(ordinal, " + ") { c -> "$c * v.$c.$extension" }}).$extension"
+                +"infix fun dot(v: Vec${ordinal}T<$unsigned>) = (${xyzwJoint(ordinal, " + ") { c -> "$c * v.$c.$extension" }}).$extension"
             }
         }
 
@@ -360,17 +389,17 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                 +"return false"
             }
         } else {
-            +"infix fun equal(v: $vec$id) = BooleanArray(length) { array[it] == m.array[it] }"
-            +"infix fun notEqual(v: $vec$id) = BooleanArray(length) { array[it] != m.array[it] }"
-            +"fun allEqual(v: $vec$id): Boolean = array.contentEquals(m.array)"
-            +"fun anyNotEqual(v: $vec$id): Boolean = !array.contentEquals(m.array)"
+            +"infix fun equal(v: $vec$id) = BooleanArray(length) { array[it] == v.array[it] }"
+            +"infix fun notEqual(v: $vec$id) = BooleanArray(length) { array[it] != v.array[it] }"
+            +"fun allEqual(v: $vec$id): Boolean = array.contentEquals(v.array)"
+            +"fun anyNotEqual(v: $vec$id): Boolean = !array.contentEquals(v.array)"
         }
 
         if (type == "Boolean") {
             +"// Boolean operators"
-            val vec_ = "Vec$ordinal$extension"
-            +"infix fun and(v: $vec_) = $vec_(${xyzwJoint(ordinal) { c -> "$c && v.$c" }})"
-            +"infix fun or(v: $vec_) = $vec_(${xyzwJoint(ordinal) { c -> "$c || v.$c" }})"
+            val vec = "Vec$ordinal$extension"
+            +"infix fun and(v: $vec) = $vec(${xyzwJoint(ordinal) { c -> "$c && v.$c" }})"
+            +"infix fun or(v: $vec) = $vec(${xyzwJoint(ordinal) { c -> "$c || v.$c" }})"
         }
 
         "companion object" {

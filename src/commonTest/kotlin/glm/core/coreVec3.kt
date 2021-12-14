@@ -1,5 +1,6 @@
-package glm
+package glm.core
 
+import glm.assert
 import glm.vec1.Vec1
 import glm.vec1.Vec1d
 import glm.vec2.Vec2i

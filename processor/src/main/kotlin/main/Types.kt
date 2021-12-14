@@ -42,23 +42,35 @@ operator fun Iterable<TypeInformation>.minus(types: Iterable<String>) = types.to
 
 
 val xyzw = listOf("x", "y", "z", "w")
+val wxyz = listOf("w", "x", "y", "z")
 val rgba = listOf("r", "g", "b", "a")
 val stpq = listOf("s", "t", "p", "q")
 
 fun xyzw(ordinal: Int, block: (Int, String) -> Unit) {
-    for (i in 0 until ordinal) {
+    for (i in 0 until ordinal)
         block(i, xyzw[i])
-    }
 }
 
 fun xyzw(ordinal: Int, block: (String) -> Unit) {
-    for (i in 0 until ordinal) {
+    for (i in 0 until ordinal)
         block(xyzw[i])
-    }
+}
+
+fun wxyz(block: (Int, String) -> Unit) {
+    for (i in wxyz.indices)
+        block(i, wxyz[i])
+}
+
+fun wxyz(block: (String) -> Unit) {
+    for (i in wxyz)
+        block(i)
 }
 
 fun xyzwJoint(ordinal: Int, separator: String = ", ", block: (Int, String) -> String) = (0 until ordinal).joinToString(separator) { block(it, xyzw[it]) }
 fun xyzwJoint(ordinal: Int, separator: String = ", ", block: (String) -> String) = (0 until ordinal).joinToString(separator) { block(xyzw[it]) }
+
+fun wxyzJoint(separator: String = ", ", block: (Int, String) -> String) = wxyz.indices.joinToString(separator) { block(it, wxyz[it]) }
+fun wxyzJoint(separator: String = ", ", block: (String) -> String) = wxyz.indices.joinToString(separator) { block(wxyz[it]) }
 
 
 val abcd = listOf("a", "b", "c", "d")

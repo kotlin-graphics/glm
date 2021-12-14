@@ -1,5 +1,6 @@
-package glm
+package glm.core
 
+import glm.assert
 import glm.extensions.BYTES
 import glm.mat2.Mat2
 import glm.mat2x3.Mat2x3
@@ -7,7 +8,6 @@ import glm.mat2x4.Mat2x4
 import glm.mat3.Mat3
 import glm.mat3x2.Mat3x2
 import glm.mat3x4.Mat3x4
-import glm.mat3x4.Mat3x4d
 import glm.mat4.Mat4
 import glm.mat4x2.*
 import glm.mat4x3.Mat4x3

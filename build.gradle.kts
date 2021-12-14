@@ -13,6 +13,8 @@ plugins {
     //    id("org.lwjgl.plugin") version "0.0.20"
     kotlin("multiplatform") version embeddedKotlinVersion
     id("com.google.devtools.ksp") version "1.5.31-1.0.1"
+    //    id("me.champeau.jmh") version "0.6.6"
+    id("org.jetbrains.kotlinx.benchmark") version "0.4.0"
 }
 
 repositories {
@@ -37,14 +39,9 @@ kotlin {
         isMingwX64 -> mingwX64("native")
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
-
     sourceSets {
         val commonMain by getting {
             kotlin.srcDir("build/generated/ksp/commonMain/kotlin")
-            dependencies {
-                //                configurations.forEach { println(it) }
-                configurations["kspMetadata"].dependencies.add(projects.processor)
-            }
         }
         val commonTest by getting {
             //            kotlin.srcDir("build/generated/ksp/test/kotlin")
@@ -54,13 +51,50 @@ kotlin {
         }
         val jvmMain by getting
         val jvmTest by getting
+        val jvmBench by creating {
+            dependsOn(commonMain)
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.4.0")
+                //                "benchCompile"(sourceSets.main.output + sourceSets.main.runtimeClasspath)
+            }
+        }
         val nativeMain by getting
         val nativeTest by getting
     }
+    targets {
+        jvm {
+            compilations.create("bench")
+        }
+    }
 }
 
+configurations.kspMetadata {
+    dependencies.add(projects.processor)
+}
+
+benchmark {
+    // Create configurations
+    //    configurations.forEach { println(it) }
+    //    configurations {
+    ////        this.named("jvmBench")
+    ////        getAt("main").apply { // main configuration is created automatically, but you can change its defaults
+    ////            warmups = 20 // number of warmup iterations
+    ////            iterations = 10 // number of iterations
+    ////            iterationTime = 3 // time in seconds per iteration
+    ////        }
+    //    }
+    targets {
+        register("jvm")
+        //        register("js")
+        //        register("native")
+    }
+}
+
+val SourceSetContainer.main: SourceSet
+    get() = named("main").get()
 dependencies {
-    "kspMetadata"(projects.processor)
+    kspMetadata(projects.processor)
+    "jvmBenchImplementation"(sourceSets.main.output + sourceSets.main.runtimeClasspath)
     //    implementation(unsigned, kool)
     //    Lwjgl { implementation(glfw, jemalloc, openal, opengl, stb) }
 }
@@ -79,7 +113,7 @@ tasks {
     withType<KotlinCompile<*>>().all {
         if (name != "kspKotlinMetadata")
             dependsOn("kspKotlinMetadata")
-        
+
         kotlinOptions {
             freeCompilerArgs += "-Xopt-in=kotlin.ExperimentalUnsignedTypes"
         }

@@ -12,9 +12,8 @@ class Processor(private val codeGenerator: CodeGenerator,
 
         logger.warn(resolver.getAllFiles().map { it.fileName }.toString())
 
-        if (invoked) {
+        if (invoked)
             return emptyList()
-        }
         invoked = true
 
         //        codeGenerator.createNewFile(Dependencies(false), "", "Foo", "kt").use { output ->
@@ -37,6 +36,8 @@ class Processor(private val codeGenerator: CodeGenerator,
         swizzles(codeGenerator)
         
         matrices(codeGenerator)
+
+        quaternions(codeGenerator)
 
         return emptyList()
     }

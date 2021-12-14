@@ -18,6 +18,7 @@
       <module name="build-logic.utils.main" target="8" />
       <module name="build-logic.utils.test" target="8" />
       <module name="glm.jdk8" target="1.8" />
+      <module name="glm.jmh" target="8" />
       <module name="glm.test-processor.commonMain" target="1.8" />
       <module name="glm.test-processor.commonTest" target="1.8" />
       <module name="glm.test-processor.jvmMain" target="1.8" />

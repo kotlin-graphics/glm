@@ -1,5 +1,6 @@
-package glm
+package glm.core
 
+import glm.assert
 import glm.extensions.BYTES
 import glm.mat2.*
 import glm.mat2x3.Mat2x3
