@@ -42,6 +42,10 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             kotlin.srcDir("build/generated/ksp/commonMain/kotlin")
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.4.0")
+                //                "benchCompile"(sourceSets.main.output + sourceSets.main.runtimeClasspath)
+            }
         }
         val commonTest by getting {
             //            kotlin.srcDir("build/generated/ksp/test/kotlin")
@@ -54,7 +58,7 @@ kotlin {
         val jvmBench by creating {
             dependsOn(commonMain)
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.4.0")
+//                implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime-jvm:0.4.0")
                 //                "benchCompile"(sourceSets.main.output + sourceSets.main.runtimeClasspath)
             }
         }
@@ -75,14 +79,14 @@ configurations.kspMetadata {
 benchmark {
     // Create configurations
     //    configurations.forEach { println(it) }
-    //    configurations {
-    ////        this.named("jvmBench")
-    ////        getAt("main").apply { // main configuration is created automatically, but you can change its defaults
-    ////            warmups = 20 // number of warmup iterations
-    ////            iterations = 10 // number of iterations
-    ////            iterationTime = 3 // time in seconds per iteration
-    ////        }
-    //    }
+        configurations {
+            named("main") { // main configuration is created automatically, but you can change its defaults
+    //            warmups = 20 // number of warmup iterations
+    //            iterations = 10 // number of iterations
+    //            iterationTime = 3 // time in seconds per iteration
+                includes.add("src/jvmBench/kotlin/main/test.kt")
+            }
+        }
     targets {
         register("jvm")
         //        register("js")
@@ -92,9 +96,10 @@ benchmark {
 
 val SourceSetContainer.main: SourceSet
     get() = named("main").get()
+
 dependencies {
     kspMetadata(projects.processor)
-    "jvmBenchImplementation"(sourceSets.main.output + sourceSets.main.runtimeClasspath)
+//    "jvmBenchImplementation"(sourceSets.main.output + sourceSets.main.runtimeClasspath)
     //    implementation(unsigned, kool)
     //    Lwjgl { implementation(glfw, jemalloc, openal, opengl, stb) }
 }
