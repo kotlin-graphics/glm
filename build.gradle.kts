@@ -44,7 +44,6 @@ kotlin {
             kotlin.srcDir("build/generated/ksp/commonMain/kotlin")
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.4.0")
-                //                "benchCompile"(sourceSets.main.output + sourceSets.main.runtimeClasspath)
             }
         }
         val commonTest by getting {
@@ -57,10 +56,6 @@ kotlin {
         val jvmTest by getting
         val jvmBench by creating {
             dependsOn(commonMain)
-            dependencies {
-//                implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime-jvm:0.4.0")
-                //                "benchCompile"(sourceSets.main.output + sourceSets.main.runtimeClasspath)
-            }
         }
         val nativeMain by getting
         val nativeTest by getting
@@ -78,17 +73,23 @@ configurations.kspMetadata {
 
 benchmark {
     // Create configurations
-    //    configurations.forEach { println(it) }
-        configurations {
-            named("main") { // main configuration is created automatically, but you can change its defaults
-    //            warmups = 20 // number of warmup iterations
-    //            iterations = 10 // number of iterations
-    //            iterationTime = 3 // time in seconds per iteration
-                includes.add("src/jvmBench/kotlin/main/test.kt")
-            }
+    configurations {
+        named("main") { // main configuration is created automatically, but you can change its defaults
+            // --> jvmBenchmark, jsBenchmark, <native target>Benchmark, benchmark
+//            param("-prof", "gc")
+
+            warmups = 1
+            iterations = 5 // number of iterations
+            iterationTime = 300
+            iterationTimeUnit = "ms"
+            advanced("jvmForks", 3)
+            //            warmups = 20 // number of warmup iterations
+            //            iterations = 10 // number of iterations
+            //            iterationTime = 3 // time in seconds per iteration
         }
+    }
     targets {
-        register("jvm")
+        register("jvmBench")
         //        register("js")
         //        register("native")
     }
@@ -99,7 +100,7 @@ val SourceSetContainer.main: SourceSet
 
 dependencies {
     kspMetadata(projects.processor)
-//    "jvmBenchImplementation"(sourceSets.main.output + sourceSets.main.runtimeClasspath)
+    //    "jvmBenchImplementation"(sourceSets.main.output + sourceSets.main.runtimeClasspath)
     //    implementation(unsigned, kool)
     //    Lwjgl { implementation(glfw, jemalloc, openal, opengl, stb) }
 }
