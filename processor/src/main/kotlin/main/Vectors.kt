@@ -403,7 +403,7 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                     }
                     "inline fun log($a, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
                         contract
-                        +"res(${xyzwJoint(ordinal) { c -> "a${c.uppercase()}.ln()" }})"
+                        +"res(${xyzwJoint(ordinal) { c -> "a${c.uppercase()}.log()" }})"
                     }
                     "inline fun exp2($a, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
                         contract

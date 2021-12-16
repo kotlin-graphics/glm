@@ -1,8 +1,12 @@
 package glm
 
+import kotlin.jvm.JvmName
 
-fun main() {
 
+object glm {
+
+    object e {
+        val float = 2.718281f
+        val double = 2.718281828459045
+    }
 }
-
-object glm

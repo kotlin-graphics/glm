@@ -151,10 +151,12 @@ inline infix fun Float.pow(exponent: Int) = pow(exponent)
 inline infix fun Float.pow(exponent: Float) = pow(exponent)
 inline infix fun Double.pow(exponent: Int) = pow(exponent)
 inline infix fun Double.pow(exponent: Double) = pow(exponent)
-inline fun Float.ln() = ln(this)
-inline fun Double.ln() = ln(this)
+inline fun Float.log() = ln(this)
+inline fun Double.log() = ln(this)
 inline fun Float.exp() = exp(this)
 inline fun Double.exp() = exp(this)
+inline fun Float.exp2() = 2f pow this
+inline fun Double.exp2() = 2.0 pow this
 inline fun Float.log2() = log2(this)
 inline fun Double.log2() = log2(this)
 inline fun Float.sqrt() = sqrt(this)
@@ -162,3 +164,5 @@ inline fun Double.sqrt() = sqrt(this)
 inline fun Float.inverseSqrt() = 1f / sqrt()
 inline fun Double.inverseSqrt() = 1.0 / sqrt()
 
+fun Float.equal(other: Float, epsilon: Float = Float.MIN_VALUE): Boolean = abs(this - other) <= epsilon
+fun Double.equal(other: Double, epsilon: Double = Double.MIN_VALUE): Boolean = abs(this - other) <= epsilon
