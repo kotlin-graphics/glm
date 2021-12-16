@@ -104,12 +104,13 @@ private fun vectorsT(ordinal: Int) {
 }
 
 private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
+    +"@file:OptIn(kotlin.contracts.ExperimentalContracts::class)"
     +"package glm.vec$ordinal"
-
     +"import glm.*"
     +"import glm.extensions.*"
     +"import kotlin.jvm.*"
     +"import kotlin.math.abs"
+    +"import kotlin.math.sqrt"
     repeat(4) { +"import glm.vec${it + 1}.*" }
     abcd(3, 3) { c, r, _ -> +"import glm.mat${matrixSizeString(c + 2, r + 2)}.*" }
 
@@ -133,7 +134,7 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
 
         +"// Explicit basic constructors"
         val arrayOf = "${type.lowercase()}ArrayOf"
-        val a = "x" * ordinal
+        var a = "x" * ordinal
         +"constructor(x: $type) : this(${if (ordinal == 1) "$arrayOf($a)" else a})"
         +"constructor(x: Number) : this(x.$extension)"
         if (type == "UByte" || type == "UShort") {
@@ -279,7 +280,7 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                             else +"$c $operatorChar= v.$c.$extension"
                         }
                     }
-                    "operator fun ${operatorName}Assign(v: Vec$ordinal$id)" {
+                    "operator fun ${operatorName}Assign(v: $vec$id)" {
                         xyzw(ordinal) { c ->
                             if ("Byte" in type || "Short" in type)
                                 +"$c = ($c $operatorChar v.$c).$extension"
@@ -290,11 +291,11 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
             }
 
             +"// Increment and decrement operators"
-            "operator fun inc(): Vec$ordinal$id" {
+            "operator fun inc(): $vec$id" {
                 xyzw(ordinal) { c -> +"$c++" }
                 +"return this"
             }
-            "operator fun dec(): Vec$ordinal$id" {
+            "operator fun dec(): $vec$id" {
                 xyzw(ordinal) { c -> +"$c--" }
                 +"return this"
             }
@@ -313,64 +314,17 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
 
             +"// Unary bit operators TODO"
             +"// Unary operators"
-            +"operator fun unaryPlus(): Vec$ordinal$id = this"
+            +"operator fun unaryPlus(): $vec$id = this"
             if (type !in unsignedTypes)
-                +"operator fun unaryMinus(): Vec$ordinal$id = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "-$c" }})"
+                +"operator fun unaryMinus(): $vec$id = $vec$id(${xyzwJoint(ordinal) { c -> "-$c" }})"
 
-            +"// Binary operators"
-            for ((operatorChar, operatorName) in operators) {
-                +"operator fun $operatorName(scalar: $type): $vec$id = $operatorName(${xyzwJoint(ordinal) { _, _ -> "scalar" }}, $vec$id())"
-                if (ordinal != 1)
-                    +"fun $operatorName(scalar: $type, res: $vec$id): $vec$id = $operatorName(${xyzwJoint(ordinal) { _, _ -> "scalar" }}, res)"
-                +"operator fun $operatorName(v: Vec1$id): $vec$id = $operatorName(${xyzwJoint(ordinal) { _ -> "v.x" }}, $vec$id())"
-                +"fun $operatorName(v: Vec1$id, res: $vec$id): $vec$id = $operatorName(${xyzwJoint(ordinal) { _ -> "v.x" }}, res)"
-                if (ordinal != 1) {
-                    +"operator fun $operatorName(v: Vec$ordinal$id): $vec$id = $operatorName(${xyzwJoint(ordinal) { c -> "v.$c" }}, $vec$id())"
-                    +"fun $operatorName(v: Vec$ordinal$id, res: $vec$id): $vec$id = $operatorName(${xyzwJoint(ordinal) { c -> "v.$c" }}, res)"
-                    if (type in matrixTypes.map { it.type }) {
-                        if (operatorChar == "*")
-                            for (i in 2..4) {
-                                +"operator fun times(m: Mat${matrixSizeString(i, ordinal)}$id): Vec$i$id = times(m, Vec$i$id())"
-                                val args = xyzwJoint(i, ",\n\t\t\t\t\t\t\t\t\t\t") { j, _ ->
-                                    (0 until ordinal).joinToString(" + ") { "${xyzw[it]} * m.${abcd[j]}$it" }
-                                }
-                                +"fun times(m: Mat${matrixSizeString(i, ordinal)}$id, res: Vec$i$id): Vec$i$id = res($args)"
-                            }
-                        else if (operatorChar == "/") {
-                            +"operator fun div(m: Mat${matrixSizeString(ordinal, ordinal)}$id): $vec$id = div(m, $vec$id())"
-                            val args = xyzwJoint(ordinal, ",\n\t\t\t\t\t") { j, _ ->
-                                (0 until ordinal).joinToString(" + ") { "${xyzw[it]} * i$j$it" }
-                            }
-                            "fun div(m: Mat${matrixSizeString(ordinal, ordinal)}$id, res: $vec$id): $vec$id" {
-                                invertMatrix(ordinal, type)
-                                +"return res($args)"
-                            }
-                        }
-                    }
-                }
-                val args = xyzwJoint(ordinal) { c -> "this.$c $operatorChar $c" }
-                +"fun $operatorName(${xyzwJoint(ordinal) { c -> "$c: $type" }}, res: $vec$id): $vec$id = res($args)"
-            }
+            binary(ordinal, type, extension, id, vec)
         }
 
-        +"// geometric"
-        if (type in floatingPointTypes) {
-            docs("""|Returns the dot product of [x] and [y], i.e., `result = x * y`.
-                    |@see [GLSL dot man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/dot.xml)
-                    |@see [GLSL 4.20.8 specification, section 8.5 Geometric Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin())
-//            "infix fun dot(b: $vec$id): $type"{
-//
-//            }
-        }
-        if (ordinal > 1 && type in numberTypes) {
-            +"// Dot products"
-            for (unsigned in (unsignedTypes + "out Number")) {
-                if (unsigned != "out Number") +"@JvmName(\"dot$unsigned\")"
-                +"infix fun dot(v: Vec${ordinal}T<$unsigned>) = (${xyzwJoint(ordinal, " + ") { c -> "$c * v.$c.$extension" }}).$extension"
-            }
-        }
+        exponential(ordinal, type, extension, id, vec)
+        geometric(ordinal, type, extension, id, vec)
 
-        +"override fun equals(other: Any?) = other is Vec$ordinal$id && ${xyzwJoint(ordinal, " && ") { c -> "$c == other.$c" }}"
+        +"override fun equals(other: Any?) = other is $vec$id && ${xyzwJoint(ordinal, " && ") { c -> "$c == other.$c" }}"
         +"override fun hashCode() = ${xyzwJoint(ordinal, " + ") { i, c -> "${31f.pow(i).toInt()} * $c.hashCode()" }}"
 
         if (type == "Float" || type == "Double") {
@@ -397,24 +351,297 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
 
         if (type == "Boolean") {
             +"// Boolean operators"
-            val vec = "Vec$ordinal$extension"
-            +"infix fun and(v: $vec) = $vec(${xyzwJoint(ordinal) { c -> "$c && v.$c" }})"
-            +"infix fun or(v: $vec) = $vec(${xyzwJoint(ordinal) { c -> "$c || v.$c" }})"
+            val v = "$vec$extension"
+            +"infix fun and(v: $v) = $v(${xyzwJoint(ordinal) { c -> "$c && v.$c" }})"
+            +"infix fun or(v: $v) = $v(${xyzwJoint(ordinal) { c -> "$c || v.$c" }})"
         }
 
         "companion object" {
             +"const val length = Vec${ordinal}T.length"
-            if (type in numberTypes)
+            if (type in numberTypes) {
                 +"const val size = length * $type.SIZE_BYTES"
+                val t = when (type) {
+                    "Byte", "Short" -> "Int"
+                    "UByte", "UShort" -> "UInt"
+                    else -> type
+                }
+                a = xyzwJoint(ordinal) { c -> "a${c.uppercase()}: $type" }
+                var b = xyzwJoint(ordinal) { c -> "b${c.uppercase()}: $type" }
+                for ((opChar, op) in operators) {
+                    "inline fun $op($a,\n\t\t\t\t\t\t$b, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $t" }}) -> Unit )" {
+                        contract
+                        +"res(${xyzwJoint(ordinal) { c -> "a${c.uppercase()} $opChar b${c.uppercase()}" }})"
+                    }
+                }
+                if (type in floatingPointTypes) {
+                    +"fun dot($a, $b): $type = ${xyzwJoint(ordinal, " + ") { c -> "a${c.uppercase()} * b${c.uppercase()}" }}"
+                    val unrolled = xyzwJoint(ordinal) { c -> "a${c.uppercase()}" }
+                    +"fun length($a): $type = sqrt(dot($unrolled, $unrolled))"
+                    "fun distance($a, $b): $type" {
+                        +xyzwJoint(ordinal, "; ") { c -> "val d$c: $type" }
+                        val d = xyzwJoint(ordinal) { c -> "a${c.uppercase()}" }
+                        b = xyzwJoint(ordinal) { c -> "b${c.uppercase()}" }
+                        val res = xyzwJoint(ordinal) { c -> "res${c.uppercase()}" }
+                        +"minus($d, $b) { $res -> ${xyzwJoint(ordinal, "; ") { c -> "d$c = res${c.uppercase()}" }} }"
+                        +"return length(${xyzwJoint(ordinal) { c -> "d$c" }})"
+                    }
+                    if (ordinal == 3) {
+                        +"inline fun cross(x: $type, y: $type, z: $type,"
+                        "\t\t\t\t vx: $type, vy: $type, vz: $type, res: (resX: $type, resY: $type, resZ: $type) -> Unit)" {
+                            contract
+                            +"\tres(y * vz - vy * z, z * vx - vz * x, x * vy - vx * y)"
+                        }
+                    }
+                    val exponent = xyzwJoint(ordinal) { c -> "e$c: $type" }
+                    "inline fun pow($a, $exponent, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                        contract
+                        +"res(${xyzwJoint(ordinal) { c -> "a${c.uppercase()} pow e$c" }})"
+                    }
+                    "inline fun exp($a, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                        contract
+                        +"res(${xyzwJoint(ordinal) { c -> "a${c.uppercase()}.exp()" }})"
+                    }
+                    "inline fun log($a, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                        contract
+                        +"res(${xyzwJoint(ordinal) { c -> "a${c.uppercase()}.ln()" }})"
+                    }
+                    "inline fun exp2($a, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                        contract
+                        +"res(${xyzwJoint(ordinal) { c -> "2${if (type == "Float") "f" else ".0"} pow a${c.uppercase()}" }})"
+                    }
+                    "inline fun log2($a, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                        contract
+                        +"res(${xyzwJoint(ordinal) { c -> "a${c.uppercase()}.log2()" }})"
+                    }
+                    "inline fun sqrt($a, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                        contract
+                        +"res(${xyzwJoint(ordinal) { c -> "a${c.uppercase()}.sqrt()" }})"
+                    }
+                    "inline fun inverseSqrt($a, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                        contract
+                        +"res(${xyzwJoint(ordinal) { c -> "a${c.uppercase()}.inverseSqrt()" }})"
+                    }
+                }
+            }
         }
     }
 
     +"// Binary operators"
     if (type in numberTypes) {
         for ((operatorChar, operatorName) in operators) {
-            +"operator fun $type.$operatorName(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "this $operatorChar v.$c" }})"
+            +"operator fun $type.$operatorName(v: $vec$id) = $vec$id(${xyzwJoint(ordinal) { c -> "this $operatorChar v.$c" }})"
             if (ordinal != 1)
-                +"operator fun Vec1$id.$operatorName(v: Vec$ordinal$id) = Vec$ordinal$id(${xyzwJoint(ordinal) { c -> "x $operatorChar v.$c" }})"
+                +"operator fun Vec1$id.$operatorName(v: $vec$id) = $vec$id(${xyzwJoint(ordinal) { c -> "x $operatorChar v.$c" }})"
+        }
+    }
+}
+
+fun binary(ordinal: Int, type: String, extension: String, id: String, vec: String) {
+
+    +"// Binary operators\n"
+
+    for ((operatorChar, operatorName) in operators) {
+        +"operator fun $operatorName(scalar: $type): $vec$id = $operatorName(${xyzwJoint(ordinal) { _ -> "scalar" }}, $vec$id())"
+
+        val t = when (type) {
+            "Byte", "Short" -> "Int"
+            "UByte", "UShort" -> "UInt"
+            else -> type
+        }
+        val unrolledPlain = xyzwJoint(ordinal) { c -> c }
+        if (ordinal != 1) {
+            val unrolled = xyzwJoint(ordinal) { _ -> "scalar" }
+            +"fun $operatorName(scalar: $type, res: $vec$id): $vec$id = $operatorName($unrolled, res)"
+            "inline fun $operatorName(scalar: $type, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $t" }}) -> Unit)" {
+                contract
+                +"$operatorName($unrolledPlain, $unrolled, res)"
+            }
+        }
+        var unrolled = xyzwJoint(ordinal) { _ -> "v.x" }
+        +"operator fun $operatorName(v: Vec1$id): $vec$id = $operatorName($unrolled, $vec$id())"
+        +"fun $operatorName(v: Vec1$id, res: $vec$id): $vec$id = $operatorName($unrolled, res)"
+        "inline fun $operatorName(v: Vec1$id, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $t" }}) -> Unit)" {
+            contract
+            +"$operatorName(${unrolledPlain}, $unrolled, res)"
+        }
+        if (ordinal != 1) {
+            unrolled = xyzwJoint(ordinal) { c -> "v.$c" }
+            +"operator fun $operatorName(v: $vec$id): $vec$id = $operatorName($unrolled, $vec$id())"
+            +"fun $operatorName(v: $vec$id, res: $vec$id): $vec$id = $operatorName($unrolled, res)"
+            "inline fun $operatorName(v: $vec$id, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $t" }}) -> Unit)" {
+                contract
+                +"$operatorName(${unrolledPlain}, $unrolled, res)"
+            }
+        }
+        var args = xyzwJoint(ordinal) { c -> "this.$c $operatorChar $c" }
+        +"fun $operatorName(${xyzwJoint(ordinal) { c -> "$c: $type" }}, res: $vec$id): $vec$id = res($args)"
+        "inline fun $operatorName(${xyzwJoint(ordinal) { c -> "$c: $type" }}, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $t" }}) -> Unit)" {
+            contract
+            +"$operatorName(${unrolledPlain}, ${unrolledPlain}, res)"
+        }
+        if (ordinal != 1 && type in matrixTypes.map { it.type })
+            if (operatorChar == "*")
+                for (i in 2..4) {
+                    +"operator fun times(m: Mat${matrixSizeString(i, ordinal)}$id): Vec$i$id = times(m, Vec$i$id())"
+                    args = xyzwJoint(i, ",\n\t\t\t\t\t\t\t\t\t\t\t") { j, _ ->
+                        (0 until ordinal).joinToString(" + ") { "${xyzw[it]} * m.${abcd[j]}$it" }
+                    }
+                    +"fun times(m: Mat${matrixSizeString(i, ordinal)}$id, res: Vec$i$id): Vec$i$id = res($args)"
+                    "inline fun times(m: Mat${matrixSizeString(i, ordinal)}$id, res: (${xyzwJoint(i) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                        contract
+                        +"times(${abcdJoint(i, ordinal, ",\n\t\t\t") { c -> "m.$c" }}, res)"
+                    }
+                    "inline fun times(${abcdJoint(i, ordinal, ",\n\t\t\t\t\t") { c -> "$c: $type" }}, res: (${xyzwJoint(i) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                        contract
+                        args = xyzwJoint(i, ",\n\t\t\t") { j, _ ->
+                            (0 until ordinal).joinToString(" + ") { "${xyzw[it]} * ${abcd[j]}$it" }
+                        }
+                        +"res($args)"
+                    }
+                }
+            else if (operatorChar == "/") {
+                +"operator fun div(m: Mat${matrixSizeString(ordinal, ordinal)}$id): $vec$id = div(m, $vec$id())"
+                args = xyzwJoint(ordinal, ",\n\t\t\t\t\t") { j, _ ->
+                    (0 until ordinal).joinToString(" + ") { "${xyzw[it]} * i$j$it" }
+                }
+                "fun div(m: Mat${matrixSizeString(ordinal, ordinal)}$id, res: $vec$id): $vec$id" {
+                    invertMatrix(ordinal, type)
+                    +"return res($args)"
+                }
+            }
+    }
+}
+
+fun exponential(ordinal: Int, type: String, extension: String, id: String, vec: String) {
+
+    +"\n\t// exponential\n"
+
+    if (type in floatingPointTypes) {
+
+        var docs = """|Returns this [$vec$id] base raised to the power [exponent].
+                      |
+                      |@receiver: Floating point value. pow function is defined for input values of this [$vec$id] defined in the range (inf-, inf+) in the limit of the type qualifier.
+                      |@param exponent: Floating point value representing the [exponent].
+                      |@see [GLSL pow man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/pow.xml)
+                      |@see [GLSL 4.20.8 specification, section 8.2 Exponential Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+        docs(docs)
+        val base = xyzwJoint(ordinal) { c -> c }
+        val exponent = xyzwJoint(ordinal) { c -> "exponent.$c" }
+        val res = xyzwJoint(ordinal) { c -> "res${c.uppercase()}" }
+        +"infix fun pow(exponent: $vec$id): $vec$id { pow($base, $exponent) { $res -> return $vec$id($res) } }"
+        docs(docs)
+        +"fun pow(exponent: $vec$id, res: $vec$id): $vec$id { pow($base, $exponent) { $res -> return res($res) } }"
+
+
+        docs = """|Returns the natural exponentiation of this [$vec$id], i.e., e^x.
+                  |
+                  |@receiver: exp function is defined for input values of this [$vec$id] defined in the range (inf-, inf+) in the limit of the type qualifier.
+                  |@param exponent: Floating point value representing the [exponent].
+                  |@see [GLSL exp man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/exp.xml)
+                  |@see [GLSL 4.20.8 specification, section 8.2 Exponential Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+        docs(docs)
+        +"fun exp(): $vec$id { exp($base) { $res -> return $vec$id($res) } }"
+        docs(docs)
+        +"infix fun exp(res: $vec$id): $vec$id { exp($base) { $res -> return res($res) } }"
+
+
+        docs = """|Returns the natural logarithm of this [$vec$id], i.e., returns the value y which satisfies the equation x = e^y.
+                  |Results are undefined if v <= 0.
+                  |
+                  |@receiver: log function is defined for input values of v defined in the range (0, inf+) in the limit of the type qualifier.
+                  |@see [GLSL log man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/log.xml)
+                  |@see [GLSL 4.20.8 specification, section 8.2 Exponential Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+        docs(docs)
+        +"fun log(): $vec$id { log($base) { $res -> return $vec$id($res) } }"
+        docs(docs)
+        +"infix fun log(res: $vec$id): $vec$id { log($base) { $res -> return res($res) } }"
+
+
+        docs = """|Returns 2 raised to the this [$vec$id] power.
+                  |
+                  |@receiver: exp2 function is defined for input values of v defined in the range (inf-, inf+) in the limit of the type qualifier.
+                  |@see [GLSL exp2 man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/exp2.xml)
+                  |@see [GLSL 4.20.8 specification, section 8.2 Exponential Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+        docs(docs)
+        +"fun exp2(): $vec$id { exp2($base) { $res -> return $vec$id($res) } }"
+        docs(docs)
+        +"infix fun exp2(res: $vec$id): $vec$id { exp2($base) { $res -> return res($res) } }"
+
+
+        docs = """|Returns the base 2 log of this [$vec$id], i.e., returns the value y, which satisfies the equation x = 2 ^ y.
+                  |
+                  |@receiver: log2 function is defined for input values of v defined in the range (0, inf+) in the limit of the type qualifier.
+                  |@see [GLSL log2 man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/log2.xml)
+                  |@see [GLSL 4.20.8 specification, section 8.2 Exponential Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+        docs(docs)
+        +"fun log2(): $vec$id { log2($base) { $res -> return $vec$id($res) } }"
+        docs(docs)
+        +"infix fun log2(res: $vec$id): $vec$id { log2($base) { $res -> return res($res) } }"
+
+
+        docs = """|Returns the positive square root of this [$vec$id].
+                  |
+                  |@receiver: sqrt function is defined for input values of v defined in the range [0, inf+) in the limit of the type qualifier.
+                  |@see [GLSL sqrt man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/sqrt.xml)
+                  |@see [GLSL 4.20.8 specification, section 8.2 Exponential Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+        docs(docs)
+        +"fun sqrt(): $vec$id { sqrt($base) { $res -> return $vec$id($res) } }"
+        docs(docs)
+        +"infix fun sqrt(res: $vec$id): $vec$id { sqrt($base) { $res -> return res($res) } }"
+
+
+        docs = """|Returns the reciprocal of the positive square root of this [$vec$id].
+                  |
+                  |@receiver: inverseSqrt function is defined for input values of v defined in the range [0, inf+) in the limit of the type qualifier.
+                  |@see [GLSL inversesqrt man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/inversesqrt.xml)
+                  |@see [GLSL 4.20.8 specification, section 8.2 Exponential Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+        docs(docs)
+        +"fun inverseSqrt(): $vec$id { inverseSqrt($base) { $res -> return $vec$id($res) } }"
+        docs(docs)
+        +"infix fun inverseSqrt(res: $vec$id): $vec$id { inverseSqrt($base) { $res -> return res($res) } }"
+    }
+}
+
+fun geometric(ordinal: Int, type: String, extension: String, id: String, vec: String) {
+
+    +"\n\t// geometric\n"
+    if (type in floatingPointTypes) {
+
+        docs("""|Returns the length of this [$vec$id], i.e., `sqrt(this * this)`.
+                |@see [GLSL length man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/length.xml)
+                |@see [GLSL 4.20.8 specification, section 8.5 Geometric Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin())
+        +"fun length(): $type = sqrt(this dot this)"
+
+        docs("""|Returns the distance between this [$vec$id] and [p], i.e., `length(this - p).`
+                |@see [GLSL distance man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/distance.xml)
+                |@see [GLSL 4.20.8 specification, section 8.5 Geometric Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin())
+        +"infix fun distance(p: $vec$id): $type = distance(${xyzwJoint(ordinal) { c -> c }}, ${xyzwJoint(ordinal) { c -> "p.$c" }})"
+
+        docs("""|Returns the dot product of this [$vec$id] and [b], i.e., `result = this * b`.
+                |@see [GLSL dot man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/dot.xml)
+                |@see [GLSL 4.20.8 specification, section 8.5 Geometric Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin())
+        +"infix fun dot(b: $vec$id): $type = dot(${xyzwJoint(ordinal) { c -> c }}, ${xyzwJoint(ordinal) { c -> "b.$c" }})"
+
+        if (ordinal == 3) {
+            docs("""|Returns the cross product of this [$vec$id] and [v] in a newly allocated $vec$id.
+                    |@see [GLSL cross man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/cross.xml)
+                    |@see [GLSL 4.20.8 specification, section 8.5 Geometric Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin())
+            +"infix fun cross(v: Vec3$id): Vec3$id { cross(x, y, z, v.x, v.z, v.y) { resX, resY, resZ -> return Vec3$id(resX, resY, resZ) } }"
+            docs("""|Returns the cross product of this [$vec$id] and [v] in [res].
+                    |@see [GLSL cross man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/cross.xml)
+                    |@see [GLSL 4.20.8 specification, section 8.5 Geometric Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin())
+            +"fun cross(v: Vec3$id, res: Vec3$id): Vec3$id { cross(x, y, z, v.x, v.z, v.y) { resX, resY, resZ -> return res(resX, resY, resZ) } }"
+        }
+        docs("""|Returns a vector in the same direction as this [$vec$id] but with length of 1.
+                |According to issue 10 GLSL 1.10 specification, if length(x) == 0 then result is undefined and generate an error.
+                |@see [GLSL normalize man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/normalize.xml)
+                |@see [GLSL 4.20.8 specification, section 8.5 Geometric Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin())
+    }
+    if (ordinal > 1 && type in numberTypes) {
+        +"// Dot products"
+        for (unsigned in (unsignedTypes + "out Number")) {
+            if (unsigned != "out Number") +"@JvmName(\"dot$unsigned\")"
+            +"infix fun dot(v: Vec${ordinal}T<$unsigned>) = (${xyzwJoint(ordinal, " + ") { c -> "$c * v.$c.$extension" }}).$extension"
         }
     }
 }

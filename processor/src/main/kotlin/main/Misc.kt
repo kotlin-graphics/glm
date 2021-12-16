@@ -130,3 +130,5 @@ fun docs(docs: String) {
         +" */"
     }
 }
+
+val contract get() = +"kotlin.contracts.contract { callsInPlace(res, kotlin.contracts.InvocationKind.EXACTLY_ONCE) }"
