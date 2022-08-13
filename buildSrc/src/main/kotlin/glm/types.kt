@@ -1,8 +1,8 @@
-package main
+package glm
 
 val numberTypeInformation = listOf(
-    TypeInformation("Byte","b", "toByte"),
-    TypeInformation("Short","s", "toShort"),
+    TypeInformation("Byte", "b", "toByte"),
+    TypeInformation("Short", "s", "toShort"),
     TypeInformation("Int", "i", "toInt"),
     TypeInformation("Long", "L", "toLong"),
     TypeInformation("UByte", "ub", "toUByte"),
@@ -11,7 +11,7 @@ val numberTypeInformation = listOf(
     TypeInformation("ULong", "ul", "toULong"),
     TypeInformation("Float", "f", "toFloat"),
     TypeInformation("Double", "d", "toDouble")
-)
+                                  )
 val extensionsToInformation = numberTypeInformation.associateBy {
     it.extension
 }
@@ -34,7 +34,7 @@ val String.unsignedToSigned get() = replace("U", "")
 data class TypeInformation(val type: String, val extension: String, val conversionFunction: String) {
     val id: String
         get() = if (type == "Float") "" else extension
-    
+
     operator fun component4() = id
 }
 
@@ -66,7 +66,11 @@ fun wxyz(block: (String) -> Unit) {
         block(i)
 }
 
-fun xyzwJoint(ordinal: Int, separator: String = ", ", block: (Int, String) -> String) = (0 until ordinal).joinToString(separator) { block(it, xyzw[it]) }
+fun xyzwJoint(ordinal: Int, separator: String = ", ", block: (Int, String) -> String) =
+    (0 until ordinal).joinToString(separator) {
+        block(it, xyzw[it])
+    }
+
 fun xyzwJoint(ordinal: Int, separator: String = ", ", block: (String) -> String) = (0 until ordinal).joinToString(separator) { block(xyzw[it]) }
 
 fun wxyzJoint(separator: String = ", ", block: (Int, String) -> String) = wxyz.indices.joinToString(separator) { block(it, wxyz[it]) }
@@ -96,5 +100,6 @@ fun abcd(width: Int, height: Int, block: (String) -> Unit) {
 
 fun abcdJoint(width: Int, height: Int, rowSeparator: String = ", ", columnSeparator: String = ", ", block: (Int, Int, String) -> String) =
     (0 until width).joinToString(rowSeparator) { i -> (0 until height).joinToString(columnSeparator) { j -> block(i, j, abcdN(i, j)) } }
+
 fun abcdJoint(width: Int, height: Int, rowSeparator: String = ", ", columnSeparator: String = ", ", block: (String) -> String) =
     (0 until width).joinToString(rowSeparator) { i -> (0 until height).joinToString(columnSeparator) { j -> block(abcdN(i, j)) } }

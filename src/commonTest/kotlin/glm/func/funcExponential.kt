@@ -51,37 +51,37 @@ class funcExponential {
     fun exp() {
 
         val a = 1f.exp()
-        assert(a.equal(glm.e.float, 0.01f))
+        assert(a.equal(glm.e.f, 0.01f))
 
         val b = Vec1(1f).exp()
-        assert(b.allEqual(Vec1(glm.e.float), 0.01f))
+        assert(b.allEqual(Vec1(glm.e.f), 0.01f))
 
         val c = Vec2(1f).exp()
-        assert(c.allEqual(Vec2(glm.e.float), 0.01f))
+        assert(c.allEqual(Vec2(glm.e.f), 0.01f))
 
         val d = Vec3(1f).exp()
-        assert(d.allEqual(Vec3(glm.e.float), 0.01f))
+        assert(d.allEqual(Vec3(glm.e.f), 0.01f))
 
         val e = Vec4(1f).exp()
-        assert(e.allEqual(Vec4(glm.e.float), 0.01f))
+        assert(e.allEqual(Vec4(glm.e.f), 0.01f))
     }
 
     @Test
     fun log() {
 
-        val a = glm.e.float.log()
+        val a = glm.e.f.log()
         assert(a.equal(1f, 0.01f))
 
-        val b = Vec1(glm.e.float).log()
+        val b = Vec1(glm.e.f).log()
         assert(b.allEqual(Vec1(1f), 0.01f))
 
-        val c = Vec2(glm.e.float).log()
+        val c = Vec2(glm.e.f).log()
         assert(c.allEqual(Vec2(1f), 0.01f))
 
-        val d = Vec3(glm.e.float).log()
+        val d = Vec3(glm.e.f).log()
         assert(d.allEqual(Vec3(1f), 0.01f))
 
-        val e = Vec4(glm.e.float).log()
+        val e = Vec4(glm.e.f).log()
         assert(e.allEqual(Vec4(1f), 0.01f))
     }
 

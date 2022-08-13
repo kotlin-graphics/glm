@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.8">
+    <bytecodeTargetLevel target="11">
       <module name="build-logic.align" target="1.8" />
       <module name="build-logic.align.main" target="8" />
       <module name="build-logic.align.test" target="8" />
@@ -19,6 +19,7 @@
       <module name="build-logic.utils.test" target="8" />
       <module name="glm.jdk8" target="1.8" />
       <module name="glm.jmh" target="8" />
+      <module name="glm.processor" target="11" />
       <module name="glm.test-processor.commonMain" target="1.8" />
       <module name="glm.test-processor.commonTest" target="1.8" />
       <module name="glm.test-processor.jvmMain" target="1.8" />

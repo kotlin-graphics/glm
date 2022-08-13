@@ -1,3 +1,4 @@
+import glm.GenerateCode
 import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
 
 ////import kx.*
@@ -12,25 +13,28 @@ plugins {
     //       "utils" to "0.0.5")
     //    id("org.lwjgl.plugin") version "0.0.20"
     kotlin("multiplatform") version embeddedKotlinVersion
-    id("com.google.devtools.ksp") version "1.5.31-1.0.1"
     //    id("me.champeau.jmh") version "0.6.6"
-    id("org.jetbrains.kotlinx.benchmark") version "0.4.0"
+    id("org.jetbrains.kotlinx.benchmark") version "0.4.3"
 }
 
-repositories {
-    mavenCentral()
-}
-
-val kspVersion by extra { "1.5.31-1.0.1" }
+repositories { mavenCentral() }
 
 kotlin {
-    jvmToolchain {
-        (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(8))
-    }
+    //    jvmToolchain {
+    //        (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(8))
+    //    }
     jvm {
+        compilations.all { kotlinOptions.jvmTarget = "1.8" }
         withJava()
         testRuns["test"].executionTask.configure { useJUnit() }
     }
+    //    js(BOTH) {
+    //        browser {
+    //            commonWebpackConfig {
+    //                cssSupport.enabled = true
+    //            }
+    //        }
+    //    }
     val hostOs = System.getProperty("os.name")
     val isMingwX64 = hostOs.startsWith("Windows")
     val nativeTarget = when {
@@ -41,9 +45,9 @@ kotlin {
     }
     sourceSets {
         val commonMain by getting {
-            kotlin.srcDir("build/generated/ksp/commonMain/kotlin")
+            kotlin.srcDir("build/generated")
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.4.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.4.3")
             }
         }
         val commonTest by getting {
@@ -54,9 +58,9 @@ kotlin {
         }
         val jvmMain by getting
         val jvmTest by getting
-        val jvmBench by creating {
-            dependsOn(commonMain)
-        }
+        val jvmBench by creating { dependsOn(commonMain) }
+        //        val jsMain by getting
+        //        val jsTest by getting
         val nativeMain by getting
         val nativeTest by getting
     }
@@ -67,16 +71,12 @@ kotlin {
     }
 }
 
-configurations.kspMetadata {
-    dependencies.add(projects.processor)
-}
-
 benchmark {
     // Create configurations
     configurations {
         named("main") { // main configuration is created automatically, but you can change its defaults
             // --> jvmBenchmark, jsBenchmark, <native target>Benchmark, benchmark
-//            param("-prof", "gc")
+            //            param("-prof", "gc")
 
             warmups = 1
             iterations = 5 // number of iterations
@@ -95,11 +95,10 @@ benchmark {
     }
 }
 
-val SourceSetContainer.main: SourceSet
-    get() = named("main").get()
+//val SourceSetContainer.main: SourceSet
+//    get() = named("main").get()
 
 dependencies {
-    kspMetadata(projects.processor)
     //    "jvmBenchImplementation"(sourceSets.main.output + sourceSets.main.runtimeClasspath)
     //    implementation(unsigned, kool)
     //    Lwjgl { implementation(glfw, jemalloc, openal, opengl, stb) }
@@ -112,16 +111,16 @@ dependencies {
 //    }
 //}
 
-kotlin.sourceSets.commonMain {
-    kotlin.srcDir("build/generated/ksp/commonMain/kotlin")
-}
+//kotlin.sourceSets.commonMain {
+//    kotlin.srcDir("build/generated/ksp/commonMain/kotlin")
+//}
 tasks {
+    val generateCode by registering(glm.GenerateCode::class)
+//    getByName("compileCommonMainKotlinMetadata") { dependsOn(generateCode) }
+    //    kotlin.sourceSets["main"].kotlin.srcDir(generateCode.get().outputs.files)
     withType<KotlinCompile<*>>().all {
-        if (name != "kspKotlinMetadata")
-            dependsOn("kspKotlinMetadata")
-
         kotlinOptions {
-            freeCompilerArgs += "-Xopt-in=kotlin.ExperimentalUnsignedTypes"
+            freeCompilerArgs += "-opt-in=kotlin.ExperimentalUnsignedTypes"
         }
     }
 }

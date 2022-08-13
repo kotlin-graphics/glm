@@ -1,34 +1,22 @@
-package main
+package glm
 
-import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.processing.Dependencies
+import java.io.File
 import kotlin.math.pow
 
-fun vectors(generator: CodeGenerator) {
-    for (i in 1..4) {
-        generator.createNewFile(dependencies = Dependencies(false), packageName = "glm.vec$i", fileName = "Vec${i}T").use {
-            text.clear()
-
+fun vectors(target: File) {
+    for (i in 1..4)
+        generate(target, "glm/vec$i/Vec${i}T.kt") {
             vectorsT(i)
-
-            it.write(text.toString().toByteArray())
         }
-    }
 
-    for ((type, extension, _, id) in vectorTypes) {
-        for (i in 1..4) {
-            generator.createNewFile(dependencies = Dependencies(false), packageName = "glm.vec$i", fileName = "Vec$i$id").use {
-                text.clear()
-
+    for ((type, extension, _, id) in vectorTypes)
+        for (i in 1..4)
+            generate(target, "glm/vec$i/Vec$i$id.kt") {
                 vectors(i, type, extension, id)
-
-                it.write(text.toString().toByteArray())
             }
-        }
-    }
 }
 
-private fun vectorsT(ordinal: Int) {
+private fun Generator.vectorsT(ordinal: Int) {
     +"package glm.vec$ordinal"
     if (ordinal > 1) {
         +"import glm.extensions.swizzle.*"
@@ -46,18 +34,14 @@ private fun vectorsT(ordinal: Int) {
             +"var ${rgba[i]}: T"
             indent {
                 +"get() = $c"
-                "set(value)" {
-                    +"$c = value"
-                }
+                +"set(value) { $c = value }"
             }
         }
         xyzw(ordinal) { i, c ->
             +"var ${stpq[i]}: T"
             indent {
                 +"get() = $c"
-                "set(value)" {
-                    +"$c = value"
-                }
+                +"set(value) { $c = value } "
             }
         }
 
@@ -103,14 +87,13 @@ private fun vectorsT(ordinal: Int) {
     }
 }
 
-private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
+private fun Generator.vectors(ordinal: Int, type: String, extension: String, id: String) {
     +"@file:OptIn(kotlin.contracts.ExperimentalContracts::class)"
     +"package glm.vec$ordinal"
     +"import glm.*"
     +"import glm.extensions.*"
     +"import kotlin.jvm.*"
-    +"import kotlin.math.abs"
-    +"import kotlin.math.sqrt"
+    +"import kotlin.math.*"
     repeat(4) { +"import glm.vec${it + 1}.*" }
     abcd(3, 3) { c, r, _ -> +"import glm.mat${matrixSizeString(c + 2, r + 2)}.*" }
 
@@ -122,9 +105,7 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
             +"override var $c: $type"
             indent {
                 +"get() = array[ofs$delta]"
-                "set(value)" {
-                    +"array[ofs$delta] = value"
-                }
+                +"set(value) { array[ofs$delta] = value } "
             }
         }
 
@@ -133,7 +114,7 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
         +"constructor(v: $vec$id) : this(${xyzwJoint(ordinal) { c -> "v.$c" }})"
 
         +"// Explicit basic constructors"
-        val arrayOf = "${type.lowercase()}ArrayOf"
+        val arrayOf = "${type.toLowerCase()}ArrayOf"
         var a = "x" * ordinal
         +"constructor(x: $type) : this(${if (ordinal == 1) "$arrayOf($a)" else a})"
         +"constructor(x: Number) : this(x.$extension)"
@@ -312,6 +293,16 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                 }
             }
 
+            "fun put(${xyzwJoint(ordinal) { c -> "$c: $type" }})" {
+                xyzw(ordinal) { c -> +"this.$c = $c" }
+            }
+            if (type in listOf("Byte", "Short", "UByte", "UShort")) {
+                val t = if (type[0] == 'U') "UInt" else "Int"
+                "fun put(${xyzwJoint(ordinal) { c -> "$c: $t" }})" {
+                    xyzw(ordinal) { c -> +"this.$c = $c.$extension" }
+                }
+            }
+
             +"// Unary bit operators TODO"
             +"// Unary operators"
             +"operator fun unaryPlus(): $vec$id = this"
@@ -321,6 +312,7 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
             binary(ordinal, type, extension, id, vec)
         }
 
+        common(ordinal, type, extension, id, vec)
         exponential(ordinal, type, extension, id, vec)
         geometric(ordinal, type, extension, id, vec)
 
@@ -348,6 +340,8 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
             +"fun allEqual(v: $vec$id): Boolean = array.contentEquals(v.array)"
             +"fun anyNotEqual(v: $vec$id): Boolean = !array.contentEquals(v.array)"
         }
+        +"fun all(predicate: ($type) -> Boolean): Boolean = array.all(predicate)"
+        +"fun any(predicate: ($type) -> Boolean): Boolean = array.any(predicate)"
 
         if (type == "Boolean") {
             +"// Boolean operators"
@@ -365,61 +359,128 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
                     "UByte", "UShort" -> "UInt"
                     else -> type
                 }
-                a = xyzwJoint(ordinal) { c -> "a${c.uppercase()}: $type" }
-                var b = xyzwJoint(ordinal) { c -> "b${c.uppercase()}: $type" }
+                a = xyzwJoint(ordinal) { c -> "$c: $type" }
+                val b = xyzwJoint(ordinal) { c -> "b${c.toUpperCase()}: $type" }
                 for ((opChar, op) in operators) {
-                    "inline fun $op($a,\n\t\t\t\t\t\t$b, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $t" }}) -> Unit )" {
+                    "inline fun $op($a,\n$b, \nres: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $t" }}) -> Unit )" {
                         contract
-                        +"res(${xyzwJoint(ordinal) { c -> "a${c.uppercase()} $opChar b${c.uppercase()}" }})"
+                        +"res(${xyzwJoint(ordinal) { c -> "$c $opChar b${c.toUpperCase()}" }})"
                     }
                 }
                 if (type in floatingPointTypes) {
-                    +"fun dot($a, $b): $type = ${xyzwJoint(ordinal, " + ") { c -> "a${c.uppercase()} * b${c.uppercase()}" }}"
-                    val unrolled = xyzwJoint(ordinal) { c -> "a${c.uppercase()}" }
+                    +"fun dot($a, $b): $type = ${xyzwJoint(ordinal, " + ") { c -> "$c * b${c.toUpperCase()}" }}"
+                    val unrolled = xyzwJoint(ordinal) { c -> c }
                     +"fun length($a): $type = sqrt(dot($unrolled, $unrolled))"
                     "fun distance($a, $b): $type" {
                         +xyzwJoint(ordinal, "; ") { c -> "val d$c: $type" }
-                        val d = xyzwJoint(ordinal) { c -> "a${c.uppercase()}" }
-                        b = xyzwJoint(ordinal) { c -> "b${c.uppercase()}" }
-                        val res = xyzwJoint(ordinal) { c -> "res${c.uppercase()}" }
-                        +"minus($d, $b) { $res -> ${xyzwJoint(ordinal, "; ") { c -> "d$c = res${c.uppercase()}" }} }"
+                        val d = xyzwJoint(ordinal) { c -> c }
+                        val e = xyzwJoint(ordinal) { c -> "b${c.toUpperCase()}" }
+                        val res = xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}" }
+                        +"minus($d, $e) { $res -> ${xyzwJoint(ordinal, "; ") { c -> "d$c = res${c.toUpperCase()}" }} }"
                         +"return length(${xyzwJoint(ordinal) { c -> "d$c" }})"
                     }
                     if (ordinal == 3) {
-                        +"inline fun cross(x: $type, y: $type, z: $type,"
-                        "\t\t\t\t vx: $type, vy: $type, vz: $type, res: (resX: $type, resY: $type, resZ: $type) -> Unit)" {
+                        "inline fun cross(x: $type, y: $type, z: $type,\nvx: $type, vy: $type, vz: $type,\nres: (resX: $type, resY: $type, resZ: $type) -> Unit)" {
                             contract
                             +"\tres(y * vz - vy * z, z * vx - vz * x, x * vy - vx * y)"
                         }
                     }
                     val exponent = xyzwJoint(ordinal) { c -> "e$c: $type" }
-                    "inline fun pow($a, $exponent, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                    "inline fun pow($a, $exponent, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> Unit)" {
                         contract
-                        +"res(${xyzwJoint(ordinal) { c -> "a${c.uppercase()} pow e$c" }})"
+                        +"res(${xyzwJoint(ordinal) { c -> "$c pow e$c" }})"
                     }
-                    "inline fun exp($a, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                    "inline fun exp($a, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> Unit)" {
                         contract
-                        +"res(${xyzwJoint(ordinal) { c -> "a${c.uppercase()}.exp()" }})"
+                        +"res(${xyzwJoint(ordinal) { c -> "$c.exp()" }})"
                     }
-                    "inline fun log($a, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                    "inline fun log($a, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> Unit)" {
                         contract
-                        +"res(${xyzwJoint(ordinal) { c -> "a${c.uppercase()}.log()" }})"
+                        +"res(${xyzwJoint(ordinal) { c -> "$c.log()" }})"
                     }
-                    "inline fun exp2($a, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                    "inline fun exp2($a, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> Unit)" {
                         contract
-                        +"res(${xyzwJoint(ordinal) { c -> "2${if (type == "Float") "f" else ".0"} pow a${c.uppercase()}" }})"
+                        +"res(${xyzwJoint(ordinal) { c -> "2${if (type == "Float") "f" else ".0"} pow $c" }})"
                     }
-                    "inline fun log2($a, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                    "inline fun log2($a, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> Unit)" {
                         contract
-                        +"res(${xyzwJoint(ordinal) { c -> "a${c.uppercase()}.log2()" }})"
+                        +"res(${xyzwJoint(ordinal) { c -> "$c.log2()" }})"
                     }
-                    "inline fun sqrt($a, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                    "inline fun sqrt($a, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> Unit)" {
                         contract
-                        +"res(${xyzwJoint(ordinal) { c -> "a${c.uppercase()}.sqrt()" }})"
+                        +"res(${xyzwJoint(ordinal) { c -> "$c.sqrt()" }})"
                     }
-                    "inline fun inverseSqrt($a, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                    "inline fun inverseSqrt($a, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> Unit)" {
                         contract
-                        +"res(${xyzwJoint(ordinal) { c -> "a${c.uppercase()}.inverseSqrt()" }})"
+                        +"res(${xyzwJoint(ordinal) { c -> "$c.inverseSqrt()" }})"
+                    }
+                }
+                if (type !in unsignedTypes && type != "Boolean")
+                    "inline fun <R> abs($a, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> R): R" {
+                        contract
+                        +"return res(${xyzwJoint(ordinal) { c -> "$c.abs()" }})"
+                    }
+                if (type in floatingPointTypes) {
+                    "inline fun <R> sign($a, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> R): R" {
+                        contract
+                        +"return res(${xyzwJoint(ordinal) { c -> "$c.sign" }})"
+                    }
+                    "inline fun <R> floor($a, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> R): R" {
+                        contract
+                        +"return res(${xyzwJoint(ordinal) { c -> "$c.floor()" }})"
+                    }
+                    "inline fun <R> trunc($a, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> R): R" {
+                        contract
+                        +"return res(${xyzwJoint(ordinal) { c -> "$c.trunc()" }})"
+                    }
+                    "inline fun <R> round($a, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> R): R" {
+                        contract
+                        +"return res(${xyzwJoint(ordinal) { c -> "$c.round()" }})"
+                    }
+                    "inline fun <R> roundEven($a, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> R): R" {
+                        contract
+                        +"return res(${xyzwJoint(ordinal) { c -> "$c.roundEven()" }})"
+                    }
+                    "inline fun <R> ceil($a, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> R): R" {
+                        contract
+                        +"return res(${xyzwJoint(ordinal) { c -> "$c.ceil()" }})"
+                    }
+                    "inline fun <R> fract($a, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> R): R" {
+                        contract
+                        +"return res(${xyzwJoint(ordinal) { c -> "$c.fract()" }})"
+                    }
+                    "inline fun <R> mod($a, $b, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> R): R" {
+                        contract
+                        +"return res(${xyzwJoint(ordinal) { c -> "$c % b${c.toUpperCase()}" }})"
+                    }
+                    var f = xyzwJoint(ordinal) { c -> "f${c.toUpperCase()}: $type" }
+                    var i = xyzwJoint(ordinal) { c -> "i${c.toUpperCase()}: $type" }
+                    "inline fun <R> modf($a, res: ($f, $i) -> R): R" {
+                        val pf = if (type == "Float") "f" else ".0"
+                        xyzw(ordinal) { c -> +"val int${c.toUpperCase()} = if ($c > 0$pf) $c.floor() else $c.ceil()" }
+                        f = xyzwJoint(ordinal) { c -> "$c - int${c.toUpperCase()}" }
+                        i = xyzwJoint(ordinal) { c -> "int${c.toUpperCase()}" }
+                        +"return res($f, $i)"
+                    }
+                }
+                if (type !in unsignedTypes && type != "Boolean") {
+                    "inline fun <R> min($a, $b, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> R): R" {
+                        contract
+                        +"return res(${xyzwJoint(ordinal) { c -> "$c min b${c.toUpperCase()}" }})"
+                    }
+                    "inline fun <R> max($a, $b, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> R): R" {
+                        contract
+                        +"return res(${xyzwJoint(ordinal) { c -> "$c max b${c.toUpperCase()}" }})"
+                    }
+                    val d = xyzwJoint(ordinal) { c -> "min${c.toUpperCase()}: $type" }
+                    val e = xyzwJoint(ordinal) { c -> "max${c.toUpperCase()}: $type" }
+                    "inline fun <R> clamp($a, $d, $e, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> R): R" {
+                        contract
+                        +"return res(${xyzwJoint(ordinal) { c -> "$c.clamp(min${c.toUpperCase()}, max${c.toUpperCase()})" }})"
+                    }
+                    "inline fun <R> mix($a, $d, $e, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }}) -> R): R" {
+                        contract
+                        +"return res(${xyzwJoint(ordinal) { c -> "$c.clamp(min${c.toUpperCase()}, max${c.toUpperCase()})" }})"
                     }
                 }
             }
@@ -436,7 +497,7 @@ private fun vectors(ordinal: Int, type: String, extension: String, id: String) {
     }
 }
 
-fun binary(ordinal: Int, type: String, extension: String, id: String, vec: String) {
+fun Generator.binary(ordinal: Int, type: String, extension: String, id: String, vec: String) {
 
     +"// Binary operators\n"
 
@@ -452,7 +513,7 @@ fun binary(ordinal: Int, type: String, extension: String, id: String, vec: Strin
         if (ordinal != 1) {
             val unrolled = xyzwJoint(ordinal) { _ -> "scalar" }
             +"fun $operatorName(scalar: $type, res: $vec$id): $vec$id = $operatorName($unrolled, res)"
-            "inline fun $operatorName(scalar: $type, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $t" }}) -> Unit)" {
+            "inline fun $operatorName(scalar: $type, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $t" }}) -> Unit)" {
                 contract
                 +"$operatorName($unrolledPlain, $unrolled, res)"
             }
@@ -460,7 +521,7 @@ fun binary(ordinal: Int, type: String, extension: String, id: String, vec: Strin
         var unrolled = xyzwJoint(ordinal) { _ -> "v.x" }
         +"operator fun $operatorName(v: Vec1$id): $vec$id = $operatorName($unrolled, $vec$id())"
         +"fun $operatorName(v: Vec1$id, res: $vec$id): $vec$id = $operatorName($unrolled, res)"
-        "inline fun $operatorName(v: Vec1$id, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $t" }}) -> Unit)" {
+        "inline fun $operatorName(v: Vec1$id, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $t" }}) -> Unit)" {
             contract
             +"$operatorName(${unrolledPlain}, $unrolled, res)"
         }
@@ -468,14 +529,14 @@ fun binary(ordinal: Int, type: String, extension: String, id: String, vec: Strin
             unrolled = xyzwJoint(ordinal) { c -> "v.$c" }
             +"operator fun $operatorName(v: $vec$id): $vec$id = $operatorName($unrolled, $vec$id())"
             +"fun $operatorName(v: $vec$id, res: $vec$id): $vec$id = $operatorName($unrolled, res)"
-            "inline fun $operatorName(v: $vec$id, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $t" }}) -> Unit)" {
+            "inline fun $operatorName(v: $vec$id, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $t" }}) -> Unit)" {
                 contract
                 +"$operatorName(${unrolledPlain}, $unrolled, res)"
             }
         }
         var args = xyzwJoint(ordinal) { c -> "this.$c $operatorChar $c" }
         +"fun $operatorName(${xyzwJoint(ordinal) { c -> "$c: $type" }}, res: $vec$id): $vec$id = res($args)"
-        "inline fun $operatorName(${xyzwJoint(ordinal) { c -> "$c: $type" }}, res: (${xyzwJoint(ordinal) { c -> "res${c.uppercase()}: $t" }}) -> Unit)" {
+        "inline fun $operatorName(${xyzwJoint(ordinal) { c -> "$c: $type" }}, res: (${xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $t" }}) -> Unit)" {
             contract
             +"$operatorName(${unrolledPlain}, ${unrolledPlain}, res)"
         }
@@ -483,17 +544,17 @@ fun binary(ordinal: Int, type: String, extension: String, id: String, vec: Strin
             if (operatorChar == "*")
                 for (i in 2..4) {
                     +"operator fun times(m: Mat${matrixSizeString(i, ordinal)}$id): Vec$i$id = times(m, Vec$i$id())"
-                    args = xyzwJoint(i, ",\n\t\t\t\t\t\t\t\t\t\t\t") { j, _ ->
+                    args = xyzwJoint(i, ",\n") { j, _ ->
                         (0 until ordinal).joinToString(" + ") { "${xyzw[it]} * m.${abcd[j]}$it" }
                     }
                     +"fun times(m: Mat${matrixSizeString(i, ordinal)}$id, res: Vec$i$id): Vec$i$id = res($args)"
-                    "inline fun times(m: Mat${matrixSizeString(i, ordinal)}$id, res: (${xyzwJoint(i) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                    "inline fun times(m: Mat${matrixSizeString(i, ordinal)}$id, res: (${xyzwJoint(i) { c -> "res${c.toUpperCase()}: $type" }}) -> Unit)" {
                         contract
-                        +"times(${abcdJoint(i, ordinal, ",\n\t\t\t") { c -> "m.$c" }}, res)"
+                        +"times(${abcdJoint(i, ordinal, ",\n") { c -> "m.$c" }}, res)"
                     }
-                    "inline fun times(${abcdJoint(i, ordinal, ",\n\t\t\t\t\t") { c -> "$c: $type" }}, res: (${xyzwJoint(i) { c -> "res${c.uppercase()}: $type" }}) -> Unit)" {
+                    "inline fun times(${abcdJoint(i, ordinal, ",\n") { c -> "$c: $type" }}, res: (${xyzwJoint(i) { c -> "res${c.toUpperCase()}: $type" }}) -> Unit)" {
                         contract
-                        args = xyzwJoint(i, ",\n\t\t\t") { j, _ ->
+                        args = xyzwJoint(i, ",\n") { j, _ ->
                             (0 until ordinal).joinToString(" + ") { "${xyzw[it]} * ${abcd[j]}$it" }
                         }
                         +"res($args)"
@@ -501,7 +562,7 @@ fun binary(ordinal: Int, type: String, extension: String, id: String, vec: Strin
                 }
             else if (operatorChar == "/") {
                 +"operator fun div(m: Mat${matrixSizeString(ordinal, ordinal)}$id): $vec$id = div(m, $vec$id())"
-                args = xyzwJoint(ordinal, ",\n\t\t\t\t\t") { j, _ ->
+                args = xyzwJoint(ordinal, ",\n") { j, _ ->
                     (0 until ordinal).joinToString(" + ") { "${xyzw[it]} * i$j$it" }
                 }
                 "fun div(m: Mat${matrixSizeString(ordinal, ordinal)}$id, res: $vec$id): $vec$id" {
@@ -512,7 +573,250 @@ fun binary(ordinal: Int, type: String, extension: String, id: String, vec: Strin
     }
 }
 
-fun exponential(ordinal: Int, type: String, extension: String, id: String, vec: String) {
+// common.hpp
+fun Generator.common(ordinal: Int, type: String, extension: String, id: String, vec: String) {
+
+    +"\n\t// common\n"
+
+    if (type !in unsignedTypes && type != "Boolean") {
+
+        var doc = """|Returns this [$vec$id] if this >= 0; otherwise, it returns -x.
+                     |
+                     |@see [GLSL abs man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/abs.xml)
+                     |@see [GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+        +"fun absAssign(): $vec$id = abs(this)"
+        docs(doc)
+        docs(doc)
+        val a = xyzwJoint(ordinal) { c -> c }
+        val res = xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}" }
+        +"fun abs(res: $vec$id = $vec$id()): $vec$id = abs { $res -> res($res) }"
+        docs(doc)
+        val b = xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}: $type" }
+        "inline fun <R> abs(res: ($b) -> R): R" {
+            contract
+            +"return abs($a, res)"
+        }
+
+        if (type in floatingPointTypes) {
+
+            doc = """|Returns 1 if x > 0, 0 if x == 0, or -1 if x < 0.
+                     |
+                     |@see [GLSL sign man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/sign.xml)
+                     |@see [GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+            docs(doc)
+            +"fun signAssign(): $vec$id = sign(this)"
+            docs(doc)
+            +"fun sign(res: $vec$id = $vec$id()): $vec$id = sign { $res -> res($res) }"
+            docs(doc)
+            "inline fun <R> sign(res: ($b) -> R): R" {
+                contract
+                +"return sign($a, res)"
+            }
+
+
+            doc = """|Returns a value equal to the nearest integer that is less then or equal to this [$vec$id].
+                     |
+                     |@see [GLSL floor man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/floor.xml)
+                     |@see [GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+            docs(doc)
+            +"fun floorAssign(): $vec$id = floor(this)"
+            docs(doc)
+            +"fun floor(res: $vec$id = $vec$id()): $vec$id = floor { $res -> res($res) }"
+            docs(doc)
+            "inline fun <R> floor(res: ($b) -> R): R" {
+                contract
+                +"return floor($a, res)"
+            }
+
+
+            doc = """|Returns a value equal to the nearest integer to this [$vec$id]
+                     |whose absolute value is not larger than the absolute value of this [$vec$id].
+                     |
+                     |@see [GLSL trunc man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/trunc.xml)
+                     |@see [GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+            docs(doc)
+            +"fun truncAssign(): $vec$id = trunc(this)"
+            docs(doc)
+            +"fun trunc(res: $vec$id = $vec$id()): $vec$id = trunc { $res -> res($res) }"
+            docs(doc)
+            "inline fun <R> trunc(res: ($b) -> R): R" {
+                contract
+                +"return trunc($a, res)"
+            }
+
+
+            doc = """|Returns a value equal to the nearest integer to this [$vec$id]. The fraction 0.5 will round in a 
+                     |direction chosen by the implementation, presumably the direction that is fastest.
+                     |This includes the possibility that `round` returns the same value as `roundEven` for all values of
+                     |this [$vec$id].
+                     |
+                     |@see [GLSL round man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/round.xml)
+                     |@see [GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+            docs(doc)
+            +"fun roundAssign(): $vec$id = round(this)"
+            docs(doc)
+            +"fun round(res: $vec$id = $vec$id()): $vec$id = round { $res -> res($res) }"
+            docs(doc)
+            "inline fun <R> round(res: ($b) -> R): R" {
+                contract
+                +"return round($a, res)"
+            }
+
+
+            doc = """|Returns a value equal to the nearest integer to this [$vec$id]. A fractional part of 0.5 will round
+                     |toward the nearest even integer. (Both 3.5 and 4.5 for x will return 4.0.)
+                     |
+                     |@see [GLSL roundEven man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/roundEven.xml)
+                     |@see [GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)
+                     |@see [New round to even technique](http://developer.amd.com/documentation/articles/pages/New-Round-to-Even-Technique.aspx)""".trimMargin()
+            docs(doc)
+            +"fun roundEvenAssign(): $vec$id = roundEven(this)"
+            docs(doc)
+            +"fun roundEven(res: $vec$id = $vec$id()): $vec$id = roundEven { $res -> res($res) }"
+            docs(doc)
+            "inline fun <R> roundEven(res: ($b) -> R): R" {
+                contract
+                +"return roundEven($a, res)"
+            }
+
+
+            doc = """|Returns a value equal to the nearest integer that is greater than or equal to this [$vec$id].
+                     |
+                     |@see [GLSL ceil man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/ceil.xml)
+                     |@see [GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+            docs(doc)
+            +"fun ceilAssign(): $vec$id = ceil(this)"
+            docs(doc)
+            +"fun ceil(res: $vec$id = $vec$id()): $vec$id = ceil { $res -> res($res) }"
+            docs(doc)
+            "inline fun <R> ceil(res: ($b) -> R): R" {
+                contract
+                +"return ceil($a, res)"
+            }
+
+
+            doc = """|Return this [$vec$id] - this.floor.
+                     |
+                     |@see [GLSL fract man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/fract.xml)
+                     |@see [GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+            docs(doc)
+            +"fun fractAssign(): $vec$id = fract(this)"
+            docs(doc)
+            +"fun fract(res: $vec$id = $vec$id()): $vec$id = fract { $res -> res($res) }"
+            docs(doc)
+            "inline fun <R> fract(res: ($b) -> R): R" {
+                contract
+                +"return fract($a, res)"
+            }
+
+            val bb = xyzwJoint(ordinal) { _ -> "b" }
+            val d = xyzwJoint(ordinal) { c -> "b${c.toUpperCase()}: $type" }
+            val e = xyzwJoint(ordinal) { c -> "b${c.toUpperCase()}" }
+
+            doc = """|Modulus. Returns this - b * floor(this / b) for each component in this [$vec$id] using the floating point value b.
+                     |
+                     |@see [GLSL mod man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/mod.xml)
+                     |@see [GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+            docs(doc)
+            +"infix fun modAssign(b: $type): $vec$id = mod(b, this)"
+            docs(doc)
+            +"fun mod(b: $type, res: $vec$id = $vec$id()): $vec$id = mod(b) { $res -> res($res) }"
+            docs(doc)
+            "inline fun <R> mod(b: $type, res: ($b) -> R): R" {
+                contract
+                +"return mod($a, $bb, res)"
+            }
+            if (ordinal != 1) {
+                docs(doc)
+                +"fun modAssign($d): $vec$id = mod($e, this)"
+                docs(doc)
+                +"fun mod($d, res: $vec$id = $vec$id()): $vec$id = mod($e) { $res -> res($res) }"
+                docs(doc)
+                "inline fun <R> mod($d, res: ($b) -> R): R" {
+                    contract
+                    +"return mod($a, $e, res)"
+                }
+            }
+
+
+            doc = """|Returns the fractional part of this [$vec$id] and its integer counterpart (as a whole number floating point value). 
+                     |Both the return values will have the same sign as this [$vec$id].
+                     |
+                     |@see [GLSL modf man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/modf.xml)
+                     |@see [GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+            docs(doc)
+            val f = xyzwJoint(ordinal) { c -> "f${c.toUpperCase()}" }
+            val i = xyzwJoint(ordinal) { c -> "i${c.toUpperCase()}" }
+            +"fun modf(f: $vec$id, i: $vec$id) = modf($a) { $f, $i ->"
+            +"\tf.put($f)"
+            +"\ti.put($i)"
+            +"}"
+            docs(doc)
+            +"fun modf(): Pair<$vec$id, $vec$id> = modf { $f, $i -> $vec$id($f) to $vec$id($i) }"
+            docs(doc)
+            val fType = xyzwJoint(ordinal) { c -> "f${c.toUpperCase()}: $type" }
+            val iType = xyzwJoint(ordinal) { c -> "i${c.toUpperCase()}: $type" }
+            +"fun <R> modf(res: ($fType, $iType) -> R): R = modf($a, res)"
+
+            doc = """|Returns [b] if [b] < this [$vec$id]; otherwise, it returns this.
+                     |
+                     |@see [GLSL min man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/min.xml)
+                     |@see [GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+            docs(doc)
+            +"infix fun minAssign(b: $type): $vec$id = min(b, this)"
+            docs(doc)
+            +"fun min(b: $type, res: $vec$id = $vec$id()): $vec$id = min($bb) { $res -> res($res) }"
+            docs(doc)
+            "inline fun <R> min(b: $type, res: ($b) -> R): R" {
+                contract
+                +"return min($a, $bb, res)"
+            }
+            if (ordinal > 1) {
+                docs(doc)
+                +"fun minAssign($d): $vec$id = min($e, this)"
+                docs(doc)
+                +"fun min($d, res: $vec$id = $vec$id()): $vec$id = min($e) { $res -> res($res) }"
+                docs(doc)
+                "inline fun <R> min($d, res: ($b) -> R): R" {
+                    contract
+                    +"return min($a, $e, res)"
+                }
+            }
+
+            doc = """|Returns [b] if this [$vec$id] < [b]; otherwise, it returns this.
+                     |
+                     |@see [GLSL max man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/max.xml)
+                     |@see [GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+            docs(doc)
+            +"infix fun maxAssign(b: $type): $vec$id = max(b, this)"
+            docs(doc)
+            +"fun max(b: $type, res: $vec$id = $vec$id()): $vec$id = max(b) { $res -> res($res) }"
+            docs(doc)
+            "inline fun <R> max(b: $type, res: ($b) -> R): R" {
+                contract
+                +"return max($a, $bb, res)"
+            }
+
+            doc = """|Returns `min(max(x, minVal), maxVal)` for each component in this [$vec$id] using the values minVal and maxVal.
+                     |
+                     |@see [GLSL clamp man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/clamp.xml)
+                     |@see [GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""".trimMargin()
+            docs(doc)
+            val min = xyzwJoint(ordinal) { _ -> "min" }
+            val max = xyzwJoint(ordinal) { _ -> "max" }
+            +"fun clampAssign(min: $type, max: $type): $vec$id = clamp(min, max, this)"
+            docs(doc)
+            +"fun clamp(min: $type, max: $type, res: $vec$id = $vec$id()): $vec$id = clamp(min, max) { $res -> res($res) }"
+            docs(doc)
+            "inline fun <R> clamp(min: $type, max: $type, res: ($b) -> R): R" {
+                contract
+                +"return clamp($a, $min, $max, res)"
+            }
+        }
+    }
+}
+
+fun Generator.exponential(ordinal: Int, type: String, extension: String, id: String, vec: String) {
 
     +"\n\t// exponential\n"
 
@@ -527,7 +831,7 @@ fun exponential(ordinal: Int, type: String, extension: String, id: String, vec: 
         docs(docs)
         val base = xyzwJoint(ordinal) { c -> c }
         val exponent = xyzwJoint(ordinal) { c -> "exponent.$c" }
-        val res = xyzwJoint(ordinal) { c -> "res${c.uppercase()}" }
+        val res = xyzwJoint(ordinal) { c -> "res${c.toUpperCase()}" }
         +"infix fun pow(exponent: $vec$id): $vec$id { pow($base, $exponent) { $res -> return $vec$id($res) } }"
         docs(docs)
         +"fun pow(exponent: $vec$id, res: $vec$id): $vec$id { pow($base, $exponent) { $res -> return res($res) } }"
@@ -602,7 +906,7 @@ fun exponential(ordinal: Int, type: String, extension: String, id: String, vec: 
     }
 }
 
-fun geometric(ordinal: Int, type: String, extension: String, id: String, vec: String) {
+fun Generator.geometric(ordinal: Int, type: String, extension: String, id: String, vec: String) {
 
     +"\n\t// geometric\n"
     if (type in floatingPointTypes) {

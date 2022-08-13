@@ -1,40 +1,26 @@
-package main
+package glm
 
-import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.processing.Dependencies
+import java.io.File
 
-fun matrices(generator: CodeGenerator) {
-    for (i in 2..4) {
-        for (j in 2..4) {
-            generator.createNewFile(dependencies = Dependencies(false), packageName = "glm.mat${matrixSizeString(i, j)}", fileName = "Mat${matrixSizeString(i, j)}T").use {
-                text.clear()
-
+fun matrices(target: File) {
+    for (i in 2..4)
+        for (j in 2..4)
+            generate(target, "glm/mat${matrixSizeString(i, j)}/Mat${matrixSizeString(i, j)}T.kt") {
                 matricesT(i, j)
-
-                it.write(text.toString().toByteArray())
             }
-        }
-    }
 
-    for ((type, extension, _, id) in matrixTypes) {
-        for (i in 2..4) {
-            for (j in 2..4) {
-                generator.createNewFile(dependencies = Dependencies(false), packageName = "glm.mat${matrixSizeString(i, j)}", fileName = "Mat${matrixSizeString(i, j)}$id").use {
-                    text.clear()
-
+    for ((type, extension, _, id) in matrixTypes)
+        for (i in 2..4)
+            for (j in 2..4)
+                generate(target, "glm/mat${matrixSizeString(i, j)}/Mat${matrixSizeString(i, j)}$id.kt") {
                     matrices(i, j, type, extension, id)
-
-                    it.write(text.toString().toByteArray())
                 }
-            }
-        }
-    }
 }
 
 fun matrixSizeString(width: Int, height: Int) = if (width == height) "$width" else "${width}x$height"
 
 
-private fun matricesT(width: Int, height: Int) {
+private fun Generator.matricesT(width: Int, height: Int) {
     +"package glm.mat${matrixSizeString(width, height)}"
 
     +"import glm.vec$height.*"
@@ -78,9 +64,7 @@ private fun matricesT(width: Int, height: Int) {
             +"var ${vNN(i, j)}: N"
             indent {
                 +"get() = $c"
-                "set(value)" {
-                    +"$c = value"
-                }
+                +"set(value) { $c = value }"
             }
         }
 
@@ -97,7 +81,7 @@ private fun matricesT(width: Int, height: Int) {
     }
 }
 
-private fun matrices(width: Int, height: Int, type: String, extension: String, id: String) {
+private fun Generator.matrices(width: Int, height: Int, type: String, extension: String, id: String) {
     +"package glm.mat${matrixSizeString(width, height)}"
 
     +"import glm.*"
@@ -114,50 +98,44 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
             +"override var $c: $type"
             indent {
                 +"get() = array[$ofs]"
-                "set(value)" {
-                    +"array[$ofs] = value"
-                }
+                +"set(value) { array[$ofs] = value }"
             }
         }
 
         +"// -- Constructors --"
         +"constructor() : this(1)"
-        +"constructor(m: $mat$id) : this(${abcdJoint(width, height) { c -> "m.$c" }})"
-        +"constructor(scalar: $type) : this(${abcdJoint(width, height) { c, r, _ -> if (c == r) "scalar" else "0" }})"
-        +"constructor(${abcdJoint(width, height, ",\n\t\t\t\t") { text -> "$text: $type" }}"
-        text.deleteAt(text.lastIndex)
-        val arrayOf = "${type.lowercase()}ArrayOf"
-        text += ") : this($arrayOf(${abcdJoint(width, height) { text -> text }}))"
+        +"constructor(m: $mat$id) : this(${abcdJoint(width, height, ",\n") { c -> "m.$c" }})"
+        +"constructor(scalar: $type) : this(${abcdJoint(width, height, ",\n") { c, r, _ -> if (c == r) "scalar" else "0" }})"
+        var a = abcdJoint(width, height, ",\n") { text -> "$text: $type" }
+        val arrayOf = "${type.toLowerCase()}ArrayOf"
+        +"constructor($a) : this($arrayOf(${abcdJoint(width, height, ",\n") { text -> text }}))"
 
-        +"constructor(${(0 until width).joinToString(",\n\t\t\t\t") { "v$it: Vec$height$id" }}"
-        text.deleteAt(text.lastIndex)
-        text += ") : this(${(0 until width).joinToString { i -> xyzwJoint(height) { _, s -> "v$i.$s" } }})"
+        a = (0 until width).joinToString { "v$it: Vec$height$id" }
+        +"constructor($a) : this(${(0 until width).joinToString(",\n") { i -> xyzwJoint(height) { _, s -> "v$i.$s" } }})"
 
-        // -- Conversions --
+        +"// -- Conversions --"
         +"constructor(s: Number) : this(s.$extension)"
-        +"constructor(m: ${mat}T<*, Vec${height}T<*>>) : this(${abcdJoint(width, height) { c -> "m.$c" }})"
+        +"constructor(m: ${mat}T<*, Vec${height}T<*>>) : this(${abcdJoint(width, height, ",\n") { c -> "m.$c" }})"
 
         if (width == height) {
             if (width > 2) {
-                +"constructor(${xyzwJoint(width - 1) { c -> "$c: Number" }}) : this(${xyzwJoint(width - 1) { c -> c }}, 1)"
+                a = xyzwJoint(width - 1) { c -> "$c: Number" }
+                +"constructor($a) : this(${xyzwJoint(width - 1) { c -> c }}, 1)"
             }
-            +"constructor(${xyzwJoint(width) { c -> "$c: Number" }}) : this("
-            indent {
-                +(abcdJoint(width, height, ",\n$indentation") { i, j, _ -> if (i == j) xyzw[i] else "0" } + ")")
-            }
+            a = abcdJoint(width, height, ",\n") { i, j, _ -> if (i == j) xyzw[i] else "0" }
+            +"constructor(${xyzwJoint(width) { c -> "$c: Number" }}) : this($a)"
         }
 
-        +"constructor(${abcdJoint(width, height, ",\n$indentation\t\t\t") { i, j, _ -> "${xyzw[i]}$j: Number" }}) : this($arrayOf("
-        indent {
-            +(abcdJoint(width, height, ",\n$indentation") { i, j, _ -> "${xyzw[i]}$j.$extension" } + "))")
-        }
+        a = abcdJoint(width, height, ",\n") { i, j, _ -> "${xyzw[i]}$j: Number" }
+        val b = abcdJoint(width, height, ",\n") { i, j, _ -> "${xyzw[i]}$j.$extension" }
+        +"constructor($a) : this($arrayOf($b))"
 
         +"// -- Matrix conversions --"
         abcd(3, 3) { i, j, _ ->
             val c = i + 2
             val r = j + 2
             if (c != width || r != height) {
-                val sep = ",\n\t\t\t\t\t\t\t\t" + if (c != r) "  " else ""
+                val sep = ",\n" + if (c != r) "  " else ""
                 val args = abcdJoint(width, height, sep) { col, row, text ->
                     when {
                         row < r && col < c -> "m.$text"
@@ -171,45 +149,39 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
 
         +"constructor(array: ${type}Array, transpose: Boolean = false) : this("
         indent {
-            +("if (transpose) $arrayOf(" + abcdJoint(width, height, ",\n$indentation") { i, j, _ -> "array[${i * height + j}]" } + ")\n${indentation}else array.copyOf())")
+            a = abcdJoint(width, height, ",\n") { i, j, _ -> "array[${i * height + j}]" }
+            +"if (transpose) $arrayOf($a)"
+            + "else array.copyOf())"
         }
 
         +"// -- Invoke functions --"
         +"operator fun invoke(s: Number): $mat$id = invoke(${"s" * width})"
-        if (width > 2) {
+        if (width > 2)
             +"operator fun invoke(${xyzwJoint(width - 1) { c -> "$c: Number" }}): $mat$id = invoke(${xyzwJoint(width - 1) { c -> c }}, 1)"
-        }
 
         +"operator fun invoke(${xyzwJoint(width) { c -> "$c: Number" }}): $mat$id = invoke("
         indent {
-            +(abcdJoint(width, height, ",\n$indentation") { i, j, _ -> if (i == j) xyzw[i] else "0" } + ")")
+            +(abcdJoint(width, height, ",\n") { i, j, _ -> if (i == j) xyzw[i] else "0" } + ")")
         }
 
-        "operator fun invoke(${abcdJoint(width, height, ",\n$indentation\t\t\t") { c -> "$c: Number" }}): $mat$id" {
-            +"put(${abcdJoint(width, height) { c -> "$c.$extension" }})"
+        "operator fun invoke(${abcdJoint(width, height, ",\n") { c -> "$c: Number" }}): $mat$id" {
+            +"put(${abcdJoint(width, height, ",\n") { c -> "$c.$extension" }})"
             +"return this"
         }
-        "operator fun invoke(m: $mat$id): $mat$id" {
-            +"put(m)"
-            +"return this"
-        }
+        +"operator fun invoke(m: $mat$id): $mat$id { put(m); return this }"
 
-        if (width == height) {
+        if (width == height)
             +"fun identity() = invoke(1)"
-        }
 
         +"// -- Put functions --"
         +"fun put(s: Number) = put(${"s" * width})"
-        if (width > 2) {
+        if (width > 2)
             +"fun put(${xyzwJoint(width - 1) { c -> "$c: Number" }}) = put(${xyzwJoint(width - 1) { c -> c }}, 1)"
-        }
 
-        +"fun put(${xyzwJoint(width) { c -> "$c: Number" }}) = put("
-        indent {
-            +(abcdJoint(width, height, ",\n$indentation") { i, j, _ -> if (i == j) xyzw[i] else "0" } + ")")
-        }
+        a = abcdJoint(width, height, ",\n") { i, j, _ -> if (i == j) xyzw[i] else "0" }
+        +"fun put(${xyzwJoint(width) { c -> "$c: Number" }}) = put($a)"
 
-        "fun put(${abcdJoint(width, height, ",\n$indentation\t\t\t") { c -> "$c: Number" }})" {
+        "fun put(${abcdJoint(width, height, ",\n") { c -> "$c: Number" }})" {
             abcd(width, height) { i, j, c ->
                 +"array[${i * height + j}] = $c.$extension"
             }
@@ -264,7 +236,7 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
         +"operator fun unaryPlus() = this"
         +"operator fun unaryMinus() = $mat$id("
         indent {
-            +(abcdJoint(width, height, ",\n$indentation") { c -> "-$c" } + ")")
+            +(abcdJoint(width, height, ",\n") { c -> "-$c" } + ")")
         }
 
         +"// -- Increment and decrement operators --"
@@ -279,31 +251,29 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
 
         +"// -- Binary operators --"
         for ((char, operation) in operators) {
-            val sep = ",\n\t\t\t\t\t\t\t\t\t\t\t\t"
-            lateinit var args: String
             +"infix operator fun $operation(scalar: $type): $mat$id = $operation(scalar, $mat$id())"
-            +"fun $operation(scalar: $type, res: $mat$id): $mat$id = res(${abcdJoint(width, height, sep) { s -> "$s $char scalar" }})"
+            +"fun $operation(scalar: $type, res: $mat$id): $mat$id = res(${abcdJoint(width, height, ",\n") { s -> "$s $char scalar" }})"
             if (char == "*") {
-                args = xyzwJoint(height, sep) { i, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$i $char v.${xyzw[it]}" } }
+                a = xyzwJoint(height, ",\n") { i, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$i $char v.${xyzw[it]}" } }
                 +"infix operator fun times(v: Vec$width$id): Vec$height$id = times(v, Vec$height$id())"
-                +"fun times(v: Vec$width$id, res: Vec$height$id): Vec$height$id = res($args)"
+                +"fun times(v: Vec$width$id, res: Vec$height$id): Vec$height$id = res($a)"
             }
             if (char == "*" || char == "/") {
                 if (width == height) {
                     +"infix operator fun $operation(m: $mat$id): $mat$id = $operation(m, $mat$id())"
                     if (char == "*") {
-                        args = abcdJoint(width, height, sep) { c, r, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$r * m.${abcd[c]}$it" } }
-                        +"fun times(m: $mat$id, res: $mat$id): $mat$id = res($args)"
+                        a = abcdJoint(width, height, ",\n") { c, r, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$r * m.${abcd[c]}$it" } }
+                        +"fun times(m: $mat$id, res: $mat$id): $mat$id = res($a)"
                     } else
                         "fun div(m: $mat$id, res: $mat$id): $mat$id" {
                             invertMatrix(width, type)
-                            args = abcdJoint(width, height, ",\n\t\t\t\t") { c, r, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$r * i$c$it" } }
-                            +"return res($args)"
+                            a = abcdJoint(width, height, ",\n") { c, r, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$r * i$c$it" } }
+                            +"return res($a)"
                         }
                 }
             } else {
-                args = abcdJoint(width, height, sep) { s -> "$s $char m.$s" }
-                +"infix operator fun $operation(m: $mat$id): $mat$id = $mat$id($args)"
+                a = abcdJoint(width, height, ",\n") { s -> "$s $char m.$s" }
+                +"infix operator fun $operation(m: $mat$id): $mat$id = $mat$id($a)"
             }
         }
 
@@ -337,45 +307,28 @@ private fun matrices(width: Int, height: Int, type: String, extension: String, i
                     +"val y = a1"
                     +"val z = a2"
                     +"val w = a3"
-                    +"val inverse = res(+ b1 * coef00 - b2 * coef04 + b3 * coef08, - a1 * coef00 + a2 * coef04 - a3 * coef08, + a1 * coef02 - a2 * coef06 + a3 * coef10, - a1 * coef03 + a2 * coef07 - a3 * coef11,"
-                    +"\t\t\t- b0 * coef00 + b2 * coef12 - b3 * coef16, + a0 * coef00 - a2 * coef12 + a3 * coef16, - a0 * coef02 + a2 * coef14 - a3 * coef18, + a0 * coef03 - a2 * coef15 + a3 * coef19,"
-                    +"\t\t\t+ b0 * coef04 - b1 * coef12 + b3 * coef20, - a0 * coef04 + a1 * coef12 - a3 * coef20, + a0 * coef06 - a1 * coef14 + a3 * coef22, - a0 * coef07 + a1 * coef15 - a3 * coef23,"
-                    +"\t\t\t- b0 * coef08 + b1 * coef16 - b2 * coef20, + a0 * coef08 - a1 * coef16 + a2 * coef20, - a0 * coef10 + a1 * coef18 - a2 * coef22, + a0 * coef11 - a1 * coef19 + a2 * coef23)"
+                    +"""val inverse = res(+ b1 * coef00 - b2 * coef04 + b3 * coef08, - a1 * coef00 + a2 * coef04 - a3 * coef08, + a1 * coef02 - a2 * coef06 + a3 * coef10, - a1 * coef03 + a2 * coef07 - a3 * coef11,
+                        |- b0 * coef00 + b2 * coef12 - b3 * coef16, + a0 * coef00 - a2 * coef12 + a3 * coef16, - a0 * coef02 + a2 * coef14 - a3 * coef18, + a0 * coef03 - a2 * coef15 + a3 * coef19,
+                        |+ b0 * coef04 - b1 * coef12 + b3 * coef20, - a0 * coef04 + a1 * coef12 - a3 * coef20, + a0 * coef06 - a1 * coef14 + a3 * coef22, - a0 * coef07 + a1 * coef15 - a3 * coef23,
+                        |- b0 * coef08 + b1 * coef16 - b2 * coef20, + a0 * coef08 - a1 * coef16 + a2 * coef20, - a0 * coef10 + a1 * coef18 - a2 * coef22, + a0 * coef11 - a1 * coef19 + a2 * coef23)""".trimMargin()
                 }
-                +"val oneOverDeterminant = $one / ("
                 when (width) {
-                    2 -> {
-                        +"\t+ a0 * b1"
-                        +"\t- b0 * a1)"
-                    }
-                    3 -> {
-                        +"\t+ a0 * (b1 * c2 - c1 * b2)"
-                        +"\t- b0 * (a1 * c2 - c1 * a2)"
-                        +"\t+ c0 * (a1 * b2 - b1 * a2))"
-                    }
-                    else -> text.deleteAt(text.lastIndex).appendLine("x * inverse.a0 + y * inverse.b0 + z * inverse.c0 + w * inverse.d0)")
+                    2 -> +"val oneOverDeterminant = $one / (+ a0 * b1\n- b0 * a1)"
+                    3 -> +"val oneOverDeterminant = $one / (+ a0 * (b1 * c2 - c1 * b2)\n- b0 * (a1 * c2 - c1 * a2)\n+ c0 * (a1 * b2 - b1 * a2))"
+                    else -> +"val oneOverDeterminant = $one / (x * inverse.a0 + y * inverse.b0 + z * inverse.c0 + w * inverse.d0)"
                 }
 
                 when (width) {
-                    2 -> {
-                        +"return res("
-                        +"\t+ b1 * oneOverDeterminant,"
-                        +"\t- a1 * oneOverDeterminant,"
-                        +"\t- b0 * oneOverDeterminant,"
-                        +"\t+ a0 * oneOverDeterminant)"
-                    }
-                    3 -> {
-                        +"return res("
-                        +"\t+ (b1 * c2 - c1 * b2) * oneOverDeterminant,"
-                        +"\t- (a1 * c2 - c1 * a2) * oneOverDeterminant,"
-                        +"\t+ (a1 * b2 - b1 * a2) * oneOverDeterminant,"
-                        +"\t- (b0 * c2 - c0 * b2) * oneOverDeterminant,"
-                        +"\t+ (a0 * c2 - c0 * a2) * oneOverDeterminant,"
-                        +"\t- (a0 * b2 - b0 * a2) * oneOverDeterminant,"
-                        +"\t+ (b0 * c1 - c0 * b1) * oneOverDeterminant,"
-                        +"\t- (a0 * c1 - c0 * a1) * oneOverDeterminant,"
-                        +"\t+ (a0 * b1 - b0 * a1) * oneOverDeterminant)"
-                    }
+                    2 -> +"return res(+ b1 * oneOverDeterminant,\n- a1 * oneOverDeterminant,\n- b0 * oneOverDeterminant,\n+ a0 * oneOverDeterminant)"
+                    3 -> +"""return res(+ (b1 * c2 - c1 * b2) * oneOverDeterminant,
+                            |- (a1 * c2 - c1 * a2) * oneOverDeterminant,
+                            |+ (a1 * b2 - b1 * a2) * oneOverDeterminant,
+                            |- (b0 * c2 - c0 * b2) * oneOverDeterminant,
+                            |+ (a0 * c2 - c0 * a2) * oneOverDeterminant,
+                            |- (a0 * b2 - b0 * a2) * oneOverDeterminant,
+                            |+ (b0 * c1 - c0 * b1) * oneOverDeterminant,
+                            |- (a0 * c1 - c0 * a1) * oneOverDeterminant,
+                            |+ (a0 * b1 - b0 * a1) * oneOverDeterminant)""".trimMargin()
                     else -> {
                         +"inverse *= oneOverDeterminant"
                         +"return inverse"

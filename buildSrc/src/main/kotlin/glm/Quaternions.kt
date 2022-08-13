@@ -1,13 +1,9 @@
-package main
+package glm
 
-import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.processing.Dependencies
+import java.io.File
 
-fun quaternions(generator: CodeGenerator) {
-    generator.createNewFile(dependencies = Dependencies(false),
-                            packageName = "glm.quat",
-                            fileName = "QuatT").use {
-        text.clear()
+fun quaternions(target: File) {
+    generate(target, "glm/quat/QuatT.kt") {
 
         +"package glm.quat"
         "abstract class QuatT<T>" {
@@ -35,23 +31,14 @@ fun quaternions(generator: CodeGenerator) {
                 +"const val length = 4"
             }
         }
-
-        it.write(text.toString().toByteArray())
     }
-    for ((type, extension, conversion, id) in numberTypeInformation.filter { it.type == "Float" || it.type == "Double" }) {
-        generator.createNewFile(dependencies = Dependencies(false),
-                                packageName = "glm.quat",
-                                fileName = "Quat$id").use {
-            text.clear()
-
+    for ((type, extension, conversion, id) in numberTypeInformation.filter { it.type == "Float" || it.type == "Double" })
+        generate(target, "glm/quat/Quat$id.kt") {
             quaternionT(type, extension, conversion, id)
-
-            it.write(text.toString().toByteArray())
         }
-    }
 }
 
-fun quaternionT(type: String, extension: String, conversion: String, id: String) {
+fun Generator.quaternionT(type: String, extension: String, conversion: String, id: String) {
     +"package glm.quat"
     +"import glm.vec3.Vec3$id"
     +"import kotlin.math.sqrt"
@@ -71,7 +58,7 @@ fun quaternionT(type: String, extension: String, conversion: String, id: String)
         +"constructor(q: Quat$id): this(q.w, q.x, q.y, q.z)"
         +"// -- Explicit basic constructors --"
         +"constructor(s: $type, v: Vec3$id): this(s, v.x, v.y, v.z)"
-        +"constructor(w: $type, x: $type, y: $type, z: $type): this(${type.lowercase()}ArrayOf(w, x, y, z))"
+        +"constructor(w: $type, x: $type, y: $type, z: $type): this(${type.toLowerCase()}ArrayOf(w, x, y, z))"
         +"// -- Conversion constructors --"
         +"constructor(q: QuatT<out Number>): this(q.w.$conversion(), q.x.$conversion(), q.y.$conversion(), q.z.$conversion())"
         +"/** Create a quaternion from two normalized axis"

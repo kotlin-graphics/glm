@@ -13,6 +13,4 @@ gradle.rootProject {
     version = "0.9.9.1-4"
 }
 
-include("processor")
-
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

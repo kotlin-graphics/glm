@@ -1,31 +1,31 @@
-package main
+package glm
 
 
-val text = StringBuilder()
-var indentation = ""
-
-fun indent(block: () -> Unit) {
-    indentation += "\t"
-    block()
-    indentation = indentation.dropLast(1)
-}
-
-operator fun String.unaryPlus() = text.appendLine("$indentation$this")
-operator fun String.invoke(block: () -> Unit) {
-    +"$this {"
-    indent(block)
-    +"}"
-}
-
-operator fun StringBuilder.plusAssign(text: String) {
-    appendLine(text)
-}
-
-operator fun String.times(i: Int) = (1..i).joinToString { this }
+//val text = StringBuilder()
+//var indentation = ""
+//
+//fun indent(block: () -> Unit) {
+//    indentation += "\t"
+//    block()
+//    indentation = indentation.dropLast(1)
+//}
+//
+//operator fun String.unaryPlus() = text.appendLine("$indentation$this")
+//operator fun String.invoke(block: () -> Unit) {
+//    +"$this {"
+//    indent(block)
+//    +"}"
+//}
+//
+//operator fun StringBuilder.plusAssign(text: String) {
+//    appendLine(text)
+//}
+//
+//operator fun String.times(i: Int) = (1..i).joinToString { this }
 
 val operators = listOf("+" to "plus", "-" to "minus", "*" to "times", "/" to "div")
 
-fun invertMatrix(ordinal: Int, type: String) {
+fun Generator.invertMatrix(ordinal: Int, type: String) {
     val one = when (type) {
         "Float" -> "1f"
         "Double" -> "1.0"
@@ -78,7 +78,7 @@ fun invertMatrix(ordinal: Int, type: String) {
             +"\t- m.b0 * (m.a1 * m.c2 - m.c1 * m.a2)"
             +"\t+ m.c0 * (m.a1 * m.b2 - m.b1 * m.a2))"
         }
-        else -> text.deleteAt(text.lastIndex).appendLine("\tm.a0 * i00 + m.a1 * i10 + m.a2 * i20 + m.a3 * i30)")
+        else -> deleteLast().appendLine("\tm.a0 * i00 + m.a1 * i10 + m.a2 * i20 + m.a3 * i30)")
     }
 
     when (ordinal) {
@@ -120,7 +120,7 @@ fun invertMatrix(ordinal: Int, type: String) {
     }
 }
 
-fun docs(docs: String) {
+fun Generator.docs(docs: String) {
     val lines = docs.lines()
     if (lines.size == 1) TODO()
     else {
@@ -130,5 +130,3 @@ fun docs(docs: String) {
         +" */"
     }
 }
-
-val contract get() = +"kotlin.contracts.contract { callsInPlace(res, kotlin.contracts.InvocationKind.EXACTLY_ONCE) }"
