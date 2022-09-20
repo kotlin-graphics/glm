@@ -1,7 +1,7 @@
 package main
 
 import kotlinx.benchmark.*
-import glm.vec2.Vec2
+import glm_.vec2.Vec2
 
 @Warmup(iterations = 5/*, time = 1, timeUnit = TimeUnit.SECONDS*/)
 @Measurement(iterations = 5, time = 1/*, timeUnit = TimeUnit.SECONDS*/)

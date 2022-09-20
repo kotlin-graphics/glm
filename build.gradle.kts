@@ -1,4 +1,4 @@
-import glm.GenerateCode
+import glm_.GenerateCode
 import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
 
 ////import kx.*
@@ -115,7 +115,7 @@ dependencies {
 //    kotlin.srcDir("build/generated/ksp/commonMain/kotlin")
 //}
 tasks {
-    val generateCode by registering(glm.GenerateCode::class)
+    val generateCode by registering(glm_.GenerateCode::class)
 //    getByName("compileCommonMainKotlinMetadata") { dependsOn(generateCode) }
     //    kotlin.sourceSets["main"].kotlin.srcDir(generateCode.get().outputs.files)
     withType<KotlinCompile<*>>().all {
