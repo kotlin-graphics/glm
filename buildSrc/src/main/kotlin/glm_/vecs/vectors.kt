@@ -1,19 +1,42 @@
-package glm_
+package glm_.vecs
 
+import glm_.*
+import glm_.detail.*
+import glm_.gen.Generator
+import glm_.gen.Generator.Experimentals
+import glm_.gen.generate
+import glm_.gen.matrixSize
 import java.io.File
 import kotlin.math.pow
 
 fun vectors(target: File) {
     for (i in 1..4)
         generate(target, "glm_/vec$i/Vec${i}T.kt") {
-            Generator.Companion.ordinal = i
+            Generator.ordinal = i
+            `package` = "glm_.vec$i"
+            if (i > 1)
+                imports += listOf("glm_.extensions.swizzle.*",
+                                  "glm_.extensions.*",
+                                  "kotlin.jvm.*")
             vectorsT(i)
         }
 
     for ((type, extension, _, id) in vectorTypes)
         for (i in 1..4)
             generate(target, "glm_/vec$i/Vec$i$id.kt") {
-                Generator.Companion.ordinal = i
+                Generator.ordinal = i
+                `package` = "glm_.vec$i"
+                experimentals += Experimentals.Contracts
+                if (type[0] == 'U')
+                    experimentals += Experimentals.UnsignedTypes
+                imports += listOf("glm_.*",
+                                  "glm_.extensions.*",
+                                  "glm_.scalar.*",
+                                  "kotlin.jvm.*",
+                                  "kotlin.math.*")
+                repeat(4) { imports += "glm_.vec${it + 1}.*" }
+                abcdIndexed(3, 3) { c, r, _ -> imports += "glm_.mat${matrixSize(c + 2, r + 2)}.*" }
+
                 vectors(i, type, extension, id)
             }
 
@@ -21,12 +44,6 @@ fun vectors(target: File) {
 }
 
 private fun Generator.vectorsT(ordinal: Int) {
-    +"package glm_.vec$ordinal"
-    if (ordinal > 1) {
-        +"import glm_.extensions.swizzle.*"
-        +"import glm_.extensions.*"
-        +"import kotlin.jvm.*"
-    }
 
     "abstract class Vec${ordinal}T<T>" {
         xyzw { +"abstract var $it: T" }
@@ -92,18 +109,6 @@ private fun Generator.vectorsT(ordinal: Int) {
 }
 
 private fun Generator.vectors(ordinal: Int, type: String, extension: String, id: String) {
-    if (type[0] == 'U')
-        +"@file:OptIn(kotlin.contracts.ExperimentalContracts::class, kotlin.ExperimentalUnsignedTypes::class)"
-    else
-        +"@file:OptIn(kotlin.contracts.ExperimentalContracts::class)"
-    +"package glm_.vec$ordinal"
-    +"import glm_.*"
-    +"import glm_.extensions.*"
-    +"import glm_.scalar.*"
-    +"import kotlin.jvm.*"
-    +"import kotlin.math.*"
-    repeat(4) { +"import glm_.vec${it + 1}.*" }
-    abcdIndexed(3, 3) { c, r, _ -> +"import glm_.mat${matrixSize(c + 2, r + 2)}.*" }
 
     val vec = "Vec$ordinal"
     val VecID = vec + id
@@ -124,7 +129,7 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
 
         +"// Explicit basic constructors"
         val arrayOf = "${type.toLowerCase()}ArrayOf"
-        var xxxx = "x" * ordinal
+        val xxxx = "x" * ordinal
         +"constructor(x: $type) : this(${if (ordinal == 1) "$arrayOf($xxxx)" else xxxx})"
         +"constructor(x: Number) : this(x.$extension)"
         if (type == "UByte" || type == "UShort") {
@@ -133,7 +138,7 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
         }
 
         if (ordinal > 1) {
-            +"constructor(${xyzwJoint { "$it: $type" }}) : this($arrayOf(${xyzwJoint { it }}))"
+            +"constructor(${xyzwJoint { "$it: $type" }}) : this($arrayOf($xyzwJoint))"
             if (type == "UByte" || type == "UShort") {
                 +"constructor(${xyzwJoint { "$it: UInt" }}) : this(${xyzwJoint { "$it.$extension" }})"
                 +"constructor(${xyzwJoint { "$it: ULong" }}) : this(${xyzwJoint { "$it.$extension" }})"
@@ -289,66 +294,70 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
                 xyzw { +"$it--" }
                 +"return this"
             }
+        }
 
-            "operator fun invoke(${xyzwJoint { "$it: $type" }}): $VecID" {
-                xyzw { +"this.$it = $it" }
+        "operator fun invoke(${xyzwJoint { "$it: $type" }}): $VecID" {
+            xyzw { +"this.$it = $it" }
+            +"return this"
+        }
+        if (type in listOf("Byte", "Short", "UByte", "UShort")) {
+            val t = if (type[0] == 'U') "UInt" else "Int"
+            "operator fun invoke(${xyzwJoint { "$it: $t" }}): $VecID" {
+                xyzw { +"this.$it = $it.$extension" }
                 +"return this"
             }
-            if (type in listOf("Byte", "Short", "UByte", "UShort")) {
-                val t = if (type[0] == 'U') "UInt" else "Int"
-                "operator fun invoke(${xyzwJoint { "$it: $t" }}): $VecID" {
-                    xyzw { +"this.$it = $it.$extension" }
-                    +"return this"
-                }
-            }
+        }
 
-            "fun put(${xyzwJoint { "$it: $type" }})" {
-                xyzw { +"this.$it = $it" }
+        "fun put(${xyzwJoint { "$it: $type" }})" {
+            xyzw { +"this.$it = $it" }
+        }
+        if (type in listOf("Byte", "Short", "UByte", "UShort")) {
+            val t = if (type[0] == 'U') "UInt" else "Int"
+            "fun put(${xyzwJoint { "$it: $t" }})" {
+                xyzw { +"this.$it = $it.$extension" }
             }
-            if (type in listOf("Byte", "Short", "UByte", "UShort")) {
-                val t = if (type[0] == 'U') "UInt" else "Int"
-                "fun put(${xyzwJoint { "$it: $t" }})" {
-                    xyzw { +"this.$it = $it.$extension" }
-                }
-            }
+        }
 
+        if (type in numberTypes) {
             +"// Unary bit operators TODO"
             +"// Unary operators"
             +"operator fun unaryPlus(): $VecID = this"
             if (type !in unsignedTypes)
                 +"operator fun unaryMinus(): $VecID = $VecID(${xyzwJoint { "-$it" }})"
 
-            binary(ordinal, type, extension, id, vec)
+            binary(ordinal, type, extension, id, vec, Generator.Part.Class)
         }
 
-        common(ordinal, type, extension, id, vec)
-        exponential(ordinal, type, extension, id, vec)
-        geometric(ordinal, type, extension, id, vec)
+        common(ordinal, type, extension, id, vec, Generator.Part.Class)
+        exponential(ordinal, type, extension, id, vec, Generator.Part.Class)
+        geometric(ordinal, type, extension, id, vec, Generator.Part.Class)
+        trigonometric(ordinal, type, extension, id, vec, Generator.Part.Class)
 
         +"override fun equals(other: Any?) = other is $VecID && ${xyzwJoint(separator = " && ") { "$it == other.$it" }}"
         +"override fun hashCode() = ${xyzwJointIndexed(separator = " + ") { i, c -> "${31f.pow(i).toInt()} * $c.hashCode()" }}"
 
-        if (type == "Float" || type == "Double") {
-            +"fun equal(v: $VecID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[it] - v.array[it]) <= epsilon }"
-            +"fun notEqual(v: $VecID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[it] - v.array[it]) > epsilon }"
-            "fun allEqual(v: $VecID, epsilon: $type = $type.MIN_VALUE): Boolean" {
-                +"for (i in 0 until length)"
-                +"\tif(abs(array[i] - v.array[i]) > epsilon)"
-                +"\t\treturn false"
-                +"return true"
-            }
-            "fun anyNotEqual(v: $VecID, epsilon: $type = $type.MIN_VALUE): Boolean" {
-                +"for (i in 0 until length)"
-                +"\tif(abs(array[i] - v.array[i]) > epsilon)"
-                +"\t\treturn true"
-                +"return false"
-            }
-        } else {
-            +"infix fun equal(v: $VecID) = BooleanArray(length) { array[it] == v.array[it] }"
-            +"infix fun notEqual(v: $VecID) = BooleanArray(length) { array[it] != v.array[it] }"
-            +"fun allEqual(v: $VecID): Boolean = array.contentEquals(v.array)"
-            +"fun anyNotEqual(v: $VecID): Boolean = !array.contentEquals(v.array)"
-        }
+        if (type == "Float" || type == "Double")
+            +"""
+                fun equal(v: $VecID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[it] - v.array[it]) <= epsilon }
+                fun notEqual(v: $VecID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[it] - v.array[it]) > epsilon }
+                fun allEqual(v: $VecID, epsilon: $type = $type.MIN_VALUE): Boolean {
+                    for (i in 0 until length)
+                        if(abs(array[i] - v.array[i]) > epsilon)
+                            return false
+                    return true
+                }
+                fun anyNotEqual(v: $VecID, epsilon: $type = $type.MIN_VALUE): Boolean {
+                    for (i in 0 until length)
+                        if(abs(array[i] - v.array[i]) > epsilon)
+                            return true
+                    return false
+                }"""
+        else
+            +"""
+                infix fun equal(v: $VecID) = BooleanArray(length) { array[it] == v.array[it] }
+                infix fun notEqual(v: $VecID) = BooleanArray(length) { array[it] != v.array[it] }
+                fun allEqual(v: $VecID): Boolean = array.contentEquals(v.array)
+                fun anyNotEqual(v: $VecID): Boolean = !array.contentEquals(v.array)"""
         +"fun all(predicate: ($type) -> Boolean): Boolean = array.all(predicate)"
         +"fun any(predicate: ($type) -> Boolean): Boolean = array.any(predicate)"
 
@@ -363,269 +372,15 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
             +"const val length = Vec${ordinal}T.length"
             if (type in numberTypes) {
                 +"const val size = length * $type.SIZE_BYTES"
-                val t = when (type) {
-                    "Byte", "Short" -> "Int"
-                    "UByte", "UShort" -> "UInt"
-                    else -> type
-                }
-                val `xyzw type` = xyzwJoint { "$it: $type" }
-                val `bXYZW type` = XyzwJoint { "b$it: $type" }
-                for ((opChar, op) in operators) {
-                    "inline fun $op($`xyzw type`,$`bXYZW type`, res: (${XyzwJoint { "res$it: $t" }}) -> Unit )" {
-                        contract
-                        +"res(${xyzwJoint { "$it $opChar b${it.toUpperCase()}" }})"
-                    }
-                }
-                val res = XyzwJoint { "res$it: $type" }
-                if (type in floatingPointTypes) {
-                    +"fun dot($`xyzw type`, $`bXYZW type`): $type = ${xyzwJoint(separator = " + ") { "$it * b${it.toUpperCase()}" }}"
-                    val unrolled = xyzwJoint { it }
-                    +"fun length($`xyzw type`): $type = sqrt(dot($unrolled, $unrolled))"
-                    "fun distance($`xyzw type`, $`bXYZW type`): $type" {
-                        +xyzwJoint(separator = "; ") { "val d$it: $type" }
-                        val d = xyzwJoint { it }
-                        val e = XyzwJoint { "b$it" }
-                        val res2 = XyzwJoint { "res$it" }
-                        +"minus($d, $e) { $res2 -> ${xyzwJoint(separator = "; ") { "d$it = res${it.toUpperCase()}" }} }"
-                        +"return length(${xyzwJoint { "d$it" }})"
-                    }
-                    if (ordinal == 3) {
-                        "inline fun cross(x: $type, y: $type, z: $type,\nvx: $type, vy: $type, vz: $type,\nres: (resX: $type, resY: $type, resZ: $type) -> Unit)" {
-                            contract
-                            +"\tres(y * vz - vy * z, z * vx - vz * x, x * vy - vx * y)"
-                        }
-                    }
-                    fun exponential() {
-                        val exponent = xyzwJoint { "e$it: $type" }
-                        "inline fun pow($`xyzw type`, $exponent, res: ($res) -> Unit)" {
-                            contract
-                            +"res(${xyzwJoint { "$it pow e$it" }})"
-                        }
-                        "inline fun exp($`xyzw type`, res: ($res) -> Unit)" {
-                            contract
-                            +"res(${xyzwJoint { "$it.exp()" }})"
-                        }
-                        "inline fun log($`xyzw type`, res: ($res) -> Unit)" {
-                            contract
-                            +"res(${xyzwJoint { "$it.log()" }})"
-                        }
-                        "inline fun exp2($`xyzw type`, res: ($res) -> Unit)" {
-                            contract
-                            +"res(${xyzwJoint { "2${if (type == "Float") "f" else ".0"} pow $it" }})"
-                        }
-                        "inline fun log2($`xyzw type`, res: ($res) -> Unit)" {
-                            contract
-                            +"res(${xyzwJoint { "$it.log2()" }})"
-                        }
-                        "inline fun sqrt($`xyzw type`, res: ($res) -> Unit)" {
-                            contract
-                            +"res(${xyzwJoint { "$it.sqrt()" }})"
-                        }
-                        "inline fun inverseSqrt($`xyzw type`, res: ($res) -> Unit)" {
-                            contract
-                            +"res(${xyzwJoint { "$it.inverseSqrt()" }})"
-                        }
-                    }
-                    exponential()
-                }
-                fun common() {
-                    if (type !in unsignedTypes)
-                        "inline fun <R> abs($`xyzw type`, res: ($res) -> R): R" {
-                            contract
-                            +"return res(${xyzwJoint { "$it.abs()" }})"
-                        }
-                    if (type in floatingPointTypes) {
-                        "inline fun <R> sign($`xyzw type`, res: ($res) -> R): R" {
-                            contract
-                            +"return res(${xyzwJoint { "$it.sign" }})"
-                        }
-                        "inline fun <R> floor($`xyzw type`, res: ($res) -> R): R" {
-                            contract
-                            +"return res(${xyzwJoint { "$it.floor()" }})"
-                        }
-                        "inline fun <R> trunc($`xyzw type`, res: ($res) -> R): R" {
-                            contract
-                            +"return res(${xyzwJoint { "$it.trunc()" }})"
-                        }
-                        "inline fun <R> round($`xyzw type`, res: ($res) -> R): R" {
-                            contract
-                            +"return res(${xyzwJoint { "$it.round()" }})"
-                        }
-                        "inline fun <R> roundEven($`xyzw type`, res: ($res) -> R): R" {
-                            contract
-                            +"return res(${xyzwJoint { "$it.roundEven()" }})"
-                        }
-                        "inline fun <R> ceil($`xyzw type`, res: ($res) -> R): R" {
-                            contract
-                            +"return res(${xyzwJoint { "$it.ceil()" }})"
-                        }
-                        "inline fun <R> fract($`xyzw type`, res: ($res) -> R): R" {
-                            contract
-                            +"return res(${xyzwJoint { "$it.fract()" }})"
-                        }
-                        "inline fun <R> mod($`xyzw type`, $`bXYZW type`, res: ($res) -> R): R" {
-                            contract
-                            +"return res(${xyzwJoint { "$it % b${it.toUpperCase()}" }})"
-                        }
-                        var f = XyzwJoint { "f$it: $type" }
-                        var i = XyzwJoint { "i$it: $type" }
-                        "inline fun <R> modf($`xyzw type`, res: ($f, $i) -> R): R" {
-                            val pf = if (type == "Float") "f" else ".0"
-                            xyzw { +"val int${it.toUpperCase()} = if ($it > 0$pf) $it.floor() else $it.ceil()" }
-                            f = xyzwJoint { "$it - int${it.toUpperCase()}" }
-                            i = XyzwJoint { "int$it" }
-                            +"return res($f, $i)"
-                        }
-                        "inline fun <R> min($`xyzw type`, $`bXYZW type`, res: ($res) -> R): R" {
-                            contract
-                            +"return res(${xyzwJoint { "$it min b${it.toUpperCase()}" }})"
-                        }
-                        "inline fun <R> max($`xyzw type`, $`bXYZW type`, res: ($res) -> R): R" {
-                            contract
-                            +"return res(${xyzwJoint { "$it max b${it.toUpperCase()}" }})"
-                        }
-                        val `minXYZW type` = XyzwJoint { "min$it: $type" }
-                        val `maxXYZW type` = XyzwJoint { "max$it: $type" }
-                        "inline fun <R> clamp($`xyzw type`, $`minXYZW type`, $`maxXYZW type`, res: ($res) -> R): R" {
-                            contract
-                            +"return res(${xyzwJoint { "$it.clamp(min${it.toUpperCase()}, max${it.toUpperCase()})" }})"
-                        }
 
-                        // mix c scalar
-                        "inline fun <R> mix($`xyzw type`, $`bXYZW type`, c: $type, res: ($res) -> R): R" {
-                            contract
-                            +"return res(${xyzwJoint { "$it.mix(b${it.toUpperCase()}, c)" }})"
-                        }
-                        "inline fun <R> mix($`xyzw type`, $`bXYZW type`, c: Boolean, res: ($res) -> R): R" {
-                            contract
-                            +"return res(${xyzwJoint { "$it.mix(b${it.toUpperCase()}, c)" }})"
-                        }
-                        if (ordinal > 1) {
-                            // mix c vectorial
-                            val `cXYZW type` = XyzwJoint { "c$it: $type" }
-                            val `cXYZW bool` = XyzwJoint { "c$it: Boolean" }
-                            "inline fun <R> mix($`xyzw type`, $`bXYZW type`, $`cXYZW type`, res: ($res) -> R): R" {
-                                contract
-                                +"return res(${xyzwJoint { "$it.mix(b${it.toUpperCase()}, c${it.toUpperCase()})" }})"
-                            }
-                            "inline fun <R> mix($`xyzw type`, $`bXYZW type`, $`cXYZW bool`, res: ($res) -> R): R" {
-                                contract
-                                +"return res(${xyzwJoint { "$it.mix(b${it.toUpperCase()}, c${it.toUpperCase()})" }})"
-                            }
-                        }
-
-                        "inline fun <R> step($`xyzw type`, edge: $type, res: ($res) -> R): R" {
-                            contract
-                            +"return res(${xyzwJoint { "$it step edge" }})"
-                        }
-                        if (ordinal > 1) {
-                            val edge = XyzwJoint { "edge$it: $type" }
-                            "inline fun <R> step($`xyzw type`, $edge, res: ($res) -> R): R" {
-                                contract
-                                +"return res(${xyzwJoint { "$it step edge${it.toUpperCase()}" }})"
-                            }
-                        }
-                    }
-                    when (type) {
-                        "Float" -> {
-                            "inline fun <R> bitsToInt($`xyzw type`, res: (${XyzwJoint { "res$it: Int" }}) -> R): R" {
-                                contract
-                                +"return res(${xyzwJoint { "$it.bitsToInt()" }})"
-                            }
-                            "inline fun <R> bitsToUInt($`xyzw type`, res: (${XyzwJoint { "res$it: UInt" }}) -> R): R" {
-                                contract
-                                +"return res(${xyzwJoint { "$it.bitsToUInt()" }})"
-                            }
-                        }
-                        "Double" -> {
-                            "inline fun <R> bitsToLong($`xyzw type`, res: (${XyzwJoint { "res$it: Long" }}) -> R): R" {
-                                contract
-                                +"return res(${xyzwJoint { "$it.bitsToLong()" }})"
-                            }
-                            "inline fun <R> bitsToULong($`xyzw type`, res: (${XyzwJoint { "res$it: ULong" }}) -> R): R" {
-                                contract
-                                +"return res(${xyzwJoint { "$it.bitsToULong()" }})"
-                            }
-                        }
-                        "Int" ->
-                            "inline fun <R> bitsToFloat($`xyzw type`, res: (${XyzwJoint { "res$it: Float" }}) -> R): R" {
-                                contract
-                                +"return res(${xyzwJoint { "$it.bitsToFloat()" }})"
-                            }
-                        "UInt" ->
-                            "inline fun <R> bitsToFloat($`xyzw type`, res: (${XyzwJoint { "res$it: Float" }}) -> R): R" {
-                                contract
-                                +"return res(${xyzwJoint { "$it.bitsToFloat()" }})"
-                            }
-                        "Long" ->
-                            "inline fun <R> bitsToDouble($`xyzw type`, res: (${XyzwJoint { "res$it: Double" }}) -> R): R" {
-                                contract
-                                +"return res(${xyzwJoint { "$it.bitsToDouble()" }})"
-                            }
-                        "ULong" ->
-                            "inline fun <R> bitsToDouble($`xyzw type`, res: (${XyzwJoint { "res$it: Double" }}) -> R): R" {
-                                contract
-                                +"return res(${xyzwJoint { "$it.bitsToDouble()" }})"
-                            }
-                    }
-                    if (type in floatingPointTypes) {
-                        // fma
-                        docs("""|Computes and returns a * b + c.
-                                |
-                                |[GLSL fma man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/fma.xml)
-                                |[GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""")
-                        val `aXYZW type` = XyzwJoint { "a$it: $type" }
-                        val `cXYZW type` = XyzwJoint { "c$it: $type" }
-                        "inline fun <R> fma($`aXYZW type`, $`bXYZW type`, $`cXYZW type`, res: (${XyzwJoint { "res$it: $type" }}) -> R): R" {
-                            contract
-                            +"return res(${XyzwJoint { "a$it.fma(b$it, c$it)" }})"
-                        }
-
-                        // frexp
-                        docs("""|Splits x into a floating-point significand in the range [0.5, 1.0) and an integral exponent of two, such that:
-                                |`x = significand * exp(2, exponent)`
-                                |
-                                |The significand is returned by the function and the exponent is returned in the parameter exp. 
-                                |For a floating-point value of zero, the significant and exponent are both zero. 
-                                |For a floating-point value that is an infinity or is not a number, the results are undefined.
-                                |
-                                |[GLSL frexp man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/frexp.xml)
-                                |[GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""")
-                        val `resMantXYZW type` = XyzwJoint { "resMant$it: $type" }
-                        val `resExpXYZW type` = XyzwJoint { "resExp$it: Int" }
-                        "inline fun <R> frexp($`xyzw type`, res: ($`resMantXYZW type`, $`resExpXYZW type`) -> R): R" {
-                            contract
-                            Xyzw { +"val e$it: Int" }
-                            Xyzw { +"val m$it = ${it.toLowerCase()}.frexp { e$it = it }" }
-                            +"return res(${XyzwJoint { "m$it" }}, ${XyzwJoint { "e$it" }})"
-                        }
-
-                        // ldexp
-                        docs("""|Builds a floating-point number from x and the corresponding integral exponent of two in exp, returning:
-                        |`significand * exp(2, exponent)`
-                        |
-                        |If this product is too large to be represented in the floating-point type, the result is undefined.
-                        |
-                        |[GLSL ldexp man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/ldexp.xml)
-                        |[GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)""")
-                        val `expXyzw Int` = XyzwJoint { "exp$it: Int" }
-                        "inline fun <R> ldexp($`xyzw type`, $`expXyzw Int`, res: (${XyzwJoint { "res$it: $type" }}) -> R): R" {
-                            contract
-                            +"return res(${xyzwJoint { "$it ldexp exp${it.toUpperCase()}" }})"
-                        }
-                    }
-                }
-                common()
+                binary(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
+                common(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
+                exponential(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
+                geometric(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
+                trigonometric(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
             }
         }
     }
 
-    +"// Binary operators"
-    if (type in numberTypes) {
-        for ((operatorChar, operatorName) in operators) {
-            +"operator fun $type.$operatorName(v: $VecID) = $VecID(${xyzwJoint { "this $operatorChar v.$it" }})"
-            if (ordinal > 1)
-                +"operator fun Vec1$id.$operatorName(v: $VecID) = $VecID(${xyzwJoint { "x $operatorChar v.$it" }})"
-        }
-    }
+    binary(ordinal, type, extension, id, vec, Generator.Part.Scalar)
 }

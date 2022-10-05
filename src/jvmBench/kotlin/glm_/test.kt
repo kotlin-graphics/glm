@@ -1,4 +1,4 @@
-package main
+package glm_
 
 import kotlinx.benchmark.*
 import glm_.vec2.Vec2

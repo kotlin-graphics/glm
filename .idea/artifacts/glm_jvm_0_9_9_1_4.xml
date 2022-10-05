@@ -1,9 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="glm-jvm-0.9.9.1-4">
     <output-path>$PROJECT_DIR$/build/libs</output-path>
-    <root id="archive" name="glm-jvm-0.9.9.1-4.jar">
-      <element id="module-output" name="glm.jvmBench" />
-      <element id="module-output" name="glm.jvmMain" />
-    </root>
+    <root id="archive" name="glm-jvm-0.9.9.1-4.jar" />
   </artifact>
 </component>

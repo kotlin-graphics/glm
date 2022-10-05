@@ -144,25 +144,9 @@ fun ByteArray.getUlong(index: Int, bigEndian: Boolean = true): ULong = getLong(i
 fun ByteArray.getUshort(index: Int, bigEndian: Boolean = true): UShort = getShort(index, bigEndian).us
 
 
-inline infix fun Int.pow(exponent: Int): Int = f.pow(exponent).i
-inline infix fun Int.pow(exponent: Float): Int = f.pow(exponent).i
-inline infix fun Float.pow(exponent: Int): Float = pow(exponent)
-inline infix fun Float.pow(exponent: Float): Float = pow(exponent)
-inline infix fun Double.pow(exponent: Int): Double = pow(exponent)
-inline infix fun Double.pow(exponent: Double): Double = pow(exponent)
-inline fun Float.exp(): Float = exp(this)
-inline fun Double.exp(): Double = exp(this)
-inline fun Float.exp2(): Float = 2f pow this
-inline fun Double.exp2(): Double = 2.0 pow this
-inline fun Float.log(): Float = ln(this)
-inline fun Double.log(): Double = ln(this)
-inline fun Float.log2(): Float = log2(this)
-inline fun Double.log2(): Double = log2(this)
+
 //inline fun Double.modf(i: (Int) -> Unit) = log2(this)
-inline fun Float.sqrt(): Float = sqrt(this)
-inline fun Double.sqrt(): Double = sqrt(this)
-inline fun Float.inverseSqrt(): Float = 1f / sqrt()
-inline fun Double.inverseSqrt(): Double = 1.0 / sqrt()
+
 
 fun Float.equal(other: Float, epsilon: Float = Float.MIN_VALUE): Boolean = abs(this - other) <= epsilon
 fun Double.equal(other: Double, epsilon: Double = Double.MIN_VALUE): Boolean = abs(this - other) <= epsilon

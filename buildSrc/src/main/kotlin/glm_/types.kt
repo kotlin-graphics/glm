@@ -1,5 +1,7 @@
 package glm_
 
+import glm_.gen.Generator
+
 val numberTypeInformation = listOf(
     TypeInformation("Byte", "b", "toByte"),
     TypeInformation("Short", "s", "toShort"),
@@ -103,17 +105,12 @@ val stpq = listOf("s", "t", "p", "q")
 
 fun Generator.xyzwIndexed(ordinal: Int = Generator.Companion.ordinal, block: (Int, String) -> Unit) {
     for (i in 0 until ordinal)
-        block(i, xyzw[i])
-}
-
-fun Generator.xyzw(ordinal: Int = Generator.Companion.ordinal, block: (String) -> Unit) {
-    for (i in 0 until ordinal)
-        block(xyzw[i])
+        block(i, glm_.xyzw[i])
 }
 
 fun Generator.Xyzw(ordinal: Int = Generator.Companion.ordinal, block: (String) -> Unit) {
     for (i in 0 until ordinal)
-        block(xyzw[i].toUpperCase())
+        block(glm_.xyzw[i].toUpperCase())
 }
 
 fun wxyzIndexed(block: (Int, String) -> Unit) {
@@ -126,16 +123,20 @@ fun wxyz(block: (String) -> Unit) {
         block(i)
 }
 
-fun Generator.xyzwJointIndexed(ordinal: Int = Generator.Companion.ordinal, separator: String = ", ", block: (Int, String) -> String) =
-    (0 until ordinal).joinToString(separator) {
-        block(it, xyzw[it])
-    }
 
-fun Generator.xyzwJoint(ordinal: Int = Generator.Companion.ordinal, separator: String = ", ", block: (String) -> String) = (0 until ordinal).joinToString(separator) { block(xyzw[it]) }
-fun Generator.XyzwJoint(ordinal: Int = Generator.Companion.ordinal, separator: String = ", ", block: (String) -> String) = (0 until ordinal).joinToString(separator) { block(xyzw[it].toUpperCase()) }
+val Generator.xyzwJoint get() = xyzwJoint { it }
+fun Generator.xyzwJoint(ordinal: Int = Generator.Companion.ordinal, separator: String = ", ", block: (String) -> String = { it }) =
+    (0 until ordinal).joinToString(separator) { block(glm_.xyzw[it]) }
+
+val Generator.XyzwJoint2 get() = XyzwJoint { it }
+fun Generator.XyzwJoint(ordinal: Int = Generator.Companion.ordinal, separator: String = ", ", block: (String) -> String) =
+    (0 until ordinal).joinToString(separator) { block(glm_.xyzw[it].toUpperCase()) }
 
 fun wxyzJointIndexed(separator: String = ", ", block: (Int, String) -> String) = wxyz.indices.joinToString(separator) { block(it, wxyz[it]) }
+fun WxyzJointIndexed(separator: String = ", ", block: (Int, String) -> String) = wxyz.indices.joinToString(separator) { block(it, wxyz[it].toUpperCase()) }
+val wxyzJoint = wxyzJoint { it }
 fun wxyzJoint(separator: String = ", ", block: (String) -> String) = wxyz.indices.joinToString(separator) { block(wxyz[it]) }
+fun WxyzJoint(separator: String = ", ", block: (String) -> String = { it }) = wxyz.indices.joinToString(separator) { block(wxyz[it].toUpperCase()) }
 
 
 val abcd = listOf("a", "b", "c", "d")
@@ -172,15 +173,3 @@ fun Generator.abcdJointIndexed(rowSeparator: String = ", ", columnSeparator: Str
                                                                                                Generator.Companion.height,
                                                                                                rowSeparator, columnSeparator, block)
 
-fun Generator.abcdJoint(width: Int = Generator.Companion.width,
-                        height: Int = Generator.Companion.height,
-                        rowSeparator: String = ", ", columnSeparator: String = ", ",
-                        block: (String) -> String) =
-    (0 until width).joinToString(rowSeparator) { i ->
-        (0 until height).joinToString(columnSeparator) { j ->
-            block(abcdN(i, j))
-        }
-    }
-fun Generator.abcdJoint(rowSeparator: String = ", ", columnSeparator: String = ", ",
-                        block: (String) -> String) = abcdJoint(Generator.Companion.width,
-                                                               Generator.Companion.height, rowSeparator, columnSeparator, block)

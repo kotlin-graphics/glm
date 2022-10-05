@@ -1,5 +1,7 @@
 package glm_
 
+import glm_.gen.Generator
+import glm_.gen.generate
 import java.io.File
 
 fun swizzles(target: File) {
@@ -27,7 +29,7 @@ private fun Generator.vecImpls() {
 }
 
 private fun Generator.swizzle(ordinal: Int) {
-    for (allChars in listOf(xyzw, rgba, stpq)) {
+    for (allChars in listOf(glm_.xyzw, rgba, stpq)) {
         val chars = allChars.take(ordinal)
 
         for (x in chars)
