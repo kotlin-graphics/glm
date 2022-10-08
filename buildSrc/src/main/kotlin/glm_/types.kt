@@ -31,6 +31,12 @@ val matrixTypes = numberTypeInformation.filter { it.type in listOf("Float", "Dou
 
 val String.unsignedToSigned get() = replace("U", "")
 
+val String.`-1`
+    get() = when (this) {
+        "Float" -> "-1f"
+        "Double" -> "-1.0"
+        else -> error("invalid type")
+    }
 val String.`0`
     get() = when (this) {
         "Float" -> "0f"

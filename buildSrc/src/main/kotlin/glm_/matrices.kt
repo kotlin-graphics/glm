@@ -189,7 +189,7 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
             +"fun identity() = invoke(1)"
 
         +"// -- Put functions --"
-        +"fun put(s: Number) = put(${"s" * width})"
+        +"infix fun put(s: Number) = put(${"s" * width})"
         if (width > 2)
             +"fun put(${xyzwJoint(width - 1) { "$it: Number" }}) = put(${xyzwJoint(width - 1)}, 1)"
 

@@ -79,7 +79,10 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                 length()
                 +"fun length($`xyzw type`): $type = sqrt(dot($xyzw, $xyzw))"
             }
-            else -> Unit
+            Generator.Part.Scalar -> {
+                length("this")
+                +"fun $type.length(): $type = abs()"
+            }
         }
 
         fun distance(p0: String = "[$xyzw]", p1: String = "p1") = glslDocs("Returns the distance between `$p0` and `$p1`, i.e., `length($p0 - $p1)`.", "distance")
@@ -98,7 +101,10 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                     +"return length(${xyzwJoint { "d$it" }})"
                 }
             }
-            else -> Unit
+            Generator.Part.Scalar -> {
+                distance("this", "p")
+                +"infix fun $type.distance(p: $type): $type = (this - p).length()"
+            }
         }
 
         fun dot(x: String = "[$xyzw]", y: String = "b.[$xyzw]") = glslDocs("Returns the dot product of `$x` and `$y`, i.e., `result = $x * $y`.", "dot")
@@ -113,7 +119,10 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                 dot(y = "b[$XYZW]")
                 +"fun dot($`xyzw type`, $`bXYZW type`): $type = ${xyzwJoint(separator = " + ") { "$it * b${it.toUpperCase()}" }}"
             }
-            else -> Unit
+            Generator.Part.Scalar -> {
+                dot("this", "y")
+                +"infix fun $type.dot(y: $type): $type = this * y"
+            }
         }
 
         if (ordinal == 3) {
@@ -153,7 +162,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                 normalize()
                 +"fun normalizeAssign(): $VecID = normalize(this)"
                 normalize()
-                +"fun normalize(res: $VecID): $VecID = normalize(this) { $`xyzw type` -> res($xyzw) }"
+                +"fun normalize(res: $VecID = $VecID()): $VecID = normalize(this) { $`xyzw type` -> res($xyzw) }"
                 normalize()
                 "inline fun <R> normalize(res: ($`resXYZW type`) -> R): R" {
                     contract
@@ -196,7 +205,10 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                     +"return if(dot($nRefXYZW, $iXYZW) < 0) res($xyzw) else res($`-xyzw`)"
                 }
             }
-            else -> Unit
+            Generator.Part.Scalar -> {
+                faceForward()
+                +"fun $type.faceForward(i: $type, nRef: $type): $type = if((nRef dot i) < 0) this else -this"
+            }
         }
 
         fun reflect(i: String = "[$xyzw]", n: String = "n.[$xyzw]") = glslDocs(
@@ -206,7 +218,9 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                 reflect()
                 +"fun reflectAssign(n: $VecID): $VecID = reflect(n, this)"
                 reflect()
-                +"fun reflect(n: $VecID, res: $VecID = $VecID()): $VecID = reflect(this, n) { $`xyzw type` -> res($xyzw) }"
+                +"infix fun reflect(n: $VecID): $VecID = reflect(n, $VecID())"
+                reflect()
+                +"fun reflect(n: $VecID, res: $VecID): $VecID = reflect(this, n) { $`xyzw type` -> res($xyzw) }"
                 reflect()
                 "inline fun <R> reflect(n: $VecID, res: ($`resXYZW type`) -> R): R" {
                     contract
@@ -227,7 +241,10 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                     +"return res(${xyzwJoint { "$it - t${it.toUpperCase()} * 2" }})"
                 }
             }
-            else -> Unit
+            Generator.Part.Scalar -> {
+                reflect()
+                +"infix fun $type.reflect(n: $type): $type = this - n * (n dot this) * ${type.`2`}"
+            }
         }
 
         fun refract(i: String = "[$xyzw]", n: String = "n.[$xyzw]") =
@@ -277,7 +294,15 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                     }
                 }
             }
-            else -> Unit
+            Generator.Part.Scalar -> {
+                refract()
+                +"""
+                    fun $type.refract(n: $type, eta: $type): $type {
+                        val dotValue = n dot this
+                        val k = ${type.`1`} - eta * eta * (${type.`1`} - dotValue * dotValue)
+                        return (eta * this - (eta * dotValue + k.sqrt()) * n) * if (k >= 0) ${type.`1`} else ${type.`0`}
+                    }"""
+            }
         }
     }
 

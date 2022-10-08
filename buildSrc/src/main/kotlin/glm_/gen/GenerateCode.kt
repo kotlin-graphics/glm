@@ -1,5 +1,6 @@
 package glm_.gen
 
+import glm_.ext.matrixClipSpace
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.tasks.OutputDirectory
@@ -35,6 +36,8 @@ abstract class GenerateCode : DefaultTask() {
         swizzles(target)
         matrices(target)
         quaternions(target)
+
+        matrixClipSpace(target)
     }
 }
 

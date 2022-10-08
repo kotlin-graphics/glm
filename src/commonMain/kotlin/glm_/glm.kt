@@ -5,7 +5,11 @@ package glm_
 
 object glm /*: func_common*/ {
     object epsilon {
-        val f = 2.718281f
-        val d = 2.718281828459045
+        val f = Float.MIN_VALUE
+        val d = Double.MIN_VALUE
+    }
+    object pi {
+        val f = kotlin.math.PI.toFloat()
+        val d = kotlin.math.PI
     }
 }

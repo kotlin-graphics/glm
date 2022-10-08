@@ -1,4 +1,4 @@
-package glm_.core
+package glm_.func
 
 import glm_.*
 import glm_.scalar.*
