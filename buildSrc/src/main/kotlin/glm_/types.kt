@@ -33,30 +33,35 @@ val String.unsignedToSigned get() = replace("U", "")
 
 val String.`-1`
     get() = when (this) {
+        "Int" -> "-1"
         "Float" -> "-1f"
         "Double" -> "-1.0"
         else -> error("invalid type")
     }
 val String.`0`
     get() = when (this) {
+        "Int" -> "0"
         "Float" -> "0f"
         "Double" -> "0.0"
         else -> error("invalid type")
     }
 val String.`1`
     get() = when (this) {
+        "Int" -> "1"
         "Float" -> "1f"
         "Double" -> "1.0"
         else -> error("invalid type")
     }
 val String.`2`
     get() = when (this) {
+        "Int" -> "2"
         "Float" -> "2f"
         "Double" -> "2.0"
         else -> error("invalid type")
     }
 val String.`3`
     get() = when (this) {
+        "Int" -> "3"
         "Float" -> "3f"
         "Double" -> "3.0"
         else -> error("invalid type")
@@ -112,6 +117,17 @@ val stpq = listOf("s", "t", "p", "q")
 fun Generator.xyzwIndexed(ordinal: Int = Generator.Companion.ordinal, block: (Int, String) -> Unit) {
     for (i in 0 until ordinal)
         block(i, glm_.xyzw[i])
+}
+
+fun Generator.XyzwIndexed(ordinal: Int = Generator.Companion.ordinal, block: (Int, String) -> Unit) {
+    for (i in 0 until ordinal)
+        block(i, glm_.xyzw[i].toUpperCase())
+}
+
+fun Generator.XyzwJointIndexed(ordinal: Int = Generator.Companion.ordinal, separator: String = ", ", block: (Int, String) -> String) {
+    (0 until ordinal).joinToString(separator) {
+        block(it, glm_.xyzw[it].toUpperCase())
+    }
 }
 
 fun Generator.Xyzw(ordinal: Int = Generator.Companion.ordinal, block: (String) -> Unit) {

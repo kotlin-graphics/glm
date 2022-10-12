@@ -77,19 +77,19 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
             +"fun radians(res: $VecID = $VecID()): $VecID = radians(this) { $`resXYZW type` -> res($resXYZW) }"
             radians()
             "inline fun <R> radians(res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return radians(this) { $`resXYZW type` -> res($resXYZW) }"
             }
         }
         Generator.Part.CompanionObject -> {
             radians()
             "inline fun <R> radians(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return radians($`v,xyzw`, res)"
             }
             radians()
             "inline fun <R> radians($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return res(${xyzwJoint { "$it.rad" }})"
             }
         }
@@ -108,19 +108,19 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
             +"fun degrees(res: $VecID = $VecID()): $VecID = degrees(this) { $`resXYZW type` -> res($resXYZW) }"
             degrees()
             "inline fun <R> degrees(res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return degrees(this) { $`resXYZW type` -> res($resXYZW) }"
             }
         }
         Generator.Part.CompanionObject -> {
             degrees()
             "inline fun <R> degrees(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return degrees($`v,xyzw`, res)"
             }
             degrees()
             "inline fun <R> degrees($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return res(${xyzwJoint { "$it.deg" }})"
             }
         }
@@ -139,19 +139,19 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
             +"fun sin(res: $VecID = $VecID()): $VecID = sin(this) { $`resXYZW type` -> res($resXYZW) }"
             sin()
             "inline fun <R> sin(res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return sin(this) { $`resXYZW type` -> res($resXYZW) }"
             }
         }
         Generator.Part.CompanionObject -> {
             sin()
             "inline fun <R> sin(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return sin($`v,xyzw`, res)"
             }
             sin()
             "inline fun <R> sin($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return res(${xyzwJoint { "$it.sin" }})"
             }
         }
@@ -170,19 +170,19 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
             +"fun cos(res: $VecID = $VecID()): $VecID = cos(this) { $`resXYZW type` -> res($resXYZW) }"
             cos()
             "inline fun <R> cos(res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return cos(this) { $`resXYZW type` -> res($resXYZW) }"
             }
         }
         Generator.Part.CompanionObject -> {
             cos()
             "inline fun <R> cos(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return cos($`v,xyzw`, res)"
             }
             cos()
             "inline fun <R> cos($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return res(${xyzwJoint { "$it.cos" }})"
             }
         }
@@ -201,19 +201,19 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
             +"fun tan(res: $VecID = $VecID()): $VecID = tan(this) { $`resXYZW type` -> res($resXYZW) }"
             tan()
             "inline fun <R> tan(res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return tan(this) { $`resXYZW type` -> res($resXYZW) }"
             }
         }
         Generator.Part.CompanionObject -> {
             tan()
             "inline fun <R> tan(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return tan($`v,xyzw`, res)"
             }
             tan()
             "inline fun <R> tan($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return res(${xyzwJoint { "$it.tan" }})"
             }
         }
@@ -235,19 +235,19 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
             +"fun asin(res: $VecID = $VecID()): $VecID = asin(this) { $`resXYZW type` -> res($resXYZW) }"
             asin()
             "inline fun <R> asin(res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return asin(this) { $`resXYZW type` -> res($resXYZW) }"
             }
         }
         Generator.Part.CompanionObject -> {
             asin("v.[$xyzw]")
             "inline fun <R> asin(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return asin($`v,xyzw`, res)"
             }
             asin()
             "inline fun <R> asin($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return res(${xyzwJoint { "$it.asin" }})"
             }
         }
@@ -269,19 +269,19 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
             +"fun acos(res: $VecID = $VecID()): $VecID = acos(this) { $`resXYZW type` -> res($resXYZW) }"
             acos()
             "inline fun <R> acos(res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return acos(this) { $`resXYZW type` -> res($resXYZW) }"
             }
         }
         Generator.Part.CompanionObject -> {
             acos("v.[$xyzw]")
             "inline fun <R> acos(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return acos($`v,xyzw`, res)"
             }
             acos()
             "inline fun <R> acos($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return res(${xyzwJoint { "$it.acos" }})"
             }
         }
@@ -304,19 +304,19 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
             +"fun atan(x: $VecID, res: $VecID = $VecID()): $VecID = atan(x, this) { $`resXYZW type` -> res($resXYZW) }"
             atan2()
             "inline fun <R> atan(x: $VecID, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return atan(this, x) { $`resXYZW type` -> res($resXYZW) }"
             }
         }
         Generator.Part.CompanionObject -> {
             atan2("y.[$xyzw]", "x.[$xyzw]")
             "inline fun <R> atan(y: $VecID, x: $VecID, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return atan($`y,xyzw`, $`x,xyzw`, res)"
             }
             atan2(y = "x[$XYZW]")
             "inline fun <R> atan($`xyzw type`, $`xXYZW type`, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return res(${xyzwJoint { "$it atan x${it.toUpperCase()}" }})"
             }
         }
@@ -337,19 +337,19 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
             +"fun atan(res: $VecID = $VecID()): $VecID = atan(this) { $`resXYZW type` -> res($resXYZW) }"
             atan()
             "inline fun <R> atan(res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return atan(this) { $`resXYZW type` -> res($resXYZW) }"
             }
         }
         Generator.Part.CompanionObject -> {
             atan("v.[$xyzw]")
             "inline fun <R> atan(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return atan($`v,xyzw`, res)"
             }
             atan()
             "inline fun <R> atan($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return res(${xyzwJoint { "$it.atan" }})"
             }
         }
@@ -368,19 +368,19 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
             +"fun sinh(res: $VecID = $VecID()): $VecID = sinh(this) { $`resXYZW type` -> res($resXYZW) }"
             sinh()
             "inline fun <R> sinh(res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return sinh(this) { $`resXYZW type` -> res($resXYZW) }"
             }
         }
         Generator.Part.CompanionObject -> {
             sinh()
             "inline fun <R> sinh(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return sinh($`v,xyzw`, res)"
             }
             sinh()
             "inline fun <R> sinh($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return res(${xyzwJoint { "$it.sinh" }})"
             }
         }
@@ -399,19 +399,19 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
             +"fun cosh(res: $VecID = $VecID()): $VecID = cosh(this) { $`resXYZW type` -> res($resXYZW) }"
             cosh()
             "inline fun <R> cosh(res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return cosh(this) { $`resXYZW type` -> res($resXYZW) }"
             }
         }
         Generator.Part.CompanionObject -> {
             cosh()
             "inline fun <R> cosh(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return cosh($`v,xyzw`, res)"
             }
             cosh()
             "inline fun <R> cosh($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return res(${xyzwJoint { "$it.cosh" }})"
             }
         }
@@ -430,19 +430,19 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
             +"fun tanh(res: $VecID = $VecID()): $VecID = tanh(this) { $`resXYZW type` -> res($resXYZW) }"
             tanh()
             "inline fun <R> tanh(res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return tanh(this) { $`resXYZW type` -> res($resXYZW) }"
             }
         }
         Generator.Part.CompanionObject -> {
             tanh()
             "inline fun <R> tanh(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return tanh($`v,xyzw`, res)"
             }
             tanh()
             "inline fun <R> tanh($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return res(${xyzwJoint { "$it.tanh" }})"
             }
         }
@@ -461,19 +461,19 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
             +"fun asinh(res: $VecID = $VecID()): $VecID = asinh(this) { $`resXYZW type` -> res($resXYZW) }"
             asinh()
             "inline fun <R> asinh(res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return asinh(this) { $`resXYZW type` -> res($resXYZW) }"
             }
         }
         Generator.Part.CompanionObject -> {
             asinh()
             "inline fun <R> asinh(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return asinh($`v,xyzw`, res)"
             }
             asinh()
             "inline fun <R> asinh($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return res(${xyzwJoint { "$it.asinh" }})"
             }
         }
@@ -492,19 +492,19 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
             +"fun acosh(res: $VecID = $VecID()): $VecID = acosh(this) { $`resXYZW type` -> res($resXYZW) }"
             acosh()
             "inline fun <R> acosh(res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return acosh(this) { $`resXYZW type` -> res($resXYZW) }"
             }
         }
         Generator.Part.CompanionObject -> {
             acosh()
             "inline fun <R> acosh(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return acosh($`v,xyzw`, res)"
             }
             acosh()
             "inline fun <R> acosh($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return res(${xyzwJoint { "$it.acosh" }})"
             }
         }
@@ -523,19 +523,19 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
             +"fun atanh(res: $VecID = $VecID()): $VecID = atanh(this) { $`resXYZW type` -> res($resXYZW) }"
             atanh()
             "inline fun <R> atanh(res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return atanh(this) { $`resXYZW type` -> res($resXYZW) }"
             }
         }
         Generator.Part.CompanionObject -> {
             atanh()
             "inline fun <R> atanh(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return atanh($`v,xyzw`, res)"
             }
             atanh()
             "inline fun <R> atanh($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                contract
+                +contract
                 +"return res(${xyzwJoint { "$it.atanh" }})"
             }
         }

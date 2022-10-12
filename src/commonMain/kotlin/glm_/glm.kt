@@ -9,7 +9,7 @@ object glm /*: func_common*/ {
         val d = Double.MIN_VALUE
     }
     object pi {
-        val f = kotlin.math.PI.toFloat()
         val d = kotlin.math.PI
+        val f = d.toFloat()
     }
 }

@@ -68,19 +68,19 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 +"fun abs(res: $VecID = $VecID()): $VecID = abs { $`resXYZW type` -> res($resXYZW) }"
                 abs()
                 "inline fun <R> abs(res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return abs($xyzw, res)"
                 }
             }
             Generator.Part.CompanionObject -> {
                 abs("v.[$xyzw]")
                 "inline fun <R> abs(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return abs($`v,xyzw`, res)"
                 }
                 abs()
                 "inline fun <R> abs($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return res(${xyzwJoint { "$it.abs()" }})"
                 }
             }
@@ -104,19 +104,19 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun sign(res: $VecID = $VecID()): $VecID = sign { $`resXYZW type` -> res($resXYZW) }"
                     sign()
                     "inline fun <R> sign(res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return sign($xyzw, res)"
                     }
                 }
                 Generator.Part.CompanionObject -> {
                     sign("v.[$xyzw]")
                     "inline fun <R> sign(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return sign($`v,xyzw`, res)"
                     }
                     sign()
                     "inline fun <R> sign($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it.sign" }})"
                     }
                 }
@@ -132,19 +132,19 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun floor(res: $VecID = $VecID()): $VecID = floor { $`resXYZW type` -> res($resXYZW) }"
                     floor()
                     "inline fun <R> floor(res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return floor($xyzw, res)"
                     }
                 }
                 Generator.Part.CompanionObject -> {
                     floor("v.[$xyzw]")
                     "inline fun <R> floor(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return floor($`v,xyzw`, res)"
                     }
                     floor()
                     "inline fun <R> floor($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it.floor()" }})"
                     }
                 }
@@ -163,19 +163,19 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun trunc(res: $VecID = $VecID()): $VecID = trunc { $`resXYZW type` -> res($resXYZW) }"
                     trunc()
                     "inline fun <R> trunc(res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return trunc($xyzw, res)"
                     }
                 }
                 Generator.Part.CompanionObject -> {
                     trunc("v.[$xyzw]")
                     "inline fun <R> trunc(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return trunc($`v,xyzw`, res)"
                     }
                     trunc()
                     "inline fun <R> trunc($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it.trunc()" }})"
                     }
                 }
@@ -197,19 +197,19 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun round(res: $VecID = $VecID()): $VecID = round { $`resXYZW type` -> res($resXYZW) }"
                     round()
                     "inline fun <R> round(res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return round($xyzw, res)"
                     }
                 }
                 Generator.Part.CompanionObject -> {
                     trunc("v.[$xyzw]")
                     "inline fun <R> round(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return round($`v,xyzw`, res)"
                     }
                     trunc()
                     "inline fun <R> round($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it.round()" }})"
                     }
                 }
@@ -232,19 +232,19 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun roundEven(res: $VecID = $VecID()): $VecID = roundEven { $`resXYZW type` -> res($resXYZW) }"
                     roundEven()
                     "inline fun <R> roundEven(res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return roundEven($xyzw, res)"
                     }
                 }
                 Generator.Part.CompanionObject -> {
                     roundEven("v.[$xyzw]")
                     "inline fun <R> roundEven(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return roundEven($`v,xyzw`, res)"
                     }
                     roundEven()
                     "inline fun <R> roundEven($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it.roundEven()" }})"
                     }
                 }
@@ -263,19 +263,19 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun ceil(res: $VecID = $VecID()): $VecID = ceil { $`resXYZW type` -> res($resXYZW) }"
                     ceil()
                     "inline fun <R> ceil(res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return ceil($xyzw, res)"
                     }
                 }
                 Generator.Part.CompanionObject -> {
                     ceil("v.[$xyzw]")
                     "inline fun <R> ceil(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return ceil($`v,xyzw`, res)"
                     }
                     ceil()
                     "inline fun <R> ceil($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it.ceil()" }})"
                     }
                 }
@@ -294,19 +294,19 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun fract(res: $VecID = $VecID()): $VecID = fract { $`resXYZW type` -> res($resXYZW) }"
                     fract()
                     "inline fun <R> fract(res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return fract($xyzw, res)"
                     }
                 }
                 Generator.Part.CompanionObject -> {
                     fract("v.[$xyzw]")
                     "inline fun <R> fract(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return fract($`v,xyzw`, res)"
                     }
                     fract()
                     "inline fun <R> fract($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it.fract()" }})"
                     }
                 }
@@ -325,7 +325,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun mod(b: $type, res: $VecID = $VecID()): $VecID = mod(b) { $`resXYZW type` -> res($resXYZW) }"
                     mod()
                     "inline fun <R> mod(b: $type, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return mod($xyzw, $bbbb, res)"
                     }
                     if (ordinal > 1) {
@@ -333,7 +333,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                         +"fun mod(b: $VecID, res: $VecID = $VecID()): $VecID = mod(b) { $`resXYZW type` -> res($resXYZW) }"
                         mod(y = "b.[$xyzw]")
                         "inline fun <R> mod(b: $VecID, res: ($`resXYZW type`) -> R): R" {
-                            contract
+                            +contract
                             +"return mod($xyzw, $`b,xyzw`, res)"
                         }
                         mod(y = "b[$XYZW]")
@@ -342,7 +342,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                         +"fun mod($`bXYZW type`, res: $VecID = $VecID()): $VecID = mod($`bXYZW`) { $`resXYZW type` -> res($resXYZW) }"
                         mod(y = "b[$XYZW]")
                         "inline fun <R> mod($`bXYZW type`, res: ($`resXYZW type`) -> R): R" {
-                            contract
+                            +contract
                             +"return mod($xyzw, $`bXYZW`, res)"
                         }
                     }
@@ -350,12 +350,12 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 Generator.Part.CompanionObject -> {
                     mod("a.[$xyzw]", "b.[$XYZW]")
                     "inline fun <R> mod(a: $VecID, b: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return mod($`a,xyzw`, $`b,xyzw`, res)"
                     }
                     mod(y = "b[$XYZW]")
                     "inline fun <R> mod($`xyzw type`, $`bXYZW type`, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it % b${it.toUpperCase()}" }})"
                     }
                 }
@@ -398,14 +398,14 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 Generator.Part.Scalar -> {
                     modf("this")
                     "inline fun $type.modf(resI: KMutableProperty0<$type>): $type" {
-                        contract("resI")
+                        +contract("resI")
                         +"val int = if (this > 0) floor() else ceil()"
                         +"resI.set(int)"
                         +"return this - int"
                     }
                     modf("this")
                     "inline fun $type.modf(resI: ($type) -> Unit): $type" {
-                        contract("resI")
+                        +contract("resI")
                         +"val int = if (this > 0) floor() else ceil()"
                         +"resI(int)"
                         +"return this - int"
@@ -432,7 +432,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun min(b: $type, res: $VecID): $VecID = min(b) { $`resXYZW type` -> res($resXYZW) }"
                     min()
                     "inline fun <R> min(b: $type, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return min($xyzw, $bbbb, res)"
                     }
                     // min vectorial
@@ -444,7 +444,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun min(b: $VecID, res: $VecID): $VecID = min($`b,xyzw`) { $`resXYZW type` -> res($resXYZW) }"
                     min(y = "b.[$xyzw]")
                     "inline fun <R> min(b: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return min($xyzw, $`b,xyzw`, res)"
                     }
                     if (ordinal > 1) {
@@ -454,7 +454,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                         +"fun min($`bXYZW type`, res: $VecID = $VecID()): $VecID = min($`bXYZW`) { $`resXYZW type` -> res($resXYZW) }"
                         min(y = "b[$XYZW]")
                         "inline fun <R> min($`bXYZW type`, res: ($`resXYZW type`) -> R): R" {
-                            contract
+                            +contract
                             +"return min($xyzw, $bXYZW, res)"
                         }
                     }
@@ -462,12 +462,12 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 Generator.Part.CompanionObject -> {
                     min("v0.[$xyzw]", "v1.[$xyzw]")
                     "inline fun <R> min(v0: $VecID, v1: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return min($`v0,xyzw`, $`v1,xyzw`, res)"
                     }
                     min(y = "b[$XYZW]")
                     "inline fun <R> min($`xyzw type`, $`bXYZW type`, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it min b${it.toUpperCase()}" }})"
                     }
                 }
@@ -488,7 +488,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun max(b: $type, res: $VecID): $VecID = max(b) { $`resXYZW type` -> res($resXYZW) }"
                     max()
                     "inline fun <R> max(b: $type, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return max($xyzw, $bbbb, res)"
                     }
                     // max vectorial
@@ -500,7 +500,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun max(b: $VecID, res: $VecID): $VecID = max(b) { $`resXYZW type` -> res($resXYZW) }"
                     max(y = "b.[$xyzw]")
                     "inline fun <R> max(b: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return max($xyzw, $`b,xyzw`, res)"
                     }
                     if (ordinal > 1) {
@@ -510,7 +510,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                         +"fun max($`bXYZW type`, res: $VecID = $VecID()): $VecID = max($`bXYZW`) { $`resXYZW type` -> res($resXYZW) }"
                         max(y = "b[$XYZW]")
                         "inline fun <R> max($`bXYZW type`, res: ($`resXYZW type`) -> R): R" {
-                            contract
+                            +contract
                             +"return max($xyzw, $bXYZW, res)"
                         }
                     }
@@ -518,12 +518,12 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 Generator.Part.CompanionObject -> {
                     max(y = "b[$XYZW]")
                     "inline fun <R> max(v0: $VecID, v1: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return max($`v0,xyzw`, $`v1,xyzw`, res)"
                     }
                     max(y = "b[$XYZW]")
                     "inline fun <R> max($`xyzw type`, $`bXYZW type`, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it max b${it.toUpperCase()}" }})"
                     }
                 }
@@ -542,19 +542,19 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun clamp(minVal: $type, maxVal: $type, res: $VecID = $VecID()): $VecID = clamp(minVal, maxVal) { $`resXYZW type` -> res($resXYZW) }"
                     clamp()
                     "inline fun <R> clamp(minVal: $type, maxVal: $type, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return clamp($xyzw, $minValJoint, $maxValJoint, res)"
                     }
                 }
                 Generator.Part.CompanionObject -> {
                     clamp(minVal = "minVal[$XYZW]", maxVal = "maxVal[$XYZW]")
                     "inline fun <R> clamp(v: $VecID, minVal: $VecID, maxVal: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return clamp($`v,xyzw`, $`minVal,xyzw`, $`maxVal,xyzw`, res)"
                     }
                     clamp(minVal = "minVal[$XYZW]", maxVal = "maxVal[$XYZW]")
                     "inline fun <R> clamp($`xyzw type`, $`minValXYZW type`, $`maxValXYZW type`, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it.clamp(minVal${it.toUpperCase()}, maxVal${it.toUpperCase()})" }})"
                     }
                 }
@@ -588,7 +588,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun mix(b: $VecID, c: $type, res: $VecID = $VecID()): $VecID = mix(b, c) { $`resXYZW type` -> res($resXYZW) }"
                     mix()
                     "inline fun <R> mix(b: $VecID, c: $type, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return mix($xyzw, $`b,xyzw`, c, res)"
                     }
                     // mix scalar other float type
@@ -605,7 +605,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun mix(b: $VecID, c: Boolean, res: $VecID = $VecID()): $VecID = mix(b, c) { $`resXYZW type` -> res($resXYZW) }"
                     mix()
                     "inline fun <R> mix(b: $VecID, c: Boolean, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return mix($xyzw, $`b,xyzw`, c, res)"
                     }
                     // mix vectorial same float type
@@ -615,7 +615,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun mix(b: $VecID, c: $VecID, res: $VecID = $VecID()): $VecID = mix(b, c) { $`resXYZW type` -> res($resXYZW) }"
                     mix(a = "c.[$xyzw]")
                     "inline fun <R> mix(b: $VecID, c: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return mix($xyzw, $`b,xyzw`, $`c,xyzw`, res)"
                     }
                     // mix vectorial other float type
@@ -632,7 +632,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun mix(b: $VecID, c: ${vec}bool, res: $VecID = $VecID()): $VecID = mix(b, c) { $`resXYZW type` -> res($resXYZW) }"
                     mix(a = "c.[$xyzw]")
                     "inline fun <R> mix(b: $VecID, c: ${vec}bool, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return mix($xyzw, $`b,xyzw`, $`c,xyzw`, res)"
                     }
                 }
@@ -641,47 +641,47 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
 
                     mix()
                     "inline fun <R> mix(a: $VecID, b: $VecID, c: $type, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return mix($`a,xyzw`, $`b,xyzw`, c, res)"
                     }
                     mix(y = "b[$XYZW]")
                     "inline fun <R> mix($`xyzw type`, $`bXYZW type`, c: $type, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it.mix(b${it.toUpperCase()}, c)" }})"
                     }
 
                     mix()
                     "inline fun <R> mix(a: $VecID, b: $VecID, c: Boolean, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return mix($`a,xyzw`, $`b,xyzw`, c, res)"
                     }
                     mix(y = "b[$XYZW]")
                     "inline fun <R> mix($`xyzw type`, $`bXYZW type`, c: Boolean, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it.mix(b${it.toUpperCase()}, c)" }})"
                     }
                     if (ordinal > 1) {
                         // mix c vectorial numeric
                         mix(a = "c.[$xyzw]")
                         "inline fun <R> mix(a: $VecID, b: $VecID, c: $VecID, res: ($`resXYZW type`) -> R): R" {
-                            contract
+                            +contract
                             +"return mix($`a,xyzw`, $`b,xyzw`, $`c,xyzw`, res)"
                         }
                         mix(y = "b[$XYZW]", a = "c[$XYZW]")
                         "inline fun <R> mix($`xyzw type`, $`bXYZW type`, $`cXYZW type`, res: ($`resXYZW type`) -> R): R" {
-                            contract
+                            +contract
                             +"return res(${xyzwJoint { "$it.mix(b${it.toUpperCase()}, c${it.toUpperCase()})" }})"
                         }
 
                         // mix c vectorial bool
                         mix(a = "c.[$xyzw]")
                         "inline fun <R> mix(a: $VecID, b: $VecID, c: ${vec}bool, res: ($`resXYZW type`) -> R): R" {
-                            contract
+                            +contract
                             +"return mix($`a,xyzw`, $`b,xyzw`, $`c,xyzw`, res)"
                         }
                         mix(y = "b[$XYZW]", a = "c[$XYZW]")
                         "inline fun <R> mix($`xyzw type`, $`bXYZW type`, $`cXYZW bool`, res: ($`resXYZW type`) -> R): R" {
-                            contract
+                            +contract
                             +"return res(${xyzwJoint { "$it.mix(b${it.toUpperCase()}, c${it.toUpperCase()})" }})"
                         }
                     }
@@ -708,7 +708,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun step(edge: $type, res: $VecID): $VecID = step(edge) { $`resXYZW type` -> res($resXYZW) }"
                     step()
                     "inline fun <R> step(edge: $type, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return step($xyzw, edge, res)"
                     }
                     // step vectorial
@@ -720,30 +720,30 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun step(edge: $VecID, res: $VecID): $VecID = step(edge) { $`resXYZW type` -> res($resXYZW) }"
                     step()
                     "inline fun <R> step(edge: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return step($xyzw, $`edge,xyzw`, res)"
                     }
                 }
                 Generator.Part.CompanionObject -> {
                     step("v.[$xyzw]")
                     "inline fun <R> step(v: $VecID, edge: $type, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return step($`v,xyzw`, edge, res)"
                     }
                     step()
                     "inline fun <R> step($`xyzw type`, edge: $type, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it step edge" }})"
                     }
                     if (ordinal > 1) {
                         step("v.[$xyzw]", "edge.[$xyzw]")
                         "inline fun <R> step(v: $VecID, edge: $VecID, res: ($`resXYZW type`) -> R): R" {
-                            contract
+                            +contract
                             +"return step($`v,xyzw`, $`edge,xyzw`, res)"
                         }
                         step(edge = "edge[$XYZW]")
                         "inline fun <R> step($`xyzw type`, $edgeXYZW, res: ($`resXYZW type`) -> R): R" {
-                            contract
+                            +contract
                             +"return res(${xyzwJoint { "$it step edge${it.toUpperCase()}" }})"
                         }
                     }
@@ -771,7 +771,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun smoothstep(edge0: $type, edge1: $type, res: $VecID = $VecID()): $VecID = smoothstep(edge0, edge1) { $`resXYZW type` -> res($resXYZW) }"
                     smoothstep()
                     "inline fun <R> smoothstep(edge0: $type, edge1: $type, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return smoothstep(this, edge0, edge1, res)"
                     }
                     // smoothstep vectorial
@@ -781,7 +781,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun smoothstep(edge0: $VecID, edge1: $VecID, res: $VecID = $VecID()): $VecID = smoothstep(edge0, edge1) { $`resXYZW type` -> res($resXYZW) }"
                     smoothstep()
                     "inline fun <R> smoothstep(edge0: $VecID, edge1: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return smoothstep(this, edge0, edge1, res)"
                     }
                 }
@@ -789,25 +789,25 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     // scalar
                     smoothstep("v.[$xyzw]")
                     "inline fun <R> smoothstep(v: $VecID, edge0: $type, edge1: $type, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return smoothstep($`v,xyzw`, edge0, edge1, res)"
                     }
                     if (ordinal > 1) {
                         smoothstep()
                         "inline fun <R> smoothstep($`xyzw type`, edge0: $type, edge1: $type, res: ($`resXYZW type`) -> R): R" {
-                            contract
+                            +contract
                             +"return smoothstep($xyzw, $edge0Joint, $edge1Joint, res)"
                         }
                     }
                     // vectorial
                     smoothstep("v.[$xyzw]", "edge0.[$xyzw]", "edge1.[$xyzw]")
                     "inline fun <R> smoothstep(v: $VecID, edge0: $VecID, edge1: $VecID, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return smoothstep($`v,xyzw`, $`edge0,xyzw`, $`edge1,xyzw`, res)"
                     }
                         smoothstep(edge0 = "edge0[$XYZW]", edge1 = "edge1[$XYZW]")
                         "inline fun <R> smoothstep($`xyzw type`, $`edge0XYZW type`, $`edge1XYZW type`, res: ($`resXYZW type`) -> R): R" {
-                            contract
+                            +contract
                             +"return res(${XyzwJoint { "${it.toLowerCase()}.smoothstep(edge0$it, edge1$it)" }})"
                     }
                 }
@@ -831,19 +831,19 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun isNan(res: ${vec}bool = ${vec}bool()): ${vec}bool = isNan { $`resXYZW Bool` -> res($resXYZW) }"
                     isNan()
                     "inline fun <R> isNan(res: ($`resXYZW Bool`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it.isNaN()" }})"
                     }
                 }
                 Generator.Part.CompanionObject -> {
                     isNan()
                     "inline fun <R> isNan(v: $VecID, res: ($`resXYZW Bool`) -> R): R" {
-                        contract
+                        +contract
                         +"return isNan($`v,xyzw`, res)"
                     }
                     isNan()
                     "inline fun <R> isNan($`xyzw type`, res: ($`resXYZW Bool`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it.isNaN()" }})"
                     }
                 }
@@ -860,19 +860,19 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"fun isInf(res: ${vec}bool = ${vec}bool()): ${vec}bool = isInf { $`resXYZW Bool` -> res($resXYZW) }"
                     isInf()
                     "inline fun <R> isInf(res: ($`resXYZW Bool`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it.isInfinite()" }})"
                     }
                 }
                 Generator.Part.CompanionObject -> {
                     isInf()
                     "inline fun <R> isInf(v: $VecID, res: ($`resXYZW Bool`) -> R): R" {
-                        contract
+                        +contract
                         +"return isInf($`v,xyzw`, res)"
                     }
                     isInf()
                     "inline fun <R> isInf($`xyzw type`, res: ($`resXYZW Bool`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it.isInfinite()" }})"
                     }
                 }
@@ -931,23 +931,23 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 // bitsToInt-Long
                 toBits()
                 "inline fun <R> bitsTo$intCounterType(v: $VecID, res: ($`resXYZW intCounterType`) -> R): R" {
-                    contract
+                    +contract
                     +"return bitsTo$intCounterType($`v,xyzw`, res)"
                 }
                 toBits()
                 "inline fun <R> bitsTo$intCounterType($`xyzw type`, res: ($`resXYZW intCounterType`) -> R): R" {
-                    contract
+                    +contract
                     +"return res(${xyzwJoint { "$it.bitsTo$intCounterType()" }})"
                 }
                 // bitsToUInt-Ulong
                 toBits(true)
                 "inline fun <R> bitsToU$intCounterType(v: $VecID, res: ($`resXYZW UnsCounterType`) -> R): R" {
-                    contract
+                    +contract
                     +"return bitsToU$intCounterType($`v,xyzw`, res)"
                 }
                 toBits(true)
                 "inline fun <R> bitsToU$intCounterType($`xyzw type`, res: ($`resXYZW UnsCounterType`) -> R): R" {
-                    contract
+                    +contract
                     +"return res(${xyzwJoint { "$it.bitsToU$intCounterType()" }})"
                 }
             }
@@ -969,7 +969,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
             Generator.Part.CompanionObject -> {
                 bitsTo()
                 "inline fun <R> bitsTo$floatCounterType($`xyzw type`, res: (${XyzwJoint { "res$it: $floatCounterType" }}) -> R): R" {
-                    contract
+                    +contract
                     +"return res(${xyzwJoint { "$it.bitsTo$floatCounterType()" }})"
                 }
             }
@@ -995,19 +995,19 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 +"fun fma(b: $VecID, c: $VecID, res: $VecID = $VecID()): $VecID = fma(b, c) { $`resXYZW type` -> res($resXYZW) }"
                 fma()
                 "inline fun <R> fma(b: $VecID, c: $VecID, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return fma($xyzw, $`b,xyzw`, $`c,xyzw`, res)"
                 }
             }
             Generator.Part.CompanionObject -> {
                 fma("a.[$xyzw]")
                 "inline fun <R> fma(a: $VecID, b: $VecID, c: $VecID, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return fma($`a,xyzw`, $`b,xyzw`, $`c,xyzw`, res)"
                 }
                 fma("a[$XYZW]", "b[$XYZW]", "c[$XYZW]")
                 "inline fun <R> fma($`aXYZW type`, $`bXYZW type`, $`cXYZW type`, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return res(${XyzwJoint { "a$it.fma(b$it, c$it)" }})"
                 }
             }
@@ -1050,12 +1050,12 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 val `resExpXYZW type` = XyzwJoint { "resExp$it: Int" }
                 frexp("v")
                 "inline fun <R> frexp(v: $VecID, res: ($`resMantXYZW type`, $`resExpXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return frexp($`v,xyzw`, res)"
                 }
                 frexp()
                 "inline fun <R> frexp($`xyzw type`, res: ($`resMantXYZW type`, $`resExpXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     Xyzw { +"val e$it: Int" }
                     Xyzw { +"val m$it = ${it.toLowerCase()}.frexp { e$it = it }" }
                     +"return res(${XyzwJoint { "m$it" }}, ${XyzwJoint { "e$it" }})"
@@ -1116,7 +1116,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
                 frexp("this")
                 "fun $type.frexp(resExp: (Int) -> Unit): $type" {
-                    contract("resExp")
+                    +contract("resExp")
                     +"""
                         val bits = toBits()
                         var realMant: $type
@@ -1231,7 +1231,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 +"fun ldexp(exp: ${vec}i, res: $VecID): $VecID = ldexp(exp) { $resXYZW -> res($resXYZW) }"
                 ldexp()
                 "inline fun <R> ldexp(exp: ${vec}i, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return ldexp($xyzw, ${xyzwJoint { "exp.$it" }}, res)"
                 }
             }
@@ -1239,7 +1239,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 ldexp()
                 val `expXyzw Int` = XyzwJoint { "exp$it: Int" }
                 "inline fun <R> ldexp($`xyzw type`, $`expXyzw Int`, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return res(${xyzwJoint { "$it ldexp exp${it.toUpperCase()}" }})"
                 }
             }

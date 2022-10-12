@@ -52,15 +52,13 @@ private fun Generator.vectorsT(ordinal: Int) {
         +"// -- Aliases --"
 
         xyzwIndexed { i, c ->
-            +"var ${rgba[i]}: T"
-            indent {
+            "var ${rgba[i]}: T".indented {
                 +"get() = $c"
                 +"set(value) { $c = value }"
             }
         }
         xyzwIndexed { i, c ->
-            +"var ${stpq[i]}: T"
-            indent {
+            "var ${stpq[i]}: T".indented {
                 +"get() = $c"
                 +"set(value) { $c = value } "
             }
@@ -82,6 +80,7 @@ private fun Generator.vectorsT(ordinal: Int) {
             +"else -> throw IndexOutOfBoundsException()"
         }
 
+        +"override fun toString() = \"${xyzwJoint { "$$it" }}\""
 
         "companion object" {
             +"const val length = $ordinal"
@@ -116,8 +115,7 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
         xyzwIndexed { i, c ->
             val delta = if (i == 0) "" else " + $i"
 
-            +"override var $c: $type"
-            indent {
+            "override var $c: $type".indented {
                 +"get() = array[ofs$delta]"
                 +"set(value) { array[ofs$delta] = value } "
             }
@@ -338,24 +336,24 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
 
         if (type == "Float" || type == "Double")
             +"""
-                fun equal(v: $VecID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[it] - v.array[it]) <= epsilon }
-                fun notEqual(v: $VecID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[it] - v.array[it]) > epsilon }
+                fun equal(v: $VecID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[ofs + it] - v.array[v.ofs + it]) <= epsilon }
+                fun notEqual(v: $VecID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[ofs + it] - v.array[v.ofs + it]) > epsilon }
                 fun allEqual(v: $VecID, epsilon: $type = $type.MIN_VALUE): Boolean {
                     for (i in 0 until length)
-                        if(abs(array[i] - v.array[i]) > epsilon)
+                        if(abs(array[ofs + i] - v.array[v.ofs + i]) > epsilon)
                             return false
                     return true
                 }
                 fun anyNotEqual(v: $VecID, epsilon: $type = $type.MIN_VALUE): Boolean {
                     for (i in 0 until length)
-                        if(abs(array[i] - v.array[i]) > epsilon)
+                        if(abs(array[ofs + i] - v.array[v.ofs + i]) > epsilon)
                             return true
                     return false
                 }"""
         else
             +"""
-                infix fun equal(v: $VecID) = BooleanArray(length) { array[it] == v.array[it] }
-                infix fun notEqual(v: $VecID) = BooleanArray(length) { array[it] != v.array[it] }
+                infix fun equal(v: $VecID) = BooleanArray(length) { array[ofs + it] == v.array[v.ofs + it] }
+                infix fun notEqual(v: $VecID) = BooleanArray(length) { array[ofs + it] != v.array[v.ofs + it] }
                 fun allEqual(v: $VecID): Boolean = array.contentEquals(v.array)
                 fun anyNotEqual(v: $VecID): Boolean = !array.contentEquals(v.array)"""
         +"fun all(predicate: ($type) -> Boolean): Boolean = array.all(predicate)"

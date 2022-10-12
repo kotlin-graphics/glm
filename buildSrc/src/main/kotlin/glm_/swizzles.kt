@@ -52,47 +52,41 @@ private fun variable(mutable: Boolean) = if (mutable) "var" else "val"
 private fun Generator.swizzle2(ordinal: Int, a: String, b: String) {
     val mutable = a != b
 
-    +"${variable(mutable)} <T> Vec${ordinal}T<T>.$a$b: Vec2T<T>"
-    indent {
+    "${variable(mutable)} <T> Vec${ordinal}T<T>.$a$b: Vec2T<T>".indented {
         +"get() = Vec2Impl($a, $b)"
-        if (mutable) {
+        if (mutable)
             "set(value)" {
                 +"$a = value.x"
                 +"$b = value.y"
             }
-        }
     }
 }
 
 private fun Generator.swizzle3(ordinal: Int, a: String, b: String, c: String) {
     val mutable = a != b && a != c && b != c
 
-    +"${variable(mutable)} <T> Vec${ordinal}T<T>.$a$b$c: Vec3T<T>"
-    indent {
+    "${variable(mutable)} <T> Vec${ordinal}T<T>.$a$b$c: Vec3T<T>".indented {
         +"get() = Vec3Impl($a, $b, $c)"
-        if (mutable) {
+        if (mutable)
             "set(value)" {
                 +"$a = value.x"
                 +"$b = value.y"
                 +"$c = value.z"
             }
-        }
     }
 }
 
 private fun Generator.swizzle4(ordinal: Int, a: String, b: String, c: String, d: String) {
     val mutable = a != b && a != c && a != d && b != c && b != d && c != d
 
-    +"${variable(mutable)} <T> Vec${ordinal}T<T>.$a$b$c$d: Vec4T<T>"
-    indent {
+    "${variable(mutable)} <T> Vec${ordinal}T<T>.$a$b$c$d: Vec4T<T>".indented {
         +"get() = Vec4Impl($a, $b, $c, $d)"
-        if (mutable) {
+        if (mutable)
             "set(value)" {
                 +"$a = value.x"
                 +"$b = value.y"
                 +"$c = value.z"
                 +"$d = value.w"
             }
-        }
     }
 }

@@ -137,7 +137,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                     +"fun cross(b: Vec3$id, res: Vec3$id): Vec3$id = cross(this, b) { $`resXYZW type` -> res($resXYZW) }"
                     cross()
                     "inline fun <R> cross(v: Vec3$id, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return cross(this, v, res)"
                     }
                 }
@@ -146,7 +146,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                     +"inline fun <R> cross(a: $VecID, b: $VecID, res: ($`resXYZW type`) -> R): R = cross($`a,xyzw`, $`b,xyzw`, res)"
                     cross()
                     "inline fun <R> cross($`xyzw type`, $`vXYZW type`, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(y * vZ - vY * z, z * vX - vZ * x, x * vY - vX * y)"
                     }
                 }
@@ -165,7 +165,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                 +"fun normalize(res: $VecID = $VecID()): $VecID = normalize(this) { $`xyzw type` -> res($xyzw) }"
                 normalize()
                 "inline fun <R> normalize(res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return normalize(this, res)"
                 }
             }
@@ -174,7 +174,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                 +"inline fun <R> normalize(v: $VecID, res: ($`resXYZW type`) -> R): R = normalize($`v,xyzw`, res)"
                 normalize()
                 "inline fun <R> normalize($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"val inverseSqrt = dot($xyzw, $xyzw).inverseSqrt()"
                     +"return times($xyzw, ${xyzwJoint { "inverseSqrt" }}) { $`resXYZW type` -> res($resXYZW) }"
                 }
@@ -192,7 +192,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                 +"fun faceForward(i: $VecID, nRef: $VecID, res: $VecID = $VecID()): $VecID = faceForward(this, i, nRef) { $`xyzw type` -> res($xyzw) }"
                 faceForward()
                 "inline fun <R> faceForward(i: $VecID, nRef: $VecID, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return faceForward(this, i, nRef, res)"
                 }
             }
@@ -201,7 +201,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                 +"inline fun <R> faceForward(n: $VecID, i: $VecID, nRef: $VecID, res: ($`resXYZW type`) -> R): R = faceForward($`n,xyzw`, $`i,xyzw`, $`nRef,xyzw`, res)"
                 faceForward(i = "i[$XYZW]", nRef = "nRef.[$xyzw]")
                 "inline fun <R> faceForward($`xyzw type`, $`iXYZW type`, $`nRefXYZW type`, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return if(dot($nRefXYZW, $iXYZW) < 0) res($xyzw) else res($`-xyzw`)"
                 }
             }
@@ -223,7 +223,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                 +"fun reflect(n: $VecID, res: $VecID): $VecID = reflect(this, n) { $`xyzw type` -> res($xyzw) }"
                 reflect()
                 "inline fun <R> reflect(n: $VecID, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return reflect(this, n, res)"
                 }
             }
@@ -232,7 +232,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                 +"inline fun <R> reflect(i: $VecID, n: $VecID, res: ($`resXYZW type`) -> R): R = reflect($`i,xyzw`, $`n,xyzw`, res)"
                 reflect(i = "[$xyzw]", n = "n[$XYZW]")
                 "inline fun <R> reflect($`xyzw type`, $`nXYZW type`, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     Xyzw { +"val t$it: $type" }
                     +"val dotValue = dot($nXYZW, $xyzw)"
                     +"times($nXYZW, ${xyzwJoint { "dotValue" }}) { $`resXYZW type` -> "
@@ -257,7 +257,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                 +"fun refract(n: $VecID, eta: $type, res: $VecID = $VecID()): $VecID = refract(this, n, eta) { $`xyzw type` -> res($xyzw) }"
                 refract()
                 "inline fun <R> refract(n: $VecID, eta: $type, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return refract(this, n, eta, res)"
                 }
             }
@@ -266,29 +266,23 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
                 +"inline fun <R> refract(i: $VecID, n: $VecID, eta: $type, res: ($`resXYZW type`) -> R): R = refract($`i,xyzw`, $`n,xyzw`, eta, res)"
                 refract(i = "i[$XYZW]", n = "n[$XYZW]")
                 "inline fun <R> refract($`iXYZW type`, $`nXYZW type`, eta: $type, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"val dotValue = dot($nXYZW, $iXYZW)"
                     +"val k = 1 - eta * eta * (1 - dotValue * dotValue)"
                     "return when" {
                         "k >= 0 -> " {
                             Xyzw { +"val a$it: $type" }
-                            +"times($iXYZW, ${xyzwJoint { "eta" }}) { $`resXYZW type` -> "
-                            indent {
+                            "times($iXYZW, ${xyzwJoint { "eta" }}) { $`resXYZW type` -> ".indentAndClose {
                                 Xyzw { +"a$it = res$it" }
                             }
-                            +"}"
                             Xyzw { +"val b$it: $type" }
                             +"val t = eta * dotValue + k.sqrt()"
-                            +"times($nXYZW, ${xyzwJoint { "t" }}) { $`resXYZW type` -> "
-                            indent {
+                            "times($nXYZW, ${xyzwJoint { "t" }}) { $`resXYZW type` -> ".indentAndClose {
                                 Xyzw { +"b$it = res$it" }
                             }
-                            +"}"
-                            +"minus(${XyzwJoint { "a$it" }}, ${XyzwJoint { "b$it" }}) { $`resXYZW type` ->"
-                            indent {
+                            "minus(${XyzwJoint { "a$it" }}, ${XyzwJoint { "b$it" }}) { $`resXYZW type` ->".indentAndClose {
                                 +"res($resXYZW)"
                             }
-                            +"}"
                         }
                         +"else -> res(${xyzwJoint { type.`0` }})"
                     }

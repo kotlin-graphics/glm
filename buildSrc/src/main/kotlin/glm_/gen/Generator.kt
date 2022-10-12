@@ -16,6 +16,20 @@ class Generator(val targetDir: File) {
     var imports = HashSet<String>()
     val experimentals = ArrayList<Experimentals>()
 
+    fun String.indented(block: () -> Unit) {
+        +this
+        indent {
+            block()
+        }
+    }
+
+    fun String.indentAndClose(block: () -> Unit) {
+        indented(block)
+        when(last()) {
+            '(' -> builder.insert(builder.lastIndex, ')')
+            else -> +"}"
+        }
+    }
 
     fun indent(block: () -> Unit) {
         indentation += "\t"
@@ -42,6 +56,7 @@ class Generator(val targetDir: File) {
             spaces++
             if (c == '(') parenthesis += spaces
             else if (c == ')' && parenthesis.isNotEmpty()) parenthesis.pop()
+            else if (c == '{') parenthesis += spaces + 1 // eg: ..{ a0, a1,\nb0, b1 ->
             aligned += c
             if (c == '\n' && i != 0 && i != lastIndex) {
                 val nextC = this[i + 1]
@@ -73,14 +88,9 @@ class Generator(val targetDir: File) {
 
     fun deleteLast() = builder.deleteAt(builder.lastIndex)
 
-    val contract: Unit
-        get() {
-            +"kotlin.contracts.contract { callsInPlace(res, kotlin.contracts.InvocationKind.EXACTLY_ONCE) }"
-        }
+    val contract = "kotlin.contracts.contract { callsInPlace(res, kotlin.contracts.InvocationKind.EXACTLY_ONCE) }"
 
-    fun contract(name: String) {
-        +"kotlin.contracts.contract { callsInPlace($name, kotlin.contracts.InvocationKind.EXACTLY_ONCE) }"
-    }
+    fun contract(name: String) = "kotlin.contracts.contract { callsInPlace($name, kotlin.contracts.InvocationKind.EXACTLY_ONCE) }"
 
     val newLineAligned: Unit
         get() {
@@ -159,7 +169,7 @@ class Generator(val targetDir: File) {
     fun abcdJoint(width: Int = Generator.Companion.width,
                   height: Int = Generator.Companion.height,
                   rowSeparator: String = ", ", columnSeparator: String = ", ",
-                  block: (String) -> String) =
+                  block: (String) -> String = { it }) =
         (0 until width).joinToString(rowSeparator) { i ->
             (0 until height).joinToString(columnSeparator) { j ->
                 block(abcdN(i, j))

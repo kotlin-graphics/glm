@@ -1,6 +1,5 @@
 package glm_.ext
 
-import glm_.detail.exponential
 import glm_.gen.Generator
 import glm_.gen.generate
 import glm_.*

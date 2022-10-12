@@ -75,8 +75,7 @@ fun Generator.numbers() {
     val matchingTypes = listOf("Number", "Char", "Boolean", "String") + unsignedTypes
 
     for ((type, extension, function) in numberTypeInformation) {
-        +"internal val Any.$function: $type"
-        indent {
+        "internal val Any.$function: $type".indented {
             "get() = when (this)" {
                 for (isType in matchingTypes)
                     +"is $isType -> this.$extension"
@@ -87,9 +86,9 @@ fun Generator.numbers() {
     }
 
 
-    for ((type) in numberTypeInformation) {
-        +"val $type.Companion.BYTES: Int"
-        indent { +"get() = SIZE_BYTES" }
-    }
+    for ((type) in numberTypeInformation)
+        "val $type.Companion.BYTES: Int".indented {
+            +"get() = SIZE_BYTES"
+        }
 }
 

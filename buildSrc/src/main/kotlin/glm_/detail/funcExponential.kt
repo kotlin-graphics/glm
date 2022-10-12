@@ -68,7 +68,7 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
                 +"fun pow(exp: $VecID, res: $VecID): $VecID = pow(exp) { $`resXYZW type` -> res($resXYZW) }"
                 pow()
                 "inline fun <R> pow(exp: $VecID, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return pow(this, exp, res)"
                 }
             }
@@ -76,23 +76,23 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
                 if (type != "Int") {
                     pow("v.[$xyzw]")
                     "inline fun <R> pow(v: $VecID, exp: ${vec}i, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return pow($`v,xyzw`, $`exp,xyzw`, res)"
                     }
                     pow()
                     "inline fun <R> pow($`xyzw type`, $`expXYZW Int`, res: ($`resXYZW type`) -> R): R" {
-                        contract
+                        +contract
                         +"return res(${xyzwJoint { "$it pow exp${it.toUpperCase()}" }})"
                     }
                 }
                 pow("v.[$xyzw]")
                 "inline fun <R> pow(v: $VecID, exp: $VecID, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return pow($`v,xyzw`, $`exp,xyzw`, res)"
                 }
                 pow()
                 "inline fun <R> pow($`xyzw type`, $`expXYZW type`, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return res(${xyzwJoint { "$it pow exp${it.toUpperCase()}" }})"
                 }
             }
@@ -115,12 +115,12 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
             Generator.Part.CompanionObject -> {
                 exp("v.[$xyzw]")
                 "inline fun <R> exp(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return exp($`v,xyzw`, res)"
                 }
                 exp()
                 "inline fun <R> exp($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return res(${xyzwJoint { "$it.exp()" }})"
                 }
             }
@@ -143,12 +143,12 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
             Generator.Part.CompanionObject -> {
                 log("v.[$xyzw]")
                 "inline fun <R> log(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return log($`v,xyzw`, res)"
                 }
                 log()
                 "inline fun <R> log($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return res(${xyzwJoint { "$it.log()" }})"
                 }
             }
@@ -170,12 +170,12 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
             Generator.Part.CompanionObject -> {
                 exp2("v.[$xyzw]")
                 "inline fun <R> exp2(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return exp2($`v,xyzw`, res)"
                 }
                 exp2()
                 "inline fun <R> exp2($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return res(${xyzwJoint { "$it.exp2()" }})"
                 }
             }
@@ -196,12 +196,12 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
             Generator.Part.CompanionObject -> {
                 log2("v.[$xyzw]")
                 "inline fun <R> log2(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return log2($`v,xyzw`, res)"
                 }
                 log2()
                 "inline fun <R> log2($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return res(${xyzwJoint { "$it.log2()" }})"
                 }
             }
@@ -222,12 +222,12 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
             Generator.Part.CompanionObject -> {
                 sqrt("v.[$xyzw]")
                 "inline fun <R> sqrt(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return sqrt($`v,xyzw`, res)"
                 }
                 sqrt()
                 "inline fun <R> sqrt($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return res(${xyzwJoint { "$it.sqrt()" }})"
                 }
             }
@@ -248,12 +248,12 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
             Generator.Part.CompanionObject -> {
                 inverseSqrt("v.[$xyzw]")
                 "inline fun <R> inverseSqrt(v: $VecID, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return inverseSqrt($`v,xyzw`, res)"
                 }
                 inverseSqrt()
                 "inline fun <R> inverseSqrt($`xyzw type`, res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return res(${xyzwJoint { "$it.inverseSqrt()" }})"
                 }
             }

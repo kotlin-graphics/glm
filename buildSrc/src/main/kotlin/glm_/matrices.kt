@@ -1,5 +1,6 @@
 package glm_
 
+import glm_.ext.matrixTransform
 import glm_.gen.Generator
 import glm_.gen.Generator.Experimentals
 import glm_.gen.generate
@@ -44,7 +45,6 @@ fun matrices(target: File) {
 }
 
 
-
 val Generator.MatNT: String
     get() = "Mat${matrixSize}T"
 
@@ -59,8 +59,14 @@ private fun Generator.matricesT(width: Int, height: Int) {
         +"abstract operator fun get(column: Int): V"
         +"operator fun get(column: Int, row: Int): N = get(column).get(row)"
 
+        for (c in 0 until width)
+            +"abstract fun set$c(${xyzwJoint(height) { "$it: N" }})"
+
         +"abstract operator fun set(column: Int, value: Vec${height}T<out Number>)"
-        +"operator fun set(column: Int, row: Int, value: N) = get(column).set(row, value)"
+        +"abstract operator fun set(column: Int, row: Int, value: N)"
+
+        for (r in 0 until height)
+            +"abstract fun setRow$r(${xyzwJoint(height) { "$it: N" }})"
 
         +"abstract fun row(row: Int): Vec${width}T<N>"
         +"abstract fun row(row: Int, value: Vec${width}T<out Number>)"
@@ -79,8 +85,7 @@ private fun Generator.matricesT(width: Int, height: Int) {
         +"// -- Aliases --"
 
         abcdIndexed { i, j, c ->
-            +"var ${vNN(i, j)}: N"
-            indent {
+            "var ${vNN(i, j)}: N".indented {
                 +"get() = $c"
                 +"set(value) { $c = value }"
             }
@@ -90,10 +95,11 @@ private fun Generator.matricesT(width: Int, height: Int) {
 
         "companion object" {
             +"const val length = $width * $height"
+            +"const val width = $width"
+            +"const val height = $height"
         }
 
-        +"override fun toString() = \"\"\""
-        indent {
+        "override fun toString() = \"\"\"".indented {
             +("|" + abcdJointIndexed(height, width, "\n|", " ") { i, j, _ -> "$${vNN(j, i)}" } + "\"\"\".trimMargin()")
         }
     }
@@ -112,8 +118,7 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
         abcdIndexed { i, j, c ->
             val ofs = i * height + j
 
-            +"override var $c: $type"
-            indent {
+            "override var $c: $type".indented {
                 +"get() = array[$ofs]"
                 +"set(value) { array[$ofs] = value }"
             }
@@ -162,8 +167,7 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
             }
         }
 
-        +"constructor(array: ${type}Array, transpose: Boolean = false) : this("
-        indent {
+        "constructor(array: ${type}Array, transpose: Boolean = false) : this(".indented {
             val array = abcdJointIndexed(",\n") { i, j, _ -> "array[${i * height + j}]" }
             +"if (transpose) $arrayOf($array)"
             +"else array.copyOf())"
@@ -174,9 +178,8 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
         if (width > 2)
             +"operator fun invoke(${xyzwJoint(width - 1) { "$it: Number" }}): $matID = invoke(${xyzwJoint(width - 1)}, 1)"
 
-        +"operator fun invoke(${xyzwJoint(width) { "$it: Number" }}): $matID = invoke("
-        indent {
-            +(xyzwDiag + ")")
+        "operator fun invoke(${xyzwJoint(width) { "$it: Number" }}): $matID = invoke(".indentAndClose {
+            +xyzwDiag
         }
 
         "operator fun invoke(${abcdJoint(",\n") { "$it: Number" }}): $matID" {
@@ -200,8 +203,8 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
                 +"array[${i * height + j}] = $c.$extension"
             }
         }
-        "fun put(m: $matID)" {
-            "if (this !== m)" {
+        "infix fun put(m: $matID)" {
+            "if (this !== m)".indented {
                 +"m.array.copyInto(array, 0, 0, length)"
             }
         }
@@ -221,6 +224,11 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
         +"override operator fun get(column: Int) = Vec$height$id(array, column * $height)"
         +"override fun row(row: Int) = Vec$width$id(${xyzwJointIndexed(width) { i, _ -> "${i * height} + row" }})"
 
+        for (col in 0 until width)
+            +"override fun set$col(${xyzwJoint(height) { "$it: $type" }}) { ${xyzwJointIndexed(height, "; ") { i, char -> "this[$col, $i] = $char" }} }"
+        for (col in 0 until width)
+            +"fun with$col(${xyzwJoint(height) { "$it: $type" }}): $matID { set$col(${xyzwJoint(height)}); return this }"
+
         "override operator fun set(column: Int, value: Vec${height}T<out Number>)" {
             xyzwIndexed(height) { i, c ->
                 val delta = if (i == 0) "" else " + $i"
@@ -228,6 +236,12 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
                 +"array[column * $height$delta] = value.$c.$extension"
             }
         }
+
+        for (row in 0 until height)
+            +"override fun setRow$row(${xyzwJoint(height) { "$it: $type" }}) { ${xyzwJointIndexed(height, "; ") { i, char -> "this[$i, $row] = $char" }} }"
+        for (row in 0 until height)
+            +"fun withRow$row(${xyzwJoint(height) { "$it: $type" }}): $matID { setRow$row(${xyzwJoint(height)}); return this }"
+
         "override fun row(row: Int, value: Vec${width}T<out Number>)" {
             xyzwIndexed(width) { i, c ->
                 val delta = if (i == 0) "" else " + $i * $height"
@@ -235,6 +249,8 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
                 +"array[row$delta] = value.$c.$extension"
             }
         }
+
+        +"override operator fun set(column: Int, row: Int, value: $type) { array[column * height + row] = value }"
 
         +"// -- Unary arithmetic operators --"
         for ((char, operation) in operators) {
@@ -247,9 +263,8 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
         }
 
         +"operator fun unaryPlus() = this"
-        +"operator fun unaryMinus() = $matID("
-        indent {
-            +(abcdJoint(",\n") { "-$it" } + ")")
+        "operator fun unaryMinus() = $matID(".indentAndClose {
+            +abcdJoint(",\n") { "-$it" }
         }
 
         +"// -- Increment and decrement operators --"
@@ -376,6 +391,8 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
             }
         }
 
+        matrixTransform(width, height, type, extension, id, Generator.Part.Class)
+
         if (type == "Float" || type == "Double")
             +"""
                 fun equal(m: $matID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[it] - m.array[it]) <= epsilon }
@@ -399,19 +416,24 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
                 fun allEqual(m: $matID): Boolean = array.contentEquals(m.array)
                 fun anyNotEqual(m: $matID): Boolean = !array.contentEquals(m.array)"""
 
-        +"override val isIdentity: Boolean"
-        indent {
+        "override val isIdentity: Boolean".indented {
             if (width != height)
                 +"get() = false"
             else
-                +("get() = " + abcdJointIndexed(" &&\n\t", " && ") { i, j, _ -> if (i == j) "this[$i, $j] == 1.$extension" else "this[$i, $j] == 0.$extension" })
+                +"get() = ${
+                    abcdJointIndexed(" &&\n\t", " && ") { i, j, _ ->
+                        if (i == j) "this[$i, $j] == 1.$extension" else "this[$i, $j] == 0.$extension"
+                    }
+                }"
         }
 
         "companion object" {
             +"const val length = $MatNT.length"
+            +"const val width = $MatNT.width"
+            +"const val height = $MatNT.height"
             +"val size = length * $type.BYTES"
-            if (width == height)
-                +"val identity get() = $matID()"
+
+            matrixTransform(width, height, type, extension, id, Generator.Part.CompanionObject)
 
             // [gtc quaternion] quat_cast
             fun gtcQuaternion() {
