@@ -6,7 +6,7 @@ import glm_.gen.Generator
 // common.hpp
 fun Generator.common(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
 
-    +"// common\n"
+    if (part != Generator.Part.Scalar) +"// common\n"
 
     val VecID = vec + id
     val xyzw = xyzwJoint
@@ -750,7 +750,8 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
                 Generator.Part.Scalar -> {
                     step("this")
-                    +"inline infix fun $type.step(edge: $type): $type = if (this < edge) ${type.`0`} else ${type.`1`}"
+//                    +"inline infix fun $type.step(edge: $type): $type = if (this < edge) ${type.`0`} else ${type.`1`}"
+                    +"inline infix fun $type.step(edge: $type): $type = ${type.`1`}.mix(${type.`0`}, this < edge)"
                 }
             }
 

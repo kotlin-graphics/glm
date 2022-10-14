@@ -5,7 +5,7 @@ import glm_.gen.Generator
 
 fun Generator.geometric(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
 
-    +"// geometric\n"
+    if (part != Generator.Part.Scalar) +"// geometric\n"
 
     val `exp,xyzw` = xyzwJoint { "exp.$it" }
     val `expXYZW type` = xyzwJoint { "exp$it: $type" }

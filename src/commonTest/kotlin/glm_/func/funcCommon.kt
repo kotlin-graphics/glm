@@ -308,7 +308,7 @@ class int {
         run {
             val x = listOf(Vec2(0f), Vec2(0f), Vec2(-1f), Vec2(-1f), Vec2(-1f))
             val y = listOf(Vec2(1f), Vec2(1f), Vec2(1f), Vec2(1f), Vec2(1f))
-            val a = listOf(Vec2bool(false), Vec2bool(true), Vec2bool(false), Vec2bool(true), Vec2bool(true))
+            val a = listOf(Vec2bool(false), Vec2bool(true), Vec2bool(false), Vec2bool(true), Vec2bool(true, false))
             val result = listOf(Vec2(0f), Vec2(1f), Vec2(-1f), Vec2(1f), Vec2(1f, -1f))
             for (i in x.indices)
                 x[i].mix(y[i], a[i]) shouldEqual result[i]

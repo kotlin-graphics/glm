@@ -12,4 +12,8 @@ object glm /*: func_common*/ {
         val d = kotlin.math.PI
         val f = d.toFloat()
     }
+    object e {
+        val d = kotlin.math.E
+        val f = d.toFloat()
+    }
 }

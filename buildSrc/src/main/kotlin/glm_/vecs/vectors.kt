@@ -129,11 +129,12 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
         val arrayOf = "${type.toLowerCase()}ArrayOf"
         val xxxx = "x" * ordinal
         +"constructor(x: $type) : this(${if (ordinal == 1) "$arrayOf($xxxx)" else xxxx})"
-        +"constructor(x: Number) : this(x.$extension)"
-        if (type == "UByte" || type == "UShort") {
-            +"constructor(x: UInt) : this(x.$extension)"
-            +"constructor(x: ULong) : this(x.$extension)"
-        }
+        for (t in listOf("Number", "UByte", "UShort", "UInt", "ULong"))
+            if (type !in t)
+                +"constructor(x: $t) : this(x.$extension)"
+
+        val unsExt = if (type == "Boolean") "i" else "u" + type.first().toLowerCase()
+        val signedInt = type !in floatingPointTypes && type[0] != 'U'
 
         if (ordinal > 1) {
             +"constructor(${xyzwJoint { "$it: $type" }}) : this($arrayOf($xyzwJoint))"
@@ -144,38 +145,53 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
 
             +"// Conversion scalar constructors"
             +"constructor(v: Vec1T<out Number>) : this(v.x.$extension)"
+            if (signedInt)
+                +"constructor(v: Vec1$unsExt) : this(v.x.$extension)"
 
             +"// Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)"
             fun oneTypes(comp: String) = listOf("$comp: Number", "$comp: Vec1T<out Number>")
-            fun value(p: String) = if (p.last() == '>') "${p[0]}.x" else p[0]
+            fun value(p: String) = if ("Vec" in p) "${p[0]}.x" else p[0]
             var postfix = ".$extension"
-            fun constructor(vararg arguments: String) {
-                +"constructor(${arguments.joinToString()}) : this(${arguments.joinToString { "${value(it)}$postfix" }})"
+            fun constructor(vararg args: String) {
+                +"constructor(${args.joinToString()}) : this(${args.joinToString { "${value(it)}$postfix" }})"
+                if (signedInt && "Vec" in args) { // avoid signature clashes
+                    val argsUns = args.map {
+                        when {
+                            "Vec" in it -> it.replace("T<out Number>", unsExt)
+                            else -> it.replace("Number", if (type == "Boolean") "Int" else "U$type")
+                        }
+                    }
+                    +"constructor(${argsUns.joinToString()}) : this(${argsUns.joinToString { "${value(it)}$postfix" }})"
+                }
                 postfix = ""
             }
-            for (x in oneTypes("x")) {
-                for (y in oneTypes("y")) {
-                    if (ordinal > 2) {
-                        for (z in oneTypes("z")) {
-                            if (ordinal > 3) {
-                                for (w in oneTypes("w")) {
+            for (x in oneTypes("x"))
+                for (y in oneTypes("y"))
+                    if (ordinal > 2)
+                        for (z in oneTypes("z"))
+                            if (ordinal > 3)
+                                for (w in oneTypes("w"))
                                     constructor(x, y, z, w)
-                                }
-                            } else {
-                                constructor(x, y, z)
-                            }
-                        }
-                    } else {
+                            else
+                                constructor(x, y, z) else
                         constructor(x, y)
-                    }
-                }
-            }
         }
 
         +"// Conversion vector constructors"
         +"// Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)"
 
-        infix fun String.args(b: String) = +"constructor($this) : this($b)"
+        infix fun String.args(b: String) {
+            +"constructor($this) : this($b)"
+            if (type !in floatingPointTypes && type[0] != 'U') {
+                val this2 = replace("T<out Number>", unsExt).replace("Number", if (type == "Boolean") "Int" else "U$type")
+                val b2 = when (type) {
+                    "Boolean" -> b
+                    else -> b.replace(",", ".to$type(),") + ".to$type()"
+                }
+                +"constructor($this2) : this($b2)"
+            }
+        }
+
         val V1 = "Vec1T<out Number>"
         val V2 = "Vec2T<out Number>"
         val V3 = "Vec3T<out Number>"
@@ -329,6 +345,7 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
         common(ordinal, type, extension, id, vec, Generator.Part.Class)
         exponential(ordinal, type, extension, id, vec, Generator.Part.Class)
         geometric(ordinal, type, extension, id, vec, Generator.Part.Class)
+        integer(ordinal, type, extension, id, vec, Generator.Part.Class)
         trigonometric(ordinal, type, extension, id, vec, Generator.Part.Class)
 
         +"override fun equals(other: Any?) = other is $VecID && ${xyzwJoint(separator = " && ") { "$it == other.$it" }}"
@@ -375,6 +392,7 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
                 common(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
                 exponential(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
                 geometric(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
+                integer(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
                 trigonometric(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
             }
         }

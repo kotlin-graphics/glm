@@ -5,7 +5,7 @@ import glm_.gen.Generator
 
 fun Generator.exponential(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
 
-    +"// exponential\n"
+    if (part != Generator.Part.Scalar) +"// exponential\n"
 
     val `exp,xyzw` = xyzwJoint { "exp.$it" }
     val `expXYZW type` = XyzwJoint { "exp$it: $type" }

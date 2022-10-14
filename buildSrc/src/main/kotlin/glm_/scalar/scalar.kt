@@ -1,12 +1,9 @@
 package glm_.scalar
 
 import glm_.*
+import glm_.detail.*
 import glm_.gen.Generator
 import glm_.gen.generate
-import glm_.detail.common
-import glm_.detail.exponential
-import glm_.detail.trigonometric
-import glm_.detail.geometric
 import java.io.File
 
 fun scalar(target: File) {
@@ -24,6 +21,7 @@ fun scalar(target: File) {
             //                          "kotlin.math.pow"
                          )
 
+        +"// common\n"
         for ((type, extension, _, _) in vectorTypes)
             common(-1, type, extension, "", "", Generator.Part.Scalar)
     }
@@ -37,9 +35,9 @@ fun scalar(target: File) {
             //                          "kotlin.reflect.KMutableProperty0",
             //                    +"import kotlin.jvm.*"
             //                          "kotlin.math.*",
-                          "kotlin.math.pow"
-                         )
+                          "kotlin.math.pow")
 
+        +"// exponential\n"
         for ((type, extension, _, _) in vectorTypes)
             exponential(-1, type, extension, "", "", Generator.Part.Scalar)
     }
@@ -49,13 +47,15 @@ fun scalar(target: File) {
         experimentals += Generator.Experimentals.Contracts
         `package` = "glm_.scalar"
         //            +"import glm_.extensions.swizzle.*"
-        imports += listOf("glm_.extensions.*",
+        imports += listOf(
+            "glm_.extensions.*",
             //                          "kotlin.reflect.KMutableProperty0",
             //                    +"import kotlin.jvm.*"
             //                          "kotlin.math.*",
-//                          "kotlin.math.pow"
+            //                          "kotlin.math.pow"
                          )
 
+        +"// geometric\n"
         for ((type, extension, _, _) in vectorTypes)
             geometric(-1, type, extension, "", "", Generator.Part.Scalar)
     }
@@ -71,7 +71,26 @@ fun scalar(target: File) {
         //            //                    +"import kotlin.jvm.*"
         //                          "kotlin.math.*")
 
+        +"// trigonometric\n"
         for ((type, extension, _, _) in vectorTypes)
             trigonometric(-1, type, extension, "", "", Generator.Part.Scalar)
+    }
+
+    generate(target, "glm_/scalar/integer.kt") {
+
+        experimentals += Generator.Experimentals.Contracts
+        `package` = "glm_.scalar"
+        //            +"import glm_.extensions.swizzle.*"
+        imports += listOf(
+            //                    "kotlin.math.pow"
+            //            "glm_.extensions.*",
+            "kotlin.reflect.KMutableProperty0",
+            //            //                    +"import kotlin.jvm.*"
+            //                          "kotlin.math.*"
+                         )
+
+        +"// integer\n"
+        for ((type, extension, _, _) in vectorTypes)
+            integer(-1, type, extension, "", "", Generator.Part.Scalar)
     }
 }

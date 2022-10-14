@@ -375,7 +375,7 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
                 +"fun toQuat(res: Quat$id = Quat$id()): Quat$id = toQuat { $`resWXYZ type` -> res($resWXYZ) }"
                 docs(doc)
                 "inline fun <R> toQuat(res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return toQuat($abcdN, res)"
                 }
             } else if (matrixSize == "4") {
@@ -385,7 +385,7 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
                 docs(doc)
                 val abcdN3 = abcdJoint(3, 3, ",\n") { it }
                 "inline fun <R> toQuat(res: ($`resXYZW type`) -> R): R" {
-                    contract
+                    +contract
                     +"return Mat3$id.toQuat($abcdN3, res)"
                 }
             }

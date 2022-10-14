@@ -151,4 +151,25 @@ fun ByteArray.getUshort(index: Int, bigEndian: Boolean = true): UShort = getShor
 fun Float.equal(other: Float, epsilon: Float = Float.MIN_VALUE): Boolean = abs(this - other) <= epsilon
 fun Double.equal(other: Double, epsilon: Double = Double.MIN_VALUE): Boolean = abs(this - other) <= epsilon
 
-// TODO fma, frexp, ldexp
+val Int.mask: Int
+    get() = when {
+        this >= Int.SIZE_BYTES * 8 -> 0.inv()
+        else -> (1 shl this) - 1
+    }
+val Long.mask: Long
+    get() = when {
+        this >= Long.SIZE_BYTES * 8 -> 0.inv()
+        else -> (1L shl this.toInt()) - 1
+    }
+val UInt.mask: UInt
+    get() = when {
+        this >= UInt.SIZE_BYTES.toUInt() * 8u -> 0u.inv()
+        else -> (1u shl this) - 1u
+    }
+val ULong.mask: ULong
+    get() = when {
+        this >= ULong.SIZE_BYTES.toUInt() * 8u -> 0uL.inv()
+        else -> (1uL shl this.toInt()) - 1uL
+    }
+
+infix fun Int.has(flag: Int): Boolean = and(flag) != 0

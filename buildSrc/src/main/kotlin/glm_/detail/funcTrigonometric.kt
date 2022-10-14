@@ -5,7 +5,8 @@ import glm_.gen.Generator
 
 fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
 
-    +"\n// trigonometric\n"
+    if (part != Generator.Part.Scalar) +"\n// trigonometric\n"
+
     val `exp,xyzw` = xyzwJoint { "exp.$it" }
     val `expXYZW type` = xyzwJoint { "exp$it: $type" }
     val `expXYZW Int` = xyzwJoint { "exp$it: Int" }
