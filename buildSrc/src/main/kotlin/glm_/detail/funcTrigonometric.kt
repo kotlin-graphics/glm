@@ -11,9 +11,9 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
     val `expXYZW type` = xyzwJoint { "exp$it: $type" }
     val `expXYZW Int` = xyzwJoint { "exp$it: Int" }
     val VecID = vec + id
-    val xyzw = xyzwJoint
+    val xyzw = xyzwJoint()
     val `-xyzw` = xyzwJoint { "-$it" }
-    val XYZW = XyzwJoint2
+    val XYZW = XyzwJoint()
     val `aXYZW type` = XyzwJoint { "a$it: $type" }
     val `a,xyzw` = xyzwJoint { "a.$it" }
     //    val `a,xyzw type` = xyzwJoint { "a.$it: $type" }

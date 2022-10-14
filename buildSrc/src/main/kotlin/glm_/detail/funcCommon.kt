@@ -9,8 +9,8 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
     if (part != Generator.Part.Scalar) +"// common\n"
 
     val VecID = vec + id
-    val xyzw = xyzwJoint
-    val XYZW = XyzwJoint2
+    val xyzw = xyzwJoint()
+    val XYZW = XyzwJoint()
     val `aXYZW type` = XyzwJoint { "a$it: $type" }
     val `a,xyzw` = xyzwJoint { "a.$it" }
     //    val `a,xyzw type` = xyzwJoint { "a.$it: $type" }

@@ -11,8 +11,8 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
     val `expXYZW type` = XyzwJoint { "exp$it: $type" }
     val `expXYZW Int` = XyzwJoint { "exp$it: Int" }
     val VecID = vec + id
-    val xyzw = xyzwJoint
-    val XYZW = XyzwJoint2
+    val xyzw = xyzwJoint()
+    val XYZW = XyzwJoint()
     val `aXYZW type` = XyzwJoint { "a$it: $type" }
     val `a,xyzw` = xyzwJoint { "a.$it" }
     //    val `a,xyzw type` = xyzwJoint { "a.$it: $type" }

@@ -145,13 +145,10 @@ fun wxyz(block: (String) -> Unit) {
         block(i)
 }
 
-
-val Generator.xyzwJoint get() = xyzwJoint { it }
 fun Generator.xyzwJoint(ordinal: Int = Generator.Companion.ordinal, separator: String = ", ", block: (String) -> String = { it }) =
     (0 until ordinal).joinToString(separator) { block(glm_.xyzw[it]) }
 
-val Generator.XyzwJoint2 get() = XyzwJoint { it }
-fun Generator.XyzwJoint(ordinal: Int = Generator.Companion.ordinal, separator: String = ", ", block: (String) -> String) =
+fun Generator.XyzwJoint(ordinal: Int = Generator.Companion.ordinal, separator: String = ", ", block: (String) -> String = { it }) =
     (0 until ordinal).joinToString(separator) { block(glm_.xyzw[it].toUpperCase()) }
 
 fun wxyzJointIndexed(separator: String = ", ", block: (Int, String) -> String) = wxyz.indices.joinToString(separator) { block(it, wxyz[it]) }
