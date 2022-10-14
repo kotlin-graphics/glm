@@ -137,7 +137,7 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
         val signedInt = type !in floatingPointTypes && type[0] != 'U'
 
         if (ordinal > 1) {
-            +"constructor(${xyzwJoint { "$it: $type" }}) : this($arrayOf($xyzwJoint))"
+            +"constructor(${xyzwJoint { "$it: $type" }}) : this($arrayOf(${xyzwJoint()}))"
             if (type == "UByte" || type == "UShort") {
                 +"constructor(${xyzwJoint { "$it: UInt" }}) : this(${xyzwJoint { "$it.$extension" }})"
                 +"constructor(${xyzwJoint { "$it: ULong" }}) : this(${xyzwJoint { "$it.$extension" }})"

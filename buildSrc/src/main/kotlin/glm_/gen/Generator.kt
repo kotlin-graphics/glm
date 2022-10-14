@@ -149,7 +149,7 @@ class Generator(val targetDir: File) {
 
 
     val operators = listOf("+" to "plus", "-" to "minus", "*" to "times", "/" to "div")
-    val xyzw get() = xyzwJoint
+    val xyzw get() = xyzwJoint()
     val matrixSize: String
         get() {
             val width = Generator.Companion.width
