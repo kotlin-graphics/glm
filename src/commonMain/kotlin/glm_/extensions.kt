@@ -6,7 +6,6 @@ package glm_
 //import java.math.BigInteger
 import glm_.extensions.*
 import kotlin.math.*
-import kotlin.math.pow
 
 
 infix fun Char.shl(bits: Int): Int = i shl bits

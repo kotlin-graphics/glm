@@ -1,3 +1,4 @@
+import glm_.gen.GenerateCode
 import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
 
 ////import kx.*
@@ -44,6 +45,9 @@ kotlin {
     }
     sourceSets {
         val commonMain by getting {
+//            kotlin {
+//                sourceSets["commonMain"].kotlin.srcDir(tasks.getByName("generateCode").outputs.files)
+//            }
             kotlin.srcDir("build/generated")
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.4.3")
@@ -114,9 +118,8 @@ dependencies {
 //    kotlin.srcDir("build/generated/ksp/commonMain/kotlin")
 //}
 tasks {
-    val generateCode by registering(glm_.gen.GenerateCode::class)
-//    getByName("compileCommonMainKotlinMetadata") { dependsOn(generateCode) }
-    //    kotlin.sourceSets["main"].kotlin.srcDir(generateCode.get().outputs.files)
+    val generateCode by registering(GenerateCode::class)
+    kotlin.sourceSets.commonMain { kotlin.srcDir(generateCode.get().outputs.files) }
     withType<KotlinCompile<*>>().all {
         kotlinOptions {
             freeCompilerArgs += "-opt-in=kotlin.ExperimentalUnsignedTypes"
