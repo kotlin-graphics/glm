@@ -17,6 +17,7 @@ import glm_.vec4.Vec4
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4i
+import kotlin.math.roundToInt
 import kotlin.math.sign
 import kotlin.test.Test
 
@@ -357,13 +358,13 @@ class int {
         run {
             val edge = 2f
 
-            val a = edge step 1f
+            val a = 1f step edge
             a shouldEqual 0f
 
-            val b = edge step 3f
+            val b = 3f step edge
             b shouldEqual 1f
 
-            val c = edge step 2f
+            val c = 2f step edge
             c shouldEqual 1f
         }
         // vec4 and float
@@ -398,11 +399,15 @@ class int {
 
         run {
             (-0f).round() shouldEqual 0f
-            (-0.5f).round() shouldEqual -1f
+            // -(-0.5f).round() returns -1f on native glm
+            (-0.5f).round() shouldEqual -0f
+            (-0.6f).round() shouldEqual -1f
             (-1f).round() shouldEqual -1f
             (-0.1f).round() shouldEqual 0f
             (-0.9f).round() shouldEqual -1f
-            (-1.5f).round() shouldEqual -2f
+            // -(-0.5f).round() returns -1f on native glm
+            (-1.5f).round() shouldEqual -1f
+            (-1.6f).round() shouldEqual -2f
             (-1.9f).round() shouldEqual -2f
         }
     }
