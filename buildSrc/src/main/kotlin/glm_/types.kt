@@ -156,7 +156,6 @@ fun Generator.XyzwJoint(ordinal: Int = Generator.Companion.ordinal, separator: S
 
 fun wxyzJointIndexed(separator: String = ", ", block: (Int, String) -> String) = wxyz.indices.joinToString(separator) { block(it, wxyz[it]) }
 fun WxyzJointIndexed(separator: String = ", ", block: (Int, String) -> String) = wxyz.indices.joinToString(separator) { block(it, wxyz[it].toUpperCase()) }
-val wxyzJoint = wxyzJoint { it }
 fun wxyzJoint(separator: String = ", ", block: (String) -> String) = wxyz.indices.joinToString(separator) { block(wxyz[it]) }
 fun WxyzJoint(separator: String = ", ", block: (String) -> String = { it }) = wxyz.indices.joinToString(separator) { block(wxyz[it].toUpperCase()) }
 
