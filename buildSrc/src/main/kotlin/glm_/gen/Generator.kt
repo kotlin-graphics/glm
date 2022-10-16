@@ -149,7 +149,7 @@ class Generator(val targetDir: File) {
 
 
     val operators = listOf("+" to "plus", "-" to "minus", "*" to "times", "/" to "div")
-    val xyzw get() = xyzwJoint()
+
     val matrixSize: String
         get() {
             val width = Generator.Companion.width
@@ -175,8 +175,22 @@ class Generator(val targetDir: File) {
                 block(abcdN(i, j))
             }
         }
+
+    fun AbcdJoint(width: Int = Generator.Companion.width,
+                  height: Int = Generator.Companion.height,
+                  rowSeparator: String = ", ", columnSeparator: String = ", ",
+                  block: (String) -> String = { it }) =
+        (0 until width).joinToString(rowSeparator) { i ->
+            (0 until height).joinToString(columnSeparator) { j ->
+                block(abcdN(i, j).toUpperCase())
+            }
+        }
     fun abcdJoint(rowSeparator: String = ", ", columnSeparator: String = ", ",
                   block: (String) -> String = { it }) = abcdJoint(Generator.Companion.width,
+                                                                  Generator.Companion.height, rowSeparator, columnSeparator, block)
+
+    fun AbcdJoint(rowSeparator: String = ", ", columnSeparator: String = ", ",
+                  block: (String) -> String = { it }) = AbcdJoint(Generator.Companion.width,
                                                                   Generator.Companion.height, rowSeparator, columnSeparator, block)
 
     fun invertMatrix(ordinal: Int, type: String) {

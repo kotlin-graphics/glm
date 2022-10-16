@@ -62,14 +62,14 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
     if (type !in floatingPointTypes)
         return
 
-    fun glslDocs(descr: String, manPage: String, append: String = "") = docs("""
-            |$descr
+    fun trig(doc: String, manPage: String, append: String = "") = docs("""
+            ${if (doc.startsWith('|')) doc else "|$doc"}
             |
             |[GLSL $manPage man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/$manPage.xml)
             |[GLSL 4.20.8 specification, section 8.1 Angle and Trigonometry Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)
             |$append""")
 
-    fun radians() = glslDocs("Converts degrees to radians and returns the result.", "radians")
+    fun radians() = trig("Converts degrees to radians and returns the result.", "radians")
     when(part) {
         Generator.Part.Class -> {
             radians()
@@ -100,7 +100,7 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
         }
     }
 
-    fun degrees() = glslDocs("Converts radians to degrees and returns the result.", "degrees.xml")
+    fun degrees() = trig("Converts radians to degrees and returns the result.", "degrees.xml")
     when(part) {
         Generator.Part.Class -> {
             degrees()
@@ -131,7 +131,7 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
         }
     }
 
-    fun sin() = glslDocs("The standard trigonometric sine function. The values returned by this function will range from `[-1, 1]`.", "sin")
+    fun sin() = trig("The standard trigonometric sine function. The values returned by this function will range from `[-1, 1]`.", "sin")
     when(part) {
         Generator.Part.Class -> {
             sin()
@@ -162,7 +162,7 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
         }
     }
 
-    fun cos() = glslDocs("The standard trigonometric cosine function. The values returned by this function will range from `[-1, 1]`.", "cos")
+    fun cos() = trig("The standard trigonometric cosine function. The values returned by this function will range from `[-1, 1]`.", "cos")
     when(part) {
         Generator.Part.Class -> {
             cos()
@@ -193,7 +193,7 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
         }
     }
 
-    fun tan() = glslDocs("The standard trigonometric tangent function.", "tan")
+    fun tan() = trig("The standard trigonometric tangent function.", "tan")
     when(part) {
         Generator.Part.Class -> {
             tan()
@@ -224,7 +224,7 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
         }
     }
 
-    fun asin(x: String = "[$xyzw]") = glslDocs("""
+    fun asin(x: String = "[$xyzw]") = trig("""
         |Arc sine. Returns an angle whose sine is `$x`."
         |The range of values returned by this function is `[-PI/2, PI/2]`.
         |Results are undefined if `|$x| > 1`.""", "asin")
@@ -258,7 +258,7 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
         }
     }
 
-    fun acos(x: String = "[$xyzw]") = glslDocs("""
+    fun acos(x: String = "[$xyzw]") = trig("""
         |Arc cosine. Returns an angle whose cosine is `$x`.
         |The range of values returned by this function is `[0, PI]`.
         |Results are undefined if `|$x| > 1`.""", "acos")
@@ -292,7 +292,7 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
         }
     }
 
-    fun atan2(y: String = "[$xyzw]", x: String = "x.[$xyzw]") = glslDocs("""
+    fun atan2(y: String = "[$xyzw]", x: String = "x.[$xyzw]") = trig("""
         |Arc tangent. Returns an angle whose tangent is `$y/$x`.
         |The signs of `$x` and `$y` are used to determine what quadrant the angle is in.
         |The range of values returned by this function is `[-PI, PI]`.
@@ -327,7 +327,7 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
         }
     }
 
-    fun atan(yOverX: String = "[$xyzw]") = glslDocs("""
+    fun atan(yOverX: String = "[$xyzw]") = trig("""
         |Arc tangent. Returns an angle whose tangent is $yOverX.
         |The range of values returned by this function is `[-PI/2, PI/2]`.""", "atan")
     when(part) {
@@ -360,7 +360,7 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
         }
     }
 
-    fun sinh() = glslDocs("Returns the hyperbolic sine function, `(exp(x) - exp(-x)) / 2`", "sinh")
+    fun sinh() = trig("Returns the hyperbolic sine function, `(exp(x) - exp(-x)) / 2`", "sinh")
     when(part) {
         Generator.Part.Class -> {
             sinh()
@@ -391,7 +391,7 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
         }
     }
 
-    fun cosh() = glslDocs("Returns the hyperbolic cosine function, `(exp(x) + exp(-x)) / 2`", "cosh")
+    fun cosh() = trig("Returns the hyperbolic cosine function, `(exp(x) + exp(-x)) / 2`", "cosh")
     when(part) {
         Generator.Part.Class -> {
             cosh()
@@ -422,7 +422,7 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
         }
     }
 
-    fun tanh() = glslDocs("Returns the hyperbolic tangent function, `sinh(angle) / cosh(angle)`", "tanh")
+    fun tanh() = trig("Returns the hyperbolic tangent function, `sinh(angle) / cosh(angle)`", "tanh")
     when(part) {
         Generator.Part.Class -> {
             tanh()
@@ -453,7 +453,7 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
         }
     }
 
-    fun asinh() = glslDocs("Arc hyperbolic sine; returns the inverse of sinh.", "asinh")
+    fun asinh() = trig("Arc hyperbolic sine; returns the inverse of sinh.", "asinh")
     when(part) {
         Generator.Part.Class -> {
             asinh()
@@ -484,7 +484,7 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
         }
     }
 
-    fun acosh(x: String = "[$xyzw]") = glslDocs("Arc hyperbolic cosine; returns the non-negative inverse of cosh. Results are undefined if `$x < 1`.", "acosh")
+    fun acosh(x: String = "[$xyzw]") = trig("Arc hyperbolic cosine; returns the non-negative inverse of cosh. Results are undefined if `$x < 1`.", "acosh")
     when(part) {
         Generator.Part.Class -> {
             acosh()
@@ -515,7 +515,7 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
         }
     }
 
-    fun atanh(x: String = "[$xyzw]") = glslDocs("Arc hyperbolic tangent; returns the inverse of tanh. Results are undefined if `abs($x) >= 1`.", "atanh")
+    fun atanh(x: String = "[$xyzw]") = trig("Arc hyperbolic tangent; returns the inverse of tanh. Results are undefined if `abs($x) >= 1`.", "atanh")
     when(part) {
         Generator.Part.Class -> {
             atanh()

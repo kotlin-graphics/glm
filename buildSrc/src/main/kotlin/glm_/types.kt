@@ -159,8 +159,9 @@ fun WxyzJoint(separator: String = ", ", block: (String) -> String = { it }) = wx
 
 val abcd = listOf("a", "b", "c", "d")
 
-fun abcdN(i: Int, j: Int) = "${abcd[i]}$j"
-fun vNN(i: Int, j: Int) = "v$i$j"
+fun abcdN(c: Int, r: Int) = "${abcd[c]}$r"
+fun vNN(c: Int, r: Int) = "v" + nn(c, r)
+fun nn(c: Int, r: Int) = "$c$r"
 
 fun Generator.abcdIndexed(width: Int = Generator.Companion.width,
                           height: Int = Generator.Companion.height, block: (Int, Int, String) -> Unit) {

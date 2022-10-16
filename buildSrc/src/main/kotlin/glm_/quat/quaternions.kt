@@ -12,7 +12,7 @@ fun quaternions(target: File) {
         "abstract class QuatT<T>" {
 
             +"// -- Data --"
-            wxyz { c -> +"abstract var $c: T" }
+            wxyz { +"abstract var $it: T" }
             wxyzIndexed { i, c -> +"operator fun component${i + 1}() = $c" }
 
             +"// -- Component accesses --"

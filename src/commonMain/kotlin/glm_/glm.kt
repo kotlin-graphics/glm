@@ -1,5 +1,7 @@
 package glm_
 
+import glm_.vec2.Vec2
+
 //import glm_.detail.func_common
 
 

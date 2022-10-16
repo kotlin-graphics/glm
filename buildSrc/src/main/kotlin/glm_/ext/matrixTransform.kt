@@ -286,13 +286,13 @@ fun Generator.matrixTransform(width: Int, height: Int, type: String, extension: 
             +"""
                 inline fun <R> scale(m: $matID, $`vXYZ type`, res: ($`abcd type`) -> R): R {
                     $contract
-                    return Vec4$id.times(m.a0, m.a1, m.a2, m.a3, vX, vX, vX, vX) { $a0123 ->
+                    Vec4$id.times(m.a0, m.a1, m.a2, m.a3, vX, vX, vX, vX) { $a0123 ->
                         Vec4$id.times(m.b0, m.b1, m.b2, m.b3, vY, vY, vY, vY) { $b0123 ->
                             Vec4$id.times(m.c0, m.c1, m.c2, m.c3, vZ, vZ, vZ, vZ) { $c0123 ->
-                                res($a0123,
-                                    $b0123,
-                                    $c0123,
-                                    m.d0, m.d1, m.d2, m.d3)
+                                return res($a0123,
+                                           $b0123,
+                                           $c0123,
+                                           m.d0, m.d1, m.d2, m.d3)
                             }
                         }
                     }

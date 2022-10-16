@@ -5,7 +5,7 @@ import glm_.gen.Generator
 
 fun Generator.exponential(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
 
-    if (part != Generator.Part.Scalar) +"// exponential\n"
+    if (part != Generator.Part.Scalar) +"// func exponential\n"
 
     val `exp,xyzw` = xyzwJoint { "exp.$it" }
     val `expXYZW type` = XyzwJoint { "exp$it: $type" }
@@ -48,8 +48,8 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
     val `edge0XYZW type` = XyzwJoint { "edge0$it: $type" }
     val `edge1XYZW type` = XyzwJoint { "edge1$it: $type" }
 
-    fun glslDocs(descr: String, manPage: String, append: String = "") = docs("""
-            |$descr
+    fun expo(doc: String, manPage: String, append: String = "") = docs("""
+            ${if (doc.startsWith('|')) doc else "|$doc"}
             |
             |[GLSL $manPage man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/$manPage.xml)
             |[GLSL 4.20.8 specification, section 8.2 Exponential Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)
@@ -57,7 +57,7 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
 
     if (type in floatingPointTypes) {
 
-        fun pow(base: String = "[$xyzw]", exp: String = "exp.[$xyzw]") = glslDocs("Returns `$base` raised to the power `$exp`.", "pow")
+        fun pow(base: String = "[$xyzw]", exp: String = "exp.[$xyzw]") = expo("Returns `$base` raised to the power `$exp`.", "pow")
         when (part) {
             Generator.Part.Class -> {
                 pow()
@@ -104,7 +104,7 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
             }
         }
 
-        fun exp(x: String = "[$xyzw]") = glslDocs("Returns the natural exponentiation of `$x`, i.e., `e^$x`.", "exp")
+        fun exp(x: String = "[$xyzw]") = expo("Returns the natural exponentiation of `$x`, i.e., `e^$x`.", "exp")
         when (part) {
             Generator.Part.Class -> {
                 exp()
@@ -130,7 +130,7 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
             }
         }
 
-        fun log(x: String = "[$xyzw]") = glslDocs("""
+        fun log(x: String = "[$xyzw]") = expo("""
             |Returns the natural logarithm of `$x`, i.e., returns the value `y` which satisfies the equation `$x = e^y`.
             |Results are undefined if v <= 0.""", "log")
         when (part) {
@@ -158,7 +158,7 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
             }
         }
 
-        fun exp2(x: String = "[$xyzw]") = glslDocs("Returns `2` raised to the `$x` power.", "exp2")
+        fun exp2(x: String = "[$xyzw]") = expo("Returns `2` raised to the `$x` power.", "exp2")
         when (part) {
             Generator.Part.Class -> {
                 exp2()
@@ -185,7 +185,7 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
             }
         }
 
-        fun log2(x: String = "[$xyzw]") = glslDocs("Returns the base 2 log of `$x`, i.e., returns the value `y`, which satisfies the equation `$x = 2 ^ y`.", "log2")
+        fun log2(x: String = "[$xyzw]") = expo("Returns the base 2 log of `$x`, i.e., returns the value `y`, which satisfies the equation `$x = 2 ^ y`.", "log2")
         when (part) {
             Generator.Part.Class -> {
                 log2()
@@ -211,7 +211,7 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
             }
         }
 
-        fun sqrt(x: String = "[$xyzw]") = glslDocs("Returns the positive square root of `$x`.", "sqrt")
+        fun sqrt(x: String = "[$xyzw]") = expo("Returns the positive square root of `$x`.", "sqrt")
         when (part) {
             Generator.Part.Class -> {
                 sqrt()
@@ -237,7 +237,7 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
             }
         }
 
-        fun inverseSqrt(x: String = "[$xyzw]") = glslDocs("Returns the reciprocal of the positive square root of `$x`.", "inversesqrt")
+        fun inverseSqrt(x: String = "[$xyzw]") = expo("Returns the reciprocal of the positive square root of `$x`.", "inversesqrt")
         when (part) {
             Generator.Part.Class -> {
                 inverseSqrt()

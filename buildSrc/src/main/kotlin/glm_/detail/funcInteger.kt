@@ -3,10 +3,9 @@ package glm_.detail
 import glm_.*
 import glm_.gen.Generator
 
-// common.hpp
 fun Generator.integer(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
 
-    if (part != Generator.Part.Scalar) +"// integer\n"
+    if (part != Generator.Part.Scalar) +"// func integer\n"
 
     val VecID = vec + id
     val xyzw = xyzwJoint()
@@ -59,13 +58,15 @@ fun Generator.integer(ordinal: Int, type: String, extension: String, id: String,
     val `edge1XYZW type` = XyzwJoint { "edge1$it: $type" }
     val `expXYZW Int` = XyzwJoint { "exp$it: Int" }
 
+    fun integer(doc: String, func: String) = docs("""
+        ${if (doc.startsWith('|')) doc else "|$doc"}
+        |
+        |@see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/$func.xml">GLSL $func man page</a>
+        |@see <a href="http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf">GLSL 4.20.8 specification, section 8.8 Integer Functions</a>""")
     if (type == "UInt") {
-        fun uaddCarry(x: String = "this", y: String = "b") = ("""
+        fun uaddCarry(x: String = "this", y: String = "b") = integer("""
             |Adds 32-bit unsigned integer `$x` and `$y`, returning the `sum modulo pow(2, 32)`. 
-            |The value carry is set to `0` if the sum was less than `pow(2, 32)`, or to `1` otherwise.
-            |
-            |@see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/uaddCarry.xml">GLSL uaddCarry man page</a>
-            |@see <a href="http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf">GLSL 4.20.8 specification, section 8.8 Integer Functions</a>""")
+            |The value carry is set to `0` if the sum was less than `pow(2, 32)`, or to `1` otherwise.""", "uaddCarry")
         when (part) {
             Generator.Part.Class -> {
                 uaddCarry()
@@ -127,12 +128,9 @@ fun Generator.integer(ordinal: Int, type: String, extension: String, id: String,
                     }"""
             }
         }
-        fun usubBorrow(x: String = "this", y: String = "b") = docs("""
+        fun usubBorrow(x: String = "this", y: String = "b") = integer("""
             |Subtracts the 32-bit unsigned integer `$y` from `$x`, returning the difference if non-negative, 
-            |or pow(2, 32) plus the difference otherwise. The value borrow is set to `0` if `$x >= $y`, or to `1` otherwise.
-            |
-            |@see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/usubBorrow.xml">GLSL usubBorrow man page</a>
-            |@see <a href="http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf">GLSL 4.20.8 specification, section 8.8 Integer Functions</a>""")
+            |or pow(2, 32) plus the difference otherwise. The value borrow is set to `0` if `$x >= $y`, or to `1` otherwise.""", "usubBorrow")
         when (part) {
             Generator.Part.Class -> {
                 usubBorrow()
@@ -197,13 +195,10 @@ fun Generator.integer(ordinal: Int, type: String, extension: String, id: String,
             }
         }
 
-        fun umulExtended(x: String = "this", y: String = "b") = docs("""
+        fun umulExtended(x: String = "this", y: String = "b") = integer("""
             |Multiplies 32-bit integers `$x` and `$y`, producing a 64-bit result. 
             |The 32 least-significant bits are returned in lsb.
-            |The 32 most-significant bits are returned in msb.
-            |
-            |@see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/umulExtended.xml">GLSL umulExtended man page</a>
-            |@see <a href="http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf">GLSL 4.20.8 specification, section 8.8 Integer Functions</a>""")
+            |The 32 most-significant bits are returned in msb.""", "umulExtended.xml")
         when (part) {
             Generator.Part.Class -> {
                 umulExtended()
@@ -252,13 +247,10 @@ fun Generator.integer(ordinal: Int, type: String, extension: String, id: String,
         }
     }
     if (type == "Int") {
-        fun imulExtended(x: String = "this", y: String = "b") = docs("""
+        fun imulExtended(x: String = "this", y: String = "b") = integer("""
                  |Multiplies 32-bit integers `$x` and `$y`, producing a 64-bit result. 
                  |The 32 least-significant bits are returned in lsb.
-                 |The 32 most-significant bits are returned in msb.
-                 |
-                 |@see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/imulExtended.xml">GLSL imulExtended man page</a>
-                 |@see <a href="http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf">GLSL 4.20.8 specification, section 8.8 Integer Functions</a>""")
+                 |The 32 most-significant bits are returned in msb.""", "imulExtended")
         when (part) {
             Generator.Part.Class -> {
                 imulExtended()
@@ -309,16 +301,13 @@ fun Generator.integer(ordinal: Int, type: String, extension: String, id: String,
     if ("Int" !in type && "Long" !in type)
         return
 
-    fun bitfieldExtract() = docs("""
+    fun bitfieldExtract() = integer("""
         |Extracts bits `[offset, offset + bits - 1]` from value, returning them in the least significant bits of the result.
         |For unsigned data types, the most significant bits of the result will be set to zero. For signed data types, 
         |the most significant bits will be set to the value of bit `offset + base - 1`.
         |
         |If `bits` is zero, the result will be zero. The result will be undefined if `offset` or `bits` is negative, 
-        |or if the sum of `offset` and `bits` is greater than the number of bits used to store the operand.
-        |
-        |@see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/bitfieldExtract.xml">GLSL bitfieldExtract man page</a>
-        |@see <a href="http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf">GLSL 4.20.8 specification, section 8.8 Integer Functions</a>""")
+        |or if the sum of `offset` and `bits` is greater than the number of bits used to store the operand.""", "bitfieldExtract")
     when (part) {
         Generator.Part.Class -> {
             bitfieldExtract()
@@ -343,16 +332,13 @@ fun Generator.integer(ordinal: Int, type: String, extension: String, id: String,
         }
     }
 
-    fun bitfieldInsert(base: String = "this", insert: String = "insert") = docs("""
+    fun bitfieldInsert(base: String = "this", insert: String = "insert") = integer("""
         |Returns the insertion the bits least-significant bits of `$insert` into `$base`.
         |
         |The result will have bits `[offset, offset + bits - 1]` taken from bits `[0, bits - 1]` of `insert`, and all other bits taken
         |directly from the corresponding bits of `$base`. If `bits` is zero, the result will simply be `$base`. The result will be
         |undefined if `offset` or `bits` is negative, or if the sum of `offset` and `bits` is greater than the number of bits used to
-        |store the operand.
-        |
-        |@see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/bitfieldInsert.xml">GLSL bitfieldInsert man page</a>
-        |@see <a href="http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf">GLSL 4.20.8 specification, section 8.8 Integer Functions</a>""")
+        |store the operand.""", "bitfieldInsert")
     when (part) {
         Generator.Part.Class -> {
             bitfieldInsert()
@@ -388,13 +374,10 @@ fun Generator.integer(ordinal: Int, type: String, extension: String, id: String,
         }
     }
 
-    fun bitfieldReverse() = docs("""
+    fun bitfieldReverse() = integer("""
         |Returns the reversal of the bits of value.
         |The bit numbered `n` of the result will be taken from bit `(bits - 1) - n` of value,
-        |where `bits` is the total number of bits used to represent value.
-        |
-        |@see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/bitfieldReverse.xml">GLSL bitfieldReverse man page</a>
-        |@see <a href="http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf">GLSL 4.20.8 specification, section 8.8 Integer Functions</a>""")
+        |where `bits` is the total number of bits used to represent value.""", "bitfieldReverse")
     when (part) {
         Generator.Part.Class -> {
             bitfieldReverse()
@@ -432,11 +415,7 @@ fun Generator.integer(ordinal: Int, type: String, extension: String, id: String,
         }
     }
 
-    fun bitCount() = docs("""
-        |Returns the number of bits set to `1` in the binary representation of value.
-        |
-        |@see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/bitCount.xml">GLSL bitCount man page</a>
-        |@see <a href="http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf">GLSL 4.20.8 specification, section 8.8 Integer Functions</a>""")
+    fun bitCount() = integer("|Returns the number of bits set to `1` in the binary representation of value.", "bitCount")
     when (part) {
         Generator.Part.Class -> {
             bitCount()
@@ -461,13 +440,9 @@ fun Generator.integer(ordinal: Int, type: String, extension: String, id: String,
         }
     }
 
-    fun findLSB() = docs("""
+    fun findLSB() = integer("""
         |Returns the bit number of the least significant bit set to `1` in the binary representation of value.
-        |If value is zero, `0` will be returned.
-        |
-        |
-        |@see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/findLSB.xml">GLSL findLSB man page</a>
-        |@see <a href="http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf">GLSL 4.20.8 specification, section 8.8 Integer Functions</a>""")
+        |If value is zero, `0` will be returned.""", "findLSB.xml")
     when (part) {
         Generator.Part.Class -> {
             findLSB()
@@ -491,14 +466,11 @@ fun Generator.integer(ordinal: Int, type: String, extension: String, id: String,
         }
     }
 
-    fun findMSB() = ("""
+    fun findMSB() = integer("""
         |Returns the bit number of the most significant bit in the binary representation of value.
         |For positive integers, the result will be the bit number of the most significant bit set to `1`.
         |For negative integers, the result will be the bit number of the most significant
-        |bit set to `0`. For a value of zero or negative one, `0` will be returned.
-        |
-        |@see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/findMSB.xml">GLSL findMSB man page</a>
-        |@see <a href="http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf">GLSL 4.20.8 specification, section 8.8 Integer Functions</a>""")
+        |bit set to `0`. For a value of zero or negative one, `0` will be returned.""", "findMSB")
     when (part) {
         Generator.Part.Class -> {
             findMSB()

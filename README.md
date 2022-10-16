@@ -41,4 +41,6 @@ fun camera(translate: Float, rotate: Vec2): Mat4 {
 
 ### How to retrieve it:
 
+Differences: Mat*.length is width * height and not simply width
+
 You can find all the instructions by [mary](https://github.com/kotlin-graphics/mary)

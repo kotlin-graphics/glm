@@ -119,7 +119,7 @@ dependencies {
 //}
 tasks {
     val generateCode by registering(GenerateCode::class)
-    kotlin.sourceSets.commonMain { kotlin.srcDir(generateCode.get().outputs.files) }
+    kotlin.sourceSets.commonMain { kotlin.srcDir(generateCode) }
     withType<KotlinCompile<*>>().all {
         kotlinOptions {
             freeCompilerArgs += "-opt-in=kotlin.ExperimentalUnsignedTypes"

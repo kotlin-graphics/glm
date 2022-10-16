@@ -6,7 +6,7 @@ import glm_.gen.Generator
 // common.hpp
 fun Generator.common(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
 
-    if (part != Generator.Part.Scalar) +"// common\n"
+    if (part != Generator.Part.Scalar) +"// func common\n"
 
     val VecID = vec + id
     val xyzw = xyzwJoint()
@@ -50,8 +50,8 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
     if (part != Generator.Part.Scalar)
         imports += "glm_.vec$ordinal.${vec}bool"
 
-    fun glslDocs(descr: String, manPage: String, append: String = "") = docs("""
-            |$descr
+    fun common(doc: String, manPage: String, append: String = "") = docs("""
+            ${if (doc.startsWith('|')) doc else "|$doc"}
             |
             |[GLSL $manPage man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/$manPage.xml)
             |[GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)
@@ -59,7 +59,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
 
     if (type !in unsignedTypes && type != "Boolean") {
 
-        fun abs(x: String = "[$xyzw]") = glslDocs("Returns `$x` if `$x` >= 0; otherwise, it returns `-$x`.", "abs")
+        fun abs(x: String = "[$xyzw]") = common("Returns `$x` if `$x` >= 0; otherwise, it returns `-$x`.", "abs")
         when (part) {
             Generator.Part.Class -> {
                 abs()
@@ -95,7 +95,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
 
         if (type in floatingPointTypes) {
 
-            fun sign(x: String = "[$xyzw]") = glslDocs("Returns `1` if `$x > 0`, `0` if `$x == 0`, or `-1` if `$x < 0`.", "sign")
+            fun sign(x: String = "[$xyzw]") = common("Returns `1` if `$x > 0`, `0` if `$x == 0`, or `-1` if `$x < 0`.", "sign")
             when (part) {
                 Generator.Part.Class -> {
                     sign()
@@ -123,7 +123,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 else -> Unit // sign in stdlib
             }
 
-            fun floor(x: String = "[$xyzw]") = glslDocs("Returns a value equal to the nearest integer that is less then or equal to `$x`.", "floor")
+            fun floor(x: String = "[$xyzw]") = common("Returns a value equal to the nearest integer that is less then or equal to `$x`.", "floor")
             when (part) {
                 Generator.Part.Class -> {
                     floor()
@@ -154,7 +154,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
             }
 
-            fun trunc(x: String = "[$xyzw]") = glslDocs("Returns a value equal to the nearest integer to `$x` whose absolute value is not larger than the absolute value of `$x`.", "trunc")
+            fun trunc(x: String = "[$xyzw]") = common("Returns a value equal to the nearest integer to `$x` whose absolute value is not larger than the absolute value of `$x`.", "trunc")
             when (part) {
                 Generator.Part.Class -> {
                     trunc()
@@ -185,7 +185,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
             }
 
-            fun round(x: String = "[$xyzw]") = glslDocs("""
+            fun round(x: String = "[$xyzw]") = common("""
                 |Returns a value equal to the nearest integer to `$x`. The fraction 0.5 will round in a direction 
                 |chosen by the implementation, presumably the direction that is fastest.
                 |This includes the possibility that `round` returns the same value as `roundEven` for all values of `$x`.""", "round")
@@ -219,11 +219,11 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
             }
 
-            fun roundEven(x: String = "[$xyzw]") = glslDocs("""
+            fun roundEven(x: String = "[$xyzw]") = common("""
                 |Returns a value equal to the nearest integer to `$x`. A fractional part of 0.5 will round toward
                 |the nearest even integer. (Both 3.5 and 4.5 for x will return 4.0.)""",
-                                                            "roundEven",
-                                                            "[New round to even technique](http://developer.amd.com/documentation/articles/pages/New-Round-to-Even-Technique.aspx)")
+                                                          "roundEven",
+                                                          "[New round to even technique](http://developer.amd.com/documentation/articles/pages/New-Round-to-Even-Technique.aspx)")
             when (part) {
                 Generator.Part.Class -> {
                     roundEven()
@@ -254,7 +254,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
             }
 
-            fun ceil(x: String = "[$xyzw]") = glslDocs("Returns a value equal to the nearest integer that is greater than or equal to `$x`.", "ceil")
+            fun ceil(x: String = "[$xyzw]") = common("Returns a value equal to the nearest integer that is greater than or equal to `$x`.", "ceil")
             when (part) {
                 Generator.Part.Class -> {
                     ceil()
@@ -285,7 +285,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
             }
 
-            fun fract(x: String = "[$xyzw]") = glslDocs("Return `$x - $x.floor`.", "fract")
+            fun fract(x: String = "[$xyzw]") = common("Return `$x - $x.floor`.", "fract")
             when (part) {
                 Generator.Part.Class -> {
                     fract()
@@ -316,7 +316,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
             }
 
-            fun mod(x: String = "[$xyzw]", y: String = "b") = glslDocs("Modulus. Returns `$x - $y * floor($x / $y).", "mod")
+            fun mod(x: String = "[$xyzw]", y: String = "b") = common("Modulus. Returns `$x - $y * floor($x / $y).", "mod")
             when (part) {
                 Generator.Part.Class -> {
                     mod()
@@ -362,7 +362,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 else -> Unit // mod in stdlib
             }
 
-            fun modf(x: String = "[$xyzw]") = glslDocs("Returns the fractional part of `$x` and its integer counterpart (as a whole number floating point value). Both will have the same sign as `$x.`", "modf")
+            fun modf(x: String = "[$xyzw]") = common("Returns the fractional part of `$x` and its integer counterpart (as a whole number floating point value). Both will have the same sign as `$x.`", "modf")
             val `fResXYZW type` = XyzwJoint { "fractRes$it: $type" }
             val fResXYZW = XyzwJoint { "fractRes$it" }
             val `iResXYZW type` = XyzwJoint { "intRes$it: $type" }
@@ -420,7 +420,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
         }
         if (type in numberTypes) {
 
-            fun min(x: String = "[$xyzw]", y: String = "b") = glslDocs("Returns `$y` if `$y < $x`; otherwise, it returns `$x`.", "min")
+            fun min(x: String = "[$xyzw]", y: String = "b") = common("Returns `$y` if `$y < $x`; otherwise, it returns `$x`.", "min")
             when (part) {
                 Generator.Part.Class -> {
                     // min scalar
@@ -477,7 +477,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
             }
 
-            fun max(x: String = "[$xyzw]", y: String = "b") = glslDocs("Returns `y` if `$x < $y`; otherwise, it returns `$x`.", "max")
+            fun max(x: String = "[$xyzw]", y: String = "b") = common("Returns `y` if `$x < $y`; otherwise, it returns `$x`.", "max")
             when (part) {
                 Generator.Part.Class -> {
                     max()
@@ -533,7 +533,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
             }
 
-            fun clamp(x: String = "[$xyzw]", minVal: String = "minVal", maxVal: String = "maxVal") = glslDocs("Returns `($x max $minVal) min $maxVal`.", "clamp")
+            fun clamp(x: String = "[$xyzw]", minVal: String = "minVal", maxVal: String = "maxVal") = common("Returns `($x max $minVal) min $maxVal`.", "clamp")
             when (part) {
                 Generator.Part.Class -> {
                     clamp()
@@ -570,7 +570,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
         }
         if (type in floatingPointTypes) {
 
-            fun mix(x: String = "[$xyzw]", y: String = "b.[$xyzw]", a: String = "c") = glslDocs("""
+            fun mix(x: String = "[$xyzw]", y: String = "b.[$xyzw]", a: String = "c") = common("""
                 |If `$a` is a floating scalar or vector: Returns `$x * (1.0 - $a) + $y * $a`, i.e., the linear blend of `$x` and `$y` using the floating-point value `$a`.
                 |The value for `$a` is not restricted to the range `[0, 1]`. If `$a` is a boolean scalar or vector: Selects which vector each returned component comes from.
                 |For a component of `$a` that is false, the corresponding component of `$x` is returned. For a component of `$a` that is true, the corresponding component of `$y` is returned.
@@ -696,7 +696,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
             }
 
-            fun step(x: String = "[$xyzw]", edge: String = "edge") = glslDocs("Returns `0` if `$x < $edge`, otherwise it returns `1`.", "step")
+            fun step(x: String = "[$xyzw]", edge: String = "edge") = common("Returns `0` if `$x < $edge`, otherwise it returns `1`.", "step")
             when (part) {
                 Generator.Part.Class -> {
                     // step scalar
@@ -755,7 +755,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
             }
 
-            fun smoothstep(x: String = "[$xyzw]", edge0: String = "edge0", edge1: String = "edge1") = glslDocs("""
+            fun smoothstep(x: String = "[$xyzw]", edge0: String = "edge0", edge1: String = "edge1") = common("""
                 |Returns `0.0` if `$x <= $edge0` and `1.0` if `$x >= $edge1` and performs smooth Hermite interpolation 
                 |between `0` and `1` when `$edge0 < $x < $edge1`. This is useful in cases where you would want 
                 |a threshold function with a smooth transition. This is equivalent to:
@@ -822,7 +822,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
             }
 
-            fun isNan(x: String = "[$xyzw]") = glslDocs("""
+            fun isNan(x: String = "[$xyzw]") = common("""
                 |Returns `true` if `$x` holds a `NaN` (not a number) representation in the underlying implementation's 
                 |set of floating point representations. Returns `false` otherwise, including for implementations 
                 |with no `NaN` representations.""", "isNaN")
@@ -851,7 +851,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 else -> Unit // in stdlib
             }
 
-            fun isInf(x: String = "[$xyzw]") = glslDocs("""
+            fun isInf(x: String = "[$xyzw]") = common("""
                 |Returns `true` if `$x` holds a positive infinity or negative infinity representation in the underlying 
                 |implementation's set of floating point representations. Returns `false` otherwise, including for
                 |implementations with no infinity representations.""", "isInf")
@@ -894,7 +894,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
             |Returns a ${if (unsigned) "un" else ""}signed integer value representing the encoding of a floating-point value.
             |The floatingpoint value's bit-level representation is preserved."""
         when (type) {
-            "Float" -> glslDocs(text, "floatBitsTo" + if (unsigned) "Uint" else "Int")
+            "Float" -> common(text, "floatBitsTo" + if (unsigned) "Uint" else "Int")
             else -> docs(text)
         }
     }
@@ -908,7 +908,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
             |If an `inf` or `NaN` is passed in, it will not signal, and the resulting floating point value is unspecified.
             |Otherwise, the bit-level representation is preserved."""
         when (type) {
-            "Float" -> glslDocs(text, (if (unsigned) "u" else "") + "intBitsToFloat")
+            "Float" -> common(text, (if (unsigned) "u" else "") + "intBitsToFloat")
             else -> docs(text)
         }
     }
@@ -987,7 +987,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
     }
 
     if (type in floatingPointTypes) {
-        fun fma(a: String = "[$xyzw]", b: String = "b.[$xyzw]", c: String = "c.[$xyzw]") = glslDocs("Computes and returns `$a * $b + $c`.", "fma")
+        fun fma(a: String = "[$xyzw]", b: String = "b.[$xyzw]", c: String = "c.[$xyzw]") = common("Computes and returns `$a * $b + $c`.", "fma")
         when (part) {
             Generator.Part.Class -> {
                 fma()
@@ -1017,7 +1017,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 +"inline fun $type.fma(b: $type, c: $type): $type = this * b + c"
             }
         }
-        fun frexp(x: String = "[$xyzw]") = glslDocs("""
+        fun frexp(x: String = "[$xyzw]") = common("""
             |Splits `$x` into a floating-point significand in the range `[0.5, 1.0)` and an integral exponent of two, such that:
             |`$x = significand * exp(2, exponent)`
             |
@@ -1217,7 +1217,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
             }
         }
 
-        fun ldexp(x: String = "[$xyzw]") = glslDocs("""
+        fun ldexp(x: String = "[$xyzw]") = common("""
             |Builds a floating-point number from `$x` and the corresponding integral exponent of two in exp, returning:
             |`significand * exp(2, exponent)`
             |

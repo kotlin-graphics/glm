@@ -393,6 +393,7 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
                 exponential(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
                 geometric(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
                 integer(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
+                matrix(ordinal, 0, type, extension, id, Generator.Part.CompanionObject)
                 trigonometric(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
             }
         }

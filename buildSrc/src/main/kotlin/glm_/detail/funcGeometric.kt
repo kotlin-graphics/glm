@@ -5,7 +5,7 @@ import glm_.gen.Generator
 
 fun Generator.geometric(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
 
-    if (part != Generator.Part.Scalar) +"// geometric\n"
+    if (part != Generator.Part.Scalar) +"// func geometric\n"
 
     val `exp,xyzw` = xyzwJoint { "exp.$it" }
     val `expXYZW type` = xyzwJoint { "exp$it: $type" }
@@ -58,8 +58,8 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
     val `edge0XYZW type` = XyzwJoint { "edge0$it: $type" }
     val `edge1XYZW type` = XyzwJoint { "edge1$it: $type" }
 
-    fun glslDocs(descr: String, manPage: String, append: String = "") = docs("""
-            |$descr
+    fun geom(doc: String, manPage: String, append: String = "") = docs("""
+            ${if (doc.startsWith('|')) doc else "|$doc"}
             |
             |[GLSL $manPage man page](http://www.opengl.org/sdk/docs/manglsl/xhtml/$manPage.xml)
             |[GLSL 4.20.8 specification, section 8.5 Geometric Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)
@@ -67,7 +67,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
 
     if (type in floatingPointTypes) {
 
-        fun length(x: String = "[$xyzw]") = glslDocs("Returns the length of `$x`, i.e., `sqrt($x * $x)`.", "length")
+        fun length(x: String = "[$xyzw]") = geom("Returns the length of `$x`, i.e., `sqrt($x * $x)`.", "length")
         when (part) {
             Generator.Part.Class -> {
                 length()
@@ -85,7 +85,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
             }
         }
 
-        fun distance(p0: String = "[$xyzw]", p1: String = "p1") = glslDocs("Returns the distance between `$p0` and `$p1`, i.e., `length($p0 - $p1)`.", "distance")
+        fun distance(p0: String = "[$xyzw]", p1: String = "p1") = geom("Returns the distance between `$p0` and `$p1`, i.e., `length($p0 - $p1)`.", "distance")
         when (part) {
             Generator.Part.Class -> {
                 distance(p1 = "p.[$xyzw]")
@@ -107,7 +107,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
             }
         }
 
-        fun dot(x: String = "[$xyzw]", y: String = "b.[$xyzw]") = glslDocs("Returns the dot product of `$x` and `$y`, i.e., `result = $x * $y`.", "dot")
+        fun dot(x: String = "[$xyzw]", y: String = "b.[$xyzw]") = geom("Returns the dot product of `$x` and `$y`, i.e., `result = $x * $y`.", "dot")
         when (part) {
             Generator.Part.Class -> {
                 dot()
@@ -126,7 +126,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
         }
 
         if (ordinal == 3) {
-            fun cross(x: String = "[$xyzw]", y: String = "b.[$xyzw]") = glslDocs("Returns the cross product of `$x` and `$y`.", "cross")
+            fun cross(x: String = "[$xyzw]", y: String = "b.[$xyzw]") = geom("Returns the cross product of `$x` and `$y`.", "cross")
             when (part) {
                 Generator.Part.Class -> {
                     cross()
@@ -154,7 +154,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
             }
         }
 
-        fun normalize(x: String = "[$xyzw]") = glslDocs("""
+        fun normalize(x: String = "[$xyzw]") = geom("""
             |Returns a vector in the same direction as `$x` but with length of `1`.
             |According to issue 10 GLSL 1.10 specification, if `length(x) == 0` then result is undefined and generate an error.""", "normalize")
         when (part) {
@@ -183,7 +183,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
         }
 
         fun faceForward(n: String = "[$xyzw]", i: String = "i.[$xyzw]", nRef: String = "nRef.[$xyzw]") =
-            glslDocs("If `dot($nRef, $i) < 0.0`, return `$n`, otherwise, return `-$n`.", "faceforward")
+            geom("If `dot($nRef, $i) < 0.0`, return `$n`, otherwise, return `-$n`.", "faceforward")
         when (part) {
             Generator.Part.Class -> {
                 faceForward()
@@ -211,7 +211,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
             }
         }
 
-        fun reflect(i: String = "[$xyzw]", n: String = "n.[$xyzw]") = glslDocs(
+        fun reflect(i: String = "[$xyzw]", n: String = "n.[$xyzw]") = geom(
             "For the incident vector `$i` and surface orientation `$n`, returns the reflection direction : result = `$i - 2.0 * dot($n, $i) * $n`.", "reflect")
         when (part) {
             Generator.Part.Class -> {
@@ -248,7 +248,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
         }
 
         fun refract(i: String = "[$xyzw]", n: String = "n.[$xyzw]") =
-            glslDocs("For the incident vector `$i` and surface normal `$n`, and the ratio of indices of refraction `eta`, return the refraction vector.", "refract")
+            geom("For the incident vector `$i` and surface normal `$n`, and the ratio of indices of refraction `eta`, return the refraction vector.", "refract")
         when (part) {
             Generator.Part.Class -> {
                 refract()

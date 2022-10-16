@@ -1,5 +1,6 @@
 package glm_
 
+import glm_.detail.matrix
 import glm_.ext.matrixTransform
 import glm_.gen.Generator
 import glm_.gen.Generator.Experimentals
@@ -109,8 +110,9 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
 
     val matID = "Mat$matrixSize$id"
     val `m,abcdN` = abcdJoint(",\n") { "m.$it" }
-    val abcdN = abcdJoint(",\n") { it }
+    val abcdN = abcdJoint(",\n")
     val `resXYZW type` = WxyzJoint { "res$it: $type" }
+
     "open class $matID protected constructor(var array: ${type}Array) : $MatNT<$type, Vec$height$id>()" {
 
         val xyzwDiag = abcdJointIndexed(",\n") { i, j, _ -> if (i == j) glm_.xyzw[i] else "0" }
@@ -307,64 +309,7 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
             }
         }
 
-        if (width == height)
-            "fun inverse(res: $matID = $matID()): $matID" {
-                if (width == 4) {
-                    +"""
-                        val coef00 = c2 * d3 - d2 * c3
-                        val coef02 = b2 * d3 - d2 * b3
-                        val coef03 = b2 * c3 - c2 * b3
-                        val coef04 = c1 * d3 - d1 * c3
-                        val coef06 = b1 * d3 - d1 * b3
-                        val coef07 = b1 * c3 - c1 * b3
-                        val coef08 = c1 * d2 - d1 * c2
-                        val coef10 = b1 * d2 - d1 * b2
-                        val coef11 = b1 * c2 - c1 * b2
-                        val coef12 = c0 * d3 - d0 * c3
-                        val coef14 = b0 * d3 - d0 * b3
-                        val coef15 = b0 * c3 - c0 * b3
-                        val coef16 = c0 * d2 - d0 * c2
-                        val coef18 = b0 * d2 - d0 * b2
-                        val coef19 = b0 * c2 - c0 * b2
-                        val coef20 = c0 * d1 - d0 * c1
-                        val coef22 = b0 * d1 - d0 * b1
-                        val coef23 = b0 * c1 - c0 * b1
-                        val x = a0
-                        val y = a1
-                        val z = a2
-                        val w = a3
-                        val inverse = res(+ b1 * coef00 - b2 * coef04 + b3 * coef08, - a1 * coef00 + a2 * coef04 - a3 * coef08, + a1 * coef02 - a2 * coef06 + a3 * coef10, - a1 * coef03 + a2 * coef07 - a3 * coef11,
-                                          - b0 * coef00 + b2 * coef12 - b3 * coef16, + a0 * coef00 - a2 * coef12 + a3 * coef16, - a0 * coef02 + a2 * coef14 - a3 * coef18, + a0 * coef03 - a2 * coef15 + a3 * coef19,
-                                          + b0 * coef04 - b1 * coef12 + b3 * coef20, - a0 * coef04 + a1 * coef12 - a3 * coef20, + a0 * coef06 - a1 * coef14 + a3 * coef22, - a0 * coef07 + a1 * coef15 - a3 * coef23,
-                                          - b0 * coef08 + b1 * coef16 - b2 * coef20, + a0 * coef08 - a1 * coef16 + a2 * coef20, - a0 * coef10 + a1 * coef18 - a2 * coef22, + a0 * coef11 - a1 * coef19 + a2 * coef23)"""
-                }
-                when (width) {
-                    2 -> +"val oneOverDeterminant = 1 / (+ a0 * b1\n- b0 * a1)"
-                    3 -> +"""
-                        val oneOverDeterminant = 1 / (+ a0 * (b1 * c2 - c1 * b2)
-                                                      - b0 * (a1 * c2 - c1 * a2)
-                                                      + c0 * (a1 * b2 - b1 * a2))"""
-                    else -> +"val oneOverDeterminant = 1 / (x * inverse.a0 + y * inverse.b0 + z * inverse.c0 + w * inverse.d0)"
-                }
-
-                when (width) {
-                    2 -> +"return res(+ b1 * oneOverDeterminant,\n- a1 * oneOverDeterminant,\n- b0 * oneOverDeterminant,\n+ a0 * oneOverDeterminant)"
-                    3 -> +"""
-                            return res(+ (b1 * c2 - c1 * b2) * oneOverDeterminant,
-                                       - (a1 * c2 - c1 * a2) * oneOverDeterminant,
-                                       + (a1 * b2 - b1 * a2) * oneOverDeterminant,
-                                       - (b0 * c2 - c0 * b2) * oneOverDeterminant,
-                                       + (a0 * c2 - c0 * a2) * oneOverDeterminant,
-                                       - (a0 * b2 - b0 * a2) * oneOverDeterminant,
-                                       + (b0 * c1 - c0 * b1) * oneOverDeterminant,
-                                       - (a0 * c1 - c0 * a1) * oneOverDeterminant,
-                                       + (a0 * b1 - b0 * a1) * oneOverDeterminant)"""
-                    else -> {
-                        +"inverse *= oneOverDeterminant"
-                        +"return inverse"
-                    }
-                }
-            }
+        matrix(width, height, type, extension, id, Generator.Part.Class)
 
         if (type in floatingPointTypes) {
             val `resWXYZ type` = WxyzJoint { "res$it: $type" }
@@ -383,7 +328,7 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
                 docs(doc)
                 +"fun toQuat(res: Quat$id = Quat$id()): Quat$id = toQuat { $`resWXYZ type` -> res($resWXYZ) }"
                 docs(doc)
-                val abcdN3 = abcdJoint(3, 3, ",\n") { it }
+                val abcdN3 = abcdJoint(3, 3, ",\n")
                 "inline fun <R> toQuat(res: ($`resXYZW type`) -> R): R" {
                     +contract
                     +"return Mat3$id.toQuat($abcdN3, res)"
@@ -434,6 +379,7 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
             +"val size = length * $type.BYTES"
 
             matrixTransform(width, height, type, extension, id, Generator.Part.CompanionObject)
+            matrix(width, height, type, extension, id, Generator.Part.CompanionObject)
 
             // [gtc quaternion] quat_cast
             fun gtcQuaternion() {
