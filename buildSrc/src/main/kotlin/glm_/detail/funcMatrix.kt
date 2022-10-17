@@ -9,6 +9,7 @@ fun Generator.matrix(width: Int, height: Int, type: String, extension: String, i
     if (part != Generator.Part.Scalar) +"// func matrix\n"
 
     val matID = "Mat$matrixSize$id"
+    val xyzw = xyzwJoint()
     val `mCR type` = abcdJointIndexed(",\n") { c, r, _ -> "m${nn(c, r)}: $type" }
     val `nCR type` = abcdJointIndexed(",\n") { c, r, _ -> "n${nn(c, r)}: $type" }
     val `m,abcdN` = abcdJoint(rowSeparator = ",\n") { "m.$it" }
@@ -29,6 +30,7 @@ fun Generator.matrix(width: Int, height: Int, type: String, extension: String, i
 
     val isMat = width > 0 && height > 0
     val isVec = width > 1 && height == 0
+    val nl = '\n'
 
     if (isMat) {
 
@@ -37,17 +39,21 @@ fun Generator.matrix(width: Int, height: Int, type: String, extension: String, i
         when (part) {
             Generator.Part.Class -> {
                 matrixCompMult()
-                +"infix fun compMultAssign(n: $matID): $matID = compMult(this, $matID())"
+                +"infix fun compMultAssign(n: $matID): $matID = compMult(n, this)"
 
+                matrixCompMult()
+                +"infix fun compMult(n: $matID): $matID = compMult(n, $matID())"
                 matrixCompMult()
                 +"""
                     fun compMult(n: $matID, res: $matID = $matID()): $matID = compMult(this, n) { $`abcdN type` ->
                         res($abcdN)
                     }"""
+
                 matrixCompMult(y = "n[${AbcdJoint()}")
-                "fun compMult($`nAbcdN type`, res: $matID = $matID()): $matID = compMult($abcdN,\n$`nAbcdN`) { $`abcdN type` ->".indentAndClose {
-                    +"res($abcdN)"
-                }
+                +"""
+                    fun compMult($`nAbcdN type`, res: $matID = $matID()): $matID = compMult($abcdN,$nl$`nAbcdN`) { $`abcdN type` ->
+                        res($abcdN)
+                    }"""
 
                 matrixCompMult()
                 +"inline fun <R> compMult(n: $matID, res: ($`abcdN type`) -> R): R = compMult(this, n, res)"
@@ -82,25 +88,32 @@ fun Generator.matrix(width: Int, height: Int, type: String, extension: String, i
         fun outerProduct(c: String = "this", r: String = "n") = matrix(
             "Treats the first parameter `$c` as a column vector and the second parameter `$r` as a row vector and does a linear algebraic matrix multiply `$c * $r`.", "outerProduct")
 
-        when (part) {
-            Generator.Part.Class -> {
-                outerProduct()
-                +"""
-                    fun outerProduct(n: $matID, res: $matID = $matID()): $matID = outerProduct(this, n) { $`abcdN type` ->
-                        res($abcdN)
-                    }"""
-                outerProduct(r = "n[${AbcdJoint()}")
-                "fun outerProduct($`nAbcdN type`, res: $matID = $matID()): $matID = outerProduct($abcdN,\n$`nAbcdN`) { $`abcdN type` ->".indentAndClose {
-                    +"res($abcdN)"
+        for (i in 2..4) {
+            val vecCid = "Vec$width$id"
+            val vecRid = "Vec$i$id"
+            // needs to overwrite since we are in a vec
+            val matID = if(width == i) "Mat$width$id" else "Mat${i}x${width}$id"
+            val `abcdN type` = abcdJoint(i, width, rowSeparator = ",\n") { "$it: $type" }
+            val abcdN = abcdJoint(i, width,",\n")
+            val `rXyzw type` = XyzwJoint(i) { "r$it: $type" }
+            val rXyzw = XyzwJoint(i) { "r$it" }
+            when (part) {
+                Generator.Part.Class -> {
+                    outerProduct()
+                    +"infix fun outerProduct(r: $vecRid): $matID = outerProduct(r, $matID())"
+                    outerProduct()
+                    +"""
+                        fun outerProduct(r: $vecRid, res: $matID): $matID = outerProduct(this, r) { $`abcdN type` ->
+                            res($abcdN)
+                        }"""
+                    outerProduct(r = "n[${AbcdJoint()}")
+                    +"""
+                        inline fun <R> outerProduct($`rXyzw type`, res: ($`abcdN type`) -> R): R {
+                            $contract
+                            return outerProduct($xyzw, $rXyzw, res)
+                        }"""
                 }
-
-                outerProduct()
-                +"inline fun <R> outerProduct(n: $matID, res: ($`abcdN type`) -> R): R = outerProduct(this, n, res)"
-                outerProduct(r = "n[${AbcdJoint()}")
-                +"inline fun <R> outerProduct($`nAbcdN type`, res: ($`abcdN type`) -> R): R = outerProduct($abcdN,\n$nAbcdN, res)"
-            }
-            Generator.Part.CompanionObject ->
-                for (i in 2..4) {
+                Generator.Part.CompanionObject -> {
                     val `resAbcd i x width type` = AbcdJoint(i, width, ",\n") { "res$it: $type" }
                     val `resAbcd i x width` = AbcdJoint(i, width, ",\n") { "res$it" }
                     val `c,xyzw` = xyzwJoint(width) { "c.$it" }
@@ -109,7 +122,7 @@ fun Generator.matrix(width: Int, height: Int, type: String, extension: String, i
                     val `r,xyzw` = xyzwJoint(i) { "r.$it" }
                     val `rXYZW type` = XyzwJoint(i) { "r$it: $type" }
                     outerProduct("c", "r")
-                    +"inline fun <R> outerProduct(c: Vec$width$id, r: Vec$i$id, res: ($`resAbcd i x width type`) -> R): R = outerProduct($`c,xyzw`,\n$`r,xyzw`, res)"
+                    +"inline fun <R> outerProduct(c: $vecCid, r: $vecRid, res: ($`resAbcd i x width type`) -> R): R = outerProduct($`c,xyzw`,\n$`r,xyzw`, res)"
                     outerProduct("c[$XYZW]", "r[$XYZW]")
                     "inline fun <R> outerProduct($`cXYZW type`,\n$`rXYZW type`, res: ($`resAbcd i x width type`) -> R): R" {
                         +contract
@@ -127,7 +140,8 @@ fun Generator.matrix(width: Int, height: Int, type: String, extension: String, i
                         times(0)
                     }
                 }
-            else -> Unit
+                else -> Unit
+            }
         }
     }
 
@@ -135,19 +149,25 @@ fun Generator.matrix(width: Int, height: Int, type: String, extension: String, i
 
         fun transpose(x: String = "this") = matrix("Returns the transposed matrix of `$x`", "transpose")
         val `abcd height x width type` = abcdJoint(height, width, ",\n") { "$it: $type" }
+        val transposeMatID = if (width == height) matID else "Mat${height}x${width}$id"
+        val abcdN = abcdJoint(height, width,",\n")
         when (part) {
             Generator.Part.Class -> {
                 if (width == height) {
                     transpose()
-                    +"fun transposeAssign(): $matID = transpose(this)"
+                    +"fun transposeAssign(): $transposeMatID = transpose(this)"
                 }
                 transpose()
-                "fun transpose(res: $matID = $matID()): $matID = transpose(this) { $`abcd height x width type` ->".indentAndClose {
+                "fun transpose(res: $transposeMatID = $transposeMatID()): $transposeMatID = transpose(this) { $`abcd height x width type` ->".indentAndClose {
                     +"res($abcdN)"
                 }
 
                 transpose()
-                +"inline fun <R> transpose(res: ($`abcd height x width type`) -> R): R = transpose($abcdN, res)"
+                +"""
+                    inline fun <R> transpose(res: ($`abcd height x width type`) -> R): R {
+                        $contract
+                        return transpose(this, res)
+                    }"""
             }
             Generator.Part.CompanionObject -> {
                 val `abcd height x width` = abcdJointIndexed(height, width, ",\n") { c, r, _ -> "${abcd[r]}$c" }

@@ -175,6 +175,16 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
             +"else array.copyOf())"
         }
 
+        // custom glm, functional programming
+        var block = abcdJointIndexed { c, r, _ ->
+            val i = c * height + r
+            val prefix = if (i % height == 0 && i > 0) "\n" else ""
+            "${prefix}block($i)"
+        }
+        +"constructor(block: (i: Int) -> $type) : this($block)"
+        block = abcdJointIndexed { c, r, _ -> "block($c, $r)" }
+        +"constructor(block: (col: Int, row: Int) -> $type) : this($block)"
+
         +"// -- Invoke functions --"
         +"operator fun invoke(s: Number): $matID = invoke(${"s" * width})"
         if (width > 2)

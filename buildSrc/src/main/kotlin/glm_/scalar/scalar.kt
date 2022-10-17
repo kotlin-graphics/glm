@@ -93,4 +93,22 @@ fun scalar(target: File) {
         for ((type, extension, _, _) in vectorTypes)
             integer(-1, type, extension, "", "", Generator.Part.Scalar)
     }
+
+    generate(target, "glm_/scalar/packing.kt") {
+
+        experimentals += Generator.Experimentals.Contracts
+        `package` = "glm_.scalar"
+        //            +"import glm_.extensions.swizzle.*"
+        imports += listOf(
+            //                    "kotlin.math.pow"
+            //            "glm_.extensions.*",
+//            "kotlin.reflect.KMutableProperty0",
+            //            //                    +"import kotlin.jvm.*"
+            //                          "kotlin.math.*"
+                         )
+
+        +"// packing\n"
+        for ((type, extension, _, _) in vectorTypes)
+            packing(0, type, extension, "", "", Generator.Part.Scalar)
+    }
 }

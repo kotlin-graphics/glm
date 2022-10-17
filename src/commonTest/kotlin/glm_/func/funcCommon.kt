@@ -400,13 +400,13 @@ class int {
         run {
             (-0f).round() shouldEqual 0f
             // -(-0.5f).round() returns -1f on native glm
-            (-0.5f).round() shouldEqual -0f
+            (-0.5f).round() shouldEqual -1f
             (-0.6f).round() shouldEqual -1f
             (-1f).round() shouldEqual -1f
             (-0.1f).round() shouldEqual 0f
             (-0.9f).round() shouldEqual -1f
             // -(-0.5f).round() returns -1f on native glm
-            (-1.5f).round() shouldEqual -1f
+            (-1.5f).round() shouldEqual -2f
             (-1.6f).round() shouldEqual -2f
             (-1.9f).round() shouldEqual -2f
         }

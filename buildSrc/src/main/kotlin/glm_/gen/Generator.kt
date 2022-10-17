@@ -60,7 +60,7 @@ class Generator(val targetDir: File) {
             aligned += c
             if (c == '\n' && i != 0 && i != lastIndex) {
                 val nextC = this[i + 1]
-                if (lastC == ',' && nextC.isLetterOrDigit()) {
+                if ((lastC == ',' || lastC == ' ') && nextC.isLetterOrDigit()) {
                     val padding = parenthesis.lastOrNull() ?: 0
                     aligned += " ".repeat(padding)
                     spaces = padding

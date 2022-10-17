@@ -239,6 +239,10 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
             }
         }
 
+        // custom glm, functional programming
+        val block = xyzwJointIndexed { i, _ -> "block($i)" }
+        +"constructor(block: (i: Int) -> $type) : this($block)"
+
         if (type in numberTypes) {
             +"// Unary arithmetic operators"
             for ((operatorChar, operatorName) in operators) {
@@ -346,6 +350,8 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
         exponential(ordinal, type, extension, id, vec, Generator.Part.Class)
         geometric(ordinal, type, extension, id, vec, Generator.Part.Class)
         integer(ordinal, type, extension, id, vec, Generator.Part.Class)
+        matrix(ordinal, 0, type, extension, id, Generator.Part.Class)
+        packing(ordinal, type, extension, id, vec, Generator.Part.Class)
         trigonometric(ordinal, type, extension, id, vec, Generator.Part.Class)
 
         +"override fun equals(other: Any?) = other is $VecID && ${xyzwJoint(separator = " && ") { "$it == other.$it" }}"
@@ -394,6 +400,7 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
                 geometric(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
                 integer(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
                 matrix(ordinal, 0, type, extension, id, Generator.Part.CompanionObject)
+                packing(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
                 trigonometric(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
             }
         }

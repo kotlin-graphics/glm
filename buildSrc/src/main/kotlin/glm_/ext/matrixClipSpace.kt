@@ -38,11 +38,7 @@ fun Generator.matrixClipSpace(type: String, extension: String, id: String) {
 
     val `-1` = type.`-1`
     val `0` = type.`0`
-    val `0,5` = when (type) {
-        "Float" -> "0.5f"
-        "Double" -> "0.5"
-        else -> error("invalid type")
-    }
+    val `0,5` = type.`0,5`
     val `1` = type.`1`
     val `2` = type.`2`
     docs("""

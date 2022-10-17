@@ -1,9 +1,15 @@
 package glm_
 
 import glm_.mat2.Mat2
+import glm_.mat2x3.Mat2x3
+import glm_.mat2x4.Mat2x4
 import glm_.mat3.Mat3
+import glm_.mat3x2.Mat3x2
+import glm_.mat3x4.Mat3x4
 import glm_.mat4.Mat4
 import glm_.mat4.Mat4d
+import glm_.mat4x2.Mat4x2
+import glm_.mat4x3.Mat4x3
 import kotlin.test.assertTrue
 import glm_.vec1.Vec1
 import glm_.vec1.Vec1d
@@ -11,6 +17,7 @@ import glm_.vec1.Vec1i
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2i
+import glm_.vec2.Vec2ui
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec3.Vec3i
@@ -59,17 +66,31 @@ fun Vec4d.shouldEqual(v: Vec4d, epsilon: Double) = assert(allEqual(v, epsilon))
 infix fun Mat2.shouldEqual(v: Mat2) = shouldEqual(v, glm.epsilon.f)
 fun Mat2.shouldEqual(v: Mat2, epsilon: Float) = assert(allEqual(v, epsilon))
 
+infix fun Mat2x3.shouldEqual(v: Mat2x3) = shouldEqual(v, glm.epsilon.f)
+fun Mat2x3.shouldEqual(v: Mat2x3, epsilon: Float) = assert(allEqual(v, epsilon))
+infix fun Mat2x4.shouldEqual(v: Mat2x4) = shouldEqual(v, glm.epsilon.f)
+fun Mat2x4.shouldEqual(v: Mat2x4, epsilon: Float) = assert(allEqual(v, epsilon))
+
 infix fun Mat3.shouldEqual(v: Mat3) = shouldEqual(v, glm.epsilon.f)
 fun Mat3.shouldEqual(v: Mat3, epsilon: Float) = assert(allEqual(v, epsilon))
+infix fun Mat3x2.shouldEqual(v: Mat3x2) = shouldEqual(v, glm.epsilon.f)
+fun Mat3x2.shouldEqual(v: Mat3x2, epsilon: Float) = assert(allEqual(v, epsilon))
+infix fun Mat3x4.shouldEqual(v: Mat3x4) = shouldEqual(v, glm.epsilon.f)
+fun Mat3x4.shouldEqual(v: Mat3x4, epsilon: Float) = assert(allEqual(v, epsilon))
 
 infix fun Mat4.shouldEqual(v: Mat4) = shouldEqual(v, glm.epsilon.f)
 fun Mat4.shouldEqual(v: Mat4, epsilon: Float) = assert(allEqual(v, epsilon))
+infix fun Mat4x2.shouldEqual(v: Mat4x2) = shouldEqual(v, glm.epsilon.f)
+fun Mat4x2.shouldEqual(v: Mat4x2, epsilon: Float) = assert(allEqual(v, epsilon))
+infix fun Mat4x3.shouldEqual(v: Mat4x3) = shouldEqual(v, glm.epsilon.f)
+fun Mat4x3.shouldEqual(v: Mat4x3, epsilon: Float) = assert(allEqual(v, epsilon))
 
 infix fun Mat4d.shouldEqual(v: Mat4d) = shouldEqual(v, glm.epsilon.d)
 fun Mat4d.shouldEqual(v: Mat4d, epsilon: Double) = assert(allEqual(v, epsilon))
 
 infix fun Vec1i.shouldBe(v: Vec1i) = equal(v)
 infix fun Vec2i.shouldBe(v: Vec2i) = equal(v)
+infix fun Vec2ui.shouldBe(v: Vec2ui) = equal(v)
 infix fun Vec3i.shouldBe(v: Vec3i) = equal(v)
 infix fun Vec4i.shouldBe(v: Vec4i) = equal(v)
 infix fun Int.shouldBe(i: Int) = assert(this == i)

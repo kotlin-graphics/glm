@@ -45,6 +45,12 @@ val String.`0`
         "Double" -> "0.0"
         else -> error("invalid type")
     }
+val String.`0,5`
+    get() = when (this) {
+    "Float" -> "0.5f"
+    "Double" -> "0.5"
+    else -> error("invalid type")
+}
 val String.`1`
     get() = when (this) {
         "Int" -> "1"

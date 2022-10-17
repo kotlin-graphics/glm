@@ -215,7 +215,16 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
                 Generator.Part.Scalar -> {
                     round("this")
-                    +"inline fun $type.round(): $type = roundTo${type.counterpart}().$extension"
+//                    +"inline fun $type.round(): $type = roundTo${type.counterpart}().$extension"
+                    +"""
+                        inline fun $type.round(): $type = when {
+                            this >= 0 -> roundTo${type.counterpart}().$extension
+                            else -> {
+                                val i = floor(this) // integer portion
+                                val f = this - i // fractional portion
+                                if (f <= ${type.`0,5`}) i else i + ${type.`1`} // round integer portion based on fractional portion
+                            }
+                            }"""
                 }
             }
 
