@@ -353,10 +353,12 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
         matrix(ordinal, 0, type, extension, id, Generator.Part.Class)
         packing(ordinal, type, extension, id, vec, Generator.Part.Class)
         trigonometric(ordinal, type, extension, id, vec, Generator.Part.Class)
+        vectorRelational(ordinal, type, extension, id, vec, Generator.Part.Class)
 
         +"override fun equals(other: Any?) = other is $VecID && ${xyzwJoint(separator = " && ") { "$it == other.$it" }}"
         +"override fun hashCode() = ${xyzwJointIndexed(separator = " + ") { i, c -> "${31f.pow(i).toInt()} * $c.hashCode()" }}"
 
+        // TODO remove
         if (type == "Float" || type == "Double")
             +"""
                 fun equal(v: $VecID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[ofs + it] - v.array[v.ofs + it]) <= epsilon }
@@ -373,12 +375,14 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
                             return true
                     return false
                 }"""
-        else
+        else {
+//            if (type != "Boolean")
+//                +"infix fun equal(v: $VecID) = BooleanArray(length) { array[ofs + it] == v.array[v.ofs + it] }"
+//            +"infix fun notEqual(v: $VecID) = BooleanArray(length) { array[ofs + it] != v.array[v.ofs + it] }"
             +"""
-                infix fun equal(v: $VecID) = BooleanArray(length) { array[ofs + it] == v.array[v.ofs + it] }
-                infix fun notEqual(v: $VecID) = BooleanArray(length) { array[ofs + it] != v.array[v.ofs + it] }
                 fun allEqual(v: $VecID): Boolean = array.contentEquals(v.array)
                 fun anyNotEqual(v: $VecID): Boolean = !array.contentEquals(v.array)"""
+        }
         +"fun all(predicate: ($type) -> Boolean): Boolean = array.all(predicate)"
         +"fun any(predicate: ($type) -> Boolean): Boolean = array.any(predicate)"
 
@@ -403,6 +407,7 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
                 packing(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
                 trigonometric(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
             }
+            vectorRelational(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
         }
     }
 

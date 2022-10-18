@@ -33,6 +33,8 @@ fun Float.shouldEqual(f: Float, epsilon: Float) = assert(equal(f, epsilon))
 infix fun Double.shouldEqual(d: Double) = shouldEqual(d, glm.epsilon.d)
 fun Double.shouldEqual(d: Double, epsilon: Double) = assert(equal(d, epsilon))
 
+infix fun Boolean.shouldBe(b: Boolean) = assert(this == b)
+
 //infix fun Quat.shouldEqual(q: Quat) = shouldEqual(q, glm.epsilon.ff)
 //fun Quat.shouldEqual(q: Quat, epsilon: Float) = allEqual(q, epsilon) shouldBe true
 //
