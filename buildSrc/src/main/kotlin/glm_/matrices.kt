@@ -1,6 +1,8 @@
 package glm_
 
+import glm_.detail.binary
 import glm_.detail.matrix
+import glm_.ext.matrixCommon
 import glm_.ext.matrixTransform
 import glm_.gen.Generator
 import glm_.gen.Generator.Experimentals
@@ -110,7 +112,9 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
 
     val matID = "Mat$matrixSize$id"
     val `m,abcdN` = abcdJoint(",\n") { "m.$it" }
+    val `mAbcdN type` = AbcdJoint(",\n") { "m$it: $type" }
     val abcdN = abcdJoint(",\n")
+    val `abcdN type` = abcdJoint(",\n") { "$it: $type" }
     val `resXYZW type` = WxyzJoint { "res$it: $type" }
 
     "open class $matID protected constructor(var array: ${type}Array) : $MatNT<$type, Vec$height$id>()" {
@@ -289,37 +293,7 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
             +"return this"
         }
 
-        +"// -- Binary operators --"
-        for ((char, operation) in operators) {
-            +"infix operator fun $operation(scalar: $type): $matID = $operation(scalar, $matID())"
-            +"fun $operation(scalar: $type, res: $matID): $matID = res(${abcdJoint(",\n") { "$it $char scalar" }})"
-            if (char == "*") {
-                val tmp = xyzwJointIndexed(height, ",\n") { i, _ ->
-                    (0 until width).joinToString(" + ") { "${abcd[it]}$i $char v.${glm_.xyzw[it]}" }
-                }
-                +"infix operator fun times(v: Vec$width$id): Vec$height$id = times(v, Vec$height$id())"
-                +"fun times(v: Vec$width$id, res: Vec$height$id): Vec$height$id = res($tmp)"
-            }
-            if (char == "*" || char == "/") {
-                if (width == height) {
-                    +"infix operator fun $operation(m: $matID): $matID = $operation(m, $matID())"
-                    if (char == "*") {
-                        val tmp = abcdJointIndexed(",\n") { c, r, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$r * m.${abcd[c]}$it" } }
-                        +"fun times(m: $matID, res: $matID): $matID = res($tmp)"
-                    } else
-                        "fun div(m: $matID, res: $matID): $matID" {
-                            invertMatrix(width, type)
-                            val tmp = abcdJointIndexed(",\n") { c, r, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$r * i$c$it" } }
-                            +"return res($tmp)"
-                        }
-                }
-            } else {
-                val tmp = abcdJoint(",\n") { "$it $char m.$it" }
-                +"infix operator fun $operation(m: $matID): $matID = $matID($tmp)"
-            }
-        }
-
-        matrix(width, height, type, extension, id, Generator.Part.Class)
+        binary(width, height, type, extension, id, "", Generator.Part.Class)
 
         if (type in floatingPointTypes) {
             val `resWXYZ type` = WxyzJoint { "res$it: $type" }
@@ -346,6 +320,9 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
             }
         }
 
+        matrix(width, height, type, extension, id, Generator.Part.Class)
+        // ext
+        matrixCommon(width, height, type, extension, id, Generator.Part.Class)
         matrixTransform(width, height, type, extension, id, Generator.Part.Class)
 
         if (type == "Float" || type == "Double")
@@ -388,8 +365,11 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
             +"const val height = $MatNT.height"
             +"val size = length * $type.BYTES"
 
-            matrixTransform(width, height, type, extension, id, Generator.Part.CompanionObject)
+            binary(width, height, type, extension, id, "", Generator.Part.CompanionObject)
             matrix(width, height, type, extension, id, Generator.Part.CompanionObject)
+            // ext
+            matrixCommon(width, height, type, extension, id, Generator.Part.CompanionObject)
+            matrixTransform(width, height, type, extension, id, Generator.Part.CompanionObject)
 
             // [gtc quaternion] quat_cast
             fun gtcQuaternion() {
@@ -486,7 +466,18 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
         +"infix operator fun Vec${height}T<$type>.timesAssign(m: $MatNT<$type, out Vec${height}T<$type>>) = $matID.Operations.times(this, this, m)"
     +"// -- Binary operators --"
     for ((char, operation) in operators) {
-        val args = abcdJoint(",\n\t\t\t\t\t\t\t\t\t") { "this $char m.$it" }
-        +"operator fun $type.$operation(m: $matID) = $matID($args)"
+        +"operator fun $type.$operation(m: $matID): $matID = $operation(m, $matID())"
+        +"fun $type.$operation(m: $matID, res: $matID): $matID = $operation(m) { $`abcdN type` -> res($abcdN) }"
+        +"""
+            inline fun <R> $type.$operation(m: $matID, res: ($`abcdN type`) -> R): R {
+                $contract
+                return $operation($`m,abcdN`, res)
+            }"""
+        val `this op abcdN` = abcdJoint(",\n") { "this $char $it" }
+        +"""
+            inline fun <R> $type.$operation($`abcdN type`, res: ($`abcdN type`) -> R): R {
+                $contract
+                return res($`this op abcdN`)
+            }"""
     }
 }

@@ -62,9 +62,14 @@ fun Generator.matrix(width: Int, height: Int, type: String, extension: String, i
             }
             Generator.Part.CompanionObject -> {
                 matrixCompMult("m")
-                +"inline fun <R> compMult(m: $matID, n: $matID, res: ($`abcdN type`) -> R): R = compMult($`m,abcdN`,\n$`n,abcdN`, res)"
+                +"""
+                    inline fun <R> compMult(m: $matID, n: $matID, res: ($`abcdN type`) -> R): R {
+                        $contract
+                        return compMult($`m,abcdN`, $`n,abcdN`, res)
+                    }"""
                 matrixCompMult("m")
                 "inline fun <R> compMult($`mCR type`,\n$`nCR type`, res: ($`abcdN type`) -> R): R" {
+                    +contract
                     fun times(c: Int) {
                         val mC = (0 until height).joinToString { "m$c$it" }
                         val nC = (0 until height).joinToString { "n$c$it" }

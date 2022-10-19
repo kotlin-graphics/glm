@@ -116,6 +116,7 @@ operator fun Iterable<TypeInformation>.minus(types: Iterable<String>) = types.to
 
 
 val xyzw = listOf("x", "y", "z", "w")
+val XYZW = listOf("X", "Y", "Z", "W")
 val wxyz = listOf("w", "x", "y", "z")
 val rgba = listOf("r", "g", "b", "a")
 val stpq = listOf("s", "t", "p", "q")
@@ -164,6 +165,7 @@ fun WxyzJoint(separator: String = ", ", block: (String) -> String = { it }) = wx
 
 
 val abcd = listOf("a", "b", "c", "d")
+val ABCD = listOf("A", "B", "C", "D")
 
 fun abcdN(c: Int, r: Int) = "${abcd[c]}$r"
 fun vNN(c: Int, r: Int) = "v" + nn(c, r)
@@ -193,8 +195,23 @@ fun Generator.abcdJointIndexed(width: Int = Generator.Companion.width,
         }
     }
 
+fun Generator.AbcdJointIndexed(width: Int = Generator.Companion.width,
+                               height: Int = Generator.Companion.height,
+                               rowSeparator: String = ", ", columnSeparator: String = ", ",
+                               block: (Int, Int, String) -> String) =
+    (0 until width).joinToString(rowSeparator) { i ->
+        (0 until height).joinToString(columnSeparator) { j ->
+            block(i, j, abcdN(i, j).toUpperCase())
+        }
+    }
+
 fun Generator.abcdJointIndexed(rowSeparator: String = ", ", columnSeparator: String = ", ",
                                block: (Int, Int, String) -> String): String = abcdJointIndexed(Generator.Companion.width,
+                                                                                               Generator.Companion.height,
+                                                                                               rowSeparator, columnSeparator, block)
+
+fun Generator.AbcdJointIndexed(rowSeparator: String = ", ", columnSeparator: String = ", ",
+                               block: (Int, Int, String) -> String): String = AbcdJointIndexed(Generator.Companion.width,
                                                                                                Generator.Companion.height,
                                                                                                rowSeparator, columnSeparator, block)
 

@@ -183,3 +183,174 @@ fun Generator.binary(ordinal: Int, type: String, extension: String, id: String, 
         }
     }
 }
+
+fun Generator.binary(width: Int, height: Int, type: String, extension: String, id: String, vec: String, part: Part) {
+
+    var size = if (width == height) "$width" else "${width}x$height"
+    val MatID = "Mat$size$id"
+
+    val `abcdN type` = abcdJoint(rowSeparator = ",\n") { "$it: $type" }
+    val `iAbcdN type` = AbcdJoint(rowSeparator = ",\n") { "i$it: $type" }
+    val iAbcdN = AbcdJoint(rowSeparator = ",\n") { "i$it" }
+    val abcdN = abcdJoint(rowSeparator = ",\n")
+    val `mAbcdN type` = AbcdJoint(rowSeparator = ",\n") { "m$it: $type" }
+    val `nAbcdN type` = AbcdJoint(rowSeparator = ",\n") { "n$it: $type" }
+    val mAbcdN = AbcdJoint(rowSeparator = ",\n") { "m$it" }
+    val nAbcdN = AbcdJoint(rowSeparator = ",\n") { "n$it" }
+    val `m,abcdN` = abcdJoint(rowSeparator = ",\n") { "m.$it" }
+    val `n,abcdN` = abcdJoint(rowSeparator = ",\n") { "n.$it" }
+    val scalarJoint = abcdJoint(rowSeparator = ",\n") { "scalar" }
+
+    if (part != Part.Scalar)
+        +"// -- Binary operators --\n"
+
+    val nl = '\n'
+
+    when (part) {
+        Part.Class ->
+            for ((sign, operation) in operators) {
+                +"infix operator fun $operation(scalar: $type): $MatID = $operation(scalar, $MatID())"
+                +"fun $operation(scalar: $type, res: $MatID): $MatID = res(${abcdJoint(",\n") { "$it $sign scalar" }})"
+                if (sign == "*") {
+                    val tmp = xyzwJointIndexed(height, ",\n") { i, _ ->
+                        (0 until width).joinToString(" + ") { "${abcd[it]}$i $sign v.${glm_.xyzw[it]}" }
+                    }
+                    +"infix operator fun times(v: Vec$width$id): Vec$height$id = times(v, Vec$height$id())"
+                    +"fun times(v: Vec$width$id, res: Vec$height$id): Vec$height$id = res($tmp)"
+                }
+                if (sign == "*" || sign == "/") {
+                    if (width == height) {
+                        +"infix operator fun $operation(m: $MatID): $MatID = $operation(m, $MatID())"
+                        if (sign == "*") {
+                            val tmp = abcdJointIndexed(",\n") { c, r, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$r * m.${abcd[c]}$it" } }
+                            +"fun times(m: $MatID, res: $MatID): $MatID = res($tmp)"
+                        } else
+                            "fun div(m: $MatID, res: $MatID): $MatID" {
+                                invertMatrix(width, type)
+                                val tmp = abcdJointIndexed(",\n") { c, r, _ -> (0 until width).joinToString(" + ") { "${abcd[it]}$r * i$c$it" } }
+                                +"return res($tmp)"
+                            }
+                    }
+                } else {
+                    val tmp = abcdJoint(",\n") { "$it $sign m.$it" }
+                    +"infix operator fun $operation(m: $MatID): $MatID = $MatID($tmp)"
+                }
+            }
+        Part.CompanionObject ->
+            for ((sign, operation) in operators) {
+                +"""
+                    inline fun <R> $operation(m: $MatID, scalar: $type, res: ($`abcdN type`) -> R): R {
+                        $contract
+                        return $operation($`m,abcdN`, scalar, res)
+                    }"""
+                val `mAbcdN sign scalar` = AbcdJoint(",\n") { "m$it $sign scalar" }
+                +"""
+                    inline fun <R> $operation($`mAbcdN type`, scalar: $type, res: ($`abcdN type`) -> R): R {
+                        $contract
+                        return res($`mAbcdN sign scalar`)
+                    }"""
+
+                if (type !in floatingPointTypes)
+                    continue
+
+                if (sign == "*" || (sign == "/" && width == height)) {
+
+                    // mat * vec
+                    val `vXyzw type` = XyzwJoint(width) { "v$it: $type" }
+                    val vXyzw = XyzwJoint(width) { "v$it" }
+                    val `xyzw type` = xyzwJoint(height) { "$it: $type" }
+                    val `v,xyzw` = xyzwJoint(width) { "v.$it" }
+                    // mat * vec(mat row length)
+                    +"""
+                        inline fun <R> $operation(m: $MatID, v: Vec$width$id, res: ($`xyzw type`) -> R): R {
+                            $contract
+                            return $operation($`m,abcdN`,$nl$`v,xyzw`, res)
+                        }"""
+                    +"""
+                        inline fun <R> $operation(m: $MatID, $`vXyzw type`, res: ($`xyzw type`) -> R): R {
+                            $contract
+                            return $operation($`m,abcdN`,$nl$vXyzw, res)
+                        }"""
+                    +"""
+                        inline fun <R> $operation($`mAbcdN type`, v: Vec$width$id, res: ($`xyzw type`) -> R): R {
+                            $contract
+                            return $operation($`mAbcdN`,$nl$`v,xyzw`, res)
+                        }"""
+                    "inline fun <R> $operation($`mAbcdN type`,$nl$`vXyzw type`, res: ($`xyzw type`) -> R): R" {
+                        +contract
+                        if (sign == "*") {
+                            val `mAbcdN operation vXyzw` = abcdJointIndexed(height, width, ",\n", " + ") { c, r, _ -> "m${ABCD[r]}$c * v${XYZW[r]}" }
+                            +"return res($`mAbcdN operation vXyzw`)"
+                        } else
+                            +"""
+                                $MatID.inverse($mAbcdN) { $`abcdN type` ->
+                                    $MatID.times($abcdN, $vXyzw) { $`vXyzw type` ->
+                                        return res($vXyzw)
+                                    }
+                                }
+                            """
+                    }
+                    if (sign == "/") {
+                        +"""
+                            inline fun <R> $operation(m: $MatID, n: $MatID, res: ($`abcdN type`) -> R): R {
+                                $contract
+                                return $operation($`m,abcdN`,$nl$`n,abcdN`, res)
+                            }"""
+                        +"""
+                            inline fun <R> $operation(m: $MatID, $`nAbcdN type`, res: ($`abcdN type`) -> R): R {
+                                $contract
+                                return $operation($`m,abcdN`,$nl$nAbcdN, res)
+                            }"""
+                        +"""
+                            inline fun <R> $operation($`mAbcdN type`, n: $MatID, res: ($`abcdN type`) -> R): R {
+                                $contract
+                                return $operation($mAbcdN,$nl$`n,abcdN`, res)
+                            }"""
+                        +"""
+                            inline fun <R> $operation($`mAbcdN type`,$nl$`nAbcdN type`, res: ($`abcdN type`) -> R): R {
+                                $MatID.inverse($nAbcdN) { $`iAbcdN type` ->
+                                    $MatID.times($mAbcdN,$nl$iAbcdN) { $`abcdN type` ->
+                                        return res($abcdN)
+                                    }
+                                }
+                            }"""
+                    }
+                }
+                if (sign == "*")
+                    // mat * mat
+                    for (n in 2..4) {
+                        size = if (width == n) "$width" else "${n}x$width"
+                        val nMatID = "Mat$size$id"
+                        // we needs to overwrite all of these with the new dimensions and they have to be restored on exit, that's why they are `val`
+                        val `nAbcdN type` = AbcdJoint(n, width, ",\n") { "n$it: $type" }
+                        val `n,abcdN` = abcdJoint(n, width, ",\n") { "n.$it" }
+                        val nAbcdN = AbcdJoint(n, width, ",\n") { "n$it" }
+                        val `abcdN type` = abcdJoint(n, height, ",\n") { "$it: $type" }
+                        +"""
+                            inline fun <R> times(m: $MatID, n: $nMatID, res: ($`abcdN type`) -> R): R {
+                                $contract
+                                return times($`m,abcdN`,$nl$`n,abcdN`, res)
+                            }"""
+                        +"""
+                            inline fun <R> times($`mAbcdN type`, n: $nMatID, res: ($`abcdN type`) -> R): R {
+                                $contract
+                                return times($`mAbcdN`,$nl$`n,abcdN`, res)
+                            }"""
+                        +"""
+                            inline fun <R> times(m: $MatID,$nl$`nAbcdN type`, res: ($`abcdN type`) -> R): R {
+                                $contract
+                                return times($`m,abcdN`,$nl$nAbcdN, res)
+                            }"""
+                        val `mAbcdN times nAbcdN` = AbcdJointIndexed(n, height, ",\n") { c, r, _ ->
+                            xyzwJointIndexed(width, " + ") { i, _ -> "m${ABCD[i]}$r * n${ABCD[c]}$i" }
+                        }
+                        +"""
+                            inline fun <R> times($`mAbcdN type`,$nl$`nAbcdN type`, res: ($`abcdN type`) -> R): R {
+                                $contract
+                                return res($`mAbcdN times nAbcdN`)
+                            }"""
+                    }
+            }
+        Part.Scalar -> {}
+    }
+}
