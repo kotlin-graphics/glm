@@ -249,6 +249,19 @@ fun Generator.binary(width: Int, height: Int, type: String, extension: String, i
                         $contract
                         return res($`mAbcdN sign scalar`)
                     }"""
+                if ((sign == "+" || sign == "-") && width == height) {
+                    +"""
+                        inline fun <R> $operation(m: $MatID, n: $MatID, res: ($`abcdN type`) -> R): R {
+                            $contract
+                            return $operation($`m,abcdN`,$nl$`n,abcdN`, res)
+                        }"""
+                    val `mAbcdN sign nAbcdN` = AbcdJoint(",\n") { "m$it $sign n$it" }
+                    +"""
+                        inline fun <R> $operation($`mAbcdN type`,$nl$`nAbcdN type`, res: ($`abcdN type`) -> R): R {
+                            $contract
+                            return res($`mAbcdN sign nAbcdN`)
+                        }"""
+                }
 
                 if (type !in floatingPointTypes)
                     continue

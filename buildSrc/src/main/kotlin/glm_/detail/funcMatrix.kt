@@ -65,7 +65,7 @@ fun Generator.matrix(width: Int, height: Int, type: String, extension: String, i
                 +"""
                     inline fun <R> compMult(m: $matID, n: $matID, res: ($`abcdN type`) -> R): R {
                         $contract
-                        return compMult($`m,abcdN`, $`n,abcdN`, res)
+                        return compMult($`m,abcdN`,$nl$`n,abcdN`, res)
                     }"""
                 matrixCompMult("m")
                 "inline fun <R> compMult($`mCR type`,\n$`nCR type`, res: ($`abcdN type`) -> R): R" {
