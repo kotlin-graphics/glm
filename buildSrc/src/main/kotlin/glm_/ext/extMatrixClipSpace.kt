@@ -5,8 +5,8 @@ import glm_.gen.generate
 import glm_.*
 import java.io.File
 
-fun matrixClipSpace(target: File) {
-    generate(target, "glm_/ext/matrixClipSpace.kt") {
+fun extMatrixClipSpace(target: File) {
+    generate(target, "glm_/ext/extMatrixClipSpace.kt") {
 
         experimentals += Generator.Experimentals.Contracts
         `package` = "glm_.ext"
@@ -30,11 +30,11 @@ fun matrixClipSpace(target: File) {
                          )
 
         for ((type, extension, _, id) in numberTypeInformation.filter { it.type in floatingPointTypes })
-            matrixClipSpace(type, extension, id)
+            extMatrixClipSpace(type, extension, id)
     }
 }
 
-fun Generator.matrixClipSpace(type: String, extension: String, id: String) {
+fun Generator.extMatrixClipSpace(type: String, extension: String, id: String) {
 
     val `-1` = type.`-1`
     val `0` = type.`0`

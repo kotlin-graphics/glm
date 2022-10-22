@@ -11,8 +11,8 @@ class matrixCommon {
 //        run {
 //            val a = Mat4(2)
 //            val b = Mat4(4)
-//            val c = a.ixglm::mix(A, B, 0.5f)
-//            glm::bvec4 const D = glm::equal(C, glm::mat4(3), 1)
+//            val c = a.mix(b, 0.5f)
+//            val d = glm::equal(C, glm::mat4(3), 1)
 //            Error += glm::all(D) ? 0 : 1
 //        }
 //

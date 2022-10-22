@@ -4,7 +4,7 @@ import glm_.gen.Generator
 import glm_.`1`
 import glm_.floatingPointTypes
 
-fun Generator.matrixCommon(width: Int, height: Int, type: String, extension: String, id: String, part: Generator.Part) {
+fun Generator.extMatrixCommon(width: Int, height: Int, type: String, extension: String, id: String, part: Generator.Part) {
 
     if (width != height || type !in floatingPointTypes)
         return

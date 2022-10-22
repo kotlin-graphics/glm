@@ -5,6 +5,8 @@ package glm_
 //import java.io.InputStream
 //import java.math.BigInteger
 import glm_.extensions.*
+import glm_.scalar.abs
+import glm_.scalar.bitsToDouble
 import glm_.scalar.bitsToFloat
 import glm_.scalar.bitsToInt
 import kotlin.math.*
@@ -143,7 +145,6 @@ fun ByteArray.getUint(index: Int, bigEndian: Boolean = true): UInt = getInt(inde
 
 fun ByteArray.getUlong(index: Int, bigEndian: Boolean = true): ULong = getLong(index, bigEndian).ul
 fun ByteArray.getUshort(index: Int, bigEndian: Boolean = true): UShort = getShort(index, bigEndian).us
-
 
 
 //inline fun Double.modf(i: (Int) -> Unit) = log2(this)

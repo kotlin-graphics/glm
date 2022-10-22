@@ -4,7 +4,7 @@ import glm_.*
 import glm_.gen.Generator
 import glm_.`0`
 
-fun Generator.matrixTransform(width: Int, height: Int, type: String, extension: String, id: String, part: Generator.Part) {
+fun Generator.extMatrixTransform(width: Int, height: Int, type: String, extension: String, id: String, part: Generator.Part) {
 
     val matID = "Mat$matrixSize$id"
 

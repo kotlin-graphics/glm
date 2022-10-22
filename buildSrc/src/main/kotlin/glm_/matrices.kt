@@ -2,8 +2,8 @@ package glm_
 
 import glm_.detail.binary
 import glm_.detail.matrix
-import glm_.ext.matrixCommon
-import glm_.ext.matrixTransform
+import glm_.ext.extMatrixCommon
+import glm_.ext.extMatrixTransform
 import glm_.gen.Generator
 import glm_.gen.Generator.Experimentals
 import glm_.gen.generate
@@ -322,8 +322,8 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
 
         matrix(width, height, type, extension, id, Generator.Part.Class)
         // ext
-        matrixCommon(width, height, type, extension, id, Generator.Part.Class)
-        matrixTransform(width, height, type, extension, id, Generator.Part.Class)
+        extMatrixCommon(width, height, type, extension, id, Generator.Part.Class)
+        extMatrixTransform(width, height, type, extension, id, Generator.Part.Class)
 
         if (type == "Float" || type == "Double")
             +"""
@@ -368,8 +368,8 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
             binary(width, height, type, extension, id, "", Generator.Part.CompanionObject)
             matrix(width, height, type, extension, id, Generator.Part.CompanionObject)
             // ext
-            matrixCommon(width, height, type, extension, id, Generator.Part.CompanionObject)
-            matrixTransform(width, height, type, extension, id, Generator.Part.CompanionObject)
+            extMatrixCommon(width, height, type, extension, id, Generator.Part.CompanionObject)
+            extMatrixTransform(width, height, type, extension, id, Generator.Part.CompanionObject)
 
             // [gtc quaternion] quat_cast
             fun gtcQuaternion() {

@@ -2,6 +2,7 @@ package glm_.vecs
 
 import glm_.*
 import glm_.detail.*
+import glm_.ext.extVectorRelational
 import glm_.gen.Generator
 import glm_.gen.Generator.Experimentals
 import glm_.gen.generate
@@ -408,6 +409,9 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
                 trigonometric(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
             }
             vectorRelational(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
+
+            // ext
+            extVectorRelational(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
         }
     }
 

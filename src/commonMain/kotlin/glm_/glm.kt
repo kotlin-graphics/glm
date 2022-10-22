@@ -1,6 +1,7 @@
 package glm_
 
 import glm_.vec2.Vec2
+import kotlin.math.ulp
 
 //import glm_.detail.func_common
 
@@ -17,5 +18,9 @@ object glm /*: func_common*/ {
     object e {
         val d = kotlin.math.E
         val f = d.toFloat()
+    }
+    object maxUlp {
+        val d = Double.MAX_VALUE.ulp
+        val f = Float.MAX_VALUE.ulp
     }
 }
