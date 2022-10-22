@@ -122,35 +122,35 @@ val Double.exponent: Long
 
 /** Bitwise convert f to integer, mask out exponent bits, shift to the right and then subtract out float's bias adjust
  *  to get true exponent value */
-//val Float.exponent: Int
-//    get() = ((toRawBits() and Float.EXP_BIT_MASK) shr (Float.SIGNIFICAND_WIDTH - 1)) - Float.EXP_BIAS
-//
-///** Returns a floating-point power of two in the normal range. */
-//val Int.powerOfTwo: Float
-//    get() {
-//        check(this >= Float.MIN_EXPONENT && this <= Float.MAX_EXPONENT)
-//        return (((this + Float.EXP_BIAS) shl (Float.SIGNIFICAND_WIDTH - 1)) and Float.EXP_BIT_MASK).bitsToFloat()
-//    }
-//val Float.ulp: Float
-//    get() = when (val exp = exponent) {
-//        // NaN or infinity
-//        Float.MAX_EXPONENT + 1 -> abs()
-//        // zero or subnormal
-//        Float.MIN_EXPONENT - 1 -> Float.MIN_VALUE
-//        else -> {
-//            check(exp <= Float.MAX_EXPONENT && exp >= Float.MIN_EXPONENT)
-//
-//            // ulp(x) is usually 2^(SIGNIFICAND_WIDTH-1)*(2^ilogb(x))
-//            val exp = exp - (Float.SIGNIFICAND_WIDTH - 1)
-//            if (exp >= Float.MIN_EXPONENT)
-//                exp.powerOfTwo
-//            else
-//            // return a subnormal result; left shift integer
-//            // representation of FloatConsts.MIN_VALUE appropriate
-//            // number of positions
-//                (1 shl (exp - (Float.MIN_EXPONENT - (Float.SIGNIFICAND_WIDTH - 1)))).bitsToFloat()
-//        }
-//    }
+val Float.exponent: Int
+    get() = ((toRawBits() and Float.EXP_BIT_MASK) shr (Float.SIGNIFICAND_WIDTH - 1)) - Float.EXP_BIAS
+
+/** Returns a floating-point power of two in the normal range. */
+val Int.powerOfTwo: Float
+    get() {
+        check(this >= Float.MIN_EXPONENT && this <= Float.MAX_EXPONENT)
+        return (((this + Float.EXP_BIAS) shl (Float.SIGNIFICAND_WIDTH - 1)) and Float.EXP_BIT_MASK).bitsToFloat()
+    }
+val Float.ulp: Float
+    get() = when (val exp = exponent) {
+        // NaN or infinity
+        Float.MAX_EXPONENT + 1 -> abs()
+        // zero or subnormal
+        Float.MIN_EXPONENT - 1 -> Float.MIN_VALUE
+        else -> {
+            check(exp <= Float.MAX_EXPONENT && exp >= Float.MIN_EXPONENT)
+
+            // ulp(x) is usually 2^(SIGNIFICAND_WIDTH-1)*(2^ilogb(x))
+            val exp = exp - (Float.SIGNIFICAND_WIDTH - 1)
+            if (exp >= Float.MIN_EXPONENT)
+                exp.powerOfTwo
+            else
+            // return a subnormal result; left shift integer
+            // representation of FloatConsts.MIN_VALUE appropriate
+            // number of positions
+                (1 shl (exp - (Float.MIN_EXPONENT - (Float.SIGNIFICAND_WIDTH - 1)))).bitsToFloat()
+        }
+    }
 
 /**
  * Returns the floating-point number adjacent to the first argument in the direction of the second argument.
@@ -235,31 +235,31 @@ infix fun Float.nextAfter(direction: Float) = when {
  *
  * @receiver starting floating-point value
  * @return The adjacent floating-point value closer to positive infinity. */
-//fun Float.nextUp(): Float = when {
-//    isNaN() || this == Float.POSITIVE_INFINITY -> this
-//    else -> {
-//        val f = this + 0f
-//        (toRawBits() + if (f >= 0f) +1 else -1).bitsToFloat()
-//    }
-//}
-//
-///**
-// * Returns the floating-point value adjacent to `this` in the direction of negative infinity.
-// * This method is semantically equivalent to `nextAfter(Float.NEGATIVE_INFINITY)`; however, a `nextDown` implementation
-// * may run faster than its equivalent `nextAfter` call.
-// *
-// * Special Cases:
-// * - If the argument is NaN, the result is NaN.
-// * - If the argument is negative infinity, the result is negative infinity.
-// * - If the argument is zero, the result is `-Float.MIN_VALUE`
-// *
-// * @receiver starting floating-point value
-// * @return The adjacent floating-point value closer to negative infinity. */
-//fun Float.nextDown(): Float = when {
-//    isNaN() || this == Float.NEGATIVE_INFINITY -> this
-//    this == 0f -> -Float.MIN_VALUE
-//    else -> (toRawBits() + if (this > 0f) -1 else +1).bitsToFloat()
-//}
+fun Float.nextUp(): Float = when {
+    isNaN() || this == Float.POSITIVE_INFINITY -> this
+    else -> {
+        val f = this + 0f
+        (toRawBits() + if (f >= 0f) +1 else -1).bitsToFloat()
+    }
+}
+
+/**
+ * Returns the floating-point value adjacent to `this` in the direction of negative infinity.
+ * This method is semantically equivalent to `nextAfter(Float.NEGATIVE_INFINITY)`; however, a `nextDown` implementation
+ * may run faster than its equivalent `nextAfter` call.
+ *
+ * Special Cases:
+ * - If the argument is NaN, the result is NaN.
+ * - If the argument is negative infinity, the result is negative infinity.
+ * - If the argument is zero, the result is `-Float.MIN_VALUE`
+ *
+ * @receiver starting floating-point value
+ * @return The adjacent floating-point value closer to negative infinity. */
+fun Float.nextDown(): Float = when {
+    isNaN() || this == Float.NEGATIVE_INFINITY -> this
+    this == 0f -> -Float.MIN_VALUE
+    else -> (toRawBits() + if (this > 0f) -1 else +1).bitsToFloat()
+}
 
 /* Return the value(s) ULP distance after the input value(s). */
 infix fun Float.nextUp(ulps: Int): Float {
@@ -284,7 +284,7 @@ infix fun Double.nextUp(ulps: Int): Double {
     check(ulps >= 0)
     var temp = this
     for(i in 0 until ulps)
-        temp = nextUp()
+        temp = temp.nextUp()
     return temp
 }
 
@@ -293,7 +293,7 @@ infix fun Double.nextDown(ulps: Int): Double {
     check(ulps >= 0)
     var temp = this
     for(i in 0 until ulps)
-        temp = nextDown()
+        temp = temp.nextDown()
     return temp
 }
 
