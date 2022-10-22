@@ -98,7 +98,7 @@ fun Generator.extVectorRelational(ordinal: Int, type: String, extension: String,
                         return $func($`a,xyzw`, $bXyzw, $`epsilon,xyzw`, res)
                     }"""
                 doc2("a[$XYZW]", "b[$XYZW]", "epsilon.[$xyzw]")
-                val `aXyzw $func bXyzw` = XyzwJoint { "(a$it - b$it).abs() $sign epsilon$it" }
+                val `aXyzw $func bXyzw` = XyzwJoint { "a$it.$func(b$it, epsilon$it)" }
                     +"""
                     inline fun <R> $func($`aXyzw type`, $`bXyzw type`, $`epsilonXyzw type`, res: ($`xyzw Boolean`) -> R): R{
                         $contract

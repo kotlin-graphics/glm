@@ -31,6 +31,8 @@ fun vectors(target: File) {
                 if (type[0] == 'U')
                     experimentals += Experimentals.UnsignedTypes
                 imports += listOf("glm_.*",
+                                  "glm_.ext.equal",
+                                  "glm_.ext.notEqual",
                                   "glm_.extensions.*",
                                   "glm_.scalar.*",
                                   "kotlin.jvm.*",

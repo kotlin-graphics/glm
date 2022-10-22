@@ -1,6 +1,7 @@
 package glm_.func
 
 import glm_.*
+import glm_.ext.equal
 import glm_.scalar.*
 import glm_.vec1.Vec1
 import glm_.vec2.Vec2

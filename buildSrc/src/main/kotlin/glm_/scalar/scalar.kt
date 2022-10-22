@@ -4,6 +4,7 @@ import glm_.*
 import glm_.detail.*
 import glm_.gen.Generator
 import glm_.gen.generate
+import glm_.ext.extScalarRelational
 import java.io.File
 
 fun scalar(target: File) {
@@ -102,7 +103,7 @@ fun scalar(target: File) {
         imports += listOf(
             //                    "kotlin.math.pow"
             //            "glm_.extensions.*",
-//            "kotlin.reflect.KMutableProperty0",
+            //            "kotlin.reflect.KMutableProperty0",
             //            //                    +"import kotlin.jvm.*"
             //                          "kotlin.math.*"
                          )
@@ -110,5 +111,22 @@ fun scalar(target: File) {
         +"// packing\n"
         for ((type, extension, _, _) in vectorTypes)
             packing(0, type, extension, "", "", Generator.Part.Scalar)
+    }
+    generate(target, "glm_/ext/scalarRelational.kt") {
+
+        experimentals += Generator.Experimentals.Contracts
+        `package` = "glm_.ext"
+        //            +"import glm_.extensions.swizzle.*"
+        imports += listOf(
+            "glm_.ext.negative",
+            "glm_.scalar.abs",
+            //            "kotlin.reflect.KMutableProperty0",
+            //            //                    +"import kotlin.jvm.*"
+            //                          "kotlin.math.*"
+                         )
+
+        +"// ext scalar relational\n"
+        for ((type, _, _, _) in vectorTypes)
+            extScalarRelational(type)
     }
 }

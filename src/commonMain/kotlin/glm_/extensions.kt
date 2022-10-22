@@ -150,8 +150,8 @@ fun ByteArray.getUshort(index: Int, bigEndian: Boolean = true): UShort = getShor
 //inline fun Double.modf(i: (Int) -> Unit) = log2(this)
 
 
-fun Float.equal(other: Float, epsilon: Float = Float.MIN_VALUE): Boolean = abs(this - other) <= epsilon
-fun Double.equal(other: Double, epsilon: Double = Double.MIN_VALUE): Boolean = abs(this - other) <= epsilon
+//fun Float.equal(other: Float, epsilon: Float = Float.MIN_VALUE): Boolean = abs(this - other) <= epsilon
+//fun Double.equal(other: Double, epsilon: Double = Double.MIN_VALUE): Boolean = abs(this - other) <= epsilon
 
 val Int.mask: Int
     get() = when {

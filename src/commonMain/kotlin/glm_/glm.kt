@@ -1,6 +1,6 @@
 package glm_
 
-import glm_.vec2.Vec2
+//import glm_.ext.ulp
 import kotlin.math.ulp
 
 //import glm_.detail.func_common
@@ -21,6 +21,6 @@ object glm /*: func_common*/ {
     }
     object maxUlp {
         val d = Double.MAX_VALUE.ulp
-        val f = Float.MAX_VALUE.ulp
+        val f = Float.MAX_VALUE.ulp // this error goes away when compiling
     }
 }

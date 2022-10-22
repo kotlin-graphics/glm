@@ -1,5 +1,6 @@
 package glm_
 
+import glm_.ext.equal
 import glm_.mat2.Mat2
 import glm_.mat2x3.Mat2x3
 import glm_.mat2x4.Mat2x4
@@ -96,5 +97,6 @@ infix fun Vec2ui.shouldBe(v: Vec2ui) = equal(v)
 infix fun Vec3i.shouldBe(v: Vec3i) = equal(v)
 infix fun Vec4i.shouldBe(v: Vec4i) = equal(v)
 infix fun Int.shouldBe(i: Int) = assert(this == i)
+infix fun Long.shouldBe(L: Long) = assert(this == L)
 infix fun UInt.shouldBe(ui: UInt) = assert(this == ui)
 infix fun ULong.shouldBe(ul: ULong) = assert(this == ul)
