@@ -19,7 +19,8 @@ fun Generator.matrix(width: Int, height: Int, type: String, extension: String, i
     val abcdN = abcdJoint(",\n")
     val `abcdN type` = abcdJoint(rowSeparator = ",\n") { "$it: $type" }
 
-    if (type !in floatingPointTypes)
+    // int is included, which is part of ext_matrix_integer
+    if (type !in matrixTypes.map { it.type })
         return
 
     fun matrix(doc: String, func: String) = docs("""
@@ -223,6 +224,9 @@ fun Generator.matrix(width: Int, height: Int, type: String, extension: String, i
                 }
                 else -> Unit
             }
+
+            if (type == "Int")
+                return
 
             fun inverse() = matrix("Return the inverse of a squared matrix.", "inverse")
             when (part) {

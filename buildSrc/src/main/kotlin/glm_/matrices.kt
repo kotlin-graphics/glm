@@ -344,9 +344,9 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
                     return false
                 }"""
         else
+//            infix fun equal(m: $matID) = BooleanArray(length) { array[it] == m.array[it] }
+//        infix fun notEqual(m: $matID) = BooleanArray(length) { array[it] != m.array[it] }
             +"""
-                infix fun equal(m: $matID) = BooleanArray(length) { array[it] == m.array[it] }
-                infix fun notEqual(m: $matID) = BooleanArray(length) { array[it] != m.array[it] }
                 fun allEqual(m: $matID): Boolean = array.contentEquals(m.array)
                 fun anyNotEqual(m: $matID): Boolean = !array.contentEquals(m.array)"""
 
