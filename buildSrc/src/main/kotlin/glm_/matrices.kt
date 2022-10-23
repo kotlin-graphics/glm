@@ -3,6 +3,7 @@ package glm_
 import glm_.detail.binary
 import glm_.detail.matrix
 import glm_.ext.extMatrixCommon
+import glm_.ext.extMatrixRelational
 import glm_.ext.extMatrixTransform
 import glm_.gen.Generator
 import glm_.gen.Generator.Experimentals
@@ -321,14 +322,15 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
         }
 
         matrix(width, height, type, extension, id, Generator.Part.Class)
-        // ext
+
         extMatrixCommon(width, height, type, extension, id, Generator.Part.Class)
         extMatrixTransform(width, height, type, extension, id, Generator.Part.Class)
+        extMatrixRelational(width, height, type, extension, id, Generator.Part.Class)
 
         if (type == "Float" || type == "Double")
+//        fun equal(m: $matID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[it] - m.array[it]) <= epsilon }
+//        fun notEqual(m: $matID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[it] - m.array[it]) > epsilon }
             +"""
-                fun equal(m: $matID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[it] - m.array[it]) <= epsilon }
-                fun notEqual(m: $matID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[it] - m.array[it]) > epsilon }
                 fun allEqual(m: $matID, epsilon: $type = $type.MIN_VALUE): Boolean {
                     for (i in 0 until length)
                         if(abs(array[i] - m.array[i]) > epsilon)
@@ -367,9 +369,10 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
 
             binary(width, height, type, extension, id, "", Generator.Part.CompanionObject)
             matrix(width, height, type, extension, id, Generator.Part.CompanionObject)
-            // ext
+
             extMatrixCommon(width, height, type, extension, id, Generator.Part.CompanionObject)
             extMatrixTransform(width, height, type, extension, id, Generator.Part.CompanionObject)
+            extMatrixRelational(width, height, type, extension, id, Generator.Part.CompanionObject)
 
             // [gtc quaternion] quat_cast
             fun gtcQuaternion() {

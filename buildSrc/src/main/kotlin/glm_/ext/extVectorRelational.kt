@@ -8,7 +8,7 @@ import glm_.xyzwJoint
 fun Generator.extVectorRelational(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
 
     val VecID = vec + id
-    val VecBool = "Vec${ordinal}Bool"
+    val VecBool = "Vec${ordinal}bool"
 
         imports += listOf("glm_.scalar.abs",)
 //                          "glm_.scalar.cos",
@@ -23,7 +23,8 @@ fun Generator.extVectorRelational(ordinal: Int, type: String, extension: String,
     val `bXyzw type` = XyzwJoint { "b$it: $type" }
     val bXyzw = XyzwJoint { "b$it" }
     val `b,xyzw` = xyzwJoint { "b.$it" }
-    val `v,xyzw type` = XyzwJoint { "v$it: $type" }
+    val `vXyzw type` = XyzwJoint { "v$it: $type" }
+    val vXyzw = XyzwJoint { "v$it" }
     val `v,xyzw` = xyzwJoint { "v.$it" }
     val `xyzw Boolean` = xyzwJoint { "$it: Boolean" }
     val xyzw = xyzwJoint()
@@ -37,6 +38,8 @@ fun Generator.extVectorRelational(ordinal: Int, type: String, extension: String,
         return
 
     for ((func, sign) in listOf("equal" to "<=", "notEqual" to ">")) {
+
+        // epsilon $type
         var eps = "epsilon"
         val maybeNot = if (func.startsWith("not")) " not" else ""
         fun doc1(x: String = "this", y: String = "v", epsilon: String = eps) = docs("""
@@ -47,7 +50,12 @@ fun Generator.extVectorRelational(ordinal: Int, type: String, extension: String,
                 doc1()
                 +"fun $func(v: $VecID, epsilon: $type, res: $VecBool = $VecBool()): $VecBool = $func($`v,xyzw`, epsilon, res)"
                 doc1(y = "v.[$xyzw]")
-                +"fun $func($`v,xyzw type`, epsilon: $type, res: $VecBool = $VecBool()): $VecBool = Companion.$func($xyzw, $`v,xyzw`, $epsilonJoint) { $`xyzw Boolean` -> res($xyzw) }"
+                +"fun $func($`vXyzw type`, epsilon: $type, res: $VecBool = $VecBool()): $VecBool = Companion.$func($xyzw, $vXyzw, $epsilonJoint) { $`xyzw Boolean` -> res($xyzw) }"
+
+                // allEqual, anyNotEqual
+//                val quant = if (func == "equal") "all" else "any"
+//                doc1(y = "v.[$xyzw]")
+//                +"fun $func(v: $VecID, epsilon: $type): $VecBool = Companion.$func($xyzw, $vXyzw, $epsilonJoint) { $`xyzw Boolean` -> res($xyzw) }"
             }
             Generator.Part.CompanionObject -> {
                 doc1("a", "b")
@@ -73,16 +81,18 @@ fun Generator.extVectorRelational(ordinal: Int, type: String, extension: String,
             }
             else -> Unit
         }
+
+        // epsilon $VecId
         eps = "epsilon.[$xyzw]"
         fun doc2(x: String = "this", y: String = "v", epsilon: String = "eps.[$xyzw]") = docs("""
-            |Returns the component-wise comparison of `|$x - $y| < $epsilon`.
+            |Returns the component-wise comparison of `|$x - $y| $sign $epsilon`.
             |True if this expression is$maybeNot satisfied.""")
         when (part) {
             Generator.Part.Class -> {
                 doc2()
                 +"fun $func(v: $VecID, epsilon: $VecID, res: $VecBool = $VecBool()): $VecBool = $func($`v,xyzw`, epsilon, res)"
                 doc2(y = "v.[$xyzw]")
-                +"fun $func($`v,xyzw type`, epsilon: $VecID, res: $VecBool = $VecBool()): $VecBool = Companion.$func($xyzw, $`v,xyzw`, $`epsilon,xyzw`) { $`xyzw Boolean` -> res($xyzw) }"
+                +"fun $func($`vXyzw type`, epsilon: $VecID, res: $VecBool = $VecBool()): $VecBool = Companion.$func($xyzw, $vXyzw, $`epsilon,xyzw`) { $`xyzw Boolean` -> res($xyzw) }"
             }
             Generator.Part.CompanionObject -> {
                 doc2("a", "b", "epsilon")
@@ -108,6 +118,7 @@ fun Generator.extVectorRelational(ordinal: Int, type: String, extension: String,
             else -> Unit
         }
 
+        // ulps Int
         val ulpsJoint = xyzwJoint { "ulps" }
         val `ulps,xyzw` = xyzwJoint { "ulps.$it" }
         val `ulpsXyzw Int` = XyzwJoint { "ulps$it: Int" }
@@ -120,7 +131,7 @@ fun Generator.extVectorRelational(ordinal: Int, type: String, extension: String,
                 doc3()
                 +"fun $func(v: $VecID, ulps: Int, res: $VecBool = $VecBool()): $VecBool = $func($`v,xyzw`, ulps, res)"
                 doc3()
-                +"fun $func($`v,xyzw type`, ulps: Int, res: $VecBool = $VecBool()): $VecBool = Companion.$func($xyzw, $`v,xyzw`, $ulpsJoint) { $`xyzw Boolean` -> res($xyzw) }"
+                +"fun $func($`vXyzw type`, ulps: Int, res: $VecBool = $VecBool()): $VecBool = Companion.$func($xyzw, $vXyzw, $ulpsJoint) { $`xyzw Boolean` -> res($xyzw) }"
             }
             Generator.Part.CompanionObject -> {
                 doc3()
@@ -146,14 +157,15 @@ fun Generator.extVectorRelational(ordinal: Int, type: String, extension: String,
             }
             else -> Unit
         }
-        eps = "epsilon.[$xyzw]"
+
+        // ulps $VecInt
         val VecInt = "Vec${ordinal}i"
         when (part) {
             Generator.Part.Class -> {
                 doc3()
                 +"fun $func(v: $VecID, ulps: $VecInt, res: $VecBool = $VecBool()): $VecBool = $func($`v,xyzw`, ulps, res)"
                 doc3()
-                +"fun $func($`v,xyzw type`, ulps: $VecInt, res: $VecBool = $VecBool()): $VecBool = Companion.$func($xyzw, $`v,xyzw`, $`ulps,xyzw`) { $`xyzw Boolean` -> res($xyzw) }"
+                +"fun $func($`vXyzw type`, ulps: $VecInt, res: $VecBool = $VecBool()): $VecBool = Companion.$func($xyzw, $vXyzw, $`ulps,xyzw`) { $`xyzw Boolean` -> res($xyzw) }"
             }
             Generator.Part.CompanionObject -> {
                 doc3()
@@ -169,7 +181,7 @@ fun Generator.extVectorRelational(ordinal: Int, type: String, extension: String,
                         return $func($`a,xyzw`, $bXyzw, $`ulps,xyzw`, res)
                     }"""
                 doc3()
-                val `aXyzw $func bXyzw` = XyzwJoint { "a$it.equal(b$it, ulps$it)" }
+                val `aXyzw $func bXyzw` = XyzwJoint { "a$it.$func(b$it, ulps$it)" }
                 +"""
                     inline fun <R> $func($`aXyzw type`, $`bXyzw type`, $`ulpsXyzw Int`, res: ($`xyzw Boolean`) -> R): R{
                         $contract

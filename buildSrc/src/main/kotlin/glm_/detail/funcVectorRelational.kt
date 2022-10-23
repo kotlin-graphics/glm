@@ -42,7 +42,7 @@ fun Generator.vectorRelational(ordinal: Int, type: String, extension: String, id
                 doc()
                 +"fun $func(b: $VecID, res: $VecBool): $VecBool = $func($`b,xyzw`, res)"
                 doc(y = "b[$XYZW]")
-                +"fun $func($`bXYZW type`, res: $VecBool): $VecBool = $func($xyzw, $bXYZW) { $`xyzw Bool` -> res($xyzw) }"
+                +"fun $func($`bXYZW type`, res: $VecBool = $VecBool()): $VecBool = $func($xyzw, $bXYZW) { $`xyzw Bool` -> res($xyzw) }"
                 doc()
                 +"""
                     inline fun <R> $func(b: $VecID, res: ($`xyzw Bool`) -> R): R {

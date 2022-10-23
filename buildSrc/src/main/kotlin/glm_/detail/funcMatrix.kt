@@ -73,8 +73,8 @@ fun Generator.matrix(width: Int, height: Int, type: String, extension: String, i
                     fun times(c: Int) {
                         val mC = (0 until height).joinToString { "m$c$it" }
                         val nC = (0 until height).joinToString { "n$c$it" }
-                        val `resCN type` = (0 until height).joinToString { abcdN(c, it) }
-                        "Vec${height}$id.times($mC, $nC) { $`resCN type` ->".indentAndClose {
+                        val abcdCN = (0 until height).joinToString { abcdN(c, it) }
+                        "Vec${height}$id.times($mC, $nC) { $abcdCN ->".indentAndClose {
                             if (c + 1 < width)
                                 times(c + 1)
                             else
@@ -134,8 +134,8 @@ fun Generator.matrix(width: Int, height: Int, type: String, extension: String, i
                         fun times(c: Int) {
                             val cXYZW = XyzwJoint(width) { "c$it" }
                             val rXYZW = XyzwJoint(width) { "r${glm_.xyzw[c].toUpperCase()}" }
-                            val `resCN type` = (0 until width).joinToString { "res${glm_.abcd[c].toUpperCase()}$it: $type" }
-                            "Vec${width}$id.times($cXYZW, $rXYZW) { $`resCN type` ->".indentAndClose {
+                            val abcdCN = (0 until width).joinToString { "res${glm_.abcd[c].toUpperCase()}$it: $type" }
+                            "Vec${width}$id.times($cXYZW, $rXYZW) { $abcdCN ->".indentAndClose {
                                 if (c + 1 < i)
                                     times(c + 1)
                                 else

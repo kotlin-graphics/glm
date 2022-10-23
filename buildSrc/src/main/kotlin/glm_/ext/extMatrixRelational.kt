@@ -1,155 +1,263 @@
 package glm_.ext
 
-import glm_.XyzwJoint
-import glm_.floatingPointTypes
+import glm_.*
 import glm_.gen.Generator
-import glm_.xyzwJoint
 
 fun Generator.extMatrixRelational(width: Int, height: Int, type: String, extension: String, id: String, part: Generator.Part) {
 
     val MatID = "Mat$matrixSize$id"
 
-//    imports += listOf("glm_.scalar.sin",
-//                      "glm_.scalar.cos",
-//                      "glm_.detail.GlmCoordinateSystem",
-//                      "glm_.detail.GLM_COORDINATE_SYSTEM")
-//    val `0` = type.`0`
-//    val `1` = type.`1`
+    //    imports += listOf("glm_.scalar.sin",
+    //                      "glm_.scalar.cos",
+    //                      "glm_.detail.GlmCoordinateSystem",
+    //                      "glm_.detail.GLM_COORDINATE_SYSTEM")
+    //    val `0` = type.`0`
+    //    val `1` = type.`1`
 
-    val abcdN = abcdJoint { "$it" }
-    val `resXYZW type` = XyzwJoint(4) { "res$it: $type" }
-    val resXYZW = XyzwJoint(4) { "res$it" }
-    val `abc4 type` = abcdJoint(3, 4, ",\n") { "$it: $type" }
+    val `mAbcdN type` = AbcdJoint(rowSeparator = ",\n") { "m$it: $type" }
+    val `nAbcdN type` = AbcdJoint(rowSeparator = ",\n") { "n$it: $type" }
+    val abcdN = abcdJoint(rowSeparator = ",\n")
+    val `m,abcdN` = abcdJoint(rowSeparator = ",\n") { "m.$it" }
+    val `n,abcdN` = abcdJoint(rowSeparator = ",\n") { "n.$it" }
+    val nAbcdN = AbcdJoint(rowSeparator = ",\n") { "n$it" }
     val `abcd type` = abcdJoint(4, 4, ",\n") { "$it: $type" }
-    val `v,xyz` = xyzwJoint(3) { "v.$it" }
-    val `axis,xyz` = xyzwJoint(3) { "axis.$it" }
-    val `axisXYZ` = XyzwJoint(3) { "axis$it" }
-    val `axisXYZ type` = XyzwJoint(3) { "axis$it: $type" }
-    val `vXYZ type` = XyzwJoint(3) { "v$it: $type" }
-    val vXYZ = XyzwJoint(3) { "v$it" }
-    val `xyz type` = xyzwJoint(3) { "$it: $type" }
     val `xyzw Boolean` = xyzwJoint(width) { "$it: Boolean" }
-    val xyz = xyzwJoint(3) { "$it" }
-    val scalarJoint = xyzwJoint(3) { "scalar" }
-    val `eyeXYZ type` = XyzwJoint(3) { "eye$it: $type" }
-    val eyeXYZ = XyzwJoint(3) { "eye$it" }
-    val `eye,xyz` = xyzwJoint(3) { "eye.$it" }
-    val `centerXYZ type` = XyzwJoint(3) { "center$it: $type" }
-    val centerXYZ = XyzwJoint(3) { "center$it" }
-    val `center,xyz` = xyzwJoint(3) { "center.$it" }
-    val `upXYZ type` = XyzwJoint(3) { "up$it: $type" }
-    val upXYZ = XyzwJoint(3) { "up$it" }
-    val `up,xyz` = xyzwJoint(3) { "up.$it" }
-    val a0123 = xyzwJointIndexed(4) { i, _ -> "a$i" }
-    val b0123 = xyzwJointIndexed(4) { i, _ -> "b$i" }
-    val c0123 = xyzwJointIndexed(4) { i, _ -> "c$i" }
-    val d0123 = xyzwJointIndexed(4) { i, _ -> "d$i" }
+    val `epsilon,xyzw` = xyzwJoint(width) { "epsilon.$it" }
+    val `ulps,xyzw` = xyzwJoint(width) { "ulps.$it" }
+    val `ulpsXyzw Int` = XyzwJoint(width) { "ulps$it: Int" }
+    val `epsilonXyzw type` = XyzwJoint(width) { "epsilon$it: $type" }
+    val epsilonXyzw = XyzwJoint(width) { "epsilon$it" }
+    val ulpsXyzw = XyzwJoint(width) { "ulps$it" }
+    val xyzw = xyzwJoint(width)
+    val Xyzw = XyzwJoint(width)
 
-    if (type !in floatingPointTypes)
-        return
+//    if (type !in floatingPointTypes)
+//        return
 
-    val VecCid = "Vec$height$id"
+    val VecCid = "Vec$width$id"
+    val VecCi = "Vec${width}i"
+    val VecCbool = "Vec${width}bool"
 
-    fun equal() = docs("""
-        |Perform a component-wise equal-to comparison of two matrices.
-        |Return a boolean vector which components value is True if this expression is satisfied per column of the matrices.""")
-    when(part) {
-        Generator.Part.Class -> {}
-        Generator.Part.CompanionObject -> {
-//            +"""
-//                inline fun <R> equal (m: $MatID, n: $MatID, res: ($`xyzw Boolean`) -> R): R {
-//                    $contract
-//                    return res($
-//                }"""
+    val funcs = listOf("equal", "notEqual")
+    val signs = listOf("<=", ">")
+    val seps = listOf("&&", "||")
+    val comps = listOf("equal-to", "not-equal-to")
+    for (i in funcs.indices) {
+        val func = funcs[i]
+        val sign = signs[i]
+        val sep = seps[i]
+        val comp = comps[i]
+        fun plain() = docs("""
+            |Perform a component-wise $comp comparison of two matrices.
+            |Return a boolean vector which components value is True if this expression is satisfied per column of the matrices.""")
+        fun epsilon(x: String = "this[abcdN]", y: String = "n[abcdN]", epsilon: String = "epsilon") = docs("""
+            |Returns the component-wise comparison of `|$x - $y| $sign $epsilon`.
+            |True if this expression is satisfied.""")
+        val maybeNot = if(func == "equal") "" else " not"
+        fun ulps() = docs("""
+            |Returns the component-wise comparison between two vectors in term of ULPs.
+            |True if this expression is$maybeNot satisfied.""")
+        when (part) {
+            Generator.Part.Class -> {
+                plain()
+                +"fun $func(n: $MatID, res: $VecCbool = $VecCbool()): $VecCbool = $func($`n,abcdN`, res)"
+                plain()
+                +"fun $func($`nAbcdN type`,\nres: $VecCbool = $VecCbool()): $VecCbool = Companion.$func($abcdN,\n$nAbcdN) { $`xyzw Boolean` -> res($xyzw) }"
+                plain()
+                "inline fun <R> $func(n: $MatID, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    +"return Companion.$func($abcdN,\n$`n,abcdN`, res)"
+                }
+                plain()
+                "inline fun <R> $func($`nAbcdN type`, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    +"return Companion.$func($abcdN,\n$nAbcdN, res)"
+                }
+
+                if (type !in floatingPointTypes)
+                    continue
+
+                epsilon()
+                +"fun $func(n: $MatID, epsilon: $type, res: $VecCbool = $VecCbool()): $VecCbool = $func($`n,abcdN`, epsilon, res)"
+                epsilon(y = "n[AbcdN]")
+                +"fun $func($`nAbcdN type`,\nepsilon: $type, res: $VecCbool = $VecCbool()): $VecCbool = Companion.$func($abcdN,\n$nAbcdN,\nepsilon) { $`xyzw Boolean` -> res($xyzw) }"
+                epsilon(epsilon = "epsilon[$xyzw]")
+                +"fun $func(n: $MatID, epsilon: $VecCid, res: $VecCbool = $VecCbool()): $VecCbool = $func($`n,abcdN`,\n$`epsilon,xyzw`, res)"
+                epsilon(y = "n[AbcdN]", epsilon = "epsilon[$Xyzw]")
+                +"fun $func($`nAbcdN type`,\n$`epsilonXyzw type`,\nres: $VecCbool = $VecCbool()): $VecCbool = Companion.$func($abcdN,\n$nAbcdN,\n$epsilonXyzw) { $`xyzw Boolean` -> res($xyzw) }"
+                epsilon()
+                "inline fun <R> $func(n: $MatID, epsilon: $type, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    +"return Companion.$func($abcdN,\n$`n,abcdN`, epsilon, res)"
+                }
+                epsilon(y = "n[AbcdN]")
+                "inline fun <R> $func($`nAbcdN type`, epsilon: $type, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    +"return Companion.$func($abcdN,\n$nAbcdN, epsilon, res)"
+                }
+                epsilon(epsilon = "epsilon[$xyzw]")
+                "inline fun <R> $func(n: $MatID, epsilon: $VecCid, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    +"return Companion.$func($abcdN,\n$`n,abcdN`, $`epsilon,xyzw`, res)"
+                }
+                epsilon(y = "n[AbcdN]", epsilon = "epsilon[$Xyzw]")
+                "inline fun <R> $func($`nAbcdN type`,\n$`epsilonXyzw type`, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    +"return Companion.$func($abcdN,\n$nAbcdN, $epsilonXyzw, res)"
+                }
+                ulps()
+                +"fun $func(n: $MatID, ulps: Int, res: $VecCbool = $VecCbool()): $VecCbool = $func($`n,abcdN`, ulps, res)"
+                ulps()
+                +"fun $func($`nAbcdN type`,\nulps: Int, res: $VecCbool = $VecCbool()): $VecCbool = Companion.$func($abcdN,\n$nAbcdN,\nulps) { $`xyzw Boolean` -> res($xyzw) }"
+                ulps()
+                +"fun $func(n: $MatID, ulps: $VecCi, res: $VecCbool = $VecCbool()): $VecCbool = $func($`n,abcdN`,\n$`ulps,xyzw`, res)"
+                ulps()
+                +"fun $func($`nAbcdN type`,\n$`ulpsXyzw Int`,\nres: $VecCbool = $VecCbool()): $VecCbool = Companion.$func($abcdN,\n$nAbcdN,\n$ulpsXyzw) { $`xyzw Boolean` -> res($xyzw) }"
+                ulps()
+                "inline fun <R> $func(n: $MatID, ulps: Int, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    +"return Companion.$func($abcdN,\n$`n,abcdN`, ulps, res)"
+                }
+                ulps()
+                "inline fun <R> $func($`nAbcdN type`, ulps: Int, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    +"return Companion.$func($abcdN,\n$nAbcdN, ulps, res)"
+                }
+                ulps()
+                "inline fun <R> $func(n: $MatID, ulps: $VecCi, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    +"return Companion.$func($abcdN,\n$`n,abcdN`, $`ulps,xyzw`, res)"
+                }
+                ulps()
+                "inline fun <R> $func($`nAbcdN type`,\n$`ulpsXyzw Int`, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    +"return Companion.$func($abcdN,\n$nAbcdN, $ulpsXyzw, res)"
+                }
+            }
+            Generator.Part.CompanionObject -> {
+                plain()
+                "inline fun <R> $func(m: $MatID, n: $MatID, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    +"return $func($`m,abcdN`,\n$`n,abcdN`, res)"
+                }
+                plain()
+                "inline fun <R> $func($`mAbcdN type`,\n$`nAbcdN type`, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    fun equal(c: Int) {
+                        val mC = (0 until height).joinToString { "m${glm_.ABCD[c]}$it" }
+                        val nC = (0 until height).joinToString { "n${glm_.ABCD[c]}$it" }
+                        val abcdCN = (0 until height).joinToString { glm_.abcdN(c, it) }
+                        val `mAbcdN func nAbcdN` = AbcdJointIndexed(columnSeparator = " $sep ") { c, r, _ -> "${glm_.abcdN(c, r)}" }
+                        "Vec${height}$id.$func($mC, $nC) { $abcdCN ->".indentAndClose {
+                            if (c + 1 < width)
+                                equal(c + 1)
+                            else
+                                +"return res($`mAbcdN func nAbcdN`)"
+                        }
+                    }
+                    equal(0)
+                }
+
+                if (type !in floatingPointTypes)
+                    continue
+
+                // epsilon $type
+                epsilon("m", "n")
+                "inline fun <R> $func(m: $MatID, n: $MatID, epsilon: $type, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    +"return $func($`m,abcdN`,\n$`n,abcdN`, epsilon, res)"
+                }
+                epsilon("m[abcdN]", "n[abcdN]")
+                "inline fun <R> $func($`mAbcdN type`,\n$`nAbcdN type`, epsilon: $type, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    fun equal(c: Int) {
+                        val mC = (0 until height).joinToString { "m${glm_.ABCD[c]}$it" }
+                        val nC = (0 until height).joinToString { "n${glm_.ABCD[c]}$it" }
+                        val abcdCN = (0 until height).joinToString { glm_.abcdN(c, it) }
+                        val `mAbcdN func nAbcdN` = AbcdJointIndexed(columnSeparator = " $sep ") { c, r, _ -> "${glm_.abcdN(c, r)}" }
+                        "Vec${height}$id.$func($mC, $nC, epsilon) { $abcdCN ->".indentAndClose {
+                            if (c + 1 < width)
+                                equal(c + 1)
+                            else
+                                +"return res($`mAbcdN func nAbcdN`)"
+                        }
+                    }
+                    equal(0)
+                }
+
+                // epsilon $VecID
+                epsilon("m", "n")
+                "inline fun <R> $func(m: $MatID, n: $MatID, epsilon: $VecCid, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    +"return $func($`m,abcdN`,\n$`n,abcdN`,\n$`epsilon,xyzw`, res)"
+                }
+                epsilon("m[abcdN]", "n[abcdN]", "epsilon[$xyzw]")
+                "inline fun <R> $func($`mAbcdN type`,\n$`nAbcdN type`,\n$`epsilonXyzw type`, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    fun equal(c: Int) {
+                        val mC = (0 until height).joinToString { "m${glm_.ABCD[c]}$it" }
+                        val nC = (0 until height).joinToString { "n${glm_.ABCD[c]}$it" }
+                        val abcdCN = (0 until height).joinToString { glm_.abcdN(c, it) }
+                        val `mAbcdN func nAbcdN` = AbcdJointIndexed(columnSeparator = " $sep ") { c, r, _ -> "${glm_.abcdN(c, r)}" }
+                        "Vec${height}$id.$func($mC, $nC, epsilon${XYZW[c]}) { $abcdCN ->".indentAndClose {
+                            if (c + 1 < width)
+                                equal(c + 1)
+                            else
+                                +"return res($`mAbcdN func nAbcdN`)"
+                        }
+                    }
+                    equal(0)
+                }
+
+                // ulps Int
+                ulps()
+                "inline fun <R> $func(m: $MatID, n: $MatID, ulps: Int, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    +"return $func($`m,abcdN`,\n$`n,abcdN`, ulps, res)"
+                }
+                ulps()
+                "inline fun <R> $func($`mAbcdN type`,\n$`nAbcdN type`, ulps: Int, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    fun equal(c: Int) {
+                        val mC = (0 until height).joinToString { "m${glm_.ABCD[c]}$it" }
+                        val nC = (0 until height).joinToString { "n${glm_.ABCD[c]}$it" }
+                        val abcdCN = (0 until height).joinToString { glm_.abcdN(c, it) }
+                        val `mAbcdN func nAbcdN` = AbcdJointIndexed(columnSeparator = " $sep ") { c, r, _ -> "${glm_.abcdN(c, r)}" }
+                        "Vec${height}$id.$func($mC, $nC, ulps) { $abcdCN ->".indentAndClose {
+                            if (c + 1 < width)
+                                equal(c + 1)
+                            else
+                                +"return res($`mAbcdN func nAbcdN`)"
+                        }
+                    }
+                    equal(0)
+                }
+
+                // ulps VecNi
+                ulps()
+                "inline fun <R> $func(m: $MatID, n: $MatID, ulps: $VecCi, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    +"return $func($`m,abcdN`,\n$`n,abcdN`, $`ulps,xyzw`, res)"
+                }
+                ulps()
+                "inline fun <R> $func($`mAbcdN type`,\n$`nAbcdN type`, $`ulpsXyzw Int`, res: ($`xyzw Boolean`) -> R): R" {
+                    +contract
+                    fun equal(c: Int) {
+                        val mC = (0 until height).joinToString { "m${glm_.ABCD[c]}$it" }
+                        val nC = (0 until height).joinToString { "n${glm_.ABCD[c]}$it" }
+                        val abcdCN = (0 until height).joinToString { glm_.abcdN(c, it) }
+                        val `mAbcdN func nAbcdN` = AbcdJointIndexed(columnSeparator = " $sep ") { c, r, _ -> "${glm_.abcdN(c, r)}" }
+                        "Vec${height}$id.$func($mC, $nC, ulps${XYZW[c]}) { $abcdCN ->".indentAndClose {
+                            if (c + 1 < width)
+                                equal(c + 1)
+                            else
+                                +"return res($`mAbcdN func nAbcdN`)"
+                        }
+                    }
+                    equal(0)
+                }
+            }
+            else -> Unit
         }
     }
-//    /// Perform a component-wise not-equal-to comparison of two matrices.
-//    /// Return a boolean vector which components value is True if this expression is satisfied per column of the matrices.
-//    ///
-//    /// @tparam C Integer between 1 and 4 included that qualify the number of columns of the matrix
-//    /// @tparam R Integer between 1 and 4 included that qualify the number of rows of the matrix
-//    /// @tparam T Floating-point or integer scalar types
-//    /// @tparam Q Value from qualifier enum
-//    template<length_t C, length_t R, typename T, qualifier Q>
-//    GLM_FUNC_DECL GLM_CONSTEXPR vec<C, bool, Q> notEqual(mat<C, R, T, Q> const& x, mat<C, R, T, Q> const& y);
-//
-//    /// Returns the component-wise comparison of |x - y| < epsilon.
-//    /// True if this expression is satisfied.
-//    ///
-//    /// @tparam C Integer between 1 and 4 included that qualify the number of columns of the matrix
-//    /// @tparam R Integer between 1 and 4 included that qualify the number of rows of the matrix
-//    /// @tparam T Floating-point or integer scalar types
-//    /// @tparam Q Value from qualifier enum
-//    template<length_t C, length_t R, typename T, qualifier Q>
-//    GLM_FUNC_DECL GLM_CONSTEXPR vec<C, bool, Q> equal(mat<C, R, T, Q> const& x, mat<C, R, T, Q> const& y, T epsilon);
-//
-//    /// Returns the component-wise comparison of |x - y| < epsilon.
-//    /// True if this expression is satisfied.
-//    ///
-//    /// @tparam C Integer between 1 and 4 included that qualify the number of columns of the matrix
-//    /// @tparam R Integer between 1 and 4 included that qualify the number of rows of the matrix
-//    /// @tparam T Floating-point or integer scalar types
-//    /// @tparam Q Value from qualifier enum
-//    template<length_t C, length_t R, typename T, qualifier Q>
-//    GLM_FUNC_DECL GLM_CONSTEXPR vec<C, bool, Q> equal(mat<C, R, T, Q> const& x, mat<C, R, T, Q> const& y, vec<C, T, Q> const& epsilon);
-//
-//    /// Returns the component-wise comparison of |x - y| < epsilon.
-//    /// True if this expression is not satisfied.
-//    ///
-//    /// @tparam C Integer between 1 and 4 included that qualify the number of columns of the matrix
-//    /// @tparam R Integer between 1 and 4 included that qualify the number of rows of the matrix
-//    /// @tparam T Floating-point or integer scalar types
-//    /// @tparam Q Value from qualifier enum
-//    template<length_t C, length_t R, typename T, qualifier Q>
-//    GLM_FUNC_DECL GLM_CONSTEXPR vec<C, bool, Q> notEqual(mat<C, R, T, Q> const& x, mat<C, R, T, Q> const& y, T epsilon);
-//
-//    /// Returns the component-wise comparison of |x - y| >= epsilon.
-//    /// True if this expression is not satisfied.
-//    ///
-//    /// @tparam C Integer between 1 and 4 included that qualify the number of columns of the matrix
-//    /// @tparam R Integer between 1 and 4 included that qualify the number of rows of the matrix
-//    /// @tparam T Floating-point or integer scalar types
-//    /// @tparam Q Value from qualifier enum
-//    template<length_t C, length_t R, typename T, qualifier Q>
-//    GLM_FUNC_DECL GLM_CONSTEXPR vec<C, bool, Q> notEqual(mat<C, R, T, Q> const& x, mat<C, R, T, Q> const& y, vec<C, T, Q> const& epsilon);
-//
-//    /// Returns the component-wise comparison between two vectors in term of ULPs.
-//    /// True if this expression is satisfied.
-//    ///
-//    /// @tparam C Integer between 1 and 4 included that qualify the number of columns of the matrix
-//    /// @tparam R Integer between 1 and 4 included that qualify the number of rows of the matrix
-//    /// @tparam T Floating-point
-//    /// @tparam Q Value from qualifier enum
-//    template<length_t C, length_t R, typename T, qualifier Q>
-//    GLM_FUNC_DECL GLM_CONSTEXPR vec<C, bool, Q> equal(mat<C, R, T, Q> const& x, mat<C, R, T, Q> const& y, int ULPs);
-//
-//    /// Returns the component-wise comparison between two vectors in term of ULPs.
-//    /// True if this expression is satisfied.
-//    ///
-//    /// @tparam C Integer between 1 and 4 included that qualify the number of columns of the matrix
-//    /// @tparam R Integer between 1 and 4 included that qualify the number of rows of the matrix
-//    /// @tparam T Floating-point
-//    /// @tparam Q Value from qualifier enum
-//    template<length_t C, length_t R, typename T, qualifier Q>
-//    GLM_FUNC_DECL GLM_CONSTEXPR vec<C, bool, Q> equal(mat<C, R, T, Q> const& x, mat<C, R, T, Q> const& y, vec<C, int, Q> const& ULPs);
-//
-//    /// Returns the component-wise comparison between two vectors in term of ULPs.
-//    /// True if this expression is not satisfied.
-//    ///
-//    /// @tparam C Integer between 1 and 4 included that qualify the number of columns of the matrix
-//    /// @tparam R Integer between 1 and 4 included that qualify the number of rows of the matrix
-//    /// @tparam T Floating-point
-//    /// @tparam Q Value from qualifier enum
-//    template<length_t C, length_t R, typename T, qualifier Q>
-//    GLM_FUNC_DECL GLM_CONSTEXPR vec<C, bool, Q> notEqual(mat<C, R, T, Q> const& x, mat<C, R, T, Q> const& y, int ULPs);
-//
-//    /// Returns the component-wise comparison between two vectors in term of ULPs.
-//    /// True if this expression is not satisfied.
-//    ///
-//    /// @tparam C Integer between 1 and 4 included that qualify the number of columns of the matrix
-//    /// @tparam R Integer between 1 and 4 included that qualify the number of rows of the matrix
-//    /// @tparam T Floating-point
-//    /// @tparam Q Value from qualifier enum
-//    template<length_t C, length_t R, typename T, qualifier Q>
-//    GLM_FUNC_DECL GLM_CONSTEXPR vec<C, bool, Q> notEqual(mat<C, R, T, Q> const& x, mat<C, R, T, Q> const& y, vec<C, int, Q> const& ULPs);
 }
