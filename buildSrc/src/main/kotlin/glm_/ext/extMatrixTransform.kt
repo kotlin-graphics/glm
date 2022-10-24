@@ -37,6 +37,7 @@ fun Generator.extMatrixTransform(width: Int, height: Int, type: String, extensio
     val resXYZW = XyzwJoint(4) { "res$it" }
     val `abc4 type` = abcdJoint(3, 4, ",\n") { "$it: $type" }
     val `abcd type` = abcdJoint(4, 4, ",\n") { "$it: $type" }
+    val `m,abcd` = abcdJoint(4, 4, ",\n") { "m.$it" }
     val `v,xyz` = xyzwJoint(3) { "v.$it" }
     val `axis,xyz` = xyzwJoint(3) { "axis.$it" }
     val `axisXYZ` = XyzwJoint(3) { "axis$it" }
@@ -118,27 +119,26 @@ fun Generator.extMatrixTransform(width: Int, height: Int, type: String, extensio
 
             translate("[$xyz]", param1 = xyz, res = "res")
             +"""
-                fun translate($`xyz type`, res: $matID): $matID = translate(this, $xyz) { $`resXYZW type` ->
+                fun translate($`xyz type`, res: $matID): $matID = Companion.translate($abcdN,${'\n'}$xyz) { $`resXYZW type` ->
                     if (res !== this) res put this
                     res.with3($resXYZW)
                 }"""
         }
         Generator.Part.CompanionObject -> {
-            translate(receiverOrParam0 = "m", res = "->")
+            translate(vector = "v.[$xyz]", receiverOrParam0 = "m", param1 = xyz, res = "->")
             +"""
                 inline fun <R> translate(m: $matID, v: Vec3$id, res: ($`resXYZW type`) -> R): R {
                     $contract
-                    return translate(m, $`v,xyz`, res) 
+                    return translate($`m,abcd`, $`v,xyz`, res)
                 }"""
-
-            translate(vector = "[$xyz]", receiverOrParam0 = "m", param1 = xyz, res = "->")
+            translate(vector = "[$xyz]", receiverOrParam0 = "[abcdN]", param1 = xyz, res = "->")
             +"""
-                inline fun <R> translate(m: $matID, $`xyz type`, res: ($`resXYZW type`) -> R): R {
+                inline fun <R> translate($`abcd type`, $`xyz type`, res: ($`resXYZW type`) -> R): R {
                     $contract
-                    return res(m[0, 0] * x + m[1, 0] * y + m[2, 0] * z + m[3, 0],
-                               m[0, 1] * x + m[1, 1] * y + m[2, 1] * z + m[3, 1],
-                               m[0, 2] * x + m[1, 2] * y + m[2, 2] * z + m[3, 2],
-                               m[0, 3] * x + m[1, 3] * y + m[2, 3] * z + m[3, 3])
+                    return res(a0 * x + b0 * y + c0 * z + d0,
+                               a1 * x + b1 * y + c1 * z + d1,
+                               a2 * x + b2 * y + c2 * z + d2,
+                               a3 * x + b3 * y + c3 * z + d3)
                 }"""
         }
         else -> Unit
@@ -190,7 +190,7 @@ fun Generator.extMatrixTransform(width: Int, height: Int, type: String, extensio
 
             rotate(axis = "axis.[$xyz]", param1 = axisXYZ, res = "res")
             +"""
-                fun rotate(angle: $type, $`axisXYZ type`, res: $matID): $matID = rotate(this, angle, $axisXYZ) { $`abc4 type` ->
+                fun rotate(angle: $type, $`axisXYZ type`, res: $matID): $matID = rotate($abcdN,${'\n'}angle, $axisXYZ) { $`abc4 type` ->
                     res.with0($a0123).with1($b0123).with2($c0123)
                 }"""
         }
@@ -199,27 +199,27 @@ fun Generator.extMatrixTransform(width: Int, height: Int, type: String, extensio
             +"""
                 inline fun <R> rotate(m: $matID, angle: $type, axis: Vec3$id, res: ($`abc4 type`) -> R): R {
                     $contract
-                    return rotate(m, angle, $`axis,xyz`, res) 
+                    return rotate($`m,abcd`, angle, $`axis,xyz`, res) 
                 }"""
 
-            rotate(axis = "axis.[$xyz]", receiverOrParam0 = "m", param1 = axisXYZ, res = "->")
+            rotate(axis = "axis.[$xyz]", receiverOrParam0 = "[abcdN]", param1 = axisXYZ, res = "->")
             +"""
-                inline fun <R> rotate(m: $matID, angle: $type, $`axisXYZ type`, res: ($`abc4 type`) -> R): R {
+                inline fun <R> rotate($`abcd type`,${'\n'}angle: $type, $`axisXYZ type`, res: ($`abc4 type`) -> R): R {
                     $contract
                     val c = angle.cos
                     val s = angle.sin
                     
-                    return Vec3$id.normalize($axisXYZ) { aX, aY, aZ ->
+                    Vec3$id.normalize($axisXYZ) { aX, aY, aZ ->
                         val oneMinusC = ${type.`1`} - c
                         val tX = oneMinusC * aX; val tY = oneMinusC * aY; val tZ = oneMinusC * aZ
                     
-                        val a0 = tX * aX + c;      val a1 = tX * aY + s * aZ; val a2 = tX * aZ - s * aY
-                        val b0 = tY * aX - s * aZ; val b1 = tY * aY + c;      val b2 = tY * aZ + s * aX                
-                        val c0 = tZ * aX + s * aY; val c1 = tZ * aY - s * aX; val c2 = tZ * aZ + c
+                        val rA0 = tX * aX + c;      val rA1 = tX * aY + s * aZ; val rA2 = tX * aZ - s * aY
+                        val rB0 = tY * aX - s * aZ; val rB1 = tY * aY + c;      val rB2 = tY * aZ + s * aX                
+                        val rC0 = tZ * aX + s * aY; val rC1 = tZ * aY - s * aX; val rC2 = tZ * aZ + c
                     
-                        res(m.a0 * a0 + m.b0 * a1 + m.c0 * a2, m.a1 * a0 + m.b1 * a1 + m.c1 * a2, m.a2 * a0 + m.b2 * a1 + m.c2 * a2, m.a3 * a0 + m.b3 * a1 + m.c3 * a2,
-                            m.a0 * b0 + m.b0 * b1 + m.c0 * b2, m.a1 * b0 + m.b1 * b1 + m.c1 * b2, m.a2 * b0 + m.b2 * b1 + m.c2 * b2, m.a3 * b0 + m.b3 * b1 + m.c3 * b2,                    
-                            m.a0 * c0 + m.b0 * c1 + m.c0 * c2, m.a1 * c0 + m.b1 * c1 + m.c1 * c2, m.a2 * c0 + m.b2 * c1 + m.c2 * c2, m.a3 * c0 + m.b3 * c1 + m.c3 * c2)
+                        return res(a0 * rA0 + b0 * rA1 + c0 * rA2, a1 * rA0 + b1 * rA1 + c1 * rA2, a2 * rA0 + b2 * rA1 + c2 * rA2, a3 * rA0 + b3 * rA1 + c3 * rA2,
+                                   a0 * rB0 + b0 * rB1 + c0 * rB2, a1 * rB0 + b1 * rB1 + c1 * rB2, a2 * rB0 + b2 * rB1 + c2 * rB2, a3 * rB0 + b3 * rB1 + c3 * rB2,                    
+                                   a0 * rC0 + b0 * rC1 + c0 * rC2, a1 * rC0 + b1 * rC1 + c1 * rC2, a2 * rC0 + b2 * rC1 + c2 * rC2, a3 * rC0 + b3 * rC1 + c3 * rC2)
                     }
                 }"""
         }
@@ -269,7 +269,7 @@ fun Generator.extMatrixTransform(width: Int, height: Int, type: String, extensio
 
             scale(param1 = vXYZ, res = "res")
             +"""
-                fun scale($`vXYZ type`, res: $matID): $matID = scale(this, $vXYZ) { $`abcd type` ->
+                fun scale($`vXYZ type`, res: $matID): $matID = scale($abcdN,${'\n'}$vXYZ) { $`abcd type` ->
                     if (res !== this) res.set3($d0123)
                     res.with0($a0123).with1($b0123).with2($c0123)
                 }"""
@@ -279,20 +279,20 @@ fun Generator.extMatrixTransform(width: Int, height: Int, type: String, extensio
             +"""
                 inline fun <R> scale(m: $matID, v: Vec3$id, res: ($`abcd type`) -> R): R {
                     $contract
-                    return scale(m, $`v,xyz`, res)
+                    return scale($`m,abcd`,${'\n'}$`v,xyz`, res)
                 }"""
 
             scale(receiverOrParam0 = "m", param1 = vXYZ, res = "->")
             +"""
-                inline fun <R> scale(m: $matID, $`vXYZ type`, res: ($`abcd type`) -> R): R {
+                inline fun <R> scale($`abcd type`,${'\n'}$`vXYZ type`, res: ($`abcd type`) -> R): R {
                     $contract
-                    Vec4$id.times(m.a0, m.a1, m.a2, m.a3, vX, vX, vX, vX) { $a0123 ->
-                        Vec4$id.times(m.b0, m.b1, m.b2, m.b3, vY, vY, vY, vY) { $b0123 ->
-                            Vec4$id.times(m.c0, m.c1, m.c2, m.c3, vZ, vZ, vZ, vZ) { $c0123 ->
+                    Vec4$id.times(a0, a1, a2, a3, vX, vX, vX, vX) { $a0123 ->
+                        Vec4$id.times(b0, b1, b2, b3, vY, vY, vY, vY) { $b0123 ->
+                            Vec4$id.times(c0, c1, c2, c3, vZ, vZ, vZ, vZ) { $c0123 ->
                                 return res($a0123,
                                            $b0123,
                                            $c0123,
-                                           m.d0, m.d1, m.d2, m.d3)
+                                           $d0123)
                             }
                         }
                     }

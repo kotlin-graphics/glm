@@ -1,6 +1,7 @@
 package glm_.gen
 
 import glm_.ext.extMatrixClipSpace
+import glm_.ext.extMatrixProjection
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.tasks.OutputDirectory
@@ -38,6 +39,7 @@ abstract class GenerateCode : DefaultTask() {
         quaternions(target)
 
         extMatrixClipSpace(target)
+        extMatrixProjection(target)
     }
 }
 
