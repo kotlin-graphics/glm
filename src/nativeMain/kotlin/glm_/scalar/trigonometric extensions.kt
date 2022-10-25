@@ -1,11 +1,11 @@
 package glm_.scalar
 
 actual val Float.rad: Float
-    get() = TODO()
+    get() = this * 0.017453292f
 actual val Double.rad: Double
-    get() = TODO()
+    get() = this * 0.017453292519943295
 
 actual val Float.deg: Float
-    get() = TODO()
+    get() = this * 57.29578f
 actual val Double.deg: Double
-    get() = TODO()
+    get() = this * 57.29577951308232
