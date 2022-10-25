@@ -3,6 +3,8 @@ package glm_.ext
 import glm_.glm
 import glm_.mat4.Mat4
 import glm_.shouldEqual
+import glm_.vec2.Vec2
+import glm_.vec4.Vec4i
 import kotlin.test.Test
 
 class matrixClipSpace {
@@ -73,15 +75,15 @@ class matrixClipSpace {
             0f, 0f, -1.999f, 0f), 0.001f)
     }
 
-//    @Test TODO
-//    fun pick() {
-//
-//        val pick = glm.pickMatrix(Vec2(1, 2), Vec2(3, 4), Vec4i(0, 0, 320, 240))
-//
-//        pick shouldBe Mat4(
-//            106.666664f, 0f, 0f, 0f,
-//            0f, 60f, 0f, 0f,
-//            0f, 0f, 1f, 0f,
-//            106f, 59f, 0f, 1f)
-//    }
+    @Test
+    fun pick() {
+
+        val pick = glm.pickMatrix(Vec2(1, 2), Vec2(3, 4), Vec4i(0, 0, 320, 240))
+
+        pick.shouldEqual(Mat4(
+            106.666664f, 0f, 0f, 0f,
+            0f, 60f, 0f, 0f,
+            0f, 0f, 1f, 0f,
+            106f, 59f, 0f, 1f), 0.00001f)
+    }
 }

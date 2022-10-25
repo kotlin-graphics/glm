@@ -12,6 +12,8 @@ class quatTransform {
         val center = Vec3(1.1f, -2f, 3.1416f)
         val up = Vec3(-0.17f, 7.23f, -1.744f)
 
+        // TODO
+
 //        val test_quat = glm::quatLookAt(glm::normalize(center - eye), up)
 //        glm::quat test_mat = glm::conjugate(glm::quat_cast(glm::lookAt(eye, center, up)))
 //

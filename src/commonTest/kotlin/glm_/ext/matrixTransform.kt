@@ -38,6 +38,7 @@ class matrixTransform {
         }
     }
 
+    @Test
     fun scale() {
 
         val m = Mat4(1f)
@@ -52,6 +53,7 @@ class matrixTransform {
         s shouldEqual r
     }
 
+    @Test
     fun rotate() {
 
         run {
