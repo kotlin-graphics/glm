@@ -2,6 +2,7 @@ package glm_.quat
 
 import java.io.File
 import glm_.*
+import glm_.ext.*
 import glm_.gen.Generator
 import glm_.gen.generate
 
@@ -148,16 +149,27 @@ fun Generator.quatId(type: String, extension: String, conversion: String, id: St
         +"""operator fun unaryPlus(): Quat$id = this"""
         +"""operator fun unaryMinus(): Quat$id = Quat$id(-w, -x, -y, -z)"""
 
-        quaternionOperators(type, extension, conversion, id, Generator.Part.Class)
-        quatGeometrical(type, extension, conversion, id, Generator.Part.Class)
-        quatRelational(type, extension, conversion, id, Generator.Part.Class)
+        quatOperators(type, extension, conversion, id, Generator.Part.Class)
+
+        extQuatCommon(type, extension, conversion, id, Generator.Part.Class)
+        extQuatGeometrical(type, extension, conversion, id, Generator.Part.Class)
+        extQuatExponential(type, extension, conversion, id, Generator.Part.Class)
+        extQuatRelational(type, extension, conversion, id, Generator.Part.Class)
+        extQuatTransform(type, extension, conversion, id, Generator.Part.Class)
+        extQuatTrigonometric(type, extension, conversion, id, Generator.Part.Class)
 
         "companion object" {
             +"const val length = QuatT.length"
             +"const val size: Int = length * $type.SIZE_BYTES"
-            quaternionOperators(type, extension, conversion, id, Generator.Part.CompanionObject)
-            quatGeometrical(type, extension, conversion, id, Generator.Part.CompanionObject)
-            quatRelational(type, extension, conversion, id, Generator.Part.CompanionObject)
+
+            quatOperators(type, extension, conversion, id, Generator.Part.CompanionObject)
+
+            extQuatCommon(type, extension, conversion, id, Generator.Part.CompanionObject)
+            extQuatGeometrical(type, extension, conversion, id, Generator.Part.CompanionObject)
+            extQuatExponential(type, extension, conversion, id, Generator.Part.CompanionObject)
+            extQuatRelational(type, extension, conversion, id, Generator.Part.CompanionObject)
+            extQuatTransform(type, extension, conversion, id, Generator.Part.CompanionObject)
+            extQuatTrigonometric(type, extension, conversion, id, Generator.Part.CompanionObject)
         }
     }
 

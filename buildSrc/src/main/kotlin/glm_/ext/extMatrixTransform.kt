@@ -6,6 +6,8 @@ import glm_.`0`
 
 fun Generator.extMatrixTransform(width: Int, height: Int, type: String, extension: String, id: String, part: Generator.Part) {
 
+    +"// ext matrix transform\n"
+
     val matID = "Mat$matrixSize$id"
 
     imports += listOf("glm_.scalar.sin",

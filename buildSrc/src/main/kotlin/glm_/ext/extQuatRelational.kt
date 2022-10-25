@@ -1,11 +1,13 @@
-package glm_.quat
+package glm_.ext
 
 import glm_.WxyzJoint
 import glm_.gen.Generator
 import glm_.wxyzJoint
 import glm_.xyzwJoint
 
-fun Generator.quatRelational(type: String, extension: String, conversion: String, id: String, part: Generator.Part) {
+fun Generator.extQuatRelational(type: String, extension: String, conversion: String, id: String, part: Generator.Part) {
+
+    +"// ext quat relational\n"
 
     imports += listOf(
         "glm_.vec4.Vec4bool",

@@ -5,6 +5,8 @@ import glm_.gen.Generator
 
 fun Generator.extScalarRelational(type: String) {
 
+    +"// ext scalar relational\n"
+
     if (type !in floatingPointTypes)
         return
 

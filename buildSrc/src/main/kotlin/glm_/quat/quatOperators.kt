@@ -8,7 +8,7 @@ import glm_.xyzwJoint
 import glm_.`2`
 
 
-fun Generator.quaternionOperators(type: String, extension: String, conversion: String, id: String, part: Generator.Part) {
+fun Generator.quatOperators(type: String, extension: String, conversion: String, id: String, part: Generator.Part) {
 
     +"// -- Unary arithmetic operators --\n"
 

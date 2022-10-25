@@ -5,6 +5,8 @@ import glm_.gen.Generator
 
 fun Generator.extMatrixRelational(width: Int, height: Int, type: String, extension: String, id: String, part: Generator.Part) {
 
+    +"// ext matrix relational\n"
+
     val MatID = "Mat$matrixSize$id"
 
     //    imports += listOf("glm_.scalar.sin",

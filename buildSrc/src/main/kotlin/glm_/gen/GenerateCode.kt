@@ -9,6 +9,7 @@ import org.gradle.api.tasks.TaskAction
 import java.io.File
 import glm_.matrices
 import glm_.primitiveExtensions
+import glm_.ext.extQuatTrigonometric
 import glm_.quat.quaternions
 import glm_.swizzles
 import glm_.vecs.vectors
@@ -40,6 +41,7 @@ abstract class GenerateCode : DefaultTask() {
 
         extMatrixClipSpace(target)
         extMatrixProjection(target)
+        extQuatTrigonometric(target)
     }
 }
 

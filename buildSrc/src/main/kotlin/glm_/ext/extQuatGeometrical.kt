@@ -1,4 +1,4 @@
-package glm_.quat
+package glm_.ext
 
 import glm_.WxyzJoint
 import glm_.XyzwJoint
@@ -8,9 +8,9 @@ import glm_.xyzwJoint
 import glm_.`0`
 import glm_.`1`
 
-fun Generator.quatGeometrical(type: String, extension: String, conversion: String, id: String, part: Generator.Part) {
+fun Generator.extQuatGeometrical(type: String, extension: String, conversion: String, id: String, part: Generator.Part) {
 
-    +"// quat geometrical\n"
+    +"// ext quat geometrical\n"
 
     imports += listOf(
         "glm_.scalar.sqrt"

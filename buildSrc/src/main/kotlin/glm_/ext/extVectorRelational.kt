@@ -7,6 +7,8 @@ import glm_.xyzwJoint
 
 fun Generator.extVectorRelational(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
 
+    +"// ext vector relational\n"
+
     val VecID = vec + id
     val VecBool = "Vec${ordinal}bool"
 
