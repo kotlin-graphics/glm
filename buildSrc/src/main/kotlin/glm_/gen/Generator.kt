@@ -148,6 +148,7 @@ class Generator(val targetDir: File) {
     enum class Part { Class, CompanionObject, Scalar }
 
 
+    // dont change order (+ and - first, then * and /). Quat operator generation relies on this
     val operators = listOf("+" to "plus", "-" to "minus", "*" to "times", "/" to "div")
 
     val matrixSize: String

@@ -47,10 +47,10 @@ val String.`0`
     }
 val String.`0,5`
     get() = when (this) {
-    "Float" -> "0.5f"
-    "Double" -> "0.5"
-    else -> error("invalid type")
-}
+        "Float" -> "0.5f"
+        "Double" -> "0.5"
+        else -> error("invalid type")
+    }
 val String.`1`
     get() = when (this) {
         "Int" -> "1"
@@ -160,7 +160,7 @@ fun Generator.XyzwJoint(ordinal: Int = Generator.Companion.ordinal, separator: S
 
 fun wxyzJointIndexed(separator: String = ", ", block: (Int, String) -> String) = wxyz.indices.joinToString(separator) { block(it, wxyz[it]) }
 fun WxyzJointIndexed(separator: String = ", ", block: (Int, String) -> String) = wxyz.indices.joinToString(separator) { block(it, wxyz[it].toUpperCase()) }
-fun wxyzJoint(separator: String = ", ", block: (String) -> String) = wxyz.indices.joinToString(separator) { block(wxyz[it]) }
+fun wxyzJoint(separator: String = ", ", block: (String) -> String = { it }) = wxyz.indices.joinToString(separator) { block(wxyz[it]) }
 fun WxyzJoint(separator: String = ", ", block: (String) -> String = { it }) = wxyz.indices.joinToString(separator) { block(wxyz[it].toUpperCase()) }
 
 

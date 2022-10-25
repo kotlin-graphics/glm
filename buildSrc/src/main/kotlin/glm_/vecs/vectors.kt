@@ -414,7 +414,7 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
         "companion object" {
             +"const val length = Vec${ordinal}T.length"
             if (type in numberTypes) {
-                +"const val size = length * $type.SIZE_BYTES"
+                +"const val size: Int = length * $type.SIZE_BYTES"
 
                 binary(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
                 common(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
