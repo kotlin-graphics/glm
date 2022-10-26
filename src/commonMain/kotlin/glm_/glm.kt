@@ -9,8 +9,8 @@ import kotlin.math.ulp as ulpe
 
 object glm /*: func_common*/ {
     object epsilon {
-        val f = Float.MIN_VALUE
-        val d = Double.MIN_VALUE
+        val f = 1f.ulp
+        val d = 1.0.ulpe
     }
     object pi {
         val d = kotlin.math.PI

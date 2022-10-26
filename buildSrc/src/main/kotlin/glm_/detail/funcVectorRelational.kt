@@ -24,6 +24,7 @@ fun Generator.vectorRelational(ordinal: Int, type: String, extension: String, id
     val XYZW = XyzwJoint()
     val `a,xyzw` = xyzwJoint { "a.$it" }
     val `aXYZW type` = XyzwJoint { "a$it: $type" }
+    val aXYZW = XyzwJoint { "a$it" }
     val `v,xyzw` = xyzwJoint { "v.$it" }
     val `xyzw type` = xyzwJoint { "$it: $type" }
     val `b,xyzw` = xyzwJoint { "b.$it" }
@@ -42,7 +43,7 @@ fun Generator.vectorRelational(ordinal: Int, type: String, extension: String, id
                 doc()
                 +"fun $func(b: $VecID, res: $VecBool): $VecBool = $func($`b,xyzw`, res)"
                 doc(y = "b[$XYZW]")
-                +"fun $func($`bXYZW type`, res: $VecBool = $VecBool()): $VecBool = $func($xyzw, $bXYZW) { $`xyzw Bool` -> res($xyzw) }"
+                +"fun $func($`bXYZW type`, res: $VecBool = $VecBool()): $VecBool = $func($xyzw, $bXYZW) { $xyzw -> res($xyzw) }"
                 doc()
                 +"""
                     inline fun <R> $func(b: $VecID, res: ($`xyzw Bool`) -> R): R {
@@ -55,6 +56,12 @@ fun Generator.vectorRelational(ordinal: Int, type: String, extension: String, id
                         $contract
                         return $func($xyzw, $bXYZW, res) 
                     }"""
+                if (func == "equal" || func == "notEqual") {
+                    val fn = if (func[0] == 'e') "allEqual" else "anyNotEqual"
+                    val op = fn.take(3)
+                    +"fun $fn(b: $VecID): Boolean = $fn($`b,xyzw`)"
+                    +"fun $fn($`bXYZW type`): Boolean = $func($bXYZW) { $xyzw -> Vec${ordinal}bool.$op($xyzw) }"
+                }
             }
             Generator.Part.CompanionObject -> {
                 doc("a")
@@ -70,6 +77,12 @@ fun Generator.vectorRelational(ordinal: Int, type: String, extension: String, id
                         $contract
                         return res($`a rel b`)
                     }"""
+                if (func == "equal" || func == "notEqual") {
+                    val fn = if (func[0] == 'e') "allEqual" else "anyNotEqual"
+                    val op = fn.take(3)
+                    +"fun $fn(a: $VecID, b: $VecID): Boolean = $fn($`a,xyzw`, $`b,xyzw`)"
+                    +"fun $fn($`aXYZW type`, $`bXYZW type`): Boolean = $func($aXYZW, $bXYZW) { $xyzw -> Vec${ordinal}bool.$op($xyzw) }"
+                }
             }
             else -> Unit
         }
@@ -101,7 +114,7 @@ fun Generator.vectorRelational(ordinal: Int, type: String, extension: String, id
                 not()
                 +"fun notAssign(): $VecBool = not(this)"
                 not()
-                +"fun not(res: $VecBool = $VecBool()): $VecBool = not(this) { $`xyzw Bool` -> res($xyzw) }"
+                +"fun not(res: $VecBool = $VecBool()): $VecBool = not(this) { $xyzw -> res($xyzw) }"
                 not()
                 +"""
                     inline fun <R> not(res: ($`xyzw Bool`) -> R): R {

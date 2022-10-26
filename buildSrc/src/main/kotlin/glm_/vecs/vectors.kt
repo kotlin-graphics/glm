@@ -360,49 +360,21 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
         // ext
         extVectorRelational(ordinal, type, extension, id, vec, Generator.Part.Class)
 
-        +"override fun equals(other: Any?) = other is $VecID && ${xyzwJoint(separator = " && ") { "$it == other.$it" }}"
-        +"override fun hashCode() = ${xyzwJointIndexed(separator = " + ") { i, c -> "${31f.pow(i).toInt()} * $c.hashCode()" }}"
-
-        // TODO remove
-        if (type == "Float" || type == "Double")
-//        fun equal(v: $VecID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[ofs + it] - v.array[v.ofs + it]) <= epsilon }
-//        fun notEqual(v: $VecID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[ofs + it] - v.array[v.ofs + it]) > epsilon }
-            +"""
-                fun allEqual(v: $VecID, epsilon: $type = $type.MIN_VALUE): Boolean {
-                    for (i in 0 until length)
-                        if(array[ofs + i].notEqual(v.array[v.ofs + i], epsilon))
-                            return false
-                    return true
-                }
-                fun allEqual(v: $VecID, ulps: Int): Boolean {
-                    for (i in 0 until length)
-                        if(array[ofs + i].notEqual(v.array[v.ofs + i], ulps))
-                            return false
-                    return true
-                }
-                fun anyNotEqual(v: $VecID, epsilon: $type = $type.MIN_VALUE): Boolean {
-                    for (i in 0 until length)
-                        if(array[ofs + i].notEqual(v.array[v.ofs + i], epsilon))
-                            return true
-                    return false
-                }
-                fun anyNotEqual(v: $VecID, ulps: Int): Boolean {
-                    for (i in 0 until length)
-                        if(array[ofs + i].notEqual(v.array[v.ofs + i], ulps))
-                            return true
-                    return false
-                }"""
-        else {
-//            if (type != "Boolean")
-//                +"infix fun equal(v: $VecID) = BooleanArray(length) { array[ofs + it] == v.array[v.ofs + it] }"
-//            +"infix fun notEqual(v: $VecID) = BooleanArray(length) { array[ofs + it] != v.array[v.ofs + it] }"
-            // TODO remove this, they don't even take in account `ofs`
-            +"""
-                fun allEqual(v: $VecID): Boolean = array.contentEquals(v.array)
-                fun anyNotEqual(v: $VecID): Boolean = !array.contentEquals(v.array)"""
-        }
-        +"fun all(predicate: ($type) -> Boolean): Boolean = array.all(predicate)"
-        +"fun any(predicate: ($type) -> Boolean): Boolean = array.any(predicate)"
+        +"""
+            override fun equals(other: Any?) = other is $VecID && ${xyzwJoint(separator = " && ") { "$it == other.$it" }}
+            override fun hashCode() = ${xyzwJointIndexed(separator = " + ") { i, c -> "${31f.pow(i).toInt()} * $c.hashCode()" }}
+            fun all(predicate: ($type) -> Boolean): Boolean {
+                for (i in 0 until length)
+                    if(!predicate(this[i]))
+                        return false
+                return true
+            }
+            fun any(predicate: ($type) -> Boolean): Boolean {
+                for (i in 0 until length)
+                    if(predicate(this[i]))
+                        return true
+                return false
+            }"""
 
         if (type == "Boolean") {
             +"// Boolean operators"
