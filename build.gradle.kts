@@ -1,17 +1,56 @@
-import kx.*
-import org.lwjgl.Lwjgl
-import org.lwjgl.Lwjgl.Module.*
+import magik.createGithubPublication
+import magik.github
+import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+import org.lwjgl.lwjgl
+import org.lwjgl.lwjgl.Module.*
 
 plugins {
-    fun kx(vararg p: Pair<String, String>) = p.forEach { id("io.github.kotlin-graphics.${it.first}") version it.second }
-    kx("align" to "0.0.7",
-       "base" to "0.0.10",
-       "publish" to "0.0.6",
-       "utils" to "0.0.5")
-    id("org.lwjgl.plugin") version "0.0.20"
+    kotlin("jvm") version embeddedKotlinVersion
+    id("org.lwjgl.plugin") version "0.0.29"
+    id("elect86.magik") version "0.3.1"
+    `maven-publish`
+}
+
+repositories {
+    mavenCentral()
+    github("kotlin-graphics/mary")
 }
 
 dependencies {
-    implementation(unsigned, kool)
-    Lwjgl { implementation(glfw, jemalloc, openal, opengl, stb) }
+    implementation(kotlin("stdlib-jdk8", embeddedKotlinVersion))
+    implementation("kotlin.graphics:unsigned:3.3.31")
+    implementation("kotlin.graphics:kool:0.9.68")
+    lwjgl { implementation(glfw, jemalloc, openal, opengl, stb) }
+
+    testImplementation("io.kotest:kotest-runner-junit5:5.4.1")
+    testImplementation("io.kotest:kotest-assertions-core:5.4.1")
 }
+
+kotlin.jvmToolchain {
+    this as JavaToolchainSpec
+    languageVersion.set(JavaLanguageVersion.of(8))
+}
+
+tasks {
+    withType<KotlinCompile<*>>().all {
+        kotlinOptions {
+            freeCompilerArgs += listOf("-opt-in=kotlin.RequiresOptIn")
+        }
+    }
+}
+
+publishing {
+    publications {
+        createGithubPublication {
+            from(components["java"])
+            suppressAllPomMetadataWarnings()
+        }
+    }
+    repositories {
+        github {
+            domain = "kotlin-graphics/mary"
+        }
+    }
+}
+
+java { withSourcesJar() }

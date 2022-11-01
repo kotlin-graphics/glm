@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11">
+    <bytecodeTargetLevel target="1.8">
       <module name="build-logic.align" target="1.8" />
       <module name="build-logic.align.main" target="8" />
       <module name="build-logic.align.test" target="8" />
@@ -17,6 +17,11 @@
       <module name="build-logic.utils" target="1.8" />
       <module name="build-logic.utils.main" target="8" />
       <module name="build-logic.utils.test" target="8" />
+      <module name="glm.jdk8" target="1.8" />
+      <module name="magik.plugin" target="1.8" />
+      <module name="magik.plugin.functionalTest" target="8" />
+      <module name="magik.plugin.main" target="8" />
+      <module name="magik.plugin.test" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
