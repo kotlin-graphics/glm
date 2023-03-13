@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:pull" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="81b6b44d-b931-4cf5-b7f2-cf93c78a4d4e" name="Default Changelist" comment="wtf">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/glm_js_0_9_9_1_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/glm_js_1_0_SNAPSHOT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/glm_jvm_0_9_9_1_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/glm_jvm_1_0_SNAPSHOT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/processor_jvm_1_0_SNAPSHOT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/test_processor_jvm_1_0_SNAPSHOT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/workload_jvm_1_0_SNAPSHOT.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinScripting.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/glm.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/detail/binary.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/detail/binary.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/detail/funcCommon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/detail/funcCommon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/detail/funcExponential.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/detail/funcExponential.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/detail/funcGeometric.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/detail/funcGeometric.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/detail/funcInteger.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/detail/funcInteger.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/detail/funcMatrix.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/detail/funcMatrix.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/detail/funcTrigonometric.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/detail/funcTrigonometric.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/detail/funcVectorRelational.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/detail/funcVectorRelational.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extMatrixProjection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extMatrixProjection.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extMatrixRelational.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extMatrixRelational.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extMatrixTransform.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extMatrixTransform.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extQuatCommon.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extQuatCommon.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extQuatExponential.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extQuatExponential.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extQuatGeometrical.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extQuatGeometrical.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extQuatRelational.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extQuatRelational.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extQuatTransform.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extQuatTransform.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extQuatTrigonometric.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extQuatTrigonometric.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extVectorRelational.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/ext/extVectorRelational.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/gen/Generator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/gen/Generator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/matrices.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/matrices.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/quat/quatOperators.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/quat/quatOperators.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/swizzles.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/swizzles.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/types.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/types.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/vecs/vectors.kt" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/kotlin/glm_/vecs/vectors.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="glm" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="glm" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="glm" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="benchmark" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="glm" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="glm" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="glm" type="f1a62948:ProjectNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="glm" type="f1a62948:ProjectNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+                <item name="compileClasspath" type="62daadca:ExternalSystemViewDefaultContributor$DependencyScopeExternalSystemNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KotlinMultiplatform" KONAN_HOME="C:\Users\elect\.konan\kotlin-native-prebuilt-windows-x86_64-1.6.21">
+    <executable TARGET="mingw_x64" TARGET_NAME="native" EXECUTABLE_NAME="test" PROJECT_PREFIX="glm:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":linkDebugTestNative" FILE="$PROJECT_DIR$/build/bin/native/debugTest/test.exe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.2\plugins\maven\lib\maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1hDxY6XvXJjmHPM2es9ouGEUX04" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="gradle help --warning-mode all" />
+      <command value="gradle tasks --warning-mode all" />
+      <command value="gradle jvmBenchBenchmark --stacktrace" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Gradle.glm [jvmBenchBenchmark]">
+    <configuration name="glm [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="glm [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="glm [help]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--warning-mode all" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="help" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="glm [jvmBenchBenchmark]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--full-stacktrace" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jvmBenchBenchmark" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="glm [tasks]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--warning-mode all" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="tasks" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.glm [build]" />
+      <item itemvalue="Gradle.glm [clean]" />
+      <item itemvalue="Gradle.glm [help]" />
+      <item itemvalue="Gradle.glm [jvmBenchBenchmark]" />
+      <item itemvalue="Gradle.glm [tasks]" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.glm [jvmBenchBenchmark]" />
+        <item itemvalue="Gradle.glm [tasks]" />
+        <item itemvalue="Gradle.glm [help]" />
+        <item itemvalue="Gradle.glm [build]" />
+        <item itemvalue="Gradle.glm [clean]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="81b6b44d-b931-4cf5-b7f2-cf93c78a4d4e" name="Default Changelist" comment="" />
+      <created>1599559508326</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1599559508326</updated>
+      <workItem from="1599559509363" duration="5011000" />
+      <workItem from="1599728341840" duration="36000" />
+      <workItem from="1599728409742" duration="345000" />
+      <workItem from="1599729262588" duration="3000" />
+      <workItem from="1599769524582" duration="1223000" />
+      <workItem from="1599770804560" duration="16000" />
+      <workItem from="1599770953232" duration="4973000" />
+      <workItem from="1599984311874" duration="599000" />
+      <workItem from="1600033344294" duration="600000" />
+      <workItem from="1600107338689" duration="61000" />
+      <workItem from="1603375292906" duration="402000" />
+      <workItem from="1603375736887" duration="163000" />
+      <workItem from="1603375911347" duration="52000" />
+      <workItem from="1603376064023" duration="6399000" />
+      <workItem from="1604313302719" duration="507000" />
+      <workItem from="1604400774372" duration="2259000" />
+      <workItem from="1604480727991" duration="146000" />
+      <workItem from="1638464828475" duration="83000" />
+      <workItem from="1638464943132" duration="6546000" />
+      <workItem from="1638517394635" duration="17000" />
+      <workItem from="1665718025922" duration="375000" />
+      <workItem from="1665718433506" duration="333000" />
+      <workItem from="1678723791076" duration="2843000" />
+    </task>
+    <task id="LOCAL-00001" summary="fixed .gitignore">
+      <created>1599559590151</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1599559590151</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fixed .gitignore">
+      <created>1599559721148</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1599559721148</updated>
+    </task>
+    <task id="LOCAL-00003" summary="up">
+      <created>1599560640760</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1599560640760</updated>
+    </task>
+    <task id="LOCAL-00004" summary="up">
+      <created>1599560697222</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1599560697222</updated>
+    </task>
+    <task id="LOCAL-00005" summary="- kotlin, dokka 1.4.10&#10;- gradle 6.7&#10;- kotest 4.2.5">
+      <created>1603379754544</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1603379754544</updated>
+    </task>
+    <task id="LOCAL-00006" summary="- kotlin, dokka 1.4.10&#10;- gradle 6.7&#10;- kotest 4.2.5">
+      <created>1603384771156</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1603384771156</updated>
+    </task>
+    <task id="LOCAL-00007" summary="gradle simplified">
+      <created>1604401769818</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1604401769818</updated>
+    </task>
+    <task id="LOCAL-00008" summary="bump up">
+      <created>1604402083554</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1604402083554</updated>
+    </task>
+    <task id="LOCAL-00009" summary="bump up">
+      <created>1604402278971</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1604402278971</updated>
+    </task>
+    <task id="LOCAL-00010" summary="wtf">
+      <created>1638511331184</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1638511331184</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="fixed .gitignore" />
+    <MESSAGE value="up" />
+    <MESSAGE value="- kotlin, dokka 1.4.10&#10;- gradle 6.7&#10;- kotest 4.2.5" />
+    <MESSAGE value="gradle simplified" />
+    <MESSAGE value="bump up" />
+    <MESSAGE value="wtf" />
+    <option name="LAST_COMMIT_MESSAGE" value="wtf" />
+  </component>
+</project>

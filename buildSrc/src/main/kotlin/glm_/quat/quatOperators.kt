@@ -193,6 +193,7 @@ fun Generator.quatOperators(type: String, extension: String, conversion: String,
                     return res(qW $sign s, qX $sign s, qY $sign s, qZ $sign s)
                 }"""
             }
+            else -> Unit
         }
     }
 }
