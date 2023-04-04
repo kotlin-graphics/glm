@@ -9,6 +9,7 @@ plugins {
     id("org.lwjgl.plugin") version "0.0.34"
     id("elect86.magik") version "0.3.2"
     `maven-publish`
+//    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 repositories {
@@ -18,16 +19,14 @@ repositories {
 
 dependencies {
     api("kotlin.graphics:unsigned:3.3.32")
-    api("kotlin.graphics:kool:0.9.74")
+    api("kotlin.graphics:kool:0.9.75")
     lwjgl { implementation(glfw, jemalloc, openal, opengl, stb) }
 
     testImplementation("io.kotest:kotest-runner-junit5:5.5.5")
     testImplementation("io.kotest:kotest-assertions-core:5.5.5")
 }
 
-kotlin.jvmToolchain {
-    languageVersion.set(JavaLanguageVersion.of(8))
-}
+kotlin.jvmToolchain { languageVersion.set(JavaLanguageVersion.of(8)) }
 
 tasks {
     withType<KotlinCompile<*>>().all {
@@ -45,11 +44,7 @@ publishing {
             suppressAllPomMetadataWarnings()
         }
     }
-    repositories {
-        github {
-            domain = "kotlin-graphics/mary"
-        }
-    }
+    repositories { github { domain = "kotlin-graphics/mary" } }
 }
 
 java.withSourcesJar()
