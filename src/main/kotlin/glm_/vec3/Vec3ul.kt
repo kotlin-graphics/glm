@@ -93,9 +93,9 @@ class Vec3ul(var ofs: Int, var array: LongArray) : Vec3t<Ulong>(), ToBuffer {
     constructor(v: Vec4bool) : this(v.x.ul, v.y.ul, v.z.ul)
 
     constructor(bytes: ByteArray, index: Int = 0, oneByteOneUlong: Boolean = false, bigEndian: Boolean = true) : this(
-            if (oneByteOneUlong) bytes[index].ul else bytes.getUlong(index, bigEndian),
-            if (oneByteOneUlong) bytes[index + 1].ul else bytes.getUlong(index + Ulong.BYTES, bigEndian),
-            if (oneByteOneUlong) bytes[index + 2].ul else bytes.getUlong(index + Ulong.BYTES * 2, bigEndian))
+        if (oneByteOneUlong) bytes[index].ul else bytes.getUlong(index, bigEndian),
+        if (oneByteOneUlong) bytes[index + 1].ul else bytes.getUlong(index + Ulong.BYTES, bigEndian),
+        if (oneByteOneUlong) bytes[index + 2].ul else bytes.getUlong(index + Ulong.BYTES * 2, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].ul, chars[index + 1].ul, chars[index + 2].ul)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1], shorts[index + 2])
@@ -110,12 +110,12 @@ class Vec3ul(var ofs: Int, var array: LongArray) : Vec3t<Ulong>(), ToBuffer {
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].ul, booleans[index + 1].ul, booleans[index + 2].ul)
 
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toLong, list.elementAt(index + 1)!!.toLong,
-            list.elementAt(index + 2)!!.toLong)
+                                                          list.elementAt(index + 2)!!.toLong)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneUlong: Boolean = false) : this(
-            if (oneByteOneUlong) bytes[index].ul else bytes.getLong(index).ul,
-            if (oneByteOneUlong) bytes[index + 1].ul else bytes.getLong(index + Ulong.BYTES).ul,
-            if (oneByteOneUlong) bytes[index + 2].ul else bytes.getLong(index + Ulong.BYTES * 2).ul)
+        if (oneByteOneUlong) bytes[index].ul else bytes.getLong(index).ul,
+        if (oneByteOneUlong) bytes[index + 1].ul else bytes.getLong(index + Ulong.BYTES).ul,
+        if (oneByteOneUlong) bytes[index + 2].ul else bytes.getLong(index + Ulong.BYTES * 2).ul)
 
     constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].ul, chars[index + 1].ul, chars[index + 2].ul)
     constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index], shorts[index + 1], shorts[index + 2])
@@ -125,6 +125,13 @@ class Vec3ul(var ofs: Int, var array: LongArray) : Vec3t<Ulong>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
     constructor(block: (Int) -> Ulong) : this(block(0), block(1), block(2))
+    // clashing
+//    constructor(ptr: Ptr<Ulong>) : this() {
+//        val p = ptr.toPtr<Long>()
+//        x.v = p[0]
+//        y.v = p[1]
+//        z.v = p[2]
+//    }
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneUlong: Boolean = false, bigEndian: Boolean = true) {
@@ -212,10 +219,11 @@ class Vec3ul(var ofs: Int, var array: LongArray) : Vec3t<Ulong>(), ToBuffer {
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutLong(ptr, x.v)
-        memPutLong(ptr + Long.BYTES, y.v)
-        memPutLong(ptr + Long.BYTES * 2, z.v)
+    infix fun to(ptr: Ptr<Ulong>) {
+        val p = ptr.toPtr<Long>()
+        p[0] = x.v
+        p[1] = y.v
+        p[2] = z.v
     }
 
     // -- Component accesses --
@@ -661,11 +669,17 @@ class Vec3ul(var ofs: Int, var array: LongArray) : Vec3t<Ulong>(), ToBuffer {
 
     companion object : vec3ul_operators {
         const val length = Vec3t.length
+
         @JvmField
         val size = length * Ulong.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec3ul(memGetLong(ptr), memGetLong(ptr + Long.BYTES), memGetLong(ptr + Long.BYTES * 2))
+        fun fromPointer(ptr: Ptr<Ulong>) = Vec3ul().apply {
+            val p = ptr.toPtr<Long>()
+            x.v = p[0]
+            y.v = p[1]
+            z.v = p[2]
+        }
     }
 
     override fun size() = size

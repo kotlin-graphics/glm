@@ -128,7 +128,7 @@ class Vec1l(x: Long) : Vec1t<Long>(x) {
         @JvmField
         val size = length * Long.BYTES
 
-        fun from(ptr: LongPtr): Vec1l = Vec1l(ptr[0])
+        fun from(ptr: Ptr<Long>): Vec1l = Vec1l(ptr[0])
     }
 
     override fun size() = size

@@ -131,7 +131,7 @@ class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 2])
 
     constructor(block: (Int) -> Int) : this(block(0), block(1), block(2), block(3))
-    constructor(ptr: IntPtr) : this(ptr[0], ptr[1], ptr[2], ptr[3])
+    constructor(ptr: Ptr<Int>) : this(ptr[0], ptr[1], ptr[2], ptr[3])
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = false, bigEndian: Boolean = true) {
@@ -215,11 +215,11 @@ class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>(), ToBuffer {
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutInt(ptr, x)
-        memPutInt(ptr + Int.BYTES, y)
-        memPutInt(ptr + Int.BYTES * 2, z)
-        memPutInt(ptr + Int.BYTES * 3, w)
+    infix fun to(ptr: Ptr<Int>) {
+        ptr[0] = x
+        ptr[1] = y
+        ptr[2] = z
+        ptr[3] = w
     }
 
     // -- Component accesses --
@@ -635,7 +635,7 @@ class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>(), ToBuffer {
         val size = length * Int.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec4i(memGetInt(ptr), memGetInt(ptr + Int.BYTES), memGetInt(ptr + Int.BYTES * 2), memGetInt(ptr + Int.BYTES * 3))
+        fun fromPointer(ptr: Ptr<Int>) = Vec4i(ptr)
     }
 
     override fun size() = size

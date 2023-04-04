@@ -114,7 +114,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
     constructor(block: (Int) -> Float) : this(block(0), block(1), block(2))
-    constructor(ptr: FloatPtr) : this(ptr[0], ptr[1], ptr[2])
+    constructor(ptr: Ptr<Float>) : this(ptr[0], ptr[1], ptr[2])
 
 
     constructor(inputStream: InputStream, bigEndian: Boolean = true) :
@@ -190,14 +190,14 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
         return buf
     }
 
-    infix fun to(ptr: FloatPtr){
+    infix fun to(ptr: Ptr<Float>){
         ptr[0] = x
         ptr[1] = y
         ptr[2] = z
     }
 
-    infix fun to(ptr: Ptr) = to(FloatPtr(ptr))
-    infix fun to(ptr: BytePtr) = to(FloatPtr(ptr.adr))
+    @JvmName("toPtrByte")
+    infix fun to(ptr: Ptr<Byte>) = to(ptr.toPtr<Float>())
 
     // -- Component accesses --
 
@@ -498,7 +498,7 @@ class Vec3(var ofs: Int, var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer 
         val size = length * Float.BYTES
 
         @JvmStatic // TODO 1.3 use inline classes
-        fun fromPointer(ptr: Ptr) = Vec3(memGetFloat(ptr), memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 2))
+        fun fromPointer(ptr: Ptr<Float>) = Vec3(ptr)
 
         fun fromColor(n: Number) = Vec3(n.f / 255, n.f / 255, n.f / 255f)
         fun fromColor(r: Number, g: Number, b: Number) = Vec3(r.f / 255, g.f / 255, b.f / 255f)

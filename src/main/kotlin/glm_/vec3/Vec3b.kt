@@ -106,7 +106,7 @@ class Vec3b(var ofs: Int, var array: ByteArray) : Vec3t<Byte>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
     constructor(block: (Int) -> Byte) : this(block(0), block(1), block(2))
-    constructor(ptr: BytePtr) : this(ptr[0], ptr[1], ptr[2])
+    constructor(ptr: Ptr<Float>) : this(ptr[0], ptr[1], ptr[2])
 
 
     fun put(x: Byte, y: Byte, z: Byte) {
@@ -148,10 +148,10 @@ class Vec3b(var ofs: Int, var array: ByteArray) : Vec3t<Byte>(), ToBuffer {
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutByte(ptr, x)
-        memPutByte(ptr + Byte.BYTES, y)
-        memPutByte(ptr + Byte.BYTES * 2, z)
+    infix fun to(ptr: Ptr<Byte>) {
+        ptr[0] = x
+        ptr[1] = y
+        ptr[2] = z
     }
 
     // -- Component accesses --
@@ -630,7 +630,7 @@ class Vec3b(var ofs: Int, var array: ByteArray) : Vec3t<Byte>(), ToBuffer {
         val size = length * Byte.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec3b(memGetByte(ptr), memGetByte(ptr + Byte.BYTES), memGetByte(ptr + Byte.BYTES * 2))
+        fun fromPointer(ptr: Ptr<Float>) = Vec3b(ptr)
     }
 
     override fun size() = size

@@ -8,10 +8,7 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.Ptr
-import kool.LongBuffer
-import kool.pos
-import kool.set
+import kool.*
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetLong
 import org.lwjgl.system.MemoryUtil.memPutLong
@@ -45,7 +42,7 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
     constructor(v: Vec4bool) : this(v.x.ul)
 
     constructor(bytes: ByteArray, index: Int = 0, oneByteOneUlong: Boolean = false, bigEndian: Boolean = true) : this(
-            if (oneByteOneUlong) bytes[index].ul else bytes.getUlong(index, bigEndian))
+        if (oneByteOneUlong) bytes[index].ul else bytes.getUlong(index, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].ul)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index])
@@ -62,7 +59,7 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toLong)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneUlong: Boolean = false) : this(
-            if (oneByteOneUlong) bytes[index].ul else bytes.getLong(index).ul)
+        if (oneByteOneUlong) bytes[index].ul else bytes.getLong(index).ul)
 
     constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].ul)
     constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index])
@@ -137,7 +134,10 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
         return buf
     }
 
-    infix fun to(ptr: Ptr) = memPutLong(ptr, x.v)
+    infix fun to(ptr: Ptr<Ulong>) {
+        val p = ptr.toPtr<Long>()
+        p[0] = x.v
+    }
 
     // -- Component accesses --
 
@@ -457,11 +457,12 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
 
     companion object : opVec1ul {
         const val length = Vec1t.length
+
         @JvmField
         val size = length * Ulong.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec1ul(memGetLong(ptr))
+        fun fromPointer(ptr: Ptr<Ulong>) = Vec1ul(ptr.toPtr<Long>()[0])
     }
 
     override fun size() = size

@@ -111,7 +111,8 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
     constructor(block: (Int) -> Long) : this(block(0), block(1), block(2))
-    // constructor(ptr: LongPtr) : this(ptr[0], ptr[1], ptr[2]) clash, use Companion::fromPointer
+    // clashing
+//    constructor(ptr: Ptr<Long>) : this(ptr[0], ptr[1], ptr[2])
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneLong: Boolean = false, bigEndian: Boolean = true) {
@@ -186,10 +187,10 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>(), ToBuffer {
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutLong(ptr, x)
-        memPutLong(ptr + Long.BYTES, y)
-        memPutLong(ptr + Long.BYTES * 2, z)
+    infix fun to(ptr: Ptr<Long>) {
+        ptr[0] = x
+        ptr[1] = y
+        ptr[2] = z
     }
 
     // -- Component accesses --
@@ -603,7 +604,11 @@ class Vec3l(var ofs: Int, var array: LongArray) : Vec3t<Long>(), ToBuffer {
         val size = length * Long.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec3l(memGetLong(ptr), memGetLong(ptr + Long.BYTES), memGetLong(ptr + Long.BYTES * 2))
+        fun fromPointer(ptr: Ptr<Long>) = Vec3l().apply {
+            x = ptr[0]
+            y = ptr[1]
+            z = ptr[2]
+        }
     }
 
     override fun size() = size

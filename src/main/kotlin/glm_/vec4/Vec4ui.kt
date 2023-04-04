@@ -13,6 +13,7 @@ import glm_.vec4.operators.vec4ui_operators
 import kool.*
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetInt
+import unsigned.Ubyte
 import unsigned.Uint
 import java.io.PrintStream
 import java.nio.*
@@ -146,6 +147,13 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
     constructor(block: (Int) -> Uint) : this(block(0), block(1), block(2), block(3))
+    constructor(ptr: Ptr<Uint>) : this() {
+        val p = ptr.toPtr<Int>()
+        x.v = p[0]
+        y.v = p[1]
+        z.v = p[2]
+        w.v = p[3]
+    }
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneUint: Boolean = false, bigEndian: Boolean = true) {
@@ -730,7 +738,7 @@ class Vec4ui(var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
         val size = length * Uint.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec4ui(memGetInt(ptr), memGetInt(ptr + Int.BYTES), memGetInt(ptr + Int.BYTES * 2), memGetInt(ptr + Int.BYTES * 3))
+        fun fromPointer(ptr: Ptr<Uint>) = Vec4ui(ptr)
     }
 
     override fun size() = size

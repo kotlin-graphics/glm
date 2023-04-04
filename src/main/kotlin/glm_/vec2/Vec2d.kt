@@ -48,6 +48,7 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+
     @JvmOverloads
     constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
 
@@ -61,6 +62,7 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
     constructor(x: Boolean, y: Boolean = x) : this(x.d, y.d)
 
     constructor(x: Boolean, v: Vec1bool) : this(x.d, v.x.d)
+
     @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.d, y.d)
 
@@ -71,8 +73,8 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
     constructor(v: Vec4bool) : this(v.x.d, v.y.d)
 
     constructor(bytes: ByteArray, index: Int = 0, oneByteOneDouble: Boolean = false, bigEndian: Boolean = true) : this(
-            if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index, bigEndian),
-            if (oneByteOneDouble) bytes[index + 1].d else bytes.getDouble(index + Double.BYTES, bigEndian))
+        if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index, bigEndian),
+        if (oneByteOneDouble) bytes[index + 1].d else bytes.getDouble(index + Double.BYTES, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].d, chars[index + 1].d)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1])
@@ -89,8 +91,8 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toDouble, list.elementAt(index + 1)!!.toDouble)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneDouble: Boolean = false) : this(
-            if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index),
-            if (oneByteOneDouble) bytes[index + 1].d else bytes.getDouble(index + Double.BYTES))
+        if (oneByteOneDouble) bytes[index].d else bytes.getDouble(index),
+        if (oneByteOneDouble) bytes[index + 1].d else bytes.getDouble(index + Double.BYTES))
 
     constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].d, chars[index + 1].d)
     constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index], shorts[index + 1])
@@ -100,6 +102,7 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Double) : this(block(0), block(1))
+    constructor(ptr: Ptr<Double>) : this(ptr[0], ptr[1])
 
     constructor(inputStream: InputStream, bigEndian: Boolean = true) : this(inputStream.double(bigEndian), inputStream.double(bigEndian))
 
@@ -164,9 +167,9 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutDouble(ptr, x)
-        memPutDouble(ptr + Double.BYTES, y)
+    infix fun to(ptr: Ptr<Double>) {
+        ptr[0] = x
+        ptr[1] = y
     }
 
     // -- Component accesses --
@@ -472,11 +475,12 @@ class Vec2d(var ofs: Int, var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuf
 
     companion object : opVec2d {
         const val length = Vec2t.length
+
         @JvmField
         val size = length * Double.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec2d(memGetDouble(ptr), memGetDouble(ptr + Double.BYTES))
+        fun fromPointer(ptr: Ptr<Double>) = Vec2d(ptr)
     }
 
     override fun size() = size

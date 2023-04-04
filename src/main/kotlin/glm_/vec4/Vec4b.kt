@@ -111,7 +111,7 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>(), ToBuffer {
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].b, booleans[index + 1].b, booleans[index + 2].b, booleans[index + 3].b)
 
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toByte, list.elementAt(index + 1)!!.toByte,
-            list.elementAt(index + 2)!!.toByte, list.elementAt(index + 3)!!.toByte)
+                                                          list.elementAt(index + 2)!!.toByte, list.elementAt(index + 3)!!.toByte)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.pos) : this(bytes[index], bytes[index + 1], bytes[index + 2], bytes[index + 3])
     constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].b, chars[index + 1].b, chars[index + 2].b, chars[index + 3].b)
@@ -122,7 +122,7 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
     constructor(block: (Int) -> Byte) : this(block(0), block(1), block(2), block(3))
-    constructor(ptr: BytePtr) : this(ptr[0], ptr[1], ptr[2], ptr[3])
+    constructor(ptr: Ptr<Byte>) : this(ptr[0], ptr[1], ptr[2], ptr[3])
 
 
     fun put(x: Byte, y: Byte, z: Byte, w: Byte) {
@@ -187,11 +187,11 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>(), ToBuffer {
         else -> throw ArrayIndexOutOfBoundsException()
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutByte(ptr, x)
-        memPutByte(ptr + Byte.BYTES, y)
-        memPutByte(ptr + Byte.BYTES * 2, z)
-        memPutByte(ptr + Byte.BYTES * 3, w)
+    infix fun to(ptr: Ptr<Byte>) {
+        ptr[0] = x
+        ptr[1] = y
+        ptr[2] = z
+        ptr[3] = w
     }
 
     // -- Unary arithmetic operators --
@@ -649,11 +649,12 @@ class Vec4b(var ofs: Int, var array: ByteArray) : Vec4t<Byte>(), ToBuffer {
 
     companion object : vec4b_operators {
         const val length = Vec4t.length
+
         @JvmField
         val size = length * Byte.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec4b(memGetByte(ptr), memGetByte(ptr + Byte.BYTES), memGetByte(ptr + Byte.BYTES * 2), memGetByte(ptr + Byte.BYTES * 3))
+        fun fromPointer(ptr: Ptr<Byte>) = Vec4b(ptr)
     }
 
     override fun size() = size

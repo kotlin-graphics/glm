@@ -79,9 +79,9 @@ class Vec3i(var ofs: Int, var array: IntArray) : Vec3t<Int>(), ToBuffer {
     constructor(v: Vec4bool) : this(v.x.i, v.y.i, v.z.i)
 
     constructor(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = false, bigEndian: Boolean = true) : this(
-            if (oneByteOneInt) bytes[index].i else bytes.getInt(index, bigEndian),
-            if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES, bigEndian),
-            if (oneByteOneInt) bytes[index + 2].i else bytes.getInt(index + Int.BYTES * 2, bigEndian))
+        if (oneByteOneInt) bytes[index].i else bytes.getInt(index, bigEndian),
+        if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES, bigEndian),
+        if (oneByteOneInt) bytes[index + 2].i else bytes.getInt(index + Int.BYTES * 2, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].i, chars[index + 1].i, chars[index + 2].i)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1], shorts[index + 2])
@@ -96,12 +96,12 @@ class Vec3i(var ofs: Int, var array: IntArray) : Vec3t<Int>(), ToBuffer {
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].i, booleans[index + 1].i, booleans[index + 2].i)
 
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toInt, list.elementAt(index + 1)!!.toInt,
-            list.elementAt(index + 2)!!.toInt)
+                                                          list.elementAt(index + 2)!!.toInt)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneInt: Boolean = false) : this(
-            if (oneByteOneInt) bytes[index].i else bytes.getInt(index),
-            if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES),
-            if (oneByteOneInt) bytes[index + 2].i else bytes.getInt(index + Int.BYTES * 2))
+        if (oneByteOneInt) bytes[index].i else bytes.getInt(index),
+        if (oneByteOneInt) bytes[index + 1].i else bytes.getInt(index + Int.BYTES),
+        if (oneByteOneInt) bytes[index + 2].i else bytes.getInt(index + Int.BYTES * 2))
 
     constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].i, chars[index + 1].i, chars[index + 2].i)
     constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index], shorts[index + 1], shorts[index + 2])
@@ -111,7 +111,7 @@ class Vec3i(var ofs: Int, var array: IntArray) : Vec3t<Int>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
     constructor(block: (Int) -> Int) : this(block(0), block(1), block(2))
-    constructor(ptr: IntPtr) : this(ptr[0], ptr[1], ptr[2])
+    constructor(ptr: Ptr<Int>) : this(ptr[0], ptr[1], ptr[2])
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = false, bigEndian: Boolean = true) {
@@ -186,10 +186,10 @@ class Vec3i(var ofs: Int, var array: IntArray) : Vec3t<Int>(), ToBuffer {
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutInt(ptr, x)
-        memPutInt(ptr + Int.BYTES, y)
-        memPutInt(ptr + Int.BYTES * 2, z)
+    infix fun to(ptr: Ptr<Int>) {
+        ptr[0] = x
+        ptr[1] = y
+        ptr[2] = z
     }
 
     // -- Component accesses --
@@ -603,11 +603,12 @@ class Vec3i(var ofs: Int, var array: IntArray) : Vec3t<Int>(), ToBuffer {
 
     companion object : vec3i_operators {
         const val length = Vec3t.length
+
         @JvmField
         val size = length * Int.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec3i(memGetInt(ptr), memGetInt(ptr + Int.BYTES), memGetInt(ptr + Int.BYTES * 2))
+        fun fromPointer(ptr: Ptr<Int>) = Vec3i(ptr)
     }
 
     override fun size() = size

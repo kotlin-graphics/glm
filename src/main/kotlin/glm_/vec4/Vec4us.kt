@@ -15,6 +15,7 @@ import glm_.vec4.operators.vec4us_operators
 import kool.*
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetShort
+import unsigned.Ubyte
 import unsigned.Ushort
 import java.io.PrintStream
 import java.nio.*
@@ -148,6 +149,13 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
     constructor(block: (Int) -> Ushort) : this(block(0), block(1), block(2), block(3))
+    constructor(ptr: Ptr<Ushort>) : this() {
+        val p = ptr.toPtr<Short>()
+        x.v = p[0]
+        y.v = p[1]
+        z.v = p[2]
+        w.v = p[3]
+    }
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = false, bigEndian: Boolean = true) {
@@ -797,7 +805,7 @@ class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
         val size = length * Ushort.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec4us(memGetShort(ptr), memGetShort(ptr + Short.BYTES), memGetShort(ptr + Short.BYTES * 2), memGetShort(ptr + Short.BYTES * 3))
+        fun fromPointer(ptr: Ptr<Ushort>) = Vec4us(ptr)
     }
 
     override fun size() = size

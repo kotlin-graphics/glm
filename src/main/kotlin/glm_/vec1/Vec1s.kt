@@ -67,7 +67,7 @@ class Vec1s(x: Short) : Vec1t<Short>(x) {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index])
 
     constructor(block: (Int) -> Int) : this(block(0))
-    constructor(ptr: ShortPtr) : this(ptr[0])
+    constructor(ptr: Ptr<Short>) : this(ptr[0])
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneInt: Boolean = false, bigEndian: Boolean = true) {

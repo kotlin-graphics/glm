@@ -31,7 +31,7 @@ public class Test {
         int l = Vec1.length;
 //        Vec2 b = (Vec2) v.aa();
 
-        Vec2 c = Vec2.fromPointer(4L);
+//        Vec2 c = Vec2.fromPointer(4L);
 
         Vec1 d = new Vec1();
         Vec1 e = new Vec1(d);

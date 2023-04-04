@@ -8,9 +8,7 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.BYTES
-import kool.Ptr
-import kool.pos
+import kool.*
 import org.lwjgl.system.MemoryUtil.memGetByte
 import org.lwjgl.system.MemoryUtil.memPutByte
 import java.io.PrintStream
@@ -51,6 +49,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+
     @JvmOverloads
     constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
 
@@ -64,6 +63,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     constructor(x: Boolean, y: Boolean = x) : this(x.b, y.b)
 
     constructor(x: Boolean, v: Vec1bool) : this(x.b, v.x.b)
+
     @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.b, y.b)
 
@@ -97,6 +97,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Byte) : this(block(0), block(1))
+    constructor(ptr: Ptr<Byte>) : this(ptr[0], ptr[1])
 
 
     fun put(x: Byte, y: Byte) {
@@ -129,13 +130,13 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
 
     override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
         return buf
-                .put(offset + 0, array[0])
-                .put(offset + 1, array[1])
+            .put(offset + 0, array[0])
+            .put(offset + 1, array[1])
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutByte(ptr, x)
-        memPutByte(ptr + Byte.BYTES, y)
+    infix fun to(ptr: Ptr<Byte>) {
+        ptr[0] = x
+        ptr[1] = y
     }
 
     // -- Component accesses --
@@ -424,6 +425,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     fun and(b: Byte, res: Vec2b) = and(res, this, b, b)
     fun and(b: Int, res: Vec2b) = and(res, this, b, b)
     fun and(b: Vec2b, res: Vec2b) = and(res, this, b.x, b.y)
+
     @JvmOverloads
     fun and(bX: Byte, bY: Byte, res: Vec2b = Vec2b()) = and(res, this, bX, bY)
 
@@ -444,6 +446,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     fun or(b: Byte, res: Vec2b) = or(res, this, b, b)
     fun or(b: Int, res: Vec2b) = or(res, this, b, b)
     fun or(b: Vec2b, res: Vec2b) = or(res, this, b.x, b.y)
+
     @JvmOverloads
     fun or(bX: Byte, bY: Byte, res: Vec2b = Vec2b()) = or(res, this, bX, bY)
 
@@ -464,6 +467,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     fun xor(b: Byte, res: Vec2b) = xor(res, this, b, b)
     fun xor(b: Int, res: Vec2b) = xor(res, this, b, b)
     fun xor(b: Vec2b, res: Vec2b) = xor(res, this, b.x, b.y)
+
     @JvmOverloads
     fun xor(bX: Byte, bY: Byte, res: Vec2b = Vec2b()) = xor(res, this, bX, bY)
 
@@ -484,6 +488,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     fun shl(b: Byte, res: Vec2b) = shl(res, this, b, b)
     fun shl(b: Int, res: Vec2b) = shl(res, this, b, b)
     fun shl(b: Vec2b, res: Vec2b) = shl(res, this, b.x, b.y)
+
     @JvmOverloads
     fun shl(bX: Byte, bY: Byte, res: Vec2b = Vec2b()) = shl(res, this, bX, bY)
 
@@ -504,6 +509,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
     fun shr(b: Byte, res: Vec2b) = shr(res, this, b, b)
     fun shr(b: Int, res: Vec2b) = shr(res, this, b, b)
     fun shr(b: Vec2b, res: Vec2b) = shr(res, this, b.x, b.y)
+
     @JvmOverloads
     fun shr(bX: Byte, bY: Byte, res: Vec2b = Vec2b()) = shr(res, this, bX, bY)
 
@@ -530,6 +536,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
 
     fun and(b: Number, res: Vec2b) = and(res, this, b.b, b.b)
     fun and(b: Vec2t<out Number>, res: Vec2b) = and(res, this, b.x.b, b.y.b)
+
     @JvmOverloads
     fun and(bX: Number, bY: Number, res: Vec2b = Vec2b()) = and(res, this, bX.b, bY.b)
 
@@ -543,6 +550,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
 
     fun or(b: Number, res: Vec2b) = or(res, this, b.b, b.b)
     fun or(b: Vec2t<out Number>, res: Vec2b) = or(res, this, b.x.b, b.y.b)
+
     @JvmOverloads
     fun or(bX: Number, bY: Number, res: Vec2b = Vec2b()) = or(res, this, bX.b, bY.b)
 
@@ -556,6 +564,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
 
     fun xor(b: Number, res: Vec2b) = xor(res, this, b.b, b.b)
     fun xor(b: Vec2t<out Number>, res: Vec2b) = xor(res, this, b.x.b, b.y.b)
+
     @JvmOverloads
     fun xor(bX: Number, bY: Number, res: Vec2b = Vec2b()) = xor(res, this, bX.b, bY.b)
 
@@ -569,6 +578,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
 
     fun shl(b: Number, res: Vec2b) = shl(res, this, b.b, b.b)
     fun shl(b: Vec2t<out Number>, res: Vec2b) = shl(res, this, b.x.b, b.y.b)
+
     @JvmOverloads
     fun shl(bX: Number, bY: Number, res: Vec2b = Vec2b()) = shl(res, this, bX.b, bY.b)
 
@@ -582,6 +592,7 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
 
     fun shr(b: Number, res: Vec2b) = shr(res, this, b.b, b.b)
     fun shr(b: Vec2t<out Number>, res: Vec2b) = shr(res, this, b.x.b, b.y.b)
+
     @JvmOverloads
     fun shr(bX: Number, bY: Number, res: Vec2b = Vec2b()) = shr(res, this, bX.b, bY.b)
 
@@ -642,11 +653,12 @@ class Vec2b(var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
 
     companion object : opVec2b {
         const val length = Vec2t.length
+
         @JvmField
         val size = length * Byte.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec2b(memGetByte(ptr), memGetByte(ptr + Byte.BYTES))
+        fun fromPointer(ptr: Ptr<Byte>) = Vec2b(ptr)
     }
 
     override fun size() = size

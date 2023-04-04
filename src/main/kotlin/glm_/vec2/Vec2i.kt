@@ -99,6 +99,7 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Int) : this(block(0), block(1))
+    constructor(ptr: Ptr<Int>) : this(ptr[0], ptr[1])
 
     // for opengl
     constructor(x: IntBuffer, y: IntBuffer) : this(x[0], y[0]) // TODO others?
@@ -168,9 +169,9 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutInt(ptr, x)
-        memPutInt(ptr + Int.BYTES, y)
+    infix fun to(ptr: Ptr<Int>) {
+        ptr[0] = x
+        ptr[1] = y
     }
 
     // -- Component accesses --
@@ -619,7 +620,7 @@ class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
         val size = length * Int.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec2i(memGetInt(ptr), memGetInt(ptr + Int.BYTES))
+        fun fromPointer(ptr: Ptr<Int>) = Vec2i(ptr)
     }
 
     override fun size() = size

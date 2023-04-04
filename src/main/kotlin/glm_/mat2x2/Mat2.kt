@@ -36,39 +36,39 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     // -- Constructors --
 
     constructor() : this(
-            1, 0,
-            0, 1)
+        1, 0,
+        0, 1)
 
     constructor(scalar: Number) : this(
-            scalar, 0,
-            0, scalar)
+        scalar, 0,
+        0, scalar)
 
     constructor(x0: Number, y0: Number,
                 x1: Number, y1: Number) : this(0, floatArrayOf(
-            x0.f, y0.f,
-            x1.f, y1.f))
+        x0.f, y0.f,
+        x1.f, y1.f))
 
     constructor(v0: Vec2t<out Number>, v1: Vec2t<out Number>) : this(
-            v0.x, v0.y,
-            v1.x, v1.y)
+        v0.x, v0.y,
+        v1.x, v1.y)
 
     constructor(block: (Int) -> Number) : this(
-            block(0).f, block(1).f,
-            block(2).f, block(3).f)
+        block(0).f, block(1).f,
+        block(2).f, block(3).f)
 
     constructor(block: (Int, Int) -> Number) : this(
-            block(0, 0).f, block(0, 1).f,
-            block(1, 0).f, block(1, 1).f)
+        block(0, 0).f, block(0, 1).f,
+        block(1, 0).f, block(1, 1).f)
 
     constructor(list: Iterable<*>, index: Int = 0) : this(
-            list.elementAt(index)!!.toFloat, list.elementAt(index + 1)!!.toFloat,
-            list.elementAt(index + 2)!!.toFloat, list.elementAt(index + 3)!!.toFloat)
+        list.elementAt(index)!!.toFloat, list.elementAt(index + 1)!!.toFloat,
+        list.elementAt(index + 2)!!.toFloat, list.elementAt(index + 3)!!.toFloat)
 
     constructor(buffer: FloatBuffer, index: Int = buffer.pos) : this(
-            buffer[index], buffer[index + 1],
-            buffer[index + 2], buffer[index + 3])
+        buffer[index], buffer[index + 1],
+        buffer[index + 2], buffer[index + 3])
 
-    constructor(ptr: FloatPtr) : this(block = { i -> ptr[i] })
+    constructor(ptr: Ptr<Float>) : this(block = { i -> ptr[i] })
 
     // -- Matrix conversions --
 
@@ -76,35 +76,35 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     constructor(mat2: Mat2d) : this(0, FloatArray(length) { mat2.array[it].f })
 
     constructor(mat3: Mat3) : this(
-            mat3[0, 0], mat3[0, 1],
-            mat3[1, 0], mat3[1, 1])
+        mat3[0, 0], mat3[0, 1],
+        mat3[1, 0], mat3[1, 1])
 
     constructor(mat4: Mat4) : this(
-            mat4[0, 0], mat4[0, 1],
-            mat4[1, 0], mat4[1, 1])
+        mat4[0, 0], mat4[0, 1],
+        mat4[1, 0], mat4[1, 1])
 
     constructor(mat2x3: Mat2x3t<*>) : this(
-            mat2x3[0, 0], mat2x3[0, 1],
-            mat2x3[1, 0], mat2x3[1, 1])
+        mat2x3[0, 0], mat2x3[0, 1],
+        mat2x3[1, 0], mat2x3[1, 1])
 
     constructor(mat3x2: Mat3x2t<*>) : this(
-            mat3x2[0, 0], mat3x2[0, 1],
-            mat3x2[1, 0], mat3x2[1, 1])
+        mat3x2[0, 0], mat3x2[0, 1],
+        mat3x2[1, 0], mat3x2[1, 1])
 
     constructor(mat2x4: Mat2x4t<*>) : this(
-            mat2x4[0, 0], mat2x4[0, 1],
-            mat2x4[1, 0], mat2x4[1, 1])
+        mat2x4[0, 0], mat2x4[0, 1],
+        mat2x4[1, 0], mat2x4[1, 1])
 
     constructor(mat4x2: Mat4x2t<*>) : this(
-            mat4x2[0, 0], mat4x2[0, 1],
-            mat4x2[1, 0], mat4x2[1, 1])
+        mat4x2[0, 0], mat4x2[0, 1],
+        mat4x2[1, 0], mat4x2[1, 1])
 
     @JvmOverloads
     constructor(floats: FloatArray, transpose: Boolean = false) : this(0,
-            if (transpose) floatArrayOf(
-                    floats[0], floats[3],
-                    floats[1], floats[4])
-            else floats.clone())
+                                                                       if (transpose) floatArrayOf(
+                                                                           floats[0], floats[3],
+                                                                           floats[1], floats[4])
+                                                                       else floats.clone())
 
     // to
 //    fun to(mat2x2: Mat2x2t<*>) { TODO
@@ -159,28 +159,28 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     infix operator fun invoke(mat2: Mat2d) = invoke(FloatArray(length) { mat2.array[it].f })
 
     infix operator fun invoke(mat3: Mat3) = invoke(
-            mat3[0, 0], mat3[0, 1],
-            mat3[1, 0], mat3[1, 1])
+        mat3[0, 0], mat3[0, 1],
+        mat3[1, 0], mat3[1, 1])
 
     infix operator fun invoke(mat3: Mat3d) = invoke(
-            mat3[0, 0].f, mat3[0, 1].f,
-            mat3[1, 0].f, mat3[1, 1].f)
+        mat3[0, 0].f, mat3[0, 1].f,
+        mat3[1, 0].f, mat3[1, 1].f)
 
     infix operator fun invoke(mat4: Mat4) = invoke(
-            mat4[0, 0], mat4[0, 1],
-            mat4[1, 0], mat4[1, 1])
+        mat4[0, 0], mat4[0, 1],
+        mat4[1, 0], mat4[1, 1])
 
     infix operator fun invoke(mat4: Mat4d) = invoke(
-            mat4[0, 0].f, mat4[0, 1].f,
-            mat4[1, 0].f, mat4[1, 1].f)
+        mat4[0, 0].f, mat4[0, 1].f,
+        mat4[1, 0].f, mat4[1, 1].f)
 
     operator fun invoke(x: Float, y: Float) = invoke(
-            x, 0f,
-            0f, y)
+        x, 0f,
+        0f, y)
 
     operator fun invoke(x: Number, y: Number) = invoke(
-            x.f, 0f,
-            0f, y.f)
+        x.f, 0f,
+        0f, y.f)
 
     operator fun invoke(a0: Float, a1: Float,
                         b0: Float, b1: Float): Mat2 {
@@ -208,8 +208,8 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
     infix fun put(floats: FloatArray) = put(floats[0], floats[1], floats[2], floats[3])
 
     fun put(x: Float, y: Float) = put(
-            x, 0f,
-            0f, y)
+        x, 0f,
+        0f, y)
 
     fun put(a0: Float, a1: Float,
             b0: Float, b1: Float) {
@@ -243,10 +243,10 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
         return buf
-                .putFloat(offset + 0 * Float.BYTES, array[0])
-                .putFloat(offset + 1 * Float.BYTES, array[1])
-                .putFloat(offset + 2 * Float.BYTES, array[2])
-                .putFloat(offset + 3 * Float.BYTES, array[3])
+            .putFloat(offset + 0 * Float.BYTES, array[0])
+            .putFloat(offset + 1 * Float.BYTES, array[1])
+            .putFloat(offset + 2 * Float.BYTES, array[2])
+            .putFloat(offset + 3 * Float.BYTES, array[3])
     }
 
     override fun to(buf: FloatBuffer, offset: Int): FloatBuffer {
@@ -257,19 +257,16 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
         return buf
     }
 
-    fun to(ptr: Ptr, transpose: Boolean = false) {
+    fun to(ptr: Ptr<Float>, transpose: Boolean = false) {
         when {
             transpose -> {
-                memPutFloat(ptr, get(0, 0))
-                memPutFloat(ptr + Float.BYTES, get(1, 0))
-                memPutFloat(ptr + Float.BYTES * 2, get(0, 1))
-                memPutFloat(ptr + Float.BYTES * 3, get(1, 1))
+                ptr[0] = get(0, 0); ptr[1] = get(1, 0)
+                ptr[2] = get(0, 1); ptr[3] = get(1, 1)
             }
+
             else -> {
-                memPutFloat(ptr, get(0, 0))
-                memPutFloat(ptr + Float.BYTES, get(0, 1))
-                memPutFloat(ptr + Float.BYTES * 2, get(1, 0))
-                memPutFloat(ptr + Float.BYTES * 3, get(1, 1))
+                ptr[0] = get(0, 0); ptr[1] = get(0, 1)
+                ptr[2] = get(1, 0); ptr[3] = get(1, 1)
             }
         }
     }
@@ -278,9 +275,8 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     operator fun unaryPlus() = this
 
-    operator fun unaryMinus() = Mat2(
-            -array[0], -array[1],
-            -array[3], -array[4])
+    operator fun unaryMinus() = Mat2(-array[0], -array[1],
+                                     -array[3], -array[4])
 
     // -- operators --
 
@@ -377,19 +373,16 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     companion object : mat2x2_operators {
         const val length = Mat2x2t.length
+
         @JvmField
         val size = length * Float.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr, transpose: Boolean = false): Mat2 {
-            return when {
-                transpose -> Mat2(
-                        memGetFloat(ptr), memGetFloat(ptr + Float.BYTES * 2),
-                        memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 3))
-                else -> Mat2(
-                        memGetFloat(ptr), memGetFloat(ptr + Float.BYTES),
-                        memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 3))
-            }
+        fun fromPointer(ptr: Ptr<Float>, transpose: Boolean = false): Mat2 = when {
+            transpose -> Mat2(ptr[0], ptr[2],
+                              ptr[1], ptr[3])
+
+            else -> Mat2(ptr)
         }
 
         val identity: Mat2

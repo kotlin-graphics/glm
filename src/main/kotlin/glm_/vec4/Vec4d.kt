@@ -133,7 +133,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>(), ToDoubleBuf
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
     constructor(block: (Int) -> Double) : this(block(0), block(1), block(2), block(3))
-    constructor(ptr: DoublePtr) : this(ptr[0], ptr[1], ptr[2], ptr[3])
+    constructor(ptr: Ptr<Double>) : this(ptr[0], ptr[1], ptr[2], ptr[3])
 
 
     constructor(inputStream: InputStream, bigEndian: Boolean = true) :
@@ -219,11 +219,11 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>(), ToDoubleBuf
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutDouble(ptr, x)
-        memPutDouble(ptr + Double.BYTES, y)
-        memPutDouble(ptr + Double.BYTES * 2, z)
-        memPutDouble(ptr + Double.BYTES * 3, w)
+    infix fun to(ptr: Ptr<Double>) {
+        ptr[0] = x
+        ptr[1] = y
+        ptr[2] = z
+        ptr[3] = w
     }
 
     // -- Component accesses --
@@ -497,7 +497,7 @@ class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>(), ToDoubleBuf
         val size = length * Double.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec4d(memGetDouble(ptr), memGetDouble(ptr + Double.BYTES), memGetDouble(ptr + Double.BYTES * 2), memGetDouble(ptr + Double.BYTES * 3))
+        fun fromPointer(ptr: Ptr<Double>) = Vec4d(ptr)
     }
 
     override fun size() = size

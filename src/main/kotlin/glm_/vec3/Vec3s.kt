@@ -114,7 +114,7 @@ class Vec3s(var ofs: Int, var array: ShortArray) : Vec3t<Short>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2])
 
     constructor(block: (Int) -> Short) : this(block(0), block(1), block(2))
-    constructor(ptr: ShortPtr) : this(ptr[0], ptr[1], ptr[2])
+    constructor(ptr: Ptr<Short>) : this(ptr[0], ptr[1], ptr[2])
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = false, bigEndian: Boolean = true) {
@@ -189,10 +189,10 @@ class Vec3s(var ofs: Int, var array: ShortArray) : Vec3t<Short>(), ToBuffer {
         return shorts
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutShort(ptr, x)
-        memPutShort(ptr + Short.BYTES, y)
-        memPutShort(ptr + Short.BYTES * 2, z)
+    infix fun to(ptr: Ptr<Short>) {
+        ptr[0] = x
+        ptr[1] = y
+        ptr[2] = z
     }
 
     // -- Component accesses --
@@ -607,7 +607,7 @@ class Vec3s(var ofs: Int, var array: ShortArray) : Vec3t<Short>(), ToBuffer {
         val size = length * Short.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec3s(memGetShort(ptr), memGetShort(ptr + Short.BYTES), memGetShort(ptr + Short.BYTES * 2))
+        fun fromPointer(ptr: Ptr<Short>) = Vec3s(ptr)
     }
 
     override fun size() = size

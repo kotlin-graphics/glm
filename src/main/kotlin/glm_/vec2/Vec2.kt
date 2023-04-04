@@ -99,6 +99,7 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Float) : this(block(0), block(1))
+    constructor(ptr: Ptr<Float>) : this(ptr[0], ptr[1])
 
     constructor(inputStream: InputStream, bigEndian: Boolean = true) : this(inputStream.float(bigEndian), inputStream.float(bigEndian))
 
@@ -173,13 +174,13 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
         return buf
     }
 
-    infix fun to(ptr: FloatPtr){
+    infix fun to(ptr: Ptr<Float>){
         ptr[0] = x
         ptr[1] = y
     }
 
-    infix fun to(ptr: Ptr) = to(FloatPtr(ptr))
-    infix fun to(ptr: BytePtr) = to(FloatPtr(ptr.adr))
+    @JvmName("toPtrByte")
+    infix fun to(ptr: Ptr<Byte>) = to(ptr.toPtr<Float>())
 
     // -- Component accesses --
 
@@ -585,7 +586,7 @@ class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer 
         val size = length * Float.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec2(memGetFloat(ptr), memGetFloat(ptr + Float.BYTES))
+        fun fromPointer(ptr: Ptr<Float>) = Vec2(ptr)
     }
 
     override fun size() = size

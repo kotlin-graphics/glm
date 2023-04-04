@@ -34,39 +34,39 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     // -- Constructors --
 
     constructor() : this(
-            1, 0,
-            0, 1)
+        1, 0,
+        0, 1)
 
     constructor(scalar: Number) : this(
-            scalar, 0,
-            0, scalar)
+        scalar, 0,
+        0, scalar)
 
     constructor(x0: Number, y0: Number,
                 x1: Number, y1: Number) : this(0, doubleArrayOf(
-            x0.d, y0.d,
-            x1.d, y1.d))
+        x0.d, y0.d,
+        x1.d, y1.d))
 
     constructor(v0: Vec2t<out Number>, v1: Vec2t<out Number>) : this(
-            v0.x, v0.y,
-            v1.x, v1.y)
+        v0.x, v0.y,
+        v1.x, v1.y)
 
     constructor(block: (Int) -> Number) : this(
-            block(0).d, block(1).d,
-            block(2).d, block(3).d)
+        block(0).d, block(1).d,
+        block(2).d, block(3).d)
 
     constructor(block: (Int, Int) -> Number) : this(
-            block(0, 0).f, block(0, 1).f,
-            block(1, 0).f, block(1, 1).f)
+        block(0, 0).f, block(0, 1).f,
+        block(1, 0).f, block(1, 1).f)
 
     constructor(list: Iterable<*>, index: Int = 0) : this(
-            list.elementAt(index)!!.toDouble, list.elementAt(index + 1)!!.toDouble,
-            list.elementAt(index + 2)!!.toDouble, list.elementAt(index + 3)!!.toDouble)
+        list.elementAt(index)!!.toDouble, list.elementAt(index + 1)!!.toDouble,
+        list.elementAt(index + 2)!!.toDouble, list.elementAt(index + 3)!!.toDouble)
 
     constructor(buffer: DoubleBuffer, index: Int = buffer.pos) : this(
-            buffer[index], buffer[index + 1],
-            buffer[index + 2], buffer[index + 3])
+        buffer[index], buffer[index + 1],
+        buffer[index + 2], buffer[index + 3])
 
-    constructor(ptr: DoublePtr) : this(block = { i -> ptr[i] })
+    constructor(ptr: Ptr<Double>) : this(block = { i -> ptr[i] })
 
     // -- Matrix conversions --
 
@@ -74,35 +74,35 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     constructor(mat2: Mat2d) : this(0, mat2.array.clone())
 
     constructor(mat3: Mat3) : this(
-            mat3[0, 0], mat3[0, 1],
-            mat3[1, 0], mat3[1, 1])
+        mat3[0, 0], mat3[0, 1],
+        mat3[1, 0], mat3[1, 1])
 
     constructor(mat4: Mat4) : this(
-            mat4[0, 0], mat4[0, 1],
-            mat4[1, 0], mat4[1, 1])
+        mat4[0, 0], mat4[0, 1],
+        mat4[1, 0], mat4[1, 1])
 
     constructor(mat2x3: Mat2x3t<*>) : this(
-            mat2x3[0, 0], mat2x3[0, 1],
-            mat2x3[1, 0], mat2x3[1, 1])
+        mat2x3[0, 0], mat2x3[0, 1],
+        mat2x3[1, 0], mat2x3[1, 1])
 
     constructor(mat3x2: Mat3x2t<*>) : this(
-            mat3x2[0, 0], mat3x2[0, 1],
-            mat3x2[1, 0], mat3x2[1, 1])
+        mat3x2[0, 0], mat3x2[0, 1],
+        mat3x2[1, 0], mat3x2[1, 1])
 
     constructor(mat2x4: Mat2x4t<*>) : this(
-            mat2x4[0, 0], mat2x4[0, 1],
-            mat2x4[1, 0], mat2x4[1, 1])
+        mat2x4[0, 0], mat2x4[0, 1],
+        mat2x4[1, 0], mat2x4[1, 1])
 
     constructor(mat4x2: Mat4x2t<*>) : this(
-            mat4x2[0, 0], mat4x2[0, 1],
-            mat4x2[1, 0], mat4x2[1, 1])
+        mat4x2[0, 0], mat4x2[0, 1],
+        mat4x2[1, 0], mat4x2[1, 1])
 
     @JvmOverloads
     constructor(doubles: DoubleArray, transpose: Boolean = false) : this(0,
-            if (transpose) doubleArrayOf(
-                    doubles[0], doubles[3],
-                    doubles[1], doubles[4])
-            else doubles.clone())
+                                                                         if (transpose) doubleArrayOf(
+                                                                             doubles[0], doubles[3],
+                                                                             doubles[1], doubles[4])
+                                                                         else doubles.clone())
 
     // to
 //    fun to(mat2x2: Mat2x2t<*>) {
@@ -167,38 +167,38 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     infix operator fun invoke(mat2: Mat2d) = invoke(mat2.array.clone())
 
     infix operator fun invoke(mat3: Mat3) = invoke(
-            mat3[0, 0].d, mat3[0, 1].d,
-            mat3[1, 0].d, mat3[1, 1].d)
+        mat3[0, 0].d, mat3[0, 1].d,
+        mat3[1, 0].d, mat3[1, 1].d)
 
     infix operator fun invoke(mat3: Mat3d) = invoke(
-            mat3[0, 0], mat3[0, 1],
-            mat3[1, 0], mat3[1, 1])
+        mat3[0, 0], mat3[0, 1],
+        mat3[1, 0], mat3[1, 1])
 
     infix operator fun invoke(mat4: Mat4) = invoke(
-            mat4[0, 0].d, mat4[0, 1].d,
-            mat4[1, 0].d, mat4[1, 1].d)
+        mat4[0, 0].d, mat4[0, 1].d,
+        mat4[1, 0].d, mat4[1, 1].d)
 
     infix operator fun invoke(mat4: Mat4d) = invoke(
-            mat4[0, 0], mat4[0, 1],
-            mat4[1, 0], mat4[1, 1])
+        mat4[0, 0], mat4[0, 1],
+        mat4[1, 0], mat4[1, 1])
 
     operator fun invoke(x: Double, y: Double) = invoke(
-            x, 0.0,
-            0.0, y)
+        x, 0.0,
+        0.0, y)
 
     operator fun invoke(x: Number, y: Number) = invoke(
-            x.d, 0.0,
-            0.0, y.d)
+        x.d, 0.0,
+        0.0, y.d)
 
     operator fun invoke(a0: Double, a1: Double,
-               b0: Double, b1: Double): Mat2d {
+                        b0: Double, b1: Double): Mat2d {
 
         put(a0, a1, b0, b1)
         return this
     }
 
     operator fun invoke(a0: Number, a1: Number,
-               b0: Number, b1: Number): Mat2d {
+                        b0: Number, b1: Number): Mat2d {
 
         put(a0.d, a1.d, b0.d, b1.d)
         return this
@@ -216,8 +216,8 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     infix fun put(doubles: DoubleArray) = put(doubles[0], doubles[1], doubles[2], doubles[3])
 
     fun put(x: Double, y: Double) = put(
-            x, 0.0,
-            0.0, y)
+        x, 0.0,
+        0.0, y)
 
     fun put(a0: Double, a1: Double,
             b0: Double, b1: Double) {
@@ -241,10 +241,10 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
 
     override fun to(buf: ByteBuffer, offset: Int): ByteBuffer {
         return buf
-                .putDouble(offset + 0 * Double.BYTES, array[0])
-                .putDouble(offset + 1 * Double.BYTES, array[1])
-                .putDouble(offset + 2 * Double.BYTES, array[2])
-                .putDouble(offset + 3 * Double.BYTES, array[3])
+            .putDouble(offset + 0 * Double.BYTES, array[0])
+            .putDouble(offset + 1 * Double.BYTES, array[1])
+            .putDouble(offset + 2 * Double.BYTES, array[2])
+            .putDouble(offset + 3 * Double.BYTES, array[3])
     }
 
     override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
@@ -255,14 +255,28 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
         return buf
     }
 
+    fun to(ptr: Ptr<Double>, transpose: Boolean = false) {
+        when {
+            transpose -> {
+                ptr[0] = get(0, 0); ptr[1] = get(1, 0)
+                ptr[2] = get(0, 1); ptr[3] = get(1, 1)
+            }
+
+            else -> {
+                ptr[0] = get(0, 0); ptr[1] = get(0, 1)
+                ptr[2] = get(1, 0); ptr[3] = get(1, 1)
+            }
+        }
+    }
+
 
     // -- Unary arithmetic operators --
 
     operator fun unaryPlus() = this
 
     operator fun unaryMinus() = Mat2d(
-            -array[0], -array[1],
-            -array[3], -array[4])
+        -array[0], -array[1],
+        -array[3], -array[4])
 
     // -- operators --
 
@@ -361,19 +375,16 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
 
     companion object : mat2x2d_operators {
         const val length = Mat2x2t.length
+
         @JvmField
         val size = length * Double.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr, transpose: Boolean = false): Mat2d {
-            return when {
-                transpose -> Mat2d(
-                        memGetDouble(ptr), memGetDouble(ptr + Double.BYTES * 2),
-                        memGetDouble(ptr + Double.BYTES), memGetDouble(ptr + Double.BYTES * 3))
-                else -> Mat2d(
-                        memGetDouble(ptr), memGetDouble(ptr + Double.BYTES),
-                        memGetDouble(ptr + Double.BYTES * 2), memGetDouble(ptr + Double.BYTES * 3))
-            }
+        fun fromPointer(ptr: Ptr<Double>, transpose: Boolean = false): Mat2d = when {
+            transpose -> Mat2d(ptr[0], ptr[2],
+                               ptr[1], ptr[3])
+
+            else -> Mat2d(ptr)
         }
 
         val identity: Mat2d
@@ -382,7 +393,7 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
 
     override fun size() = size
 
-	override fun elementCount() = length
+    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Mat2d && array.contentEquals(other.array)
     override fun hashCode() = 31 * this[0].hashCode() + this[1].hashCode()

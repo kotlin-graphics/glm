@@ -13,6 +13,7 @@ import glm_.vec4.operators.vec4ul_operators
 import kool.*
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetLong
+import unsigned.Ubyte
 import unsigned.Ulong
 import java.io.PrintStream
 import java.nio.*
@@ -146,6 +147,14 @@ class Vec4ul(var ofs: Int, var array: LongArray) : Vec4t<Ulong>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
     constructor(block: (Int) -> Ulong) : this(block(0), block(1), block(2), block(3))
+    // clashing
+//    constructor(ptr: Ptr<Ulong>) : this() {
+//        val p = ptr.toPtr<Long>()
+//        x.v = p[0]
+//        y.v = p[1]
+//        z.v = p[2]
+//        w.v = p[3]
+//    }
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneUlong: Boolean = false, bigEndian: Boolean = true) {
@@ -701,7 +710,13 @@ class Vec4ul(var ofs: Int, var array: LongArray) : Vec4t<Ulong>(), ToBuffer {
         val size = length * Ulong.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec4ul(memGetLong(ptr), memGetLong(ptr + Long.BYTES), memGetLong(ptr + Long.BYTES * 2), memGetLong(ptr + Long.BYTES * 3))
+        fun fromPointer(ptr: Ptr<Ulong>) = Vec4ul().apply {
+            val p = ptr.toPtr<Long>()
+            x.v = p[0]
+            y.v = p[1]
+            z.v = p[2]
+            w.v = p[3]
+        }
     }
 
     override fun size() = size

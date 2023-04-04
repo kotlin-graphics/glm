@@ -1,3 +1,4 @@
+
 package glm_.vec2
 
 import glm_.*
@@ -8,9 +9,7 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.BYTES
-import kool.Ptr
-import kool.pos
+import kool.*
 import org.lwjgl.system.MemoryUtil.memGetByte
 import org.lwjgl.system.MemoryUtil.memPutByte
 import unsigned.Ubyte
@@ -103,6 +102,11 @@ class Vec2ub(var ofs: Int, var array: ByteArray) : Vec2t<Ubyte>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Ubyte) : this(block(0), block(1))
+    constructor(ptr: Ptr<Ubyte>) : this() {
+        val p = ptr.toPtr<Byte>()
+        x.v = p[0]
+        y.v = p[1]
+    }
 
 
     fun put(x: Ubyte, y: Ubyte) {
@@ -150,9 +154,10 @@ class Vec2ub(var ofs: Int, var array: ByteArray) : Vec2t<Ubyte>(), ToBuffer {
                 .put(offset + 1, array[1])
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutByte(ptr, x.v)
-        memPutByte(ptr + Byte.BYTES, y.v)
+    infix fun to(ptr: Ptr<Ubyte>) {
+        val p = ptr.toPtr<Byte>()
+        p[0] = x.v
+        p[1] = y.v
     }
 
     // -- Component accesses --
@@ -748,7 +753,7 @@ class Vec2ub(var ofs: Int, var array: ByteArray) : Vec2t<Ubyte>(), ToBuffer {
         val size = length * Ubyte.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec2ub(memGetByte(ptr), memGetByte(ptr + Byte.BYTES))
+        fun fromPointer(ptr: Ptr<Ubyte>) = Vec2ub(ptr)
     }
 
     override fun size() = size

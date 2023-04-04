@@ -11,11 +11,9 @@ import glm_.mat4x4.Mat4
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
-import kool.BYTES
-import kool.FloatPtr
-import kool.Ptr
+import kool.*
+
 import org.lwjgl.system.MemoryUtil.memGetFloat
-import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.io.InputStream
 import java.io.PrintStream
 import kotlin.math.abs
@@ -80,7 +78,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     constructor(inputStream: InputStream, bigEndian: Boolean = true) :
             this(inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian))
 
-    constructor(ptr: FloatPtr) : this(block = { i -> ptr[i] })
+    constructor(ptr: Ptr<Float>) : this(block = { i -> ptr[i] })
 
     infix fun to(res: Mat3) = glm.mat3_cast(this, res)
     fun toMat3() = glm.mat3_cast(this, Mat3())
@@ -105,11 +103,11 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
     infix fun put(quat: Quat) = put(quat.w, quat.x, quat.y, quat.z)
 
-    infix fun to(ptr: Ptr) {
-        memPutFloat(ptr, w)
-        memPutFloat(ptr + Float.BYTES, x)
-        memPutFloat(ptr + Float.BYTES * 2, y)
-        memPutFloat(ptr + Float.BYTES * 3, z)
+    infix fun to(ptr: Ptr<Float>) {
+        ptr[0] = w
+        ptr[1] = x
+        ptr[2] = y
+        ptr[3] = z
     }
 
     // -- Component accesses --
@@ -226,7 +224,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
         val size = length * Float.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Quat(memGetFloat(ptr), memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 3))
+        fun fromPointer(ptr: Ptr<Float>) = Quat(ptr[0], ptr[1], ptr[2], ptr[3])
 
         val identity: Quat
             get() = Quat(1f, 0f, 0f, 0f)

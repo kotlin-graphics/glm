@@ -12,6 +12,7 @@ import kool.*
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetLong
 import org.lwjgl.system.MemoryUtil.memPutLong
+import unsigned.Ubyte
 import unsigned.Ulong
 import java.io.PrintStream
 import java.nio.*
@@ -58,6 +59,7 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+
     @JvmOverloads
     constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
 
@@ -71,6 +73,7 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
     constructor(x: Boolean, y: Boolean = x) : this(x.ul, y.ul)
 
     constructor(x: Boolean, v: Vec1bool) : this(x.ul, v.x.ul)
+
     @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.ul, y.ul)
 
@@ -81,8 +84,8 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
     constructor(v: Vec4bool) : this(v.x.ul, v.y.ul)
 
     constructor(bytes: ByteArray, index: Int = 0, oneByteOneUlong: Boolean = false, bigEndian: Boolean = true) : this(
-            if (oneByteOneUlong) bytes[index].ul else bytes.getUlong(index, bigEndian),
-            if (oneByteOneUlong) bytes[index + 1].ul else bytes.getUlong(index + Ulong.BYTES, bigEndian))
+        if (oneByteOneUlong) bytes[index].ul else bytes.getUlong(index, bigEndian),
+        if (oneByteOneUlong) bytes[index + 1].ul else bytes.getUlong(index + Ulong.BYTES, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].ul, chars[index + 1].ul)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1])
@@ -99,8 +102,8 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toLong, list.elementAt(index + 1)!!.toLong)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneUlong: Boolean = false) : this(
-            if (oneByteOneUlong) bytes[index].ul else bytes.getLong(index).ul,
-            if (oneByteOneUlong) bytes[index + 1].ul else bytes.getLong(index + Ulong.BYTES).ul)
+        if (oneByteOneUlong) bytes[index].ul else bytes.getLong(index).ul,
+        if (oneByteOneUlong) bytes[index + 1].ul else bytes.getLong(index + Ulong.BYTES).ul)
 
     constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].ul, chars[index + 1].ul)
     constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index], shorts[index + 1])
@@ -110,6 +113,12 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Ulong) : this(block(0), block(1))
+    // clashing
+//    constructor(ptr: Ptr<Ulong>) : this() {
+//        val p = ptr.toPtr<Long>()
+//        x.v = p[0]
+//        y.v = p[1]
+//    }
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneUlong: Boolean = false, bigEndian: Boolean = true) {
@@ -186,9 +195,10 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutLong(ptr, x.v)
-        memPutLong(ptr + Long.BYTES, y.v)
+    infix fun to(ptr: Ptr<Ulong>) {
+        val p = ptr.toPtr<Long>()
+        p[0] = x.v
+        p[1] = y.v
     }
 
     // -- Component accesses --
@@ -474,6 +484,7 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
     fun and(b: Ulong, res: Vec2ul) = and(res, this, b, b)
     fun and(b: Long, res: Vec2ul) = and(res, this, b, b)
     fun and(b: Vec2ul, res: Vec2ul) = and(res, this, b.x, b.y)
+
     @JvmOverloads
     fun and(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = and(res, this, bX, bY)
 
@@ -494,6 +505,7 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
     fun or(b: Ulong, res: Vec2ul) = or(res, this, b, b)
     fun or(b: Long, res: Vec2ul) = or(res, this, b, b)
     fun or(b: Vec2ul, res: Vec2ul) = or(res, this, b.x, b.y)
+
     @JvmOverloads
     fun or(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = or(res, this, bX, bY)
 
@@ -514,6 +526,7 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
     fun xor(b: Ulong, res: Vec2ul) = xor(res, this, b, b)
     fun xor(b: Long, res: Vec2ul) = xor(res, this, b, b)
     fun xor(b: Vec2ul, res: Vec2ul) = xor(res, this, b.x, b.y)
+
     @JvmOverloads
     fun xor(bX: Ulong, bY: Ulong, res: Vec2ul = Vec2ul()) = xor(res, this, bX, bY)
 
@@ -530,6 +543,7 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
     infix fun shl(b: Int) = shl(Vec2ul(), this, b, b)
 
     fun shl(b: Int, res: Vec2ul) = shl(res, this, b, b)
+
     @JvmOverloads
     fun shl(bX: Int, bY: Int, res: Vec2ul = Vec2ul()) = shl(res, this, bX, bY)
 
@@ -540,6 +554,7 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
     infix fun shr(b: Int) = shr(Vec2ul(), this, b, b)
 
     fun shr(b: Int, res: Vec2ul) = shr(res, this, b, b)
+
     @JvmOverloads
     fun shr(bX: Int, bY: Int, res: Vec2ul = Vec2ul()) = shr(res, this, bX, bY)
 
@@ -666,11 +681,16 @@ class Vec2ul(var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
 
     companion object : opVec2ul {
         const val length = Vec2t.length
+
         @JvmField
         val size = length * Ulong.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec2ul(memGetLong(ptr), memGetLong(ptr + Long.BYTES))
+        fun fromPointer(ptr: Ptr<Ulong>) = Vec2ul().apply {
+            val p = ptr.toPtr<Long>()
+            x.v = p[0]
+            y.v = p[1]
+        }
     }
 
     override fun size() = size

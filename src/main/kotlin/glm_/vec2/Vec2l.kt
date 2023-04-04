@@ -46,6 +46,7 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
     constructor(x: Number, y: Number = x) : this(x.L, y.L)
 
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+
     @JvmOverloads
     constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
 
@@ -59,6 +60,7 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
     constructor(x: Boolean, y: Boolean = x) : this(x.L, y.L)
 
     constructor(x: Boolean, v: Vec1bool) : this(x.L, v.x.L)
+
     @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.L, y.L)
 
@@ -69,8 +71,8 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
     constructor(v: Vec4bool) : this(v.x.L, v.y.L)
 
     constructor(bytes: ByteArray, index: Int = 0, oneByteOneLong: Boolean = false, bigEndian: Boolean = true) : this(
-            if (oneByteOneLong) bytes[index].L else bytes.getLong(index, bigEndian),
-            if (oneByteOneLong) bytes[index + 1].L else bytes.getLong(index + Long.BYTES, bigEndian))
+        if (oneByteOneLong) bytes[index].L else bytes.getLong(index, bigEndian),
+        if (oneByteOneLong) bytes[index + 1].L else bytes.getLong(index + Long.BYTES, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].L, chars[index + 1].L)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1])
@@ -87,8 +89,8 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toLong, list.elementAt(index + 1)!!.toLong)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneLong: Boolean = false) : this(
-            if (oneByteOneLong) bytes[index].L else bytes.getLong(index),
-            if (oneByteOneLong) bytes[index + 1].L else bytes.getLong(index + Long.BYTES))
+        if (oneByteOneLong) bytes[index].L else bytes.getLong(index),
+        if (oneByteOneLong) bytes[index + 1].L else bytes.getLong(index + Long.BYTES))
 
     constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].L, chars[index + 1].L)
     constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index], shorts[index + 1])
@@ -98,7 +100,8 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Long) : this(block(0), block(1))
-    // constructor(ptr: LongPtr) : this(ptr[0], ptr[1]) clash, use Companion::fromPointer
+    // clashing
+//    constructor(ptr: Ptr<Long>) : this(ptr[0], ptr[1])
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneLong: Boolean = false, bigEndian: Boolean = true) {
@@ -175,8 +178,13 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
 //        ptr[1] = y
 //    }
 
-    infix fun to(ptr: Ptr) = to(LongPtr(ptr))
-    infix fun to(ptr: BytePtr) = to(LongPtr(ptr.adr))
+    infix fun to(ptr: Ptr<Long>) {
+        ptr[0] = x
+        ptr[1] = y
+    }
+
+    @JvmName("toPtrByte")
+    infix fun to(ptr: Ptr<Byte>) = to(ptr.toPtr<Long>())
 
     // -- Component accesses --
 
@@ -364,6 +372,7 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
     fun and(b: Int, res: Vec2l) = and(res, this, b, b)
     fun and(b: Long, res: Vec2l) = and(res, this, b, b)
     fun and(b: Vec2l, res: Vec2l) = and(res, this, b.x, b.y)
+
     @JvmOverloads
     fun and(bX: Int, bY: Int, res: Vec2l = Vec2l()) = and(res, this, bX, bY)
 
@@ -384,6 +393,7 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
     fun or(b: Int, res: Vec2l) = or(res, this, b, b)
     fun or(b: Long, res: Vec2l) = or(res, this, b, b)
     fun or(b: Vec2l, res: Vec2l) = or(res, this, b.x, b.y)
+
     @JvmOverloads
     fun or(bX: Int, bY: Int, res: Vec2l = Vec2l()) = or(res, this, bX, bY)
 
@@ -404,6 +414,7 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
     fun xor(b: Int, res: Vec2l) = xor(res, this, b, b)
     fun xor(b: Long, res: Vec2l) = xor(res, this, b, b)
     fun xor(b: Vec2l, res: Vec2l) = xor(res, this, b.x, b.y)
+
     @JvmOverloads
     fun xor(bX: Int, bY: Int, res: Vec2l = Vec2l()) = xor(res, this, bX, bY)
 
@@ -424,6 +435,7 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
     fun shl(b: Int, res: Vec2l) = shl(res, this, b, b)
     fun shl(b: Long, res: Vec2l) = shl(res, this, b, b)
     fun shl(b: Vec2l, res: Vec2l) = shl(res, this, b.x, b.y)
+
     @JvmOverloads
     fun shl(bX: Int, bY: Int, res: Vec2l = Vec2l()) = shl(res, this, bX, bY)
 
@@ -444,6 +456,7 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
     fun shr(b: Int, res: Vec2l) = shr(res, this, b, b)
     fun shr(b: Long, res: Vec2l) = shr(res, this, b, b)
     fun shr(b: Vec2l, res: Vec2l) = shr(res, this, b.x, b.y)
+
     @JvmOverloads
     fun shr(bX: Int, bY: Int, res: Vec2l = Vec2l()) = shr(res, this, bX, bY)
 
@@ -470,6 +483,7 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
 
     fun and(b: Number, res: Vec2l) = and(res, this, b.L, b.L)
     fun and(b: Vec2t<out Number>, res: Vec2l) = and(res, this, b.x.L, b.y.L)
+
     @JvmOverloads
     fun and(bX: Number, bY: Number, res: Vec2l = Vec2l()) = and(res, this, bX.L, bY.L)
 
@@ -483,6 +497,7 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
 
     fun or(b: Number, res: Vec2l) = or(res, this, b.L, b.L)
     fun or(b: Vec2t<out Number>, res: Vec2l) = or(res, this, b.x.L, b.y.L)
+
     @JvmOverloads
     fun or(bX: Number, bY: Number, res: Vec2l = Vec2l()) = or(res, this, bX.L, bY.L)
 
@@ -496,6 +511,7 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
 
     fun xor(b: Number, res: Vec2l) = xor(res, this, b.L, b.L)
     fun xor(b: Vec2t<out Number>, res: Vec2l) = xor(res, this, b.x.L, b.y.L)
+
     @JvmOverloads
     fun xor(bX: Number, bY: Number, res: Vec2l = Vec2l()) = xor(res, this, bX.L, bY.L)
 
@@ -509,6 +525,7 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
 
     fun shl(b: Number, res: Vec2l) = shl(res, this, b.L, b.L)
     fun shl(b: Vec2t<out Number>, res: Vec2l) = shl(res, this, b.x.L, b.y.L)
+
     @JvmOverloads
     fun shl(bX: Number, bY: Number, res: Vec2l = Vec2l()) = shl(res, this, bX.L, bY.L)
 
@@ -522,6 +539,7 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
 
     fun shr(b: Number, res: Vec2l) = shr(res, this, b.L, b.L)
     fun shr(b: Vec2t<out Number>, res: Vec2l) = shr(res, this, b.x.L, b.y.L)
+
     @JvmOverloads
     fun shr(bX: Number, bY: Number, res: Vec2l = Vec2l()) = shr(res, this, bX.L, bY.L)
 
@@ -582,11 +600,15 @@ class Vec2l(var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
 
     companion object : opVec2l {
         const val length = Vec2t.length
+
         @JvmField
         val size = length * Long.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec2l(memGetLong(ptr), memGetLong(ptr + Long.BYTES))
+        fun fromPointer(ptr: Ptr<Long>) = Vec2l().apply {
+            x = ptr[0]
+            y = ptr[1]
+        }
     }
 
     override fun size() = size

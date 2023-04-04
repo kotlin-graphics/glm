@@ -132,7 +132,7 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
     constructor(block: (Int) -> Short) : this(block(0), block(1), block(2), block(3))
-    constructor(ptr: ShortPtr) : this(ptr[0], ptr[1], ptr[2], ptr[3])
+    constructor(ptr: Ptr<Short>) : this(ptr[0], ptr[1], ptr[2], ptr[3])
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = false, bigEndian: Boolean = true) {
@@ -695,7 +695,7 @@ class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>(), ToBuffer {
         val size = length * Short.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec4s(memGetShort(ptr), memGetShort(ptr + Short.BYTES), memGetShort(ptr + Short.BYTES * 2), memGetShort(ptr + Short.BYTES * 3))
+        fun fromPointer(ptr: Ptr<Short>) = Vec4s(ptr)
     }
 
     override fun size() = size

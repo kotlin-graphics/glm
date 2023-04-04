@@ -97,6 +97,7 @@ class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Short) : this(block(0), block(1))
+    constructor(ptr: Ptr<Short>) : this(ptr[0], ptr[1])
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = false, bigEndian: Boolean = true) {
@@ -162,9 +163,9 @@ class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>(), ToBuffer {
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutShort(ptr, x)
-        memPutShort(ptr + Short.BYTES, y)
+    infix fun to(ptr: Ptr<Short>) {
+        ptr[0] = x
+        ptr[1] = y
     }
 
     // -- Component accesses --
@@ -676,7 +677,7 @@ class Vec2s(var ofs: Int, var array: ShortArray) : Vec2t<Short>(), ToBuffer {
         val size = length * Short.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec2s(memGetShort(ptr), memGetShort(ptr + Short.BYTES))
+        fun fromPointer(ptr: Ptr<Short>) = Vec2s(ptr)
     }
 
     override fun size() = size

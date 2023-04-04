@@ -12,6 +12,7 @@ import kool.*
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetInt
 import org.lwjgl.system.MemoryUtil.memPutInt
+import unsigned.Ubyte
 import unsigned.Uint
 import java.io.PrintStream
 import java.nio.*
@@ -110,6 +111,11 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Uint) : this(block(0), block(1))
+    constructor(ptr: Ptr<Uint>) : this() {
+        val p = ptr.toPtr<Int>()
+        x.v = p[0]
+        y.v = p[1]
+    }
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneUint: Boolean = false, bigEndian: Boolean = true) {
@@ -186,9 +192,10 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>(), ToBuffer {
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutInt(ptr, x.v)
-        memPutInt(ptr + Int.BYTES, y.v)
+    infix fun to(ptr: Ptr<Uint>) {
+        val p = ptr.toPtr<Int>()
+        p[0] = x.v
+        p[1] = y.v
     }
 
     // -- Component accesses --
@@ -696,7 +703,7 @@ class Vec2ui(var ofs: Int, var array: IntArray) : Vec2t<Uint>(), ToBuffer {
         val size = length * Uint.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec2ui(memGetInt(ptr), memGetInt(ptr + Int.BYTES))
+        fun fromPointer(ptr: Ptr<Uint>) = Vec2ui(ptr)
     }
 
     override fun size() = size

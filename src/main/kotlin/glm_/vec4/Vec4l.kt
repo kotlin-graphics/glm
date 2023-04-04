@@ -97,10 +97,10 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
     constructor(v: Vec4bool) : this(v.x.L, v.y.L, v.z.L, v.w.L)
 
     constructor(bytes: ByteArray, index: Int = 0, oneByteOneLong: Boolean = false, bigEndian: Boolean = true) : this(
-            if (oneByteOneLong) bytes[index].L else bytes.getLong(index, bigEndian),
-            if (oneByteOneLong) bytes[index + 1].L else bytes.getLong(index + Long.BYTES, bigEndian),
-            if (oneByteOneLong) bytes[index + 2].L else bytes.getLong(index + Long.BYTES * 2, bigEndian),
-            if (oneByteOneLong) bytes[index + 3].L else bytes.getLong(index + Long.BYTES * 3, bigEndian))
+        if (oneByteOneLong) bytes[index].L else bytes.getLong(index, bigEndian),
+        if (oneByteOneLong) bytes[index + 1].L else bytes.getLong(index + Long.BYTES, bigEndian),
+        if (oneByteOneLong) bytes[index + 2].L else bytes.getLong(index + Long.BYTES * 2, bigEndian),
+        if (oneByteOneLong) bytes[index + 3].L else bytes.getLong(index + Long.BYTES * 3, bigEndian))
 
     constructor(chars: CharArray, index: Int = 0) : this(chars[index].L, chars[index + 1].L, chars[index + 2].L, chars[index + 3].L)
     constructor(shorts: ShortArray, index: Int = 0) : this(shorts[index], shorts[index + 1], shorts[index + 2], shorts[index + 3])
@@ -115,13 +115,13 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
     constructor(booleans: Array<Boolean>, index: Int = 0) : this(booleans[index].L, booleans[index + 1].L, booleans[index + 2].L, booleans[index + 3].L)
 
     constructor(list: Iterable<*>, index: Int = 0) : this(list.elementAt(index)!!.toLong, list.elementAt(index + 1)!!.toLong,
-            list.elementAt(index + 2)!!.toLong, list.elementAt(index + 3)!!.toLong)
+                                                          list.elementAt(index + 2)!!.toLong, list.elementAt(index + 3)!!.toLong)
 
     constructor(bytes: ByteBuffer, index: Int = bytes.pos, oneByteOneLong: Boolean = false) : this(
-            if (oneByteOneLong) bytes[index].L else bytes.getLong(index),
-            if (oneByteOneLong) bytes[index + 1].L else bytes.getLong(index + Long.BYTES),
-            if (oneByteOneLong) bytes[index + 2].L else bytes.getLong(index + Long.BYTES * 2),
-            if (oneByteOneLong) bytes[index + 3].L else bytes.getLong(index + Long.BYTES * 3))
+        if (oneByteOneLong) bytes[index].L else bytes.getLong(index),
+        if (oneByteOneLong) bytes[index + 1].L else bytes.getLong(index + Long.BYTES),
+        if (oneByteOneLong) bytes[index + 2].L else bytes.getLong(index + Long.BYTES * 2),
+        if (oneByteOneLong) bytes[index + 3].L else bytes.getLong(index + Long.BYTES * 3))
 
     constructor(chars: CharBuffer, index: Int = chars.pos) : this(chars[index].L, chars[index + 1].L, chars[index + 2].L, chars[index + 3].L)
     constructor(shorts: ShortBuffer, index: Int = shorts.pos) : this(shorts[index], shorts[index + 1], shorts[index + 2], shorts[index + 3])
@@ -131,7 +131,8 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
     constructor(block: (Int) -> Long) : this(block(0), block(1), block(2), block(3))
-//    constructor(ptr: LongPtr) : this(ptr[0], ptr[1], ptr[2], ptr[3]) clash, use Companion::fromPointer
+    // clashing
+//    constructor(ptr: Ptr<Long>) : this(ptr[0], ptr[1], ptr[2], ptr[3])
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneLong: Boolean = false, bigEndian: Boolean = true) {
@@ -215,11 +216,11 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutLong(ptr, x)
-        memPutLong(ptr + Long.BYTES, y)
-        memPutLong(ptr + Long.BYTES * 2, z)
-        memPutLong(ptr + Long.BYTES * 3, w)
+    infix fun to(ptr: Ptr<Long>) {
+        ptr[0] = x
+        ptr[1] = y
+        ptr[2] = z
+        ptr[3] = w
     }
 
     // -- Component accesses --
@@ -631,11 +632,17 @@ class Vec4l(var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
 
     companion object : vec4l_operators {
         const val length = Vec4t.length
+
         @JvmField
         val size = length * Long.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec4l(memGetLong(ptr), memGetLong(ptr + Long.BYTES), memGetLong(ptr + Long.BYTES * 2), memGetLong(ptr + Long.BYTES * 3))
+        fun fromPointer(ptr: Ptr<Long>) = Vec4l().apply {
+            x = ptr[0]
+            y = ptr[1]
+            z = ptr[2]
+            w = ptr[3]
+        }
     }
 
     override fun size() = Vec4l.size

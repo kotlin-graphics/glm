@@ -66,7 +66,7 @@ class Vec1(x: Float) : Vec1t<Float>(x), ToFloatBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index])
 
     constructor(block: (Int) -> Float) : this(block(0))
-    constructor(ptr: FloatPtr) : this(ptr[0])
+    constructor(ptr: Ptr<Float>) : this(ptr[0])
 
     constructor(s: Number) : this(s.f)
 
@@ -118,12 +118,12 @@ class Vec1(x: Float) : Vec1t<Float>(x), ToFloatBuffer {
         return buf
     }
 
-    infix fun to(ptr: FloatPtr){
+    infix fun to(ptr: Ptr<Float>){
         ptr[0] = x
     }
 
-    infix fun to(ptr: Ptr) = to(FloatPtr(ptr))
-    infix fun to(ptr: BytePtr) = to(FloatPtr(ptr.adr))
+    @JvmName("toPtrByte")
+    infix fun to(ptr: Ptr<Byte>) = to(ptr.toPtr<Float>())
 
     // -- Unary arithmetic operators --
 

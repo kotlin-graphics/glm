@@ -136,7 +136,7 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
     constructor(block: (Int) -> Float) : this(block(0), block(1), block(2), block(3))
-    constructor(ptr: FloatPtr) : this(ptr[0], ptr[1], ptr[2], ptr[3])
+    constructor(ptr: Ptr<Float>) : this(ptr[0], ptr[1], ptr[2], ptr[3])
 
     constructor(inputStream: InputStream, bigEndian: Boolean = true) :
             this(inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian), inputStream.float(bigEndian))
@@ -222,11 +222,11 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutFloat(ptr, x)
-        memPutFloat(ptr + Float.BYTES, y)
-        memPutFloat(ptr + Float.BYTES * 2, z)
-        memPutFloat(ptr + Float.BYTES * 3, w)
+    infix fun to(ptr: Ptr<Float>) {
+        ptr[0] = x
+        ptr[1] = y
+        ptr[2] = z
+        ptr[3] = w
     }
 
     // -- Component accesses --
@@ -521,7 +521,7 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
         val size = length * Float.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec4(memGetFloat(ptr), memGetFloat(ptr + Float.BYTES), memGetFloat(ptr + Float.BYTES * 2), memGetFloat(ptr + Float.BYTES * 3))
+        fun fromPointer(ptr: Ptr<Float>) = Vec4(ptr)
 
         // TODO other? d?
         fun fromColor(n: Number) = Vec4(n.f / 255, n.f / 255, n.f / 255f, n.f / 255)

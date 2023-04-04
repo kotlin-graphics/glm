@@ -12,6 +12,7 @@ import kool.*
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetShort
 import org.lwjgl.system.MemoryUtil.memPutShort
+import unsigned.Ubyte
 import unsigned.Ushort
 import java.io.PrintStream
 import java.nio.*
@@ -110,6 +111,11 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
     constructor(doubles: DoubleBuffer, index: Int = doubles.pos) : this(doubles[index], doubles[index + 1])
 
     constructor(block: (Int) -> Ushort) : this(block(0), block(1))
+    constructor(ptr: Ptr<Ushort>) : this() {
+        val p = ptr.toPtr<Short>()
+        x.v = p[0]
+        y.v = p[1]
+    }
 
 
     fun set(bytes: ByteArray, index: Int = 0, oneByteOneShort: Boolean = false, bigEndian: Boolean = true) {
@@ -186,9 +192,10 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
         return buf
     }
 
-    infix fun to(ptr: Ptr) {
-        memPutShort(ptr, x.v)
-        memPutShort(ptr + Short.BYTES, y.v)
+    infix fun to(ptr: Ptr<Ushort>) {
+        val p = ptr.toPtr<Short>()
+        p[0] = x.v
+        p[1] = y.v
     }
 
     // -- Component accesses --
@@ -729,7 +736,7 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
         val size = length * Ushort.BYTES
 
         @JvmStatic
-        fun fromPointer(ptr: Ptr) = Vec2us(memGetShort(ptr), memGetShort(ptr + Short.BYTES))
+        fun fromPointer(ptr: Ptr<Ushort>) = Vec2us(ptr)
     }
 
     override fun size() = size
