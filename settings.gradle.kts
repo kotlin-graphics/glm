@@ -10,5 +10,5 @@ pluginManagement {
 
 gradle.rootProject {
     group = "kotlin.graphics"
-    version = "0.9.9.1-8"
+    version = "0.9.9.1-9"
 }
