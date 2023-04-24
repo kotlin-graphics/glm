@@ -1,4 +1,5 @@
-import glm_.gen.GenerateCode
+import glm_.generators.gen.GenerateCode
+import kotlinx.benchmark.gradle.KotlinJvmBenchmarkTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
 
 ////import kx.*
@@ -24,7 +25,20 @@ kotlin {
     //        (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(8))
     //    }
     jvm {
-        compilations.all { kotlinOptions.jvmTarget = "1.8" }
+        compilations {
+            all { kotlinOptions.jvmTarget = "1.8" }
+
+            val main by getting
+            val bench by creating { associateWith(main) }
+
+            benchmark.targets.add(
+                    KotlinJvmBenchmarkTarget(
+                            benchmark,
+                            bench.defaultSourceSet.name,
+                            bench,
+                    )
+            )
+        }
         withJava()
         testRuns["test"].executionTask.configure { useJUnit() }
     }
@@ -48,7 +62,6 @@ kotlin {
 //            kotlin {
 //                sourceSets["commonMain"].kotlin.srcDir(tasks.getByName("generateCode").outputs.files)
 //            }
-            kotlin.srcDir("build/generated")
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.4.3")
             }
@@ -61,16 +74,11 @@ kotlin {
         }
         val jvmMain by getting
         val jvmTest by getting
-        val jvmBench by creating { dependsOn(commonMain) }
+        val jvmBench by getting
         //        val jsMain by getting
         //        val jsTest by getting
         val nativeMain by getting
         val nativeTest by getting
-    }
-    targets {
-        jvm {
-            compilations.create("bench")
-        }
     }
 }
 
@@ -90,11 +98,6 @@ benchmark {
             //            iterations = 10 // number of iterations
             //            iterationTime = 3 // time in seconds per iteration
         }
-    }
-    targets {
-        register("jvmBench")
-        //        register("js")
-        //        register("native")
     }
 }
 
@@ -120,9 +123,10 @@ dependencies {
 tasks {
     val generateCode by registering(GenerateCode::class)
     kotlin.sourceSets.commonMain { kotlin.srcDir(generateCode) }
-    withType<KotlinCompile<*>>().all {
+    withType<KotlinCompile<*>>().configureEach {
         kotlinOptions {
             freeCompilerArgs += "-opt-in=kotlin.ExperimentalUnsignedTypes"
+            freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
         }
     }
 }
