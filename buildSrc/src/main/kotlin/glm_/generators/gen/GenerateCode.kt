@@ -45,8 +45,8 @@ abstract class GenerateCode : DefaultTask() {
     }
 }
 
-fun generate(targetDir: File, file: String, block: Generator.() -> Unit) {
-    Generator(targetDir).apply {
+fun generate(targetDir: File, file: String, `package`: String = "", ordinal: Int = -1, width: Int = -1, height: Int = -1, block: Generator.() -> Unit) {
+    Generator(targetDir, ordinal, width, height).apply {
         block()
         for(import in imports) builder.insert(0, "import $import\n")
         if (`package`.isNotEmpty()) builder.insert(0, "package $`package`\n")

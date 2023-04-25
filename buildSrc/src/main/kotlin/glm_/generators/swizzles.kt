@@ -6,22 +6,20 @@ import java.io.File
 
 fun swizzles(target: File) {
 
-    generate(target, "glm_/extensions/swizzle/Vecs.kt") {
+    generate(target, "glm_/extensions/swizzle/Vecs.kt", `package` = "glm_.extensions.swizzle") {
         vecImpls()
     }
 
     for (i in 2..4)
-        generate(target, "glm_/extensions/swizzle/vec$i/Vec$i.kt") {
-            +"package glm_.extensions.swizzle.vec$i"
-            +"import glm_.extensions.swizzle.*"
-            for (j in 2..i) +"import glm_.vec$j.*"
+        generate(target, "glm_/extensions/swizzle/vec$i/Vec$i.kt", `package` = "glm_.extensions.swizzle.vec$i") {
+            imports += "glm_.extensions.swizzle.*"
+            for (j in 2..i) imports += "glm_.vec$j.*"
             swizzle(i)
         }
 }
 
 private fun Generator.vecImpls() {
-    +"package glm_.extensions.swizzle"
-    for (j in 2..4) +"import glm_.vec$j.*"
+    for (j in 2..4) imports += "glm_.vec$j.*"
 
 
     for (ordinal in 2..4)

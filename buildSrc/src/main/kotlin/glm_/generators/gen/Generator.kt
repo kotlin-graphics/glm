@@ -1,29 +1,29 @@
 package glm_.generators.gen
 
+import glm_.generators.Type
 import glm_.generators.abcdN
-import glm_.generators.xyzwJoint
+import glm_.generators.`1`
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
 
-class Generator(val targetDir: File) {
+class Generator(val targetDir: File, val ordinal: Int, val width: Int, val height: Int) {
 
     val builder = StringBuilder()
     var indentation = ""
 
-    var `package` = ""
     var imports = HashSet<String>()
     val experimentals = ArrayList<Experimentals>()
 
-    fun String.indented(block: () -> Unit) {
+    inline fun String.indented(block: () -> Unit) {
         +this
         indent {
             block()
         }
     }
 
-    fun String.indentAndClose(block: () -> Unit) {
+    inline fun String.indentAndClose(block: () -> Unit) {
         indented(block)
         when(last()) {
             '(' -> builder.insert(builder.lastIndex, ')')
@@ -31,7 +31,7 @@ class Generator(val targetDir: File) {
         }
     }
 
-    fun indent(block: () -> Unit) {
+    inline fun indent(block: () -> Unit) {
         indentation += "\t"
         block()
         indentation = indentation.dropLast(1)
@@ -74,7 +74,7 @@ class Generator(val targetDir: File) {
         //        builder.appendLine(trimIndent().prependIndent(indentation))
     }
 
-    operator fun String.invoke(block: () -> Unit) {
+    inline operator fun String.invoke(block: () -> Unit) {
         +"$this {"
         indent(block)
         +"}"
@@ -151,24 +151,19 @@ class Generator(val targetDir: File) {
     // dont change order (+ and - first, then * and /). Quat operator generation relies on this
     val operators = listOf("+" to "plus", "-" to "minus", "*" to "times", "/" to "div")
 
-    val matrixSize: String
-        get() {
-            val width = Generator.Companion.width
-            val height = Generator.Companion.height
-            return if (width == height) "$width" else "${width}x$height"
-        }
+    val matrixSize: String = matrixSize(width, height)
 
-    fun xyzw(ordinal: Int = Generator.Companion.ordinal, block: (String) -> Unit) {
+    fun xyzw(ordinal: Int = this.ordinal, block: (String) -> Unit) {
         for (i in 0 until ordinal)
             block(glm_.generators.xyzw[i])
     }
-    fun xyzwJointIndexed(ordinal: Int = Generator.Companion.ordinal, separator: String = ", ", block: (Int, String) -> String) =
+    fun xyzwJointIndexed(ordinal: Int = this.ordinal, separator: String = ", ", block: (Int, String) -> String) =
         (0 until ordinal).joinToString(separator) {
             block(it, glm_.generators.xyzw[it])
         }
 
-    fun abcdJoint(width: Int = Generator.Companion.width,
-                  height: Int = Generator.Companion.height,
+    fun abcdJoint(width: Int = this.width,
+                  height: Int = this.height,
                   rowSeparator: String = ", ", columnSeparator: String = ", ",
                   block: (String) -> String = { it }) =
         (0 until width).joinToString(rowSeparator) { i ->
@@ -177,8 +172,8 @@ class Generator(val targetDir: File) {
             }
         }
 
-    fun AbcdJoint(width: Int = Generator.Companion.width,
-                  height: Int = Generator.Companion.height,
+    fun AbcdJoint(width: Int = this.width,
+                  height: Int = this.height,
                   rowSeparator: String = ", ", columnSeparator: String = ", ",
                   block: (String) -> String = { it }) =
         (0 until width).joinToString(rowSeparator) { i ->
@@ -187,19 +182,15 @@ class Generator(val targetDir: File) {
             }
         }
     fun abcdJoint(rowSeparator: String = ", ", columnSeparator: String = ", ",
-                  block: (String) -> String = { it }) = abcdJoint(Generator.Companion.width,
-                                                                  Generator.Companion.height, rowSeparator, columnSeparator, block)
+                  block: (String) -> String = { it }) = abcdJoint(width,
+                                                                  height, rowSeparator, columnSeparator, block)
 
     fun AbcdJoint(rowSeparator: String = ", ", columnSeparator: String = ", ",
-                  block: (String) -> String = { it }) = AbcdJoint(Generator.Companion.width,
-                                                                  Generator.Companion.height, rowSeparator, columnSeparator, block)
+                  block: (String) -> String = { it }) = AbcdJoint(width,
+                                                                  height, rowSeparator, columnSeparator, block)
 
-    fun invertMatrix(ordinal: Int, type: String) {
-        val one = when (type) {
-            "Float" -> "1f"
-            "Double" -> "1.0"
-            else -> "1"
-        }
+    fun invertMatrix(ordinal: Int, type: Type) {
+        val one = type.`1`
         if (ordinal == 4) {
             +"""
             val coef00 = m.c2 * m.d3 - m.d2 * m.c3
@@ -282,12 +273,6 @@ class Generator(val targetDir: File) {
                 i23 *= oneOverDeterminant
                 i33 *= oneOverDeterminant"""
         }
-    }
-
-    companion object {
-        var ordinal = -1
-        var width = -1
-        var height = -1
     }
 }
 

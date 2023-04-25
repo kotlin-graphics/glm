@@ -3,10 +3,11 @@ package glm_.generators.ext
 import glm_.generators.*
 import glm_.generators.gen.Generator
 
-fun Generator.extMatrixRelational(width: Int, height: Int, type: String, extension: String, id: String, part: Generator.Part) {
+fun Generator.extMatrixRelational(width: Int, height: Int, type: Type, part: Generator.Part) {
 
     +"// ext matrix relational\n"
 
+    val id = type.id
     val MatID = "Mat$matrixSize$id"
 
     //    imports += listOf("glm_.scalar.sin",

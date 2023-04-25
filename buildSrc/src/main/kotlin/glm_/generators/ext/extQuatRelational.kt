@@ -1,11 +1,12 @@
 package glm_.generators.ext
 
+import glm_.generators.Type
 import glm_.generators.WxyzJoint
 import glm_.generators.gen.Generator
 import glm_.generators.wxyzJoint
 import glm_.generators.xyzwJoint
 
-fun Generator.extQuatRelational(type: String, extension: String, conversion: String, id: String, part: Generator.Part) {
+fun Generator.extQuatRelational(type: Type, part: Generator.Part) {
 
     +"// ext quat relational\n"
 
@@ -15,6 +16,7 @@ fun Generator.extQuatRelational(type: String, extension: String, conversion: Str
         "glm_.ext.notEqual",
                      )
 
+    val id = type.id
     val `wxyz Bool` = wxyzJoint { "$it: Boolean" }
     val xyzw = xyzwJoint(4)
     val wxyz = wxyzJoint()

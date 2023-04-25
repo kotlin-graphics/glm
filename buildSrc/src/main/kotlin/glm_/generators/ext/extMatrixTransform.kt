@@ -4,10 +4,11 @@ import glm_.generators.*
 import glm_.generators.gen.Generator
 import glm_.generators.`0`
 
-fun Generator.extMatrixTransform(width: Int, height: Int, type: String, extension: String, id: String, part: Generator.Part) {
+fun Generator.extMatrixTransform(width: Int, height: Int, type: Type, part: Generator.Part) {
 
     +"// ext matrix transform\n"
 
+    val id = type.id
     val matID = "Mat$matrixSize$id"
 
     imports += listOf("glm_.scalar.sin",
@@ -34,7 +35,7 @@ fun Generator.extMatrixTransform(width: Int, height: Int, type: String, extensio
     if (type !in floatingPointTypes)
         return
 
-    val abcdN = abcdJoint { "$it" }
+    val abcdN = abcdJoint()
     val `resXYZW type` = XyzwJoint(4) { "res$it: $type" }
     val resXYZW = XyzwJoint(4) { "res$it" }
     val `abc4 type` = abcdJoint(3, 4, ",\n") { "$it: $type" }
@@ -42,12 +43,12 @@ fun Generator.extMatrixTransform(width: Int, height: Int, type: String, extensio
     val `m,abcd` = abcdJoint(4, 4, ",\n") { "m.$it" }
     val `v,xyz` = xyzwJoint(3) { "v.$it" }
     val `axis,xyz` = xyzwJoint(3) { "axis.$it" }
-    val `axisXYZ` = XyzwJoint(3) { "axis$it" }
+    val axisXYZ = XyzwJoint(3) { "axis$it" }
     val `axisXYZ type` = XyzwJoint(3) { "axis$it: $type" }
     val `vXYZ type` = XyzwJoint(3) { "v$it: $type" }
     val vXYZ = XyzwJoint(3) { "v$it" }
     val `xyz type` = xyzwJoint(3) { "$it: $type" }
-    val xyz = xyzwJoint(3) { "$it" }
+    val xyz = xyzwJoint(3)
     val scalarJoint = xyzwJoint(3) { "scalar" }
     val `eyeXYZ type` = XyzwJoint(3) { "eye$it: $type" }
     val eyeXYZ = XyzwJoint(3) { "eye$it" }

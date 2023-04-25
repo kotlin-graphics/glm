@@ -12,9 +12,7 @@ import kotlin.math.pow
 
 fun vectors(target: File) {
     for (i in 1..4)
-        generate(target, "glm_/vec$i/Vec${i}T.kt") {
-            Generator.ordinal = i
-            `package` = "glm_.vec$i"
+        generate(target, "glm_/vec$i/Vec${i}T.kt", `package` = "glm_.vec$i", ordinal = i) {
             if (i > 1)
                 imports += listOf("glm_.extensions.swizzle.*",
                                   "glm_.extensions.*",
@@ -22,13 +20,11 @@ fun vectors(target: File) {
             vectorsT(i)
         }
 
-    for ((type, extension, _, id) in vectorTypes)
+    for (type in vectorTypes)
         for (i in 1..4)
-            generate(target, "glm_/vec$i/Vec$i$id.kt") {
-                Generator.ordinal = i
-                `package` = "glm_.vec$i"
+            generate(target, "glm_/vec$i/Vec$i${type.id}.kt", `package` = "glm_.vec$i", ordinal = i) {
                 experimentals += Experimentals.Contracts
-                if (type[0] == 'U')
+                if (type in unsignedTypes)
                     experimentals += Experimentals.UnsignedTypes
                 imports += listOf("glm_.*",
                                   "glm_.ext.equal",
@@ -40,10 +36,8 @@ fun vectors(target: File) {
                 repeat(4) { imports += "glm_.vec${it + 1}.*" }
                 abcdIndexed(3, 3) { c, r, _ -> imports += "glm_.mat${matrixSize(c + 2, r + 2)}.*" }
 
-                vectors(i, type, extension, id)
+                vectors(i, type)
             }
-
-    Generator.Companion.ordinal = -1
 }
 
 private fun Generator.vectorsT(ordinal: Int) {
@@ -95,11 +89,11 @@ private fun Generator.vectorsT(ordinal: Int) {
             +"@Suppress(\"UNCHECKED_CAST\")"
             if (unsigned != "out Number") +"@JvmName(\"dot$unsigned\")"
             "infix fun <N> Vec${ordinal}T<N>.dot(v: Vec${ordinal}T<$unsigned>): N = when (this)" {
-                for ((_, _, _, id) in numberTypeInformation) {
+                for ((_, _, _, id) in numberTypes) {
                     +"is Vec$ordinal$id -> this.dot(v) as N"
                 }
                 "is Vec${ordinal}Impl -> when (x)" {
-                    for ((type, extension) in numberTypeInformation) {
+                    for ((type, extension) in numberTypes) {
                         +"is $type -> (${xyzwJoint(separator = " + ") { "($it as $type) * v.$it.$extension" }}).$extension as N"
                     }
                     +"else -> throw IllegalArgumentException(\"Can't compute dot product of non-number vectors!\")"
@@ -110,9 +104,11 @@ private fun Generator.vectorsT(ordinal: Int) {
     }
 }
 
-private fun Generator.vectors(ordinal: Int, type: String, extension: String, id: String) {
+private fun Generator.vectors(ordinal: Int, type: Type) {
 
     val vec = "Vec$ordinal"
+    val extension = type.extension
+    val id = type.id
     val VecID = vec + id
     "open class $VecID(var array: ${type}Array, var ofs: Int = 0) : ${vec}T<$type>()" {
         xyzwIndexed { i, c ->
@@ -129,19 +125,19 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
         +"constructor(v: $VecID) : this(${xyzwJoint { "v.$it" }})"
 
         +"// Explicit basic constructors"
-        val arrayOf = "${type.toLowerCase()}ArrayOf"
+        val arrayOf = "${type.name.toLowerCase()}ArrayOf"
         val xxxx = "x" * ordinal
         +"constructor(x: $type) : this(${if (ordinal == 1) "$arrayOf($xxxx)" else xxxx})"
-        for (t in listOf("Number", "UByte", "UShort", "UInt", "ULong"))
-            if (type !in t)
-                +"constructor(x: $t) : this(x.$extension)"
+        +"constructor(x: Number) : this(x.$extension)"
+        for (t in listOf(Type.UByte, Type.UShort, Type.UInt, Type.ULong) - type.signedToUnsigned)
+            +"constructor(x: $t) : this(x.$extension)"
 
-        val unsExt = if (type == "Boolean") "i" else "u" + type.first().toLowerCase()
-        val signedInt = type !in floatingPointTypes && type[0] != 'U'
+        val unsExt = if (type == Type.Boolean) "i" else type.signedToUnsigned.extension
+        val signedInt = type !in floatingPointTypes && type !in unsignedTypes
 
         if (ordinal > 1) {
             +"constructor(${xyzwJoint { "$it: $type" }}) : this($arrayOf(${xyzwJoint()}))"
-            if (type == "UByte" || type == "UShort") {
+            if (type == Type.UByte || type == Type.UShort) {
                 +"constructor(${xyzwJoint { "$it: UInt" }}) : this(${xyzwJoint { "$it.$extension" }})"
                 +"constructor(${xyzwJoint { "$it: ULong" }}) : this(${xyzwJoint { "$it.$extension" }})"
             }
@@ -161,7 +157,7 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
                     val argsUns = args.map {
                         when {
                             "Vec" in it -> it.replace("T<out Number>", unsExt)
-                            else -> it.replace("Number", if (type == "Boolean") "Int" else "U$type")
+                            else -> it.replace("Number", (if (type == Type.Boolean) Type.Int else type.signedToUnsigned).toString())
                         }
                     }
                     +"constructor(${argsUns.joinToString()}) : this(${argsUns.joinToString { "${value(it)}$postfix" }})"
@@ -185,10 +181,10 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
 
         infix fun String.args(b: String) {
             +"constructor($this) : this($b)"
-            if (type !in floatingPointTypes && type[0] != 'U') {
-                val this2 = replace("T<out Number>", unsExt).replace("Number", if (type == "Boolean") "Int" else "U$type")
+            if (type !in floatingPointTypes && type !in unsignedTypes) {
+                val this2 = replace("T<out Number>", unsExt).replace("Number", (if (type == Type.Boolean) Type.Int else type.signedToUnsigned).toString())
                 val b2 = when (type) {
-                    "Boolean" -> b
+                    Type.Boolean -> b
                     else -> b.replace(",", ".to$type(),") + ".to$type()"
                 }
                 +"constructor($this2) : this($b2)"
@@ -249,7 +245,7 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
         if (type in numberTypes) {
             +"// Unary arithmetic operators"
             for ((operatorChar, operatorName) in operators) {
-                if ("Byte" in type || "Short" in type) {
+                if (type in intPromotedTypes) {
                     for (scalar in listOf(N, type)) {
                         +"operator fun ${operatorName}Assign(scalar: $scalar) = ${operatorName}Assign(scalar.${if (type in unsignedTypes) "u" else ""}i)"
                     }
@@ -257,33 +253,33 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
                     +"operator fun ${operatorName}Assign(scalar: $N) = ${operatorName}Assign(scalar.$extension)"
                     "operator fun ${operatorName}Assign(scalar: $type)" {
                         xyzw {
-                            when {
-                                "Byte" in type || "Short" in type -> +"$it = ($it $operatorChar scalar).$extension"
+                            when (type) {
+                                in intPromotedTypes -> +"$it = ($it $operatorChar scalar).$extension"
                                 else -> +"$it $operatorChar= scalar"
                             }
                         }
                     }
                 }
-                if ("Byte" in type || "Short" in type) {
-                    "operator fun ${operatorName}Assign(scalar: ${if (type[0] == 'U') "UInt" else "Int"})" {
+                if (type in intPromotedTypes) {
+                    "operator fun ${operatorName}Assign(scalar: ${if (type in unsignedTypes) "UInt" else "Int"})" {
                         xyzw { +"$it = ($it $operatorChar scalar).$extension" }
                     }
                     if (type in unsignedTypes)
                         +"operator fun ${operatorName}Assign(scalar: ULong) = ${operatorName}Assign(scalar.$extension)"
                 } else if (type in unsignedTypes)
-                    if (type == "UInt")
+                    if (type == Type.UInt)
                         +"operator fun ${operatorName}Assign(scalar: ULong) = ${operatorName}Assign(scalar.ui)"
                     else +"operator fun ${operatorName}Assign(scalar: UInt) = ${operatorName}Assign(scalar.ul)"
                 "operator fun ${operatorName}Assign(v: $V1)" {
                     xyzw {
-                        if ("Byte" in type || "Short" in type)
+                        if (type in intPromotedTypes)
                             +"$it = ($it $operatorChar v.x.$extension).$extension"
                         else +"$it $operatorChar= v.x.$extension"
                     }
                 }
                 "operator fun ${operatorName}Assign(v: Vec1$id)" {
                     xyzw {
-                        if ("Byte" in type || "Short" in type)
+                        if (type in intPromotedTypes)
                             +"$it = ($it $operatorChar v.x).$extension"
                         else +"$it $operatorChar= v.x"
                     }
@@ -291,14 +287,14 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
                 if (ordinal > 1) {
                     "operator fun ${operatorName}Assign(v: Vec${ordinal}T<out Number>)" {
                         xyzw {
-                            if ("Byte" in type || "Short" in type)
+                            if (type in intPromotedTypes)
                                 +"$it = ($it $operatorChar v.$it.$extension).$extension"
                             else +"$it $operatorChar= v.$it.$extension"
                         }
                     }
                     "operator fun ${operatorName}Assign(v: $VecID)" {
                         xyzw {
-                            if ("Byte" in type || "Short" in type)
+                            if (type in intPromotedTypes)
                                 +"$it = ($it $operatorChar v.$it).$extension"
                             else +"$it $operatorChar= v.$it"
                         }
@@ -321,8 +317,8 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
             xyzw { +"this.$it = $it" }
             +"return this"
         }
-        if (type in listOf("Byte", "Short", "UByte", "UShort")) {
-            val t = if (type[0] == 'U') "UInt" else "Int"
+        if (type in intPromotedTypes) {
+            val t = if (type in unsignedTypes) "UInt" else "Int"
             "operator fun invoke(${xyzwJoint { "$it: $t" }}): $VecID" {
                 xyzw { +"this.$it = $it.$extension" }
                 +"return this"
@@ -332,8 +328,8 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
         "fun put(${xyzwJoint { "$it: $type" }})" {
             xyzw { +"this.$it = $it" }
         }
-        if (type in listOf("Byte", "Short", "UByte", "UShort")) {
-            val t = if (type[0] == 'U') "UInt" else "Int"
+        if (type in intPromotedTypes) {
+            val t = if (type in unsignedTypes) "UInt" else "Int"
             "fun put(${xyzwJoint { "$it: $t" }})" {
                 xyzw { +"this.$it = $it.$extension" }
             }
@@ -346,19 +342,19 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
             if (type !in unsignedTypes)
                 +"operator fun unaryMinus(): $VecID = $VecID(${xyzwJoint { "-$it" }})"
 
-            binary(ordinal, type, extension, id, vec, Generator.Part.Class)
+            binary(ordinal, type, vec, Generator.Part.Class)
         }
 
-        common(ordinal, type, extension, id, vec, Generator.Part.Class)
-        exponential(ordinal, type, extension, id, vec, Generator.Part.Class)
-        geometric(ordinal, type, extension, id, vec, Generator.Part.Class)
-        integer(ordinal, type, extension, id, vec, Generator.Part.Class)
-        matrix(ordinal, 0, type, extension, id, Generator.Part.Class)
-        packing(ordinal, type, extension, id, vec, Generator.Part.Class)
-        trigonometric(ordinal, type, extension, id, vec, Generator.Part.Class)
-        vectorRelational(ordinal, type, extension, id, vec, Generator.Part.Class)
+        common(ordinal, type, id, vec, Generator.Part.Class)
+        exponential(ordinal, type, id, vec, Generator.Part.Class)
+        geometric(ordinal, type, id, vec, Generator.Part.Class)
+        integer(ordinal, type, id, vec, Generator.Part.Class)
+        matrix(ordinal, 0, type, Generator.Part.Class)
+        packing(ordinal, type, id, vec, Generator.Part.Class)
+        trigonometric(ordinal, type, id, vec, Generator.Part.Class)
+        vectorRelational(ordinal, type, vec, Generator.Part.Class)
         // ext
-        extVectorRelational(ordinal, type, extension, id, vec, Generator.Part.Class)
+        extVectorRelational(ordinal, type, vec, Generator.Part.Class)
 
         +"""
             override fun equals(other: Any?) = other is $VecID && ${xyzwJoint(separator = " && ") { "$it == other.$it" }}
@@ -376,7 +372,7 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
                 return false
             }"""
 
-        if (type == "Boolean") {
+        if (type == Type.Boolean) {
             +"// Boolean operators"
             val v = "$vec$extension"
             +"infix fun and(v: $v) = $v(${xyzwJoint { "$it && v.$it" }})"
@@ -388,21 +384,21 @@ private fun Generator.vectors(ordinal: Int, type: String, extension: String, id:
             if (type in numberTypes) {
                 +"const val size: Int = length * $type.SIZE_BYTES"
 
-                binary(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
-                common(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
-                exponential(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
-                geometric(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
-                integer(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
-                matrix(ordinal, 0, type, extension, id, Generator.Part.CompanionObject)
-                packing(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
-                trigonometric(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
+                binary(ordinal, type, vec, Generator.Part.CompanionObject)
+                common(ordinal, type, id, vec, Generator.Part.CompanionObject)
+                exponential(ordinal, type, id, vec, Generator.Part.CompanionObject)
+                geometric(ordinal, type, id, vec, Generator.Part.CompanionObject)
+                integer(ordinal, type, id, vec, Generator.Part.CompanionObject)
+                matrix(ordinal, 0, type, Generator.Part.CompanionObject)
+                packing(ordinal, type, id, vec, Generator.Part.CompanionObject)
+                trigonometric(ordinal, type, id, vec, Generator.Part.CompanionObject)
             }
-            vectorRelational(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
+            vectorRelational(ordinal, type, vec, Generator.Part.CompanionObject)
 
             // ext
-            extVectorRelational(ordinal, type, extension, id, vec, Generator.Part.CompanionObject)
+            extVectorRelational(ordinal, type, vec, Generator.Part.CompanionObject)
         }
     }
 
-    binary(ordinal, type, extension, id, vec, Generator.Part.Scalar)
+    binary(ordinal, type, vec, Generator.Part.Scalar)
 }

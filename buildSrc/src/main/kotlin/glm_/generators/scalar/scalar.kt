@@ -10,10 +10,9 @@ import java.io.File
 
 fun scalar(target: File) {
 
-    generate(target, "glm_/scalar/funcCommon.kt") {
+    generate(target, "glm_/scalar/funcCommon.kt", `package` = "glm_.scalar") {
 
         experimentals += Generator.Experimentals.Contracts
-        `package` = "glm_.scalar"
         //            +"import glm_.extensions.swizzle.*"
         imports += listOf(
             "glm_.extensions.*",
@@ -24,14 +23,13 @@ fun scalar(target: File) {
                          )
 
         +"// common\n"
-        for ((type, extension, _, _) in vectorTypes)
-            common(-1, type, extension, "", "", Generator.Part.Scalar)
+        for (type in vectorTypes)
+            common(-1, type, "", "", Generator.Part.Scalar)
     }
 
-    generate(target, "glm_/scalar/funcExponential.kt") {
+    generate(target, "glm_/scalar/funcExponential.kt", `package` = "glm_.scalar") {
 
         experimentals += Generator.Experimentals.Contracts
-        `package` = "glm_.scalar"
         //            +"import glm_.extensions.swizzle.*"
         imports += listOf("glm_.extensions.*",
             //                          "kotlin.reflect.KMutableProperty0",
@@ -40,14 +38,13 @@ fun scalar(target: File) {
                           "kotlin.math.pow")
 
         +"// exponential\n"
-        for ((type, extension, _, _) in vectorTypes)
-            exponential(-1, type, extension, "", "", Generator.Part.Scalar)
+        for (type in vectorTypes)
+            exponential(-1, type, "", "", Generator.Part.Scalar)
     }
 
-    generate(target, "glm_/scalar/funcGeometric.kt") {
+    generate(target, "glm_/scalar/funcGeometric.kt", `package` = "glm_.scalar") {
 
         experimentals += Generator.Experimentals.Contracts
-        `package` = "glm_.scalar"
         //            +"import glm_.extensions.swizzle.*"
         imports += listOf(
             "glm_.extensions.*",
@@ -58,14 +55,13 @@ fun scalar(target: File) {
                          )
 
         +"// geometric\n"
-        for ((type, extension, _, _) in vectorTypes)
-            geometric(-1, type, extension, "", "", Generator.Part.Scalar)
+        for (type in vectorTypes)
+            geometric(-1, type, "", "", Generator.Part.Scalar)
     }
 
-    generate(target, "glm_/scalar/trigonometric.kt") {
+    generate(target, "glm_/scalar/trigonometric.kt", `package` = "glm_.scalar") {
 
         //        experimentals += Generator.Experimentals.Contracts
-        `package` = "glm_.scalar"
         //            +"import glm_.extensions.swizzle.*"
         //        imports += listOf("kotlin.math.pow")
         //            "glm_.extensions.*",
@@ -74,14 +70,13 @@ fun scalar(target: File) {
         //                          "kotlin.math.*")
 
         +"// trigonometric\n"
-        for ((type, extension, _, _) in vectorTypes)
-            trigonometric(-1, type, extension, "", "", Generator.Part.Scalar)
+        for (type in vectorTypes)
+            trigonometric(-1, type, "", "", Generator.Part.Scalar)
     }
 
-    generate(target, "glm_/scalar/integer.kt") {
+    generate(target, "glm_/scalar/integer.kt", `package` = "glm_.scalar") {
 
         experimentals += Generator.Experimentals.Contracts
-        `package` = "glm_.scalar"
         //            +"import glm_.extensions.swizzle.*"
         imports += listOf(
             //                    "kotlin.math.pow"
@@ -92,14 +87,13 @@ fun scalar(target: File) {
                          )
 
         +"// integer\n"
-        for ((type, extension, _, _) in vectorTypes)
-            integer(-1, type, extension, "", "", Generator.Part.Scalar)
+        for (type in vectorTypes)
+            integer(-1, type, "", "", Generator.Part.Scalar)
     }
 
-    generate(target, "glm_/scalar/packing.kt") {
+    generate(target, "glm_/scalar/packing.kt", `package` = "glm_.scalar") {
 
         experimentals += Generator.Experimentals.Contracts
-        `package` = "glm_.scalar"
         //            +"import glm_.extensions.swizzle.*"
         imports += listOf(
             //                    "kotlin.math.pow"
@@ -110,13 +104,12 @@ fun scalar(target: File) {
                          )
 
         +"// packing\n"
-        for ((type, extension, _, _) in vectorTypes)
-            packing(0, type, extension, "", "", Generator.Part.Scalar)
+        for (type in vectorTypes)
+            packing(0, type, "", "", Generator.Part.Scalar)
     }
-    generate(target, "glm_/ext/scalarRelational.kt") {
+    generate(target, "glm_/ext/scalarRelational.kt", `package` = "glm_.ext") {
 
         experimentals += Generator.Experimentals.Contracts
-        `package` = "glm_.ext"
         //            +"import glm_.extensions.swizzle.*"
         imports += listOf(
             "glm_.ext.negative",
@@ -127,13 +120,12 @@ fun scalar(target: File) {
                          )
 
         +"// ext scalar relational\n"
-        for ((type, _, _, _) in vectorTypes)
+        for (type in vectorTypes)
             extScalarRelational(type)
     }
-    generate(target, "glm_/ext/extScalarCommon.kt") {
+    generate(target, "glm_/ext/extScalarCommon.kt", `package` = "glm_.ext") {
 
         experimentals += Generator.Experimentals.Contracts
-        `package` = "glm_.ext"
         //            +"import glm_.extensions.swizzle.*"
         imports += listOf(
 //            "glm_.ext.negative",
@@ -144,7 +136,7 @@ fun scalar(target: File) {
                          )
 
         +"// ext scalar common\n"
-        for ((type, _, _, _) in vectorTypes)
+        for (type in vectorTypes)
             extScalarCommon(type)
     }
 }

@@ -3,10 +3,11 @@ package glm_.generators.detail
 import glm_.generators.*
 import glm_.generators.gen.Generator
 
-fun Generator.geometric(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
+fun Generator.geometric(ordinal: Int, type: Type, id: String, vec: String, part: Generator.Part) {
 
     if (part != Generator.Part.Scalar) +"// func geometric\n"
 
+    val extension = type.extension
     val `exp,xyzw` = xyzwJoint { "exp.$it" }
     val `expXYZW type` = xyzwJoint { "exp$it: $type" }
     val `expXYZW Int` = xyzwJoint { "exp$it: Int" }
@@ -17,7 +18,7 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
     val `aXYZW type` = XyzwJoint { "a$it: $type" }
     val `a,xyzw` = xyzwJoint { "a.$it" }
     //    val `a,xyzw type` = xyzwJoint { "a.$it: $type" }
-    val `bXYZW` = XyzwJoint { "b$it" }
+    val bXYZW = XyzwJoint { "b$it" }
     val `bXYZW type` = XyzwJoint { "b$it: $type" }
     val `b,xyzw` = xyzwJoint { "b.$it" }
     val `n,xyzw` = xyzwJoint { "n.$it" }
@@ -46,8 +47,8 @@ fun Generator.geometric(ordinal: Int, type: String, extension: String, id: Strin
     val `maxVal,xyzw` = xyzwJoint { "maxVal.$it" }
     val `minValXYZW type` = XyzwJoint { "minVal$it: $type" }
     val `maxValXYZW type` = XyzwJoint { "maxVal$it: $type" }
-    val otherFloatType = if (type == "Float") "Double" else "Float"
-    val otherFloatVecID = if (type == "Float") "${vec}d" else vec
+    val otherFloatType = type.otherFloatType
+    val otherFloatVecID = vec + otherFloatType.id
     val edgeJoint = XyzwJoint { "edge" }
     val edge0Joint = XyzwJoint { "edge0" }
     val edge1Joint = XyzwJoint { "edge1" }

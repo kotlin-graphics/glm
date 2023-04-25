@@ -1,16 +1,17 @@
 package glm_.generators.ext
 
+import glm_.generators.Type
 import glm_.generators.XyzwJoint
 import glm_.generators.floatingPointTypes
 import glm_.generators.gen.Generator
 import glm_.generators.xyzwJoint
 
-fun Generator.extVectorRelational(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
+fun Generator.extVectorRelational(ordinal: Int, type: Type, vec: String, part: Generator.Part) {
 
     +"// ext vector relational\n"
 
-    val VecID = vec + id
-    val VecBool = "Vec${ordinal}bool"
+    val VecID = vec + type.id
+    val VecBool = "Vec${ordinal}${Type.Boolean.id}"
 
     imports += listOf("glm_.scalar.abs")
     //                          "glm_.scalar.cos",

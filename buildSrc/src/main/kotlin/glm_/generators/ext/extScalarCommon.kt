@@ -1,13 +1,9 @@
 package glm_.generators.ext
 
-import glm_.generators.floatingPointTypes
+import glm_.generators.*
 import glm_.generators.gen.Generator
-import glm_.generators.`0,5`
-import glm_.generators.`0`
-import glm_.generators.`1`
-import glm_.generators.`2`
 
-fun Generator.extScalarCommon(type: String) {
+fun Generator.extScalarCommon(type: Type) {
 
     +"// ext scalar common\n"
 

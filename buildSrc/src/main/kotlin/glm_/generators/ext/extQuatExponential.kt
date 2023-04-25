@@ -3,7 +3,7 @@ package glm_.generators.ext
 import glm_.generators.*
 import glm_.generators.gen.Generator
 
-fun Generator.extQuatExponential(type: String, extension: String, conversion: String, id: String, part: Generator.Part) {
+fun Generator.extQuatExponential(type: Type, part: Generator.Part) {
 
     +"// ext quaternion exponential\n"
 
@@ -18,6 +18,8 @@ fun Generator.extQuatExponential(type: String, extension: String, conversion: St
         "glm_.glm",
                      )
 
+    val extension = type.extension
+    val id = type.id
     val `wxyz type` = wxyzJoint { "$it: $type" }
     val xyz = xyzwJoint(3)
     val xyzw = xyzwJoint(4)

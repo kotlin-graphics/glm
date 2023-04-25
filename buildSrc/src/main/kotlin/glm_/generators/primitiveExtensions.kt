@@ -6,24 +6,24 @@ import java.io.File
 
 
 fun primitiveExtensions(targetDir: File) {
-    generate(targetDir, "glm_/extensions/primitiveExtensions.kt") {
+    generate(targetDir, "glm_/extensions/primitiveExtensions.kt", `package` = "glm_.extensions") {
         numbers()
     }
 }
 
 fun Generator.numbers() {
+    imports += "kotlin.math.*"
 
-    +"package glm_.extensions"
-    +"import kotlin.math.*"
-
-    for ((_, extension, function) in numberTypeInformation + TypeInformation("Char", "c", "toChar")) {
-        if (extension == "c") {
+    for (type in numberTypes + Type.Char) {
+        val function = type.conversionFunction
+        val extension = type.extension
+        if (type == Type.Char) {
             +"val Number.$extension get() = toInt().$function()"
 
             for (utype in unsignedTypes)
                 +"val $utype.$extension get() = toInt().$function()"
         } else {
-            +"val Number.$extension get() = ${if ("U" in function) "${function.unsignedToSigned}().$function()" else "$function()"}"
+            +"val Number.$extension get() = ${if (type in unsignedTypes) "${type.unsignedToSigned.conversionFunction}().$function()" else "$function()"}"
 
             for (utype in unsignedTypes)
                 +"val $utype.$extension get() = $function()"
@@ -31,18 +31,16 @@ fun Generator.numbers() {
 
         +"val Boolean.$extension get() = if (this) 1.$extension else 0.$extension"
 
-        if (extension == "i") {
+        if (type == Type.Int) {
             +"val Char.$extension get() = code"
         } else {
             +"val Char.$extension get() = code.$function()"
         }
 
-        extensionsToInformation[extension]?.let { information ->
-            if (information.type in floatingPointTypes)
-                +"val String.$extension get() = $function()"
-            else
-                +"val String.$extension get() = if (startsWith(\"0x\")) substring(2).$function(16) else $function()"
-        }
+        if (type in floatingPointTypes)
+            +"val String.$extension get() = $function()"
+        else if (type in numberTypes)
+            +"val String.$extension get() = if (startsWith(\"0x\")) substring(2).$function(16) else $function()"
     }
 
 
@@ -52,29 +50,31 @@ fun Generator.numbers() {
         +"val $utype.bool get() = i != 0"
 
 
-    val binaryTypes = numberTypeInformation - floatingPointTypes
-    val skip = listOf("Int" to "Int")
-    val skipWithInt = listOf("Long", "UInt", "ULong")
+    val binaryTypes = numberTypes - floatingPointTypes
+    val skip = listOf(Type.Int to Type.Int)
+    val skipWithInt = listOf(Type.Long, Type.UInt, Type.ULong)
     val operations = listOf("shl" to true, "shr" to true, "ushr" to true, "and" to false, "or" to false, "xor" to false)
 
-    for ((typeLeft, keyLeft) in binaryTypes)
-        for ((typeRight, _) in binaryTypes - listOf("Long", "ULong")) {
+    for (typeLeft in binaryTypes) {
+        val leftExtension = typeLeft.extension
+        for (typeRight in binaryTypes - listOf(Type.Long, Type.ULong)) {
             if ((typeLeft to typeRight) in skip) continue
-            if (typeRight == "Int" && typeLeft in skipWithInt) continue
+            if (typeRight == Type.Int && typeLeft in skipWithInt) continue
 
             for ((op, shift) in operations) {
                 if (!shift && typeLeft in unsignedTypes && typeLeft == typeRight) continue
 
-                if (typeLeft == "Long" || typeLeft == "ULong")
-                    +"infix fun $typeLeft.$op(other: $typeRight) = (L $op other.${if (shift) "i" else "L"}).$keyLeft"
+                if (typeLeft == Type.Long || typeLeft == Type.ULong)
+                    +"infix fun $typeLeft.$op(other: $typeRight) = (L $op other.${if (shift) "i" else "L"}).$leftExtension"
                 else
-                    +"infix fun $typeLeft.$op(other: $typeRight) = (i $op other.i).$keyLeft"
+                    +"infix fun $typeLeft.$op(other: $typeRight) = (i $op other.i).$leftExtension"
             }
         }
+    }
 
-    val matchingTypes = listOf("Number", "Char", "Boolean", "String") + unsignedTypes
+    val matchingTypes = listOf("Number", "Char", "Boolean", "String") + unsignedTypes.map { it.name }
 
-    for ((type, extension, function) in numberTypeInformation) {
+    for ((type, extension, function) in numberTypes) {
         "internal val Any.$function: $type".indented {
             "get() = when (this)" {
                 for (isType in matchingTypes)
@@ -86,7 +86,7 @@ fun Generator.numbers() {
     }
 
 
-    for ((type) in numberTypeInformation)
+    for (type in numberTypes)
         "val $type.Companion.BYTES: Int".indented {
             +"get() = SIZE_BYTES"
         }

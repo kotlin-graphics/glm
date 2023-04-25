@@ -1,9 +1,10 @@
 package glm_.generators.ext
 
+import glm_.generators.Type
 import glm_.generators.floatingPointTypes
 import glm_.generators.gen.Generator
 
-fun Generator.extScalarRelational(type: String) {
+fun Generator.extScalarRelational(type: Type) {
 
     +"// ext scalar relational\n"
 

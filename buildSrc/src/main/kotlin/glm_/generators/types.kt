@@ -2,118 +2,136 @@ package glm_.generators
 
 import glm_.generators.gen.Generator
 
-val numberTypeInformation = listOf(
-    TypeInformation("Byte", "b", "toByte"),
-    TypeInformation("Short", "s", "toShort"),
-    TypeInformation("Int", "i", "toInt"),
-    TypeInformation("Long", "L", "toLong"),
-    TypeInformation("UByte", "ub", "toUByte"),
-    TypeInformation("UShort", "us", "toUShort"),
-    TypeInformation("UInt", "ui", "toUInt"),
-    TypeInformation("ULong", "ul", "toULong"),
-    TypeInformation("Float", "f", "toFloat"),
-    TypeInformation("Double", "d", "toDouble"))
-val extensionsToInformation = numberTypeInformation.associateBy {
-    it.extension
-}
-val typeToInformation = numberTypeInformation.associateBy {
-    it.type
-}
-val intPromotedTypes = listOf("Byte", "Short", "UByte", "UShort")
-val numberTypes = numberTypeInformation.map {
-    it.type
-}
-val unsignedTypes = listOf("UByte", "UShort", "UInt", "ULong")
-val floatingPointTypes = listOf("Float", "Double")
+val numberTypes =
+    setOf(
+        Type.Byte,
+        Type.Short,
+        Type.Int,
+        Type.Long,
+        Type.UByte,
+        Type.UShort,
+        Type.UInt,
+        Type.ULong,
+        Type.Float,
+        Type.Double)
+val intPromotedTypes = setOf(Type.Byte, Type.Short, Type.UByte, Type.UShort)
+val unsignedTypes = setOf(Type.UByte, Type.UShort, Type.UInt, Type.ULong)
+val floatingPointTypes = setOf(Type.Float, Type.Double)
+val integerTypes = setOf(Type.Int, Type.UInt, Type.Long, Type.ULong)
 
-val vectorTypes = numberTypeInformation + TypeInformation("Boolean", "bool", "")
-val matrixTypes = numberTypeInformation.filter { it.type in listOf("Float", "Double", "Int"/*, "UInt"*/) }
+val vectorTypes = numberTypes + Type.Boolean
+val matrixTypes = setOf(Type.Float, Type.Double, Type.Int /*, DataType.UInt*/)
 
-val String.unsignedToSigned get() = replace("U", "")
+val Type.unsignedToSigned
+    get() =
+        when (this) {
+            Type.UByte -> Type.Byte
+            Type.UShort -> Type.Short
+            Type.UInt -> Type.Int
+            Type.ULong -> Type.Long
+            else -> this
+        }
 
-val String.`-1`
+val Type.signedToUnsigned
     get() = when (this) {
-        "Int" -> "-1"
-        "Float" -> "-1f"
-        "Double" -> "-1.0"
-        else -> error("invalid type")
-    }
-val String.`0`
-    get() = when (this) {
-        "Int" -> "0"
-        "Float" -> "0f"
-        "Double" -> "0.0"
-        else -> error("invalid type")
-    }
-val String.`0,5`
-    get() = when (this) {
-        "Float" -> "0.5f"
-        "Double" -> "0.5"
-        else -> error("invalid type")
-    }
-val String.`1`
-    get() = when (this) {
-        "Int" -> "1"
-        "Float" -> "1f"
-        "Double" -> "1.0"
-        else -> error("invalid type")
-    }
-val String.`2`
-    get() = when (this) {
-        "Int" -> "2"
-        "Float" -> "2f"
-        "Double" -> "2.0"
-        else -> error("invalid type")
-    }
-val String.`3`
-    get() = when (this) {
-        "Int" -> "3"
-        "Float" -> "3f"
-        "Double" -> "3.0"
-        else -> error("invalid type")
-    }
-val String.promotedExtensionOrThis
-    get() = when (this) {
-        "Byte" -> "i"
-        "Short" -> "i"
-        "UByte" -> "ui"
-        "UShort" -> "ui"
-        else -> "this"
-    }
-val String.promotedExtensionOrEmpty
-    get() = when (this) {
-        "Byte" -> ".i"
-        "Short" -> ".i"
-        "UByte" -> ".ui"
-        "UShort" -> ".ui"
-        else -> ""
-    }
-val String.maybePromotedBack
-    get() = when (this) {
-        "Byte" -> ".b"
-        "Short" -> ".s"
-        "UByte" -> ".ub"
-        "UShort" -> ".us"
-        else -> ""
-    }
-val String.counterpart
-    get() = when (this) {
-        "Float" -> "Int"
-        "Double" -> "Long"
-        "Int" -> "Float"
-        "Long" -> "Double"
-        else -> ""
+        Type.Byte -> Type.UByte
+        Type.Short -> Type.UShort
+        Type.Int -> Type.UInt
+        Type.Long -> Type.ULong
+        else -> this
     }
 
-data class TypeInformation(val type: String, val extension: String, val conversionFunction: String) {
+val Type.`-1`
+    get() = (-1).toType
+val Type.`0`
+    get() = 0.toType
+val Type.`0,5`
+    get() =
+        when (this) {
+            Type.Float -> "0.5f"
+            Type.Double -> "0.5"
+            else -> error("invalid type")
+        }
+val Type.`1`
+    get() = 1.toType
+val Type.`2`
+    get() = 2.toType
+val Type.`3`
+    get() = 3.toType
+val Type.promoted: Type
+    get() =
+        when (this) {
+            Type.Byte -> Type.Int
+            Type.Short -> Type.Int
+            Type.UByte -> Type.UInt
+            Type.UShort -> Type.UInt
+            else -> this
+        }
+val Type.shouldBePromoted: Boolean
+    get() =
+        when (this) {
+            Type.Byte, Type.Short, Type.UByte, Type.UShort -> true
+            else -> false
+        }
+val Type.promotedExtensionOrThis
+    get() = if (shouldBePromoted) promoted.extension else "this"
+val Type.promotedExtensionOrEmpty
+    get() = if (shouldBePromoted) ".${promoted.extension}" else ""
+val Type.unpromotedExtensionOrEmpty
+    get() = if (shouldBePromoted) ".${extension}" else ""
+val Type.integerExtensionOrThis
+    get() = if (this == Type.UInt || this == Type.ULong) unsignedToSigned.extension else "this"
+val Type.counterpart
+    get() =
+        when (this) {
+            Type.Float -> Type.Int
+            Type.Double -> Type.Long
+            Type.Int -> Type.Float
+            Type.Long -> Type.Double
+            else -> this
+        }
+val Type.otherFloatType
+    get() =
+        when (this) {
+            Type.Float -> Type.Double
+            else -> Type.Float
+        }
+
+enum class Type(val extension: String, private val overrideConversionFunction: String? = null) {
+    Byte("b"),
+    Short("s"),
+    Int("i"),
+    Long("L"),
+    UByte("ub"),
+    UShort("us"),
+    UInt("ui"),
+    ULong("ul"),
+    Float("f"),
+    Double("d"),
+    Boolean("bool", ""),
+    Char("c");
+
+    val conversionFunction
+        get() = overrideConversionFunction ?: "to$this"
+
+    val kotlin.Int.toType
+        get() =
+            when (this@Type) {
+                Int -> "$this"
+                Float -> "${this}f"
+                Double -> "${this}.0"
+                else -> error("invalid type")
+            }
+
+    operator fun component1() = name
+    operator fun component2() = extension
+    operator fun component3() = conversionFunction
+
     val id: String
-        get() = if (type == "Float") "" else extension
+        get() = if (this == Float) "" else extension
 
     operator fun component4() = id
 }
-
-operator fun Iterable<TypeInformation>.minus(types: Iterable<String>) = types.toSet().let { typeSet -> this.filter { it.type !in typeSet } }
-
 
 val xyzw = listOf("x", "y", "z", "w")
 val XYZW = listOf("X", "Y", "Z", "W")
@@ -121,23 +139,23 @@ val wxyz = listOf("w", "x", "y", "z")
 val rgba = listOf("r", "g", "b", "a")
 val stpq = listOf("s", "t", "p", "q")
 
-fun Generator.xyzwIndexed(ordinal: Int = Generator.Companion.ordinal, block: (Int, String) -> Unit) {
+fun Generator.xyzwIndexed(ordinal: Int = this.ordinal, block: (Int, String) -> Unit) {
     for (i in 0 until ordinal)
         block(i, xyzw[i])
 }
 
-fun Generator.XyzwIndexed(ordinal: Int = Generator.Companion.ordinal, block: (Int, String) -> Unit) {
+fun Generator.XyzwIndexed(ordinal: Int = this.ordinal, block: (Int, String) -> Unit) {
     for (i in 0 until ordinal)
         block(i, xyzw[i].toUpperCase())
 }
 
-fun Generator.XyzwJointIndexed(ordinal: Int = Generator.Companion.ordinal, separator: String = ", ", block: (Int, String) -> String) {
+fun Generator.XyzwJointIndexed(ordinal: Int = this.ordinal, separator: String = ", ", block: (Int, String) -> String) {
     (0 until ordinal).joinToString(separator) {
         block(it, xyzw[it].toUpperCase())
     }
 }
 
-fun Generator.Xyzw(ordinal: Int = Generator.Companion.ordinal, block: (String) -> Unit) {
+fun Generator.Xyzw(ordinal: Int = this.ordinal, block: (String) -> Unit) {
     for (i in 0 until ordinal)
         block(xyzw[i].toUpperCase())
 }
@@ -152,10 +170,10 @@ fun wxyz(block: (String) -> Unit) {
         block(i)
 }
 
-fun Generator.xyzwJoint(ordinal: Int = Generator.Companion.ordinal, separator: String = ", ", block: (String) -> String = { it }) =
+fun Generator.xyzwJoint(ordinal: Int = this.ordinal, separator: String = ", ", block: (String) -> String = { it }) =
     (0 until ordinal).joinToString(separator) { block(xyzw[it]) }
 
-fun Generator.XyzwJoint(ordinal: Int = Generator.Companion.ordinal, separator: String = ", ", block: (String) -> String = { it }) =
+fun Generator.XyzwJoint(ordinal: Int = this.ordinal, separator: String = ", ", block: (String) -> String = { it }) =
     (0 until ordinal).joinToString(separator) { block(xyzw[it].toUpperCase()) }
 
 fun wxyzJointIndexed(separator: String = ", ", block: (Int, String) -> String) = wxyz.indices.joinToString(separator) { block(it, wxyz[it]) }
@@ -171,22 +189,22 @@ fun abcdN(c: Int, r: Int) = "${abcd[c]}$r"
 fun vNN(c: Int, r: Int) = "v" + nn(c, r)
 fun nn(c: Int, r: Int) = "$c$r"
 
-fun Generator.abcdIndexed(width: Int = Generator.Companion.width,
-                          height: Int = Generator.Companion.height, block: (Int, Int, String) -> Unit) {
+fun Generator.abcdIndexed(width: Int = this.width,
+                          height: Int = this.height, block: (Int, Int, String) -> Unit) {
     for (i in 0 until width)
         for (j in 0 until height)
             block(i, j, abcdN(i, j))
 }
 
-fun Generator.abcd(width: Int = Generator.Companion.width,
-                   height: Int = Generator.Companion.height, block: (String) -> Unit) {
+fun Generator.abcd(width: Int = this.width,
+                   height: Int = this.height, block: (String) -> Unit) {
     for (i in 0 until width)
         for (j in 0 until height)
             block("${abcd[i]}$j")
 }
 
-fun Generator.abcdJointIndexed(width: Int = Generator.Companion.width,
-                               height: Int = Generator.Companion.height,
+fun Generator.abcdJointIndexed(width: Int = this.width,
+                               height: Int = this.height,
                                rowSeparator: String = ", ", columnSeparator: String = ", ",
                                block: (Int, Int, String) -> String) =
     (0 until width).joinToString(rowSeparator) { i ->
@@ -195,8 +213,8 @@ fun Generator.abcdJointIndexed(width: Int = Generator.Companion.width,
         }
     }
 
-fun Generator.AbcdJointIndexed(width: Int = Generator.Companion.width,
-                               height: Int = Generator.Companion.height,
+fun Generator.AbcdJointIndexed(width: Int = this.width,
+                               height: Int = this.height,
                                rowSeparator: String = ", ", columnSeparator: String = ", ",
                                block: (Int, Int, String) -> String) =
     (0 until width).joinToString(rowSeparator) { i ->
@@ -206,12 +224,12 @@ fun Generator.AbcdJointIndexed(width: Int = Generator.Companion.width,
     }
 
 fun Generator.abcdJointIndexed(rowSeparator: String = ", ", columnSeparator: String = ", ",
-                               block: (Int, Int, String) -> String): String = abcdJointIndexed(Generator.Companion.width,
-                                                                                               Generator.Companion.height,
+                               block: (Int, Int, String) -> String): String = abcdJointIndexed(width,
+                                                                                               height,
                                                                                                rowSeparator, columnSeparator, block)
 
 fun Generator.AbcdJointIndexed(rowSeparator: String = ", ", columnSeparator: String = ", ",
-                               block: (Int, Int, String) -> String): String = AbcdJointIndexed(Generator.Companion.width,
-                                                                                               Generator.Companion.height,
+                               block: (Int, Int, String) -> String): String = AbcdJointIndexed(width,
+                                                                                               height,
                                                                                                rowSeparator, columnSeparator, block)
 

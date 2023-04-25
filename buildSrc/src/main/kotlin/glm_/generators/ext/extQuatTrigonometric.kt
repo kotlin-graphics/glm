@@ -5,7 +5,7 @@ import glm_.generators.gen.Generator
 import glm_.generators.gen.generate
 import java.io.File
 
-fun Generator.extQuatTrigonometric(type: String, extension: String, conversion: String, id: String, part: Generator.Part) {
+fun Generator.extQuatTrigonometric(type: Type, part: Generator.Part) {
 
     +"// quaternion trigonometric"
 
@@ -19,6 +19,8 @@ fun Generator.extQuatTrigonometric(type: String, extension: String, conversion: 
         "glm_.glm",
                      )
 
+    val extension = type.extension
+    val id = type.id
     val `wxyz type` = wxyzJoint { "$it: $type" }
     val xyz = xyzwJoint(3)
     val xyzw = xyzwJoint(4)
@@ -105,20 +107,20 @@ fun Generator.extQuatTrigonometric(type: String, extension: String, conversion: 
 }
 
 fun extQuatTrigonometric(target: File) {
-    generate(target, "glm_/ext/extQuatTrigonometric.kt") {
+    generate(target, "glm_/ext/extQuatTrigonometric.kt", `package` = "glm_.ext") {
 
         experimentals += Generator.Experimentals.Contracts
-        `package` = "glm_.ext"
 
         //            +"import glm_.extensions.swizzle.*"
-        for ((type, extension, _, id) in numberTypeInformation.filter { it.type in floatingPointTypes })
-            quatTrigonometric(type, extension, id)
+        for (type in floatingPointTypes)
+            quatTrigonometric(type)
     }
 }
 
 
-fun Generator.quatTrigonometric(type: String, extension: String, id: String) {
+fun Generator.quatTrigonometric(type: Type) {
 
+    val id = type.id
     val `v,xyz` = xyzwJoint(3) { "v.$it" }
     val vXyz = XyzwJoint(3) { "v$it" }
     val `v,xyzw` = xyzwJoint(4) { "v.$it" }

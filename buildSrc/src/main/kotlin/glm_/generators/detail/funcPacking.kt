@@ -1,8 +1,9 @@
 package glm_.generators.detail
 
+import glm_.generators.Type
 import glm_.generators.gen.Generator
 
-fun Generator.packing(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
+fun Generator.packing(ordinal: Int, type: Type, id: String, vec: String, part: Generator.Part) {
 
     fun packing(doc: String, func: String) = docs("""
         ${if (doc.startsWith('|')) doc else "|$doc"}
@@ -144,7 +145,7 @@ fun Generator.packing(ordinal: Int, type: String, extension: String, id: String,
         }
     }
 
-    val isUInt = ordinal == 0 && type == "UInt" && part == Generator.Part.Scalar
+    val isUInt = ordinal == 0 && type == Type.UInt && part == Generator.Part.Scalar
     if (isUInt) {
         imports += listOf("glm_.vec2.Vec2", "glm_.vec4.Vec4", "kotlin.UInt", "glm_.extensions.*")
         packing("""
@@ -255,7 +256,7 @@ fun Generator.packing(ordinal: Int, type: String, extension: String, id: String,
             else -> Unit
         }
     }
-    if(ordinal == 0 && type == "Double" && part == Generator.Part.Scalar) {
+    if(ordinal == 0 && type == Type.Double && part == Generator.Part.Scalar) {
         imports += "glm_.vec2.Vec2ui"
         packing("""
             |Returns a two-component unsigned integer vector representation of `this`.

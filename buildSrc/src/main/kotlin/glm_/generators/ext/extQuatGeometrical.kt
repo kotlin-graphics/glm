@@ -1,14 +1,9 @@
 package glm_.generators.ext
 
-import glm_.generators.WxyzJoint
-import glm_.generators.XyzwJoint
+import glm_.generators.*
 import glm_.generators.gen.Generator
-import glm_.generators.wxyzJoint
-import glm_.generators.xyzwJoint
-import glm_.generators.`0`
-import glm_.generators.`1`
 
-fun Generator.extQuatGeometrical(type: String, extension: String, conversion: String, id: String, part: Generator.Part) {
+fun Generator.extQuatGeometrical(type: Type, part: Generator.Part) {
 
     +"// ext quat geometrical\n"
 
@@ -16,6 +11,7 @@ fun Generator.extQuatGeometrical(type: String, extension: String, conversion: St
         "glm_.scalar.sqrt"
                      )
 
+    val id = type.id
     val `wxyz type` = wxyzJoint { "$it: $type" }
     val xyz = xyzwJoint(3)
     val xyzw = xyzwJoint(4)

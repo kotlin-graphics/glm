@@ -7,9 +7,8 @@ import glm_.generators.gen.Generator
 import glm_.generators.gen.generate
 
 fun quaternions(target: File) {
-    generate(target, "glm_/quat/QuatT.kt") {
+    generate(target, "glm_/quat/QuatT.kt", `package` = "glm_.quat") {
 
-        `package` = "glm_.quat"
         "abstract class QuatT<T>" {
 
             +"// -- Data --"
@@ -36,19 +35,19 @@ fun quaternions(target: File) {
             }
         }
     }
-    for ((type, extension, conversion, id) in numberTypeInformation.filter { it.type == "Float" || it.type == "Double" })
-        generate(target, "glm_/quat/Quat$id.kt") {
-            `package` = "glm_.quat"
-            imports += listOf("glm_.vec3.Vec3$id",
+    for (type in floatingPointTypes)
+        generate(target, "glm_/quat/Quat${type.id}.kt", `package` = "glm_.quat") {
+            imports += listOf("glm_.vec3.Vec3${type.id}",
                               "kotlin.math.sqrt",
                               "kotlin.math.abs")
             experimentals += Generator.Experimentals.Contracts
-            quatId(type, extension, conversion, id)
+            quatId(type)
         }
 }
 
-fun Generator.quatId(type: String, extension: String, conversion: String, id: String) {
+fun Generator.quatId(type: Type) {
 
+    val (_, extension, conversion, id) = type
     val `wxyz type` = wxyzJoint { "$it: $type" }
     imports += listOf(
         "glm_.extensions.$extension",
@@ -66,7 +65,7 @@ fun Generator.quatId(type: String, extension: String, conversion: String, id: St
                 +"array[ofs$delta] = value"
             }
         }
-        val postfix = if (type == "Float") "f" else ".0"
+        val postfix = if (type == Type.Float) "f" else ".0"
         val otherID = if (id.isEmpty()) "d" else ""
         +"""
             // -- Implicit basic constructors --
@@ -76,7 +75,7 @@ fun Generator.quatId(type: String, extension: String, conversion: String, id: St
             // -- Explicit basic constructors --
             constructor(s: $type, v: Vec3$id): this(s, v.x, v.y, v.z)
             constructor(s: Number, v: Vec3T<out Number>): this(s.$extension, v.x.$extension, v.y.$extension, v.z.$extension)
-            constructor(w: $type, x: $type, y: $type, z: $type): this(${type.toLowerCase()}ArrayOf(w, x, y, z))
+            constructor(w: $type, x: $type, y: $type, z: $type): this(${type.name.toLowerCase()}ArrayOf(w, x, y, z))
             constructor(w: Number, x: Number, y: Number, z: Number): this(w.$extension, x.$extension, y.$extension, z.$extension)
             // -- Conversion constructors --
             constructor(q: QuatT<out Number>): this(q.w.$conversion(), q.x.$conversion(), q.y.$conversion(), q.z.$conversion())
@@ -149,27 +148,27 @@ fun Generator.quatId(type: String, extension: String, conversion: String, id: St
         +"""operator fun unaryPlus(): Quat$id = this"""
         +"""operator fun unaryMinus(): Quat$id = Quat$id(-w, -x, -y, -z)"""
 
-        quatOperators(type, extension, conversion, id, Generator.Part.Class)
+        quatOperators(type, Generator.Part.Class)
 
-        extQuatCommon(type, extension, conversion, id, Generator.Part.Class)
-        extQuatGeometrical(type, extension, conversion, id, Generator.Part.Class)
-        extQuatExponential(type, extension, conversion, id, Generator.Part.Class)
-        extQuatRelational(type, extension, conversion, id, Generator.Part.Class)
-        extQuatTransform(type, extension, conversion, id, Generator.Part.Class)
-        extQuatTrigonometric(type, extension, conversion, id, Generator.Part.Class)
+        extQuatCommon(type, Generator.Part.Class)
+        extQuatGeometrical(type, Generator.Part.Class)
+        extQuatExponential(type, Generator.Part.Class)
+        extQuatRelational(type, Generator.Part.Class)
+        extQuatTransform(type, Generator.Part.Class)
+        extQuatTrigonometric(type, Generator.Part.Class)
 
         "companion object" {
             +"const val length = QuatT.length"
             +"const val size: Int = length * $type.SIZE_BYTES"
 
-            quatOperators(type, extension, conversion, id, Generator.Part.CompanionObject)
+            quatOperators(type, Generator.Part.CompanionObject)
 
-            extQuatCommon(type, extension, conversion, id, Generator.Part.CompanionObject)
-            extQuatGeometrical(type, extension, conversion, id, Generator.Part.CompanionObject)
-            extQuatExponential(type, extension, conversion, id, Generator.Part.CompanionObject)
-            extQuatRelational(type, extension, conversion, id, Generator.Part.CompanionObject)
-            extQuatTransform(type, extension, conversion, id, Generator.Part.CompanionObject)
-            extQuatTrigonometric(type, extension, conversion, id, Generator.Part.CompanionObject)
+            extQuatCommon(type, Generator.Part.CompanionObject)
+            extQuatGeometrical(type, Generator.Part.CompanionObject)
+            extQuatExponential(type, Generator.Part.CompanionObject)
+            extQuatRelational(type, Generator.Part.CompanionObject)
+            extQuatTransform(type, Generator.Part.CompanionObject)
+            extQuatTrigonometric(type, Generator.Part.CompanionObject)
         }
     }
 

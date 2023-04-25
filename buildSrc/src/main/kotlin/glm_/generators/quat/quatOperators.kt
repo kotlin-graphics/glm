@@ -1,17 +1,14 @@
 package glm_.generators.quat
 
-import glm_.generators.WxyzJoint
-import glm_.generators.XyzwJoint
+import glm_.generators.*
 import glm_.generators.gen.Generator
-import glm_.generators.wxyzJoint
-import glm_.generators.xyzwJoint
-import glm_.generators.`2`
 
 
-fun Generator.quatOperators(type: String, extension: String, conversion: String, id: String, part: Generator.Part) {
+fun Generator.quatOperators(type: Type, part: Generator.Part) {
 
     +"// -- Unary arithmetic operators --\n"
 
+    val id = type.id
     val `wxyz type` = wxyzJoint { "$it: $type" }
     val xyz = xyzwJoint(3)
     val xyzw = xyzwJoint(4)

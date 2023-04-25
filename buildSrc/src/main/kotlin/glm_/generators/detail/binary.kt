@@ -5,13 +5,10 @@ import glm_.generators.gen.Generator.Part
 import glm_.generators.gen.matrixSize
 import glm_.generators.*
 
-fun Generator.binary(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Part) {
+fun Generator.binary(ordinal: Int, type: Type, vec: String, part: Part) {
 
-    val promotedType = when (type) {
-        "Byte", "Short" -> "Int"
-        "UByte", "UShort" -> "UInt"
-        else -> type
-    }
+    val promotedType = type.promoted
+    val id = type.id
     val VecID = vec + id
 
     val xyzw = xyzwJoint()
@@ -69,7 +66,7 @@ fun Generator.binary(ordinal: Int, type: String, extension: String, id: String, 
                         Companion.$operation($xyzw, $xyzw, res)
                     }"""
 
-                if (ordinal > 1 && type in matrixTypes.map { it.type }) {
+                if (ordinal > 1 && type in matrixTypes) {
                     if (operator == "*")
                         for (i in 2..4) {
                             +"infix operator fun times(m: Mat${matrixSize(i, ordinal)}$id): Vec$i$id = times(m, Vec$i$id())"
@@ -124,14 +121,14 @@ fun Generator.binary(ordinal: Int, type: String, extension: String, id: String, 
                     "inline fun <R> $operation($`xyzw type`, $`bXYZW type`, res: ($resArgs) -> R): R" {
                         +contract
                         val (prefix, postfix) = when {
-                            `resXYZW type` != `resXYZW promotedType` && !promoted -> "(" to ").$extension"
+                            `resXYZW type` != `resXYZW promotedType` && !promoted -> "(" to ").${type.extension}"
                             else -> "" to ""
                         }
                         +"return res(${xyzwJoint { "$prefix$it $operator b${it.toUpperCase()}$postfix" }})"
                     }
 
                     val nl = '\n'
-                    if (ordinal > 1 && type in matrixTypes.map { it.type }) {
+                    if (ordinal > 1 && type in matrixTypes) {
                         if (operator == "*")
                             for (i in 2..4) {
                                 val MatID = "Mat${matrixSize(i, ordinal)}$id"
@@ -184,7 +181,8 @@ fun Generator.binary(ordinal: Int, type: String, extension: String, id: String, 
     }
 }
 
-fun Generator.binary(width: Int, height: Int, type: String, extension: String, id: String, vec: String, part: Part) {
+fun Generator.binary(width: Int, height: Int, type: Type, vec: String, part: Part) {
+    val id = type.id
 
     var size = if (width == height) "$width" else "${width}x$height"
     val MatID = "Mat$size$id"
@@ -287,7 +285,7 @@ fun Generator.binary(width: Int, height: Int, type: String, extension: String, i
                     +"""
                         inline fun <R> $operation($`mAbcdN type`, v: Vec$width$id, res: ($`xyzw type`) -> R): R {
                             $contract
-                            return $operation($`mAbcdN`,$nl$`v,xyzw`, res)
+                            return $operation($mAbcdN,$nl$`v,xyzw`, res)
                         }"""
                     "inline fun <R> $operation($`mAbcdN type`,$nl$`vXyzw type`, res: ($`xyzw type`) -> R): R" {
                         +contract
@@ -347,7 +345,7 @@ fun Generator.binary(width: Int, height: Int, type: String, extension: String, i
                         +"""
                             inline fun <R> times($`mAbcdN type`, n: $nMatID, res: ($`abcdN type`) -> R): R {
                                 $contract
-                                return times($`mAbcdN`,$nl$`n,abcdN`, res)
+                                return times($mAbcdN,$nl$`n,abcdN`, res)
                             }"""
                         +"""
                             inline fun <R> times(m: $MatID,$nl$`nAbcdN type`, res: ($`abcdN type`) -> R): R {

@@ -3,7 +3,7 @@ package glm_.generators.detail
 import glm_.generators.*
 import glm_.generators.gen.Generator
 
-fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
+fun Generator.trigonometric(ordinal: Int, type: Type, id: String, vec: String, part: Generator.Part) {
 
     if (part != Generator.Part.Scalar) +"\n// trigonometric\n"
 
@@ -17,7 +17,7 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
     val `aXYZW type` = XyzwJoint { "a$it: $type" }
     val `a,xyzw` = xyzwJoint { "a.$it" }
     //    val `a,xyzw type` = xyzwJoint { "a.$it: $type" }
-    val `bXYZW` = XyzwJoint { "b$it" }
+    val bXYZW = XyzwJoint { "b$it" }
     val `bXYZW type` = XyzwJoint { "b$it: $type" }
     val `b,xyzw` = xyzwJoint { "b.$it" }
     val `n,xyzw` = xyzwJoint { "n.$it" }
@@ -46,8 +46,8 @@ fun Generator.trigonometric(ordinal: Int, type: String, extension: String, id: S
     val `maxVal,xyzw` = xyzwJoint { "maxVal.$it" }
     val `minValXYZW type` = XyzwJoint { "minVal$it: $type" }
     val `maxValXYZW type` = XyzwJoint { "maxVal$it: $type" }
-    val otherFloatType = if (type == "Float") "Double" else "Float"
-    val otherFloatVecID = if (type == "Float") "${vec}d" else vec
+    val otherFloatType = type.otherFloatType
+    val otherFloatVecID = vec + otherFloatType.id
     val edgeJoint = XyzwJoint { "edge" }
     val edge0Joint = XyzwJoint { "edge0" }
     val edge1Joint = XyzwJoint { "edge1" }

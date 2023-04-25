@@ -3,7 +3,7 @@ package glm_.generators.ext
 import glm_.generators.*
 import glm_.generators.gen.Generator
 
-fun Generator.extQuatCommon(type: String, extension: String, conversion: String, id: String, part: Generator.Part) {
+fun Generator.extQuatCommon(type: Type, part: Generator.Part) {
 
     +"// ext quaternion common\n"
 
@@ -16,6 +16,7 @@ fun Generator.extQuatCommon(type: String, extension: String, conversion: String,
         "glm_.glm",
                      )
 
+    val id = type.id
     val `wxyz type` = wxyzJoint { "$it: $type" }
     val xyz = xyzwJoint(3)
     val xyzw = xyzwJoint(4)
@@ -270,7 +271,7 @@ fun Generator.extQuatCommon(type: String, extension: String, conversion: String,
                         else -> {
                             // Graphics Gems III, page 96
                             val angle = (cosTheta).acos
-                            val phi = angle + k * glm.pi.$extension
+                            val phi = angle + k * glm.pi.${type.extension}
                             val s = (angle - a * phi).sin
                             val t = (a * phi).sin
                             val u = angle.sin

@@ -4,10 +4,11 @@ import glm_.generators.*
 import glm_.generators.gen.Generator
 
 // this is called both from mats and vecs. With vecs, `width` is `ordinal` and `height` is 0
-fun Generator.matrix(width: Int, height: Int, type: String, extension: String, id: String, part: Generator.Part) {
+fun Generator.matrix(width: Int, height: Int, type: Type, part: Generator.Part) {
 
     if (part != Generator.Part.Scalar) +"// func matrix\n"
 
+    val id = type.id
     val matID = "Mat$matrixSize$id"
     val xyzw = xyzwJoint()
     val `mCR type` = abcdJointIndexed(",\n") { c, r, _ -> "m${nn(c, r)}: $type" }
@@ -20,7 +21,7 @@ fun Generator.matrix(width: Int, height: Int, type: String, extension: String, i
     val `abcdN type` = abcdJoint(rowSeparator = ",\n") { "$it: $type" }
 
     // int is included, which is part of ext_matrix_integer
-    if (type !in matrixTypes.map { it.type })
+    if (type !in matrixTypes)
         return
 
     fun matrix(doc: String, func: String) = docs("""
@@ -52,7 +53,7 @@ fun Generator.matrix(width: Int, height: Int, type: String, extension: String, i
 
                 matrixCompMult(y = "n[${AbcdJoint()}")
                 +"""
-                    fun compMult($`nAbcdN type`, res: $matID = $matID()): $matID = compMult($abcdN,$nl$`nAbcdN`) { $`abcdN type` ->
+                    fun compMult($`nAbcdN type`, res: $matID = $matID()): $matID = compMult($abcdN,$nl$nAbcdN) { $`abcdN type` ->
                         res($abcdN)
                     }"""
 
@@ -225,7 +226,7 @@ fun Generator.matrix(width: Int, height: Int, type: String, extension: String, i
                 else -> Unit
             }
 
-            if (type == "Int")
+            if (type == Type.Int)
                 return
 
             fun inverse() = matrix("Return the inverse of a squared matrix.", "inverse")

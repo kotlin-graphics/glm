@@ -3,7 +3,7 @@ package glm_.generators.detail
 import glm_.generators.*
 import glm_.generators.gen.Generator
 
-fun Generator.integer(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
+fun Generator.integer(ordinal: Int, type: Type, id: String, vec: String, part: Generator.Part) {
 
     if (part != Generator.Part.Scalar) +"// func integer\n"
 
@@ -38,8 +38,8 @@ fun Generator.integer(ordinal: Int, type: String, extension: String, id: String,
     val `maxVal,xyzw` = xyzwJoint { "maxVal.$it" }
     val `minValXYZW type` = XyzwJoint { "minVal$it: $type" }
     val `maxValXYZW type` = XyzwJoint { "maxVal$it: $type" }
-    val otherFloatType = if (type == "Float") "Double" else "Float"
-    val otherFloatVecID = if (type == "Float") "${vec}d" else vec
+    val otherFloatType = type.otherFloatType
+    val otherFloatVecID = vec + otherFloatType.id
     val edgeJoint = XyzwJoint { "edge" }
     val edge0Joint = XyzwJoint { "edge0" }
     val edge1Joint = XyzwJoint { "edge1" }
@@ -63,7 +63,7 @@ fun Generator.integer(ordinal: Int, type: String, extension: String, id: String,
         |
         |@see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/$func.xml">GLSL $func man page</a>
         |@see <a href="http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf">GLSL 4.20.8 specification, section 8.8 Integer Functions</a>""")
-    if (type == "UInt") {
+    if (type == Type.UInt) {
         fun uaddCarry(x: String = "this", y: String = "b") = integer("""
             |Adds 32-bit unsigned integer `$x` and `$y`, returning the `sum modulo pow(2, 32)`. 
             |The value carry is set to `0` if the sum was less than `pow(2, 32)`, or to `1` otherwise.""", "uaddCarry")
@@ -246,7 +246,7 @@ fun Generator.integer(ordinal: Int, type: String, extension: String, id: String,
             }
         }
     }
-    if (type == "Int") {
+    if (type == Type.Int) {
         fun imulExtended(x: String = "this", y: String = "b") = integer("""
                  |Multiplies 32-bit integers `$x` and `$y`, producing a 64-bit result. 
                  |The 32 least-significant bits are returned in lsb.
@@ -298,7 +298,7 @@ fun Generator.integer(ordinal: Int, type: String, extension: String, id: String,
             }
         }
     }
-    if ("Int" !in type && "Long" !in type)
+    if (type !in integerTypes)
         return
 
     fun bitfieldExtract() = integer("""
@@ -397,15 +397,16 @@ fun Generator.integer(ordinal: Int, type: String, extension: String, id: String,
         }
         Generator.Part.Scalar -> {
             bitfieldReverse()
-            val unsType = if (type.startsWith('U')) "U" else ""
-            val ext = if (type.startsWith('U')) "uL" else ""
+            val isUnsigned = type in unsignedTypes
+            val unsType = if (isUnsigned) Type.ULong else Type.Long
+            val ext = if (isUnsigned) "uL" else ""
             val (prefix, postfix) = when {
-                "Long" in type -> "" to ".call(0x00000000FFFFFFFF$unsType, 32)"
-                else -> "to${unsType}Long()." to ".to$type()"
+                type == Type.Long || type == Type.ULong -> "" to ".call(0x00000000FFFFFFFF${if(isUnsigned) "U" else ""}, 32)"
+                else -> "to$unsType()." to ".to$type()"
             }
             +"""
                 fun $type.bitfieldReverse(): $type {
-                    fun ${unsType}Long.call(mask: ${unsType}Long, shift: Int) = (this and mask shl shift) or (this and mask.inv() shr shift)
+                    fun $unsType.call(mask: $unsType, shift: Int) = (this and mask shl shift) or (this and mask.inv() shr shift)
                     return ${prefix}call(0x5555555555555555$ext, 1)
                         .call(0x3333333333333333$ext, 2)
                         .call(0x0F0F0F0F0F0F0F0F$ext, 4)
@@ -431,7 +432,7 @@ fun Generator.integer(ordinal: Int, type: String, extension: String, id: String,
                 +"return res(${xyzwJoint { "$it.bitCount" }})"
             }
             bitCount()
-            val maybeConvert = if (type == "Int") "" else ".to$type()"
+            val maybeConvert = if (type == Type.Int) "" else ".to$type()"
             +"fun bitCount(v: $VecID, res: $VecID = $VecID()): $VecID = res(${xyzwJoint { "v.$it.bitCount$maybeConvert" }})"
         }
         Generator.Part.Scalar -> {

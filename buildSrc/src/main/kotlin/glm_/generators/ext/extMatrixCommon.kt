@@ -2,16 +2,17 @@ package glm_.generators.ext
 
 import glm_.generators.gen.Generator
 import glm_.generators.`1`
+import glm_.generators.Type
 import glm_.generators.floatingPointTypes
 
-fun Generator.extMatrixCommon(width: Int, height: Int, type: String, extension: String, id: String, part: Generator.Part) {
+fun Generator.extMatrixCommon(width: Int, height: Int, type: Type, part: Generator.Part) {
 
     if (width != height || type !in floatingPointTypes)
         return
 
     +"// func ext matrixCommon\n"
 
-    val MatID = "Mat$matrixSize$id"
+    val MatID = "Mat$matrixSize${type.id}"
     val `m,abcdN` = abcdJoint(rowSeparator = ",\n") { "m.$it" }
     val `mAbcdN type` = AbcdJoint(rowSeparator = ",\n") { "m$it: $type" }
     val mAbcdN = AbcdJoint(rowSeparator = ",\n") { "m$it" }

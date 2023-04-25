@@ -3,7 +3,7 @@ package glm_.generators.ext
 import glm_.generators.*
 import glm_.generators.gen.Generator
 
-fun Generator.extQuatTransform(type: String, extension: String, conversion: String, id: String, part: Generator.Part) {
+fun Generator.extQuatTransform(type: Type, part: Generator.Part) {
 
     +"// ext quaternion transform\n"
 
@@ -16,6 +16,7 @@ fun Generator.extQuatTransform(type: String, extension: String, conversion: Stri
 //        "glm_.glm",
                      )
 
+    val id = type.id
     val `wxyz type` = wxyzJoint { "$it: $type" }
     val xyz = xyzwJoint(3)
     val xyzw = xyzwJoint(4)
@@ -78,7 +79,7 @@ fun Generator.extQuatTransform(type: String, extension: String, conversion: Stri
                     return rotate($`q,wxyz`, angle, $`axis,xyz`, res)
                 }"""
             rotate()
-            val `0,001` = if (type == "Float") "0.001f" else "0.001"
+            val `0,001` = if (type == Type.Float) "0.001f" else "0.001"
             +"""
                 inline fun <R> rotate($`qWxyz type`, angle: $type, $`axisXyz type`, res: ($`wxyz type`) -> R): R {
                     $contract

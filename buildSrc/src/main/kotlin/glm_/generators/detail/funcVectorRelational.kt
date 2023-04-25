@@ -1,10 +1,11 @@
 package glm_.generators.detail
 
+import glm_.generators.Type
 import glm_.generators.XyzwJoint
 import glm_.generators.gen.Generator
 import glm_.generators.xyzwJoint
 
-fun Generator.vectorRelational(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
+fun Generator.vectorRelational(ordinal: Int, type: Type, vec: String, part: Generator.Part) {
 
     if (part != Generator.Part.Scalar) +"\n// vector relational\n"
 
@@ -17,7 +18,7 @@ fun Generator.vectorRelational(ordinal: Int, type: String, extension: String, id
         |[GLSL 4.20.8 specification, section 8.7 Vector Relational Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)
         |$append""")
 
-    val VecID = vec + id
+    val VecID = vec + type.id
     val VecBool = "${vec}bool"
     val `xyzw Bool` = xyzwJoint { "$it: Boolean" }
     val xyzw = xyzwJoint()
@@ -33,7 +34,7 @@ fun Generator.vectorRelational(ordinal: Int, type: String, extension: String, id
 
     for ((func, sign) in listOf("lessThan" to "<", "lessThanEqual" to "<=", "greaterThan" to ">", "greaterThanEqual" to ">=",
                                 "equal" to "==", "notEqual" to "!=")) {
-        if (type == "Boolean" && "equal" !in func)
+        if (type == Type.Boolean && "equal" !in func)
             continue
         fun doc(x: String = "this", y: String = "b") = rel("Returns the component-wise comparison result of `$x $sign $y`.", func)
         when (part) {
@@ -88,7 +89,7 @@ fun Generator.vectorRelational(ordinal: Int, type: String, extension: String, id
         }
     }
 
-    if (type == "Boolean") {
+    if (type == Type.Boolean) {
 
         for ((func, sign) in listOf("any" to "||", "all" to "&&")) {
             fun doc(x: String = "this") = rel("Returns `true` if $func component of `$x` is `true`.", func)

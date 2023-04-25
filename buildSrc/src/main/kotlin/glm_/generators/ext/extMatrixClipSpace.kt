@@ -6,10 +6,9 @@ import glm_.generators.*
 import java.io.File
 
 fun extMatrixClipSpace(target: File) {
-    generate(target, "glm_/ext/extMatrixClipSpace.kt") {
+    generate(target, "glm_/ext/extMatrixClipSpace.kt", `package` = "glm_.ext") {
 
         experimentals += Generator.Experimentals.Contracts
-        `package` = "glm_.ext"
         //            +"import glm_.extensions.swizzle.*"
         imports += listOf(
             "glm_.glm",
@@ -29,13 +28,15 @@ fun extMatrixClipSpace(target: File) {
             //                          "kotlin.math.pow"
                          )
 
-        for ((type, extension, _, id) in numberTypeInformation.filter { it.type in floatingPointTypes })
-            extMatrixClipSpace(type, extension, id)
+        for (type in floatingPointTypes)
+            extMatrixClipSpace(type)
     }
 }
 
-fun Generator.extMatrixClipSpace(type: String, extension: String, id: String) {
+fun Generator.extMatrixClipSpace(type: Type) {
 
+    val extension = type.extension
+    val id = type.id
     val `-1` = type.`-1`
     val `0` = type.`0`
     val `0,5` = type.`0,5`

@@ -4,17 +4,20 @@ import glm_.generators.*
 import glm_.generators.gen.Generator
 
 // common.hpp
-fun Generator.common(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
+fun Generator.common(ordinal: Int, type: Type, id: String, vec: String, part: Generator.Part) {
 
     if (part != Generator.Part.Scalar) +"// func common\n"
 
+    val extension = type.extension
     val VecID = vec + id
+    val VecBoolID = vec + Type.Boolean.id
+    val VecIntID = vec + Type.Int.id
     val xyzw = xyzwJoint()
     val XYZW = XyzwJoint()
     val `aXYZW type` = XyzwJoint { "a$it: $type" }
     val `a,xyzw` = xyzwJoint { "a.$it" }
     //    val `a,xyzw type` = xyzwJoint { "a.$it: $type" }
-    val `bXYZW` = XyzwJoint { "b$it" }
+    val bXYZW = XyzwJoint { "b$it" }
     val `bXYZW type` = XyzwJoint { "b$it: $type" }
     val `b,xyzw` = xyzwJoint { "b.$it" }
     val `c,xyzw` = xyzwJoint { "c.$it" }
@@ -34,8 +37,8 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
     val `maxVal,xyzw` = xyzwJoint { "maxVal.$it" }
     val `minValXYZW type` = XyzwJoint { "minVal$it: $type" }
     val `maxValXYZW type` = XyzwJoint { "maxVal$it: $type" }
-    val otherFloatType = if (type == "Float") "Double" else "Float"
-    val otherFloatVecID = if (type == "Float") "${vec}d" else vec
+    val otherFloatType = type.otherFloatType
+    val otherFloatVecID = "$vec${otherFloatType.id}"
     val edgeJoint = XyzwJoint { "edge" }
     val edge0Joint = XyzwJoint { "edge0" }
     val edge1Joint = XyzwJoint { "edge1" }
@@ -48,7 +51,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
     val `expXYZW Int` = XyzwJoint { "exp$it: Int" }
 
     if (part != Generator.Part.Scalar)
-        imports += "glm_.vec$ordinal.${vec}bool"
+        imports += "glm_.vec$ordinal.$VecBoolID"
 
     fun common(doc: String, manPage: String, append: String = "") = docs("""
             ${if (doc.startsWith('|')) doc else "|$doc"}
@@ -57,7 +60,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
             |[GLSL 4.20.8 specification, section 8.3 Common Functions](http://www.opengl.org/registry/doc/GLSLangSpec.4.20.8.pdf)
             |$append""")
 
-    if (type !in unsignedTypes && type != "Boolean") {
+    if (type !in unsignedTypes && type != Type.Boolean) {
 
         fun abs(x: String = "[$xyzw]") = common("Returns `$x` if `$x` >= 0; otherwise, it returns `-$x`.", "abs")
         when (part) {
@@ -88,7 +91,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 abs("this")
                 // TODO this should be JVM only
                 val maybeToInt = if (type in intPromotedTypes) "toInt()" else "this"
-                val maybeBack = if (type in intPromotedTypes) ".to$type()" else ""
+                val maybeBack = if (type in intPromotedTypes) ".${type.conversionFunction}()" else ""
                 +"inline fun $type.abs(): $type = abs($maybeToInt)$maybeBack"
             }
         }
@@ -346,13 +349,13 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                             +"return mod($xyzw, $`b,xyzw`, res)"
                         }
                         mod(y = "b[$XYZW]")
-                        +"fun modAssign($`bXYZW type`): $VecID = mod($`bXYZW`, this)"
+                        +"fun modAssign($`bXYZW type`): $VecID = mod($bXYZW, this)"
                         mod(y = "b[$XYZW]")
-                        +"fun mod($`bXYZW type`, res: $VecID = $VecID()): $VecID = mod($`bXYZW`) { $`resXYZW type` -> res($resXYZW) }"
+                        +"fun mod($`bXYZW type`, res: $VecID = $VecID()): $VecID = mod($bXYZW) { $`resXYZW type` -> res($resXYZW) }"
                         mod(y = "b[$XYZW]")
                         "inline fun <R> mod($`bXYZW type`, res: ($`resXYZW type`) -> R): R" {
                             +contract
-                            +"return mod($xyzw, $`bXYZW`, res)"
+                            +"return mod($xyzw, $bXYZW, res)"
                         }
                     }
                 }
@@ -458,9 +461,9 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     }
                     if (ordinal > 1) {
                         min(y = "b[$XYZW]")
-                        +"fun minAssign($`bXYZW type`): $VecID = min($`bXYZW`, this)"
+                        +"fun minAssign($`bXYZW type`): $VecID = min($bXYZW, this)"
                         min(y = "b[$XYZW]")
-                        +"fun min($`bXYZW type`, res: $VecID = $VecID()): $VecID = min($`bXYZW`) { $`resXYZW type` -> res($resXYZW) }"
+                        +"fun min($`bXYZW type`, res: $VecID = $VecID()): $VecID = min($bXYZW) { $`resXYZW type` -> res($resXYZW) }"
                         min(y = "b[$XYZW]")
                         "inline fun <R> min($`bXYZW type`, res: ($`resXYZW type`) -> R): R" {
                             +contract
@@ -482,7 +485,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
                 Generator.Part.Scalar -> {
                     min("this")
-                    +"inline infix fun $type.min(b: $type): $type = min(${type.promotedExtensionOrThis}, b${type.promotedExtensionOrEmpty})${type.maybePromotedBack}"
+                    +"inline infix fun $type.min(b: $type): $type = min(${type.promotedExtensionOrThis}, b${type.promotedExtensionOrEmpty})${type.unpromotedExtensionOrEmpty}"
                 }
             }
 
@@ -514,9 +517,9 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     }
                     if (ordinal > 1) {
                         max(y = "b[$XYZW]")
-                        +"fun maxAssign($`bXYZW type`): $VecID = max($`bXYZW`, this)"
+                        +"fun maxAssign($`bXYZW type`): $VecID = max($bXYZW, this)"
                         max(y = "b[$XYZW]")
-                        +"fun max($`bXYZW type`, res: $VecID = $VecID()): $VecID = max($`bXYZW`) { $`resXYZW type` -> res($resXYZW) }"
+                        +"fun max($`bXYZW type`, res: $VecID = $VecID()): $VecID = max($bXYZW) { $`resXYZW type` -> res($resXYZW) }"
                         max(y = "b[$XYZW]")
                         "inline fun <R> max($`bXYZW type`, res: ($`resXYZW type`) -> R): R" {
                             +contract
@@ -538,7 +541,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
                 Generator.Part.Scalar -> {
                     max("this")
-                    +"inline infix fun $type.max(b: $type): $type = max(${type.promotedExtensionOrThis}, b${type.promotedExtensionOrEmpty})${type.maybePromotedBack}"
+                    +"inline infix fun $type.max(b: $type): $type = max(${type.promotedExtensionOrThis}, b${type.promotedExtensionOrEmpty})${type.unpromotedExtensionOrEmpty}"
                 }
             }
 
@@ -570,7 +573,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 Generator.Part.Scalar -> {
                     clamp("")
                     +"inline fun $type.clamp(minVal: $type, maxVal: $type): $type = max(minVal) min maxVal"
-                    if (type == "Int" || type == "Long") {
+                    if (type == Type.Int || type == Type.Long) {
                         clamp()
                         +"inline infix fun $type.clamp(range: ${type}Range): $type = max(range.first) min range.last"
                     }
@@ -636,11 +639,11 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"inline fun <R> mix(b: $VecID, c: $otherFloatVecID, res: ($`resXYZW type`) -> R): R = mix($xyzw, $`b,xyzw`, ${xyzwJoint { "c.$it.$extension" }}, res)"
                     // mix vectorial boolean
                     mix(a = "c.[$xyzw]")
-                    +"fun mixAssign(b: $VecID, c: ${vec}bool): $VecID = mix(b, c, this)"
+                    +"fun mixAssign(b: $VecID, c: $VecBoolID): $VecID = mix(b, c, this)"
                     mix(a = "c.[$xyzw]")
-                    +"fun mix(b: $VecID, c: ${vec}bool, res: $VecID = $VecID()): $VecID = mix(b, c) { $`resXYZW type` -> res($resXYZW) }"
+                    +"fun mix(b: $VecID, c: $VecBoolID, res: $VecID = $VecID()): $VecID = mix(b, c) { $`resXYZW type` -> res($resXYZW) }"
                     mix(a = "c.[$xyzw]")
-                    "inline fun <R> mix(b: $VecID, c: ${vec}bool, res: ($`resXYZW type`) -> R): R" {
+                    "inline fun <R> mix(b: $VecID, c: $VecBoolID, res: ($`resXYZW type`) -> R): R" {
                         +contract
                         +"return mix($xyzw, $`b,xyzw`, $`c,xyzw`, res)"
                     }
@@ -684,7 +687,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
 
                         // mix c vectorial bool
                         mix(a = "c.[$xyzw]")
-                        "inline fun <R> mix(a: $VecID, b: $VecID, c: ${vec}bool, res: ($`resXYZW type`) -> R): R" {
+                        "inline fun <R> mix(a: $VecID, b: $VecID, c: $VecBoolID, res: ($`resXYZW type`) -> R): R" {
                             +contract
                             +"return mix($`a,xyzw`, $`b,xyzw`, $`c,xyzw`, res)"
                         }
@@ -838,7 +841,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
             when (part) {
                 Generator.Part.Class -> {
                     isNan()
-                    +"fun isNan(res: ${vec}bool = ${vec}bool()): ${vec}bool = isNan { $`resXYZW Bool` -> res($resXYZW) }"
+                    +"fun isNan(res: $VecBoolID = $VecBoolID()): $VecBoolID = isNan { $`resXYZW Bool` -> res($resXYZW) }"
                     isNan()
                     "inline fun <R> isNan(res: ($`resXYZW Bool`) -> R): R" {
                         +contract
@@ -867,7 +870,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
             when (part) {
                 Generator.Part.Class -> {
                     isInf()
-                    +"fun isInf(res: ${vec}bool = ${vec}bool()): ${vec}bool = isInf { $`resXYZW Bool` -> res($resXYZW) }"
+                    +"fun isInf(res: $VecBoolID = $VecBoolID()): $VecBoolID = isInf { $`resXYZW Bool` -> res($resXYZW) }"
                     isInf()
                     "inline fun <R> isInf(res: ($`resXYZW Bool`) -> R): R" {
                         +contract
@@ -895,7 +898,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
     val intCounterType = type.counterpart
     //    println("type: $type")
     //    println("intCounterType: $intCounterType")
-    val intCounterID: String? = numberTypeInformation.find { it.type == intCounterType }?.id ?: ""
+    val intCounterID: String = intCounterType.id
 
     //    println("intCounterID: $intCounterID")
     fun toBits(unsigned: Boolean = false) {
@@ -903,40 +906,41 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
             |Returns a ${if (unsigned) "un" else ""}signed integer value representing the encoding of a floating-point value.
             |The floatingpoint value's bit-level representation is preserved."""
         when (type) {
-            "Float" -> common(text, "floatBitsTo" + if (unsigned) "Uint" else "Int")
+            Type.Float -> common(text, "floatBitsTo" + if (unsigned) "Uint" else "Int")
             else -> docs(text)
         }
     }
-
+    val uIntCounterType = intCounterType.signedToUnsigned
     val `resXYZW intCounterType` = XyzwJoint { "res$it: $intCounterType" }
-    val `resXYZW UnsCounterType` = XyzwJoint { "res$it: U$intCounterType" }
-    val unsigned = type[0] == 'U'
+    val `resXYZW UnsCounterType` = XyzwJoint { "res$it: $uIntCounterType" }
+    val unsigned = type in unsignedTypes
     fun bitsTo() {
         val text = """
             |Returns a floating-point value corresponding to a ${if (unsigned) "un" else ""}signed integer encoding of a floating-point value.
             |If an `inf` or `NaN` is passed in, it will not signal, and the resulting floating point value is unspecified.
             |Otherwise, the bit-level representation is preserved."""
         when (type) {
-            "Float" -> common(text, (if (unsigned) "u" else "") + "intBitsToFloat")
+            Type.Float -> common(text, (if (unsigned) "u" else "") + "intBitsToFloat")
             else -> docs(text)
         }
     }
 
-    val floatCounterType = type.drop(if (unsigned) 1 else 0).counterpart
+    val floatCounterType = type.unsignedToSigned.counterpart
     //    println("floatCounterType: $floatCounterType")
-    val floatCounterID = numberTypeInformation.find { it.type == floatCounterType }?.id ?: ""
+    val floatCounterID = floatCounterType.id
     val `resXYZW floatCounterType` = XyzwJoint { "res$it: $floatCounterType" }
-    when {
-        type in floatingPointTypes -> when (part) {
+    when (type) {
+        in floatingPointTypes -> when (part) {
             Generator.Part.Class -> {
                 // bitsToInt-Long
                 toBits()
                 +"fun bitsTo$intCounterType(res: $vec$intCounterID = $vec$intCounterID()): $vec$intCounterID = bitsTo$intCounterType($xyzw) { $`resXYZW intCounterType` -> res($resXYZW) }"
-                // bitsToUInt-Ulong
+                // bitsToUInt-ULong
                 toBits(true)
-                val uns = "u" + intCounterType[0].toLowerCase()
-                +"fun bitsToU$intCounterType(res: $vec$uns = $vec$uns()): $vec$uns = bitsToU$intCounterType($xyzw) { $`resXYZW UnsCounterType` -> res($resXYZW) }"
+                val VecUnsignedId = "$vec${uIntCounterType.id}"
+                +"fun bitsTo$uIntCounterType(res: $VecUnsignedId = $VecUnsignedId()): $VecUnsignedId = bitsTo$uIntCounterType($xyzw) { $`resXYZW UnsCounterType` -> res($resXYZW) }"
             }
+
             Generator.Part.CompanionObject -> {
                 // bitsToInt-Long
                 toBits()
@@ -951,31 +955,33 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 }
                 // bitsToUInt-Ulong
                 toBits(true)
-                "inline fun <R> bitsToU$intCounterType(v: $VecID, res: ($`resXYZW UnsCounterType`) -> R): R" {
+                "inline fun <R> bitsTo$uIntCounterType(v: $VecID, res: ($`resXYZW UnsCounterType`) -> R): R" {
                     +contract
-                    +"return bitsToU$intCounterType($`v,xyzw`, res)"
+                    +"return bitsTo$uIntCounterType($`v,xyzw`, res)"
                 }
                 toBits(true)
-                "inline fun <R> bitsToU$intCounterType($`xyzw type`, res: ($`resXYZW UnsCounterType`) -> R): R" {
+                "inline fun <R> bitsTo$uIntCounterType($`xyzw type`, res: ($`resXYZW UnsCounterType`) -> R): R" {
                     +contract
-                    +"return res(${xyzwJoint { "$it.bitsToU$intCounterType()" }})"
+                    +"return res(${xyzwJoint { "$it.bitsTo$uIntCounterType()" }})"
                 }
             }
+
             Generator.Part.Scalar -> {
                 // bitsToInt-Long
                 toBits()
                 +"inline fun $type.bitsTo$intCounterType(): $intCounterType = toBits()"
                 // bitsToUInt-ULong
                 toBits(true)
-                +"inline fun $type.bitsToU$intCounterType(): U$intCounterType = toBits().u${intCounterType[0].toLowerCase()}"
+                +"inline fun $type.bitsTo$uIntCounterType(): $uIntCounterType = toBits().${uIntCounterType.extension}"
             }
         }
         // every integer, signed and unsigned
-        "Int" in type || "Long" in type -> when (part) {
+        in integerTypes -> when (part) {
             Generator.Part.Class -> {
                 bitsTo()
                 +"fun bitsTo$floatCounterType(res: $vec$floatCounterID = $vec$floatCounterID()): $vec$floatCounterID = bitsTo$floatCounterType($xyzw) { $`resXYZW floatCounterType` -> res($resXYZW) }"
             }
+
             Generator.Part.CompanionObject -> {
                 bitsTo()
                 "inline fun <R> bitsTo$floatCounterType($`xyzw type`, res: (${XyzwJoint { "res$it: $floatCounterType" }}) -> R): R" {
@@ -983,16 +989,15 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                     +"return res(${xyzwJoint { "$it.bitsTo$floatCounterType()" }})"
                 }
             }
+
             Generator.Part.Scalar -> {
-                val bits = when (type) {
-                    "UInt" -> "i"
-                    "ULong" -> "L"
-                    else -> "this"
-                }
+                val bits = type.integerExtensionOrThis
                 bitsTo()
                 +"inline fun $type.bitsTo$floatCounterType(): $floatCounterType = $floatCounterType.fromBits($bits)"
             }
         }
+
+        else -> {}
     }
 
     if (type in floatingPointTypes) {
@@ -1039,13 +1044,13 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                 val mantXYZW = XyzwJoint { "mant$it" }
                 val expXYZW = XyzwJoint { "exp$it" }
                 +"""
-                    fun frexp(resMant: $VecID = $VecID(), resExp: ${vec}i = ${vec}i()) = frexp($xyzw) { $mantXYZW, $expXYZW ->
+                    fun frexp(resMant: $VecID = $VecID(), resExp: $VecIntID = $VecIntID()) = frexp($xyzw) { $mantXYZW, $expXYZW ->
                         resMant.put($mantXYZW)
                         resExp.put($expXYZW)
                     }"""
                 frexp()
                 +"""
-                    fun frexp(resMantExp: Pair<$VecID, ${vec}i> = $VecID() to ${vec}i()): Pair<$VecID, ${vec}i> = frexp($xyzw) { $mantXYZW, $expXYZW ->
+                    fun frexp(resMantExp: Pair<$VecID, $VecIntID> = $VecID() to $VecIntID()): Pair<$VecID, $VecIntID> = frexp($xyzw) { $mantXYZW, $expXYZW ->
                         resMantExp.apply {
                             first.put($mantXYZW)
                             second.put($expXYZW)
@@ -1073,7 +1078,7 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
             }
             Generator.Part.Scalar -> {
                 frexp("this")
-                val x = if (type == "Float") 23 else 52
+                val x = if (type == Type.Float) 23 else 52
                 "fun $type.frexp(resExp: KMutableProperty0<Int>): $type" {
                     +"""
                         val bits = toBits()
@@ -1089,25 +1094,25 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                                 val neg = bits < 0
                                 ${
                         when (type) {
-                            "Float" -> "var exponent = (bits ushr $x) and 0xff"
+                            Type.Float -> "var exponent = (bits ushr $x) and 0xff"
                             else -> "var exponent = ((bits ushr $x) and 0x7ffL).i"
                         }
                     }
                                 ${
                         when (type) {
-                            "Float" -> "var mantissa = bits and 0xffffff"
+                            Type.Float -> "var mantissa = bits and 0xffffff"
                             else -> "var mantissa = bits and 0xfffffffffffffL"
                         }
                     }
                                 if (exponent == 0)
                                     exponent++
                                 else
-                                    mantissa = mantissa or (1${if (type == "Float") "" else "L"} shl $x)
+                                    mantissa = mantissa or (1${if (type == Type.Float) "" else "L"} shl $x)
         
-                                // bias the exponent - actually biased by ${if (type == "Float") "127" else "1023"}.
+                                // bias the exponent - actually biased by ${if (type == Type.Float) "127" else "1023"}.
                                 // we are treating the mantissa as m.0 instead of 0.m
                                 // so subtract another $x.
-                                exponent -= ${if (type == "Float") "150" else "1075"}
+                                exponent -= ${if (type == Type.Float) "150" else "1075"}
                                 realMant = mantissa.${extension}
         
                                 // normalize
@@ -1141,25 +1146,25 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                                 val neg = bits < 0
                                 ${
                         when (type) {
-                            "Float" -> "var exponent = (bits ushr $x) and 0xff"
+                            Type.Float -> "var exponent = (bits ushr $x) and 0xff"
                             else -> "var exponent = ((bits ushr $x) and 0x7ffL).i"
                         }
                     }
                                 ${
                         when (type) {
-                            "Float" -> "var mantissa = bits and 0xffffff"
+                            Type.Float -> "var mantissa = bits and 0xffffff"
                             else -> "var mantissa = bits and 0xfffffffffffffL"
                         }
                     }
                                 if (exponent == 0)
                                     exponent++
                                 else
-                                    mantissa = mantissa or (1${if (type == "Float") "" else "L"} shl $x)
+                                    mantissa = mantissa or (1${if (type == Type.Float) "" else "L"} shl $x)
         
-                                // bias the exponent - actually biased by ${if (type == "Float") "127" else "1023"}.
+                                // bias the exponent - actually biased by ${if (type == Type.Float) "127" else "1023"}.
                                 // we are treating the mantissa as m.0 instead of 0.m
                                 // so subtract another $x.
-                                exponent -= ${if (type == "Float") "150" else "1075"}
+                                exponent -= ${if (type == Type.Float) "150" else "1075"}
                                 realMant = mantissa.${extension}
         
                                 // normalize
@@ -1189,25 +1194,25 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
                                 val neg = bits < 0
                                 ${
                         when (type) {
-                            "Float" -> "var exponent = (bits ushr $x) and 0xff"
+                            Type.Float -> "var exponent = (bits ushr $x) and 0xff"
                             else -> "var exponent = ((bits ushr $x) and 0x7ffL).i"
                         }
                     }
                                 ${
                         when (type) {
-                            "Float" -> "var mantissa = bits and 0xffffff"
+                            Type.Float -> "var mantissa = bits and 0xffffff"
                             else -> "var mantissa = bits and 0xfffffffffffffL"
                         }
                     }
                                 if (exponent == 0)
                                     exponent++
                                 else
-                                    mantissa = mantissa or (1${if (type == "Float") "" else "L"} shl $x)
+                                    mantissa = mantissa or (1${if (type == Type.Float) "" else "L"} shl $x)
         
-                                // bias the exponent - actually biased by ${if (type == "Float") "127" else "1023"}.
+                                // bias the exponent - actually biased by ${if (type == Type.Float) "127" else "1023"}.
                                 // we are treating the mantissa as m.0 instead of 0.m
                                 // so subtract another $x.
-                                exponent -= ${if (type == "Float") "150" else "1075"}
+                                exponent -= ${if (type == Type.Float) "150" else "1075"}
                                 realMant = mantissa.${extension}
         
                                 // normalize
@@ -1234,13 +1239,13 @@ fun Generator.common(ordinal: Int, type: String, extension: String, id: String, 
         when (part) {
             Generator.Part.Class -> {
                 ldexp()
-                +"fun ldexpAssign(exp: ${vec}i): $VecID = ldexp(exp, this)"
+                +"fun ldexpAssign(exp: $VecIntID): $VecID = ldexp(exp, this)"
                 ldexp()
-                +"infix fun ldexp(exp: ${vec}i): $VecID = ldexp(exp, $VecID())"
+                +"infix fun ldexp(exp: $VecIntID): $VecID = ldexp(exp, $VecID())"
                 ldexp()
-                +"fun ldexp(exp: ${vec}i, res: $VecID): $VecID = ldexp(exp) { $resXYZW -> res($resXYZW) }"
+                +"fun ldexp(exp: $VecIntID, res: $VecID): $VecID = ldexp(exp) { $resXYZW -> res($resXYZW) }"
                 ldexp()
-                "inline fun <R> ldexp(exp: ${vec}i, res: ($`resXYZW type`) -> R): R" {
+                "inline fun <R> ldexp(exp: $VecIntID, res: ($`resXYZW type`) -> R): R" {
                     +contract
                     +"return ldexp($xyzw, ${xyzwJoint { "exp.$it" }}, res)"
                 }

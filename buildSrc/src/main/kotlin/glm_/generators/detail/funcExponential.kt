@@ -3,7 +3,7 @@ package glm_.generators.detail
 import glm_.generators.*
 import glm_.generators.gen.Generator
 
-fun Generator.exponential(ordinal: Int, type: String, extension: String, id: String, vec: String, part: Generator.Part) {
+fun Generator.exponential(ordinal: Int, type: Type, id: String, vec: String, part: Generator.Part) {
 
     if (part != Generator.Part.Scalar) +"// func exponential\n"
 
@@ -11,12 +11,13 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
     val `expXYZW type` = XyzwJoint { "exp$it: $type" }
     val `expXYZW Int` = XyzwJoint { "exp$it: Int" }
     val VecID = vec + id
+    val VecIntID = vec + Type.Int.id
     val xyzw = xyzwJoint()
     val XYZW = XyzwJoint()
     val `aXYZW type` = XyzwJoint { "a$it: $type" }
     val `a,xyzw` = xyzwJoint { "a.$it" }
     //    val `a,xyzw type` = xyzwJoint { "a.$it: $type" }
-    val `bXYZW` = XyzwJoint { "b$it" }
+    val bXYZW = XyzwJoint { "b$it" }
     val `bXYZW type` = XyzwJoint { "b$it: $type" }
     val `b,xyzw` = xyzwJoint { "b.$it" }
     val `c,xyzw` = xyzwJoint { "c.$it" }
@@ -36,8 +37,8 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
     val `maxVal,xyzw` = xyzwJoint { "maxVal.$it" }
     val `minValXYZW type` = XyzwJoint { "minVal$it: $type" }
     val `maxValXYZW type` = XyzwJoint { "maxVal$it: $type" }
-    val otherFloatType = if (type == "Float") "Double" else "Float"
-    val otherFloatVecID = if (type == "Float") "${vec}d" else vec
+    val otherFloatType = type.otherFloatType
+    val otherFloatVecID = vec + otherFloatType.id
     val edgeJoint = XyzwJoint { "edge" }
     val edge0Joint = XyzwJoint { "edge0" }
     val edge1Joint = XyzwJoint { "edge1" }
@@ -73,9 +74,9 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
                 }
             }
             Generator.Part.CompanionObject -> {
-                if (type != "Int") {
+                if (type != Type.Int) {
                     pow("v.[$xyzw]")
-                    "inline fun <R> pow(v: $VecID, exp: ${vec}i, res: ($`resXYZW type`) -> R): R" {
+                    "inline fun <R> pow(v: $VecID, exp: $VecIntID, res: ($`resXYZW type`) -> R): R" {
                         +contract
                         +"return pow($`v,xyzw`, $`exp,xyzw`, res)"
                     }
@@ -96,6 +97,7 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
                     +"return res(${xyzwJoint { "$it pow exp${it.toUpperCase()}" }})"
                 }
             }
+
             Generator.Part.Scalar -> {
                 pow("this")
                 +"inline infix fun $type.pow(exponent: Int): $type = pow(exponent)"
@@ -257,6 +259,7 @@ fun Generator.exponential(ordinal: Int, type: String, extension: String, id: Str
                     +"return res(${xyzwJoint { "$it.inverseSqrt()" }})"
                 }
             }
+
             Generator.Part.Scalar -> {
                 inverseSqrt("this")
                 +"inline fun $type.inverseSqrt(): $type = ${type.`1`} / sqrt()"

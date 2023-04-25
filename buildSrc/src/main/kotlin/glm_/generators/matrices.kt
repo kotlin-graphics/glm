@@ -14,10 +14,7 @@ import java.io.File
 fun matrices(target: File) {
     for (i in 2..4)
         for (j in 2..4)
-            generate(target, "glm_/mat${matrixSize(i, j)}/Mat${matrixSize(i, j)}T.kt") {
-                Generator.width = i
-                Generator.height = j
-                `package` = "glm_.mat$matrixSize"
+            generate(target, "glm_/mat${matrixSize(i, j)}/Mat${matrixSize(i, j)}T.kt", `package` = "glm_.mat${matrixSize(i, j)}", width = i, height = j) {
                 imports += listOf("glm_.vec$j.*",
                                   "glm_.vec$i.*")
                 //    abcd(3, 3) { c, r, s -> +"import glm.mat${matrixSizeString(c + 2, r + 2)}.*" }
@@ -27,25 +24,20 @@ fun matrices(target: File) {
                 matricesT(i, j)
             }
 
-    for ((type, extension, _, id) in matrixTypes)
+    for (type in matrixTypes)
         for (i in 2..4)
             for (j in 2..4)
-                generate(target, "glm_/mat${matrixSize(i, j)}/Mat${matrixSize(i, j)}$id.kt") {
-                    Generator.width = i
-                    Generator.height = j
+                generate(target, "glm_/mat${matrixSize(i, j)}/Mat${matrixSize(i, j)}${type.id}.kt", `package` = "glm_.mat${matrixSize(i, j)}", width = i, height = j) {
                     experimentals += Experimentals.Contracts
-                    `package` = "glm_.mat$matrixSize"
                     imports += listOf("glm_.*",
                                       "glm_.extensions.*",
                                       "kotlin.math.abs")
                     repeat(4) { imports += "glm_.vec${it + 1}.*" }
                     abcdIndexed(3, 3) { c, r, _ -> imports += "glm_.mat${matrixSize(c + 2, r + 2)}.*" }
                     if (type in floatingPointTypes && (matrixSize == "3" || matrixSize == "4"))
-                        imports += "glm_.quat.Quat$id"
-                    matrices(i, j, type, extension, id)
+                        imports += "glm_.quat.Quat${type.id}"
+                    matrices(i, j, type)
                 }
-    Generator.Companion.width = -1
-    Generator.Companion.height = -1
 }
 
 
@@ -109,8 +101,10 @@ private fun Generator.matricesT(width: Int, height: Int) {
     }
 }
 
-private fun Generator.matrices(width: Int, height: Int, type: String, extension: String, id: String) {
+private fun Generator.matrices(width: Int, height: Int, type: Type) {
 
+    val extension = type.extension
+    val id = type.id
     val matID = "Mat$matrixSize$id"
     val `m,abcdN` = abcdJoint(",\n") { "m.$it" }
     val `mAbcdN type` = AbcdJoint(",\n") { "m$it: $type" }
@@ -136,7 +130,7 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
         +"constructor(m: $matID) : this($`m,abcdN`)"
         +"constructor(scalar: $type) : this(${abcdJointIndexed(",\n") { c, r, _ -> if (c == r) "scalar" else "0" }})"
         val `abcd type` = abcdJoint(",\n") { "$it: $type" }
-        val arrayOf = "${type.toLowerCase()}ArrayOf"
+        val arrayOf = "${type.name.toLowerCase()}ArrayOf"
         +"constructor($`abcd type`) : this($arrayOf(${abcdJoint(",\n")}))"
 
         val `vN VecID` = (0 until width).joinToString { "v$it: Vec$height$id" }
@@ -294,7 +288,7 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
             +"return this"
         }
 
-        binary(width, height, type, extension, id, "", Generator.Part.Class)
+        binary(width, height, type, "", Generator.Part.Class)
 
         if (type in floatingPointTypes) {
             val `resWXYZ type` = WxyzJoint { "res$it: $type" }
@@ -321,13 +315,13 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
             }
         }
 
-        matrix(width, height, type, extension, id, Generator.Part.Class)
+        matrix(width, height, type, Generator.Part.Class)
 
-        extMatrixCommon(width, height, type, extension, id, Generator.Part.Class)
-        extMatrixTransform(width, height, type, extension, id, Generator.Part.Class)
-        extMatrixRelational(width, height, type, extension, id, Generator.Part.Class)
+        extMatrixCommon(width, height, type, Generator.Part.Class)
+        extMatrixTransform(width, height, type, Generator.Part.Class)
+        extMatrixRelational(width, height, type, Generator.Part.Class)
 
-        if (type == "Float" || type == "Double")
+        if (type in floatingPointTypes)
 //        fun equal(m: $matID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[it] - m.array[it]) <= epsilon }
 //        fun notEqual(m: $matID, epsilon: $type = $type.MIN_VALUE) = BooleanArray(length) { abs(array[it] - m.array[it]) > epsilon }
             +"""
@@ -367,12 +361,12 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
             +"const val height = $MatNT.height"
             +"val size = length * $type.BYTES"
 
-            binary(width, height, type, extension, id, "", Generator.Part.CompanionObject)
-            matrix(width, height, type, extension, id, Generator.Part.CompanionObject)
+            binary(width, height, type, "", Generator.Part.CompanionObject)
+            matrix(width, height, type, Generator.Part.CompanionObject)
 
-            extMatrixCommon(width, height, type, extension, id, Generator.Part.CompanionObject)
-            extMatrixTransform(width, height, type, extension, id, Generator.Part.CompanionObject)
-            extMatrixRelational(width, height, type, extension, id, Generator.Part.CompanionObject)
+            extMatrixCommon(width, height, type, Generator.Part.CompanionObject)
+            extMatrixTransform(width, height, type, Generator.Part.CompanionObject)
+            extMatrixRelational(width, height, type, Generator.Part.CompanionObject)
 
             // [gtc quaternion] quat_cast
             fun gtcQuaternion() {
@@ -404,7 +398,7 @@ private fun Generator.matrices(width: Int, height: Int, type: String, extension:
                                 biggestIndex = 3
                             }
                         ${
-                        if (type == "Float")
+                        if (type == Type.Float)
                             """
                             val biggestVal = kotlin.math.sqrt(fourBiggestSquaredMinus1 + 1f) * 0.5f
                             val mult = 0.25f / biggestVal"""

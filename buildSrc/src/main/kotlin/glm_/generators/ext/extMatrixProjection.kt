@@ -6,10 +6,9 @@ import glm_.generators.*
 import java.io.File
 
 fun extMatrixProjection(target: File) {
-    generate(target, "glm_/ext/extMatrixProjection.kt") {
+    generate(target, "glm_/ext/extMatrixProjection.kt", `package` = "glm_.ext") {
 
         experimentals += Generator.Experimentals.Contracts
-        `package` = "glm_.ext"
         //            +"import glm_.extensions.swizzle.*"
         imports += listOf(
             "glm_.glm",
@@ -37,12 +36,13 @@ fun extMatrixProjection(target: File) {
             //                          "kotlin.math.pow"
                          )
 
-        for ((type, extension, _, id) in numberTypeInformation.filter { it.type in floatingPointTypes })
-            extMatrixProjection(type, extension, id)
+        for (type in floatingPointTypes)
+            extMatrixProjection(type)
     }
 }
 
-fun Generator.extMatrixProjection(type: String, extension: String, id: String) {
+fun Generator.extMatrixProjection(type: Type) {
+    val id = type.id
 
     val `-1` = type.`-1`
     val `0` = type.`0`
