@@ -3,7 +3,7 @@ package glm_.vec1
 interface Vec1Vars<T : Number> {
     var x: T
 
-    fun component1() = x
+    operator fun component1() = x
 
 
     // -- Component accesses --

@@ -5,7 +5,7 @@ import glm_.vec2.Vec2Vars
 interface Vec3Vars<T : Number> : Vec2Vars<T> {
     var z: T
 
-    fun component3() = z
+    operator fun component3() = z
 
 
     // -- Component accesses --
