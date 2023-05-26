@@ -17,12 +17,12 @@ abstract class Vec4t<T : Number> : ToBuffer {
     abstract var z: T
     abstract var w: T
 
-    operator fun component1() = x
-    operator fun component2() = y
-    operator fun component3() = z
-    operator fun component4() = w
+    inline operator fun component1() = x
+    inline operator fun component2() = y
+    inline operator fun component3() = z
+    inline operator fun component4() = w
 
-    operator fun get(index: Int) = when (index) {
+    inline operator fun get(index: Int) = when (index) {
         0 -> x
         1 -> y
         2 -> z
@@ -111,6 +111,7 @@ abstract class Vec4t<T : Number> : ToBuffer {
                     x is Double && y is Double && z is Double && w is Double -> put(a.d, b.d, c.d, d.d)
                     else -> throw ArithmeticException("incompatible type")  //TODO uns
                 }
+
             else -> throw ArithmeticException("incompatible type")
         }
     }
@@ -201,6 +202,7 @@ abstract class Vec4t<T : Number> : ToBuffer {
                     x is Double && y is Double && z is Double && w is Double -> invoke(a.d, b.d, c.d, d.d)
                     else -> throw ArithmeticException("incompatible type")  //TODO uns
                 }
+
             else -> throw ArithmeticException("incompatible type")
         }
     }
@@ -244,44 +246,44 @@ abstract class Vec4t<T : Number> : ToBuffer {
 
     // components alias
 
-    var r
+    inline var r
         @JvmName("r") get() = x
         @JvmName("r") set(value) {
             x = value
         }
-    var g
+    inline var g
         @JvmName("g") get() = y
         @JvmName("g") set(value) {
             y = value
         }
-    var b
+    inline var b
         @JvmName("b") get() = z
         @JvmName("b") set(value) {
             z = value
         }
-    var a
+    inline var a
         @JvmName("a") get() = w
         @JvmName("a") set(value) {
             w = value
         }
 
 
-    var s
+    inline var s
         @JvmName("s") get() = x
         @JvmName("s") set(value) {
             x = value
         }
-    var t
+    inline var t
         @JvmName("t") get() = y
         @JvmName("t") set(value) {
             y = value
         }
-    var p
+    inline var p
         @JvmName("p") get() = z
         @JvmName("p") set(value) {
             z = value
         }
-    var q
+    inline var q
         @JvmName("q") get() = w
         @JvmName("q") set(value) {
             w = value

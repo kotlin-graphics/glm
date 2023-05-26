@@ -20,12 +20,12 @@ import kotlin.math.abs
  * Created bY GBarbieri on 05.10.2016.
  */
 
-class Vec2(var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer {
+class Vec2(@JvmField var ofs: Int, var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer {
 
-    override var x: Float
+    override inline var x: Float
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override var y: Float
+    override inline var y: Float
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
 

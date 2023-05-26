@@ -21,18 +21,18 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4i(var ofs: Int, var array: IntArray) : Vec4t<Int>(), ToBuffer {
+class Vec4i(@JvmField var ofs: Int, @JvmField var array: IntArray) : Vec4t<Int>(), ToBuffer {
 
-    override var x: Int
+    override inline var x: Int
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override var y: Int
+    override inline var y: Int
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
-    override var z: Int
+    override inline var z: Int
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
-    override var w: Int
+    override inline var w: Int
         get() = array[ofs + 3]
         set(value) = array.set(ofs + 3, value)
 

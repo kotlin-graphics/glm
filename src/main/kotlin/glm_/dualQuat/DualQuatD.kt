@@ -15,7 +15,7 @@ class DualQuatD(var real: QuatD, var dual: QuatD) {
     /** Return the count of components of a dual quaternion */
     val length = 2
 
-    operator fun get(index: Int) = when (index) {
+    inline operator fun get(index: Int) = when (index) {
         0 -> real
         1 -> dual
         else -> throw Error()

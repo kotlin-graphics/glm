@@ -21,15 +21,15 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec3ub(var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>(), ToBuffer {
+class Vec3ub(@JvmField var ofs: Int, var array: ByteArray) : Vec3t<Ubyte>(), ToBuffer {
 
-    override var x: Ubyte
+    override inline var x: Ubyte
         get() = Ubyte(array[ofs])
         set(value) = array.set(ofs, value.v)
-    override var y: Ubyte
+    override inline var y: Ubyte
         get() = Ubyte(array[ofs + 1])
         set(value) = array.set(ofs + 1, value.v)
-    override var z: Ubyte
+    override inline var z: Ubyte
         get() = Ubyte(array[ofs + 2])
         set(value) = array.set(ofs + 2, value.v)
 

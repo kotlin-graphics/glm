@@ -20,18 +20,18 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4s(var ofs: Int, var array: ShortArray) : Vec4t<Short>(), ToBuffer {
+class Vec4s(@JvmField var ofs: Int, var array: ShortArray) : Vec4t<Short>(), ToBuffer {
 
-    override var x: Short
+    override inline var x: Short
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override var y: Short
+    override inline var y: Short
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
-    override var z: Short
+    override inline var z: Short
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
-    override var w: Short
+    override inline var w: Short
         get() = array[ofs + 3]
         set(value) = array.set(ofs + 3, value)
 

@@ -20,12 +20,12 @@ import kotlin.math.abs
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2i(var ofs: Int, var array: IntArray) : Vec2t<Int>() {
+class Vec2i(@JvmField var ofs: Int, var array: IntArray) : Vec2t<Int>() {
 
-    override var x: Int
+    override inline var x: Int
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override var y: Int
+    override inline var y: Int
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
 

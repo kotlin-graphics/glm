@@ -21,15 +21,15 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec3ul(var ofs: Int, var array: LongArray) : Vec3t<Ulong>(), ToBuffer {
+class Vec3ul(@JvmField var ofs: Int, var array: LongArray) : Vec3t<Ulong>(), ToBuffer {
 
-    override var x: Ulong
+    override inline var x: Ulong
         get() = Ulong(array[ofs])
         set(value) = array.set(ofs, value.v)
-    override var y: Ulong
+    override inline var y: Ulong
         get() = Ulong(array[ofs + 1])
         set(value) = array.set(ofs + 1, value.v)
-    override var z: Ulong
+    override inline var z: Ulong
         get() = Ulong(array[ofs + 2])
         set(value) = array.set(ofs + 2, value.v)
 

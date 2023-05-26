@@ -22,15 +22,15 @@ import kotlin.math.abs
  * Created by elect on 08/10/16.
  */
 
-class Vec3d(var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuffer {
+class Vec3d(@JvmField var ofs: Int, var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuffer {
 
-    override var x: Double
+    override inline var x: Double
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override var y: Double
+    override inline var y: Double
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
-    override var z: Double
+    override inline var z: Double
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
 

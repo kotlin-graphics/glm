@@ -23,18 +23,18 @@ import kotlin.math.abs
  * Created by elect on 09/10/16.
  */
 
-class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer {
+class Vec4(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer {
 
-    override var x: Float
+    override inline var x: Float
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override var y: Float
+    override inline var y: Float
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
-    override var z: Float
+    override inline var z: Float
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
-    override var w: Float
+    override inline var w: Float
         get() = array[ofs + 3]
         set(value) = array.set(ofs + 3, value)
 

@@ -20,15 +20,15 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec3s(var ofs: Int, var array: ShortArray) : Vec3t<Short>(), ToBuffer {
+class Vec3s(@JvmField var ofs: Int, var array: ShortArray) : Vec3t<Short>(), ToBuffer {
 
-    override var x: Short
+    override inline var x: Short
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override var y: Short
+    override inline var y: Short
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
-    override var z: Short
+    override inline var z: Short
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
 

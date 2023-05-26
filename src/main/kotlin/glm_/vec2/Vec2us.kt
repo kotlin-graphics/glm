@@ -22,12 +22,12 @@ import kotlin.math.abs
  * Created by elect on 08/10/16.
  */
 
-class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
+class Vec2us(@JvmField var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
 
-    override var x: Ushort
+    override inline var x: Ushort
         get() = Ushort(array[ofs])
         set(value) = array.set(ofs, value.v)
-    override var y: Ushort
+    override inline var y: Ushort
         get() = Ushort(array[ofs + 1])
         set(value) = array.set(ofs + 1, value.v)
 

@@ -24,18 +24,18 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4us(var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
+class Vec4us(@JvmField var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
 
-    override var x: Ushort
+    override inline var x: Ushort
         get() = Ushort(array[ofs])
         set(value) = array.set(ofs, value.v)
-    override var y: Ushort
+    override inline var y: Ushort
         get() = Ushort(array[ofs + 1])
         set(value) = array.set(ofs + 1, value.v)
-    override var z: Ushort
+    override inline var z: Ushort
         get() = Ushort(array[ofs + 2])
         set(value) = array.set(ofs + 2, value.v)
-    override var w: Ushort
+    override inline var w: Ushort
         get() = Ushort(array[ofs + 3])
         set(value) = array.set(ofs + 3, value.v)
 

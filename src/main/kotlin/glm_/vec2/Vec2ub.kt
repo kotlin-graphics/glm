@@ -21,12 +21,12 @@ import kotlin.math.abs
  * Created by elect on 07/10/16.
  */
 
-class Vec2ub(var ofs: Int, var array: ByteArray) : Vec2t<Ubyte>(), ToBuffer {
+class Vec2ub(@JvmField var ofs: Int, var array: ByteArray) : Vec2t<Ubyte>(), ToBuffer {
 
-    override var x: Ubyte
+    override inline var x: Ubyte
         get() = Ubyte(array[ofs])
         set(value) = array.set(ofs, value.v)
-    override var y: Ubyte
+    override inline var y: Ubyte
         get() = Ubyte(array[ofs + 1])
         set(value) = array.set(ofs + 1, value.v)
 

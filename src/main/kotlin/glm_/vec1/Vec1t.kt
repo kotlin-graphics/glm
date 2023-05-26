@@ -26,7 +26,7 @@ abstract class Vec1t<T : Number>(_x: T): ToBuffer {
 
     // -- Component accesses --
 
-    operator fun get(index: Int) = when (index) {
+    inline operator fun get(index: Int) = when (index) {
         0 -> x
         else -> throw IndexOutOfBoundsException()
     }
@@ -203,14 +203,14 @@ abstract class Vec1t<T : Number>(_x: T): ToBuffer {
 
     // component alias
 
-    var r
+    inline var r
         @JvmName("r") get() = x
         @JvmName("r") set(value) {
             x = value
         }
 
 
-    var s
+    inline var s
         @JvmName("s") get() = x
         @JvmName("s") set(value) {
             x = value

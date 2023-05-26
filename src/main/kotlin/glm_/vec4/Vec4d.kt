@@ -23,18 +23,18 @@ import kotlin.math.abs
  * Created by elect on 09/10/16.
  */
 
-class Vec4d(var ofs: Int, var array: DoubleArray) : Vec4t<Double>(), ToDoubleBuffer {
+class Vec4d(@JvmField var ofs: Int, var array: DoubleArray) : Vec4t<Double>(), ToDoubleBuffer {
 
-    override var x: Double
+    override inline var x: Double
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override var y: Double
+    override inline var y: Double
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
-    override var z: Double
+    override inline var z: Double
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
-    override var w: Double
+    override inline var w: Double
         get() = array[ofs + 3]
         set(value) = array.set(ofs + 3, value)
 

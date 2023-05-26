@@ -20,15 +20,15 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec3i(var ofs: Int, var array: IntArray) : Vec3t<Int>(), ToBuffer {
+class Vec3i(@JvmField var ofs: Int, var array: IntArray) : Vec3t<Int>(), ToBuffer {
 
-    override var x: Int
+    override inline var x: Int
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override var y: Int
+    override inline var y: Int
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
-    override var z: Int
+    override inline var z: Int
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
 

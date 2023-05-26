@@ -18,12 +18,12 @@ abstract class Vec2t<T : Number>: ToBuffer {
     abstract var x: T
     abstract var y: T
 
-    operator fun component1() = x
-    operator fun component2() = y
+    inline operator fun component1() = x
+    inline operator fun component2() = y
 
     // -- Component accesses --
 
-    operator fun get(index: Int) = when (index) {
+    inline operator fun get(index: Int) = when (index) {
         0 -> x
         1 -> y
         else -> throw IndexOutOfBoundsException()
@@ -221,24 +221,24 @@ abstract class Vec2t<T : Number>: ToBuffer {
 
     // component alias
 
-    var r
+    inline var r
         @JvmName("r") get() = x
         @JvmName("r") set(value) {
             x = value
         }
 
-    var g
+    inline var g
         @JvmName("g") get() = y
         @JvmName("g") set(value) {
             y = value
         }
-    var s
+    inline var s
         @JvmName("s") get() = x
         @JvmName("s") set(value) {
             x = value
         }
 
-    var t
+    inline var t
         @JvmName("t") get() = y
         @JvmName("t") set(value) {
             y = value
