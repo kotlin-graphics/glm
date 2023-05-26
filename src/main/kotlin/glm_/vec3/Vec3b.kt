@@ -19,7 +19,7 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec3b(@JvmField var ofs: Int, var array: ByteArray) : Vec3t<Byte>(), ToBuffer {
+class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte>(), ToBuffer {
 
     override inline var x: Byte
         get() = array[ofs]

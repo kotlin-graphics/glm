@@ -21,7 +21,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4l(@JvmField var ofs: Int, var array: LongArray) : Vec4t<Long>(), ToBuffer {
+class Vec4l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec4t<Long>(), ToBuffer {
 
     override inline var x: Long
         get() = array[ofs]

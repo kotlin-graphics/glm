@@ -22,7 +22,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4ui(@JvmField var ofs: Int, var array: IntArray) : Vec4t<Uint>(), ToBuffer {
+class Vec4ui(@JvmField var ofs: Int, @JvmField var array: IntArray) : Vec4t<Uint>(), ToBuffer {
 
     override inline var x: Uint
         get() = Uint(array[ofs])

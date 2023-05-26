@@ -22,7 +22,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4ul(@JvmField var ofs: Int, var array: LongArray) : Vec4t<Ulong>(), ToBuffer {
+class Vec4ul(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec4t<Ulong>(), ToBuffer {
 
     override inline var x: Ulong
         get() = Ulong(array[ofs])

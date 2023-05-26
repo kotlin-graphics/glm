@@ -22,7 +22,7 @@ import kotlin.math.abs
  * Created by elect on 08/10/16.
  */
 
-class Vec2ul(@JvmField var ofs: Int, var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
+class Vec2ul(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec2t<Ulong>(), ToBuffer {
 
     override inline var x: Ulong
         get() = Ulong(array[ofs])

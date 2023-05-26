@@ -20,7 +20,7 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec3i(@JvmField var ofs: Int, var array: IntArray) : Vec3t<Int>(), ToBuffer {
+class Vec3i(@JvmField var ofs: Int, @JvmField var array: IntArray) : Vec3t<Int>(), ToBuffer {
 
     override inline var x: Int
         get() = array[ofs]

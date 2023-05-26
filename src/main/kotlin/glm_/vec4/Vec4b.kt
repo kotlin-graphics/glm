@@ -20,7 +20,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4b(@JvmField var ofs: Int, var array: ByteArray) : Vec4t<Byte>(), ToBuffer {
+class Vec4b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec4t<Byte>(), ToBuffer {
 
     override inline var x: Byte
         get() = array[ofs]

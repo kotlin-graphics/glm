@@ -21,7 +21,7 @@ import kotlin.math.abs
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2l(@JvmField var ofs: Int, var array: LongArray) : Vec2t<Long>(), ToBuffer {
+class Vec2l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec2t<Long>(), ToBuffer {
 
     override inline var x: Long
         get() = array[ofs]

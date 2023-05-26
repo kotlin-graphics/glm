@@ -19,7 +19,7 @@ import kotlin.math.abs
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2b(@JvmField var ofs: Int, var array: ByteArray) : Vec2t<Byte>() {
+class Vec2b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec2t<Byte>() {
 
     override inline var x: Byte
         get() = array[ofs]

@@ -24,7 +24,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4us(@JvmField var ofs: Int, var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
+class Vec4us(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec4t<Ushort>(), ToBuffer {
 
     override inline var x: Ushort
         get() = Ushort(array[ofs])

@@ -32,7 +32,7 @@ import java.nio.DoubleBuffer
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-class Mat4d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var array: DoubleArray) : Mat4x4t<Double>(), ToDoubleBuffer {
+class Mat4d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmField var array: DoubleArray) : Mat4x4t<Double>(), ToDoubleBuffer {
 
     // -- Constructors --
 
@@ -41,10 +41,10 @@ class Mat4d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
     constructor(s: Number) : this(s, s, s, s)
 
     constructor(x: Number, y: Number, z: Number, w: Number) : this(
-            x, 0, 0, 0,
-            0, y, 0, 0,
-            0, 0, z, 0,
-            0, 0, 0, w)
+        x, 0, 0, 0,
+        0, y, 0, 0,
+        0, 0, z, 0,
+        0, 0, 0, w)
 
     // TODO others
 

@@ -31,7 +31,7 @@ import kotlin.math.abs
  *
  * GLSL, column major
  */
-class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var array: FloatArray) : Mat2x2t<Float>(), ToFloatBuffer {
+class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmField var array: FloatArray) : Mat2x2t<Float>(), ToFloatBuffer {
 
     // -- Constructors --
 

@@ -33,7 +33,7 @@ import java.nio.FloatBuffer
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var array: FloatArray) : Mat4x4t<Float>(), ToFloatBuffer {
+class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmField var array: FloatArray) : Mat4x4t<Float>(), ToFloatBuffer {
 
     // -- Constructors --
 

@@ -32,7 +32,7 @@ import java.nio.DoubleBuffer
  * Created by GBarbieri on 10.11.2016.
  */
 
-class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var array: DoubleArray) : Mat3x3t<Double>(), ToDoubleBuffer {
+class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmField var array: DoubleArray) : Mat3x3t<Double>(), ToDoubleBuffer {
 
     // -- Constructors --
 
