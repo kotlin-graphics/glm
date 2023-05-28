@@ -2,7 +2,9 @@ package glm_.vec4
 
 import glm_.*
 import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1d
 import glm_.vec1.Vec1t
+import glm_.vec2.Vec2b
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
@@ -11,8 +13,6 @@ import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4d_operators
 import kool.*
-import org.lwjgl.system.MemoryUtil.memGetDouble
-import org.lwjgl.system.MemoryUtil.memPutDouble
 import java.awt.Color
 import java.io.InputStream
 import java.io.PrintStream
@@ -102,13 +102,13 @@ class Vec4d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec4t<Do
     constructor(x: Vec1d, y: Vec1d, z: Vec1d, w: Vec1d) : this(x.x, y.x, z.x, w.x)
 
 
-    constructor(xy: Vec2b, z: Double, w: Double) : this(xy.x, xy.y, z, w)
-    constructor(x: Double, yz: Vec2b, w: Double) : this(x, yz.x, yz.y, w)
-    constructor(x: Double, y: Double, zw: Vec2b) : this(x, y, zw.x, zw.y)
-    constructor(xy: Vec2b, zw: Vec2b) : this(xy.x, xy.y, zw.x, zw.y)
+    constructor(xy: Vec2d, z: Double, w: Double) : this(xy.x, xy.y, z, w)
+    constructor(x: Double, yz: Vec2d, w: Double) : this(x, yz.x, yz.y, w)
+    constructor(x: Double, y: Double, zw: Vec2d) : this(x, y, zw.x, zw.y)
+    constructor(xy: Vec2d, zw: Vec2d) : this(xy.x, xy.y, zw.x, zw.y)
 
-    constructor(xyz: Vec3b, w: Double) : this(xyz.x, xyz.y, xyz.z, w)
-    constructor(x: Double, yzw: Vec3b) : this(x, yzw.x, yzw.y, yzw.z)
+    constructor(xyz: Vec3d, w: Double) : this(xyz.x, xyz.y, xyz.z, w)
+    constructor(x: Double, yzw: Vec3d) : this(x, yzw.x, yzw.y, yzw.z)
 
     constructor(v: Vec1bool) : this(v.x.d, 0, 0, 1)
     constructor(v: Vec2bool) : this(v.x.d, v.y.d, 0, 1)

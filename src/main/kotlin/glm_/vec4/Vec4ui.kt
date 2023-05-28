@@ -12,8 +12,6 @@ import glm_.vec3.Vec3ui
 import glm_.vec4.operators.vec4ui_operators
 import kool.*
 import org.lwjgl.system.MemoryStack
-import org.lwjgl.system.MemoryUtil.memGetInt
-import unsigned.Ubyte
 import unsigned.Uint
 import unsigned.UintArray
 import unsigned.toUint

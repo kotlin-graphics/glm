@@ -1,7 +1,7 @@
 package glm_.func
 
-import glm_.*
-import glm_.ext.equal
+import glm_.b
+import glm_.s
 import glm_.vec1.*
 import glm_.vec2.*
 import glm_.vec3.*

@@ -10,10 +10,11 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec3.Vec3ub
 import glm_.vec4.operators.vec4ub_operators
-import kool.*
-import org.lwjgl.system.MemoryUtil.memGetByte
+import kool.Ptr
+import kool.get
+import kool.pos
+import kool.set
 import unsigned.Ubyte
-import unsigned.Ulong
 import unsigned.UbyteArray
 import unsigned.toUbyte
 import java.io.PrintStream

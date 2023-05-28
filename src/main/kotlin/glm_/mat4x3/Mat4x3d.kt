@@ -4,17 +4,15 @@ package  glm_.mat4x3
  * Created by GBarbieri on 09.12.2016.
  */
 
-import glm_.*
+import glm_.ToDoubleBuffer
+import glm_.d
+import glm_.toDouble
 import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import kool.BYTES
-import kool.DoubleBuffer
-import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
-import java.util.*
 
 
 class Mat4x3d(var array: DoubleArray) : Mat4x3t<Double>(), ToDoubleBuffer {

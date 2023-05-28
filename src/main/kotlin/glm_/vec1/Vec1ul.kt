@@ -4,14 +4,18 @@ import glm_.*
 import glm_.vec1.operators.opVec1ul
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
+import glm_.vec2.Vec2ub
+import glm_.vec2.Vec2ul
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
+import glm_.vec3.Vec3ub
+import glm_.vec3.Vec3ul
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import glm_.vec4.Vec4ub
+import glm_.vec4.Vec4ul
 import kool.*
 import org.lwjgl.system.MemoryStack
-import org.lwjgl.system.MemoryUtil.memGetLong
-import org.lwjgl.system.MemoryUtil.memPutLong
 import unsigned.Ulong
 import java.io.PrintStream
 import java.lang.Math.abs
@@ -30,6 +34,11 @@ class Vec1ul(@JvmField inline var x: Ulong) : Vec1t<Ulong> {
 
     // -- Explicit basic constructors --
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    constructor(v: Vec1ul) : this(v.x)
+    constructor(v: Vec2ul) : this(v.x)
+    constructor(v: Vec3ul) : this(v.x)
+    constructor(v: Vec4ul) : this(v.x)
 
     constructor(v: Vec1t<out Number>) : this(v._x)
     constructor(v: Vec2t<out Number>) : this(v._x)

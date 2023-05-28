@@ -1,6 +1,5 @@
 package  glm_.mat2x3
 
-import glm_.BYTES
 import glm_.ToFloatBuffer
 import glm_.f
 import glm_.toFloat
@@ -8,10 +7,8 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
 import kool.BYTES
 import kool.set
-import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
-import java.util.*
 
 /**
  * Created by GBarbieri on 09.12.2016.

@@ -2,16 +2,16 @@ package glm_.vec3
 
 import glm_.*
 import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1d
 import glm_.vec1.Vec1t
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import glm_.vec3.operators.vec3d_operators
 import glm_.vec4.Vec4bool
+import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryUtil.memGetDouble
-import org.lwjgl.system.MemoryUtil.memPutDouble
 import java.awt.Color
 import java.io.InputStream
 import java.io.PrintStream

@@ -9,9 +9,10 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.*
-import org.lwjgl.system.MemoryUtil.memGetByte
-import org.lwjgl.system.MemoryUtil.memPutByte
+import kool.Ptr
+import kool.get
+import kool.pos
+import kool.set
 import unsigned.Ubyte
 import unsigned.UbyteArray
 import unsigned.toUbyte

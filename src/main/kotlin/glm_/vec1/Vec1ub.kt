@@ -6,13 +6,15 @@ import glm_.ub
 import glm_.vec1.operators.opVec1ub
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
+import glm_.vec2.Vec2ub
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
+import glm_.vec3.Vec3ub
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import glm_.vec4.Vec4ub
 import kool.pos
 import unsigned.Ubyte
-import unsigned.Uint
 import java.nio.*
 import kotlin.math.abs
 

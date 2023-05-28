@@ -1,15 +1,17 @@
 package glm_.vec2
 
 import glm_.*
+import glm_.vec1.Vec1
 import glm_.vec1.Vec1bool
 import glm_.vec1.Vec1t
 import glm_.vec2.operators.opVec2
+import glm_.vec3.Vec3
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
+import glm_.vec4.Vec4
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryUtil.memGetFloat
 import java.awt.Color
 import java.io.InputStream
 import java.io.PrintStream
@@ -425,14 +427,14 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
 
     infix fun max(b: Vec2t<*>): Vec2 {
         val res = Vec2()
-        res.x = GLM.max(x, b._x.f)
-        res.y = GLM.max(y, b._y.f)
+        res.x = glm.max(x, b._x.f)
+        res.y = glm.max(y, b._y.f)
         return res
     }
 
     infix fun maxAssign(b: Vec2t<*>) {
-        x = GLM.max(x, b._x.f)
-        y = GLM.max(y, b._y.f)
+        x = glm.max(x, b._x.f)
+        y = glm.max(y, b._y.f)
     }
 
     infix fun max(b: Float) = glm.max(this, b, Vec2())
@@ -463,14 +465,14 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
 
     infix fun min(b: Vec2t<*>): Vec2 {
         val res = Vec2()
-        res.x = GLM.min(x, b._x.f)
-        res.y = GLM.min(y, b._y.f)
+        res.x = glm.min(x, b._x.f)
+        res.y = glm.min(y, b._y.f)
         return res
     }
 
     infix fun minAssign(b: Vec2t<*>) {
-        x = GLM.min(x, b._x.f)
-        y = GLM.min(y, b._y.f)
+        x = glm.min(x, b._x.f)
+        y = glm.min(y, b._y.f)
     }
 
     infix fun min(b: Float) = glm.min(this, b, Vec2())

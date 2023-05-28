@@ -24,8 +24,6 @@ import glm_.vec4.Vec4
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryUtil.memGetFloat
-import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.io.InputStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer

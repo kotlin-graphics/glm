@@ -4,12 +4,7 @@ import glm_.*
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
 import kool.BYTES
-import kool.DoubleBuffer
-import kool.pos
 import kool.set
-import org.lwjgl.system.CallbackI
-import org.lwjgl.system.MemoryStack
-import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*

@@ -1,17 +1,14 @@
 package  glm_.mat2x4
 
-import glm_.*
+import glm_.ToFloatBuffer
+import glm_.f
+import glm_.toFloat
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
 import kool.BYTES
-import kool.FloatBuffer
-import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
-import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
-import java.util.*
 
 /**
  * Created by GBarbieri on 09.12.2016.

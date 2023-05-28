@@ -2,16 +2,17 @@ package glm_.vec2
 
 import glm_.*
 import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1i
 import glm_.vec1.Vec1t
 import glm_.vec2.operators.opVec2i
 import glm_.vec3.Vec3bool
+import glm_.vec3.Vec3i
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
+import glm_.vec4.Vec4i
 import glm_.vec4.Vec4t
 import kool.*
 import org.lwjgl.system.MemoryStack
-import org.lwjgl.system.MemoryUtil.memGetInt
-import org.lwjgl.system.MemoryUtil.memPutInt
 import java.io.PrintStream
 import java.nio.*
 import kotlin.math.abs

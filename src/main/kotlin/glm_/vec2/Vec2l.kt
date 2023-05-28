@@ -2,20 +2,20 @@ package glm_.vec2
 
 import glm_.*
 import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1l
 import glm_.vec1.Vec1t
 import glm_.vec2.operators.opVec2l
 import glm_.vec3.Vec3bool
+import glm_.vec3.Vec3l
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
+import glm_.vec4.Vec4l
 import glm_.vec4.Vec4t
 import kool.*
 import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryStack.stackGet
-import org.lwjgl.system.MemoryUtil.memGetLong
-import org.lwjgl.system.MemoryUtil.memPutLong
 import java.io.PrintStream
 import java.nio.*
-import kotlin.math.abs
 
 /**
  * Created bY GBarbieri on 06.10.2016.
@@ -46,7 +46,6 @@ class Vec2l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec2t<Long
     constructor(v: Number) : this(v.L)
     constructor(x: Number, y: Number) : this(x.L, y.L)
 
-    constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 

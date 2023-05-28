@@ -24,8 +24,6 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryUtil.memGetDouble
-import org.lwjgl.system.MemoryUtil.memPutDouble
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 

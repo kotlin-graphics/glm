@@ -1,6 +1,7 @@
 package glm_.vec3
 
 import glm_.*
+import glm_.vec1.Vec1
 import glm_.vec1.Vec1bool
 import glm_.vec1.Vec1t
 import glm_.vec2.Vec2
@@ -11,8 +12,6 @@ import glm_.vec4.Vec4
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryUtil.memGetFloat
-import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.awt.Color
 import java.io.InputStream
 import java.io.PrintStream
@@ -500,7 +499,7 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
 
 
     companion object : vec3_operators {
-        const val length = LENGTH
+        const val length = Vec3t.LENGTH
 
         @JvmField
         val size = length * Float.BYTES

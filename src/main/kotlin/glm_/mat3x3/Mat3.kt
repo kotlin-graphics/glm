@@ -1,6 +1,8 @@
 package  glm_.mat3x3
 
-import glm_.*
+import glm_.ToFloatBuffer
+import glm_.f
+import glm_.glm
 import glm_.glm.inverse
 import glm_.glm.transpose
 import glm_.mat2x2.Mat2
@@ -15,6 +17,7 @@ import glm_.mat4x3.Mat4x3t
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.quat.Quat
+import glm_.toFloat
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
@@ -23,8 +26,6 @@ import glm_.vec3.Vec3t
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryUtil.memGetFloat
-import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 

@@ -2,6 +2,7 @@ package glm_.vec4
 
 import glm_.*
 import glm_.vec1.Vec1bool
+import glm_.vec1.Vec1i
 import glm_.vec1.Vec1t
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2i
@@ -12,8 +13,6 @@ import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4i_operators
 import kool.*
 import org.lwjgl.system.MemoryStack
-import org.lwjgl.system.MemoryUtil.memGetInt
-import org.lwjgl.system.MemoryUtil.memPutInt
 import java.io.PrintStream
 import java.nio.*
 

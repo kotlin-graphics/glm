@@ -12,7 +12,6 @@ import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryUtil.memGetFloat
 import java.io.InputStream
 import java.io.PrintStream
 import kotlin.math.abs

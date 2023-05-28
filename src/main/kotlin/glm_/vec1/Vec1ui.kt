@@ -4,10 +4,16 @@ import glm_.*
 import glm_.vec1.operators.opVec1ui
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
+import glm_.vec2.Vec2ub
+import glm_.vec2.Vec2ui
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
+import glm_.vec3.Vec3ub
+import glm_.vec3.Vec3ui
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import glm_.vec4.Vec4ub
+import glm_.vec4.Vec4ui
 import kool.IntBuffer
 import kool.pos
 import kool.set
@@ -29,6 +35,11 @@ class Vec1ui(@JvmField inline var x: Uint) : Vec1t<Uint> {
 
     // -- Explicit basic constructors --
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+
+    constructor(v: Vec1ui) : this(v.x)
+    constructor(v: Vec2ui) : this(v.x)
+    constructor(v: Vec3ui) : this(v.x)
+    constructor(v: Vec4ui) : this(v.x)
 
     constructor(v: Vec1t<out Number>) : this(v._x)
     constructor(v: Vec2t<out Number>) : this(v._x)

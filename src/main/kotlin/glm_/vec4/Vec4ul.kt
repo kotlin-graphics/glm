@@ -12,8 +12,6 @@ import glm_.vec3.Vec3ul
 import glm_.vec4.operators.vec4ul_operators
 import kool.*
 import org.lwjgl.system.MemoryStack
-import org.lwjgl.system.MemoryUtil.memGetLong
-import unsigned.Ubyte
 import unsigned.Ulong
 import unsigned.UlongArray
 import unsigned.toUlong

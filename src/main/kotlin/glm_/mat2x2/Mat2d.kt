@@ -12,19 +12,15 @@ import glm_.mat4x2.Mat4x2d
 import glm_.mat4x2.Mat4x2t
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
-import glm_.vec2.Vec2
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d
 import kool.*
-import org.lwjgl.system.MemoryUtil.memGetDouble
-import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*
-import kotlin.math.abs
 
 /**
  * Created by GBarbieri on 10.11.2016.

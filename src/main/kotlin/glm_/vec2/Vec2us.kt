@@ -10,15 +10,11 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.*
 import org.lwjgl.system.MemoryStack
-import org.lwjgl.system.MemoryUtil.memGetShort
-import org.lwjgl.system.MemoryUtil.memPutShort
-import unsigned.Ubyte
 import unsigned.Ushort
 import unsigned.UshortArray
 import unsigned.toUshort
 import java.io.PrintStream
 import java.nio.*
-import kotlin.math.abs
 
 /**
  * Created by elect on 08/10/16.

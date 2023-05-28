@@ -1,12 +1,17 @@
 package glm_.vec1
 
-import glm_.*
+import glm_.getInt
+import glm_.i
+import glm_.putInt
 import glm_.vec1.operators.opVec1i
 import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2i
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
+import glm_.vec3.Vec3i
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
+import glm_.vec4.Vec4i
 import glm_.vec4.Vec4t
 import kool.*
 import org.lwjgl.system.MemoryStack

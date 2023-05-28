@@ -18,13 +18,9 @@ import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import kool.*
-import org.lwjgl.system.MemoryUtil.memGetFloat
-import org.lwjgl.system.MemoryUtil.memPutFloat
-import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.util.*
-import kotlin.math.abs
 
 /**
  * Created by GBarbieri on 10.11.2016.

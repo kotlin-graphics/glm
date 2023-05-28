@@ -1,17 +1,18 @@
 package glm_.vec1
 
-import glm_.BYTES
 import glm_.b
 import glm_.toByte
 import glm_.vec1.operators.opVec1b
+import glm_.vec2.Vec2b
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
+import glm_.vec3.Vec3b
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
+import glm_.vec4.Vec4b
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.*
-
 import java.nio.*
 import kotlin.math.abs
 

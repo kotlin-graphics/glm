@@ -11,8 +11,6 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.*
 import org.lwjgl.system.MemoryStack
-import org.lwjgl.system.MemoryUtil.memGetLong
-import org.lwjgl.system.MemoryUtil.memPutLong
 import unsigned.Ulong
 import unsigned.UlongArray
 import unsigned.toUlong

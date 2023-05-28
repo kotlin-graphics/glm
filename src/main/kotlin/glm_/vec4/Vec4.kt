@@ -1,6 +1,7 @@
 package glm_.vec4
 
 import glm_.*
+import glm_.vec1.Vec1
 import glm_.vec1.Vec1bool
 import glm_.vec1.Vec1t
 import glm_.vec2.Vec2
@@ -11,8 +12,6 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4_operators
 import kool.*
-import org.lwjgl.system.MemoryUtil.memGetFloat
-import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.awt.Color
 import java.io.InputStream
 import java.io.PrintStream
@@ -463,9 +462,9 @@ class Vec4(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec4t<Floa
     fun anyEqual(f: Float, epsilon: Float = glm.εf): Boolean = abs(x - f) < epsilon || abs(y - f) < epsilon || abs(z - f) < epsilon || abs(w - f) < epsilon
     fun equal(f: Float, epsilon: Float = glm.εf): Vec4bool = Vec4bool { abs(get(it) - f) < epsilon }
 
-    fun allNotEqual(f: Float, epsilon: Float = GLM.εf): Boolean = abs(x - f) >= epsilon && abs(y - f) >= epsilon && abs(z - f) >= epsilon && abs(w - f) >= epsilon
-    fun anyNotEqual(f: Float, epsilon: Float = GLM.εf): Boolean = abs(x - f) >= epsilon || abs(y - f) >= epsilon || abs(z - f) >= epsilon || abs(w - f) >= epsilon
-    fun notEqual(f: Float, epsilon: Float = GLM.εf): Vec4bool = Vec4bool { abs(get(it) - f) >= epsilon }
+    fun allNotEqual(f: Float, epsilon: Float = glm.εf): Boolean = abs(x - f) >= epsilon && abs(y - f) >= epsilon && abs(z - f) >= epsilon && abs(w - f) >= epsilon
+    fun anyNotEqual(f: Float, epsilon: Float = glm.εf): Boolean = abs(x - f) >= epsilon || abs(y - f) >= epsilon || abs(z - f) >= epsilon || abs(w - f) >= epsilon
+    fun notEqual(f: Float, epsilon: Float = glm.εf): Vec4bool = Vec4bool { abs(get(it) - f) >= epsilon }
 
     infix fun allGreaterThan(f: Float): Boolean = x > f && y > f && z > f && w > f
     infix fun anyGreaterThan(f: Float): Boolean = x > f || y > f || z > f || w > f
@@ -488,9 +487,9 @@ class Vec4(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec4t<Floa
     fun anyEqual(v: Vec4, epsilon: Float = glm.εf): Boolean = abs(x - v.x) < epsilon || abs(y - v.y) < epsilon || abs(z - v.z) < epsilon || abs(w - v.w) < epsilon
     fun equal(v: Vec4, epsilon: Float = glm.εf): Vec4bool = Vec4bool { abs(get(it) - v[it]) < epsilon }
 
-    fun allNotEqual(v: Vec4, epsilon: Float = GLM.εf): Boolean = abs(x - v.x) >= epsilon && abs(y - v.y) >= epsilon && abs(z - v.z) >= epsilon && abs(w - v.w) >= epsilon
-    fun anyNotEqual(v: Vec4, epsilon: Float = GLM.εf): Boolean = abs(x - v.x) >= epsilon || abs(y - v.y) >= epsilon || abs(z - v.z) >= epsilon || abs(w - v.w) >= epsilon
-    fun notEqual(v: Vec4, epsilon: Float = GLM.εf): Vec4bool = Vec4bool { abs(get(it) - v[it]) >= epsilon }
+    fun allNotEqual(v: Vec4, epsilon: Float = glm.εf): Boolean = abs(x - v.x) >= epsilon && abs(y - v.y) >= epsilon && abs(z - v.z) >= epsilon && abs(w - v.w) >= epsilon
+    fun anyNotEqual(v: Vec4, epsilon: Float = glm.εf): Boolean = abs(x - v.x) >= epsilon || abs(y - v.y) >= epsilon || abs(z - v.z) >= epsilon || abs(w - v.w) >= epsilon
+    fun notEqual(v: Vec4, epsilon: Float = glm.εf): Vec4bool = Vec4bool { abs(get(it) - v[it]) >= epsilon }
 
     infix fun allGreaterThan(v: Vec4): Boolean = x > v.x && y > v.y && z > v.z && w > v.w
     infix fun anyGreaterThan(v: Vec4): Boolean = x > v.x || y > v.y || z > v.z || w > v.w

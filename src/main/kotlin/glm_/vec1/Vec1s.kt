@@ -3,10 +3,13 @@ package glm_.vec1
 import glm_.*
 import glm_.vec1.operators.opVec1s
 import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2s
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
+import glm_.vec3.Vec3s
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
+import glm_.vec4.Vec4s
 import glm_.vec4.Vec4t
 import kool.*
 import org.lwjgl.system.MemoryStack

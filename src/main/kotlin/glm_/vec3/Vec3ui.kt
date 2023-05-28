@@ -11,10 +11,7 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.*
 import org.lwjgl.system.MemoryStack
-import org.lwjgl.system.MemoryUtil.memGetInt
-import org.lwjgl.system.MemoryUtil.memPutInt
 import unsigned.Uint
-import unsigned.Ulong
 import unsigned.UintArray
 import unsigned.toUint
 import java.io.PrintStream

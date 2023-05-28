@@ -1,6 +1,8 @@
 package  glm_.mat3x3
 
-import glm_.*
+import glm_.ToDoubleBuffer
+import glm_.d
+import glm_.glm
 import glm_.glm.inverse
 import glm_.glm.transpose
 import glm_.mat2x2.Mat2
@@ -15,6 +17,7 @@ import glm_.mat4x3.Mat4x3t
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.quat.QuatD
+import glm_.toDouble
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
@@ -23,8 +26,6 @@ import glm_.vec3.Vec3t
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryUtil.memGetDouble
-import org.lwjgl.system.MemoryUtil.memPutDouble
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 

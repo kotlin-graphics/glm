@@ -1,17 +1,14 @@
 package  glm_.mat2x3
 
-import glm_.*
+import glm_.ToDoubleBuffer
+import glm_.d
+import glm_.toDouble
 import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import kool.BYTES
-import kool.DoubleBuffer
-import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
-import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
-import java.util.*
 
 /**
  * Created by GBarbieri on 09.12.2016.
