@@ -329,7 +329,7 @@ class Vec1d(@JvmField inline var x: Double) : Vec1t<Double>, ToDoubleBuffer {
         } else throw IndexOutOfBoundsException()
     }
 
-    override inline fun component1() = x
+    override inline operator fun component1() = x
     
     override fun toString(): String = "($x)"
 }

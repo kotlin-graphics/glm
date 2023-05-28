@@ -666,8 +666,8 @@ class Vec2i(@JvmField var ofs: Int, @JvmField var array: IntArray) : Vec2t<Int> 
         array[ofs + index] = value
     }
 
-    override inline fun component1() = x
-    override inline fun component2() = y
+    override inline operator fun component1() = x
+    override inline operator fun component2() = y
 
 
     override fun toString(): String = "($x, $y)"

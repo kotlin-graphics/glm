@@ -528,9 +528,9 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
         array[ofs + index] = value
     }
 
-    override inline fun component1() = x
-    override inline fun component2() = y
-    override inline fun component3() = z
+    override inline operator fun component1() = x
+    override inline operator fun component2() = y
+    override inline operator fun component3() = z
 
     override fun toString(): String = "($x, $y, $z)"
 }

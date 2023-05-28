@@ -125,7 +125,7 @@ class Vec1b(@JvmField inline var x: Byte) : Vec1t<Byte> {
         } else throw IndexOutOfBoundsException()
     }
 
-    override inline fun component1() = x
+    override inline operator fun component1() = x
 
     override fun toString(): String = "($x)"
 }

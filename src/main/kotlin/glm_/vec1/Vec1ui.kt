@@ -495,7 +495,7 @@ class Vec1ui(@JvmField inline var x: Uint) : Vec1t<Uint> {
         } else throw IndexOutOfBoundsException()
     }
 
-    override inline fun component1() = x
+    override inline operator fun component1() = x
 
     override fun toString(): String = "($x)"
 }

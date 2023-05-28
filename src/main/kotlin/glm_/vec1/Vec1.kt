@@ -340,7 +340,7 @@ class Vec1(@JvmField inline var x: Float) : Vec1t<Float>, ToFloatBuffer {
         } else throw IndexOutOfBoundsException()
     }
 
-    override inline fun component1() = x
+    override inline operator fun component1() = x
 
 
     override fun toString(): String = "($x)"
