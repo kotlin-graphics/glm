@@ -712,7 +712,7 @@ class Vec2s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec2t<Sho
     override inline var t get() = y; set(value) { y = value }
     //@formatter:on
 
-    override inline operator fun get(index: Int): Short = array[ofs + index]
+    override inline operator fun get(index: Int) = array[ofs + index]
 
     override inline operator fun set(index: Int, value: Short) {
         array[ofs + index] = value

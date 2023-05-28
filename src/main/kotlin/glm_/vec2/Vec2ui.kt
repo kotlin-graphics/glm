@@ -730,7 +730,7 @@ class Vec2ui(@JvmField var ofs: Int, var array: UintArray) : Vec2t<Uint>, ToBuff
     override inline var t get() = y; set(value) { y = value }
     //@formatter:on
 
-    override inline operator fun get(index: Int): Uint = array[ofs + index]
+    override inline operator fun get(index: Int) = array[ofs + index]
 
     override inline operator fun set(index: Int, value: Uint) {
         array[ofs + index] = value

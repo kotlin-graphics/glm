@@ -638,7 +638,7 @@ class Vec2l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec2t<Long
     override inline var t get() = y; set(value) { y = value }
     //@formatter:on
 
-    override inline operator fun get(index: Int): Long = array[ofs + index]
+    override inline operator fun get(index: Int) = array[ofs + index]
 
     override inline operator fun set(index: Int, value: Long) {
         array[ofs + index] = value

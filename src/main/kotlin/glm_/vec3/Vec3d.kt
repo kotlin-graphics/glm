@@ -22,15 +22,15 @@ import kotlin.math.abs
  * Created by elect on 08/10/16.
  */
 
-class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Double>(), ToDoubleBuffer {
+class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Double>, ToDoubleBuffer {
 
-    override inline var x: Double
+    inline var x: Double
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override inline var y: Double
+    inline var y: Double
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
-    override inline var z: Double
+    inline var z: Double
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
 
@@ -47,33 +47,44 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
 
     // -- Conversion scalar constructors --
 
-    constructor(v: Vec1t<out Number>) : this(v.x, v.x, v.x)
+    constructor(v: Vec1t<out Number>) : this(v._x, v._x, v._x)
 
     // Explicit converions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     @JvmOverloads
     constructor(x: Number, y: Number = x, z: Number = x) : this(x.d, y.d, z.d)
 
-    constructor(x: Vec1t<out Number>, y: Number, z: Number) : this(x.x, y, z)
-    constructor(x: Number, y: Vec1t<out Number>, z: Number) : this(x, y.x, z)
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number) : this(x.x, y.x, z)
-    constructor(x: Number, y: Number, z: Vec1t<out Number>) : this(x, y, z.x)
-    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>) : this(x.x, y, z.x)
-    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x, y.x, z.x)
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x.x, y.x, z.x)
+    constructor(x: Vec1t<out Number>, y: Number, z: Number) : this(x._x, y, z)
+    constructor(x: Number, y: Vec1t<out Number>, z: Number) : this(x, y._x, z)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number) : this(x._x, y._x, z)
+    constructor(x: Number, y: Number, z: Vec1t<out Number>) : this(x, y, z._x)
+    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>) : this(x._x, y, z._x)
+    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x, y._x, z._x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x._x, y._x, z._x)
 
     // -- Conversion vector constructors --
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     @JvmOverloads
-    constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy.x, xy.y, z)
+    constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy._x, xy._y, z)
 
-    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy.x, xy.y, z.x)
-    constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz.x, yz.y)
-    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x.x, yz.x, yz.y)
-    constructor(v: Vec3t<out Number>) : this(v.x, v.y, v.z)
-    constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z)
+    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy._x, xy._y, z._x)
+    constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz._x, yz._y)
+    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x._x, yz._x, yz._y)
+    constructor(v: Vec3t<out Number>) : this(v._x, v._y, v._z)
+    constructor(v: Vec4t<out Number>) : this(v._x, v._y, v._z)
+
+
+    constructor(v: Vec1d) : this(v.x, v.x, v.x)
+    constructor(x: Vec1d, y: Double, z: Double) : this(x.x, y, z)
+    constructor(x: Double, y: Vec1d, z: Double) : this(x, y.x, z)
+    constructor(x: Double, y: Double, z: Vec1d) : this(x, y, z.x)
+    constructor(x: Vec1d, y: Vec1d, z: Vec1d) : this(x.x, y.x, z.x)
+
+    constructor(xy: Vec2d, z: Double) : this(xy.x, xy.y, z)
+    constructor(x: Double, yz: Vec2d) : this(x, yz.x, yz.y)
+    constructor(v: Vec4d) : this(v.x, v.y, v.z)
 
     constructor(v: Vec1bool) : this(v.x.d, 0, 0)
     constructor(v: Vec2bool) : this(v.x.d, v.y.d, 0)
@@ -197,13 +208,6 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
 
     // -- Component accesses --
 
-    operator fun set(index: Int, value: Double) = when (index) {
-        0 -> x = value
-        1 -> y = value
-        2 -> z = value
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.d
         1 -> y = value.d
@@ -317,11 +321,11 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
     // -- Generic binary arithmetic operators --
 
     operator fun plus(b: Number) = plus(Vec3d(), this, b.d, b.d, b.d)
-    operator fun plus(b: Vec3t<out Number>) = plus(Vec3d(), this, b.x.d, b.y.d, b.z.d)
+    operator fun plus(b: Vec3t<out Number>) = plus(Vec3d(), this, b._x.d, b._y.d, b._z.d)
 
     fun plus(bX: Number, bY: Number, bZ: Number, res: Vec3d = Vec3d()) = plus(res, this, bX.d, bY.d, bZ.d)
     fun plus(b: Number, res: Vec3d = Vec3d()) = plus(res, this, b.d, b.d, b.d)
-    fun plus(b: Vec3t<out Number>, res: Vec3d = Vec3d()) = plus(res, this, b.x.d, b.y.d, b.z.d)
+    fun plus(b: Vec3t<out Number>, res: Vec3d = Vec3d()) = plus(res, this, b._x.d, b._y.d, b._z.d)
 
     fun plusAssign(bX: Number, bY: Number, bZ: Number) = plus(this, this, bX.d, bY.d, bZ.d)
     infix operator fun plusAssign(b: Number) {
@@ -329,16 +333,16 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
     }
 
     infix operator fun plusAssign(b: Vec3t<out Number>) {
-        plus(this, this, b.x.d, b.y.d, b.z.d)
+        plus(this, this, b._x.d, b._y.d, b._z.d)
     }
 
 
     operator fun minus(b: Number) = minus(Vec3d(), this, b.d, b.d, b.d)
-    operator fun minus(b: Vec3t<out Number>) = minus(Vec3d(), this, b.x.d, b.y.d, b.z.d)
+    operator fun minus(b: Vec3t<out Number>) = minus(Vec3d(), this, b._x.d, b._y.d, b._z.d)
 
     fun minus(bX: Number, bY: Number, bZ: Number, res: Vec3d = Vec3d()) = minus(res, this, bX.d, bY.d, bZ.d)
     fun minus(b: Number, res: Vec3d = Vec3d()) = minus(res, this, b.d, b.d, b.d)
-    fun minus(b: Vec3t<out Number>, res: Vec3d = Vec3d()) = minus(res, this, b.x.d, b.y.d, b.z.d)
+    fun minus(b: Vec3t<out Number>, res: Vec3d = Vec3d()) = minus(res, this, b._x.d, b._y.d, b._z.d)
 
     fun minusAssign(bX: Number, bY: Number, bZ: Number) = minus(this, this, bX.d, bY.d, bZ.d)
     infix operator fun minusAssign(b: Number) {
@@ -346,16 +350,16 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
     }
 
     infix operator fun minusAssign(b: Vec3t<out Number>) {
-        minus(this, this, b.x.d, b.y.d, b.z.d)
+        minus(this, this, b._x.d, b._y.d, b._z.d)
     }
 
 
     operator fun times(b: Number) = times(Vec3d(), this, b.d, b.d, b.d)
-    operator fun times(b: Vec3t<out Number>) = times(Vec3d(), this, b.x.d, b.y.d, b.z.d)
+    operator fun times(b: Vec3t<out Number>) = times(Vec3d(), this, b._x.d, b._y.d, b._z.d)
 
     fun times(bX: Number, bY: Number, bZ: Number, res: Vec3d = Vec3d()) = times(res, this, bX.d, bY.d, bZ.d)
     fun times(b: Number, res: Vec3d = Vec3d()) = times(res, this, b.d, b.d, b.d)
-    fun times(b: Vec3t<out Number>, res: Vec3d = Vec3d()) = times(res, this, b.x.d, b.y.d, b.z.d)
+    fun times(b: Vec3t<out Number>, res: Vec3d = Vec3d()) = times(res, this, b._x.d, b._y.d, b._z.d)
 
     fun timesAssign(bX: Number, bY: Number, bZ: Number) = times(this, this, bX.d, bY.d, bZ.d)
     infix operator fun timesAssign(b: Number) {
@@ -363,16 +367,16 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
     }
 
     infix operator fun timesAssign(b: Vec3t<out Number>) {
-        times(this, this, b.x.d, b.y.d, b.z.d)
+        times(this, this, b._x.d, b._y.d, b._z.d)
     }
 
 
     operator fun div(b: Number) = div(Vec3d(), this, b.d, b.d, b.d)
-    operator fun div(b: Vec3t<out Number>) = div(Vec3d(), this, b.x.d, b.y.d, b.z.d)
+    operator fun div(b: Vec3t<out Number>) = div(Vec3d(), this, b._x.d, b._y.d, b._z.d)
 
     fun div(bX: Number, bY: Number, bZ: Number, res: Vec3d = Vec3d()) = div(res, this, bX.d, bY.d, bZ.d)
     fun div(b: Number, res: Vec3d = Vec3d()) = div(res, this, b.d, b.d, b.d)
-    fun div(b: Vec3t<out Number>, res: Vec3d = Vec3d()) = div(res, this, b.x.d, b.y.d, b.z.d)
+    fun div(b: Vec3t<out Number>, res: Vec3d = Vec3d()) = div(res, this, b._x.d, b._y.d, b._z.d)
 
     fun divAssign(bX: Number, bY: Number, bZ: Number) = div(this, this, bX.d, bY.d, bZ.d)
     infix operator fun divAssign(b: Number) {
@@ -380,16 +384,16 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
     }
 
     infix operator fun divAssign(b: Vec3t<out Number>) {
-        div(this, this, b.x.d, b.y.d, b.z.d)
+        div(this, this, b._x.d, b._y.d, b._z.d)
     }
 
 
     operator fun rem(b: Number) = rem(Vec3d(), this, b.d, b.d, b.d)
-    operator fun rem(b: Vec3t<out Number>) = rem(Vec3d(), this, b.x.d, b.y.d, b.z.d)
+    operator fun rem(b: Vec3t<out Number>) = rem(Vec3d(), this, b._x.d, b._y.d, b._z.d)
 
     fun rem(bX: Number, bY: Number, bZ: Number, res: Vec3d = Vec3d()) = rem(res, this, bX.d, bY.d, bZ.d)
     fun rem(b: Number, res: Vec3d = Vec3d()) = rem(res, this, b.d, b.d, b.d)
-    fun rem(b: Vec3t<out Number>, res: Vec3d = Vec3d()) = rem(res, this, b.x.d, b.y.d, b.z.d)
+    fun rem(b: Vec3t<out Number>, res: Vec3d = Vec3d()) = rem(res, this, b._x.d, b._y.d, b._z.d)
 
     fun remAssign(bX: Number, bY: Number, bZ: Number) = rem(this, this, bX.d, bY.d, bZ.d)
     infix operator fun remAssign(b: Number) {
@@ -397,7 +401,7 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
     }
 
     infix operator fun remAssign(b: Vec3t<out Number>) {
-        rem(this, this, b.x.d, b.y.d, b.z.d)
+        rem(this, this, b._x.d, b._y.d, b._z.d)
     }
 
 
@@ -478,7 +482,7 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
 
 
     companion object : vec3d_operators {
-        const val length = Vec3t.length
+        const val length = Vec3t.LENGTH
 
         @JvmField
         val size = length * Double.BYTES
@@ -499,6 +503,30 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
+
+    //@formatter:off
+    override inline var _x get() = x; set(value) { x = value }
+    override inline var r get() = x; set(value) { x = value }
+    override inline var s get() = x; set(value) { x = value }
+
+    override inline var _y get() = y; set(value) { y = value }
+    override inline var g get() = y; set(value) { y = value }
+    override inline var t get() = y; set(value) { y = value }
+
+    override inline var _z get() = z; set(value) { z = value }
+    override inline var b get() = z; set(value) { z = value }
+    override inline var p get() = z; set(value) { z = value }
+    //@formatter:on
+
+    override inline operator fun get(index: Int) = array[ofs + index]
+
+    override inline operator fun set(index: Int, value: Double) {
+        array[ofs + index] = value
+    }
+
+    override inline fun component1() = x
+    override inline fun component2() = y
+    override inline fun component3() = z
 
     override fun toString(): String = "($x, $y, $z)"
 }

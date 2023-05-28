@@ -23,15 +23,15 @@ import kotlin.math.abs
  * Created bY GBarbieri on 05.10.2016.
  */
 
-class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Float>(), ToFloatBuffer {
+class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Float>, ToFloatBuffer {
 
-    override inline var x: Float
+    inline var x: Float
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override inline var y: Float
+    inline var y: Float
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
-    override inline var z: Float
+    inline var z: Float
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
 
@@ -39,7 +39,6 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
 
     constructor() : this(0, 0, 0)
     constructor(v: Vec3) : this(v.x, v.y, v.z)
-    constructor(v: Vec2) : this(v.x, v.y, 0f)
 
     // -- Explicit basic constructors --
 
@@ -48,33 +47,44 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
 
     // -- Conversion scalar constructors --
 
-    constructor(v: Vec1t<out Number>) : this(v.x, v.x, v.x)
+    constructor(v: Vec1t<out Number>) : this(v._x, v._x, v._x)
 
-    // Explicit converions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     @JvmOverloads
     constructor(x: Number, y: Number = x, z: Number = x) : this(x.f, y.f, z.f)
 
-    constructor(x: Vec1t<out Number>, y: Number, z: Number) : this(x.x, y, z)
-    constructor(x: Number, y: Vec1t<out Number>, z: Number) : this(x, y.x, z)
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number) : this(x.x, y.x, z)
-    constructor(x: Number, y: Number, z: Vec1t<out Number>) : this(x, y, z.x)
-    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>) : this(x.x, y, z.x)
-    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x, y.x, z.x)
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x.x, y.x, z.x)
+    constructor(x: Vec1t<out Number>, y: Number, z: Number) : this(x._x, y, z)
+    constructor(x: Number, y: Vec1t<out Number>, z: Number) : this(x, y._x, z)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number) : this(x._x, y._x, z)
+    constructor(x: Number, y: Number, z: Vec1t<out Number>) : this(x, y, z._x)
+    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>) : this(x._x, y, z._x)
+    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x, y._x, z._x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x._x, y._x, z._x)
 
     // -- Conversion vector constructors --
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     @JvmOverloads
-    constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy.x, xy.y, z)
+    constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy._x, xy._y, z)
 
-    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy.x, xy.y, z.x)
-    constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz.x, yz.y)
-    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x.x, yz.x, yz.y)
-    constructor(v: Vec3t<out Number>) : this(v.x, v.y, v.z)
-    constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z)
+    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy._x, xy._y, z._x)
+    constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz._x, yz._y)
+    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x._x, yz._x, yz._y)
+    constructor(v: Vec3t<out Number>) : this(v._x, v._y, v._z)
+    constructor(v: Vec4t<out Number>) : this(v._x, v._y, v._z)
+
+
+    constructor(v: Vec1) : this(v.x, v.x, v.x)
+    constructor(x: Vec1, y: Float, z: Float) : this(x.x, y, z)
+    constructor(x: Float, y: Vec1, z: Float) : this(x, y.x, z)
+    constructor(x: Float, y: Float, z: Vec1) : this(x, y, z.x)
+    constructor(x: Vec1, y: Vec1, z: Vec1) : this(x.x, y.x, z.x)
+
+    constructor(xy: Vec2, z: Float) : this(xy.x, xy.y, z)
+    constructor(x: Float, yz: Vec2) : this(x, yz.x, yz.y)
+    constructor(v: Vec4) : this(v.x, v.y, v.z)
 
     constructor(v: Vec1bool) : this(v.x.f, 0, 0)
     constructor(v: Vec2bool) : this(v.x.f, v.y.f, 0)
@@ -200,13 +210,6 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
     infix fun to(ptr: Ptr<Byte>) = to(ptr.toPtr<Float>())
 
     // -- Component accesses --
-
-    operator fun set(index: Int, value: Float) = when (index) {
-        0 -> x = value
-        1 -> y = value
-        2 -> z = value
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.f
@@ -336,7 +339,7 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
     fun plus(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = plus(res, this, bX.f, bY.f, bZ.f)
 
     fun plus(b: Number, res: Vec3) = plus(res, this, b.f, b.f, b.f)
-    fun plus(b: Vec3t<out Number>, res: Vec3 = Vec3()) = plus(res, this, b.x.f, b.y.f, b.z.f)
+    fun plus(b: Vec3t<out Number>, res: Vec3 = Vec3()) = plus(res, this, b._x.f, b._y.f, b._z.f)
 
     fun plusAssign(bX: Number, bY: Number, bZ: Number) = plus(this, this, bX.f, bY.f, bZ.f)
     infix operator fun plusAssign(b: Number) {
@@ -344,7 +347,7 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
     }
 
     infix operator fun plusAssign(b: Vec3t<out Number>) {
-        plus(this, this, b.x.f, b.y.f, b.z.f)
+        plus(this, this, b._x.f, b._y.f, b._z.f)
     }
 
 
@@ -352,7 +355,7 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
 
     fun minus(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = minus(res, this, bX.f, bY.f, bZ.f)
     fun minus(b: Number, res: Vec3 = Vec3()) = minus(res, this, b.f, b.f, b.f)
-    fun minus(b: Vec3t<out Number>, res: Vec3 = Vec3()) = minus(res, this, b.x.f, b.y.f, b.z.f)
+    fun minus(b: Vec3t<out Number>, res: Vec3 = Vec3()) = minus(res, this, b._x.f, b._y.f, b._z.f)
 
     fun minusAssign(bX: Number, bY: Number, bZ: Number) = minus(this, this, bX.f, bY.f, bZ.f)
     infix operator fun minusAssign(b: Number) {
@@ -360,16 +363,16 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
     }
 
     infix operator fun minusAssign(b: Vec3t<out Number>) {
-        minus(this, this, b.x.f, b.y.f, b.z.f)
+        minus(this, this, b._x.f, b._y.f, b._z.f)
     }
 
 
     infix operator fun times(b: Number) = times(Vec3(), this, b.f, b.f, b.f)
-    infix operator fun times(b: Vec3t<out Number>) = times(Vec3(), this, b.x.f, b.y.f, b.z.f)
+    infix operator fun times(b: Vec3t<out Number>) = times(Vec3(), this, b._x.f, b._y.f, b._z.f)
 
     fun times(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = times(res, this, bX.f, bY.f, bZ.f)
     fun times(b: Number, res: Vec3 = Vec3()) = times(res, this, b.f, b.f, b.f)
-    fun times(b: Vec3t<out Number>, res: Vec3 = Vec3()) = times(res, this, b.x.f, b.y.f, b.z.f)
+    fun times(b: Vec3t<out Number>, res: Vec3 = Vec3()) = times(res, this, b._x.f, b._y.f, b._z.f)
 
     fun timesAssign(bX: Number, bY: Number, bZ: Number) = times(this, this, bX.f, bY.f, bZ.f)
     infix operator fun timesAssign(b: Number) {
@@ -377,16 +380,16 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
     }
 
     infix operator fun timesAssign(b: Vec3t<out Number>) {
-        times(this, this, b.x.f, b.y.f, b.z.f)
+        times(this, this, b._x.f, b._y.f, b._z.f)
     }
 
 
     infix operator fun div(b: Number) = div(Vec3(), this, b.f, b.f, b.f)
-    infix operator fun div(b: Vec3t<out Number>) = div(Vec3(), this, b.x.f, b.y.f, b.z.f)
+    infix operator fun div(b: Vec3t<out Number>) = div(Vec3(), this, b._x.f, b._y.f, b._z.f)
 
     fun div(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = div(res, this, bX.f, bY.f, bZ.f)
     fun div(b: Number, res: Vec3 = Vec3()) = div(res, this, b.f, b.f, b.f)
-    fun div(b: Vec3t<out Number>, res: Vec3 = Vec3()) = div(res, this, b.x.f, b.y.f, b.z.f)
+    fun div(b: Vec3t<out Number>, res: Vec3 = Vec3()) = div(res, this, b._x.f, b._y.f, b._z.f)
 
     fun divAssign(bX: Number, bY: Number, bZ: Number) = div(this, this, bX.f, bY.f, bZ.f)
     infix operator fun divAssign(b: Number) {
@@ -394,16 +397,16 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
     }
 
     infix operator fun divAssign(b: Vec3t<out Number>) {
-        div(this, this, b.x.f, b.y.f, b.z.f)
+        div(this, this, b._x.f, b._y.f, b._z.f)
     }
 
 
     infix operator fun rem(b: Number) = rem(Vec3(), this, b.f, b.f, b.f)
-    infix operator fun rem(b: Vec3t<out Number>) = rem(Vec3(), this, b.x.f, b.y.f, b.z.f)
+    infix operator fun rem(b: Vec3t<out Number>) = rem(Vec3(), this, b._x.f, b._y.f, b._z.f)
 
     fun rem(bX: Number, bY: Number, bZ: Number, res: Vec3 = Vec3()) = rem(res, this, bX.f, bY.f, bZ.f)
     fun rem(b: Number, res: Vec3 = Vec3()) = rem(res, this, b.f, b.f, b.f)
-    fun rem(b: Vec3t<out Number>, res: Vec3 = Vec3()) = rem(res, this, b.x.f, b.y.f, b.z.f)
+    fun rem(b: Vec3t<out Number>, res: Vec3 = Vec3()) = rem(res, this, b._x.f, b._y.f, b._z.f)
 
     fun remAssign(bX: Number, bY: Number, bZ: Number) = rem(this, this, bX.f, bY.f, bZ.f)
     infix operator fun remAssign(b: Number) {
@@ -411,7 +414,7 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
     }
 
     infix operator fun remAssign(b: Vec3t<out Number>) {
-        rem(this, this, b.x.f, b.y.f, b.z.f)
+        rem(this, this, b._x.f, b._y.f, b._z.f)
     }
 
 
@@ -493,7 +496,8 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
 
 
     companion object : vec3_operators {
-        const val length = Vec3t.length
+        const val length = LENGTH
+
         @JvmField
         val size = length * Float.BYTES
 
@@ -533,6 +537,31 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
+
+
+    //@formatter:off
+    override inline var _x get() = x; set(value) { x = value }
+    override inline var r get() = x; set(value) { x = value }
+    override inline var s get() = x; set(value) { x = value }
+
+    override inline var _y get() = y; set(value) { y = value }
+    override inline var g get() = y; set(value) { y = value }
+    override inline var t get() = y; set(value) { y = value }
+
+    override inline var _z get() = z; set(value) { z = value }
+    override inline var b get() = z; set(value) { z = value }
+    override inline var p get() = z; set(value) { z = value }
+    //@formatter:on
+
+    override inline operator fun get(index: Int) = array[ofs + index]
+
+    override inline operator fun set(index: Int, value: Float) {
+        array[ofs + index] = value
+    }
+
+    override inline fun component1() = x
+    override inline fun component2() = y
+    override inline fun component3() = z
 
     override fun toString(): String = "($x, $y, $z)"
 }

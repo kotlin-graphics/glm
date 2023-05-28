@@ -790,7 +790,7 @@ class Vec2ub(@JvmField var ofs: Int, var array: UbyteArray) : Vec2t<Ubyte>, ToBu
     override inline var t get() = y; set(value) { y = value }
     //@formatter:on
 
-    override inline operator fun get(index: Int): Ubyte = array[ofs + index]
+    override inline operator fun get(index: Int) = array[ofs + index]
 
     override inline operator fun set(index: Int, value: Ubyte) {
         array[ofs + index] = value

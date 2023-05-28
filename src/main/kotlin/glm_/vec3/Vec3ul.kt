@@ -14,6 +14,8 @@ import org.lwjgl.system.MemoryStack
 import org.lwjgl.system.MemoryUtil.memGetLong
 import org.lwjgl.system.MemoryUtil.memPutLong
 import unsigned.Ulong
+import unsigned.UlongArray
+import unsigned.toUlong
 import java.io.PrintStream
 import java.nio.*
 
@@ -21,27 +23,27 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec3ul(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Ulong>(), ToBuffer {
+class Vec3ul(@JvmField var ofs: Int, var array: UlongArray) : Vec3t<Ulong>, ToBuffer {
 
-    override inline var x: Ulong
-        get() = Ulong(array[ofs])
-        set(value) = array.set(ofs, value.v)
-    override inline var y: Ulong
-        get() = Ulong(array[ofs + 1])
-        set(value) = array.set(ofs + 1, value.v)
-    override inline var z: Ulong
-        get() = Ulong(array[ofs + 2])
-        set(value) = array.set(ofs + 2, value.v)
-
-    inline var vX: Long
+    inline var x: Ulong
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    inline var vY: Long
+    inline var y: Ulong
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
-    inline var vZ: Long
+    inline var z: Ulong
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
+
+    inline var vX: Long
+        get() = array[ofs].toLong()
+        set(value) = array.set(ofs, value.toUlong())
+    inline var vY: Long
+        get() = array[ofs + 1].toLong()
+        set(value) = array.set(ofs + 1, value.toUlong())
+    inline var vZ: Long
+        get() = array[ofs + 2].toLong()
+        set(value) = array.set(ofs + 2, value.toUlong())
 
     // -- Implicit basic constructors --
 
@@ -52,39 +54,39 @@ class Vec3ul(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Ulo
     // -- Explicit basic constructors --
 
     @JvmOverloads
-    constructor(x: Ulong, y: Ulong = x, z: Ulong = x) : this(0, longArrayOf(x.L, y.L, z.L))
+    constructor(x: Ulong, y: Ulong = x, z: Ulong = x) : this(0, UlongArray(longArrayOf(x.L, y.L, z.L)))
 
     @JvmOverloads
-    constructor(x: Long, y: Long = x, z: Long = x) : this(0, longArrayOf(x, y, z))
+    constructor(x: Long, y: Long = x, z: Long = x) : this(0, UlongArray(longArrayOf(x, y, z)))
 
     // -- Conversion scalar constructors --
 
-    constructor(v: Vec1t<out Number>) : this(v.x, v.x, v.x)
+    constructor(v: Vec1t<out Number>) : this(v._x, v._x, v._x)
 
     // Explicit converions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     @JvmOverloads
     constructor(x: Number, y: Number = x, z: Number = x) : this(x.ul, y.ul, z.ul)
 
-    constructor(x: Vec1t<out Number>, y: Number, z: Number) : this(x.x, y, z)
-    constructor(x: Number, y: Vec1t<out Number>, z: Number) : this(x, y.x, z)
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number) : this(x.x, y.x, z)
-    constructor(x: Number, y: Number, z: Vec1t<out Number>) : this(x, y, z.x)
-    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>) : this(x.x, y, z.x)
-    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x, y.x, z.x)
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x.x, y.x, z.x)
+    constructor(x: Vec1t<out Number>, y: Number, z: Number) : this(x._x, y, z)
+    constructor(x: Number, y: Vec1t<out Number>, z: Number) : this(x, y._x, z)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number) : this(x._x, y._x, z)
+    constructor(x: Number, y: Number, z: Vec1t<out Number>) : this(x, y, z._x)
+    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>) : this(x._x, y, z._x)
+    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x, y._x, z._x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x._x, y._x, z._x)
 
     // -- Conversion vector constructors --
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     @JvmOverloads
-    constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy.x, xy.y, z)
+    constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy._x, xy._y, z)
 
-    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy.x, xy.y, z.x)
-    constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz.x, yz.y)
-    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x.x, yz.x, yz.y)
-    constructor(v: Vec3t<out Number>) : this(v.x, v.y, v.z)
+    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy._x, xy._y, z._x)
+    constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz._x, yz._y)
+    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x._x, yz._x, yz._y)
+    constructor(v: Vec3t<out Number>) : this(v._x, v._y, v._z)
     constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z)
 
     constructor(v: Vec1bool) : this(v.x.ul, 0, 0)
@@ -227,13 +229,6 @@ class Vec3ul(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Ulo
     }
 
     // -- Component accesses --
-
-    operator fun set(index: Int, value: Ulong) = when (index) {
-        0 -> x = value
-        1 -> y = value
-        2 -> z = value
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.ul
@@ -389,11 +384,11 @@ class Vec3ul(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Ulo
     // -- Generic binary arithmetic operators --
 
     operator fun plus(b: Number) = plus(Vec3ul(), this, b.L, b.L, b.L)
-    operator fun plus(b: Vec3t<out Number>) = plus(Vec3ul(), this, b.x.L, b.y.L, b.z.L)
+    operator fun plus(b: Vec3t<out Number>) = plus(Vec3ul(), this, b._x.L, b._y.L, b._z.L)
 
     fun plus(bX: Number, bY: Number, bZ: Number, res: Vec3ul = Vec3ul()) = plus(res, this, bX.L, bY.L, bZ.L)
     fun plus(b: Number, res: Vec3ul = Vec3ul()) = plus(res, this, b.L, b.L, b.L)
-    fun plus(b: Vec3t<out Number>, res: Vec3ul = Vec3ul()) = plus(res, this, b.x.L, b.y.L, b.z.L)
+    fun plus(b: Vec3t<out Number>, res: Vec3ul = Vec3ul()) = plus(res, this, b._x.L, b._y.L, b._z.L)
 
     fun plusAssign(bX: Number, bY: Number, bZ: Number) = plus(this, this, bX.L, bY.L, bZ.L)
     infix operator fun plusAssign(b: Number) {
@@ -401,16 +396,16 @@ class Vec3ul(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Ulo
     }
 
     infix operator fun plusAssign(b: Vec3t<out Number>) {
-        plus(this, this, b.x.L, b.y.L, b.z.L)
+        plus(this, this, b._x.L, b._y.L, b._z.L)
     }
 
 
     operator fun minus(b: Number) = minus(Vec3ul(), this, b.L, b.L, b.L)
-    operator fun minus(b: Vec3t<out Number>) = minus(Vec3ul(), this, b.x.L, b.y.L, b.z.L)
+    operator fun minus(b: Vec3t<out Number>) = minus(Vec3ul(), this, b._x.L, b._y.L, b._z.L)
 
     fun minus(bX: Number, bY: Number, bZ: Number, res: Vec3ul = Vec3ul()) = minus(res, this, bX.L, bY.L, bZ.L)
     fun minus(b: Number, res: Vec3ul = Vec3ul()) = minus(res, this, b.L, b.L, b.L)
-    fun minus(b: Vec3t<out Number>, res: Vec3ul = Vec3ul()) = minus(res, this, b.x.L, b.y.L, b.z.L)
+    fun minus(b: Vec3t<out Number>, res: Vec3ul = Vec3ul()) = minus(res, this, b._x.L, b._y.L, b._z.L)
 
     fun minusAssign(bX: Number, bY: Number, bZ: Number) = minus(this, this, bX.L, bY.L, bZ.L)
     infix operator fun minusAssign(b: Number) {
@@ -418,16 +413,16 @@ class Vec3ul(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Ulo
     }
 
     infix operator fun minusAssign(b: Vec3t<out Number>) {
-        minus(this, this, b.x.L, b.y.L, b.z.L)
+        minus(this, this, b._x.L, b._y.L, b._z.L)
     }
 
 
     operator fun times(b: Number) = times(Vec3ul(), this, b.L, b.L, b.L)
-    operator fun times(b: Vec3t<out Number>) = times(Vec3ul(), this, b.x.L, b.y.L, b.z.L)
+    operator fun times(b: Vec3t<out Number>) = times(Vec3ul(), this, b._x.L, b._y.L, b._z.L)
 
     fun times(bX: Number, bY: Number, bZ: Number, res: Vec3ul = Vec3ul()) = times(res, this, bX.L, bY.L, bZ.L)
     fun times(b: Number, res: Vec3ul = Vec3ul()) = times(res, this, b.L, b.L, b.L)
-    fun times(b: Vec3t<out Number>, res: Vec3ul = Vec3ul()) = times(res, this, b.x.L, b.y.L, b.z.L)
+    fun times(b: Vec3t<out Number>, res: Vec3ul = Vec3ul()) = times(res, this, b._x.L, b._y.L, b._z.L)
 
     fun timesAssign(bX: Number, bY: Number, bZ: Number) = times(this, this, bX.L, bY.L, bZ.L)
     infix operator fun timesAssign(b: Number) {
@@ -435,16 +430,16 @@ class Vec3ul(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Ulo
     }
 
     infix operator fun timesAssign(b: Vec3t<out Number>) {
-        times(this, this, b.x.L, b.y.L, b.z.L)
+        times(this, this, b._x.L, b._y.L, b._z.L)
     }
 
 
     operator fun div(b: Number) = div(Vec3ul(), this, b.L, b.L, b.L)
-    operator fun div(b: Vec3t<out Number>) = div(Vec3ul(), this, b.x.L, b.y.L, b.z.L)
+    operator fun div(b: Vec3t<out Number>) = div(Vec3ul(), this, b._x.L, b._y.L, b._z.L)
 
     fun div(bX: Number, bY: Number, bZ: Number, res: Vec3ul = Vec3ul()) = div(res, this, bX.L, bY.L, bZ.L)
     fun div(b: Number, res: Vec3ul = Vec3ul()) = div(res, this, b.L, b.L, b.L)
-    fun div(b: Vec3t<out Number>, res: Vec3ul = Vec3ul()) = div(res, this, b.x.L, b.y.L, b.z.L)
+    fun div(b: Vec3t<out Number>, res: Vec3ul = Vec3ul()) = div(res, this, b._x.L, b._y.L, b._z.L)
 
     fun divAssign(bX: Number, bY: Number, bZ: Number) = div(this, this, bX.L, bY.L, bZ.L)
     infix operator fun divAssign(b: Number) {
@@ -452,16 +447,16 @@ class Vec3ul(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Ulo
     }
 
     infix operator fun divAssign(b: Vec3t<out Number>) {
-        div(this, this, b.x.L, b.y.L, b.z.L)
+        div(this, this, b._x.L, b._y.L, b._z.L)
     }
 
 
     operator fun rem(b: Number) = rem(Vec3ul(), this, b.L, b.L, b.L)
-    operator fun rem(b: Vec3t<out Number>) = rem(Vec3ul(), this, b.x.L, b.y.L, b.z.L)
+    operator fun rem(b: Vec3t<out Number>) = rem(Vec3ul(), this, b._x.L, b._y.L, b._z.L)
 
     fun rem(bX: Number, bY: Number, bZ: Number, res: Vec3ul = Vec3ul()) = rem(res, this, bX.L, bY.L, bZ.L)
     fun rem(b: Number, res: Vec3ul = Vec3ul()) = rem(res, this, b.L, b.L, b.L)
-    fun rem(b: Vec3t<out Number>, res: Vec3ul = Vec3ul()) = rem(res, this, b.x.L, b.y.L, b.z.L)
+    fun rem(b: Vec3t<out Number>, res: Vec3ul = Vec3ul()) = rem(res, this, b._x.L, b._y.L, b._z.L)
 
     fun remAssign(bX: Number, bY: Number, bZ: Number) = rem(this, this, bX.L, bY.L, bZ.L)
     infix operator fun remAssign(b: Number) {
@@ -469,7 +464,7 @@ class Vec3ul(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Ulo
     }
 
     infix operator fun remAssign(b: Vec3t<out Number>) {
-        rem(this, this, b.x.L, b.y.L, b.z.L)
+        rem(this, this, b._x.L, b._y.L, b._z.L)
     }
 
 
@@ -560,41 +555,41 @@ class Vec3ul(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Ulo
 
     infix fun and(b: Number) = and(Vec3ul(), this, b.L, b.L, b.L)
     fun and(bX: Number, bY: Number, bZ: Number) = and(Vec3ul(), this, bX.L, bY.L, bZ.L)
-    fun and(b: Vec3t<out Number>) = and(Vec3ul(), this, b.x.L, b.y.L, b.z.L)
+    fun and(b: Vec3t<out Number>) = and(Vec3ul(), this, b._x.L, b._y.L, b._z.L)
 
     infix fun andAssign(b: Number) = and(this, this, b.L, b.L, b.L)
     fun andAssign(bX: Number, bY: Number, bZ: Number) = and(this, this, bX.L, bY.L, bZ.L)
-    infix fun andAssign(b: Vec3t<out Number>) = and(this, this, b.x.L, b.y.L, b.z.L)
+    infix fun andAssign(b: Vec3t<out Number>) = and(this, this, b._x.L, b._y.L, b._z.L)
 
     fun and(b: Number, res: Vec3ul) = and(res, this, b.L, b.L, b.L)
     fun and(bX: Number, bY: Number, bZ: Number, res: Vec3ul) = and(res, this, bX.L, bY.L, bZ.L)
-    fun and(b: Vec3t<out Number>, res: Vec3ul) = and(res, this, b.x.L, b.y.L, b.z.L)
+    fun and(b: Vec3t<out Number>, res: Vec3ul) = and(res, this, b._x.L, b._y.L, b._z.L)
 
 
     infix fun or(b: Number) = or(Vec3ul(), this, b.L, b.L, b.L)
     fun or(bX: Number, bY: Number, bZ: Number) = or(Vec3ul(), this, bX.L, bY.L, bZ.L)
-    fun or(b: Vec3t<out Number>) = or(Vec3ul(), this, b.x.L, b.y.L, b.z.L)
+    fun or(b: Vec3t<out Number>) = or(Vec3ul(), this, b._x.L, b._y.L, b._z.L)
 
     infix fun orAssign(b: Number) = or(this, this, b.L, b.L, b.L)
     fun orAssign(bX: Number, bY: Number, bZ: Number) = or(this, this, bX.L, bY.L, bZ.L)
-    infix fun orAssign(b: Vec3t<out Number>) = or(this, this, b.x.L, b.y.L, b.z.L)
+    infix fun orAssign(b: Vec3t<out Number>) = or(this, this, b._x.L, b._y.L, b._z.L)
 
     fun or(b: Number, res: Vec3ul) = or(res, this, b.L, b.L, b.L)
     fun or(bX: Number, bY: Number, bZ: Number, res: Vec3ul) = or(res, this, bX.L, bY.L, bZ.L)
-    fun or(b: Vec3t<out Number>, res: Vec3ul) = or(res, this, b.x.L, b.y.L, b.z.L)
+    fun or(b: Vec3t<out Number>, res: Vec3ul) = or(res, this, b._x.L, b._y.L, b._z.L)
 
 
     infix fun xor(b: Number) = xor(Vec3ul(), this, b.L, b.L, b.L)
     fun xor(bX: Number, bY: Number, bZ: Number) = xor(Vec3ul(), this, bX.L, bY.L, bZ.L)
-    fun xor(b: Vec3t<out Number>) = xor(Vec3ul(), this, b.x.L, b.y.L, b.z.L)
+    fun xor(b: Vec3t<out Number>) = xor(Vec3ul(), this, b._x.L, b._y.L, b._z.L)
 
     infix fun xorAssign(b: Number) = xor(this, this, b.L, b.L, b.L)
     fun xorAssign(bX: Number, bY: Number, bZ: Number) = xor(this, this, bX.L, bY.L, bZ.L)
-    infix fun xorAssign(b: Vec3t<out Number>) = xor(this, this, b.x.L, b.y.L, b.z.L)
+    infix fun xorAssign(b: Vec3t<out Number>) = xor(this, this, b._x.L, b._y.L, b._z.L)
 
     fun xor(b: Number, res: Vec3ul) = xor(res, this, b.L, b.L, b.L)
     fun xor(bX: Number, bY: Number, bZ: Number, res: Vec3ul) = xor(res, this, bX.L, bY.L, bZ.L)
-    fun xor(b: Vec3t<out Number>, res: Vec3ul) = xor(res, this, b.x.L, b.y.L, b.z.L)
+    fun xor(b: Vec3t<out Number>, res: Vec3ul) = xor(res, this, b._x.L, b._y.L, b._z.L)
 
 
     infix fun shl(b: Number) = shl(Vec3ul(), this, b.L, b.L, b.L)
@@ -668,7 +663,7 @@ class Vec3ul(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Ulo
 
 
     companion object : vec3ul_operators {
-        const val length = Vec3t.length
+        const val length = Vec3t.LENGTH
 
         @JvmField
         val size = length * Ulong.BYTES
@@ -693,5 +688,30 @@ class Vec3ul(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Ulo
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
 
-    override fun toString(): String = "(${x.v}, ${y.v}, ${z.v})"
+
+    //@formatter:off
+    override inline var _x get() = x; set(value) { x = value }
+    override inline var r get() = x; set(value) { x = value }
+    override inline var s get() = x; set(value) { x = value }
+
+    override inline var _y get() = y; set(value) { y = value }
+    override inline var g get() = y; set(value) { y = value }
+    override inline var t get() = y; set(value) { y = value }
+
+    override inline var _z get() = z; set(value) { z = value }
+    override inline var b get() = z; set(value) { z = value }
+    override inline var p get() = z; set(value) { z = value }
+    //@formatter:on
+
+    override inline operator fun get(index: Int) = array[ofs + index]
+
+    override inline operator fun set(index: Int, value: Ulong) {
+        array[ofs + index] = value
+    }
+
+    override inline fun component1() = x
+    override inline fun component2() = y
+    override inline fun component3() = z
+
+    override fun toString(): String = "($x, $y, $z)"
 }

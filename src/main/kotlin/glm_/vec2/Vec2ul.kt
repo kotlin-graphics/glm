@@ -711,7 +711,7 @@ class Vec2ul(@JvmField var ofs: Int, var array: UlongArray) : Vec2t<Ulong>, ToBu
     override inline var t get() = y; set(value) { y = value }
     //@formatter:on
 
-    override inline operator fun get(index: Int): Ulong = array[ofs + index]
+    override inline operator fun get(index: Int) = array[ofs + index]
 
     override inline operator fun set(index: Int, value: Ulong) {
         array[ofs + index] = value

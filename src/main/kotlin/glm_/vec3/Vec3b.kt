@@ -19,15 +19,15 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte>(), ToBuffer {
+class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte>, ToBuffer {
 
-    override inline var x: Byte
+    inline var x: Byte
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override inline var y: Byte
+    inline var y: Byte
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
-    override inline var z: Byte
+    inline var z: Byte
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
 
@@ -48,33 +48,44 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
 
     // -- Conversion scalar constructors --
 
-    constructor(v: Vec1t<out Number>) : this(v.x, v.x, v.x)
+    constructor(v: Vec1t<out Number>) : this(v._x, v._x, v._x)
 
     // Explicit converions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     @JvmOverloads
     constructor(x: Number, y: Number = x, z: Number = x) : this(x.b, y.b, z.b)
 
-    constructor(x: Vec1t<out Number>, y: Number, z: Number) : this(x.x, y, z)
-    constructor(x: Number, y: Vec1t<out Number>, z: Number) : this(x, y.x, z)
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number) : this(x.x, y.x, z)
-    constructor(x: Number, y: Number, z: Vec1t<out Number>) : this(x, y, z.x)
-    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>) : this(x.x, y, z.x)
-    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x, y.x, z.x)
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x.x, y.x, z.x)
+    constructor(x: Vec1t<out Number>, y: Number, z: Number) : this(x._x, y, z)
+    constructor(x: Number, y: Vec1t<out Number>, z: Number) : this(x, y._x, z)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number) : this(x._x, y._x, z)
+    constructor(x: Number, y: Number, z: Vec1t<out Number>) : this(x, y, z._x)
+    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>) : this(x._x, y, z._x)
+    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x, y._x, z._x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>) : this(x._x, y._x, z._x)
 
     // -- Conversion vector constructors --
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     @JvmOverloads
-    constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy.x, xy.y, z)
+    constructor(xy: Vec2t<out Number>, z: Number = 0) : this(xy._x, xy._y, z)
 
-    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy.x, xy.y, z.x)
-    constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz.x, yz.y)
-    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x.x, yz.x, yz.y)
-    constructor(v: Vec3t<out Number>) : this(v.x, v.y, v.z)
-    constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z)
+    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>) : this(xy._x, xy._y, z._x)
+    constructor(x: Number, yz: Vec2t<out Number>) : this(x, yz._x, yz._y)
+    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>) : this(x._x, yz._x, yz._y)
+    constructor(v: Vec3t<out Number>) : this(v._x, v._y, v._z)
+    constructor(v: Vec4t<out Number>) : this(v._x, v._y, v._z)
+
+
+    constructor(v: Vec1b) : this(v.x, v.x, v.x)
+    constructor(x: Vec1b, y: Byte, z: Byte) : this(x.x, y, z)
+    constructor(x: Byte, y: Vec1b, z: Byte) : this(x, y.x, z)
+    constructor(x: Byte, y: Byte, z: Vec1b) : this(x, y, z.x)
+    constructor(x: Vec1b, y: Vec1b, z: Vec1b) : this(x.x, y.x, z.x)
+
+    constructor(xy: Vec2b, z: Byte) : this(xy.x, xy.y, z)
+    constructor(x: Byte, yz: Vec2b) : this(x, yz.x, yz.y)
+    constructor(v: Vec4b) : this(v.x, v.y, v.z)
 
     constructor(v: Vec1bool) : this(v.x.b, 0, 0)
     constructor(v: Vec2bool) : this(v.x.b, v.y.b, 0)
@@ -155,13 +166,6 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
     }
 
     // -- Component accesses --
-
-    operator fun set(index: Int, value: Byte) = when (index) {
-        0 -> x = value
-        1 -> y = value
-        2 -> z = value
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.b
@@ -317,11 +321,11 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
     // -- Generic binary arithmetic operators --
 
     operator fun plus(b: Number) = plus(Vec3b(), this, b.i, b.i, b.i)
-    operator fun plus(b: Vec3t<out Number>) = plus(Vec3b(), this, b.x.i, b.y.i, b.z.i)
+    operator fun plus(b: Vec3t<out Number>) = plus(Vec3b(), this, b._x.i, b._y.i, b._z.i)
 
     fun plus(bX: Number, bY: Number, bZ: Number, res: Vec3b = Vec3b()) = plus(res, this, bX.i, bY.i, bZ.i)
     fun plus(b: Number, res: Vec3b = Vec3b()) = plus(res, this, b.i, b.i, b.i)
-    fun plus(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = plus(res, this, b.x.i, b.y.i, b.z.i)
+    fun plus(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = plus(res, this, b._x.i, b._y.i, b._z.i)
 
     fun plusAssign(bX: Number, bY: Number, bZ: Number) = plus(this, this, bX.i, bY.i, bZ.i)
     infix operator fun plusAssign(b: Number) {
@@ -329,16 +333,16 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
     }
 
     infix operator fun plusAssign(b: Vec3t<out Number>) {
-        plus(this, this, b.x.i, b.y.i, b.z.i)
+        plus(this, this, b._x.i, b._y.i, b._z.i)
     }
 
 
     operator fun minus(b: Number) = minus(Vec3b(), this, b.i, b.i, b.i)
-    operator fun minus(b: Vec3t<out Number>) = minus(Vec3b(), this, b.x.i, b.y.i, b.z.i)
+    operator fun minus(b: Vec3t<out Number>) = minus(Vec3b(), this, b._x.i, b._y.i, b._z.i)
 
     fun minus(bX: Number, bY: Number, bZ: Number, res: Vec3b = Vec3b()) = minus(res, this, bX.i, bY.i, bZ.i)
     fun minus(b: Number, res: Vec3b = Vec3b()) = minus(res, this, b.i, b.i, b.i)
-    fun minus(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = minus(res, this, b.x.i, b.y.i, b.z.i)
+    fun minus(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = minus(res, this, b._x.i, b._y.i, b._z.i)
 
     fun minusAssign(bX: Number, bY: Number, bZ: Number) = minus(this, this, bX.i, bY.i, bZ.i)
     infix operator fun minusAssign(b: Number) {
@@ -346,16 +350,16 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
     }
 
     infix operator fun minusAssign(b: Vec3t<out Number>) {
-        minus(this, this, b.x.i, b.y.i, b.z.i)
+        minus(this, this, b._x.i, b._y.i, b._z.i)
     }
 
 
     operator fun times(b: Number) = times(Vec3b(), this, b.i, b.i, b.i)
-    operator fun times(b: Vec3t<out Number>) = times(Vec3b(), this, b.x.i, b.y.i, b.z.i)
+    operator fun times(b: Vec3t<out Number>) = times(Vec3b(), this, b._x.i, b._y.i, b._z.i)
 
     fun times(bX: Number, bY: Number, bZ: Number, res: Vec3b = Vec3b()) = times(res, this, bX.i, bY.i, bZ.i)
     fun times(b: Number, res: Vec3b = Vec3b()) = times(res, this, b.i, b.i, b.i)
-    fun times(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = times(res, this, b.x.i, b.y.i, b.z.i)
+    fun times(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = times(res, this, b._x.i, b._y.i, b._z.i)
 
     fun timesAssign(bX: Number, bY: Number, bZ: Number) = times(this, this, bX.i, bY.i, bZ.i)
     infix operator fun timesAssign(b: Number) {
@@ -363,16 +367,16 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
     }
 
     infix operator fun timesAssign(b: Vec3t<out Number>) {
-        times(this, this, b.x.i, b.y.i, b.z.i)
+        times(this, this, b._x.i, b._y.i, b._z.i)
     }
 
 
     operator fun div(b: Number) = div(Vec3b(), this, b.i, b.i, b.i)
-    operator fun div(b: Vec3t<out Number>) = div(Vec3b(), this, b.x.i, b.y.i, b.z.i)
+    operator fun div(b: Vec3t<out Number>) = div(Vec3b(), this, b._x.i, b._y.i, b._z.i)
 
     fun div(bX: Number, bY: Number, bZ: Number, res: Vec3b = Vec3b()) = div(res, this, bX.i, bY.i, bZ.i)
     fun div(b: Number, res: Vec3b = Vec3b()) = div(res, this, b.i, b.i, b.i)
-    fun div(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = div(res, this, b.x.i, b.y.i, b.z.i)
+    fun div(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = div(res, this, b._x.i, b._y.i, b._z.i)
 
     fun divAssign(bX: Number, bY: Number, bZ: Number) = div(this, this, bX.i, bY.i, bZ.i)
     infix operator fun divAssign(b: Number) {
@@ -380,16 +384,16 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
     }
 
     infix operator fun divAssign(b: Vec3t<out Number>) {
-        div(this, this, b.x.i, b.y.i, b.z.i)
+        div(this, this, b._x.i, b._y.i, b._z.i)
     }
 
 
     operator fun rem(b: Number) = rem(Vec3b(), this, b.i, b.i, b.i)
-    operator fun rem(b: Vec3t<out Number>) = rem(Vec3b(), this, b.x.i, b.y.i, b.z.i)
+    operator fun rem(b: Vec3t<out Number>) = rem(Vec3b(), this, b._x.i, b._y.i, b._z.i)
 
     fun rem(bX: Number, bY: Number, bZ: Number, res: Vec3b = Vec3b()) = rem(res, this, bX.i, bY.i, bZ.i)
     fun rem(b: Number, res: Vec3b = Vec3b()) = rem(res, this, b.i, b.i, b.i)
-    fun rem(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = rem(res, this, b.x.i, b.y.i, b.z.i)
+    fun rem(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = rem(res, this, b._x.i, b._y.i, b._z.i)
 
     fun remAssign(bX: Number, bY: Number, bZ: Number) = rem(this, this, bX.i, bY.i, bZ.i)
     infix operator fun remAssign(b: Number) {
@@ -397,7 +401,7 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
     }
 
     infix operator fun remAssign(b: Vec3t<out Number>) {
-        rem(this, this, b.x.i, b.y.i, b.z.i)
+        rem(this, this, b._x.i, b._y.i, b._z.i)
     }
 
 
@@ -505,13 +509,13 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
     // -- Generic bitwise operators --
 
     infix fun and(b: Number) = and(Vec3b(), this, b.b, b.b, b.b)
-    infix fun and(b: Vec3t<out Number>) = and(Vec3b(), this, b.x.b, b.y.b, b.z.b)
+    infix fun and(b: Vec3t<out Number>) = and(Vec3b(), this, b._x.b, b._y.b, b._z.b)
 
     infix fun andAssign(b: Number) = and(this, this, b.b, b.b, b.b)
-    infix fun andAssign(b: Vec3t<out Number>) = and(this, this, b.x.b, b.y.b, b.z.b)
+    infix fun andAssign(b: Vec3t<out Number>) = and(this, this, b._x.b, b._y.b, b._z.b)
 
     fun and(b: Number, res: Vec3b = Vec3b()) = and(res, this, b.b, b.b, b.b)
-    fun and(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = and(res, this, b.x.b, b.y.b, b.z.b)
+    fun and(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = and(res, this, b._x.b, b._y.b, b._z.b)
 
     fun and(bX: Number, bY: Number, bZ: Number, res: Vec3b = Vec3b()) = and(res, this, bX.b, bY.b, bZ.b)
 
@@ -519,13 +523,13 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
 
 
     infix fun or(b: Number) = or(Vec3b(), this, b.b, b.b, b.b)
-    infix fun or(b: Vec3t<out Number>) = or(Vec3b(), this, b.x.b, b.y.b, b.z.b)
+    infix fun or(b: Vec3t<out Number>) = or(Vec3b(), this, b._x.b, b._y.b, b._z.b)
 
     infix fun orAssign(b: Number) = or(this, this, b.b, b.b, b.b)
-    infix fun orAssign(b: Vec3t<out Number>) = or(this, this, b.x.b, b.y.b, b.z.b)
+    infix fun orAssign(b: Vec3t<out Number>) = or(this, this, b._x.b, b._y.b, b._z.b)
 
     fun or(b: Number, res: Vec3b = Vec3b()) = or(res, this, b.b, b.b, b.b)
-    fun or(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = or(res, this, b.x.b, b.y.b, b.z.b)
+    fun or(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = or(res, this, b._x.b, b._y.b, b._z.b)
 
     fun or(bX: Number, bY: Number, bZ: Number, res: Vec3b = Vec3b()) = or(res, this, bX.b, bY.b, bZ.b)
 
@@ -533,13 +537,13 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
 
 
     infix fun xor(b: Number) = xor(Vec3b(), this, b.b, b.b, b.b)
-    infix fun xor(b: Vec3t<out Number>) = xor(Vec3b(), this, b.x.b, b.y.b, b.z.b)
+    infix fun xor(b: Vec3t<out Number>) = xor(Vec3b(), this, b._x.b, b._y.b, b._z.b)
 
     infix fun xorAssign(b: Number) = xor(this, this, b.b, b.b, b.b)
-    infix fun xorAssign(b: Vec3t<out Number>) = xor(this, this, b.x.b, b.y.b, b.z.b)
+    infix fun xorAssign(b: Vec3t<out Number>) = xor(this, this, b._x.b, b._y.b, b._z.b)
 
     fun xor(b: Number, res: Vec3b = Vec3b()) = xor(res, this, b.b, b.b, b.b)
-    fun xor(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = xor(res, this, b.x.b, b.y.b, b.z.b)
+    fun xor(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = xor(res, this, b._x.b, b._y.b, b._z.b)
 
     fun xor(bX: Number, bY: Number, bZ: Number, res: Vec3b = Vec3b()) = xor(res, this, bX.b, bY.b, bZ.b)
 
@@ -547,13 +551,13 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
 
 
     infix fun shl(b: Number) = shl(Vec3b(), this, b.b, b.b, b.b)
-    infix fun shl(b: Vec3t<out Number>) = shl(Vec3b(), this, b.x.b, b.y.b, b.z.b)
+    infix fun shl(b: Vec3t<out Number>) = shl(Vec3b(), this, b._x.b, b._y.b, b._z.b)
 
     infix fun shlAssign(b: Number) = shl(this, this, b.b, b.b, b.b)
-    infix fun shlAssign(b: Vec3t<out Number>) = shl(this, this, b.x.b, b.y.b, b.z.b)
+    infix fun shlAssign(b: Vec3t<out Number>) = shl(this, this, b._x.b, b._y.b, b._z.b)
 
     fun shl(b: Number, res: Vec3b = Vec3b()) = shl(res, this, b.b, b.b, b.b)
-    fun shl(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = shl(res, this, b.x.b, b.y.b, b.z.b)
+    fun shl(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = shl(res, this, b._x.b, b._y.b, b._z.b)
 
     fun shl(bX: Number, bY: Number, bZ: Number, res: Vec3b = Vec3b()) = shl(res, this, bX.b, bY.b, bZ.b)
 
@@ -561,13 +565,13 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
 
 
     infix fun shr(b: Number) = shr(Vec3b(), this, b.b, b.b, b.b)
-    infix fun shr(b: Vec3t<out Number>) = shr(Vec3b(), this, b.x.b, b.y.b, b.z.b)
+    infix fun shr(b: Vec3t<out Number>) = shr(Vec3b(), this, b._x.b, b._y.b, b._z.b)
 
     infix fun shrAssign(b: Number) = shr(this, this, b.b, b.b, b.b)
-    infix fun shrAssign(b: Vec3t<out Number>) = shr(this, this, b.x.b, b.y.b, b.z.b)
+    infix fun shrAssign(b: Vec3t<out Number>) = shr(this, this, b._x.b, b._y.b, b._z.b)
 
     fun shr(b: Number, res: Vec3b = Vec3b()) = shr(res, this, b.b, b.b, b.b)
-    fun shr(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = shr(res, this, b.x.b, b.y.b, b.z.b)
+    fun shr(b: Vec3t<out Number>, res: Vec3b = Vec3b()) = shr(res, this, b._x.b, b._y.b, b._z.b)
 
     fun shr(bX: Number, bY: Number, bZ: Number, res: Vec3b = Vec3b()) = shr(res, this, bX.b, bY.b, bZ.b)
 
@@ -625,7 +629,8 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
 
 
     companion object : vec3b_operators {
-        const val length = Vec3t.length
+        const val length = Vec3t.LENGTH
+
         @JvmField
         val size = length * Byte.BYTES
 
@@ -643,6 +648,30 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
+
+    //@formatter:off
+    override inline var _x get() = x; set(value) { x = value }
+    override inline var r get() = x; set(value) { x = value }
+    override inline var s get() = x; set(value) { x = value }
+
+    override inline var _y get() = y; set(value) { y = value }
+    override inline var g get() = y; set(value) { y = value }
+    override inline var t get() = y; set(value) { y = value }
+
+    override inline var _z get() = z; set(value) { z = value }
+    override inline var b get() = z; set(value) { z = value }
+    override inline var p get() = z; set(value) { z = value }
+    //@formatter:on
+
+    override inline operator fun get(index: Int) = array[ofs + index]
+
+    override inline operator fun set(index: Int, value: Byte) {
+        array[ofs + index] = value
+    }
+
+    override inline fun component1() = x
+    override inline fun component2() = y
+    override inline fun component3() = z
 
     override fun toString(): String = "($x, $y, $z)"
 }
