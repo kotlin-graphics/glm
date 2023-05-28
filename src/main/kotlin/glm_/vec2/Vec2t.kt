@@ -13,31 +13,32 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-abstract class Vec2t<T : Number>: ToBuffer {
+interface Vec2t<T : Number> : ToBuffer {
 
-    abstract var x: T
-    abstract var y: T
+    var _x: T
+    var _y: T
 
-    inline operator fun component1() = x
-    inline operator fun component2() = y
+    operator fun component1() = _x
+    operator fun component2() = _y
 
     // -- Component accesses --
 
-    inline operator fun get(index: Int) = when (index) {
-        0 -> x
-        1 -> y
+    operator fun get(index: Int) = when (index) {
+        0 -> _x
+        1 -> _y
         else -> throw IndexOutOfBoundsException()
     }
 
-    abstract operator fun set(index: Int, value: Number)
+    operator fun set(index: Int, value: T)
+    operator fun set(index: Int, value: Number)
 
     // -- infix Generic Constructors --
 
-    abstract fun put(x: Number, y: Number)
+    fun put(x: Number, y: Number)
 
     infix fun put(x: Number) = put(x, x)
 
-    infix fun put(v: Vec2t<out Number>) = put(v.x, v.y)
+    infix fun put(v: Vec2t<out Number>) = put(v._x, v._y)
     infix fun put(v: Vec3t<out Number>) = put(v.x, v.y)
     infix fun put(v: Vec4t<out Number>) = put(v.x, v.y)
 
@@ -92,12 +93,12 @@ abstract class Vec2t<T : Number>: ToBuffer {
             a is Boolean && b is Boolean -> put(a.b, b.b)
             a is String && b is String ->
                 when {
-                    x is Byte && y is Byte -> put(a.b, b.b)
-                    x is Short && y is Short -> put(a.s, b.s)
-                    x is Int && y is Int -> put(a.i, b.i)
-                    x is Long && y is Long -> put(a.L, b.L)
-                    x is Float && y is Float -> put(a.f, b.f)
-                    x is Double && y is Double -> put(a.d, b.d)
+                    _x is Byte && _y is Byte -> put(a.b, b.b)
+                    _x is Short && _y is Short -> put(a.s, b.s)
+                    _x is Int && _y is Int -> put(a.i, b.i)
+                    _x is Long && _y is Long -> put(a.L, b.L)
+                    _x is Float && _y is Float -> put(a.f, b.f)
+                    _x is Double && _y is Double -> put(a.d, b.d)
                     else -> throw ArithmeticException("incompatible type")
                 }
             else -> throw ArithmeticException("incompatible type")
@@ -115,9 +116,9 @@ abstract class Vec2t<T : Number>: ToBuffer {
 
     // -- Same but with () --
 
-    abstract operator fun invoke(x: Number, y: Number): Vec2t<out Number>
+    operator fun invoke(x: Number, y: Number): Vec2t<out Number>
 
-    infix operator fun invoke(v: Vec2t<out Number>) = invoke(v.x, v.y)
+    infix operator fun invoke(v: Vec2t<out Number>) = invoke(v._x, v._y)
     infix operator fun invoke(v: Vec3t<out Number>) = invoke(v.x, v.y)
     infix operator fun invoke(v: Vec4t<out Number>) = invoke(v.x, v.y)
 
@@ -174,12 +175,12 @@ abstract class Vec2t<T : Number>: ToBuffer {
             a is Boolean && b is Boolean -> invoke(a.b, b.b)
             a is String && b is String ->
                 when {
-                    x is Byte && y is Byte -> invoke(a.b, b.b)
-                    x is Short && y is Short -> invoke(a.s, b.s)
-                    x is Int && y is Int -> invoke(a.i, b.i)
-                    x is Long && y is Long -> invoke(a.L, b.L)
-                    x is Float && y is Float -> invoke(a.f, b.f)
-                    x is Double && y is Double -> invoke(a.d, b.d)
+                    _x is Byte && _y is Byte -> invoke(a.b, b.b)
+                    _x is Short && _y is Short -> invoke(a.s, b.s)
+                    _x is Int && _y is Int -> invoke(a.i, b.i)
+                    _x is Long && _y is Long -> invoke(a.L, b.L)
+                    _x is Float && _y is Float -> invoke(a.f, b.f)
+                    _x is Double && _y is Double -> invoke(a.d, b.d)
                     else -> throw ArithmeticException("incompatible type")
                 }
             else -> throw ArithmeticException("incompatible type")
@@ -194,10 +195,10 @@ abstract class Vec2t<T : Number>: ToBuffer {
     operator fun invoke(floats: FloatBuffer, index: Int) = invoke(floats[index], floats[index + 1])
     operator fun invoke(doubles: DoubleBuffer, index: Int) = invoke(doubles[index], doubles[index + 1])
 
-    fun toByteArray(bigEndian: Boolean = true): ByteArray = to(ByteArray(length), 0, bigEndian)
+    fun toByteArray(bigEndian: Boolean = true): ByteArray = to(ByteArray(LENGTH), 0, bigEndian)
     infix fun to(bytes: ByteArray): ByteArray = to(bytes, 0)
     fun to(bytes: ByteArray, bigEndian: Boolean): ByteArray = to(bytes, 0, bigEndian)
-    abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
+    fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
 
 //    infix fun lessThan(b: Vec2t<out Number>) = glm.lessThan(this, b, Vec2bool())
 //    fun lessThan(b: Vec2t<out Number>, res: Vec2bool = Vec2bool()) = glm.lessThan(this, b, res)
@@ -221,32 +222,16 @@ abstract class Vec2t<T : Number>: ToBuffer {
 
     // component alias
 
-    inline var r
-        @JvmName("r") get() = x
-        @JvmName("r") set(value) {
-            x = value
-        }
 
-    inline var g
-        @JvmName("g") get() = y
-        @JvmName("g") set(value) {
-            y = value
-        }
-    inline var s
-        @JvmName("s") get() = x
-        @JvmName("s") set(value) {
-            x = value
-        }
+    //@formatter:off
+    var r get() = _x; set(value) { _x = value }
+    var s get() = _x; set(value) { _x = value }
 
-    inline var t
-        @JvmName("t") get() = y
-        @JvmName("t") set(value) {
-            y = value
-        }
+    var g get() = _y; set(value) { _y = value }
+    var t get() = _y; set(value) { _y = value }
+    //@formatter:on
 
     companion object {
-        const val length = 2
+        const val LENGTH = 2
     }
-
-    override fun toString(): String = "($x, $y)"
 }

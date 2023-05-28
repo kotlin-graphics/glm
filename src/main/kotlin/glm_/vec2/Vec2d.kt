@@ -21,12 +21,12 @@ import kotlin.math.abs
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Double>(), ToDoubleBuffer {
+class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Double>, ToDoubleBuffer {
 
-    override inline var x: Double
+    inline var x: Double
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override inline var y: Double
+    inline var y: Double
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
 
@@ -47,16 +47,22 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+    constructor(v: Vec1t<out Number>) : this(v._x, v._x)
+    constructor(x: Vec1t<out Number>, y: Number) : this(x._x, y)
+    constructor(x: Number, y: Vec1t<out Number>) : this(x, y._x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x._x, y._x)
 
-    @JvmOverloads
-    constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+    constructor(v: Vec2t<out Number>) : this(v._x, v._y)
+    constructor(v: Vec3t<out Number>) : this(v._x, v._y)
+    constructor(v: Vec4t<out Number>) : this(v._x, v._y)
 
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
+    constructor(v: Vec1d) : this(v.x, v.x)
+    constructor(x: Vec1d, y: Double) : this(x.x, y)
+    constructor(x: Double, y: Vec1d) : this(x, y.x)
+    constructor(x: Vec1d, y: Vec1d) : this(x.x, y.x)
 
-    constructor(v: Vec2t<out Number>) : this(v.x, v.y)
-    constructor(v: Vec3t<out Number>) : this(v.x, v.y)
-    constructor(v: Vec4t<out Number>) : this(v.x, v.y)
+    constructor(v: Vec3d) : this(v.x, v.y)
+    constructor(v: Vec4d) : this(v.x, v.y)
 
     @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.d, y.d)
@@ -173,12 +179,6 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
     }
 
     // -- Component accesses --
-
-    operator fun set(index: Int, value: Double) = when (index) {
-        0 -> x = value
-        1 -> y = value
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.d
@@ -305,13 +305,13 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
     // -- Generic binary arithmetic operators --
 
     infix operator fun plus(b: Number) = plus(Vec2d(), this, b.d, b.d)
-    infix operator fun plus(b: Vec2t<out Number>) = plus(Vec2d(), this, b.x.d, b.y.d)
+    infix operator fun plus(b: Vec2t<out Number>) = plus(Vec2d(), this, b._x.d, b._y.d)
 
     @JvmOverloads
     fun plus(bX: Number, bY: Number, res: Vec2d = Vec2d()) = plus(res, this, bX.d, bY.d)
 
     fun plus(b: Number, res: Vec2d) = plus(res, this, b.d, b.d)
-    fun plus(b: Vec2t<out Number>, res: Vec2d) = plus(res, this, b.x.d, b.y.d)
+    fun plus(b: Vec2t<out Number>, res: Vec2d) = plus(res, this, b._x.d, b._y.d)
 
     fun plusAssign(bX: Number, bY: Number) = plus(this, this, bX.d, bY.d)
     infix operator fun plusAssign(b: Number) {
@@ -319,18 +319,18 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
     }
 
     infix operator fun plusAssign(b: Vec2t<out Number>) {
-        plus(this, this, b.x.d, b.y.d)
+        plus(this, this, b._x.d, b._y.d)
     }
 
 
     infix operator fun minus(b: Number) = minus(Vec2d(), this, b.d, b.d)
-    infix operator fun minus(b: Vec2t<out Number>) = minus(Vec2d(), this, b.x.d, b.y.d)
+    infix operator fun minus(b: Vec2t<out Number>) = minus(Vec2d(), this, b._x.d, b._y.d)
 
     @JvmOverloads
     fun minus(bX: Number, bY: Number, res: Vec2d = Vec2d()) = minus(res, this, bX.d, bY.d)
 
     fun minus(b: Number, res: Vec2d) = minus(res, this, b.d, b.d)
-    fun minus(b: Vec2t<out Number>, res: Vec2d) = minus(res, this, b.x.d, b.y.d)
+    fun minus(b: Vec2t<out Number>, res: Vec2d) = minus(res, this, b._x.d, b._y.d)
 
     fun minusAssign(bX: Number, bY: Number) = minus(this, this, bX.d, bY.d)
     infix operator fun minusAssign(b: Number) {
@@ -338,18 +338,18 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
     }
 
     infix operator fun minusAssign(b: Vec2t<out Number>) {
-        minus(this, this, b.x.d, b.y.d)
+        minus(this, this, b._x.d, b._y.d)
     }
 
 
     infix operator fun times(b: Number) = times(Vec2d(), this, b.d, b.d)
-    infix operator fun times(b: Vec2t<out Number>) = times(Vec2d(), this, b.x.d, b.y.d)
+    infix operator fun times(b: Vec2t<out Number>) = times(Vec2d(), this, b._x.d, b._y.d)
 
     @JvmOverloads
     fun times(bX: Number, bY: Number, res: Vec2d = Vec2d()) = times(res, this, bX.d, bY.d)
 
     fun times(b: Number, res: Vec2d) = times(res, this, b.d, b.d)
-    fun times(b: Vec2t<out Number>, res: Vec2d) = times(res, this, b.x.d, b.y.d)
+    fun times(b: Vec2t<out Number>, res: Vec2d) = times(res, this, b._x.d, b._y.d)
 
     fun timesAssign(bX: Number, bY: Number) = times(this, this, bX.d, bY.d)
     infix operator fun timesAssign(b: Number) {
@@ -357,18 +357,18 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
     }
 
     infix operator fun timesAssign(b: Vec2t<out Number>) {
-        times(this, this, b.x.d, b.y.d)
+        times(this, this, b._x.d, b._y.d)
     }
 
 
     infix operator fun div(b: Number) = div(Vec2d(), this, b.d, b.d)
-    infix operator fun div(b: Vec2t<out Number>) = div(Vec2d(), this, b.x.d, b.y.d)
+    infix operator fun div(b: Vec2t<out Number>) = div(Vec2d(), this, b._x.d, b._y.d)
 
     @JvmOverloads
     fun div(bX: Number, bY: Number, res: Vec2d = Vec2d()) = div(res, this, bX.d, bY.d)
 
     fun div(b: Number, res: Vec2d) = div(res, this, b.d, b.d)
-    fun div(b: Vec2t<out Number>, res: Vec2d) = div(res, this, b.x.d, b.y.d)
+    fun div(b: Vec2t<out Number>, res: Vec2d) = div(res, this, b._x.d, b._y.d)
 
     fun divAssign(bX: Number, bY: Number) = div(this, this, bX.d, bY.d)
     infix operator fun divAssign(b: Number) {
@@ -376,18 +376,18 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
     }
 
     infix operator fun divAssign(b: Vec2t<out Number>) {
-        div(this, this, b.x.d, b.y.d)
+        div(this, this, b._x.d, b._y.d)
     }
 
 
     infix operator fun rem(b: Number) = rem(Vec2d(), this, b.d, b.d)
-    infix operator fun rem(b: Vec2t<out Number>) = rem(Vec2d(), this, b.x.d, b.y.d)
+    infix operator fun rem(b: Vec2t<out Number>) = rem(Vec2d(), this, b._x.d, b._y.d)
 
     @JvmOverloads
     fun rem(bX: Number, bY: Number, res: Vec2d = Vec2d()) = rem(res, this, bX.d, bY.d)
 
     fun rem(b: Number, res: Vec2d) = rem(res, this, b.d, b.d)
-    fun rem(b: Vec2t<out Number>, res: Vec2d) = rem(res, this, b.x.d, b.y.d)
+    fun rem(b: Vec2t<out Number>, res: Vec2d) = rem(res, this, b._x.d, b._y.d)
 
     fun remAssign(bX: Number, bY: Number) = rem(this, this, bX.d, bY.d)
     infix operator fun remAssign(b: Number) {
@@ -395,7 +395,7 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
     }
 
     infix operator fun remAssign(b: Vec2t<out Number>) {
-        rem(this, this, b.x.d, b.y.d)
+        rem(this, this, b._x.d, b._y.d)
     }
 
 
@@ -474,7 +474,7 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
 
 
     companion object : opVec2d {
-        const val length = Vec2t.length
+        const val length = Vec2t.LENGTH
 
         @JvmField
         val size = length * Double.BYTES
@@ -496,4 +496,26 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
+
+    //@formatter:off
+    override inline var _x get() = x; set(value) { x = value }
+    override inline var r get() = x; set(value) { x = value }
+    override inline var s get() = x; set(value) { x = value }
+
+    override inline var _y get() = y; set(value) { y = value }
+    override inline var g get() = y; set(value) { y = value }
+    override inline var t get() = y; set(value) { y = value }
+    //@formatter:on
+
+    override inline operator fun get(index: Int): Double = array[ofs + index]
+
+    override inline operator fun set(index: Int, value: Double) {
+        array[ofs + index] = value
+    }
+
+    override inline fun component1() = x
+    override inline fun component2() = y
+
+
+    override fun toString(): String = "($x, $y)"
 }

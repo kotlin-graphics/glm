@@ -32,9 +32,9 @@ class Vec1d(@JvmField inline var x: Double) : Vec1t<Double>, ToDoubleBuffer {
     constructor(v: Vec4d) : this(v.x)
 
     constructor(v: Vec1t<out Number>) : this(v._x)
-    constructor(v: Vec2t<out Number>) : this(v.x)
-    constructor(v: Vec3t<out Number>) : this(v.x)
-    constructor(v: Vec4t<out Number>) : this(v.x)
+    constructor(v: Vec2t<out Number>) : this(v._x)
+    constructor(v: Vec3t<out Number>) : this(v._x)
+    constructor(v: Vec4t<out Number>) : this(v._x)
 
     constructor(v: Vec1bool) : this(v.x.d)
     constructor(v: Vec2bool) : this(v.x.d)
@@ -312,7 +312,7 @@ class Vec1d(@JvmField inline var x: Double) : Vec1t<Double>, ToDoubleBuffer {
     //@formatter:off
     override inline var _x get() = x; set(value) { x = value }
     override inline var r get() = x; set(value) { x = value }
-    override inline var s get() = x; set(value) { x =value }
+    override inline var s get() = x; set(value) { x = value }
     //@formatter:on
 
     override inline operator fun get(index: Int): Double {

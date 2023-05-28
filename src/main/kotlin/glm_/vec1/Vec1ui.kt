@@ -31,9 +31,9 @@ class Vec1ui(override inline var x: Uint) : Vec1t<Uint> {
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     constructor(v: Vec1t<out Number>) : this(v.x)
-    constructor(v: Vec2t<out Number>) : this(v.x)
-    constructor(v: Vec3t<out Number>) : this(v.x)
-    constructor(v: Vec4t<out Number>) : this(v.x)
+    constructor(v: Vec2t<out Number>) : this(v._x)
+    constructor(v: Vec3t<out Number>) : this(v._x)
+    constructor(v: Vec4t<out Number>) : this(v._x)
 
     constructor(v: Vec1bool) : this(v.x.ui)
     constructor(v: Vec2bool) : this(v.x.ui)
@@ -470,7 +470,7 @@ class Vec1ui(override inline var x: Uint) : Vec1t<Uint> {
     //@formatter:off
     override inline var _x get() = x; set(value) { x = value }
     override inline var r get() = x; set(value) { x = value }
-    override inline var s get() = x; set(value) { x =value }
+    override inline var s get() = x; set(value) { x = value }
     //@formatter:on
 
     override inline operator fun get(index: Int): Uint {

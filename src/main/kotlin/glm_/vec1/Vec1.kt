@@ -31,9 +31,9 @@ class Vec1(@JvmField inline var x: Float) : Vec1t<Float>, ToFloatBuffer {
     constructor(v: Vec4) : this(v.x)
 
     constructor(v: Vec1t<out Number>) : this(v._x)
-    constructor(v: Vec2t<out Number>) : this(v.x)
-    constructor(v: Vec3t<out Number>) : this(v.x)
-    constructor(v: Vec4t<out Number>) : this(v.x)
+    constructor(v: Vec2t<out Number>) : this(v._x)
+    constructor(v: Vec3t<out Number>) : this(v._x)
+    constructor(v: Vec4t<out Number>) : this(v._x)
 
     constructor(v: Vec1bool) : this(v.x.f)
     constructor(v: Vec2bool) : this(v.x.f)
@@ -323,7 +323,7 @@ class Vec1(@JvmField inline var x: Float) : Vec1t<Float>, ToFloatBuffer {
     //@formatter:off
     override inline var _x get() = x; set(value) { x = value }
     override inline var r get() = x; set(value) { x = value }
-    override inline var s get() = x; set(value) { x =value }
+    override inline var s get() = x; set(value) { x = value }
     //@formatter:on
 
     override inline operator fun get(index: Int): Float {

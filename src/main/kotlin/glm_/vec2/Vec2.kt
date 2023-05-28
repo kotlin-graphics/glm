@@ -20,12 +20,12 @@ import kotlin.math.abs
  * Created bY GBarbieri on 05.10.2016.
  */
 
-class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Float>(), ToFloatBuffer {
+class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Float>, ToFloatBuffer {
 
-    override inline var x: Float
+    inline var x: Float
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override inline var y: Float
+    inline var y: Float
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
 
@@ -46,20 +46,28 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
-    @JvmOverloads
-    constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+    constructor(v: Vec1t<out Number>) : this(v._x, v._x)
+    constructor(x: Vec1t<out Number>, y: Number) : this(x._x, y)
+    constructor(x: Number, y: Vec1t<out Number>) : this(x, y._x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x._x, y._x)
 
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
+    constructor(v: Vec2t<out Number>) : this(v._x, v._y)
+    constructor(v: Vec3t<out Number>) : this(v._x, v._y)
+    constructor(v: Vec4t<out Number>) : this(v._x, v._y)
 
-    constructor(v: Vec2t<out Number>) : this(v.x, v.y)
-    constructor(v: Vec3t<out Number>) : this(v.x, v.y)
-    constructor(v: Vec4t<out Number>) : this(v.x, v.y)
+    constructor(v: Vec1) : this(v.x, v.x)
+    constructor(x: Vec1, y: Float) : this(x.x, y)
+    constructor(x: Float, y: Vec1) : this(x, y.x)
+    constructor(x: Vec1, y: Vec1) : this(x.x, y.x)
+
+    constructor(v: Vec3) : this(v.x, v.y)
+    constructor(v: Vec4) : this(v.x, v.y)
 
     @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.f, y.f)
 
     constructor(x: Boolean, v: Vec1bool) : this(x.f, v.x.f)
+
     @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.f, y.f)
 
@@ -183,12 +191,6 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
     infix fun to(ptr: Ptr<Byte>) = to(ptr.toPtr<Float>())
 
     // -- Component accesses --
-
-    operator fun set(index: Int, value: Float) = when (index) {
-        0 -> x = value
-        1 -> y = value
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.f
@@ -314,13 +316,13 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
     // -- Generic binary arithmetic operators --
 
     infix operator fun plus(b: Number) = plus(Vec2(), this, b.f, b.f)
-    infix operator fun plus(b: Vec2t<out Number>) = plus(Vec2(), this, b.x.f, b.y.f)
+    infix operator fun plus(b: Vec2t<out Number>) = plus(Vec2(), this, b._x.f, b._y.f)
 
     @JvmOverloads
     fun plus(bX: Number, bY: Number, res: Vec2 = Vec2()) = plus(res, this, bX.f, bY.f)
 
     fun plus(b: Number, res: Vec2) = plus(res, this, b.f, b.f)
-    fun plus(b: Vec2t<out Number>, res: Vec2) = plus(res, this, b.x.f, b.y.f)
+    fun plus(b: Vec2t<out Number>, res: Vec2) = plus(res, this, b._x.f, b._y.f)
 
     fun plusAssign(bX: Number, bY: Number) = plus(this, this, bX.f, bY.f)
     infix operator fun plusAssign(b: Number) {
@@ -328,18 +330,18 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
     }
 
     infix operator fun plusAssign(b: Vec2t<out Number>) {
-        plus(this, this, b.x.f, b.y.f)
+        plus(this, this, b._x.f, b._y.f)
     }
 
 
     infix operator fun minus(b: Number) = minus(Vec2(), this, b.f, b.f)
-    infix operator fun minus(b: Vec2t<out Number>) = minus(Vec2(), this, b.x.f, b.y.f)
+    infix operator fun minus(b: Vec2t<out Number>) = minus(Vec2(), this, b._x.f, b._y.f)
 
     @JvmOverloads
     fun minus(bX: Number, bY: Number, res: Vec2 = Vec2()) = minus(res, this, bX.f, bY.f)
 
     fun minus(b: Number, res: Vec2) = minus(res, this, b.f, b.f)
-    fun minus(b: Vec2t<out Number>, res: Vec2) = minus(res, this, b.x.f, b.y.f)
+    fun minus(b: Vec2t<out Number>, res: Vec2) = minus(res, this, b._x.f, b._y.f)
 
     fun minusAssign(bX: Number, bY: Number) = minus(this, this, bX.f, bY.f)
     infix operator fun minusAssign(b: Number) {
@@ -347,18 +349,18 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
     }
 
     infix operator fun minusAssign(b: Vec2t<out Number>) {
-        minus(this, this, b.x.f, b.y.f)
+        minus(this, this, b._x.f, b._y.f)
     }
 
 
     infix operator fun times(b: Number) = times(Vec2(), this, b.f, b.f)
-    infix operator fun times(b: Vec2t<out Number>) = times(Vec2(), this, b.x.f, b.y.f)
+    infix operator fun times(b: Vec2t<out Number>) = times(Vec2(), this, b._x.f, b._y.f)
 
     @JvmOverloads
     fun times(bX: Number, bY: Number, res: Vec2 = Vec2()) = times(res, this, bX.f, bY.f)
 
     fun times(b: Number, res: Vec2) = times(res, this, b.f, b.f)
-    fun times(b: Vec2t<out Number>, res: Vec2) = times(res, this, b.x.f, b.y.f)
+    fun times(b: Vec2t<out Number>, res: Vec2) = times(res, this, b._x.f, b._y.f)
 
     fun timesAssign(bX: Number, bY: Number) = times(this, this, bX.f, bY.f)
     infix operator fun timesAssign(b: Number) {
@@ -366,18 +368,18 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
     }
 
     infix operator fun timesAssign(b: Vec2t<out Number>) {
-        times(this, this, b.x.f, b.y.f)
+        times(this, this, b._x.f, b._y.f)
     }
 
 
     infix operator fun div(b: Number) = div(Vec2(), this, b.f, b.f)
-    infix operator fun div(b: Vec2t<out Number>) = div(Vec2(), this, b.x.f, b.y.f)
+    infix operator fun div(b: Vec2t<out Number>) = div(Vec2(), this, b._x.f, b._y.f)
 
     @JvmOverloads
     fun div(bX: Number, bY: Number, res: Vec2 = Vec2()) = div(res, this, bX.f, bY.f)
 
     fun div(b: Number, res: Vec2) = div(res, this, b.f, b.f)
-    fun div(b: Vec2t<out Number>, res: Vec2) = div(res, this, b.x.f, b.y.f)
+    fun div(b: Vec2t<out Number>, res: Vec2) = div(res, this, b._x.f, b._y.f)
 
     fun divAssign(bX: Number, bY: Number) = div(this, this, bX.f, bY.f)
     infix operator fun divAssign(b: Number) {
@@ -385,18 +387,18 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
     }
 
     infix operator fun divAssign(b: Vec2t<out Number>) {
-        div(this, this, b.x.f, b.y.f)
+        div(this, this, b._x.f, b._y.f)
     }
 
 
     infix operator fun rem(b: Number) = rem(Vec2(), this, b.f, b.f)
-    infix operator fun rem(b: Vec2t<out Number>) = rem(Vec2(), this, b.x.f, b.y.f)
+    infix operator fun rem(b: Vec2t<out Number>) = rem(Vec2(), this, b._x.f, b._y.f)
 
     @JvmOverloads
     fun rem(bX: Number, bY: Number, res: Vec2 = Vec2()) = rem(res, this, bX.f, bY.f)
 
     fun rem(b: Number, res: Vec2) = rem(res, this, b.f, b.f)
-    fun rem(b: Vec2t<out Number>, res: Vec2) = rem(res, this, b.x.f, b.y.f)
+    fun rem(b: Vec2t<out Number>, res: Vec2) = rem(res, this, b._x.f, b._y.f)
 
     fun remAssign(bX: Number, bY: Number) = rem(this, this, bX.f, bY.f)
     infix operator fun remAssign(b: Number) {
@@ -404,7 +406,7 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
     }
 
     infix operator fun remAssign(b: Vec2t<out Number>) {
-        rem(this, this, b.x.f, b.y.f)
+        rem(this, this, b._x.f, b._y.f)
     }
 
     // -- functions --
@@ -419,14 +421,14 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
 
     infix fun max(b: Vec2t<*>): Vec2 {
         val res = Vec2()
-        res.x = glm.max(x, b.x.f)
-        res.y = glm.max(y, b.y.f)
+        res.x = GLM.max(x, b._x.f)
+        res.y = GLM.max(y, b._y.f)
         return res
     }
 
     infix fun maxAssign(b: Vec2t<*>) {
-        x = glm.max(x, b.x.f)
-        y = glm.max(y, b.y.f)
+        x = GLM.max(x, b._x.f)
+        y = GLM.max(y, b._y.f)
     }
 
     infix fun max(b: Float) = glm.max(this, b, Vec2())
@@ -457,14 +459,14 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
 
     infix fun min(b: Vec2t<*>): Vec2 {
         val res = Vec2()
-        res.x = glm.min(x, b.x.f)
-        res.y = glm.min(y, b.y.f)
+        res.x = GLM.min(x, b._x.f)
+        res.y = GLM.min(y, b._y.f)
         return res
     }
 
     infix fun minAssign(b: Vec2t<*>) {
-        x = glm.min(x, b.x.f)
-        y = glm.min(y, b.y.f)
+        x = GLM.min(x, b._x.f)
+        y = GLM.min(y, b._y.f)
     }
 
     infix fun min(b: Float) = glm.min(this, b, Vec2())
@@ -537,23 +539,23 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
     infix fun greaterThanEqual(v: Vec2): Vec2bool = Vec2bool { get(it) >= v[it] }
 
 
-    infix fun <T : Number> allLessThan(v: Vec2t<T>): Boolean = x < v.x.f && y < v.y.f
-    infix fun <T : Number> anyLessThan(v: Vec2t<T>): Boolean = x < v.x.f || y < v.y.f
+    infix fun <T : Number> allLessThan(v: Vec2t<T>): Boolean = x < v._x.f && y < v._y.f
+    infix fun <T : Number> anyLessThan(v: Vec2t<T>): Boolean = x < v._x.f || y < v._y.f
 
-    infix fun <T : Number> allLessThanEqual(v: Vec2t<T>): Boolean = x <= v.x.f && y <= v.y.f
-    infix fun <T : Number> anyLessThanEqual(v: Vec2t<T>): Boolean = x <= v.x.f || y <= v.y.f
+    infix fun <T : Number> allLessThanEqual(v: Vec2t<T>): Boolean = x <= v._x.f && y <= v._y.f
+    infix fun <T : Number> anyLessThanEqual(v: Vec2t<T>): Boolean = x <= v._x.f || y <= v._y.f
 
-    infix fun <T : Number> allEqual(v: Vec2t<T>): Boolean = x == v.x.f && y == v.y.f
-    infix fun <T : Number> anyEqual(v: Vec2t<T>): Boolean = x == v.x.f || y == v.y.f
+    infix fun <T : Number> allEqual(v: Vec2t<T>): Boolean = x == v._x.f && y == v._y.f
+    infix fun <T : Number> anyEqual(v: Vec2t<T>): Boolean = x == v._x.f || y == v._y.f
 
-    infix fun <T : Number> allNotEqual(v: Vec2t<T>): Boolean = x != v.x.f && y != v.y.f
-    infix fun <T : Number> anyNotEqual(v: Vec2t<T>): Boolean = x != v.x.f || y != v.y.f
+    infix fun <T : Number> allNotEqual(v: Vec2t<T>): Boolean = x != v._x.f && y != v._y.f
+    infix fun <T : Number> anyNotEqual(v: Vec2t<T>): Boolean = x != v._x.f || y != v._y.f
 
-    infix fun <T : Number> allGreaterThan(v: Vec2t<T>): Boolean = x > v.x.f && y > v.y.f
-    infix fun <T : Number> anyGreaterThan(v: Vec2t<T>): Boolean = x > v.x.f || y > v.y.f
+    infix fun <T : Number> allGreaterThan(v: Vec2t<T>): Boolean = x > v._x.f && y > v._y.f
+    infix fun <T : Number> anyGreaterThan(v: Vec2t<T>): Boolean = x > v._x.f || y > v._y.f
 
-    infix fun <T : Number> allGreaterThanEqual(v: Vec2t<T>): Boolean = x >= v.x.f && y >= v.y.f
-    infix fun <T : Number> anyGreaterThanEqual(v: Vec2t<T>): Boolean = x >= v.x.f || y >= v.y.f
+    infix fun <T : Number> allGreaterThanEqual(v: Vec2t<T>): Boolean = x >= v._x.f && y >= v._y.f
+    infix fun <T : Number> anyGreaterThanEqual(v: Vec2t<T>): Boolean = x >= v._x.f || y >= v._y.f
 
 
     infix fun dot(b: Vec2) = glm.dot(this, b)
@@ -581,7 +583,8 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
 
 
     companion object : opVec2 {
-        const val length = Vec2t.length
+        const val length = Vec2t.LENGTH
+
         @JvmField
         val size = length * Float.BYTES
 
@@ -602,4 +605,26 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
+
+    //@formatter:off
+    override inline var _x get() = x; set(value) { x = value }
+    override inline var r get() = x; set(value) { x = value }
+    override inline var s get() = x; set(value) { x = value }
+
+    override inline var _y get() = y; set(value) { y = value }
+    override inline var g get() = y; set(value) { y = value }
+    override inline var t get() = y; set(value) { y = value }
+    //@formatter:on
+
+    override inline operator fun get(index: Int): Float = array[ofs + index]
+
+    override inline operator fun set(index: Int, value: Float) {
+        array[ofs + index] = value
+    }
+
+    override inline fun component1() = x
+    override inline fun component2() = y
+
+
+    override fun toString(): String = "($x, $y)"
 }

@@ -31,9 +31,9 @@ class Vec1l(@JvmField inline var x: Long) : Vec1t<Long> {
     constructor(v: Vec4l) : this(v.x)
 
     constructor(v: Vec1t<out Number>) : this(v._x)
-    constructor(v: Vec2t<out Number>) : this(v.x)
-    constructor(v: Vec3t<out Number>) : this(v.x)
-    constructor(v: Vec4t<out Number>) : this(v.x)
+    constructor(v: Vec2t<out Number>) : this(v._x)
+    constructor(v: Vec3t<out Number>) : this(v._x)
+    constructor(v: Vec4t<out Number>) : this(v._x)
 
     constructor(v: Vec1bool) : this(v.x.L)
     constructor(v: Vec2bool) : this(v.x.L)
@@ -148,7 +148,7 @@ class Vec1l(@JvmField inline var x: Long) : Vec1t<Long> {
     //@formatter:off
     override inline var _x get() = x; set(value) { x = value }
     override inline var r get() = x; set(value) { x = value }
-    override inline var s get() = x; set(value) { x =value }
+    override inline var s get() = x; set(value) { x = value }
     //@formatter:on
 
     override inline operator fun get(index: Int): Long {

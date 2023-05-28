@@ -203,7 +203,8 @@ interface Vec1t<T : Number> : ToBuffer {
     // component alias
     //@formatter:off
     var r get() = _x; set(value) { _x = value }
-    var s get() = _x; set(value) { _x =value }
+
+    var s get() = _x; set(value) { _x = value }
     //@formatter:on
 
     companion object {
