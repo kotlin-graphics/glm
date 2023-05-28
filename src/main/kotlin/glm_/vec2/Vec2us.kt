@@ -764,7 +764,7 @@ class Vec2us(@JvmField var ofs: Int, var array: UshortArray) : Vec2t<Ushort>, To
 
     override inline operator fun get(index: Int) = array[ofs + index]
 
-    override inline operator fun set(index: Int, value: Ushort) {
+    inline operator fun set(index: Int, value: Ushort) {
         array[ofs + index] = value
     }
 

@@ -29,7 +29,6 @@ interface Vec3t<T : Number> : ToBuffer {
         else -> throw IndexOutOfBoundsException()
     }
 
-    operator fun set(index: Int, value: T)
     operator fun set(index: Int, value: Number)
 
     // -- infix Generic Constructors --

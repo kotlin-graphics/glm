@@ -749,7 +749,7 @@ class Vec4ul(@JvmField var ofs: Int, var array: UlongArray) : Vec4t<Ulong>, ToBu
 
     override inline operator fun get(index: Int) = array[ofs + index]
 
-    override inline operator fun set(index: Int, value: Ulong) {
+    inline operator fun set(index: Int, value: Ulong) {
         array[ofs + index] = value
     }
 

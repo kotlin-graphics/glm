@@ -741,7 +741,7 @@ class Vec4s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec4t<Sho
 
     override inline operator fun get(index: Int) = array[ofs + index]
 
-    override inline operator fun set(index: Int, value: Short) {
+    inline operator fun set(index: Int, value: Short) {
         array[ofs + index] = value
     }
 

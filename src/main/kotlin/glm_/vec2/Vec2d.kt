@@ -514,7 +514,7 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
 
     override inline operator fun get(index: Int) = array[ofs + index]
 
-    override inline operator fun set(index: Int, value: Double) {
+    inline operator fun set(index: Int, value: Double) {
         array[ofs + index] = value
     }
 

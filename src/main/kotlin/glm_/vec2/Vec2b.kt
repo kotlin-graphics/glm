@@ -688,7 +688,7 @@ class Vec2b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec2t<Byte
 
     override inline operator fun get(index: Int) = array[ofs + index]
 
-    override inline operator fun set(index: Int, value: Byte) {
+    inline operator fun set(index: Int, value: Byte) {
         array[ofs + index] = value
     }
 

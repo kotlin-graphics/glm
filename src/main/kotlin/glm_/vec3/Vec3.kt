@@ -559,7 +559,7 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
 
     override inline operator fun get(index: Int) = array[ofs + index]
 
-    override inline operator fun set(index: Int, value: Float) {
+    inline operator fun set(index: Int, value: Float) {
         array[ofs + index] = value
     }
 

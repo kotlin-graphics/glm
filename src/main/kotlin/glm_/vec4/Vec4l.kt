@@ -687,7 +687,7 @@ class Vec4l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec4t<Long
 
     override inline operator fun get(index: Int) = array[ofs + index]
 
-    override inline operator fun set(index: Int, value: Long) {
+    inline operator fun set(index: Int, value: Long) {
         array[ofs + index] = value
     }
 
