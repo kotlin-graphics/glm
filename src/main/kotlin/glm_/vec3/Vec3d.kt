@@ -239,6 +239,8 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
 
     operator fun plus(b: Double) = plus(Vec3d(), this, b, b, b)
     operator fun plus(b: Vec3d) = plus(Vec3d(), this, b.x, b.y, b.z)
+    operator fun plus(b: Vec3) = plus(Vec3d(), this, b.x.d, b.y.d, b.z.d)
+    operator fun plus(b: Vec3i) = plus(Vec3d(), this, b.x.d, b.y.d, b.z.d)
 
     fun plus(bX: Double, bY: Double, bZ: Double, res: Vec3d = Vec3d()) = plus(res, this, bX, bY, bZ)
     fun plus(b: Double, res: Vec3d = Vec3d()) = plus(res, this, b, b, b)
@@ -253,9 +255,19 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
         plus(this, this, b.x, b.y, b.z)
     }
 
+    infix operator fun plusAssign(b: Vec3) {
+        plus(this, this, b.x.d, b.y.d, b.z.d)
+    }
+
+    infix operator fun plusAssign(b: Vec3i) {
+        plus(this, this, b.x.d, b.y.d, b.z.d)
+    }
+
 
     operator fun minus(b: Double) = minus(Vec3d(), this, b, b, b)
     operator fun minus(b: Vec3d) = minus(Vec3d(), this, b.x, b.y, b.z)
+    operator fun minus(b: Vec3) = minus(Vec3d(), this, b.x.d, b.y.d, b.z.d)
+    operator fun minus(b: Vec3i) = minus(Vec3d(), this, b.x.d, b.y.d, b.z.d)
 
     fun minus(bX: Double, bY: Double, bZ: Double, res: Vec3d = Vec3d()) = minus(res, this, bX, bY, bZ)
     fun minus(b: Double, res: Vec3d = Vec3d()) = minus(res, this, b, b, b)
@@ -268,6 +280,14 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
 
     infix operator fun minusAssign(b: Vec3d) {
         minus(this, this, b.x, b.y, b.z)
+    }
+
+    infix operator fun minusAssign(b: Vec3) {
+        minus(this, this, b.x.d, b.y.d, b.z.d)
+    }
+
+    infix operator fun minusAssign(b: Vec3i) {
+        minus(this, this, b.x.d, b.y.d, b.z.d)
     }
 
 

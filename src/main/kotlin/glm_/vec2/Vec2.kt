@@ -46,6 +46,7 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
 
     constructor(v: Number) : this(v.f)
     constructor(x: Number, y: Number) : this(x.f, y.f)
+    constructor(x: Int, y: Int) : this(x.f, y.f)
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
@@ -226,6 +227,7 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
 
     infix operator fun plus(b: Float) = plus(Vec2(), this, b, b)
     infix operator fun plus(b: Vec2) = plus(Vec2(), this, b.x, b.y)
+    infix operator fun plus(b: Vec2i) = plus(Vec2(), this, b.x.f, b.y.f)
 
     @JvmOverloads
     fun plus(bX: Float, bY: Float, res: Vec2 = Vec2()) = plus(res, this, bX, bY)
@@ -242,9 +244,14 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
         plus(this, this, b.x, b.y)
     }
 
+    infix operator fun plusAssign(b: Vec2i) {
+        plus(this, this, b.x.f, b.y.f)
+    }
+
 
     infix operator fun minus(b: Float) = minus(Vec2(), this, b, b)
     infix operator fun minus(b: Vec2) = minus(Vec2(), this, b.x, b.y)
+    infix operator fun minus(b: Vec2i) = minus(Vec2(), this, b.x.f, b.y.f)
 
     @JvmOverloads
     fun minus(bX: Float, bY: Float, res: Vec2 = Vec2()) = minus(res, this, bX, bY)
@@ -259,6 +266,10 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
 
     infix operator fun minusAssign(b: Vec2) {
         minus(this, this, b.x, b.y)
+    }
+
+    infix operator fun minusAssign(b: Vec2i) {
+        minus(this, this, b.x.f, b.y.f)
     }
 
 

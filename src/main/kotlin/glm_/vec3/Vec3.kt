@@ -241,6 +241,7 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
 
     infix operator fun plus(b: Float) = plus(Vec3(), this, b, b, b)
     infix operator fun plus(b: Vec3) = plus(Vec3(), this, b.x, b.y, b.z)
+    infix operator fun plus(b: Vec3i) = plus(Vec3(), this, b.x.f, b.y.f, b.z.f)
 
     @JvmOverloads
     fun plus(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = plus(res, this, bX, bY, bZ)
@@ -260,6 +261,7 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
 
     infix operator fun minus(b: Float) = minus(Vec3(), this, b, b, b)
     infix operator fun minus(b: Vec3) = minus(Vec3(), this, b.x, b.y, b.z)
+    infix operator fun minus(b: Vec3i) = minus(Vec3(), this, b.x.f, b.y.f, b.z.f)
 
     @JvmOverloads
     fun minus(bX: Float, bY: Float, bZ: Float, res: Vec3 = Vec3()) = minus(res, this, bX, bY, bZ)
