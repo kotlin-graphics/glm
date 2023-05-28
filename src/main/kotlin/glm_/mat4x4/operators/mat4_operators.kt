@@ -195,10 +195,10 @@ interface mat4x4_operators {
         val var16 = ba[13]
         val var17 = ba[14]
         val var18 = ba[15]
-        var var19 = ba[0]
-        var var20 = ba[4]
-        var var21 = ba[8]
-        var var22 = ba[12]
+        var var19 = aa[0]
+        var var20 = aa[4]
+        var var21 = aa[8]
+        var var22 = aa[12]
 
 
         ra[0] = var19 * var3 + var20 * var4 + var21 * var5 + var22 * var6
