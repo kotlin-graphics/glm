@@ -47,12 +47,12 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
 
     // -- Conversion scalar constructors --
 
-    constructor(v: Vec1t<out Number>) : this(v._x, v._x, v._x)
+    constructor(v: Vec1t<out Number>) : this(v._x.f)
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    @JvmOverloads
-    constructor(x: Number, y: Number = x, z: Number = x) : this(x.f, y.f, z.f)
+    constructor(v: Number) : this(x.f)
+    constructor(x: Number, y: Number, z: Number) : this(x.f, y.f, z.f)
 
     constructor(x: Vec1t<out Number>, y: Number, z: Number) : this(x._x, y, z)
     constructor(x: Number, y: Vec1t<out Number>, z: Number) : this(x, y._x, z)
@@ -76,7 +76,7 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
     constructor(v: Vec4t<out Number>) : this(v._x, v._y, v._z)
 
 
-    constructor(v: Vec1) : this(v.x, v.x, v.x)
+    constructor(v: Vec1) : this(v.x)
     constructor(x: Vec1, y: Float, z: Float) : this(x.x, y, z)
     constructor(x: Float, y: Vec1, z: Float) : this(x, y.x, z)
     constructor(x: Float, y: Float, z: Vec1) : this(x, y, z.x)
@@ -85,6 +85,10 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
     constructor(xy: Vec2, z: Float) : this(xy.x, xy.y, z)
     constructor(x: Float, yz: Vec2) : this(x, yz.x, yz.y)
     constructor(v: Vec4) : this(v.x, v.y, v.z)
+
+
+    constructor(v: Vec3i) : this(v.x.toFloat(), v.y.toFloat(), v.z.toFloat())
+    constructor(v: Vec3d) : this(v.x.toFloat(), v.y.toFloat(), v.z.toFloat())
 
     constructor(v: Vec1bool) : this(v.x.f, 0, 0)
     constructor(v: Vec2bool) : this(v.x.f, v.y.f, 0)

@@ -48,12 +48,12 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
 
     // -- Conversion scalar constructors --
 
-    constructor(v: Vec1t<out Number>) : this(v._x, v._x, v._x)
+    constructor(v: Vec1t<out Number>) : this(v._x.b)
 
-    // Explicit converions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    @JvmOverloads
-    constructor(x: Number, y: Number = x, z: Number = x) : this(x.b, y.b, z.b)
+    constructor(v: Number) : this(v.b)
+    constructor(x: Number, y: Number, z: Number) : this(x.b, y.b, z.b)
 
     constructor(x: Vec1t<out Number>, y: Number, z: Number) : this(x._x, y, z)
     constructor(x: Number, y: Vec1t<out Number>, z: Number) : this(x, y._x, z)
@@ -77,7 +77,7 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
     constructor(v: Vec4t<out Number>) : this(v._x, v._y, v._z)
 
 
-    constructor(v: Vec1b) : this(v.x, v.x, v.x)
+    constructor(v: Vec1b) : this(v.x)
     constructor(x: Vec1b, y: Byte, z: Byte) : this(x.x, y, z)
     constructor(x: Byte, y: Vec1b, z: Byte) : this(x, y.x, z)
     constructor(x: Byte, y: Byte, z: Vec1b) : this(x, y, z.x)

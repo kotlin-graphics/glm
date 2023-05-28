@@ -54,8 +54,9 @@ class Vec2ub(@JvmField var ofs: Int, var array: UbyteArray) : Vec2t<Ubyte>, ToBu
 
     // -- Conversion constructors --
 
-    @JvmOverloads
-    constructor(x: Number, y: Number = x) : this(x.ub, y.ub)
+
+    constructor(v: Number) : this(x.ub)
+    constructor(x: Number, y: Number) : this(x.ub, y.ub)
 
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v._x)
 

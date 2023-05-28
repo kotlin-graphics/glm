@@ -42,12 +42,13 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
 
     // -- Conversion constructors --
 
-    @JvmOverloads
-    constructor(x: Number, y: Number = x) : this(x.d, y.d)
+
+    constructor(v: Number) : this(v.d)
+    constructor(x: Number, y: Number) : this(x.d, y.d)
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    constructor(v: Vec1t<out Number>) : this(v._x, v._x)
+    constructor(v: Vec1t<out Number>) : this(v._x)
     constructor(x: Vec1t<out Number>, y: Number) : this(x._x, y)
     constructor(x: Number, y: Vec1t<out Number>) : this(x, y._x)
     constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x._x, y._x)
@@ -63,6 +64,10 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
 
     constructor(v: Vec3d) : this(v.x, v.y)
     constructor(v: Vec4d) : this(v.x, v.y)
+
+
+    constructor(v: Vec2i) : this(v.x.toDouble(), v.y.toDouble())
+    constructor(v: Vec2) : this(v.x.toDouble(), v.y.toDouble())
 
     @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.d, y.d)

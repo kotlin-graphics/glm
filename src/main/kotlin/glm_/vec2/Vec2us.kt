@@ -55,8 +55,9 @@ class Vec2us(@JvmField var ofs: Int, var array: UshortArray) : Vec2t<Ushort>, To
 
     // -- Conversion constructors --
 
-    @JvmOverloads
-    constructor(x: Number, y: Number = x) : this(x.us, y.us)
+
+    constructor(v: Number) : this(v.us)
+    constructor(x: Number, y: Number) : this(x.us, y.us)
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 

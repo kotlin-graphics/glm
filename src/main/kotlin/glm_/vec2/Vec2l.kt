@@ -42,14 +42,15 @@ class Vec2l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec2t<Long
 
     // -- Conversion constructors --
 
-    @JvmOverloads
-    constructor(x: Number, y: Number = x) : this(x.L, y.L)
+
+    constructor(v: Number) : this(v.L)
+    constructor(x: Number, y: Number) : this(x.L, y.L)
 
     constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    constructor(v: Vec1t<out Number>) : this(v._x, v._x)
+    constructor(v: Vec1t<out Number>) : this(v._x)
     constructor(x: Vec1t<out Number>, y: Number) : this(x._x, y)
     constructor(x: Number, y: Vec1t<out Number>) : this(x, y._x)
     constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x._x, y._x)

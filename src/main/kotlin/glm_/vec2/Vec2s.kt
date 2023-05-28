@@ -20,7 +20,7 @@ import kotlin.math.abs
  * Created by GBarbieri on 06.10.2016.
  */
 
-class Vec2s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec2t<Short>(), ToBuffer {
+class Vec2s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec2t<Short>, ToBuffer {
 
     inline var x: Short
         get() = array[ofs]
@@ -41,11 +41,12 @@ class Vec2s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec2t<Sho
 
     // -- Conversion constructors --
 
-    @JvmOverloads
-    constructor(x: Number, y: Number = x) : this(x.s, y.s)
+
+    constructor(v: Number) : this(v.s)
+    constructor(x: Number, y: Number) : this(x.s, y.s)
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    constructor(v: Vec1t<out Number>) : this(v._x, v._x)
+    constructor(v: Vec1t<out Number>) : this(v._x)
     constructor(x: Vec1t<out Number>, y: Number) : this(x._x, y)
     constructor(x: Number, y: Vec1t<out Number>) : this(x, y._x)
     constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x._x, y._x)

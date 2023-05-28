@@ -48,12 +48,12 @@ class Vec3s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec3t<Sho
 
     // -- Conversion scalar constructors --
 
-    constructor(v: Vec1t<out Number>) : this(v._x, v._x, v._x)
+    constructor(v: Vec1t<out Number>) : this(v._x)
 
-    // Explicit converions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    @JvmOverloads
-    constructor(x: Number, y: Number = x, z: Number = x) : this(x.s, y.s, z.s)
+    constructor(v: Number) : this(v.s)
+    constructor(x: Number, y: Number, z: Number) : this(x.s, y.s, z.s)
 
     constructor(x: Vec1t<out Number>, y: Number, z: Number) : this(x._x, y, z)
     constructor(x: Number, y: Vec1t<out Number>, z: Number) : this(x, y._x, z)
@@ -77,7 +77,7 @@ class Vec3s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec3t<Sho
     constructor(v: Vec4t<out Number>) : this(v._x, v._y, v._z)
 
 
-    constructor(v: Vec1s) : this(v.x, v.x, v.x)
+    constructor(v: Vec1s) : this(v.x)
     constructor(x: Vec1s, y: Short, z: Short) : this(x.x, y, z)
     constructor(x: Short, y: Vec1s, z: Short) : this(x, y.x, z)
     constructor(x: Short, y: Short, z: Vec1s) : this(x, y, z.x)

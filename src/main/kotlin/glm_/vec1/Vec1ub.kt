@@ -25,7 +25,7 @@ class Vec1ub(@JvmField inline var x: Ubyte) : Vec1t<Ubyte> {
     // -- Implicit basic constructors --
 
     constructor() : this(0)
-    constructor(x: Number) : this(x.ub)
+    constructor(v: Number) : this(v.ub)
 
     // -- Explicit basic constructors --
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)

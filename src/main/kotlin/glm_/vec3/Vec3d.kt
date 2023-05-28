@@ -47,12 +47,12 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
 
     // -- Conversion scalar constructors --
 
-    constructor(v: Vec1t<out Number>) : this(v._x, v._x, v._x)
+    constructor(v: Vec1t<out Number>) : this(v._x.d)
 
-    // Explicit converions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
+    // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    @JvmOverloads
-    constructor(x: Number, y: Number = x, z: Number = x) : this(x.d, y.d, z.d)
+    constructor(v: Number) : this(v.d)
+    constructor(x: Number, y: Number, z: Number) : this(x.d, y.d, z.d)
 
     constructor(x: Vec1t<out Number>, y: Number, z: Number) : this(x._x, y, z)
     constructor(x: Number, y: Vec1t<out Number>, z: Number) : this(x, y._x, z)
@@ -76,7 +76,7 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
     constructor(v: Vec4t<out Number>) : this(v._x, v._y, v._z)
 
 
-    constructor(v: Vec1d) : this(v.x, v.x, v.x)
+    constructor(v: Vec1d) : this(v.x)
     constructor(x: Vec1d, y: Double, z: Double) : this(x.x, y, z)
     constructor(x: Double, y: Vec1d, z: Double) : this(x, y.x, z)
     constructor(x: Double, y: Double, z: Vec1d) : this(x, y, z.x)
@@ -85,6 +85,10 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
     constructor(xy: Vec2d, z: Double) : this(xy.x, xy.y, z)
     constructor(x: Double, yz: Vec2d) : this(x, yz.x, yz.y)
     constructor(v: Vec4d) : this(v.x, v.y, v.z)
+
+
+    constructor(v: Vec3) : this(v.x.toDouble(), v.y.toDouble(), v.z.toDouble())
+    constructor(v: Vec3i) : this(v.x.toDouble(), v.y.toDouble(), v.z.toDouble())
 
     constructor(v: Vec1bool) : this(v.x.d, 0, 0)
     constructor(v: Vec2bool) : this(v.x.d, v.y.d, 0)
