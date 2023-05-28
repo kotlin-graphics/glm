@@ -21,7 +21,7 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
+class Vec1ul(override inline var x: Ulong) : Vec1t<Ulong> {
 
     // -- Implicit basic constructors --
 
@@ -139,12 +139,6 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
         p[0] = x.v
     }
 
-    // -- Component accesses --
-
-    override operator fun set(index: Int, value: Ulong) = when (index) {
-        0 -> x = value
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
 
     // -- Unary arithmetic operators --
 
@@ -456,7 +450,7 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
 
 
     companion object : opVec1ul {
-        const val length = Vec1t.length
+        const val length = Vec1t.LENGTH
 
         @JvmField
         val size = length * Ulong.BYTES
@@ -478,4 +472,25 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
+
+    //@formatter:off
+    override inline var _x get() = x; set(value) { x = value }
+    override inline var r get() = x; set(value) { x = value }
+    override inline var s get() = x; set(value) { x =value }
+    //@formatter:on
+
+    override inline operator fun get(index: Int): Ulong {
+        if (index == 0) return x
+        throw IndexOutOfBoundsException()
+    }
+
+    override inline operator fun set(index: Int, value: Ulong) {
+        if (index == 0) {
+            x = value
+        } else throw IndexOutOfBoundsException()
+    }
+
+    override inline fun component1() = x
+
+    override fun toString(): String = "($x)"
 }

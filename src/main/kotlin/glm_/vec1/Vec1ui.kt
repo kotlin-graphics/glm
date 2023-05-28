@@ -20,7 +20,7 @@ import kotlin.math.abs
  * Created by elect on 08/10/16.
  */
 
-class Vec1ui(x: Uint) : Vec1t<Uint>(x) {
+class Vec1ui(override inline var x: Uint) : Vec1t<Uint> {
 
     // -- Implicit basic constructors --
 
@@ -452,7 +452,8 @@ class Vec1ui(x: Uint) : Vec1t<Uint>(x) {
 
 
     companion object : opVec1ui {
-        const val length = Vec1t.length
+        const val length = Vec1t.LENGTH
+
         @JvmField
         val size = length * Uint.BYTES
     }
@@ -464,4 +465,26 @@ class Vec1ui(x: Uint) : Vec1t<Uint>(x) {
     fun notEqual(b: Vec1ui, epsilon: Int = 0): Boolean = !equal(b, epsilon)
 
     override fun hashCode() = x.v.hashCode()
+
+
+    //@formatter:off
+    override inline var _x get() = x; set(value) { x = value }
+    override inline var r get() = x; set(value) { x = value }
+    override inline var s get() = x; set(value) { x =value }
+    //@formatter:on
+
+    override inline operator fun get(index: Int): Uint {
+        if (index == 0) return x
+        throw IndexOutOfBoundsException()
+    }
+
+    override inline operator fun set(index: Int, value: Uint) {
+        if (index == 0) {
+            x = value
+        } else throw IndexOutOfBoundsException()
+    }
+
+    override inline fun component1() = x
+
+    override fun toString(): String = "($x)"
 }

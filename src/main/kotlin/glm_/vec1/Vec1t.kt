@@ -16,31 +16,30 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-abstract class Vec1t<T : Number>(_x: T): ToBuffer {
+interface Vec1t<T : Number> : ToBuffer {
 
-//    @JvmField TODO bug
-    var x = _x
+    var _x: T
 
-    fun component1() = x
+    fun component1() = _x
 
 
     // -- Component accesses --
 
-    inline operator fun get(index: Int) = when (index) {
-        0 -> x
+    operator fun get(index: Int) = when (index) {
+        0 -> _x
         else -> throw IndexOutOfBoundsException()
     }
 
-    open operator fun set(index: Int, value: T) = when (index) {
-        0 -> x = value
+    operator fun set(index: Int, value: T) = when (index) {
+        0 -> _x = value
         else -> throw IndexOutOfBoundsException()
     }
 
     // -- infix Generic Constructors --
 
-    abstract fun put(x: Number)
+    fun put(x: Number)
 
-    infix fun put(v: Vec1t<out Number>) = put(v.x)
+    infix fun put(v: Vec1t<out Number>) = put(v._x)
     infix fun put(v: Vec2t<out Number>) = put(v.x)
     infix fun put(v: Vec3t<out Number>) = put(v.x)
     infix fun put(v: Vec4t<out Number>) = put(v.x)
@@ -107,9 +106,9 @@ abstract class Vec1t<T : Number>(_x: T): ToBuffer {
 
     // Same, but with ()
 
-    abstract operator fun invoke(x: Number): Vec1t<out Number>
+    operator fun invoke(x: Number): Vec1t<out Number>
 
-    infix operator fun invoke(v: Vec1t<out Number>) = invoke(v.x)
+    infix operator fun invoke(v: Vec1t<out Number>) = invoke(v._x)
     infix operator fun invoke(v: Vec2t<out Number>) = invoke(v.x)
     infix operator fun invoke(v: Vec3t<out Number>) = invoke(v.x)
     infix operator fun invoke(v: Vec4t<out Number>) = invoke(v.x)
@@ -174,10 +173,10 @@ abstract class Vec1t<T : Number>(_x: T): ToBuffer {
     operator fun invoke(doubles: DoubleBuffer, index: Int) = invoke(doubles[index])
 
 
-    fun toByteArray(): ByteArray = to(ByteArray(length), 0)
+    fun toByteArray(): ByteArray = to(ByteArray(LENGTH), 0)
     infix fun to(bytes: ByteArray): ByteArray = to(bytes, 0)
     fun to(bytes: ByteArray, bigEndian: Boolean): ByteArray = to(bytes, 0, bigEndian)
-    abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
+    fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
 
 // TODO
 //    infix fun lessThan(b: Vec2t<out Number>) = glm.lessThan(this, b, Vec2bool())
@@ -202,23 +201,12 @@ abstract class Vec1t<T : Number>(_x: T): ToBuffer {
 
 
     // component alias
-
-    inline var r
-        @JvmName("r") get() = x
-        @JvmName("r") set(value) {
-            x = value
-        }
-
-
-    inline var s
-        @JvmName("s") get() = x
-        @JvmName("s") set(value) {
-            x = value
-        }
+    //@formatter:off
+    var r get() = _x; set(value) { _x = value }
+    var s get() = _x; set(value) { _x =value }
+    //@formatter:on
 
     companion object {
-        const val length = 1
+        const val LENGTH = 1
     }
-
-    override fun toString(): String = "($x)"
 }
