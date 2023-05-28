@@ -29,10 +29,10 @@ class Mat2x4d(var array: DoubleArray) : Mat2x4t<Double>(), ToDoubleBuffer {
     override operator fun set(column: Int, row: Int, value: Double) = array.set(column * 4 + row, value)
 
     override operator fun set(index: Int, value: Vec4t<out Number>) {
-        array[index * 4] = value.x.d
-        array[index * 4 + 1] = value.y.d
-        array[index * 4 + 2] = value.z.d
-        array[index * 4 + 2] = value.w.d
+        array[index * 4] = value._x.d
+        array[index * 4 + 1] = value._y.d
+        array[index * 4 + 2] = value._z.d
+        array[index * 4 + 2] = value._w.d
     }
 
     operator fun set(i: Int, v: Vec4d) {

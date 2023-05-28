@@ -48,12 +48,12 @@ class Mat4d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmFi
 
     // TODO others
 
-    constructor(v: Vec2t<*>) : this(v.x, v.y, 0, 1)
-    constructor(v: Vec2t<*>, z: Number) : this(v.x, v.y, z, 1)
-    constructor(v: Vec2t<*>, z: Number, w: Number) : this(v.x, v.y, z, w)
-    constructor(v: Vec3t<*>) : this(v.x, v.y, v.z, 1)
-    constructor(v: Vec3t<*>, w: Number) : this(v.x, v.y, v.z, w)
-    constructor(v: Vec4t<*>) : this(v.x, v.y, v.z, v.w)
+    constructor(v: Vec2t<*>) : this(v._x, v._y, 0, 1)
+    constructor(v: Vec2t<*>, z: Number) : this(v._x, v._y, z, 1)
+    constructor(v: Vec2t<*>, z: Number, w: Number) : this(v._x, v._y, z, w)
+    constructor(v: Vec3t<*>) : this(v._x, v._y, v._z, 1)
+    constructor(v: Vec3t<*>, w: Number) : this(v._x, v._y, v._z, w)
+    constructor(v: Vec4t<*>) : this(v._x, v._y, v._z, v._w)
 
     constructor(x0: Number, y0: Number, z0: Number, w0: Number,
                 x1: Number, y1: Number, z1: Number, w1: Number,
@@ -65,10 +65,10 @@ class Mat4d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmFi
             x3.d, y3.d, z3.d, w3.d))
 
     constructor(v0: Vec4t<out Number>, v1: Vec4t<out Number>, v2: Vec4t<out Number>, v3: Vec4t<out Number>) : this(
-            v0.x, v0.y, v0.z, v0.w,
-            v1.x, v1.y, v1.z, v1.w,
-            v2.x, v2.y, v2.z, v2.w,
-            v3.x, v3.y, v3.z, v3.w)
+            v0._x, v0._y, v0._z, v0._w,
+            v1._x, v1._y, v1._z, v1._w,
+            v2._x, v2._y, v2._z, v2._w,
+            v3._x, v3._y, v3._z, v3._w)
 
     constructor(block: (Int) -> Number) : this(
             block(0).d, block(1).d, block(2).d, block(3).d,
@@ -431,10 +431,10 @@ class Mat4d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmFi
     override operator fun set(column: Int, row: Int, value: Double) = array.set(column * 4 + row, value)
 
     override operator fun set(index: Int, value: Vec4t<out Number>) {
-        array[index * 4] = value.x.d
-        array[index * 4 + 1] = value.y.d
-        array[index * 4 + 2] = value.z.d
-        array[index * 4 + 3] = value.w.d
+        array[index * 4] = value._x.d
+        array[index * 4 + 1] = value._y.d
+        array[index * 4 + 2] = value._z.d
+        array[index * 4 + 3] = value._w.d
     }
 
     operator fun set(i: Int, v: Vec4d) {

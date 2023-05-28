@@ -49,8 +49,8 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmFie
         x1.f, y1.f))
 
     constructor(v0: Vec2t<out Number>, v1: Vec2t<out Number>) : this(
-        v0.x, v0.y,
-        v1.x, v1.y)
+        v0._x, v0._y,
+        v1._x, v1._y)
 
     constructor(block: (Int) -> Number) : this(
         block(0).f, block(1).f,
@@ -138,8 +138,8 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmFie
 
     override operator fun set(column: Int, row: Int, value: Float) = array.set(column * 2 + row, value)
     override operator fun set(index: Int, value: Vec2t<out Number>) {
-        array[index * 2] = value.x.f
-        array[index * 2 + 1] = value.y.f
+        array[index * 2] = value._x.f
+        array[index * 2 + 1] = value._y.f
     }
 
     operator fun set(index: Int, value: Vec2) {

@@ -577,8 +577,8 @@ interface packing {
             Ushort((v.x.i shl 8) or v.y.i)
 
     fun unpackUint2x8(p: Ushort, res: Vec2ub = Vec2ub()): Vec2ub {
-        res.array[0] = (p shr 8).b // TODO var Vec2ub.xV backed by the array
-        res.array[1] = p.b
+        res.array[0] = (p shr 8).ub // TODO var Vec2ub.xV backed by the array
+        res.array[1] = p.ub
         return res
     }
 
@@ -597,10 +597,10 @@ interface packing {
             Uint((v.x.i shl 24) or (v.y.i shl 16) or (v.z.i shl 8) or v.w.i)
 
     fun unpackUint4x8(p: Uint, res: Vec4ub = Vec4ub()): Vec4ub {
-        res.array[0] = (p shr 24).b
-        res.array[1] = (p shr 16).b
-        res.array[2] = (p shr 8).b
-        res.array[3] = p.b
+        res.array[0] = (p shr 24).ub
+        res.array[1] = (p shr 16).ub
+        res.array[2] = (p shr 8).ub
+        res.array[3] = p.ub
         return res
     }
 
@@ -628,8 +628,8 @@ interface packing {
             Uint((v.x.i shl 16) or v.y.i)
 
     fun unpackUint2x16(p: Uint, res: Vec2us = Vec2us()): Vec2us {
-        res.array[0] = (p shr 16).s
-        res.array[1] = p.s
+        res.array[0] = (p shr 16).us
+        res.array[1] = p.us
         return res
     }
 
@@ -637,10 +637,10 @@ interface packing {
             Ulong((v.x.L shl 48) or (v.y.L shl 32) or (v.z.L shl 16) or v.w.L)
 
     fun unpackUint4x16(p: Ulong, res: Vec4us = Vec4us()): Vec4us {
-        res.array[0] = (p shr 48).s
-        res.array[1] = (p shr 32).s
-        res.array[2] = (p shr 16).s
-        res.array[3] = p.s
+        res.array[0] = (p shr 48).us
+        res.array[1] = (p shr 32).us
+        res.array[2] = (p shr 16).us
+        res.array[3] = p.us
         return res
     }
 
@@ -657,8 +657,8 @@ interface packing {
             Ulong((v.x.L shl 32) or v.y.L)
 
     fun unpackUint2x32(p: Ulong, res: Vec2ui = Vec2ui()): Vec2ui {
-        res.array[0] = (p shr 32).i
-        res.array[1] = p.i
+        res.array[0] = (p shr 32).ui
+        res.array[1] = p.ui
         return res
     }
 }

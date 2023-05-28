@@ -31,7 +31,7 @@ class Vec1us(@JvmField inline var x: Ushort) : Vec1t<Ushort> {
     // -- Explicit basic constructors --
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    constructor(v: Vec1us) : this(v._x)
+    constructor(v: Vec1us) : this(v.x)
     constructor(v: Vec2us) : this(v.x)
     constructor(v: Vec3us) : this(v.x)
     constructor(v: Vec4us) : this(v.x)

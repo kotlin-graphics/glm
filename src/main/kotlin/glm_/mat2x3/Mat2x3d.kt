@@ -29,9 +29,9 @@ class Mat2x3d(var array: DoubleArray) : Mat2x3t<Double>(), ToDoubleBuffer {
     override operator fun set(column: Int, row: Int, value: Double) = array.set(column * 3 + row, value)
 
     override operator fun set(index: Int, value: Vec3t<out Number>) {
-        array[index * 3] = value.x.d
-        array[index * 3 + 1] = value.y.d
-        array[index * 3 + 2] = value.z.d
+        array[index * 3] = value._x.d
+        array[index * 3 + 1] = value._y.d
+        array[index * 3 + 2] = value._z.d
     }
 
     operator fun set(i: Int, v: Vec3d) {

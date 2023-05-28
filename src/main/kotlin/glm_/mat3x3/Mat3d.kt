@@ -41,14 +41,14 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmFi
     constructor(s: Number) : this(s, s, s)
 
     constructor(x: Number, y: Number, z: Number) : this(
-        x, 0, 0,
-        0, y, 0,
-        0, 0, z)
+       x, 0, 0,
+       0, y, 0,
+       0, 0, z)
 
-    constructor(v: Vec2t<*>) : this(v.x, v.y, 0)
-    constructor(v: Vec2t<*>, z: Number) : this(v.x, v.y, z)
-    constructor(v: Vec3t<*>) : this(v.x, v.y, v.z)
-    constructor(v: Vec4t<*>) : this(v.x, v.y, v.z)
+    constructor(v: Vec2t<*>) : this(v._x, v._y, 0)
+    constructor(v: Vec2t<*>, z: Number) : this(v._x, v._y, z)
+    constructor(v: Vec3t<*>) : this(v._x, v._y, v._z)
+    constructor(v: Vec4t<*>) : this(v._x, v._y, v._z)
 
     constructor(x0: Number, y0: Number, z0: Number,
                 x1: Number, y1: Number, z1: Number,
@@ -58,9 +58,9 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmFi
         x2.d, y2.d, z2.d))
 
     constructor(v0: Vec3t<out Number>, v1: Vec3t<out Number>, v2: Vec3t<out Number>) : this(
-        v0.x, v0.y, v0.z,
-        v1.x, v1.y, v1.z,
-        v2.x, v2.y, v2.z)
+        v0._x, v0._y, v0._z,
+        v1._x, v1._y, v1._z,
+        v2._x, v2._y, v2._z)
 
     constructor(block: (Int) -> Number) : this(
         block(0).d, block(1).d, block(2).d,
@@ -179,9 +179,9 @@ class Mat3d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmFi
 
     override operator fun set(column: Int, row: Int, value: Double) = array.set(column * 3 + row, value)
     override operator fun set(index: Int, value: Vec3t<out Number>) {
-        array[index * 3] = value.x.d
-        array[index * 3 + 1] = value.y.d
-        array[index * 3 + 2] = value.z.d
+        array[index * 3] = value._x.d
+        array[index * 3 + 1] = value._y.d
+        array[index * 3 + 2] = value._z.d
     }
 
     operator fun set(i: Int, v: Vec3d) {
