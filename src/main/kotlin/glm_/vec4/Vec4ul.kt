@@ -64,7 +64,7 @@ class Vec4ul(@JvmField var ofs: Int, var array: UlongArray) : Vec4t<Ulong>, ToBu
     constructor(x: Ulong) : this(x, x, x, x)
     constructor(x: Ulong, y: Ulong, z: Ulong, w: Ulong) : this(0, UlongArray(longArrayOf(x.v, y.v, z.v, w.v)))
     constructor(x: Long) : this(x, x, x, x)
-    constructor(x: Long, y: Long, z: Long, w: Long) : this(0, UlongArray(llongArrayOf(x, y, z, w)))
+    constructor(x: Long, y: Long, z: Long, w: Long) : this(0, UlongArray(longArrayOf(x, y, z, w)))
 
     // -- Conversion scalar constructors --
 
@@ -258,13 +258,6 @@ class Vec4ul(@JvmField var ofs: Int, var array: UlongArray) : Vec4t<Ulong>, ToBu
 
     // -- Component accesses --
 
-    operator fun set(index: Int, value: Ulong) = when (index) {
-        0 -> x = value
-        1 -> y = value
-        2 -> z = value
-        3 -> w = value
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
 
     operator fun set(index: Int, value: Long) = when (index) {
         0 -> x.v = value

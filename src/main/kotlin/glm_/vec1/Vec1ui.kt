@@ -20,7 +20,7 @@ import kotlin.math.abs
  * Created by elect on 08/10/16.
  */
 
-class Vec1ui(override inline var x: Uint) : Vec1t<Uint> {
+class Vec1ui(@JvmField inline var x: Uint) : Vec1t<Uint> {
 
     // -- Implicit basic constructors --
 
@@ -30,7 +30,7 @@ class Vec1ui(override inline var x: Uint) : Vec1t<Uint> {
     // -- Explicit basic constructors --
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    constructor(v: Vec1t<out Number>) : this(v.x)
+    constructor(v: Vec1t<out Number>) : this(v._x)
     constructor(v: Vec2t<out Number>) : this(v._x)
     constructor(v: Vec3t<out Number>) : this(v._x)
     constructor(v: Vec4t<out Number>) : this(v._x)
@@ -256,77 +256,77 @@ class Vec1ui(override inline var x: Uint) : Vec1t<Uint> {
     // -- Generic binary arithmetic operators --
 
     infix operator fun plus(b: Number) = plus(Vec1ui(), this, b.i)
-    infix operator fun plus(b: Vec2t<out Number>) = plus(Vec1ui(), this, b.x.i)
+    infix operator fun plus(b: Vec2t<out Number>) = plus(Vec1ui(), this, b._x.i)
 
     fun plus(b: Number, res: Vec1ui) = plus(res, this, b.i)
-    fun plus(b: Vec2t<out Number>, res: Vec1ui) = plus(res, this, b.x.i)
+    fun plus(b: Vec2t<out Number>, res: Vec1ui) = plus(res, this, b._x.i)
 
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.i)
     }
 
     infix operator fun plusAssign(b: Vec2t<out Number>) {
-        plus(this, this, b.x.i)
+        plus(this, this, b._x.i)
     }
 
 
     infix operator fun minus(b: Number) = minus(Vec1ui(), this, b.i)
-    infix operator fun minus(b: Vec2t<out Number>) = minus(Vec1ui(), this, b.x.i)
+    infix operator fun minus(b: Vec2t<out Number>) = minus(Vec1ui(), this, b._x.i)
 
     fun minus(b: Number, res: Vec1ui) = minus(res, this, b.i)
-    fun minus(b: Vec2t<out Number>, res: Vec1ui) = minus(res, this, b.x.i)
+    fun minus(b: Vec2t<out Number>, res: Vec1ui) = minus(res, this, b._x.i)
 
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.i)
     }
 
     infix operator fun minusAssign(b: Vec2t<out Number>) {
-        minus(this, this, b.x.i)
+        minus(this, this, b._x.i)
     }
 
 
     infix operator fun times(b: Number) = times(Vec1ui(), this, b.i)
-    infix operator fun times(b: Vec2t<out Number>) = times(Vec1ui(), this, b.x.i)
+    infix operator fun times(b: Vec2t<out Number>) = times(Vec1ui(), this, b._x.i)
 
     fun times(b: Number, res: Vec1ui) = times(res, this, b.i)
-    fun times(b: Vec2t<out Number>, res: Vec1ui) = times(res, this, b.x.i)
+    fun times(b: Vec2t<out Number>, res: Vec1ui) = times(res, this, b._x.i)
 
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.i)
     }
 
     infix operator fun timesAssign(b: Vec2t<out Number>) {
-        times(this, this, b.x.i)
+        times(this, this, b._x.i)
     }
 
 
     infix operator fun div(b: Number) = div(Vec1ui(), this, b.i)
-    infix operator fun div(b: Vec2t<out Number>) = div(Vec1ui(), this, b.x.i)
+    infix operator fun div(b: Vec2t<out Number>) = div(Vec1ui(), this, b._x.i)
 
     fun div(b: Number, res: Vec1ui) = div(res, this, b.i)
-    fun div(b: Vec2t<out Number>, res: Vec1ui) = div(res, this, b.x.i)
+    fun div(b: Vec2t<out Number>, res: Vec1ui) = div(res, this, b._x.i)
 
     infix operator fun divAssign(b: Number) {
         div(this, this, b.i)
     }
 
     infix operator fun divAssign(b: Vec2t<out Number>) {
-        div(this, this, b.x.i)
+        div(this, this, b._x.i)
     }
 
 
     infix operator fun rem(b: Number) = rem(Vec1ui(), this, b.i)
-    infix operator fun rem(b: Vec2t<out Number>) = rem(Vec1ui(), this, b.x.i)
+    infix operator fun rem(b: Vec2t<out Number>) = rem(Vec1ui(), this, b._x.i)
 
     fun rem(b: Number, res: Vec1ui) = rem(res, this, b.i)
-    fun rem(b: Vec2t<out Number>, res: Vec1ui) = rem(res, this, b.x.i)
+    fun rem(b: Vec2t<out Number>, res: Vec1ui) = rem(res, this, b._x.i)
 
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.i)
     }
 
     infix operator fun remAssign(b: Vec2t<out Number>) {
-        rem(this, this, b.x.i)
+        rem(this, this, b._x.i)
     }
 
 
@@ -402,53 +402,53 @@ class Vec1ui(override inline var x: Uint) : Vec1t<Uint> {
     // -- Generic bitwise operators --
 
     infix fun and(b: Number) = and(Vec1ui(), this, b.i)
-    infix fun and(b: Vec2t<out Number>) = and(Vec1ui(), this, b.x.i)
+    infix fun and(b: Vec2t<out Number>) = and(Vec1ui(), this, b._x.i)
 
     fun and(b: Number, res: Vec1ui) = and(res, this, b.i)
-    fun and(b: Vec2t<out Number>, res: Vec1ui) = and(res, this, b.x.i)
+    fun and(b: Vec2t<out Number>, res: Vec1ui) = and(res, this, b._x.i)
 
     infix fun andAssign(b: Number) = and(this, this, b.i)
-    infix fun andAssign(b: Vec2t<out Number>) = and(this, this, b.x.i)
+    infix fun andAssign(b: Vec2t<out Number>) = and(this, this, b._x.i)
 
 
     infix fun or(b: Number) = or(Vec1ui(), this, b.i)
-    infix fun or(b: Vec2t<out Number>) = or(Vec1ui(), this, b.x.i)
+    infix fun or(b: Vec2t<out Number>) = or(Vec1ui(), this, b._x.i)
 
     fun or(b: Number, res: Vec1ui) = or(res, this, b.i)
-    fun or(b: Vec2t<out Number>, res: Vec1ui) = or(res, this, b.x.i)
+    fun or(b: Vec2t<out Number>, res: Vec1ui) = or(res, this, b._x.i)
 
     infix fun orAssign(b: Number) = or(this, this, b.i)
-    infix fun orAssign(b: Vec2t<out Number>) = or(this, this, b.x.i)
+    infix fun orAssign(b: Vec2t<out Number>) = or(this, this, b._x.i)
 
 
     infix fun xor(b: Number) = xor(Vec1ui(), this, b.i)
-    infix fun xor(b: Vec2t<out Number>) = xor(Vec1ui(), this, b.x.i)
+    infix fun xor(b: Vec2t<out Number>) = xor(Vec1ui(), this, b._x.i)
 
     fun xor(b: Number, res: Vec1ui) = xor(res, this, b.i)
-    fun xor(b: Vec2t<out Number>, res: Vec1ui) = xor(res, this, b.x.i)
+    fun xor(b: Vec2t<out Number>, res: Vec1ui) = xor(res, this, b._x.i)
 
     infix fun xorAssign(b: Number) = xor(this, this, b.i)
-    infix fun xorAssign(b: Vec2t<out Number>) = xor(this, this, b.x.i)
+    infix fun xorAssign(b: Vec2t<out Number>) = xor(this, this, b._x.i)
 
 
     infix fun shl(b: Number) = shl(Vec1ui(), this, b.i)
-    infix fun shl(b: Vec2t<out Number>) = shl(Vec1ui(), this, b.x.i)
+    infix fun shl(b: Vec2t<out Number>) = shl(Vec1ui(), this, b._x.i)
 
     fun shl(b: Number, res: Vec1ui) = shl(res, this, b.i)
-    fun shl(b: Vec2t<out Number>, res: Vec1ui) = shl(res, this, b.x.i)
+    fun shl(b: Vec2t<out Number>, res: Vec1ui) = shl(res, this, b._x.i)
 
     infix fun shlAssign(b: Number) = shl(this, this, b.i)
-    infix fun shlAssign(b: Vec2t<out Number>) = shl(this, this, b.x.i)
+    infix fun shlAssign(b: Vec2t<out Number>) = shl(this, this, b._x.i)
 
 
     infix fun shr(b: Number) = shr(Vec1ui(), this, b.i)
-    infix fun shr(b: Vec2t<out Number>) = shr(Vec1ui(), this, b.x.i)
+    infix fun shr(b: Vec2t<out Number>) = shr(Vec1ui(), this, b._x.i)
 
     fun shr(b: Number, res: Vec1ui) = shr(res, this, b.i)
-    fun shr(b: Vec2t<out Number>, res: Vec1ui) = shr(res, this, b.x.i)
+    fun shr(b: Vec2t<out Number>, res: Vec1ui) = shr(res, this, b._x.i)
 
     infix fun shrAssign(b: Number) = shr(this, this, b.i)
-    infix fun shrAssign(b: Vec2t<out Number>) = shr(this, this, b.x.i)
+    infix fun shrAssign(b: Vec2t<out Number>) = shr(this, this, b._x.i)
 
 
     companion object : opVec1ui {

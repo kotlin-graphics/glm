@@ -51,7 +51,7 @@ class Vec3(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec3t<Floa
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    constructor(v: Number) : this(x.f)
+    constructor(v: Number) : this(v.f)
     constructor(x: Number, y: Number, z: Number) : this(x.f, y.f, z.f)
 
     constructor(x: Vec1t<out Number>, y: Number, z: Number) : this(x._x, y, z)

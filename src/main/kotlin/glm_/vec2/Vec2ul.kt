@@ -56,7 +56,7 @@ class Vec2ul(@JvmField var ofs: Int, var array: UlongArray) : Vec2t<Ulong>, ToBu
     // -- Conversion constructors --
 
 
-    constructor(v: Number) : this(x.ul)
+    constructor(v: Number) : this(v.ul)
     constructor(x: Number, y: Number) : this(x.ul, y.ul)
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
@@ -69,7 +69,7 @@ class Vec2ul(@JvmField var ofs: Int, var array: UlongArray) : Vec2t<Ulong>, ToBu
     constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x._x, y._x)
 
     constructor(v: Vec2t<out Number>) : this(v._x, v._y)
-    constructor(v: Vec3t<out Number>) : this(v.x, v.y)
+    constructor(v: Vec3t<out Number>) : this(v._x, v._y)
     constructor(v: Vec4t<out Number>) : this(v._x, v._y)
 
     @JvmOverloads

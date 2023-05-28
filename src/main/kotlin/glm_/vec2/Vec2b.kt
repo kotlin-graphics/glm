@@ -44,7 +44,7 @@ class Vec2b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec2t<Byte
     // -- Conversion constructors --
 
 
-    constructor(v: Number) : this(x.b)
+    constructor(v: Number) : this(v.b)
     constructor(x: Number, y: Number) : this(x.b, y.b)
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)

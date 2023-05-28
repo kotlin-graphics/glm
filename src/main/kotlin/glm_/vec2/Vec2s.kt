@@ -356,13 +356,13 @@ class Vec2s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec2t<Sho
     // -- Generic binary arithmetic operators --
 
     infix operator fun plus(b: Number) = plus(Vec2s(), this, b.s, b.s)
-    infix operator fun plus(b: Vec2t<out Number>) = plus(Vec2s(), this, b._x.s, b.y.s)
+    infix operator fun plus(b: Vec2t<out Number>) = plus(Vec2s(), this, b._x.s, b._y.s)
 
     @JvmOverloads
     fun plus(bX: Number, bY: Number, res: Vec2s = Vec2s()) = plus(res, this, bX.s, bY.s)
 
     fun plus(b: Number, res: Vec2s) = plus(res, this, b.s, b.s)
-    fun plus(b: Vec2t<out Number>, res: Vec2s) = plus(res, this, b._x.s, b.y.s)
+    fun plus(b: Vec2t<out Number>, res: Vec2s) = plus(res, this, b._x.s, b._y.s)
 
     fun plusAssign(bX: Number, bY: Number) = plus(this, this, bX.s, bY.s)
     infix operator fun plusAssign(b: Number) {
@@ -370,18 +370,18 @@ class Vec2s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec2t<Sho
     }
 
     infix operator fun plusAssign(b: Vec2t<out Number>) {
-        plus(this, this, b._x.s, b.y.s)
+        plus(this, this, b._x.s, b._y.s)
     }
 
 
     infix operator fun minus(b: Number) = minus(Vec2s(), this, b.s, b.s)
-    infix operator fun minus(b: Vec2t<out Number>) = minus(Vec2s(), this, b._x.s, b.y.s)
+    infix operator fun minus(b: Vec2t<out Number>) = minus(Vec2s(), this, b._x.s, b._y.s)
 
     @JvmOverloads
     fun minus(bX: Number, bY: Number, res: Vec2s = Vec2s()) = minus(res, this, bX.s, bY.s)
 
     fun minus(b: Number, res: Vec2s) = minus(res, this, b.s, b.s)
-    fun minus(b: Vec2t<out Number>, res: Vec2s) = minus(res, this, b._x.s, b.y.s)
+    fun minus(b: Vec2t<out Number>, res: Vec2s) = minus(res, this, b._x.s, b._y.s)
 
     fun minusAssign(bX: Number, bY: Number) = minus(this, this, bX.s, bY.s)
     infix operator fun minusAssign(b: Number) {
@@ -389,18 +389,18 @@ class Vec2s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec2t<Sho
     }
 
     infix operator fun minusAssign(b: Vec2t<out Number>) {
-        minus(this, this, b._x.s, b.y.s)
+        minus(this, this, b._x.s, b._y.s)
     }
 
 
     infix operator fun times(b: Number) = times(Vec2s(), this, b.s, b.s)
-    infix operator fun times(b: Vec2t<out Number>) = times(Vec2s(), this, b._x.s, b.y.s)
+    infix operator fun times(b: Vec2t<out Number>) = times(Vec2s(), this, b._x.s, b._y.s)
 
     @JvmOverloads
     fun times(bX: Number, bY: Number, res: Vec2s = Vec2s()) = times(res, this, bX.s, bY.s)
 
     fun times(b: Number, res: Vec2s) = times(res, this, b.s, b.s)
-    fun times(b: Vec2t<out Number>, res: Vec2s) = times(res, this, b._x.s, b.y.s)
+    fun times(b: Vec2t<out Number>, res: Vec2s) = times(res, this, b._x.s, b._y.s)
 
     fun timesAssign(bX: Number, bY: Number) = times(this, this, bX.s, bY.s)
     infix operator fun timesAssign(b: Number) {
@@ -408,12 +408,12 @@ class Vec2s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec2t<Sho
     }
 
     infix operator fun timesAssign(b: Vec2t<out Number>) {
-        times(this, this, b._x.s, b.y.s)
+        times(this, this, b._x.s, b._y.s)
     }
 
 
     infix operator fun div(b: Number) = div(Vec2s(), this, b.s, b.s)
-    infix operator fun div(b: Vec2t<out Number>) = div(Vec2s(), this, b._x.s, b.y.s)
+    infix operator fun div(b: Vec2t<out Number>) = div(Vec2s(), this, b._x.s, b._y.s)
 
     @JvmOverloads
     fun div(bX: Number, bY: Number, res: Vec2s = Vec2s()) = div(res, this, bX.s, bY.s)
@@ -427,18 +427,18 @@ class Vec2s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec2t<Sho
     }
 
     infix operator fun divAssign(b: Vec2t<out Number>) {
-        div(this, this, b._x.s, b.y.s)
+        div(this, this, b._x.s, b._y.s)
     }
 
 
     infix operator fun rem(b: Number) = rem(Vec2s(), this, b.s, b.s)
-    infix operator fun rem(b: Vec2t<out Number>) = rem(Vec2s(), this, b._x.s, b.y.s)
+    infix operator fun rem(b: Vec2t<out Number>) = rem(Vec2s(), this, b._x.s, b._y.s)
 
     @JvmOverloads
     fun rem(bX: Number, bY: Number, res: Vec2s = Vec2s()) = rem(res, this, bX.s, bY.s)
 
     fun rem(b: Number, res: Vec2s) = rem(res, this, b.s, b.s)
-    fun rem(b: Vec2t<out Number>, res: Vec2s) = rem(res, this, b._x.s, b.y.s)
+    fun rem(b: Vec2t<out Number>, res: Vec2s) = rem(res, this, b._x.s, b._y.s)
 
     fun remAssign(bX: Number, bY: Number) = rem(this, this, bX.s, bY.s)
     infix operator fun remAssign(b: Number) {
@@ -446,7 +446,7 @@ class Vec2s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec2t<Sho
     }
 
     infix operator fun remAssign(b: Vec2t<out Number>) {
-        rem(this, this, b._x.s, b.y.s)
+        rem(this, this, b._x.s, b._y.s)
     }
 
 

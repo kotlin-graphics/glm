@@ -39,8 +39,8 @@ interface Vec2t<T : Number> : ToBuffer {
     infix fun put(x: Number) = put(x, x)
 
     infix fun put(v: Vec2t<out Number>) = put(v._x, v._y)
-    infix fun put(v: Vec3t<out Number>) = put(v.x, v.y)
-    infix fun put(v: Vec4t<out Number>) = put(v.x, v.y)
+    infix fun put(v: Vec3t<out Number>) = put(v._x, v._y)
+    infix fun put(v: Vec4t<out Number>) = put(v._x, v._y)
 
     infix fun put(v: Vec2bool) = put(v.x.b, v.y.b)
     infix fun put(v: Vec3bool) = put(v.x.b, v.y.b)
@@ -119,8 +119,8 @@ interface Vec2t<T : Number> : ToBuffer {
     operator fun invoke(x: Number, y: Number): Vec2t<out Number>
 
     infix operator fun invoke(v: Vec2t<out Number>) = invoke(v._x, v._y)
-    infix operator fun invoke(v: Vec3t<out Number>) = invoke(v.x, v.y)
-    infix operator fun invoke(v: Vec4t<out Number>) = invoke(v.x, v.y)
+    infix operator fun invoke(v: Vec3t<out Number>) = invoke(v._x, v._y)
+    infix operator fun invoke(v: Vec4t<out Number>) = invoke(v._x, v._y)
 
     infix operator fun invoke(v: Vec2bool) = invoke(v.x.b, v.y.b)
     infix operator fun invoke(v: Vec3bool) = invoke(v.x.b, v.y.b)

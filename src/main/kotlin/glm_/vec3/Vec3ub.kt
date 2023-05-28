@@ -65,7 +65,7 @@ class Vec3ub(@JvmField var ofs: Int, var array: UbyteArray) : Vec3t<Ubyte>, ToBu
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    constructor(v: Number) : this(x.ub)
+    constructor(v: Number) : this(v.ub)
     constructor(x: Number, y: Number, z: Number) : this(x.ub, y.ub, z.ub)
 
     constructor(x: Vec1t<out Number>, y: Number, z: Number) : this(x._x, y, z)

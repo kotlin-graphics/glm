@@ -62,19 +62,20 @@ class Vec2ui(@JvmField var ofs: Int, var array: UintArray) : Vec2t<Uint>, ToBuff
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
     @JvmOverloads
-    constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+    constructor(x: Vec1t<out Number>, y: Number = x._x) : this(x._x, y)
 
-    constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
+    constructor(x: Number, v: Vec1t<out Number>) : this(x, v._x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x._x, y._x)
 
-    constructor(v: Vec2t<out Number>) : this(v.x, v.y)
-    constructor(v: Vec3t<out Number>) : this(v.x, v.y)
+    constructor(v: Vec2t<out Number>) : this(v._x, v._y)
+    constructor(v: Vec3t<out Number>) : this(v._x, v._y)
     constructor(v: Vec4t<out Number>) : this(v._x, v._y)
 
     @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.ui, y.ui)
 
     constructor(x: Boolean, v: Vec1bool) : this(x.ui, v.x.ui)
+
     @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.ui, y.ui)
 
