@@ -40,7 +40,12 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmFie
     /**
      * Creates a identity matrix
      */
-    constructor() : this(1)
+    constructor() : this(1.0f)
+
+    /**
+     * Creates a matrix with the diagonal set to [s]
+     */
+    constructor(s: Float) : this(s, s, s, s)
 
     /**
      * Creates a matrix with the diagonal set to [s]
@@ -55,43 +60,52 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmFie
     /**
      * Creates a matrix with the diagonal set to [x], [y], [z] and [w]:
      */
+    constructor(x: Float, y: Float, z: Float, w: Float) : this(
+            x, 0, 0, 0,
+            0, y, 0, 0,
+            0, 0, z, 0,
+            0, 0, 0, w)
+
+    /**
+     * Creates a matrix with the diagonal set to [x], [y], [z] and [w]:
+     */
     constructor(x: Number, y: Number, z: Number, w: Number) : this(
-        x, 0, 0, 0,
-        0, y, 0, 0,
-        0, 0, z, 0,
-        0, 0, 0, w)
+            x, 0f, 0f, 0f,
+            0f, y, 0f, 0f,
+            0f, 0f, z, 0f,
+            0f, 0f, 0f, w)
 
     // TODO others
 
     /**
      * Creates a matrix with the diagonal set to [v].x, [v].y, 0 and 1:
      */
-    constructor(v: Vec2t<*>) : this(v.x, v.y, 0, 1)
+    constructor(v: Vec2t<*>) : this(v._x, v._y, 0, 1)
 
     /**
      * Creates a matrix with the diagonal set to [v].x, [v].y, z and 1
      */
-    constructor(v: Vec2t<*>, z: Number) : this(v.x, v.y, z, 1)
+    constructor(v: Vec2t<*>, z: Number) : this(v._x, v._y, z, 1)
 
     /**
      * Creates a matrix with the diagonal set to [v].x, [v].y, z and w
      */
-    constructor(v: Vec2t<*>, z: Number, w: Number) : this(v.x, v.y, z, w)
+    constructor(v: Vec2t<*>, z: Number, w: Number) : this(v._x, v._y, z, w)
 
     /**
      * Creates a matrix with the diagonal set to [v].x, [v].y, [v].z and 1
      */
-    constructor(v: Vec3t<*>) : this(v.x, v.y, v.z, 1)
+    constructor(v: Vec3t<*>) : this(v._x, v._y, v._z, 1)
 
     /**
      * Creates a matrix with the diagonal set to [v].x, [v].y, [v].z and w
      */
-    constructor(v: Vec3t<*>, w: Number) : this(v.x, v.y, v.z, w)
+    constructor(v: Vec3t<*>, w: Number) : this(v._x, v._y, v._z, w)
 
     /**
      * Creates a matrix with the diagonal set to [v].x, [v].y, [v].z and [v].w
      */
-    constructor(v: Vec4t<*>) : this(v.x, v.y, v.z, v.w)
+    constructor(v: Vec4t<*>) : this(v._x, v._y, v._z, v._w)
 
     /**
      * Creates a matrix with the
@@ -100,8 +114,7 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmFie
      * the third [c] and [cW] and
      * the last [d] and [dW]
      */
-    constructor(a: Vec3t<*>, aW: Number, b: Vec3t<*>, bW: Number, c: Vec3t<*>, cW: Number, d: Vec3t<*>, dW: Number) : this(
-        a.x, a.y, a.z, aW, b.x, b.y, b.z, bW, c.x, c.y, c.z, cW, d.x, d.y, d.z, dW)
+    constructor(a: Vec3t<*>, aW: Number, b: Vec3t<*>, bW: Number, c: Vec3t<*>, cW: Number, d: Vec3t<*>, dW: Number) : this(a._x, a._y, a._z, aW, b._x, b._y, b._z, bW, c._x, c._y, c._z, cW, d._x, d._y, d._z, dW)
 
 
     // TODO(wasabi): check, either the variable names a chosen badly or the order passed to the array is wrong
@@ -109,16 +122,28 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmFie
                 x1: Number, y1: Number, z1: Number, w1: Number,
                 x2: Number, y2: Number, z2: Number, w2: Number,
                 x3: Number, y3: Number, z3: Number, w3: Number) : this(0, floatArrayOf(
-        x0.f, y0.f, z0.f, w0.f,
-        x1.f, y1.f, z1.f, w1.f,
-        x2.f, y2.f, z2.f, w2.f,
-        x3.f, y3.f, z3.f, w3.f))
+            x0.f, y0.f, z0.f, w0.f,
+            x1.f, y1.f, z1.f, w1.f,
+            x2.f, y2.f, z2.f, w2.f,
+            x3.f, y3.f, z3.f, w3.f,
+    ))
+
+    // TODO(wasabi): check, either the variable names a chosen badly or the order passed to the array is wrong
+    constructor(x0: Float, y0: Float, z0: Float, w0: Float,
+                x1: Float, y1: Float, z1: Float, w1: Float,
+                x2: Float, y2: Float, z2: Float, w2: Float,
+                x3: Float, y3: Float, z3: Float, w3: Float) : this(0, floatArrayOf(
+            x0, y0, z0, w0,
+            x1, y1, z1, w1,
+            x2, y2, z2, w2,
+            x3, y3, z3, w3,
+    ))
 
     constructor(v0: Vec4t<out Number>, v1: Vec4t<out Number>, v2: Vec4t<out Number>, v3: Vec4t<out Number>) : this(
-        v0.x, v0.y, v0.z, v0.w,
-        v1.x, v1.y, v1.z, v1.w,
-        v2.x, v2.y, v2.z, v2.w,
-        v3.x, v3.y, v3.z, v3.w)
+            v0._x, v0._y, v0._z, v0._w,
+            v1._x, v1._y, v1._z, v1._w,
+            v2._x, v2._y, v2._z, v2._w,
+            v3._x, v3._y, v3._z, v3._w)
 
     constructor(block: (Int) -> Number) : this(
         block(0).f, block(1).f, block(2).f, block(3).f,
@@ -544,10 +569,10 @@ class Mat4 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmFie
     override operator fun set(column: Int, row: Int, value: Float) = array.set(column * 4 + row, value)
 
     override operator fun set(index: Int, value: Vec4t<out Number>) {
-        array[index * 4] = value.x.f
-        array[index * 4 + 1] = value.y.f
-        array[index * 4 + 2] = value.z.f
-        array[index * 4 + 3] = value.w.f
+        array[index * 4] = value._x.f
+        array[index * 4 + 1] = value._y.f
+        array[index * 4 + 2] = value._z.f
+        array[index * 4 + 3] = value._w.f
     }
 
     operator fun set(i: Int, v: Vec4) {
