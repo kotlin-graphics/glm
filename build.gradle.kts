@@ -22,8 +22,8 @@ dependencies {
     api("kotlin.graphics:kool:0.9.77")
     lwjgl { implementation(glfw, jemalloc, openal, opengl, stb) }
 
-    testImplementation("io.kotest:kotest-runner-junit5:5.5.5")
-    testImplementation("io.kotest:kotest-assertions-core:5.5.5")
+    testImplementation("io.kotest:kotest-runner-junit5:5.6.2")
+    testImplementation("io.kotest:kotest-assertions-core:5.6.2")
 }
 
 kotlin.jvmToolchain { languageVersion.set(JavaLanguageVersion.of(8)) }
