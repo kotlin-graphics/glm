@@ -71,9 +71,9 @@ interface func_trigonometric {
     }
 
     fun degrees(rad: Vec3, res: Vec3): Vec3 {
-        res.x = Math.toDegrees(rad.x.d).f
-        res.y = Math.toDegrees(rad.y.d).f
-        res.z = Math.toDegrees(rad.z.d).f
+        res.x = toDegrees(rad.x)
+        res.y = toDegrees(rad.y)
+        res.z = toDegrees(rad.z)
         return res
     }
 
@@ -85,9 +85,9 @@ interface func_trigonometric {
     }
 
     fun degrees(rad: Vec4, res: Vec4): Vec4 {
-        res.x = Math.toDegrees(rad.x.d).f
-        res.y = Math.toDegrees(rad.y.d).f
-        res.z = Math.toDegrees(rad.z.d).f
+        res.x = toDegrees(rad.x)
+        res.y = toDegrees(rad.y)
+        res.z = toDegrees(rad.z)
         return res
     }
 
@@ -98,7 +98,7 @@ interface func_trigonometric {
         return res
     }
 
-    fun radians(deg: Float) = Math.toRadians(deg.d).f
+    fun radians(deg: Float) = toRadians(deg)
     fun radians(deg: Double) = Math.toRadians(deg)
 
     fun radians(rad: Vec2) = radians(rad, Vec2())
@@ -109,8 +109,8 @@ interface func_trigonometric {
     fun radians(rad: Vec4d) = radians(rad, Vec4d())
 
     fun radians(deg: Vec2, res: Vec2): Vec2 {
-        res.x = Math.toRadians(deg.x.d).f
-        res.y = Math.toRadians(deg.y.d).f
+        res.x = toRadians(deg.x)
+        res.y = toRadians(deg.y)
         return res
     }
 
@@ -121,9 +121,9 @@ interface func_trigonometric {
     }
 
     fun radians(deg: Vec3, res: Vec3): Vec3 {
-        res.x = Math.toRadians(deg.x.d).f
-        res.y = Math.toRadians(deg.y.d).f
-        res.z = Math.toRadians(deg.z.d).f
+        res.x = toRadians(deg.x)
+        res.y = toRadians(deg.y)
+        res.z = toRadians(deg.z)
         return res
     }
 
@@ -135,9 +135,9 @@ interface func_trigonometric {
     }
 
     fun radians(deg: Vec4, res: Vec4): Vec4 {
-        res.x = Math.toRadians(deg.x.d).f
-        res.y = Math.toRadians(deg.y.d).f
-        res.z = Math.toRadians(deg.z.d).f
+        res.x = toRadians(deg.x)
+        res.y = toRadians(deg.y)
+        res.z = toRadians(deg.z)
         return res
     }
 
@@ -150,16 +150,16 @@ interface func_trigonometric {
 }
 
 val Int.deg: Float
-    get() = Math.toDegrees(d).f
+    get() = toDegrees(f)
 val Float.deg: Float
-    get() = Math.toDegrees(d).f
+    get() = toDegrees(this)
 val Double.deg: Double
     get() = Math.toDegrees(this)
 
 val Int.rad: Float
-    get() = Math.toRadians(d).f
+    get() = toRadians(f)
 val Float.rad: Float
-    get() = Math.toRadians(d).f
+    get() = toRadians(this)
 val Double.rad: Double
     get() = Math.toRadians(this)
 
@@ -176,3 +176,14 @@ val Float.sin: Float
     get() = _sin(this)
 val Double.sin: Double
     get() = _sin(this)
+
+
+const val DEGREES_TO_RADIANS = 0.017453292519943295
+const val DEGREES_TO_RADIANSf = DEGREES_TO_RADIANS.toFloat()
+
+const val RADIANS_TO_DEGREES = 57.29577951308232
+const val RADIANS_TO_DEGREESf = RADIANS_TO_DEGREES.toFloat()
+
+
+fun toDegrees(angrad: Float): Float = angrad * RADIANS_TO_DEGREESf
+fun toRadians(angdeg: Float): Float = angdeg * DEGREES_TO_RADIANSf
