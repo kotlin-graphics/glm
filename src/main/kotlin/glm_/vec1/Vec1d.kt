@@ -119,8 +119,8 @@ class Vec1d(@JvmField inline var x: Double) : Vec1t<Double>, ToDoubleBuffer {
         return doubles
     }
 
-    override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
-        buf[offset] = x
+    override fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
+        buf[index] = x
         return buf
     }
 

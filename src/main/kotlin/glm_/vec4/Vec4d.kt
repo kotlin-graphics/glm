@@ -228,11 +228,11 @@ class Vec4d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec4t<Do
         return buf
     }
 
-    override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
-        buf[offset] = x
-        buf[offset + 1] = y
-        buf[offset + 2] = z
-        buf[offset + 3] = w
+    override fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
+        buf[index] = x
+        buf[index + 1] = y
+        buf[index + 2] = z
+        buf[index + 3] = w
         return buf
     }
 

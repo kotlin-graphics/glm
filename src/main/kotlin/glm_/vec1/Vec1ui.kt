@@ -25,7 +25,7 @@ import kotlin.math.abs
  * Created by elect on 08/10/16.
  */
 
-class Vec1ui(@JvmField inline var x: Uint) : Vec1t<Uint>, ToShortBuffer {
+class Vec1ui(@JvmField inline var x: Uint) : Vec1t<Uint>, ToIntBuffer {
 
     // -- Implicit basic constructors --
 
@@ -131,7 +131,7 @@ class Vec1ui(@JvmField inline var x: Uint) : Vec1t<Uint>, ToShortBuffer {
         return ints
     }
 
-    fun to(buf: IntBuffer, index: Int): IntBuffer {
+   override fun to(buf: IntBuffer, index: Int): IntBuffer {
         buf[index] = x.v
         return buf
     }

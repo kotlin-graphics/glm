@@ -136,7 +136,7 @@ class Vec1ul(@JvmField inline var x: Ulong) : Vec1t<Ulong>, ToLongBuffer {
         return buf
     }
 
-    fun to(buf: LongBuffer, index: Int): LongBuffer {
+   override fun to(buf: LongBuffer, index: Int): LongBuffer {
         buf[index] = x.v
         return buf
     }

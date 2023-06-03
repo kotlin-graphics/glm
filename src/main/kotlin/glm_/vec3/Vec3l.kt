@@ -186,7 +186,7 @@ class Vec3l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Long
         return buf
     }
 
-    fun to(buf: LongBuffer, index: Int): LongBuffer {
+   override fun to(buf: LongBuffer, index: Int): LongBuffer {
         buf[index] = x
         buf[index + 1] = y
         buf[index + 2] = z

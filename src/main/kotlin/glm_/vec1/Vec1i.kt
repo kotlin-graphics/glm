@@ -122,7 +122,7 @@ class Vec1i(@JvmField inline var x: Int) : Vec1t<Int> , ToIntBuffer {
         return ints
     }
 
-    fun to(buf: IntBuffer, index: Int): IntBuffer {
+   override fun to(buf: IntBuffer, index: Int): IntBuffer {
         buf[index] = x
         return buf
     }

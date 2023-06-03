@@ -206,7 +206,7 @@ class Vec3ui(@JvmField var ofs: Int, var array: UintArray) : Vec3t<Uint>, ToIntB
         return buf
     }
 
-    fun to(buf: IntBuffer, index: Int): IntBuffer {
+   override fun to(buf: IntBuffer, index: Int): IntBuffer {
         buf[index] = x.v
         buf[index + 1] = y.v
         buf[index + 2] = z.v

@@ -238,7 +238,7 @@ class Vec4us(@JvmField var ofs: Int, var array: UshortArray) : Vec4t<Ushort>, To
         return buf
     }
 
-    fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
+    override fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
         shorts[index] = x.v
         shorts[index + 1] = y.v
         shorts[index + 2] = z.v

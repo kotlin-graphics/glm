@@ -131,7 +131,7 @@ class Vec1us(@JvmField inline var x: Ushort) : Vec1t<Ushort>, ToShortBuffer {
         return shorts
     }
 
-    fun to(buf: ShortBuffer, index: Int): ShortBuffer {
+   override fun to(buf: ShortBuffer, index: Int): ShortBuffer {
         buf[index] = x.v
         return buf
     }

@@ -340,23 +340,23 @@ class Mat4d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmFi
                 .putDouble(offset + 15 * Double.BYTES, array[15])
     }
 
-    override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
-        buf[offset + 0] = array[0]
-        buf[offset + 1] = array[1]
-        buf[offset + 2] = array[2]
-        buf[offset + 3] = array[3]
-        buf[offset + 4] = array[4]
-        buf[offset + 5] = array[5]
-        buf[offset + 6] = array[6]
-        buf[offset + 7] = array[7]
-        buf[offset + 8] = array[8]
-        buf[offset + 9] = array[9]
-        buf[offset + 10] = array[10]
-        buf[offset + 11] = array[11]
-        buf[offset + 12] = array[12]
-        buf[offset + 13] = array[13]
-        buf[offset + 14] = array[14]
-        buf[offset + 15] = array[15]
+    override fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
+        buf[index + 0] = array[0]
+        buf[index + 1] = array[1]
+        buf[index + 2] = array[2]
+        buf[index + 3] = array[3]
+        buf[index + 4] = array[4]
+        buf[index + 5] = array[5]
+        buf[index + 6] = array[6]
+        buf[index + 7] = array[7]
+        buf[index + 8] = array[8]
+        buf[index + 9] = array[9]
+        buf[index + 10] = array[10]
+        buf[index + 11] = array[11]
+        buf[index + 12] = array[12]
+        buf[index + 13] = array[13]
+        buf[index + 14] = array[14]
+        buf[index + 15] = array[15]
         return buf
     }
 

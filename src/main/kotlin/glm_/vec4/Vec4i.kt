@@ -218,7 +218,7 @@ class Vec4i(@JvmField var ofs: Int, @JvmField var array: IntArray) : Vec4t<Int>,
         return buf
     }
 
-    fun to(buf: IntBuffer, index: Int): IntBuffer {
+   override fun to(buf: IntBuffer, index: Int): IntBuffer {
         buf[index] = x
         buf[index + 1] = y
         buf[index + 2] = z

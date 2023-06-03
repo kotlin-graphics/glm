@@ -1,8 +1,5 @@
 package glm_
 
-import glm_.vec1.Vec1l
-import glm_.vec2.Vec2l
-import glm_.vec2.Vec2s
 import kool.*
 import org.lwjgl.system.MemoryStack
 import java.nio.*
@@ -108,7 +105,7 @@ interface ToDoubleBuffer : ToBuffer {
     fun toDoubleBuffer(): DoubleBuffer = to(DoubleBuffer.allocate(elementCount()), 0)
     infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
 
-    fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer
+    fun to(buf: DoubleBuffer, index: Int): DoubleBuffer
 }
 
 /**
@@ -147,15 +144,19 @@ interface ToIntBuffer : ToBuffer {
     infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(elementCount()), 0)
     fun toIntBuffer(): IntBuffer = to(IntBuffer(elementCount()), 0)
     infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
+
+    fun to(buf: IntBuffer, index:Int): IntBuffer
 }
 
 
 interface ToLongBuffer : ToBuffer {
 
-    fun toLongBufferStack(): LongBuffer = to(stackGet().mallocLong(elementCount()), 0)
+    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackGet().mallocLong(elementCount()), 0)
     infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(elementCount()), 0)
     fun toLongBuffer(): LongBuffer = to(LongBuffer(elementCount()), 0)
     infix fun to(buf: LongBuffer): LongBuffer = to(buf, buf.pos)
+
+    fun to(buf: LongBuffer, index:Int): LongBuffer
 }
 
 
@@ -165,4 +166,6 @@ interface ToShortBuffer : ToBuffer {
     infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(elementCount()), 0)
     fun toShortBuffer(): ShortBuffer = to(ShortBuffer(elementCount()), 0)
     infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)
+
+    fun to(buf: ShortBuffer, index:Int): ShortBuffer
 }

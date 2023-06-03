@@ -188,7 +188,7 @@ class Vec3s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec3t<Sho
         return buf
     }
 
-    fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
+    override fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
         shorts[index] = x
         shorts[index + 1] = y
         shorts[index + 2] = z

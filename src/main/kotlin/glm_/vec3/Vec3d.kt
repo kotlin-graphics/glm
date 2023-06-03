@@ -197,10 +197,10 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
         return buf
     }
 
-    override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
-        buf[offset] = x
-        buf[offset + 1] = y
-        buf[offset + 2] = z
+    override fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
+        buf[index] = x
+        buf[index + 1] = y
+        buf[index + 2] = z
         return buf
     }
 

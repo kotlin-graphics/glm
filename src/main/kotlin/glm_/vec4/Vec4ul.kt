@@ -244,7 +244,7 @@ class Vec4ul(@JvmField var ofs: Int, var array: UlongArray) : Vec4t<Ulong>, ToLo
         return buf
     }
 
-    fun to(longs: LongBuffer, index: Int): LongBuffer {
+    override fun to(longs: LongBuffer, index: Int): LongBuffer {
         longs[index] = x.v
         longs[index + 1] = y.v
         longs[index + 2] = z.v

@@ -182,7 +182,7 @@ class Vec2us(@JvmField var ofs: Int, var array: UshortArray) : Vec2t<Ushort>, To
         return buf
     }
 
-    fun to(buf: ShortBuffer, index: Int): ShortBuffer {
+   override fun to(buf: ShortBuffer, index: Int): ShortBuffer {
         buf[index] = x.v
         buf[index + 1] = y.v
         return buf

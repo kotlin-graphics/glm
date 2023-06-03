@@ -183,7 +183,7 @@ class Vec2ul(@JvmField var ofs: Int, var array: UlongArray) : Vec2t<Ulong>, ToLo
         return buf
     }
 
-    fun to(buf: LongBuffer, index: Int): LongBuffer {
+   override fun to(buf: LongBuffer, index: Int): LongBuffer {
         buf[index] = x.v
         buf[index + 1] = y.v
         return buf

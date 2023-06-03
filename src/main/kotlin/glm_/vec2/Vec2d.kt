@@ -173,9 +173,9 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
         return buf
     }
 
-    override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
-        buf[offset] = x
-        buf[offset + 1] = y
+    override fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
+        buf[index] = x
+        buf[index + 1] = y
         return buf
     }
 
