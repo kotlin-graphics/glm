@@ -491,7 +491,6 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
 
     override fun size() = size
 
-    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec2d && this[0] == other[0] && this[1] == other[1]
 
@@ -525,3 +524,4 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
 
     override fun toString(): String = "($x, $y)"
 }
+

@@ -12,7 +12,6 @@ import glm_.vec3.Vec3i
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4i_operators
 import kool.*
-import org.lwjgl.system.MemoryStack
 import java.io.PrintStream
 import java.nio.*
 
@@ -20,7 +19,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4i(@JvmField var ofs: Int, @JvmField var array: IntArray) : Vec4t<Int>, ToBuffer {
+class Vec4i(@JvmField var ofs: Int, @JvmField var array: IntArray) : Vec4t<Int>, ToIntBuffer {
 
     inline var x: Int
         get() = array[ofs]
@@ -219,10 +218,6 @@ class Vec4i(@JvmField var ofs: Int, @JvmField var array: IntArray) : Vec4t<Int>,
         return buf
     }
 
-    fun toIntBufferStack(): IntBuffer = to(MemoryStack.stackGet().mallocInt(length), 0)
-    infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(length), 0)
-    fun toIntBuffer(): IntBuffer = to(IntBuffer(length), 0)
-    infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
     fun to(buf: IntBuffer, index: Int): IntBuffer {
         buf[index] = x
         buf[index + 1] = y
@@ -691,3 +686,4 @@ class Vec4i(@JvmField var ofs: Int, @JvmField var array: IntArray) : Vec4t<Int>,
 
     override fun toString(): String = "($x, $y, $z, $w)"
 }
+

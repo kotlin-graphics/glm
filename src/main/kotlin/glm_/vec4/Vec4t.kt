@@ -261,7 +261,9 @@ interface Vec4t<T : Number> : ToBuffer {
     var q get() = _w; set(value) { _w = value }
     //@formatter:on
 
+    override fun elementCount(): Int = length
     companion object {
         const val LENGTH = 4
     }
 }
+

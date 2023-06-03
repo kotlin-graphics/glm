@@ -4,18 +4,23 @@ import glm_.vec1.Vec1
 import glm_.vec1.Vec1d
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2i
-import glm_.vec2.Vec2t
 import glm_.vec2.swizzle.xy
 import glm_.vec2.swizzle.yy
-import glm_.vec3.*
-import glm_.vec3.operators.*
+import glm_.vec3.Vec3
+import glm_.vec3.Vec3bool
+import glm_.vec3.Vec3d
+import glm_.vec3.Vec3i
+import glm_.vec3.operators.div
+import glm_.vec3.operators.minus
+import glm_.vec3.operators.plus
+import glm_.vec3.operators.times
 import glm_.vec3.swizzle.*
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4i
 import glm_.vec4.swizzle.xyz
 import glm_.vec4.swizzle.xyzw
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 import kool.BYTES
 
 class coreVec3 : StringSpec() {

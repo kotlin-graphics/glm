@@ -1,7 +1,6 @@
 package glm_
 
 import glm_.vec2.Vec2
-import glm_.vec2.Vec2ub
 import glm_.vec2.Vec2us
 import io.kotest.core.spec.style.StringSpec
 

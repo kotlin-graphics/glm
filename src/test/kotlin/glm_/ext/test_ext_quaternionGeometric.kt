@@ -1,7 +1,5 @@
 package glm_.ext
 
-import glm_.func.deg
-import glm_.glm
 import glm_.quat.Quat
 import glm_.shouldEqual
 import glm_.vec3.Vec3

@@ -12,8 +12,8 @@ import glm_.vec4.operators.minus
 import glm_.vec4.operators.plus
 import glm_.vec4.operators.times
 import glm_.vec4.swizzle.*
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 import kool.BYTES
 
 class coreVec4 : StringSpec() {

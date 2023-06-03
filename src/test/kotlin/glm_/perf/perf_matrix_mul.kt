@@ -4,7 +4,6 @@ import glm_.f
 import glm_.mat4x4.Mat4
 import io.kotest.core.spec.style.StringSpec
 import kotlin.system.measureNanoTime
-import kotlin.system.measureTimeMillis
 
 class perf_matrix_mul : StringSpec() { // TODO all other case
 

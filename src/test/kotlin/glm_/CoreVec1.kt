@@ -6,9 +6,8 @@ import glm_.vec1.Vec1i
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2i
-import glm_.vec2.operators.timesAssign
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 import kool.BYTES
 
 class CoreVec1 : StringSpec() {

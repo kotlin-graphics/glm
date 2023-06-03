@@ -1,7 +1,6 @@
 package glm_.ext
 
 import glm_.BYTES
-import glm_.vec1.Vec1
 import glm_.vec1.Vec1i
 import glm_.vec1.Vec1ui
 import glm_.vec2.Vec2i
@@ -10,9 +9,9 @@ import glm_.vec3.Vec3i
 import glm_.vec3.Vec3ui
 import glm_.vec4.Vec4i
 import glm_.vec4.Vec4ui
+import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import io.kotest.core.spec.style.StringSpec
 import kool.BYTES
 import unsigned.Uint
 

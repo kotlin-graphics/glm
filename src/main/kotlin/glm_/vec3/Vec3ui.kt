@@ -735,3 +735,4 @@ class Vec3ui(@JvmField var ofs: Int, var array: UintArray) : Vec3t<Uint>, ToBuff
 
     override fun toString(): String = "($x, $y, $z)"
 }
+

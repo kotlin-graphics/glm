@@ -842,3 +842,4 @@ class Vec4us(@JvmField var ofs: Int, var array: UshortArray) : Vec4t<Ushort>, To
 
     override fun toString(): String = "($x, $y, $z, $w)"
 }
+

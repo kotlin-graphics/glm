@@ -770,3 +770,4 @@ class Vec2us(@JvmField var ofs: Int, var array: UshortArray) : Vec2t<Ushort>, To
 
     override fun toString(): String = "($x, $y)"
 }
+

@@ -804,3 +804,4 @@ class Vec2ub(@JvmField var ofs: Int, var array: UbyteArray) : Vec2t<Ubyte>, ToBu
 
     override fun toString(): String = "($x, $y)"
 }
+

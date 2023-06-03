@@ -566,3 +566,4 @@ class Vec1us(@JvmField inline var x: Ushort) : Vec1t<Ushort> {
 
     override fun toString(): String = "($x)"
 }
+

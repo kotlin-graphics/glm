@@ -12,7 +12,10 @@ import glm_.vec3.Vec3t
 import glm_.vec4.Vec4b
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.*
+import kool.BYTES
+import kool.Ptr
+import kool.get
+import kool.pos
 import java.nio.*
 import kotlin.math.abs
 
@@ -129,3 +132,4 @@ class Vec1b(@JvmField inline var x: Byte) : Vec1t<Byte> {
 
     override fun toString(): String = "($x)"
 }
+

@@ -18,8 +18,8 @@ import glm_.vec1.operators.minus
 import glm_.vec4.Vec4
 import glm_.vec4.operators.minus
 import glm_.vec4.operators.times
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 import kotlin.system.measureNanoTime
 
 class testGtxFastTrigonometry : StringSpec() {

@@ -7,8 +7,8 @@ import glm_.vec1.*
 import glm_.vec2.*
 import glm_.vec3.*
 import glm_.vec4.*
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class gtx_stringCast : StringSpec() {
 

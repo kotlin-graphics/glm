@@ -758,3 +758,4 @@ class Vec4ul(@JvmField var ofs: Int, var array: UlongArray) : Vec4t<Ulong>, ToBu
 
     override fun toString(): String = "($x, $y, $z, $w)"
 }
+

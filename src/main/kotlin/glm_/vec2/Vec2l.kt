@@ -650,3 +650,4 @@ class Vec2l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec2t<Long
 
     override fun toString(): String = "($x, $y)"
 }
+

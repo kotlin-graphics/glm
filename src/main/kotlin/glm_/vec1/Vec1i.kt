@@ -1,5 +1,6 @@
 package glm_.vec1
 
+import glm_.ToIntBuffer
 import glm_.getInt
 import glm_.i
 import glm_.putInt
@@ -14,7 +15,6 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4i
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryStack
 import java.nio.*
 import kotlin.math.abs
 
@@ -22,7 +22,7 @@ import kotlin.math.abs
  * Created by GBarbieri on 04.04.2017.
  */
 
-class Vec1i(@JvmField inline var x: Int) : Vec1t<Int> {
+class Vec1i(@JvmField inline var x: Int) : Vec1t<Int> , ToIntBuffer {
 
     // -- Implicit basic constructors --
 
@@ -122,9 +122,6 @@ class Vec1i(@JvmField inline var x: Int) : Vec1t<Int> {
         return ints
     }
 
-    fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.callocInt(length), 0)
-    fun toIntBuffer(): IntBuffer = to(IntBuffer(length), 0)
-    infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
     fun to(buf: IntBuffer, index: Int): IntBuffer {
         buf[index] = x
         return buf
@@ -292,3 +289,4 @@ class Vec1i(@JvmField inline var x: Int) : Vec1t<Int> {
 
     override fun toString(): String = "($x)"
 }
+

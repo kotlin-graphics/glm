@@ -20,7 +20,6 @@ import glm_.vec4.Vec4d
 import kool.*
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
-import java.util.*
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -401,3 +400,4 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmFi
     fun allEqual(b: Mat2d, epsilon: Double = glm.ε): Boolean = glm.allEqual(this, b, epsilon)
     fun anyNotEqual(b: Mat2d, epsilon: Double = glm.ε): Boolean = glm.anyNotEqual(this, b, epsilon)
 }
+

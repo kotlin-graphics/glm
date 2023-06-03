@@ -2,8 +2,8 @@ package glm_.gtx
 
 import glm_.glm
 import glm_.vec3.Vec3
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class testGtxNormal : StringSpec() {
 

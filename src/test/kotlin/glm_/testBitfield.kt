@@ -4,8 +4,8 @@ import glm_.vec2.Vec2b
 import glm_.vec2.Vec2s
 import glm_.vec4.Vec4b
 import glm_.vec4.Vec4i
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 import kool.BYTES
 import unsigned.toUInt
 import unsigned.toULong

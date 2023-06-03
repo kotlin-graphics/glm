@@ -4,8 +4,8 @@ import glm_.mat4x4.Mat4
 import glm_.quat.Quat
 import glm_.quat.times
 import glm_.vec3.Vec3
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 /**
  * Created by elect on 04/03/2017.

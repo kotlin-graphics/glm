@@ -6,8 +6,8 @@ import glm_.quat.QuatD
 import glm_.shouldEqual
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class test_ext_quaternionExponential : StringSpec() {
 

@@ -1,10 +1,11 @@
 package glm_
 
-import io.kotest.matchers.shouldBe
+import glm_.testCoreFuncInteger.Result.FAIL
+import glm_.testCoreFuncInteger.Result.SUCCESS
 import io.kotest.core.spec.style.StringSpec
-import unsigned.toULong
-import glm_.testCoreFuncInteger.Result.*
+import io.kotest.matchers.shouldBe
 import kool.BYTES
+import unsigned.toULong
 
 class testCoreFuncInteger : StringSpec() {
 

@@ -720,3 +720,4 @@ class Vec2ul(@JvmField var ofs: Int, var array: UlongArray) : Vec2t<Ulong>, ToBu
 
     override fun toString(): String = "($x, $y)"
 }
+

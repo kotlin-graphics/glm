@@ -10,13 +10,10 @@ import glm_.vec1.Vec1
 import glm_.vec1.Vec1d
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2d
-import glm_.vec2.Vec2i
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
-import glm_.vec3.Vec3i
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4d
-import glm_.vec4.Vec4i
 import io.kotest.matchers.shouldBe
 
 infix fun Float.shouldEqual(f: Float) = shouldEqual(f, glm.εf)
