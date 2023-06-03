@@ -13,9 +13,21 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-abstract class Vec2t<T : Number>: Vec2Vars<T>, ToBuffer {
+abstract class Vec2t<T : Number>: ToBuffer {
+
+    abstract var x: T
+    abstract var y: T
+
+    operator fun component1() = x
+    operator fun component2() = y
 
     // -- Component accesses --
+
+    operator fun get(index: Int) = when (index) {
+        0 -> x
+        1 -> y
+        else -> throw IndexOutOfBoundsException()
+    }
 
     abstract operator fun set(index: Int, value: Number)
 

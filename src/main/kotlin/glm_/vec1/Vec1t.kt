@@ -16,12 +16,20 @@ import java.nio.*
  * Created bY GBarbieri on 05.10.2016.
  */
 
-abstract class Vec1t<T : Number>(_x: T): Vec1Vars<T>, ToBuffer {
+abstract class Vec1t<T : Number>(_x: T): ToBuffer {
 
 //    @JvmField TODO bug
-    override var x = _x
+    var x = _x
+
+    fun component1() = x
+
 
     // -- Component accesses --
+
+    operator fun get(index: Int) = when (index) {
+        0 -> x
+        else -> throw IndexOutOfBoundsException()
+    }
 
     open operator fun set(index: Int, value: T) = when (index) {
         0 -> x = value

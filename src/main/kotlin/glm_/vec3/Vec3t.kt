@@ -9,9 +9,25 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import java.nio.*
 
-abstract class Vec3t<T : Number>: Vec3Vars<T>, ToBuffer {
+abstract class Vec3t<T : Number>: ToBuffer {
+
+    abstract var x: T
+    abstract var y: T
+    abstract var z: T
+
+    operator fun component1() = x
+    operator fun component2() = y
+    operator fun component3() = z
+
 
     // -- Component accesses --
+
+    operator fun get(index: Int) = when (index) {
+        0 -> x
+        1 -> y
+        2 -> z
+        else -> throw IndexOutOfBoundsException()
+    }
 
     abstract operator fun set(index: Int, value: Number)
 
