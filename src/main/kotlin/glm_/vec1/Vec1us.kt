@@ -17,7 +17,6 @@ import glm_.vec4.Vec4us
 import kool.ShortBuffer
 import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
 import unsigned.Ushort
 import java.lang.Math.abs
 import java.nio.*
@@ -26,7 +25,7 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec1us(@JvmField inline var x: Ushort) : Vec1t<Ushort> {
+class Vec1us(@JvmField inline var x: Ushort) : Vec1t<Ushort>, ToShortBuffer {
 
     // -- Implicit basic constructors --
 
@@ -132,9 +131,6 @@ class Vec1us(@JvmField inline var x: Ushort) : Vec1t<Ushort> {
         return shorts
     }
 
-    infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
-    fun toShortBuffer(): ShortBuffer = to(ShortBuffer(length), 0)
-    infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)
     fun to(buf: ShortBuffer, index: Int): ShortBuffer {
         buf[index] = x.v
         return buf

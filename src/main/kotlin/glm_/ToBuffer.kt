@@ -1,5 +1,8 @@
 package glm_
 
+import glm_.vec1.Vec1l
+import glm_.vec2.Vec2l
+import glm_.vec2.Vec2s
 import kool.*
 import org.lwjgl.system.MemoryStack
 import java.nio.*
@@ -144,4 +147,22 @@ interface ToIntBuffer : ToBuffer {
     infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(elementCount()), 0)
     fun toIntBuffer(): IntBuffer = to(IntBuffer(elementCount()), 0)
     infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
+}
+
+
+interface ToLongBuffer : ToBuffer {
+
+    fun toLongBufferStack(): LongBuffer = to(stackGet().mallocLong(elementCount()), 0)
+    infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(elementCount()), 0)
+    fun toLongBuffer(): LongBuffer = to(LongBuffer(elementCount()), 0)
+    infix fun to(buf: LongBuffer): LongBuffer = to(buf, buf.pos)
+}
+
+
+interface ToShortBuffer : ToBuffer {
+
+    fun toShortBufferStack(): ShortBuffer = to(MemoryStack.stackGet().mallocShort(elementCount()), 0)
+    infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(elementCount()), 0)
+    fun toShortBuffer(): ShortBuffer = to(ShortBuffer(elementCount()), 0)
+    infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)
 }

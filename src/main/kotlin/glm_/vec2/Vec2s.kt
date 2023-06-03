@@ -12,7 +12,6 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4s
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryStack
 import java.io.PrintStream
 import java.nio.*
 
@@ -20,7 +19,7 @@ import java.nio.*
  * Created by GBarbieri on 06.10.2016.
  */
 
-class Vec2s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec2t<Short>, ToBuffer {
+class Vec2s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec2t<Short>, ToShortBuffer {
 
     inline var x: Short
         get() = array[ofs]
@@ -163,10 +162,6 @@ class Vec2s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec2t<Sho
         return buf
     }
 
-    fun toShortBufferStack(): ShortBuffer = to(MemoryStack.stackGet().mallocShort(length), 0)
-    infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
-    fun toShortBuffer(): ShortBuffer = to(ShortBuffer(length), 0)
-    infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)
     fun to(buf: ShortBuffer, index: Int): ShortBuffer {
         buf[index] = x
         buf[index + 1] = y

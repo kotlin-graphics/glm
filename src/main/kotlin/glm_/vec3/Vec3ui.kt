@@ -10,7 +10,6 @@ import glm_.vec3.operators.vec3ui_operators
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryStack
 import unsigned.Uint
 import unsigned.UintArray
 import unsigned.toUint
@@ -21,7 +20,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec3ui(@JvmField var ofs: Int, var array: UintArray) : Vec3t<Uint>, ToBuffer {
+class Vec3ui(@JvmField var ofs: Int, var array: UintArray) : Vec3t<Uint>, ToIntBuffer {
 
     inline var x: Uint
         get() = array[ofs]
@@ -207,10 +206,6 @@ class Vec3ui(@JvmField var ofs: Int, var array: UintArray) : Vec3t<Uint>, ToBuff
         return buf
     }
 
-    fun toIntBufferStack(): IntBuffer = to(MemoryStack.stackGet().mallocInt(length), 0)
-    infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(length), 0)
-    fun toIntBuffer(): IntBuffer = to(IntBuffer(length), 0)
-    infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
     fun to(buf: IntBuffer, index: Int): IntBuffer {
         buf[index] = x.v
         buf[index + 1] = y.v

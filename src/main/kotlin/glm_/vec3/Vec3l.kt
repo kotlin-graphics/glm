@@ -12,7 +12,6 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4l
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryStack
 import java.io.PrintStream
 import java.nio.*
 
@@ -20,7 +19,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec3l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Long>, ToBuffer {
+class Vec3l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Long>, ToLongBuffer {
 
     inline var x: Long
         get() = array[ofs]
@@ -187,10 +186,6 @@ class Vec3l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Long
         return buf
     }
 
-    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackGet().mallocLong(length), 0)
-    infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(length), 0)
-    fun toLongBuffer(): LongBuffer = to(LongBuffer(length), 0)
-    infix fun to(buf: LongBuffer): LongBuffer = to(buf, buf.pos)
     fun to(buf: LongBuffer, index: Int): LongBuffer {
         buf[index] = x
         buf[index + 1] = y

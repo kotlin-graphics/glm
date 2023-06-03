@@ -17,7 +17,6 @@ import glm_.vec4.Vec4ui
 import kool.IntBuffer
 import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
 import unsigned.Uint
 import java.nio.*
 import kotlin.math.abs
@@ -26,7 +25,7 @@ import kotlin.math.abs
  * Created by elect on 08/10/16.
  */
 
-class Vec1ui(@JvmField inline var x: Uint) : Vec1t<Uint> {
+class Vec1ui(@JvmField inline var x: Uint) : Vec1t<Uint>, ToShortBuffer {
 
     // -- Implicit basic constructors --
 
@@ -132,9 +131,6 @@ class Vec1ui(@JvmField inline var x: Uint) : Vec1t<Uint> {
         return ints
     }
 
-    infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(length), 0)
-    fun toIntBuffer(): IntBuffer = to(IntBuffer(length), 0)
-    infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
     fun to(buf: IntBuffer, index: Int): IntBuffer {
         buf[index] = x.v
         return buf
@@ -499,3 +495,4 @@ class Vec1ui(@JvmField inline var x: Uint) : Vec1t<Uint> {
 
     override fun toString(): String = "($x)"
 }
+

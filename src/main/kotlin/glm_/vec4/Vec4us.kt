@@ -11,7 +11,6 @@ import glm_.vec3.Vec3t
 import glm_.vec3.Vec3us
 import glm_.vec4.operators.vec4us_operators
 import kool.*
-import org.lwjgl.system.MemoryStack
 import unsigned.Ushort
 import unsigned.UshortArray
 import java.io.PrintStream
@@ -21,7 +20,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4us(@JvmField var ofs: Int, var array: UshortArray) : Vec4t<Ushort>, ToBuffer {
+class Vec4us(@JvmField var ofs: Int, var array: UshortArray) : Vec4t<Ushort>, ToShortBuffer {
 
     inline var x: Ushort
         get() = array[ofs]
@@ -239,10 +238,6 @@ class Vec4us(@JvmField var ofs: Int, var array: UshortArray) : Vec4t<Ushort>, To
         return buf
     }
 
-    fun toShortBufferStack(): ShortBuffer = to(MemoryStack.stackGet().mallocShort(length), 0)
-    infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
-    fun toShortBuffer(): ShortBuffer = to(ShortBuffer(length), 0)
-    infix fun to(shorts: ShortBuffer): ShortBuffer = to(shorts, shorts.pos)
     fun to(shorts: ShortBuffer, index: Int): ShortBuffer {
         shorts[index] = x.v
         shorts[index + 1] = y.v

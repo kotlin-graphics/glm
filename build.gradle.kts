@@ -20,7 +20,7 @@ repositories {
 dependencies {
     api("kotlin.graphics:unsigned:3.3.32")
     api("kotlin.graphics:kool:0.9.77")
-    lwjgl { implementation(glfw, jemalloc, openal, opengl, stb) }
+    // lwjgl { implementation(glfw, jemalloc, openal, opengl, stb) }
 
     testImplementation("io.kotest:kotest-runner-junit5:5.6.2")
     testImplementation("io.kotest:kotest-assertions-core:5.6.2")

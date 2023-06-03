@@ -12,7 +12,6 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4s
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryStack
 import java.nio.*
 import kotlin.math.abs
 
@@ -20,7 +19,7 @@ import kotlin.math.abs
  * Created by GBarbieri on 04.04.2017.
  */
 
-class Vec1s(@JvmField inline var x: Short) : Vec1t<Short> {
+class Vec1s(@JvmField inline var x: Short) : Vec1t<Short>, ToShortBuffer {
 
     // -- Implicit basic constructors --
 
@@ -120,9 +119,6 @@ class Vec1s(@JvmField inline var x: Short) : Vec1t<Short> {
         return shorts
     }
 
-    infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
-    fun toShortBuffer(): ShortBuffer = to(ShortBuffer(length), 0)
-    infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)
     fun to(buf: ShortBuffer, index: Int): ShortBuffer {
         buf[index] = x
         return buf
@@ -169,3 +165,4 @@ class Vec1s(@JvmField inline var x: Short) : Vec1t<Short> {
 
     override fun toString(): String = "($x)"
 }
+
