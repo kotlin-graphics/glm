@@ -1,6 +1,5 @@
 package  glm_.mat2x3
 
-import glm_.BYTES
 import glm_.ToFloatBuffer
 import glm_.f
 import glm_.toFloat
@@ -8,10 +7,8 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
 import kool.BYTES
 import kool.set
-import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
-import java.util.*
 
 /**
  * Created by GBarbieri on 09.12.2016.
@@ -29,9 +26,9 @@ class Mat2x3(var array: FloatArray) : Mat2x3t<Float>(), ToFloatBuffer {
     override operator fun set(column: Int, row: Int, value: Float) = array.set(column * 3 + row, value)
 
     override operator fun set(index: Int, value: Vec3t<out Number>) {
-        array[index * 3] = value.x.f
-        array[index * 3 + 1] = value.y.f
-        array[index * 3 + 2] = value.z.f
+        array[index * 3] = value._x.f
+        array[index * 3 + 1] = value._y.f
+        array[index * 3 + 2] = value._z.f
     }
 
     operator fun set(i: Int, v: Vec3) {

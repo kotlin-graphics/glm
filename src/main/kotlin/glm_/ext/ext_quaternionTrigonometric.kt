@@ -1,6 +1,5 @@
 package glm_.ext
 
-import glm_.ext.equal
 import glm_.glm
 import glm_.quat.Quat
 import glm_.quat.QuatD

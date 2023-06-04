@@ -1,10 +1,6 @@
 package glm_.ext
 
-import glm_.detail.GLM_COORDINATE_SYSTEM
-import glm_.detail.GlmCoordinateSystem
 import glm_.glm
-import glm_.mat3x3.Mat3
-import glm_.mat3x3.Mat3d
 import glm_.quat.Quat
 import glm_.quat.QuatD
 import glm_.vec3.Vec3

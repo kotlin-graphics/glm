@@ -4,10 +4,7 @@ import glm_.*
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import kool.BYTES
-import kool.DoubleBuffer
-import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*
@@ -28,8 +25,8 @@ class Mat3x2d(var array: DoubleArray) : Mat3x2t<Double>(), ToDoubleBuffer {
     override operator fun set(column: Int, row: Int, value: Double) = array.set(column * 2 + row, value)
 
     override operator fun set(index: Int, value: Vec2t<out Number>) {
-        array[index * 2] = value.x.d
-        array[index * 2 + 1] = value.y.d
+        array[index * 2] = value._x.d
+        array[index * 2 + 1] = value._y.d
     }
 
     operator fun set(i: Int, v: Vec2d) {

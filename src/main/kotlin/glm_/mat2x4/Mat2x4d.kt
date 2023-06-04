@@ -4,11 +4,7 @@ import glm_.*
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
 import kool.BYTES
-import kool.DoubleBuffer
-import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
-import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*
@@ -29,10 +25,10 @@ class Mat2x4d(var array: DoubleArray) : Mat2x4t<Double>(), ToDoubleBuffer {
     override operator fun set(column: Int, row: Int, value: Double) = array.set(column * 4 + row, value)
 
     override operator fun set(index: Int, value: Vec4t<out Number>) {
-        array[index * 4] = value.x.d
-        array[index * 4 + 1] = value.y.d
-        array[index * 4 + 2] = value.z.d
-        array[index * 4 + 2] = value.w.d
+        array[index * 4] = value._x.d
+        array[index * 4 + 1] = value._y.d
+        array[index * 4 + 2] = value._z.d
+        array[index * 4 + 2] = value._w.d
     }
 
     operator fun set(i: Int, v: Vec4d) {

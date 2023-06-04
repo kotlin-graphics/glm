@@ -1,12 +1,17 @@
 package glm_.vec1
 
-import glm_.*
+import glm_.getInt
+import glm_.i
+import glm_.putInt
 import glm_.vec1.operators.opVec1i
 import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2i
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
+import glm_.vec3.Vec3i
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
+import glm_.vec4.Vec4i
 import glm_.vec4.Vec4t
 import kool.*
 import org.lwjgl.system.MemoryStack
@@ -17,7 +22,7 @@ import kotlin.math.abs
  * Created by GBarbieri on 04.04.2017.
  */
 
-class Vec1i(x: Int) : Vec1t<Int>(x) {
+class Vec1i(@JvmField inline var x: Int) : Vec1t<Int> {
 
     // -- Implicit basic constructors --
 
@@ -27,10 +32,15 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     // -- Explicit basic constructors --
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    constructor(v: Vec1t<out Number>) : this(v.x)
-    constructor(v: Vec2t<out Number>) : this(v.x)
-    constructor(v: Vec3t<out Number>) : this(v.x)
-    constructor(v: Vec4t<out Number>) : this(v.x)
+    constructor(v: Vec1i) : this(v.x)
+    constructor(v: Vec2i) : this(v.x)
+    constructor(v: Vec3i) : this(v.x)
+    constructor(v: Vec4i) : this(v.x)
+
+    constructor(v: Vec1t<out Number>) : this(v._x)
+    constructor(v: Vec2t<out Number>) : this(v._x)
+    constructor(v: Vec3t<out Number>) : this(v._x)
+    constructor(v: Vec4t<out Number>) : this(v._x)
 
     constructor(v: Vec1bool) : this(v.x.i)
     constructor(v: Vec2bool) : this(v.x.i)
@@ -248,7 +258,7 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     infix fun shrAssign(b: Vec1i) = shr(this, this, b.x)
 
     companion object : opVec1i {
-        const val length = Vec1t.length
+        const val length = Vec1t.LENGTH
         @JvmField
         val size = length * Int.BYTES
     }
@@ -260,4 +270,25 @@ class Vec1i(x: Int) : Vec1t<Int>(x) {
     fun notEqual(b: Vec1i, epsilon: Int = 0): Boolean = !equal(b, epsilon)
 
     override fun hashCode() = x.hashCode()
+
+    //@formatter:off
+    override inline var _x get() = x; set(value) { x = value }
+    override inline var r get() = x; set(value) { x = value }
+    override inline var s get() = x; set(value) { x = value }
+    //@formatter:on
+
+    override inline operator fun get(index: Int): Int {
+        if (index == 0) return x
+        throw IndexOutOfBoundsException()
+    }
+
+    override inline operator fun set(index: Int, value: Int) {
+        if (index == 0) {
+            x = value
+        } else throw IndexOutOfBoundsException()
+    }
+
+    override inline operator fun component1() = x
+
+    override fun toString(): String = "($x)"
 }

@@ -4,13 +4,18 @@ import glm_.*
 import glm_.vec1.operators.opVec1us
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
-import glm_.vec2.operators.opVec2us
+import glm_.vec2.Vec2ub
+import glm_.vec2.Vec2us
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
+import glm_.vec3.Vec3ub
+import glm_.vec3.Vec3us
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.pos
+import glm_.vec4.Vec4ub
+import glm_.vec4.Vec4us
 import kool.ShortBuffer
+import kool.pos
 import kool.set
 import org.lwjgl.system.MemoryStack
 import unsigned.Ushort
@@ -21,20 +26,25 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
+class Vec1us(@JvmField inline var x: Ushort) : Vec1t<Ushort> {
 
     // -- Implicit basic constructors --
 
     constructor() : this(0)
-    constructor(x: Number) : this(x.us)
+    constructor(v: Number) : this(v.us)
 
     // -- Explicit basic constructors --
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    constructor(v: Vec1t<out Number>) : this(v.x)
-    constructor(v: Vec2t<out Number>) : this(v.x)
-    constructor(v: Vec3t<out Number>) : this(v.x)
-    constructor(v: Vec4t<out Number>) : this(v.x)
+    constructor(v: Vec1us) : this(v.x)
+    constructor(v: Vec2us) : this(v.x)
+    constructor(v: Vec3us) : this(v.x)
+    constructor(v: Vec4us) : this(v.x)
+
+    constructor(v: Vec1t<out Number>) : this(v._x)
+    constructor(v: Vec2t<out Number>) : this(v._x)
+    constructor(v: Vec3t<out Number>) : this(v._x)
+    constructor(v: Vec4t<out Number>) : this(v._x)
 
     constructor(v: Vec1bool) : this(v.x.us)
     constructor(v: Vec2bool) : this(v.x.us)
@@ -520,7 +530,8 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
 
 
     companion object : opVec1us {
-        const val length = Vec1t.length
+        const val length = Vec1t.LENGTH
+
         @JvmField
         val size = length * Ushort.BYTES
     }
@@ -532,4 +543,26 @@ class Vec1us(x: Ushort) : Vec1t<Ushort>(x) {
     fun notEqual(b: Vec1us, epsilon: Int = 0): Boolean = !equal(b, epsilon)
 
     override fun hashCode() = x.v.hashCode()
+
+
+    //@formatter:off
+    override inline var _x get() = x; set(value) { x = value }
+    override inline var r get() = x; set(value) { x = value }
+    override inline var s get() = x; set(value) { x = value }
+    //@formatter:on
+
+    override inline operator fun get(index: Int): Ushort {
+        if (index == 0) return x
+        throw IndexOutOfBoundsException()
+    }
+
+    override inline operator fun set(index: Int, value: Ushort) {
+        if (index == 0) {
+            x = value
+        } else throw IndexOutOfBoundsException()
+    }
+
+    override inline operator fun component1() = x
+
+    override fun toString(): String = "($x)"
 }

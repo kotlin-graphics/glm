@@ -12,8 +12,6 @@ import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
 import kool.*
-
-import org.lwjgl.system.MemoryUtil.memGetFloat
 import java.io.InputStream
 import java.io.PrintStream
 import kotlin.math.abs
@@ -90,7 +88,7 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
 
     constructor(q: QuatD) : this(q.w.f, q.x.f, q.y.f, q.z.f)
     constructor(w: Number, x: Number, y: Number, z: Number) : this(w.f, x.f, y.f, z.f)
-    constructor(vec4: Vec4t<*>) : this(vec4.w.f, vec4.x.f, vec4.y.f, vec4.z.f)
+    constructor(vec4: Vec4t<*>) : this(vec4._w.f, vec4._x.f, vec4._y.f, vec4._z.f)
 
 
     fun put(w: Float, x: Float, y: Float, z: Float): Quat {

@@ -12,24 +12,20 @@ import glm_.mat4x2.Mat4x2d
 import glm_.mat4x2.Mat4x2t
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
-import glm_.vec2.Vec2
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d
 import kool.*
-import org.lwjgl.system.MemoryUtil.memGetDouble
-import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
 import java.util.*
-import kotlin.math.abs
 
 /**
  * Created by GBarbieri on 10.11.2016.
  */
-class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var array: DoubleArray) : Mat2x2t<Double>(), ToDoubleBuffer {
+class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmField var array: DoubleArray) : Mat2x2t<Double>(), ToDoubleBuffer {
 
     // -- Constructors --
 
@@ -47,8 +43,8 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
         x1.d, y1.d))
 
     constructor(v0: Vec2t<out Number>, v1: Vec2t<out Number>) : this(
-        v0.x, v0.y,
-        v1.x, v1.y)
+        v0._x, v0._y,
+        v1._x, v1._y)
 
     constructor(block: (Int) -> Number) : this(
         block(0).d, block(1).d,
@@ -136,8 +132,8 @@ class Mat2d private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var ar
 
     override operator fun set(column: Int, row: Int, value: Double) = array.set(column * 2 + row, value)
     override operator fun set(index: Int, value: Vec2t<out Number>) {
-        array[index * 2] = value.x.d
-        array[index * 2 + 1] = value.y.d
+        array[index * 2] = value._x.d
+        array[index * 2 + 1] = value._y.d
     }
 
     operator fun set(i: Int, v: Vec2d) {

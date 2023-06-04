@@ -9,21 +9,37 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import java.nio.*
 
-abstract class Vec3t<T : Number>: Vec3Vars<T>, ToBuffer {
+interface Vec3t<T : Number> : ToBuffer {
+
+    var _x: T
+    var _y: T
+    var _z: T
+
+    operator fun component1() = _x
+    operator fun component2() = _y
+    operator fun component3() = _z
+
 
     // -- Component accesses --
 
-    abstract operator fun set(index: Int, value: Number)
+    operator fun get(index: Int) = when (index) {
+        0 -> _x
+        1 -> _y
+        2 -> _z
+        else -> throw IndexOutOfBoundsException()
+    }
+
+    operator fun set(index: Int, value: Number)
 
     // -- infix Generic Constructors --
 
-    abstract fun put(x: Number, y: Number, z: Number)
+    fun put(x: Number, y: Number, z: Number)
 
     infix fun put(x: Number) = put(x, x, x)
 
-    infix fun put(v: Vec2t<out Number>) = put(v.x, v.y, 0)
-    infix fun put(v: Vec3t<out Number>) = put(v.x, v.y, v.z)
-    infix fun put(v: Vec4t<out Number>) = put(v.x, v.y, v.z)
+    infix fun put(v: Vec2t<out Number>) = put(v._x, v._y, 0)
+    infix fun put(v: Vec3t<out Number>) = put(v._x, v._y, v._z)
+    infix fun put(v: Vec4t<out Number>) = put(v._x, v._y, v._z)
 
     infix fun put(v: Vec2bool) = put(v.x.b, v.y.b, 0)
     infix fun put(v: Vec3bool) = put(v.x.b, v.y.b, v.z.b)
@@ -77,12 +93,12 @@ abstract class Vec3t<T : Number>: Vec3Vars<T>, ToBuffer {
             a is Boolean && b is Boolean && c is Boolean -> put(a.b, b.b, c.b)
             a is String && b is String && c is String ->
                 when {
-                    x is Byte && y is Byte && z is Byte -> put(a.b, b.b, c.b)
-                    x is Short && y is Short && z is Short -> put(a.s, b.s, c.s)
-                    x is Int && y is Int && z is Int -> put(a.i, b.i, c.i)
-                    x is Long && y is Long && z is Long -> put(a.L, b.L, c.L)
-                    x is Float && y is Float && z is Float -> put(a.f, b.f, c.f)
-                    x is Double && y is Double && z is Double -> put(a.d, b.d, c.d)
+                    _x is Byte && _y is Byte && _z is Byte -> put(a.b, b.b, c.b)
+                    _x is Short && _y is Short && _z is Short -> put(a.s, b.s, c.s)
+                    _x is Int && _y is Int && _z is Int -> put(a.i, b.i, c.i)
+                    _x is Long && _y is Long && _z is Long -> put(a.L, b.L, c.L)
+                    _x is Float && _y is Float && _z is Float -> put(a.f, b.f, c.f)
+                    _x is Double && _y is Double && _z is Double -> put(a.d, b.d, c.d)
                     else -> throw ArithmeticException("incompatible type")  //TODO uns
                 }
             else -> throw ArithmeticException("incompatible type")
@@ -100,11 +116,11 @@ abstract class Vec3t<T : Number>: Vec3Vars<T>, ToBuffer {
 
     // -- Same, but with () operator --
 
-    abstract operator fun invoke(x: Number, y: Number, z: Number): Vec3t<out Number>
+    operator fun invoke(x: Number, y: Number, z: Number): Vec3t<out Number>
 
-    infix operator fun invoke(v: Vec2t<out Number>) = invoke(v.x, v.y, 0)
-    infix operator fun invoke(v: Vec3t<out Number>) = invoke(v.x, v.y, v.z)
-    infix operator fun invoke(v: Vec4t<out Number>) = invoke(v.x, v.y, v.z)
+    infix operator fun invoke(v: Vec2t<out Number>) = invoke(v._x, v._y, 0)
+    infix operator fun invoke(v: Vec3t<out Number>) = invoke(v._x, v._y, v._z)
+    infix operator fun invoke(v: Vec4t<out Number>) = invoke(v._x, v._y, v._z)
 
     infix operator fun invoke(v: Vec2bool) = invoke(v.x.b, v.y.b, 0)
     infix operator fun invoke(v: Vec3bool) = invoke(v.x.b, v.y.b, v.z.b)
@@ -133,7 +149,7 @@ abstract class Vec3t<T : Number>: Vec3Vars<T>, ToBuffer {
     infix operator fun invoke(floats: FloatBuffer) = invoke(floats, 0)
     infix operator fun invoke(doubles: DoubleBuffer) = invoke(doubles, 0)
 
-    open infix operator fun invoke(s: Number) = invoke(s, s, s)
+    infix operator fun invoke(s: Number) = invoke(s, s, s)
 
     // -- indexed Generic Constructors --
 
@@ -160,12 +176,12 @@ abstract class Vec3t<T : Number>: Vec3Vars<T>, ToBuffer {
             a is Boolean && b is Boolean && c is Boolean -> invoke(a.b, b.b, c.b)
             a is String && b is String && c is String ->
                 when {
-                    x is Byte && y is Byte && z is Byte -> invoke(a.b, b.b, c.b)
-                    x is Short && y is Short && z is Short -> invoke(a.s, b.s, c.s)
-                    x is Int && y is Int && z is Int -> invoke(a.i, b.i, c.i)
-                    x is Long && y is Long && z is Long -> invoke(a.L, b.L, c.L)
-                    x is Float && y is Float && z is Float -> invoke(a.f, b.f, c.f)
-                    x is Double && y is Double && z is Double -> invoke(a.d, b.d, c.d)
+                    _x is Byte && _y is Byte && _z is Byte -> invoke(a.b, b.b, c.b)
+                    _x is Short && _y is Short && _z is Short -> invoke(a.s, b.s, c.s)
+                    _x is Int && _y is Int && _z is Int -> invoke(a.i, b.i, c.i)
+                    _x is Long && _y is Long && _z is Long -> invoke(a.L, b.L, c.L)
+                    _x is Float && _y is Float && _z is Float -> invoke(a.f, b.f, c.f)
+                    _x is Double && _y is Double && _z is Double -> invoke(a.d, b.d, c.d)
                     else -> throw ArithmeticException("incompatible type")  //TODO uns
                 }
             else -> throw ArithmeticException("incompatible type")
@@ -181,10 +197,10 @@ abstract class Vec3t<T : Number>: Vec3Vars<T>, ToBuffer {
     operator fun invoke(doubles: DoubleBuffer, index: Int) = invoke(doubles[index], doubles[index + 1], doubles[index + 2])
 
 
-    fun toByteArray(bigEndian: Boolean = true): ByteArray = to(ByteArray(length), 0, bigEndian)
+    fun toByteArray(bigEndian: Boolean = true): ByteArray = to(ByteArray(LENGTH), 0, bigEndian)
     infix fun to(bytes: ByteArray): ByteArray = to(bytes, 0)
     fun to(bytes: ByteArray, bigEndian: Boolean): ByteArray = to(bytes, 0, bigEndian)
-    abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
+    fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
 
 
 //    infix fun lessThan(b: Vec3t<out Number>) = glm.lessThan(this, b, Vec3bool())
@@ -208,42 +224,21 @@ abstract class Vec3t<T : Number>: Vec3Vars<T>, ToBuffer {
 //    infix fun isEqual(b: Vec3t<out Number>) = glm.isEqual(this, b)
 
     // components alias
-    var r
-        @JvmName("r") get() = x
-        @JvmName("r") set(value) {
-            x = value
-        }
-    var g
-        @JvmName("g") get() = y
-        @JvmName("g") set(value) {
-            y = value
-        }
-    var b
-        @JvmName("b") get() = z
-        @JvmName("b") set(value) {
-            z = value
-        }
 
-    var s
-        @JvmName("s") get() = x
-        @JvmName("s") set(value) {
-            x = value
-        }
-    var t
-        @JvmName("t") get() = y
-        @JvmName("t") set(value) {
-            y = value
-        }
-    var p
-        @JvmName("p") get() = z
-        @JvmName("p") set(value) {
-            z = value
-        }
+
+    //@formatter:off
+    var r get() = _x; set(value) { _x = value }
+    var s get() = _x; set(value) { _x = value }
+
+    var g get() = _y; set(value) { _y = value }
+    var t get() = _y; set(value) { _y = value }
+
+    var b get() = _z; set(value) { _z = value }
+    var p get() = _z; set(value) { _z = value }
+    //@formatter:on
 
 
     companion object {
-        const val length = 3
+        const val LENGTH = 3
     }
-
-    override fun toString(): String = "($x, $y, $z)"
 }

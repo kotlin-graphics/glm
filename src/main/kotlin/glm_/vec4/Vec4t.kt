@@ -10,25 +10,43 @@ import glm_.vec3.Vec3t
 import java.nio.*
 
 // TODO other
-abstract class Vec4t<T : Number> : Vec4Vars<T>, ToBuffer {
+interface Vec4t<T : Number> : ToBuffer {
 
-    abstract operator fun set(index: Int, value: Number)
+    var _x: T
+    var _y: T
+    var _z: T
+    var _w: T
+
+    operator fun component1() = _x
+    operator fun component2() = _y
+    operator fun component3() = _z
+    operator fun component4() = _w
+
+    operator fun get(index: Int) = when (index) {
+        0 -> _x
+        1 -> _y
+        2 -> _z
+        3 -> _w
+        else -> throw IndexOutOfBoundsException()
+    }
+
+    operator fun set(index: Int, value: Number)
 
     // -- infix Generic Constructors --
 
-    abstract fun put(x: Number, y: Number, z: Number, w: Number)
+    fun put(x: Number, y: Number, z: Number, w: Number)
 
     infix fun put(x: Number) = put(x, x, x, x)
 
-    infix fun put(v: Vec2t<out Number>) = put(v.x, v.y, 0, 1)
-    fun put(v: Vec2t<out Number>, z: Number) = put(v.x, v.y, z, 1)
-    fun put(v: Vec2t<out Number>, z: Number, w: Number) = put(v.x, v.y, z, w)
-    fun put(x: Number, y: Number, v: Vec2t<out Number>) = put(x, y, v.x, v.y)
+    infix fun put(v: Vec2t<out Number>) = put(v._x, v._y, 0, 1)
+    fun put(v: Vec2t<out Number>, z: Number) = put(v._x, v._y, z, 1)
+    fun put(v: Vec2t<out Number>, z: Number, w: Number) = put(v._x, v._y, z, w)
+    fun put(x: Number, y: Number, v: Vec2t<out Number>) = put(x, y, v._x, v._y)
 
-    infix fun put(v: Vec3t<out Number>) = put(v.x, v.y, v.z, 1)
-    fun put(v: Vec3t<out Number>, w: Number) = put(v.x, v.y, v.z, w)
+    infix fun put(v: Vec3t<out Number>) = put(v._x, v._y, v._z, 1)
+    fun put(v: Vec3t<out Number>, w: Number) = put(v._x, v._y, v._z, w)
 
-    infix fun put(v: Vec4t<out Number>) = put(v.x, v.y, v.z, v.w)
+    infix fun put(v: Vec4t<out Number>) = put(v._x, v._y, v._z, v._w)
 
     infix fun put(v: Vec2bool) = put(v.x.b, v.y.b, 0, 1)
     infix fun put(v: Vec3bool) = put(v.x.b, v.y.b, v.z.b, 1)
@@ -85,14 +103,15 @@ abstract class Vec4t<T : Number> : Vec4Vars<T>, ToBuffer {
             a is Boolean && b is Boolean && c is Boolean && d is Boolean -> put(a.b, b.b, c.b, d.b)
             a is String && b is String && c is String && d is String ->
                 when {
-                    x is Byte && y is Byte && z is Byte && w is Byte -> put(a.b, b.b, c.b, d.b)
-                    x is Short && y is Short && z is Short && w is Short -> put(a.s, b.s, c.s, d.s)
-                    x is Int && y is Int && z is Int && w is Int -> put(a.i, b.i, c.i, d.i)
-                    x is Long && y is Long && z is Long && w is Long -> put(a.L, b.L, c.L, d.L)
-                    x is Float && y is Float && z is Float && w is Float -> put(a.f, b.f, c.f, d.f)
-                    x is Double && y is Double && z is Double && w is Double -> put(a.d, b.d, c.d, d.d)
+                    _x is Byte && _y is Byte && _z is Byte && _w is Byte -> put(a.b, b.b, c.b, d.b)
+                    _x is Short && _y is Short && _z is Short && _w is Short -> put(a.s, b.s, c.s, d.s)
+                    _x is Int && _y is Int && _z is Int && _w is Int -> put(a.i, b.i, c.i, d.i)
+                    _x is Long && _y is Long && _z is Long && _w is Long -> put(a.L, b.L, c.L, d.L)
+                    _x is Float && _y is Float && _z is Float && _w is Float -> put(a.f, b.f, c.f, d.f)
+                    _x is Double && _y is Double && _z is Double && _w is Double -> put(a.d, b.d, c.d, d.d)
                     else -> throw ArithmeticException("incompatible type")  //TODO uns
                 }
+
             else -> throw ArithmeticException("incompatible type")
         }
     }
@@ -108,17 +127,17 @@ abstract class Vec4t<T : Number> : Vec4Vars<T>, ToBuffer {
 
     // -- Same but with () --
 
-    abstract operator fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4t<out Number>
+    operator fun invoke(x: Number, y: Number, z: Number, w: Number): Vec4t<out Number>
 
-    infix operator fun invoke(v: Vec2t<out Number>) = invoke(v.x, v.y, 0, 1)
-    operator fun invoke(v: Vec2t<out Number>, z: Number) = invoke(v.x, v.y, z, 1)
-    operator fun invoke(v: Vec2t<out Number>, z: Number, w: Number) = invoke(v.x, v.y, z, w)
-    operator fun invoke(x: Number, y: Number, v: Vec2t<out Number>) = invoke(x, y, v.x, v.y)
+    infix operator fun invoke(v: Vec2t<out Number>) = invoke(v._x, v._y, 0, 1)
+    operator fun invoke(v: Vec2t<out Number>, z: Number) = invoke(v._x, v._y, z, 1)
+    operator fun invoke(v: Vec2t<out Number>, z: Number, w: Number) = invoke(v._x, v._y, z, w)
+    operator fun invoke(x: Number, y: Number, v: Vec2t<out Number>) = invoke(x, y, v._x, v._y)
 
-    infix operator fun invoke(v: Vec3t<out Number>) = invoke(v.x, v.y, v.z, 1)
-    operator fun invoke(v: Vec3t<out Number>, w: Number) = invoke(v.x, v.y, v.z, w)
+    infix operator fun invoke(v: Vec3t<out Number>) = invoke(v._x, v._y, v._z, 1)
+    operator fun invoke(v: Vec3t<out Number>, w: Number) = invoke(v._x, v._y, v._z, w)
 
-    infix operator fun invoke(v: Vec4t<out Number>) = invoke(v.x, v.y, v.z, v.w)
+    infix operator fun invoke(v: Vec4t<out Number>) = invoke(v._x, v._y, v._z, v._w)
 
     infix operator fun invoke(v: Vec2bool) = invoke(v.x.b, v.y.b, 0, 1)
     infix operator fun invoke(v: Vec3bool) = invoke(v.x.b, v.y.b, v.z.b, 1)
@@ -175,14 +194,15 @@ abstract class Vec4t<T : Number> : Vec4Vars<T>, ToBuffer {
             a is Boolean && b is Boolean && c is Boolean && d is Boolean -> invoke(a.b, b.b, c.b, d.b)
             a is String && b is String && c is String && d is String ->
                 when {
-                    x is Byte && y is Byte && z is Byte && w is Byte -> invoke(a.b, b.b, c.b, d.b)
-                    x is Short && y is Short && z is Short && w is Short -> invoke(a.s, b.s, c.s, d.s)
-                    x is Int && y is Int && z is Int && w is Int -> invoke(a.i, b.i, c.i, d.i)
-                    x is Long && y is Long && z is Long && w is Long -> invoke(a.L, b.L, c.L, d.L)
-                    x is Float && y is Float && z is Float && w is Float -> invoke(a.f, b.f, c.f, d.f)
-                    x is Double && y is Double && z is Double && w is Double -> invoke(a.d, b.d, c.d, d.d)
+                    _x is Byte && _y is Byte && _z is Byte && _w is Byte -> invoke(a.b, b.b, c.b, d.b)
+                    _x is Short && _y is Short && _z is Short && _w is Short -> invoke(a.s, b.s, c.s, d.s)
+                    _x is Int && _y is Int && _z is Int && _w is Int -> invoke(a.i, b.i, c.i, d.i)
+                    _x is Long && _y is Long && _z is Long && _w is Long -> invoke(a.L, b.L, c.L, d.L)
+                    _x is Float && _y is Float && _z is Float && _w is Float -> invoke(a.f, b.f, c.f, d.f)
+                    _x is Double && _y is Double && _z is Double && _w is Double -> invoke(a.d, b.d, c.d, d.d)
                     else -> throw ArithmeticException("incompatible type")  //TODO uns
                 }
+
             else -> throw ArithmeticException("incompatible type")
         }
     }
@@ -196,10 +216,10 @@ abstract class Vec4t<T : Number> : Vec4Vars<T>, ToBuffer {
     operator fun invoke(doubles: DoubleBuffer, index: Int) = invoke(doubles[index], doubles[index + 1], doubles[index + 2], doubles[index + 3])
 
 
-    fun toByteArray(bigEndian: Boolean = true): ByteArray = to(ByteArray(length), 0, bigEndian)
+    fun toByteArray(bigEndian: Boolean = true): ByteArray = to(ByteArray(LENGTH), 0, bigEndian)
     infix fun to(bytes: ByteArray): ByteArray = to(bytes, 0)
     fun to(bytes: ByteArray, bigEndian: Boolean): ByteArray = to(bytes, 0, bigEndian)
-    abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
+    fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
 
 
 //    infix fun lessThan(b: Vec4t<out Number>) = glm.lessThan(this, b, Vec4bool())
@@ -226,52 +246,22 @@ abstract class Vec4t<T : Number> : Vec4Vars<T>, ToBuffer {
 
     // components alias
 
-    var r
-        @JvmName("r") get() = x
-        @JvmName("r") set(value) {
-            x = value
-        }
-    var g
-        @JvmName("g") get() = y
-        @JvmName("g") set(value) {
-            y = value
-        }
-    var b
-        @JvmName("b") get() = z
-        @JvmName("b") set(value) {
-            z = value
-        }
-    var a
-        @JvmName("a") get() = w
-        @JvmName("a") set(value) {
-            w = value
-        }
 
+    //@formatter:off
+    var r get() = _x; set(value) { _x = value }
+    var s get() = _x; set(value) { _x = value }
 
-    var s
-        @JvmName("s") get() = x
-        @JvmName("s") set(value) {
-            x = value
-        }
-    var t
-        @JvmName("t") get() = y
-        @JvmName("t") set(value) {
-            y = value
-        }
-    var p
-        @JvmName("p") get() = z
-        @JvmName("p") set(value) {
-            z = value
-        }
-    var q
-        @JvmName("q") get() = w
-        @JvmName("q") set(value) {
-            w = value
-        }
+    var g get() = _y; set(value) { _y = value }
+    var t get() = _y; set(value) { _y = value }
+
+    var b get() = _z; set(value) { _z = value }
+    var p get() = _z; set(value) { _z = value }
+
+    var a get() = _w; set(value) { _w = value }
+    var q get() = _w; set(value) { _w = value }
+    //@formatter:on
 
     companion object {
-        const val length = 4
+        const val LENGTH = 4
     }
-
-    override fun toString(): String = "($x, $y, $z, $w)"
 }

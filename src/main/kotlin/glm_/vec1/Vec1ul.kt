@@ -4,14 +4,18 @@ import glm_.*
 import glm_.vec1.operators.opVec1ul
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
+import glm_.vec2.Vec2ub
+import glm_.vec2.Vec2ul
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
+import glm_.vec3.Vec3ub
+import glm_.vec3.Vec3ul
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
+import glm_.vec4.Vec4ub
+import glm_.vec4.Vec4ul
 import kool.*
 import org.lwjgl.system.MemoryStack
-import org.lwjgl.system.MemoryUtil.memGetLong
-import org.lwjgl.system.MemoryUtil.memPutLong
 import unsigned.Ulong
 import java.io.PrintStream
 import java.lang.Math.abs
@@ -21,7 +25,7 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
+class Vec1ul(@JvmField inline var x: Ulong) : Vec1t<Ulong> {
 
     // -- Implicit basic constructors --
 
@@ -31,10 +35,15 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
     // -- Explicit basic constructors --
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    constructor(v: Vec1t<out Number>) : this(v.x)
-    constructor(v: Vec2t<out Number>) : this(v.x)
-    constructor(v: Vec3t<out Number>) : this(v.x)
-    constructor(v: Vec4t<out Number>) : this(v.x)
+    constructor(v: Vec1ul) : this(v.x)
+    constructor(v: Vec2ul) : this(v.x)
+    constructor(v: Vec3ul) : this(v.x)
+    constructor(v: Vec4ul) : this(v.x)
+
+    constructor(v: Vec1t<out Number>) : this(v._x)
+    constructor(v: Vec2t<out Number>) : this(v._x)
+    constructor(v: Vec3t<out Number>) : this(v._x)
+    constructor(v: Vec4t<out Number>) : this(v._x)
 
     constructor(v: Vec1bool) : this(v.x.ul)
     constructor(v: Vec2bool) : this(v.x.ul)
@@ -139,12 +148,6 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
         p[0] = x.v
     }
 
-    // -- Component accesses --
-
-    override operator fun set(index: Int, value: Ulong) = when (index) {
-        0 -> x = value
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
 
     // -- Unary arithmetic operators --
 
@@ -272,77 +275,77 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
     // -- Generic binary arithmetic operators --
 
     infix operator fun plus(b: Number) = plus(Vec1ul(), this, b.L)
-    infix operator fun plus(b: Vec1t<out Number>) = plus(Vec1ul(), this, b.x.L)
+    infix operator fun plus(b: Vec1t<out Number>) = plus(Vec1ul(), this, b._x.L)
 
     fun plus(b: Number, res: Vec1ul) = plus(res, this, b.L)
-    fun plus(b: Vec1t<out Number>, res: Vec1ul) = plus(res, this, b.x.L)
+    fun plus(b: Vec1t<out Number>, res: Vec1ul) = plus(res, this, b._x.L)
 
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.L)
     }
 
     infix operator fun plusAssign(b: Vec1t<out Number>) {
-        plus(this, this, b.x.L)
+        plus(this, this, b._x.L)
     }
 
 
     infix operator fun minus(b: Number) = minus(Vec1ul(), this, b.L)
-    infix operator fun minus(b: Vec1t<out Number>) = minus(Vec1ul(), this, b.x.L)
+    infix operator fun minus(b: Vec1t<out Number>) = minus(Vec1ul(), this, b._x.L)
 
     fun minus(b: Number, res: Vec1ul) = minus(res, this, b.L)
-    fun minus(b: Vec1t<out Number>, res: Vec1ul) = minus(res, this, b.x.L)
+    fun minus(b: Vec1t<out Number>, res: Vec1ul) = minus(res, this, b._x.L)
 
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.L)
     }
 
     infix operator fun minusAssign(b: Vec1t<out Number>) {
-        minus(this, this, b.x.L)
+        minus(this, this, b._x.L)
     }
 
 
     infix operator fun times(b: Number) = times(Vec1ul(), this, b.L)
-    infix operator fun times(b: Vec1t<out Number>) = times(Vec1ul(), this, b.x.L)
+    infix operator fun times(b: Vec1t<out Number>) = times(Vec1ul(), this, b._x.L)
 
     fun times(b: Number, res: Vec1ul) = times(res, this, b.L)
-    fun times(b: Vec1t<out Number>, res: Vec1ul) = times(res, this, b.x.L)
+    fun times(b: Vec1t<out Number>, res: Vec1ul) = times(res, this, b._x.L)
 
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.L)
     }
 
     infix operator fun timesAssign(b: Vec1t<out Number>) {
-        times(this, this, b.x.L)
+        times(this, this, b._x.L)
     }
 
 
     infix operator fun div(b: Number) = div(Vec1ul(), this, b.L)
-    infix operator fun div(b: Vec1t<out Number>) = div(Vec1ul(), this, b.x.L)
+    infix operator fun div(b: Vec1t<out Number>) = div(Vec1ul(), this, b._x.L)
 
     fun div(b: Number, res: Vec1ul) = div(res, this, b.L)
-    fun div(b: Vec1t<out Number>, res: Vec1ul) = div(res, this, b.x.L)
+    fun div(b: Vec1t<out Number>, res: Vec1ul) = div(res, this, b._x.L)
 
     infix operator fun divAssign(b: Number) {
         div(this, this, b.L)
     }
 
     infix operator fun divAssign(b: Vec1t<out Number>) {
-        div(this, this, b.x.L)
+        div(this, this, b._x.L)
     }
 
 
     infix operator fun rem(b: Number) = rem(Vec1ul(), this, b.L)
-    infix operator fun rem(b: Vec1t<out Number>) = rem(Vec1ul(), this, b.x.L)
+    infix operator fun rem(b: Vec1t<out Number>) = rem(Vec1ul(), this, b._x.L)
 
     fun rem(b: Number, res: Vec1ul) = rem(res, this, b.L)
-    fun rem(b: Vec1t<out Number>, res: Vec1ul) = rem(res, this, b.x.L)
+    fun rem(b: Vec1t<out Number>, res: Vec1ul) = rem(res, this, b._x.L)
 
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.L)
     }
 
     infix operator fun remAssign(b: Vec1t<out Number>) {
-        rem(this, this, b.x.L)
+        rem(this, this, b._x.L)
     }
 
 
@@ -412,33 +415,33 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
     // -- Generic bitwise operators --
 
     infix fun and(b: Number) = and(Vec1ul(), this, b.L)
-    fun and(b: Vec1t<out Number>) = and(Vec1ul(), this, b.x.L)
+    fun and(b: Vec1t<out Number>) = and(Vec1ul(), this, b._x.L)
 
     fun and(b: Number, res: Vec1ul) = and(res, this, b.L)
-    fun and(b: Vec1t<out Number>, res: Vec1ul) = and(res, this, b.x.L)
+    fun and(b: Vec1t<out Number>, res: Vec1ul) = and(res, this, b._x.L)
 
     infix fun andAssign(b: Number) = and(this, this, b.L)
-    infix fun andAssign(b: Vec1t<out Number>) = and(this, this, b.x.L)
+    infix fun andAssign(b: Vec1t<out Number>) = and(this, this, b._x.L)
 
 
     infix fun or(b: Number) = or(Vec1ul(), this, b.L)
-    fun or(b: Vec1t<out Number>) = or(Vec1ul(), this, b.x.L)
+    fun or(b: Vec1t<out Number>) = or(Vec1ul(), this, b._x.L)
 
     fun or(b: Number, res: Vec1ul) = or(res, this, b.L)
-    fun or(b: Vec1t<out Number>, res: Vec1ul) = or(res, this, b.x.L)
+    fun or(b: Vec1t<out Number>, res: Vec1ul) = or(res, this, b._x.L)
 
     infix fun orAssign(b: Number) = or(this, this, b.L)
-    infix fun orAssign(b: Vec1t<out Number>) = or(this, this, b.x.L)
+    infix fun orAssign(b: Vec1t<out Number>) = or(this, this, b._x.L)
 
 
     infix fun xor(b: Number) = xor(Vec1ul(), this, b.L)
-    fun xor(b: Vec1t<out Number>) = xor(Vec1ul(), this, b.x.L)
+    fun xor(b: Vec1t<out Number>) = xor(Vec1ul(), this, b._x.L)
 
     fun xor(b: Number, res: Vec1ul) = xor(res, this, b.L)
-    fun xor(b: Vec1t<out Number>, res: Vec1ul) = xor(res, this, b.x.L)
+    fun xor(b: Vec1t<out Number>, res: Vec1ul) = xor(res, this, b._x.L)
 
     infix fun xorAssign(b: Number) = xor(this, this, b.L)
-    infix fun xorAssign(b: Vec1t<out Number>) = xor(this, this, b.x.L)
+    infix fun xorAssign(b: Vec1t<out Number>) = xor(this, this, b._x.L)
 
 
     infix fun shl(b: Number) = shl(Vec1ul(), this, b.L)
@@ -456,7 +459,7 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
 
 
     companion object : opVec1ul {
-        const val length = Vec1t.length
+        const val length = Vec1t.LENGTH
 
         @JvmField
         val size = length * Ulong.BYTES
@@ -478,4 +481,25 @@ class Vec1ul(x: Ulong) : Vec1t<Ulong>(x) {
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
+
+    //@formatter:off
+    override inline var _x get() = x; set(value) { x = value }
+    override inline var r get() = x; set(value) { x = value }
+    override inline var s get() = x; set(value) { x = value }
+    //@formatter:on
+
+    override inline operator fun get(index: Int): Ulong {
+        if (index == 0) return x
+        throw IndexOutOfBoundsException()
+    }
+
+    override inline operator fun set(index: Int, value: Ulong) {
+        if (index == 0) {
+            x = value
+        } else throw IndexOutOfBoundsException()
+    }
+
+    override inline operator fun component1() = x
+
+    override fun toString(): String = "($x)"
 }

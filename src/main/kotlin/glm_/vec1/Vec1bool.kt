@@ -8,7 +8,7 @@ import glm_.glm
  */
 
 // TODO fill vec1bool methods as others
-data class Vec1bool(var x: Boolean = false) {
+data class Vec1bool(@JvmField var x: Boolean = false) {
 
     // -- Explicit basic, conversion other main.and conversion vector constructors --
 
@@ -16,22 +16,22 @@ data class Vec1bool(var x: Boolean = false) {
 
     constructor(ba: Array<Boolean>) : this(ba[0])
 
-    constructor(init: (Int) -> Boolean): this(init(0))
+    constructor(init: (Int) -> Boolean) : this(init(0))
 
     // -- Component accesses --
 
-    operator fun get(i: Int): Boolean = when (i) {
-        0 -> x
-        else -> throw IndexOutOfBoundsException()
+    inline operator fun get(i: Int): Boolean {
+        if (i == 0) return x
+        throw IndexOutOfBoundsException()
     }
 
-    operator fun set(i: Int, b: Boolean) = when (i) {
-        0 -> x = b
-        else -> throw IndexOutOfBoundsException()
+    inline operator fun set(i: Int, b: Boolean) {
+        if (i == 0) x = b
+        else throw IndexOutOfBoundsException()
     }
 
 
-    fun put(b: Boolean): Vec1bool {
+    inline fun put(b: Boolean): Vec1bool {
         x = b
         return this
     }
@@ -60,7 +60,7 @@ data class Vec1bool(var x: Boolean = false) {
 
     // -- Unary arithmetic vecOperators --
 
-    operator fun not(): Vec1bool = TODO()//Vec1bool(!x)
+    operator fun not(): Vec1bool = Vec1bool(!x)
 
     fun notAssign(): Vec1bool {
         x = !x

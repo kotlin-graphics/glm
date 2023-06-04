@@ -4,10 +4,7 @@ import glm_.*
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2t
 import kool.BYTES
-import kool.FloatBuffer
-import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import java.util.*
@@ -30,8 +27,8 @@ class Mat3x2(var array: FloatArray) : Mat3x2t<Float>(), ToFloatBuffer {
     override operator fun set(column: Int, row: Int, value: Float) = array.set(column * 2 + row, value)
 
     override operator fun set(index: Int, value: Vec2t<out Number>) {
-        array[index * 2] = value.x.f
-        array[index * 2 + 1] = value.y.f
+        array[index * 2] = value._x.f
+        array[index * 2 + 1] = value._y.f
     }
 
     operator fun set(i: Int, v: Vec2) {
