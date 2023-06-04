@@ -11,9 +11,9 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.*
 import unsigned.Ubyte
-import java.io.PrintStream
 import unsigned.UbyteArray
 import unsigned.toUbyte
+import java.io.PrintStream
 import java.nio.*
 
 /**

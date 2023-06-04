@@ -1,7 +1,7 @@
 package glm_.func
 
-import glm_.f
 import glm_.d
+import glm_.f
 import glm_.glm.inverseSqrt
 import glm_.vec1.Vec1
 import glm_.vec1.Vec1d

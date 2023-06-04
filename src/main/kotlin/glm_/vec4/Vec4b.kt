@@ -4,8 +4,8 @@ import glm_.ToBuffer
 import glm_.b
 import glm_.i
 import glm_.toByte
-import glm_.vec1.Vec1bool
 import glm_.vec1.Vec1b
+import glm_.vec1.Vec1bool
 import glm_.vec1.Vec1t
 import glm_.vec2.Vec2b
 import glm_.vec2.Vec2bool

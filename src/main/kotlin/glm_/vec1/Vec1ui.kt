@@ -4,17 +4,13 @@ import glm_.*
 import glm_.vec1.operators.opVec1ui
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
-import glm_.vec2.Vec2ub
 import glm_.vec2.Vec2ui
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
-import glm_.vec3.Vec3ub
 import glm_.vec3.Vec3ui
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import glm_.vec4.Vec4ub
 import glm_.vec4.Vec4ui
-import kool.IntBuffer
 import kool.pos
 import kool.set
 import unsigned.Uint

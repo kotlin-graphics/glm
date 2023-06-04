@@ -230,7 +230,7 @@ interface Vec2t<T : Number> : ToBuffer {
     var t get() = _y; set(value) { _y = value }
     //@formatter:on
 
-    override fun elementCount(): Int = length
+    override fun elementCount(): Int = LENGTH
 
     companion object {
         const val LENGTH = 2

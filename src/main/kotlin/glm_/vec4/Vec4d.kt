@@ -4,7 +4,6 @@ import glm_.*
 import glm_.vec1.Vec1bool
 import glm_.vec1.Vec1d
 import glm_.vec1.Vec1t
-import glm_.vec2.Vec2b
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
