@@ -601,8 +601,14 @@ class Vec3i(var ofs: Int, var array: IntArray) : Vec3t<Int>(), ToBuffer {
     infix fun greaterThanEqual(v: Vec3i): Vec3bool = Vec3bool { get(it) >= v[it] }
 
 
+    infix fun dot(b: Vec3i) = glm.dot(this, b)
+
+    fun length() = glm.length(this)
+    fun length2() = glm.length2(this)
+
     companion object : vec3i_operators {
         const val length = Vec3t.length
+
 
         @JvmField
         val size = length * Int.BYTES
