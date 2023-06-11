@@ -10,33 +10,31 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.*
 import org.lwjgl.system.MemoryStack
-import org.lwjgl.system.MemoryUtil.memGetShort
-import org.lwjgl.system.MemoryUtil.memPutShort
-import unsigned.Ubyte
 import unsigned.Ushort
+import unsigned.UshortArray
+import unsigned.toUshort
 import java.io.PrintStream
 import java.nio.*
-import kotlin.math.abs
 
 /**
  * Created by elect on 08/10/16.
  */
 
-class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
+class Vec2us(@JvmField var ofs: Int, var array: UshortArray) : Vec2t<Ushort>, ToBuffer {
 
-    override var x: Ushort
-        get() = Ushort(array[ofs])
-        set(value) = array.set(ofs, value.v)
-    override var y: Ushort
-        get() = Ushort(array[ofs + 1])
-        set(value) = array.set(ofs + 1, value.v)
-
-    inline var vX: Short
+    inline var x: Ushort
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    inline var vY: Short
+    inline var y: Ushort
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
+
+    inline var vX: Short
+        get() = array[ofs].toShort()
+        set(value) = array.set(ofs, value.toUshort())
+    inline var vY: Short
+        get() = array[ofs + 1].toShort()
+        set(value) = array.set(ofs + 1, value.toUshort())
 
     // -- Implicit basic constructors --
 
@@ -49,29 +47,32 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
     constructor(x: Short, y: Short = x) : this(x.us, y.us)
 
     @JvmOverloads
-    constructor(x: Ushort, y: Ushort = x) : this(0, shortArrayOf(x.v, y.v))
+    constructor(x: Ushort, y: Ushort = x) : this(0, UshortArray(shortArrayOf(x.v, y.v)))
 
     // -- Conversion constructors --
 
-    @JvmOverloads
-    constructor(x: Number, y: Number = x) : this(x.us, y.us)
+
+    constructor(v: Number) : this(v.us)
+    constructor(x: Number, y: Number) : this(x.us, y.us)
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    constructor(x: Number, v: Vec1t<out Number>) : this(x, v.x)
+    constructor(x: Number, v: Vec1t<out Number>) : this(x, v._x)
+
     @JvmOverloads
-    constructor(v: Vec1t<out Number>, y: Number = v.x) : this(v.x, y)
+    constructor(v: Vec1t<out Number>, y: Number = v._x) : this(v._x, y)
 
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x.x, y.x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>) : this(x._x, y._x)
 
-    constructor(v: Vec2t<out Number>) : this(v.x, v.y)
-    constructor(v: Vec3t<out Number>) : this(v.x, v.y)
-    constructor(v: Vec4t<out Number>) : this(v.x, v.y)
+    constructor(v: Vec2t<out Number>) : this(v._x, v._y)
+    constructor(v: Vec3t<out Number>) : this(v._x, v._y)
+    constructor(v: Vec4t<out Number>) : this(v._x, v._y)
 
     @JvmOverloads
     constructor(x: Boolean, y: Boolean = x) : this(x.us, y.us)
 
     constructor(x: Boolean, v: Vec1bool) : this(x.us, v.x.us)
+
     @JvmOverloads
     constructor(v: Vec1bool, y: Boolean = v.x) : this(v.x.us, y.us)
 
@@ -199,12 +200,6 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
     }
 
     // -- Component accesses --
-
-    operator fun set(index: Int, value: Ushort) = when (index) {
-        0 -> x = value
-        1 -> y = value
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
 
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.us
@@ -398,11 +393,11 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
     // -- Generic binary arithmetic operators --
 
     operator fun plus(b: Number) = plus(Vec2us(), this, b.i, b.i)
-    operator fun plus(b: Vec2t<out Number>) = plus(Vec2us(), this, b.x.i, b.y.i)
+    operator fun plus(b: Vec2t<out Number>) = plus(Vec2us(), this, b._x.i, b._y.i)
 
     fun plus(bX: Number, bY: Number, res: Vec2us = Vec2us()) = plus(res, this, bX.i, bY.i)
     fun plus(b: Number, res: Vec2us = Vec2us()) = plus(res, this, b.i, b.i)
-    fun plus(b: Vec2t<out Number>, res: Vec2us = Vec2us()) = plus(res, this, b.x.i, b.y.i)
+    fun plus(b: Vec2t<out Number>, res: Vec2us = Vec2us()) = plus(res, this, b._x.i, b._y.i)
 
     fun plusAssign(bX: Number, bY: Number) = plus(this, this, bX.i, bY.i)
     infix operator fun plusAssign(b: Number) {
@@ -410,16 +405,16 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
     }
 
     infix operator fun plusAssign(b: Vec2t<out Number>) {
-        plus(this, this, b.x.i, b.y.i)
+        plus(this, this, b._x.i, b._y.i)
     }
 
 
     operator fun minus(b: Number) = minus(Vec2us(), this, b.i, b.i)
-    operator fun minus(b: Vec2t<out Number>) = minus(Vec2us(), this, b.x.i, b.y.i)
+    operator fun minus(b: Vec2t<out Number>) = minus(Vec2us(), this, b._x.i, b._y.i)
 
     fun minus(bX: Number, bY: Number, res: Vec2us = Vec2us()) = minus(res, this, bX.i, bY.i)
     fun minus(b: Number, res: Vec2us = Vec2us()) = minus(res, this, b.i, b.i)
-    fun minus(b: Vec2t<out Number>, res: Vec2us = Vec2us()) = minus(res, this, b.x.i, b.y.i)
+    fun minus(b: Vec2t<out Number>, res: Vec2us = Vec2us()) = minus(res, this, b._x.i, b._y.i)
 
     fun minusAssign(bX: Number, bY: Number) = minus(this, this, bX.i, bY.i)
     infix operator fun minusAssign(b: Number) {
@@ -427,16 +422,16 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
     }
 
     infix operator fun minusAssign(b: Vec2t<out Number>) {
-        minus(this, this, b.x.i, b.y.i)
+        minus(this, this, b._x.i, b._y.i)
     }
 
 
     operator fun times(b: Number) = times(Vec2us(), this, b.i, b.i)
-    operator fun times(b: Vec2t<out Number>) = times(Vec2us(), this, b.x.i, b.y.i)
+    operator fun times(b: Vec2t<out Number>) = times(Vec2us(), this, b._x.i, b._y.i)
 
     fun times(bX: Number, bY: Number, res: Vec2us = Vec2us()) = times(res, this, bX.i, bY.i)
     fun times(b: Number, res: Vec2us = Vec2us()) = times(res, this, b.i, b.i)
-    fun times(b: Vec2t<out Number>, res: Vec2us = Vec2us()) = times(res, this, b.x.i, b.y.i)
+    fun times(b: Vec2t<out Number>, res: Vec2us = Vec2us()) = times(res, this, b._x.i, b._y.i)
 
     fun timesAssign(bX: Number, bY: Number) = times(this, this, bX.i, bY.i)
     infix operator fun timesAssign(b: Number) {
@@ -444,16 +439,16 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
     }
 
     infix operator fun timesAssign(b: Vec2t<out Number>) {
-        times(this, this, b.x.i, b.y.i)
+        times(this, this, b._x.i, b._y.i)
     }
 
 
     operator fun div(b: Number) = div(Vec2us(), this, b.i, b.i)
-    operator fun div(b: Vec2t<out Number>) = div(Vec2us(), this, b.x.i, b.y.i)
+    operator fun div(b: Vec2t<out Number>) = div(Vec2us(), this, b._x.i, b._y.i)
 
     fun div(bX: Number, bY: Number, res: Vec2us = Vec2us()) = div(res, this, bX.i, bY.i)
     fun div(b: Number, res: Vec2us = Vec2us()) = div(res, this, b.i, b.i)
-    fun div(b: Vec2t<out Number>, res: Vec2us = Vec2us()) = div(res, this, b.x.i, b.y.i)
+    fun div(b: Vec2t<out Number>, res: Vec2us = Vec2us()) = div(res, this, b._x.i, b._y.i)
 
     fun divAssign(bX: Number, bY: Number) = div(this, this, bX.i, bY.i)
     infix operator fun divAssign(b: Number) {
@@ -461,16 +456,16 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
     }
 
     infix operator fun divAssign(b: Vec2t<out Number>) {
-        div(this, this, b.x.i, b.y.i)
+        div(this, this, b._x.i, b._y.i)
     }
 
 
     operator fun rem(b: Number) = rem(Vec2us(), this, b.i, b.i)
-    operator fun rem(b: Vec2t<out Number>) = rem(Vec2us(), this, b.x.i, b.y.i)
+    operator fun rem(b: Vec2t<out Number>) = rem(Vec2us(), this, b._x.i, b._y.i)
 
     fun rem(bX: Number, bY: Number, res: Vec2us = Vec2us()) = rem(res, this, bX.i, bY.i)
     fun rem(b: Number, res: Vec2us = Vec2us()) = rem(res, this, b.i, b.i)
-    fun rem(b: Vec2t<out Number>, res: Vec2us = Vec2us()) = rem(res, this, b.x.i, b.y.i)
+    fun rem(b: Vec2t<out Number>, res: Vec2us = Vec2us()) = rem(res, this, b._x.i, b._y.i)
 
     fun remAssign(bX: Number, bY: Number) = rem(this, this, bX.i, bY.i)
     infix operator fun remAssign(b: Number) {
@@ -478,7 +473,7 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
     }
 
     infix operator fun remAssign(b: Vec2t<out Number>) {
-        rem(this, this, b.x.i, b.y.i)
+        rem(this, this, b._x.i, b._y.i)
     }
 
 
@@ -617,67 +612,67 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
 
     infix fun and(b: Number) = and(Vec2us(), this, b.i, b.i)
     fun and(bX: Number, bY: Number) = and(Vec2us(), this, bX.i, bY.i)
-    fun and(b: Vec2t<out Number>) = and(Vec2us(), this, b.x.i, b.y.i)
+    fun and(b: Vec2t<out Number>) = and(Vec2us(), this, b._x.i, b._y.i)
 
     infix fun andAssign(b: Number) = and(this, this, b.i, b.i)
     fun andAssign(bX: Number, bY: Number) = and(this, this, bX.i, bY.i)
-    infix fun andAssign(b: Vec2t<out Number>) = and(this, this, b.x.i, b.y.i)
+    infix fun andAssign(b: Vec2t<out Number>) = and(this, this, b._x.i, b._y.i)
 
     fun and(b: Number, res: Vec2us) = and(res, this, b.i, b.i)
     fun and(bX: Number, bY: Number, res: Vec2us) = and(res, this, bX.i, bY.i)
-    fun and(b: Vec2t<out Number>, res: Vec2us) = and(res, this, b.x.i, b.y.i)
+    fun and(b: Vec2t<out Number>, res: Vec2us) = and(res, this, b._x.i, b._y.i)
 
 
     infix fun or(b: Number) = or(Vec2us(), this, b.i, b.i)
     fun or(bX: Number, bY: Number) = or(Vec2us(), this, bX.i, bY.i)
-    fun or(b: Vec2t<out Number>) = or(Vec2us(), this, b.x.i, b.y.i)
+    fun or(b: Vec2t<out Number>) = or(Vec2us(), this, b._x.i, b._y.i)
 
     infix fun orAssign(b: Number) = or(this, this, b.i, b.i)
     fun orAssign(bX: Number, bY: Number) = or(this, this, bX.i, bY.i)
-    infix fun orAssign(b: Vec2t<out Number>) = or(this, this, b.x.i, b.y.i)
+    infix fun orAssign(b: Vec2t<out Number>) = or(this, this, b._x.i, b._y.i)
 
     fun or(b: Number, res: Vec2us) = or(res, this, b.i, b.i)
     fun or(bX: Number, bY: Number, res: Vec2us) = or(res, this, bX.i, bY.i)
-    fun or(b: Vec2t<out Number>, res: Vec2us) = or(res, this, b.x.i, b.y.i)
+    fun or(b: Vec2t<out Number>, res: Vec2us) = or(res, this, b._x.i, b._y.i)
 
 
     infix fun xor(b: Number) = xor(Vec2us(), this, b.i, b.i)
     fun xor(bX: Number, bY: Number) = xor(Vec2us(), this, bX.i, bY.i)
-    fun xor(b: Vec2t<out Number>) = xor(Vec2us(), this, b.x.i, b.y.i)
+    fun xor(b: Vec2t<out Number>) = xor(Vec2us(), this, b._x.i, b._y.i)
 
     infix fun xorAssign(b: Number) = xor(this, this, b.i, b.i)
     fun xorAssign(bX: Number, bY: Number) = xor(this, this, bX.i, bY.i)
-    infix fun xorAssign(b: Vec2t<out Number>) = xor(this, this, b.x.i, b.y.i)
+    infix fun xorAssign(b: Vec2t<out Number>) = xor(this, this, b._x.i, b._y.i)
 
     fun xor(b: Number, res: Vec2us) = xor(res, this, b.i, b.i)
     fun xor(bX: Number, bY: Number, res: Vec2us) = xor(res, this, bX.i, bY.i)
-    fun xor(b: Vec2t<out Number>, res: Vec2us) = xor(res, this, b.x.i, b.y.i)
+    fun xor(b: Vec2t<out Number>, res: Vec2us) = xor(res, this, b._x.i, b._y.i)
 
 
     infix fun shl(b: Number) = shl(Vec2us(), this, b.i, b.i)
     fun shl(bX: Number, bY: Number) = shl(Vec2us(), this, bX.i, bY.i)
-    fun shl(b: Vec2t<out Number>) = shl(Vec2us(), this, b.x.i, b.y.i)
+    fun shl(b: Vec2t<out Number>) = shl(Vec2us(), this, b._x.i, b._y.i)
 
     infix fun shlAssign(b: Number) = shl(this, this, b.i, b.i)
     fun shlAssign(bX: Number, bY: Number) = shl(this, this, bX.i, bY.i)
-    infix fun shlAssign(b: Vec2t<out Number>) = shl(this, this, b.x.i, b.y.i)
+    infix fun shlAssign(b: Vec2t<out Number>) = shl(this, this, b._x.i, b._y.i)
 
     fun shl(b: Number, res: Vec2us) = shl(res, this, b.i, b.i)
     fun shl(bX: Number, bY: Number, res: Vec2us) = shl(res, this, bX.i, bY.i)
-    fun shl(b: Vec2t<out Number>, res: Vec2us) = shl(res, this, b.x.i, b.y.i)
+    fun shl(b: Vec2t<out Number>, res: Vec2us) = shl(res, this, b._x.i, b._y.i)
 
 
     infix fun shr(b: Number) = shr(Vec2us(), this, b.i, b.i)
     fun shr(bX: Number, bY: Number) = shr(Vec2us(), this, bX.i, bY.i)
-    fun shr(b: Vec2t<out Number>) = shr(Vec2us(), this, b.x.i, b.y.i)
+    fun shr(b: Vec2t<out Number>) = shr(Vec2us(), this, b._x.i, b._y.i)
 
     infix fun shrAssign(b: Number) = shr(this, this, b.i, b.i)
     fun shrAssign(bX: Number, bY: Number) = shr(this, this, bX.i, bY.i)
-    infix fun shrAssign(b: Vec2t<out Number>) = shr(this, this, b.x.i, b.y.i)
+    infix fun shrAssign(b: Vec2t<out Number>) = shr(this, this, b._x.i, b._y.i)
 
     fun shr(b: Number, res: Vec2us) = shr(res, this, b.i, b.i)
     fun shr(bX: Number, bY: Number, res: Vec2us) = shr(res, this, bX.i, bY.i)
-    fun shr(b: Vec2t<out Number>, res: Vec2us) = shr(res, this, b.x.i, b.y.i)
+    fun shr(b: Vec2t<out Number>, res: Vec2us) = shr(res, this, b._x.i, b._y.i)
 
 
     infix fun allLessThan(us: Ushort): Boolean = x < us && y < us
@@ -731,7 +726,8 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
 
 
     companion object : opVec2us {
-        const val length = Vec2t.length
+        const val length = Vec2t.LENGTH
+
         @JvmField
         val size = length * Ushort.BYTES
 
@@ -750,4 +746,27 @@ class Vec2us(var ofs: Int, var array: ShortArray) : Vec2t<Ushort>(), ToBuffer {
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
+
+
+    //@formatter:off
+    override inline var _x get() = x; set(value) { x = value }
+    override inline var r get() = x; set(value) { x = value }
+    override inline var s get() = x; set(value) { x = value }
+
+    override inline var _y get() = y; set(value) { y = value }
+    override inline var g get() = y; set(value) { y = value }
+    override inline var t get() = y; set(value) { y = value }
+    //@formatter:on
+
+    override inline operator fun get(index: Int) = array[ofs + index]
+
+    inline operator fun set(index: Int, value: Ushort) {
+        array[ofs + index] = value
+    }
+
+    override inline operator fun component1() = x
+    override inline operator fun component2() = y
+
+
+    override fun toString(): String = "($x, $y)"
 }

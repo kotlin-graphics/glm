@@ -1,17 +1,14 @@
 package  glm_.mat3x4
 
-import glm_.*
+import glm_.ToFloatBuffer
+import glm_.f
+import glm_.toFloat
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
 import kool.BYTES
-import kool.FloatBuffer
-import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
-import java.io.PrintStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
-import java.util.*
 
 /**
  * Created by GBarbieri on 09.12.2016.
@@ -29,10 +26,10 @@ class Mat3x4(var array: FloatArray) : Mat3x4t<Float>(), ToFloatBuffer {
     override operator fun set(column: Int, row: Int, value: Float) = array.set(column * 4 + row, value)
 
     override operator fun set(index: Int, value: Vec4t<out Number>) {
-        array[index * 4] = value.x.f
-        array[index * 4 + 1] = value.y.f
-        array[index * 4 + 2] = value.z.f
-        array[index * 4 + 2] = value.w.f
+        array[index * 4] = value._x.f
+        array[index * 4 + 1] = value._y.f
+        array[index * 4 + 2] = value._z.f
+        array[index * 4 + 2] = value._w.f
     }
 
     operator fun set(i: Int, v: Vec4) {

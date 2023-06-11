@@ -1,6 +1,7 @@
 package glm_.vec4
 
 import glm_.*
+import glm_.vec1.Vec1
 import glm_.vec1.Vec1bool
 import glm_.vec1.Vec1t
 import glm_.vec2.Vec2
@@ -11,8 +12,6 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.operators.vec4_operators
 import kool.*
-import org.lwjgl.system.MemoryUtil.memGetFloat
-import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.awt.Color
 import java.io.InputStream
 import java.io.PrintStream
@@ -23,18 +22,18 @@ import kotlin.math.abs
  * Created by elect on 09/10/16.
  */
 
-class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer {
+class Vec4(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec4t<Float>, ToFloatBuffer {
 
-    override var x: Float
+    inline var x: Float
         get() = array[ofs]
         set(value) = array.set(ofs, value)
-    override var y: Float
+    inline var y: Float
         get() = array[ofs + 1]
         set(value) = array.set(ofs + 1, value)
-    override var z: Float
+    inline var z: Float
         get() = array[ofs + 2]
         set(value) = array.set(ofs + 2, value)
-    override var w: Float
+    inline var w: Float
         get() = array[ofs + 3]
         set(value) = array.set(ofs + 3, value)
 
@@ -52,46 +51,64 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
 
     // -- Conversion scalar constructors --
 
-    constructor(v: Vec1t<out Number>) : this(v.x, v.x, v.x, v.x)
+    constructor(v: Vec1t<out Number>) : this(v._x, v._x, v._x, v._x)
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    constructor(x: Number) : this(x, x, x, x)
+    constructor(v: Number) : this(v.f)
     constructor(x: Number, y: Number, z: Number, w: Number) : this(x.f, y.f, z.f, w.f)
 
-    constructor(x: Vec1t<out Number>, y: Number, z: Number, w: Number) : this(x.x, y, z, w)
-    constructor(x: Number, y: Vec1t<out Number>, z: Number, w: Number) : this(x, y.x, z, w)
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number, w: Number) : this(x.x, y.x, z, w)
-    constructor(x: Number, y: Number, z: Vec1t<out Number>, w: Number) : this(x, y, z.x, w)
-    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>, w: Number) : this(x.x, y, z.x, w)
-    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Number) : this(x, y.x, z.x, w)
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Number) : this(x.x, y.x, z.x, w)
-    constructor(x: Vec1t<out Number>, y: Number, z: Number, w: Vec1t<out Number>) : this(x.x, y, z, w.x)
-    constructor(x: Number, y: Vec1t<out Number>, z: Number, w: Vec1t<out Number>) : this(x, y.x, z, w.x)
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number, w: Vec1t<out Number>) : this(x.x, y.x, z, w.x)
-    constructor(x: Number, y: Number, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x, y, z.x, w.x)
-    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x.x, y, z.x, w.x)
-    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x, y.x, z.x, w.x)
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x.x, y.x, z.x, w.x)
+    constructor(x: Vec1t<out Number>, y: Number, z: Number, w: Number) : this(x._x, y, z, w)
+    constructor(x: Number, y: Vec1t<out Number>, z: Number, w: Number) : this(x, y._x, z, w)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number, w: Number) : this(x._x, y._x, z, w)
+    constructor(x: Number, y: Number, z: Vec1t<out Number>, w: Number) : this(x, y, z._x, w)
+    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>, w: Number) : this(x._x, y, z._x, w)
+    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Number) : this(x, y._x, z._x, w)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Number) : this(x._x, y._x, z._x, w)
+    constructor(x: Vec1t<out Number>, y: Number, z: Number, w: Vec1t<out Number>) : this(x._x, y, z, w._x)
+    constructor(x: Number, y: Vec1t<out Number>, z: Number, w: Vec1t<out Number>) : this(x, y._x, z, w._x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Number, w: Vec1t<out Number>) : this(x._x, y._x, z, w._x)
+    constructor(x: Number, y: Number, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x, y, z._x, w._x)
+    constructor(x: Vec1t<out Number>, y: Number, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x._x, y, z._x, w._x)
+    constructor(x: Number, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x, y._x, z._x, w._x)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(x._x, y._x, z._x, w._x)
 
-    constructor(xy: Vec2t<out Number>, z: Number, w: Number) : this(xy.x, xy.y, z, w)
-    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>, w: Number) : this(xy.x, xy.y, z.x, w)
-    constructor(xy: Vec2t<out Number>, z: Number, w: Vec1t<out Number>) : this(xy.x, xy.y, z, w.x)
-    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(xy.x, xy.y, z.x, w.x)
-    constructor(x: Number, yz: Vec2t<out Number>, w: Number) : this(x, yz.x, yz.y, w)
-    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>, w: Number) : this(x.x, yz.x, yz.y, w)
-    constructor(x: Number, yz: Vec2t<out Number>, w: Vec1t<out Number>) : this(x, yz.x, yz.y, w.x)
-    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>, w: Vec1t<out Number>) : this(x.x, yz.x, yz.y, w.x)
-    constructor(x: Number, y: Number, zw: Vec2t<out Number>) : this(x, y, zw.x, zw.y)
-    constructor(x: Vec1t<out Number>, y: Number, zw: Vec2t<out Number>) : this(x.x, y, zw.x, zw.y)
-    constructor(x: Number, y: Vec1t<out Number>, zw: Vec2t<out Number>) : this(x, y, zw.x, zw.y)
-    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, zw: Vec2t<out Number>) : this(x.x, y.x, zw.x, zw.y)
-    constructor(xyz: Vec3t<out Number>, w: Number) : this(xyz.x, xyz.y, xyz.z, w)
-    constructor(xyz: Vec3t<out Number>, w: Vec1t<out Number>) : this(xyz.x, xyz.y, xyz.z, w.x)
-    constructor(x: Number, yzw: Vec3t<out Number>) : this(x, yzw.x, yzw.y, yzw.z)
-    constructor(x: Vec1t<out Number>, yzw: Vec3t<out Number>) : this(x.x, yzw.x, yzw.y, yzw.z)
-    constructor(xy: Vec2t<out Number>, zw: Vec2t<out Number>) : this(xy.x, xy.y, zw.x, zw.y)
-    constructor(v: Vec4t<out Number>) : this(v.x, v.y, v.z, v.w)
+    constructor(xy: Vec2t<out Number>, z: Number, w: Number) : this(xy._x, xy._y, z, w)
+    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>, w: Number) : this(xy._x, xy._y, z._x, w)
+    constructor(xy: Vec2t<out Number>, z: Number, w: Vec1t<out Number>) : this(xy._x, xy._y, z, w._x)
+    constructor(xy: Vec2t<out Number>, z: Vec1t<out Number>, w: Vec1t<out Number>) : this(xy._x, xy._y, z._x, w._x)
+    constructor(x: Number, yz: Vec2t<out Number>, w: Number) : this(x, yz._x, yz._y, w)
+    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>, w: Number) : this(x._x, yz._x, yz._y, w)
+    constructor(x: Number, yz: Vec2t<out Number>, w: Vec1t<out Number>) : this(x, yz._x, yz._y, w._x)
+    constructor(x: Vec1t<out Number>, yz: Vec2t<out Number>, w: Vec1t<out Number>) : this(x._x, yz._x, yz._y, w._x)
+    constructor(x: Number, y: Number, zw: Vec2t<out Number>) : this(x, y, zw._x, zw._y)
+    constructor(x: Vec1t<out Number>, y: Number, zw: Vec2t<out Number>) : this(x._x, y, zw._x, zw._y)
+    constructor(x: Number, y: Vec1t<out Number>, zw: Vec2t<out Number>) : this(x, y, zw._x, zw._y)
+    constructor(x: Vec1t<out Number>, y: Vec1t<out Number>, zw: Vec2t<out Number>) : this(x._x, y._x, zw._x, zw._y)
+    constructor(xyz: Vec3t<out Number>, w: Number) : this(xyz._x, xyz._y, xyz._z, w)
+    constructor(xyz: Vec3t<out Number>, w: Vec1t<out Number>) : this(xyz._x, xyz._y, xyz._z, w._x)
+    constructor(x: Number, yzw: Vec3t<out Number>) : this(x, yzw._x, yzw._y, yzw._z)
+    constructor(x: Vec1t<out Number>, yzw: Vec3t<out Number>) : this(x._x, yzw._x, yzw._y, yzw._z)
+    constructor(xy: Vec2t<out Number>, zw: Vec2t<out Number>) : this(xy._x, xy._y, zw._x, zw._y)
+    constructor(v: Vec4t<out Number>) : this(v._x, v._y, v._z, v._w)
+
+
+    constructor(v: Vec1) : this(v.x)
+    constructor(x: Vec1, y: Float, z: Float, w: Float) : this(x.x, y, z, w)
+    constructor(x: Float, y: Vec1, z: Float, w: Float) : this(x, y.x, z, w)
+    constructor(x: Float, y: Float, z: Vec1, w: Float) : this(x, y, z.x, w)
+    constructor(x: Float, y: Float, z: Float, w: Vec1) : this(x, y, z, w.x)
+    constructor(x: Vec1, y: Vec1, z: Vec1, w: Vec1) : this(x.x, y.x, z.x, w.x)
+
+
+    constructor(xy: Vec2, z: Float, w: Float) : this(xy.x, xy.y, z, w)
+    constructor(x: Float, yz: Vec2, w: Float) : this(x, yz.x, yz.y, w)
+    constructor(x: Float, y: Float, zw: Vec2) : this(x, y, zw.x, zw.y)
+    constructor(xy: Vec2, zw: Vec2) : this(xy.x, xy.y, zw.x, zw.y)
+
+    constructor(xyz: Vec3, w: Float) : this(xyz.x, xyz.y, xyz.z, w)
+    constructor(x: Float, yzw: Vec3) : this(x, yzw.x, yzw.y, yzw.z)
+
 
     constructor(v: Vec1bool) : this(v.x.f, 0, 0, 1)
     constructor(v: Vec2bool) : this(v.x.f, v.y.f, 0, 1)
@@ -231,14 +248,6 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
 
     // -- Component accesses --
 
-    operator fun set(index: Int, value: Float) = when (index) {
-        0 -> x = value
-        1 -> y = value
-        2 -> z = value
-        3 -> w = value
-        else -> throw ArrayIndexOutOfBoundsException()
-    }
-
     override operator fun set(index: Int, value: Number) = when (index) {
         0 -> x = value.f
         1 -> y = value.f
@@ -357,11 +366,11 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
     // -- Generic binary arithmetic operators --
 
     operator fun plus(b: Number) = plus(Vec4(), this, b.f, b.f, b.f, b.f)
-    operator fun plus(b: Vec4t<out Number>) = plus(Vec4(), this, b.x.f, b.y.f, b.z.f, b.w.f)
+    operator fun plus(b: Vec4t<out Number>) = plus(Vec4(), this, b._x.f, b._y.f, b._z.f, b._w.f)
 
     fun plus(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4 = Vec4()) = plus(res, this, bX.f, bY.f, bZ.f, bW.f)
     fun plus(b: Number, res: Vec4 = Vec4()) = plus(res, this, b.f, b.f, b.f, b.f)
-    fun plus(b: Vec4t<out Number>, res: Vec4 = Vec4()) = plus(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    fun plus(b: Vec4t<out Number>, res: Vec4 = Vec4()) = plus(res, this, b._x.f, b._y.f, b._z.f, b._w.f)
 
     fun plusAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = plus(this, this, bX.f, bY.f, bZ.f, bW.f)
     infix operator fun plusAssign(b: Number) {
@@ -369,16 +378,16 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
     }
 
     infix operator fun plusAssign(b: Vec4t<out Number>) {
-        plus(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+        plus(this, this, b._x.f, b._y.f, b._z.f, b._w.f)
     }
 
 
     operator fun minus(b: Number) = minus(Vec4(), this, b.f, b.f, b.f, b.f)
-    operator fun minus(b: Vec4t<out Number>) = minus(Vec4(), this, b.x.f, b.y.f, b.z.f, b.w.f)
+    operator fun minus(b: Vec4t<out Number>) = minus(Vec4(), this, b._x.f, b._y.f, b._z.f, b._w.f)
 
     fun minus(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4 = Vec4()) = minus(res, this, bX.f, bY.f, bZ.f, bW.f)
     fun minus(b: Number, res: Vec4 = Vec4()) = minus(res, this, b.f, b.f, b.f, b.f)
-    fun minus(b: Vec4t<out Number>, res: Vec4 = Vec4()) = minus(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    fun minus(b: Vec4t<out Number>, res: Vec4 = Vec4()) = minus(res, this, b._x.f, b._y.f, b._z.f, b._w.f)
 
     fun minusAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = minus(this, this, bX.f, bY.f, bZ.f, bW.f)
     infix operator fun minusAssign(b: Number) {
@@ -386,16 +395,16 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
     }
 
     infix operator fun minusAssign(b: Vec4t<out Number>) {
-        minus(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+        minus(this, this, b._x.f, b._y.f, b._z.f, b._w.f)
     }
 
 
     operator fun times(b: Number) = times(Vec4(), this, b.f, b.f, b.f, b.f)
-    operator fun times(b: Vec4t<out Number>) = times(Vec4(), this, b.x.f, b.y.f, b.z.f, b.w.f)
+    operator fun times(b: Vec4t<out Number>) = times(Vec4(), this, b._x.f, b._y.f, b._z.f, b._w.f)
 
     fun times(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4 = Vec4()) = times(res, this, bX.f, bY.f, bZ.f, bW.f)
     fun times(b: Number, res: Vec4 = Vec4()) = times(res, this, b.f, b.f, b.f, b.f)
-    fun times(b: Vec4t<out Number>, res: Vec4 = Vec4()) = times(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    fun times(b: Vec4t<out Number>, res: Vec4 = Vec4()) = times(res, this, b._x.f, b._y.f, b._z.f, b._w.f)
 
     fun timesAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = times(this, this, bX.f, bY.f, bZ.f, bW.f)
     infix operator fun timesAssign(b: Number) {
@@ -403,16 +412,16 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
     }
 
     infix operator fun timesAssign(b: Vec4t<out Number>) {
-        times(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+        times(this, this, b._x.f, b._y.f, b._z.f, b._w.f)
     }
 
 
     operator fun div(b: Number) = div(Vec4(), this, b.f, b.f, b.f, b.f)
-    operator fun div(b: Vec4t<out Number>) = div(Vec4(), this, b.x.f, b.y.f, b.z.f, b.w.f)
+    operator fun div(b: Vec4t<out Number>) = div(Vec4(), this, b._x.f, b._y.f, b._z.f, b._w.f)
 
     fun div(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4 = Vec4()) = div(res, this, bX.f, bY.f, bZ.f, bW.f)
     fun div(b: Number, res: Vec4 = Vec4()) = div(res, this, b.f, b.f, b.f, b.f)
-    fun div(b: Vec4t<out Number>, res: Vec4 = Vec4()) = div(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    fun div(b: Vec4t<out Number>, res: Vec4 = Vec4()) = div(res, this, b._x.f, b._y.f, b._z.f, b._w.f)
 
     fun divAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = div(this, this, bX.f, bY.f, bZ.f, bW.f)
     infix operator fun divAssign(b: Number) {
@@ -420,16 +429,16 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
     }
 
     infix operator fun divAssign(b: Vec4t<out Number>) {
-        div(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+        div(this, this, b._x.f, b._y.f, b._z.f, b._w.f)
     }
 
 
     operator fun rem(b: Number) = rem(Vec4(), this, b.f, b.f, b.f, b.f)
-    operator fun rem(b: Vec4t<out Number>) = rem(Vec4(), this, b.x.f, b.y.f, b.z.f, b.w.f)
+    operator fun rem(b: Vec4t<out Number>) = rem(Vec4(), this, b._x.f, b._y.f, b._z.f, b._w.f)
 
     fun rem(bX: Number, bY: Number, bZ: Number, bW: Number, res: Vec4 = Vec4()) = rem(res, this, bX.f, bY.f, bZ.f, bW.f)
     fun rem(b: Number, res: Vec4 = Vec4()) = rem(res, this, b.f, b.f, b.f, b.f)
-    fun rem(b: Vec4t<out Number>, res: Vec4 = Vec4()) = rem(res, this, b.x.f, b.y.f, b.z.f, b.w.f)
+    fun rem(b: Vec4t<out Number>, res: Vec4 = Vec4()) = rem(res, this, b._x.f, b._y.f, b._z.f, b._w.f)
 
     fun remAssign(bX: Number, bY: Number, bZ: Number, bW: Number) = rem(this, this, bX.f, bY.f, bZ.f, bW.f)
     infix operator fun remAssign(b: Number) {
@@ -437,7 +446,7 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
     }
 
     infix operator fun remAssign(b: Vec4t<out Number>) {
-        rem(this, this, b.x.f, b.y.f, b.z.f, b.w.f)
+        rem(this, this, b._x.f, b._y.f, b._z.f, b._w.f)
     }
 
 
@@ -455,15 +464,15 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
 
     fun allNotEqual(f: Float, epsilon: Float = glm.εf): Boolean = abs(x - f) >= epsilon && abs(y - f) >= epsilon && abs(z - f) >= epsilon && abs(w - f) >= epsilon
     fun anyNotEqual(f: Float, epsilon: Float = glm.εf): Boolean = abs(x - f) >= epsilon || abs(y - f) >= epsilon || abs(z - f) >= epsilon || abs(w - f) >= epsilon
-    fun notEqual(f: Float, epsilon: Float = glm.εf): Vec4bool = Vec4bool{ abs(get(it) - f) >= epsilon }
+    fun notEqual(f: Float, epsilon: Float = glm.εf): Vec4bool = Vec4bool { abs(get(it) - f) >= epsilon }
 
     infix fun allGreaterThan(f: Float): Boolean = x > f && y > f && z > f && w > f
     infix fun anyGreaterThan(f: Float): Boolean = x > f || y > f || z > f || w > f
-    infix fun greaterThan(f: Float): Vec4bool = Vec4bool{ get(it) > f }
+    infix fun greaterThan(f: Float): Vec4bool = Vec4bool { get(it) > f }
 
     infix fun allGreaterThanEqual(f: Float): Boolean = x >= f && y >= f && z >= f && w >= f
     infix fun anyGreaterThanEqual(f: Float): Boolean = x >= f || y >= f || z >= f || w >= f
-    infix fun greaterThanEqual(f: Float): Vec4bool = Vec4bool{ get(it) >= f }
+    infix fun greaterThanEqual(f: Float): Vec4bool = Vec4bool { get(it) >= f }
 
 
     infix fun allLessThan(v: Vec4): Boolean = x < v.x && y < v.y && z < v.z && w < v.w
@@ -480,15 +489,15 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
 
     fun allNotEqual(v: Vec4, epsilon: Float = glm.εf): Boolean = abs(x - v.x) >= epsilon && abs(y - v.y) >= epsilon && abs(z - v.z) >= epsilon && abs(w - v.w) >= epsilon
     fun anyNotEqual(v: Vec4, epsilon: Float = glm.εf): Boolean = abs(x - v.x) >= epsilon || abs(y - v.y) >= epsilon || abs(z - v.z) >= epsilon || abs(w - v.w) >= epsilon
-    fun notEqual(v: Vec4, epsilon: Float = glm.εf): Vec4bool = Vec4bool{ abs(get(it) - v[it]) >= epsilon }
+    fun notEqual(v: Vec4, epsilon: Float = glm.εf): Vec4bool = Vec4bool { abs(get(it) - v[it]) >= epsilon }
 
     infix fun allGreaterThan(v: Vec4): Boolean = x > v.x && y > v.y && z > v.z && w > v.w
     infix fun anyGreaterThan(v: Vec4): Boolean = x > v.x || y > v.y || z > v.z || w > v.w
-    infix fun greaterThan(v: Vec4): Vec4bool = Vec4bool{ get(it) > v[it] }
+    infix fun greaterThan(v: Vec4): Vec4bool = Vec4bool { get(it) > v[it] }
 
     infix fun allGreaterThanEqual(v: Vec4): Boolean = x >= v.x && y >= v.y && z >= v.z && w >= v.w
     infix fun anyGreaterThanEqual(v: Vec4): Boolean = x >= v.x || y >= v.y || z >= v.z || w >= v.w
-    infix fun greaterThanEqual(v: Vec4): Vec4bool = Vec4bool{ get(it) >= v[it] }
+    infix fun greaterThanEqual(v: Vec4): Vec4bool = Vec4bool { get(it) >= v[it] }
 
 
     // -- functions --
@@ -516,7 +525,8 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
 
 
     companion object : vec4_operators {
-        const val length = Vec4t.length
+        const val length = Vec4t.LENGTH
+
         @JvmField
         val size = length * Float.BYTES
 
@@ -550,6 +560,35 @@ class Vec4(var ofs: Int, var array: FloatArray) : Vec4t<Float>(), ToFloatBuffer 
 
     @JvmOverloads
     fun println(name: String = "", stream: PrintStream = System.out) = stream.println("$name$this")
+
+    //@formatter:off
+    override inline var _x get() = x; set(value) { x = value }
+    override inline var r get() = x; set(value) { x = value }
+    override inline var s get() = x; set(value) { x = value }
+
+    override inline var _y get() = y; set(value) { y = value }
+    override inline var g get() = y; set(value) { y = value }
+    override inline var t get() = y; set(value) { y = value }
+
+    override inline var _z get() = z; set(value) { z = value }
+    override inline var b get() = z; set(value) { z = value }
+    override inline var p get() = z; set(value) { z = value }
+
+    override inline var _w get() = w; set(value) { w = value }
+    override inline var a get() = w; set(value) { w = value }
+    override inline var q get() = w; set(value) { w = value }
+    //@formatter:on
+
+    override inline operator fun get(index: Int) = array[ofs + index]
+
+    inline operator fun set(index: Int, value: Float) {
+        array[ofs + index] = value
+    }
+
+    override inline operator fun component1() = x
+    override inline operator fun component2() = y
+    override inline operator fun component3() = z
+    override inline operator fun component4() = w
 
     override fun toString(): String = "($x, $y, $z, $w)"
 }

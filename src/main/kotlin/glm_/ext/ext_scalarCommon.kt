@@ -1,7 +1,6 @@
 package glm_.ext
 
 import glm_.*
-import kotlin.isNaN
 import kotlin.math.max
 import kotlin.math.min
 

@@ -4,17 +4,15 @@ package  glm_.mat4x3
  * Created by GBarbieri on 09.12.2016.
  */
 
-import glm_.*
+import glm_.ToFloatBuffer
+import glm_.f
+import glm_.toFloat
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3t
 import kool.BYTES
-import kool.FloatBuffer
-import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
-import java.util.*
 
 
 class Mat4x3(var array: FloatArray) : Mat4x3t<Float>(), ToFloatBuffer {
@@ -29,9 +27,9 @@ class Mat4x3(var array: FloatArray) : Mat4x3t<Float>(), ToFloatBuffer {
     override operator fun set(column: Int, row: Int, value: Float) = array.set(column * 3 + row, value)
 
     override operator fun set(index: Int, value: Vec3t<out Number>) {
-        array[index * 3] = value.x.f
-        array[index * 3 + 1] = value.y.f
-        array[index * 3 + 2] = value.z.f
+        array[index * 3] = value._x.f
+        array[index * 3 + 1] = value._y.f
+        array[index * 3 + 2] = value._z.f
     }
 
     operator fun set(i: Int, v: Vec3) {

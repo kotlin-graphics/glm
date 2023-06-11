@@ -1,15 +1,15 @@
 package glm_.func
 
-import glm_.d
 import glm_.f
+import glm_.d
 import glm_.glm.inverseSqrt
-import glm_.quat.Quat
 import glm_.vec1.Vec1
 import glm_.vec1.Vec1d
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2d
 import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
+import glm_.vec3.Vec3i
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4d
@@ -31,6 +31,7 @@ interface func_geometric {
 
     fun length(a: Vec3) = sqrt(dot(a, a))
     fun length(a: Vec3d) = sqrt(dot(a, a))
+    fun length(a: Vec3i) = sqrt(dot(a, a).d)
 
     fun length(a: Vec4) = sqrt(dot(a, a))
     fun length(a: Vec4d) = sqrt(dot(a, a))
@@ -40,6 +41,7 @@ interface func_geometric {
 
     fun length2(a: Vec3) = a dot a
     fun length2(a: Vec3d) = a dot a
+    fun length2(a: Vec3i) = a dot a
 
     fun length2(a: Vec4) = a dot a
     fun length2(a: Vec4d) = a dot a
@@ -73,9 +75,10 @@ interface func_geometric {
 
     fun dot(a: Vec3, b: Vec3) = a.x * b.x + a.y * b.y + a.z * b.z
     fun dot(a: Vec3d, b: Vec3d) = a.x * b.x + a.y * b.y + a.z * b.z
+    fun dot(a: Vec3i, b: Vec3i) = a.x * b.x + a.y * b.y + a.z * b.z
 
-    fun dot(a: Vec3, b: Vec3t<out Number>) = a.x * b.x.f + a.y * b.y.f + a.z * b.z.f
-    fun dot(a: Vec3d, b: Vec3t<out Number>) = a.x * b.x.f + a.y * b.y.f + a.z * b.z.f
+    fun dot(a: Vec3, b: Vec3t<out Number>) = a.x * b._x.f + a.y * b._y.f + a.z * b._z.f
+    fun dot(a: Vec3d, b: Vec3t<out Number>) = a.x * b._x.f + a.y * b._y.f + a.z * b._z.f
 
     fun dot(a: Vec4, b: Vec4) = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w
     fun dot(a: Vec4d, b: Vec4d) = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w

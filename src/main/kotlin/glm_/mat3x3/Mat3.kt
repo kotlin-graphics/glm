@@ -1,6 +1,8 @@
 package  glm_.mat3x3
 
-import glm_.*
+import glm_.ToFloatBuffer
+import glm_.f
+import glm_.glm
 import glm_.glm.inverse
 import glm_.glm.transpose
 import glm_.mat2x2.Mat2
@@ -15,6 +17,7 @@ import glm_.mat4x3.Mat4x3t
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
 import glm_.quat.Quat
+import glm_.toFloat
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3
@@ -23,8 +26,6 @@ import glm_.vec3.Vec3t
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryUtil.memGetFloat
-import org.lwjgl.system.MemoryUtil.memPutFloat
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 
@@ -32,7 +33,7 @@ import java.nio.FloatBuffer
  * Created by GBarbieri on 10.11.2016.
  */
 
-class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var array: FloatArray) : Mat3x3t<Float>(), ToFloatBuffer {
+class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmField var array: FloatArray) : Mat3x3t<Float>(), ToFloatBuffer {
 
     // -- Constructors --
 
@@ -45,10 +46,10 @@ class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
         0, y, 0,
         0, 0, z)
 
-    constructor(v: Vec2t<*>) : this(v.x, v.y, 0)
-    constructor(v: Vec2t<*>, z: Number) : this(v.x, v.y, z)
-    constructor(v: Vec3t<*>) : this(v.x, v.y, v.z)
-    constructor(v: Vec4t<*>) : this(v.x, v.y, v.z)
+    constructor(v: Vec2t<*>) : this(v._x, v._y, 0)
+    constructor(v: Vec2t<*>, z: Number) : this(v._x, v._y, z)
+    constructor(v: Vec3t<*>) : this(v._x, v._y, v._z)
+    constructor(v: Vec4t<*>) : this(v._x, v._y, v._z)
 
     constructor(x0: Number, y0: Number, z0: Number,
                 x1: Number, y1: Number, z1: Number,
@@ -58,9 +59,9 @@ class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
         x2.f, y2.f, z2.f))
 
     constructor(v0: Vec3t<out Number>, v1: Vec3t<out Number>, v2: Vec3t<out Number>) : this(
-        v0.x, v0.y, v0.z,
-        v1.x, v1.y, v1.z,
-        v2.x, v2.y, v2.z)
+        v0._x, v0._y, v0._z,
+        v1._x, v1._y, v1._z,
+        v2._x, v2._y, v2._z)
 
     constructor(block: (Int) -> Number) : this(
         block(0).f, block(1).f, block(2).f,
@@ -178,9 +179,9 @@ class Mat3 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, var arr
 
     override operator fun set(column: Int, row: Int, value: Float) = array.set(column * 3 + row, value)
     override operator fun set(index: Int, value: Vec3t<out Number>) {
-        array[index * 3] = value.x.f
-        array[index * 3 + 1] = value.y.f
-        array[index * 3 + 2] = value.z.f
+        array[index * 3] = value._x.f
+        array[index * 3 + 1] = value._y.f
+        array[index * 3 + 2] = value._z.f
     }
 
     operator fun set(i: Int, v: Vec3) {

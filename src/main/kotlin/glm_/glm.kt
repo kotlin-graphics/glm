@@ -5,14 +5,11 @@
 package glm_
 
 import glm_.ext.*
-import glm_.ext.ext_quaternionCommon
-import glm_.ext.ext_quaternionTransform
-import glm_.ext.ext_quaternionTrigonometric
 import glm_.func.*
 import glm_.func.common.*
 import glm_.gtc.gtc_MatrixInverse
-import glm_.gtx.*
 import glm_.gtc.gtc_Quaternion
+import glm_.gtx.*
 import glm_.quat.gtx_quaternion
 
 object glm :

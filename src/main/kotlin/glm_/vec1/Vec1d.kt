@@ -3,10 +3,13 @@ package glm_.vec1
 import glm_.*
 import glm_.vec1.operators.opVec1d
 import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
+import glm_.vec3.Vec3d
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
+import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
 import kool.*
 import java.nio.*
@@ -16,7 +19,7 @@ import kotlin.math.abs
  * Created by GBarbieri on 28.04.2017.
  */
 
-class Vec1d(x: Double) : Vec1t<Double>(x), ToDoubleBuffer {
+class Vec1d(@JvmField inline var x: Double) : Vec1t<Double>, ToDoubleBuffer {
 
     // -- Implicit basic constructors --
 
@@ -26,10 +29,15 @@ class Vec1d(x: Double) : Vec1t<Double>(x), ToDoubleBuffer {
     // -- Explicit basic constructors --
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 
-    constructor(v: Vec1t<out Number>) : this(v.x)
-    constructor(v: Vec2t<out Number>) : this(v.x)
-    constructor(v: Vec3t<out Number>) : this(v.x)
-    constructor(v: Vec4t<out Number>) : this(v.x)
+    constructor(v: Vec1d) : this(v.x)
+    constructor(v: Vec2d) : this(v.x)
+    constructor(v: Vec3d) : this(v.x)
+    constructor(v: Vec4d) : this(v.x)
+
+    constructor(v: Vec1t<out Number>) : this(v._x)
+    constructor(v: Vec2t<out Number>) : this(v._x)
+    constructor(v: Vec3t<out Number>) : this(v._x)
+    constructor(v: Vec4t<out Number>) : this(v._x)
 
     constructor(v: Vec1bool) : this(v.x.d)
     constructor(v: Vec2bool) : this(v.x.d)
@@ -214,82 +222,82 @@ class Vec1d(x: Double) : Vec1t<Double>(x), ToDoubleBuffer {
     // -- Generic binary arithmetic operators --
 
     infix operator fun plus(b: Number) = plus(Vec1d(), this, b.d)
-    infix operator fun plus(b: Vec1t<out Number>) = plus(Vec1d(), this, b.x.d)
+    infix operator fun plus(b: Vec1t<out Number>) = plus(Vec1d(), this, b._x.d)
 
     fun plus(b: Number, res: Vec1d) = plus(res, this, b.d)
-    fun plus(b: Vec1t<out Number>, res: Vec1d) = plus(res, this, b.x.d)
+    fun plus(b: Vec1t<out Number>, res: Vec1d) = plus(res, this, b._x.d)
 
     infix operator fun plusAssign(b: Number) {
         plus(this, this, b.d)
     }
 
     infix operator fun plusAssign(b: Vec1t<out Number>) {
-        plus(this, this, b.x.d)
+        plus(this, this, b._x.d)
     }
 
 
     infix operator fun minus(b: Number) = minus(Vec1d(), this, b.d)
-    infix operator fun minus(b: Vec1t<out Number>) = minus(Vec1d(), this, b.x.d)
+    infix operator fun minus(b: Vec1t<out Number>) = minus(Vec1d(), this, b._x.d)
 
     fun minus(b: Number, res: Vec1d) = minus(res, this, b.d)
-    fun minus(b: Vec1t<out Number>, res: Vec1d) = minus(res, this, b.x.d)
+    fun minus(b: Vec1t<out Number>, res: Vec1d) = minus(res, this, b._x.d)
 
     infix operator fun minusAssign(b: Number) {
         minus(this, this, b.d)
     }
 
     infix operator fun minusAssign(b: Vec1t<out Number>) {
-        minus(this, this, b.x.d)
+        minus(this, this, b._x.d)
     }
 
 
     infix operator fun times(b: Number) = times(Vec1d(), this, b.d)
-    infix operator fun times(b: Vec1t<out Number>) = times(Vec1d(), this, b.x.d)
+    infix operator fun times(b: Vec1t<out Number>) = times(Vec1d(), this, b._x.d)
 
     fun times(b: Number, res: Vec1d) = times(res, this, b.d)
-    fun times(b: Vec1t<out Number>, res: Vec1d) = times(res, this, b.x.d)
+    fun times(b: Vec1t<out Number>, res: Vec1d) = times(res, this, b._x.d)
 
     infix operator fun timesAssign(b: Number) {
         times(this, this, b.d)
     }
 
     infix operator fun timesAssign(b: Vec1t<out Number>) {
-        times(this, this, b.x.d)
+        times(this, this, b._x.d)
     }
 
 
     infix operator fun div(b: Number) = div(Vec1d(), this, b.d)
-    infix operator fun div(b: Vec1t<out Number>) = div(Vec1d(), this, b.x.d)
+    infix operator fun div(b: Vec1t<out Number>) = div(Vec1d(), this, b._x.d)
 
     fun div(b: Number, res: Vec1d) = div(res, this, b.d)
-    fun div(b: Vec1t<out Number>, res: Vec1d) = div(res, this, b.x.d)
+    fun div(b: Vec1t<out Number>, res: Vec1d) = div(res, this, b._x.d)
 
     infix operator fun divAssign(b: Number) {
         div(this, this, b.d)
     }
 
     infix operator fun divAssign(b: Vec1t<out Number>) {
-        div(this, this, b.x.d)
+        div(this, this, b._x.d)
     }
 
 
     infix operator fun rem(b: Number) = rem(Vec1d(), this, b.d)
-    infix operator fun rem(b: Vec1t<out Number>) = rem(Vec1d(), this, b.x.d)
+    infix operator fun rem(b: Vec1t<out Number>) = rem(Vec1d(), this, b._x.d)
 
     fun rem(b: Number, res: Vec1d) = rem(res, this, b.d)
-    fun rem(b: Vec1t<out Number>, res: Vec1d) = rem(res, this, b.x.d)
+    fun rem(b: Vec1t<out Number>, res: Vec1d) = rem(res, this, b._x.d)
 
     infix operator fun remAssign(b: Number) {
         rem(this, this, b.d)
     }
 
     infix operator fun remAssign(b: Vec1t<out Number>) {
-        rem(this, this, b.x.d)
+        rem(this, this, b._x.d)
     }
 
 
     companion object : opVec1d {
-        const val length = Vec1t.length
+        const val length = Vec1t.LENGTH
         @JvmField
         val size = length * Double.BYTES
     }
@@ -303,4 +311,25 @@ class Vec1d(x: Double) : Vec1t<Double>(x), ToDoubleBuffer {
     fun notEqual(b: Vec1d, epsilon: Double = glm.ε): Boolean = !equal(b, epsilon)
 
     override fun hashCode() = x.hashCode()
+
+    //@formatter:off
+    override inline var _x get() = x; set(value) { x = value }
+    override inline var r get() = x; set(value) { x = value }
+    override inline var s get() = x; set(value) { x = value }
+    //@formatter:on
+
+    override inline operator fun get(index: Int): Double {
+        if (index == 0) return x
+        throw IndexOutOfBoundsException()
+    }
+
+    override inline operator fun set(index: Int, value: Double) {
+        if (index == 0) {
+            x = value
+        } else throw IndexOutOfBoundsException()
+    }
+
+    override inline operator fun component1() = x
+    
+    override fun toString(): String = "($x)"
 }

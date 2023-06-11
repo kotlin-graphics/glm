@@ -1,41 +1,46 @@
 package glm_.vec1
 
-import glm_.*
+import glm_.ToBuffer
+import glm_.b
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import kool.Buffer
-import kool.pos
-import org.lwjgl.system.MemoryStack
 import java.nio.*
 
 /**
  * Created bY GBarbieri on 05.10.2016.
  */
 
-abstract class Vec1t<T : Number>(_x: T): Vec1Vars<T>, ToBuffer {
+interface Vec1t<T : Number> : ToBuffer {
 
-//    @JvmField TODO bug
-    override var x = _x
+    var _x: T
+
+    fun component1() = _x
+
 
     // -- Component accesses --
 
-    open operator fun set(index: Int, value: T) = when (index) {
-        0 -> x = value
+    operator fun get(index: Int) = when (index) {
+        0 -> _x
+        else -> throw IndexOutOfBoundsException()
+    }
+
+    operator fun set(index: Int, value: T) = when (index) {
+        0 -> _x = value
         else -> throw IndexOutOfBoundsException()
     }
 
     // -- infix Generic Constructors --
 
-    abstract fun put(x: Number)
+    fun put(x: Number)
 
-    infix fun put(v: Vec1t<out Number>) = put(v.x)
-    infix fun put(v: Vec2t<out Number>) = put(v.x)
-    infix fun put(v: Vec3t<out Number>) = put(v.x)
-    infix fun put(v: Vec4t<out Number>) = put(v.x)
+    infix fun put(v: Vec1t<out Number>) = put(v._x)
+    infix fun put(v: Vec2t<out Number>) = put(v._x)
+    infix fun put(v: Vec3t<out Number>) = put(v._x)
+    infix fun put(v: Vec4t<out Number>) = put(v._x)
 
     infix fun put(v: Vec1bool) = put(v.x.b)
     infix fun put(v: Vec2bool) = put(v.x.b)
@@ -99,12 +104,12 @@ abstract class Vec1t<T : Number>(_x: T): Vec1Vars<T>, ToBuffer {
 
     // Same, but with ()
 
-    abstract operator fun invoke(x: Number): Vec1t<out Number>
+    operator fun invoke(x: Number): Vec1t<out Number>
 
-    infix operator fun invoke(v: Vec1t<out Number>) = invoke(v.x)
-    infix operator fun invoke(v: Vec2t<out Number>) = invoke(v.x)
-    infix operator fun invoke(v: Vec3t<out Number>) = invoke(v.x)
-    infix operator fun invoke(v: Vec4t<out Number>) = invoke(v.x)
+    infix operator fun invoke(v: Vec1t<out Number>) = invoke(v._x)
+    infix operator fun invoke(v: Vec2t<out Number>) = invoke(v._x)
+    infix operator fun invoke(v: Vec3t<out Number>) = invoke(v._x)
+    infix operator fun invoke(v: Vec4t<out Number>) = invoke(v._x)
 
     infix operator fun invoke(v: Vec1bool) = invoke(v.x.b)
     infix operator fun invoke(v: Vec2bool) = invoke(v.x.b)
@@ -166,10 +171,10 @@ abstract class Vec1t<T : Number>(_x: T): Vec1Vars<T>, ToBuffer {
     operator fun invoke(doubles: DoubleBuffer, index: Int) = invoke(doubles[index])
 
 
-    fun toByteArray(): ByteArray = to(ByteArray(length), 0)
+    fun toByteArray(): ByteArray = to(ByteArray(LENGTH), 0)
     infix fun to(bytes: ByteArray): ByteArray = to(bytes, 0)
     fun to(bytes: ByteArray, bigEndian: Boolean): ByteArray = to(bytes, 0, bigEndian)
-    abstract fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
+    fun to(bytes: ByteArray, index: Int, bigEndian: Boolean = true): ByteArray
 
 // TODO
 //    infix fun lessThan(b: Vec2t<out Number>) = glm.lessThan(this, b, Vec2bool())
@@ -194,23 +199,13 @@ abstract class Vec1t<T : Number>(_x: T): Vec1Vars<T>, ToBuffer {
 
 
     // component alias
+    //@formatter:off
+    var r get() = _x; set(value) { _x = value }
 
-    var r
-        @JvmName("r") get() = x
-        @JvmName("r") set(value) {
-            x = value
-        }
-
-
-    var s
-        @JvmName("s") get() = x
-        @JvmName("s") set(value) {
-            x = value
-        }
+    var s get() = _x; set(value) { _x = value }
+    //@formatter:on
 
     companion object {
-        const val length = 1
+        const val LENGTH = 1
     }
-
-    override fun toString(): String = "($x)"
 }
