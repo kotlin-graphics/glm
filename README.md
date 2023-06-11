@@ -40,6 +40,7 @@ fun camera(translate: Float, rotate: Vec2): Mat4 {
 
 ### How to retrieve it:
 
+#### mary
 ```kotlin
 repositories {
     maven("https://raw.githubusercontent.com/kotlin-graphics/mary/master")
@@ -47,7 +48,14 @@ repositories {
     //github("kotlin-graphics/mary")
 }
 dependencies {
-    implementation("kotlin.graphics:glm:0.9.9.1-7")
+    implementation("kotlin.graphics:glm:0.9.9.1-11")
+}
+```
+
+#### maven central
+```kotlin
+dependencies {
+    implementation("io.github.kotlin-graphics:glm:0.9.9.1-11")
 }
 ```
 
