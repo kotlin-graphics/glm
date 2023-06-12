@@ -1,6 +1,6 @@
-import magik.createGithubPublication
 import magik.github
 import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+import java.util.*
 
 plugins {
     kotlin("jvm") version embeddedKotlinVersion
@@ -28,9 +28,7 @@ dependencies {
 kotlin.jvmToolchain { languageVersion.set(JavaLanguageVersion.of(8)) }
 
 tasks {
-    withType<KotlinCompile<*>>().all {
-        kotlinOptions { freeCompilerArgs += listOf("-opt-in=kotlin.RequiresOptIn") }
-    }
+    withType<KotlinCompile<*>>().all { kotlinOptions { freeCompilerArgs += listOf("-opt-in=kotlin.RequiresOptIn") } }
     test { useJUnitPlatform() }
 }
 
