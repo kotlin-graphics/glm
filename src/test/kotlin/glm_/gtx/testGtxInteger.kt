@@ -4,8 +4,8 @@ import glm_.d
 import glm_.glm
 import glm_.i
 import glm_.msb
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class testGtxInteger : StringSpec() {
 

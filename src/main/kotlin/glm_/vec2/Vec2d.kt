@@ -173,9 +173,9 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
         return buf
     }
 
-    override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
-        buf[offset] = x
-        buf[offset + 1] = y
+    override fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
+        buf[index] = x
+        buf[index + 1] = y
         return buf
     }
 
@@ -491,7 +491,6 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
 
     override fun size() = size
 
-    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec2d && this[0] == other[0] && this[1] == other[1]
 
@@ -525,3 +524,4 @@ class Vec2d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec2t<Do
 
     override fun toString(): String = "($x, $y)"
 }
+

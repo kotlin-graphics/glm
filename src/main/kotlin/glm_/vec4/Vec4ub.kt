@@ -807,3 +807,4 @@ class Vec4ub(@JvmField var ofs: Int, var array: UbyteArray) : Vec4t<Ubyte>, ToBu
 
     override fun toString(): String = "($x, $y, $z, $w)"
 }
+

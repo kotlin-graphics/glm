@@ -1,6 +1,9 @@
 package glm_.vec4
 
-import glm_.*
+import glm_.ToBuffer
+import glm_.b
+import glm_.i
+import glm_.toByte
 import glm_.vec1.Vec1b
 import glm_.vec1.Vec1bool
 import glm_.vec1.Vec1t
@@ -709,3 +712,4 @@ class Vec4b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec4t<Byte
 
     override fun toString(): String = "($x, $y, $z, $w)"
 }
+

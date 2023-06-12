@@ -3,16 +3,20 @@ package glm_
 import glm_.glm.abs
 import glm_.glm.greaterThan
 import glm_.glm.lessThan
-import glm_.mat4x4.Mat4
 import glm_.quat.Quat
 import glm_.quat.QuatD
 import glm_.vec1.Vec1
 import glm_.vec1.Vec1bool
 import glm_.vec1.Vec1d
-import glm_.vec2.*
-import glm_.vec3.*
-import glm_.vec4.*
-import glm_.glm.equal
+import glm_.vec2.Vec2
+import glm_.vec2.Vec2bool
+import glm_.vec2.Vec2d
+import glm_.vec3.Vec3
+import glm_.vec3.Vec3bool
+import glm_.vec3.Vec3d
+import glm_.vec4.Vec4
+import glm_.vec4.Vec4bool
+import glm_.vec4.Vec4d
 
 /**
  * Created by GBarbieri on 11.11.2016.

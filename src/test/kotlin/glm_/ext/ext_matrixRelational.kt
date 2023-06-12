@@ -2,9 +2,8 @@ package glm_.ext
 
 import glm_.mat4x4.Mat4
 import glm_.shouldEqual
-import glm_.vec4.Vec4
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class ext_matrixRelational : StringSpec() {
 

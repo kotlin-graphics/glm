@@ -5,8 +5,8 @@ import glm_.glm.epsilonF
 import glm_.shouldEqual
 import glm_.vec2.Vec2
 import glm_.vec3.Vec3
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class testGtxIntersect : StringSpec() {
 

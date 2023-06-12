@@ -588,3 +588,4 @@ class Vec1ub(@JvmField inline var x: Ubyte) : Vec1t<Ubyte> {
 
     override fun toString(): String = "($x)"
 }
+

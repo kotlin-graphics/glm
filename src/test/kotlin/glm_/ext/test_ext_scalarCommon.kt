@@ -2,8 +2,8 @@ package glm_.ext
 
 import glm_.glm
 import glm_.shouldEqual
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class test_ext_scalarCommon : StringSpec() {
 

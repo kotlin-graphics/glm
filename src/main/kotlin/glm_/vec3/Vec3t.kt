@@ -238,7 +238,9 @@ interface Vec3t<T : Number> : ToBuffer {
     //@formatter:on
 
 
+    override fun elementCount(): Int = LENGTH
     companion object {
         const val LENGTH = 3
     }
 }
+

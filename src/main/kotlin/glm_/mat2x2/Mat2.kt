@@ -1,6 +1,8 @@
 package glm_.mat2x2
 
-import glm_.*
+import glm_.ToFloatBuffer
+import glm_.f
+import glm_.glm
 import glm_.mat2x2.operators.mat2x2_operators
 import glm_.mat2x3.Mat2x3t
 import glm_.mat2x4.Mat2x4t
@@ -12,6 +14,7 @@ import glm_.mat4x2.Mat4x2
 import glm_.mat4x2.Mat4x2t
 import glm_.mat4x4.Mat4
 import glm_.mat4x4.Mat4d
+import glm_.toFloat
 import glm_.vec2.Vec2
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
@@ -20,7 +23,6 @@ import glm_.vec4.Vec4
 import kool.*
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
-import java.util.*
 
 /**
  * Created by GBarbieri on 10.11.2016.
@@ -402,3 +404,4 @@ class Mat2 private constructor(@Suppress("UNUSED_PARAMETER") dummy: Int, @JvmFie
     fun allEqual(b: Mat2, epsilon: Float = glm.εf): Boolean = glm.allEqual(this, b, epsilon)
     fun anyNotEqual(b: Mat2, epsilon: Float = glm.εf): Boolean = glm.anyNotEqual(this, b, epsilon)
 }
+

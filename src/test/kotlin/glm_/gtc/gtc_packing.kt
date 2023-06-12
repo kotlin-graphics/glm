@@ -5,8 +5,8 @@ import glm_.vec1.Vec1
 import glm_.vec2.*
 import glm_.vec3.Vec3
 import glm_.vec4.*
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import unsigned.Uint
 import unsigned.Ulong

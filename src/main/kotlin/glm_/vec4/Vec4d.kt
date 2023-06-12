@@ -4,7 +4,6 @@ import glm_.*
 import glm_.vec1.Vec1bool
 import glm_.vec1.Vec1d
 import glm_.vec1.Vec1t
-import glm_.vec2.Vec2b
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2d
 import glm_.vec2.Vec2t
@@ -228,11 +227,11 @@ class Vec4d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec4t<Do
         return buf
     }
 
-    override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
-        buf[offset] = x
-        buf[offset + 1] = y
-        buf[offset + 2] = z
-        buf[offset + 3] = w
+    override fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
+        buf[index] = x
+        buf[index + 1] = y
+        buf[index + 2] = z
+        buf[index + 3] = w
         return buf
     }
 
@@ -512,8 +511,6 @@ class Vec4d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec4t<Do
     }
 
     override fun size() = size
-
-    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec4d && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
     override fun hashCode() = 31 * (31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()) + w.hashCode()

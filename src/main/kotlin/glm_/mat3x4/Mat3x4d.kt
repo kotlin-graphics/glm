@@ -1,13 +1,14 @@
 package  glm_.mat3x4
 
-import glm_.*
+import glm_.ToDoubleBuffer
+import glm_.d
+import glm_.toDouble
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
 import kool.BYTES
 import kool.set
 import java.nio.ByteBuffer
 import java.nio.DoubleBuffer
-import java.util.*
 
 /**
  * Created by GBarbieri on 09.12.2016.
@@ -58,19 +59,19 @@ class Mat3x4d(var array: DoubleArray) : Mat3x4t<Double>(), ToDoubleBuffer {
                 .putDouble(offset + 11 * Double.BYTES, array[11])
     }
 
-    override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
-        buf[offset + 0] = array[0]
-        buf[offset + 1] = array[1]
-        buf[offset + 2] = array[2]
-        buf[offset + 3] = array[3]
-        buf[offset + 4] = array[4]
-        buf[offset + 5] = array[5]
-        buf[offset + 6] = array[6]
-        buf[offset + 7] = array[7]
-        buf[offset + 8] = array[8]
-        buf[offset + 9] = array[9]
-        buf[offset + 10] = array[10]
-        buf[offset + 11] = array[11]
+    override fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
+        buf[index + 0] = array[0]
+        buf[index + 1] = array[1]
+        buf[index + 2] = array[2]
+        buf[index + 3] = array[3]
+        buf[index + 4] = array[4]
+        buf[index + 5] = array[5]
+        buf[index + 6] = array[6]
+        buf[index + 7] = array[7]
+        buf[index + 8] = array[8]
+        buf[index + 9] = array[9]
+        buf[index + 10] = array[10]
+        buf[index + 11] = array[11]
         return buf
     }
 

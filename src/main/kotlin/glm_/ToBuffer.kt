@@ -20,6 +20,14 @@ interface ToBuffer {
 
     val size: Int
         get() = 0
+
+
+    /**
+     * The size of the object in elements
+     *
+     * Also see [ToBuffer.size]
+     */
+    fun elementCount(): Int     // HINT this can not be called length, as it would conflict with Vec.length() which is more important
 }
 
 /**
@@ -59,13 +67,6 @@ interface ToFloatBuffer : ToBuffer {
     infix fun to(buf: FloatBuffer): FloatBuffer = to(buf, buf.pos)
 
     fun to(buf: FloatBuffer, offset: Int): FloatBuffer
-
-    /**
-     * The size of the object in number of floats.
-     *
-     * Also see [ToBuffer.size]
-     */
-    fun elementCount(): Int     // HINT this can not be called length, as it would conflict with Vec.lengt() which is more important
 }
 
 /**
@@ -104,14 +105,7 @@ interface ToDoubleBuffer : ToBuffer {
     fun toDoubleBuffer(): DoubleBuffer = to(DoubleBuffer.allocate(elementCount()), 0)
     infix fun to(buf: DoubleBuffer): DoubleBuffer = to(buf, buf.pos)
 
-    fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer
-
-    /**
-     * The size of the object in number of doubles.
-     *
-     * Also see [ToBuffer.size]
-     */
-    fun elementCount(): Int    // HINT this can not be called length, as it would conflict with Vec.lengt() which is more important
+    fun to(buf: DoubleBuffer, index: Int): DoubleBuffer
 }
 
 /**
@@ -141,4 +135,37 @@ fun List<ToDoubleBuffer>.toDoubleBuffer(assumeConstSize: Boolean = true): Double
     this.to(buffer)
 
     return buffer
+}
+
+
+interface ToIntBuffer : ToBuffer {
+
+    fun toIntBufferStack(): IntBuffer = to(MemoryStack.stackGet().mallocInt(elementCount()), 0)
+    infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(elementCount()), 0)
+    fun toIntBuffer(): IntBuffer = to(IntBuffer(elementCount()), 0)
+    infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
+
+    fun to(buf: IntBuffer, index:Int): IntBuffer
+}
+
+
+interface ToLongBuffer : ToBuffer {
+
+    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackGet().mallocLong(elementCount()), 0)
+    infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(elementCount()), 0)
+    fun toLongBuffer(): LongBuffer = to(LongBuffer(elementCount()), 0)
+    infix fun to(buf: LongBuffer): LongBuffer = to(buf, buf.pos)
+
+    fun to(buf: LongBuffer, index:Int): LongBuffer
+}
+
+
+interface ToShortBuffer : ToBuffer {
+
+    fun toShortBufferStack(): ShortBuffer = to(MemoryStack.stackGet().mallocShort(elementCount()), 0)
+    infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(elementCount()), 0)
+    fun toShortBuffer(): ShortBuffer = to(ShortBuffer(elementCount()), 0)
+    infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)
+
+    fun to(buf: ShortBuffer, index:Int): ShortBuffer
 }

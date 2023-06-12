@@ -11,7 +11,10 @@ import glm_.mat4x4.Mat4
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4t
-import kool.*
+import kool.BYTES
+import kool.Ptr
+import kool.get
+import kool.set
 import java.io.InputStream
 import java.io.PrintStream
 import kotlin.math.abs
@@ -246,3 +249,4 @@ class Quat(w: Float, x: Float, y: Float, z: Float) : QuatT<Float>(w, x, y, z) {
     fun anyNotEqual(q: Quat, epsilon: Float = glm.εf): Boolean =
             x - q.x >= epsilon || y - q.y >= epsilon || z - q.z >= epsilon || w - q.w >= epsilon
 }
+

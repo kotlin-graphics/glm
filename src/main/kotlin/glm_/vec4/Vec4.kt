@@ -550,7 +550,6 @@ class Vec4(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec4t<Floa
 
     override fun size() = size
 
-    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec4 && this[0] == other[0] && this[1] == other[1] && this[2] == other[2] && this[3] == other[3]
     override fun hashCode() = 31 * (31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()) + w.hashCode()

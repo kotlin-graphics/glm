@@ -205,7 +205,9 @@ interface Vec1t<T : Number> : ToBuffer {
     var s get() = _x; set(value) { _x = value }
     //@formatter:on
 
+    override fun elementCount(): Int = LENGTH
     companion object {
         const val LENGTH = 1
     }
 }
+

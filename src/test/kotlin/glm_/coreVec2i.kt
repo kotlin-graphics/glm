@@ -1,9 +1,8 @@
 package glm_
 
-import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2i
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 /**
  * Created by fschaefers on 09.02.2017.

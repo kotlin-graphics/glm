@@ -197,10 +197,10 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
         return buf
     }
 
-    override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
-        buf[offset] = x
-        buf[offset + 1] = y
-        buf[offset + 2] = z
+    override fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
+        buf[index] = x
+        buf[index + 1] = y
+        buf[index + 2] = z
         return buf
     }
 
@@ -517,7 +517,6 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
 
     override fun size() = size
 
-    override fun elementCount() = length
 
     override fun equals(other: Any?) = other is Vec3d && this[0] == other[0] && this[1] == other[1] && this[2] == other[2]
     override fun hashCode() = 31 * (31 * x.hashCode() + y.hashCode()) + z.hashCode()

@@ -759,3 +759,4 @@ class Vec3ub(@JvmField var ofs: Int, var array: UbyteArray) : Vec3t<Ubyte>, ToBu
 
     override fun toString(): String = "($x, $y, $z)"
 }
+

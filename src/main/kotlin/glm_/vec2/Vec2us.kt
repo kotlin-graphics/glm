@@ -9,7 +9,6 @@ import glm_.vec3.Vec3t
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryStack
 import unsigned.Ushort
 import unsigned.UshortArray
 import unsigned.toUshort
@@ -20,7 +19,7 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec2us(@JvmField var ofs: Int, var array: UshortArray) : Vec2t<Ushort>, ToBuffer {
+class Vec2us(@JvmField var ofs: Int, var array: UshortArray) : Vec2t<Ushort>, ToShortBuffer {
 
     inline var x: Ushort
         get() = array[ofs]
@@ -183,11 +182,7 @@ class Vec2us(@JvmField var ofs: Int, var array: UshortArray) : Vec2t<Ushort>, To
         return buf
     }
 
-    fun toShortBufferStack(): ShortBuffer = to(MemoryStack.stackGet().mallocShort(length), 0)
-    infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
-    fun toShortBuffer(): ShortBuffer = to(ShortBuffer(length), 0)
-    infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)
-    fun to(buf: ShortBuffer, index: Int): ShortBuffer {
+   override fun to(buf: ShortBuffer, index: Int): ShortBuffer {
         buf[index] = x.v
         buf[index + 1] = y.v
         return buf
@@ -770,3 +765,4 @@ class Vec2us(@JvmField var ofs: Int, var array: UshortArray) : Vec2t<Ushort>, To
 
     override fun toString(): String = "($x, $y)"
 }
+

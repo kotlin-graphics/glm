@@ -3,7 +3,6 @@ package glm_;
 import glm_.mat4x4.Mat4;
 import glm_.vec1.Vec1;
 import glm_.vec2.Vec2;
-import glm_.vec2.Vec2us;
 import glm_.vec3.Vec3;
 
 import static glm_.Java.glm;

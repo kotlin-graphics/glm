@@ -10,8 +10,10 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec3.Vec3ui
 import glm_.vec4.operators.vec4ui_operators
-import kool.*
-import org.lwjgl.system.MemoryStack
+import kool.Ptr
+import kool.get
+import kool.pos
+import kool.set
 import unsigned.Uint
 import unsigned.UintArray
 import unsigned.toUint
@@ -22,7 +24,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4ui(@JvmField var ofs: Int, var array: UintArray) : Vec4t<Uint>, ToBuffer {
+class Vec4ui(@JvmField var ofs: Int, var array: UintArray) : Vec4t<Uint>, ToIntBuffer {
 
     inline var x: Uint
         get() = array[ofs]
@@ -240,11 +242,7 @@ class Vec4ui(@JvmField var ofs: Int, var array: UintArray) : Vec4t<Uint>, ToBuff
         return buf
     }
 
-    fun toIntBufferStack(): IntBuffer = to(MemoryStack.stackGet().mallocInt(length), 0)
-    infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(length), 0)
-    fun toIntBuffer(): IntBuffer = to(IntBuffer(length), 0)
-    infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
-    fun to(buf: IntBuffer, index: Int): IntBuffer {
+   override fun to(buf: IntBuffer, index: Int): IntBuffer {
         buf[index] = x.v
         buf[index + 1] = y.v
         buf[index + 2] = z.v
@@ -778,3 +776,4 @@ class Vec4ui(@JvmField var ofs: Int, var array: UintArray) : Vec4t<Uint>, ToBuff
 
     override fun toString(): String = "($x, $y, $z, $w)"
 }
+

@@ -53,13 +53,13 @@ class Mat2x3d(var array: DoubleArray) : Mat2x3t<Double>(), ToDoubleBuffer {
                 .putDouble(offset + 5 * Double.BYTES, array[5])
     }
 
-    override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
-        buf[offset + 0] = array[0]
-        buf[offset + 1] = array[1]
-        buf[offset + 2] = array[2]
-        buf[offset + 3] = array[3]
-        buf[offset + 4] = array[4]
-        buf[offset + 5] = array[5]
+    override fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
+        buf[index + 0] = array[0]
+        buf[index + 1] = array[1]
+        buf[index + 2] = array[2]
+        buf[index + 3] = array[3]
+        buf[index + 4] = array[4]
+        buf[index + 5] = array[5]
         return buf
     }
 

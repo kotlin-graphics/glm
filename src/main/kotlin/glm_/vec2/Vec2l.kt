@@ -12,8 +12,6 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4l
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryStack
-import org.lwjgl.system.MemoryStack.stackGet
 import java.io.PrintStream
 import java.nio.*
 
@@ -21,7 +19,7 @@ import java.nio.*
  * Created bY GBarbieri on 06.10.2016.
  */
 
-class Vec2l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec2t<Long>, ToBuffer {
+class Vec2l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec2t<Long>, ToLongBuffer {
 
     inline var x: Long
         get() = array[ofs]
@@ -167,11 +165,7 @@ class Vec2l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec2t<Long
         return buf
     }
 
-    fun toLongBufferStack(): LongBuffer = to(stackGet().mallocLong(length), 0)
-    infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(length), 0)
-    fun toLongBuffer(): LongBuffer = to(LongBuffer(length), 0)
-    infix fun to(buf: LongBuffer): LongBuffer = to(buf, buf.pos)
-    fun to(buf: LongBuffer, index: Int): LongBuffer {
+   override fun to(buf: LongBuffer, index: Int): LongBuffer {
         buf[index] = x
         buf[index + 1] = y
         return buf
@@ -650,3 +644,4 @@ class Vec2l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec2t<Long
 
     override fun toString(): String = "($x, $y)"
 }
+

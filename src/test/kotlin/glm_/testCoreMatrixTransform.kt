@@ -1,8 +1,8 @@
 package glm_
 
 import glm_.mat4x4.Mat4
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 /**
  * Created by GBarbieri on 08.03.2017.

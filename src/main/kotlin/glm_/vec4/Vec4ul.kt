@@ -10,8 +10,10 @@ import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
 import glm_.vec3.Vec3ul
 import glm_.vec4.operators.vec4ul_operators
-import kool.*
-import org.lwjgl.system.MemoryStack
+import kool.Ptr
+import kool.get
+import kool.pos
+import kool.set
 import unsigned.Ulong
 import unsigned.UlongArray
 import unsigned.toUlong
@@ -22,7 +24,7 @@ import java.nio.*
  * Created by elect on 09/10/16.
  */
 
-class Vec4ul(@JvmField var ofs: Int, var array: UlongArray) : Vec4t<Ulong>, ToBuffer {
+class Vec4ul(@JvmField var ofs: Int, var array: UlongArray) : Vec4t<Ulong>, ToLongBuffer {
 
     inline var x: Ulong
         get() = array[ofs]
@@ -242,11 +244,7 @@ class Vec4ul(@JvmField var ofs: Int, var array: UlongArray) : Vec4t<Ulong>, ToBu
         return buf
     }
 
-    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackGet().mallocLong(length), 0)
-    infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(length), 0)
-    fun toLongBuffer(): LongBuffer = to(LongBuffer(length), 0)
-    infix fun to(longs: LongBuffer): LongBuffer = to(longs, longs.pos)
-    fun to(longs: LongBuffer, index: Int): LongBuffer {
+    override fun to(longs: LongBuffer, index: Int): LongBuffer {
         longs[index] = x.v
         longs[index + 1] = y.v
         longs[index + 2] = z.v
@@ -758,3 +756,4 @@ class Vec4ul(@JvmField var ofs: Int, var array: UlongArray) : Vec4t<Ulong>, ToBu
 
     override fun toString(): String = "($x, $y, $z, $w)"
 }
+

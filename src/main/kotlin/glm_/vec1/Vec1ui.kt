@@ -4,20 +4,15 @@ import glm_.*
 import glm_.vec1.operators.opVec1ui
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
-import glm_.vec2.Vec2ub
 import glm_.vec2.Vec2ui
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
-import glm_.vec3.Vec3ub
 import glm_.vec3.Vec3ui
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import glm_.vec4.Vec4ub
 import glm_.vec4.Vec4ui
-import kool.IntBuffer
 import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
 import unsigned.Uint
 import java.nio.*
 import kotlin.math.abs
@@ -26,7 +21,7 @@ import kotlin.math.abs
  * Created by elect on 08/10/16.
  */
 
-class Vec1ui(@JvmField inline var x: Uint) : Vec1t<Uint> {
+class Vec1ui(@JvmField inline var x: Uint) : Vec1t<Uint>, ToIntBuffer {
 
     // -- Implicit basic constructors --
 
@@ -132,10 +127,7 @@ class Vec1ui(@JvmField inline var x: Uint) : Vec1t<Uint> {
         return ints
     }
 
-    infix fun toIntBuffer(stack: MemoryStack): IntBuffer = to(stack.mallocInt(length), 0)
-    fun toIntBuffer(): IntBuffer = to(IntBuffer(length), 0)
-    infix fun to(buf: IntBuffer): IntBuffer = to(buf, buf.pos)
-    fun to(buf: IntBuffer, index: Int): IntBuffer {
+   override fun to(buf: IntBuffer, index: Int): IntBuffer {
         buf[index] = x.v
         return buf
     }
@@ -499,3 +491,4 @@ class Vec1ui(@JvmField inline var x: Uint) : Vec1t<Uint> {
 
     override fun toString(): String = "($x)"
 }
+

@@ -4,20 +4,15 @@ import glm_.*
 import glm_.vec1.operators.opVec1us
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
-import glm_.vec2.Vec2ub
 import glm_.vec2.Vec2us
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
-import glm_.vec3.Vec3ub
 import glm_.vec3.Vec3us
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import glm_.vec4.Vec4ub
 import glm_.vec4.Vec4us
-import kool.ShortBuffer
 import kool.pos
 import kool.set
-import org.lwjgl.system.MemoryStack
 import unsigned.Ushort
 import java.lang.Math.abs
 import java.nio.*
@@ -26,7 +21,7 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec1us(@JvmField inline var x: Ushort) : Vec1t<Ushort> {
+class Vec1us(@JvmField inline var x: Ushort) : Vec1t<Ushort>, ToShortBuffer {
 
     // -- Implicit basic constructors --
 
@@ -132,10 +127,7 @@ class Vec1us(@JvmField inline var x: Ushort) : Vec1t<Ushort> {
         return shorts
     }
 
-    infix fun toShortBuffer(stack: MemoryStack): ShortBuffer = to(stack.mallocShort(length), 0)
-    fun toShortBuffer(): ShortBuffer = to(ShortBuffer(length), 0)
-    infix fun to(buf: ShortBuffer): ShortBuffer = to(buf, buf.pos)
-    fun to(buf: ShortBuffer, index: Int): ShortBuffer {
+   override fun to(buf: ShortBuffer, index: Int): ShortBuffer {
         buf[index] = x.v
         return buf
     }
@@ -566,3 +558,4 @@ class Vec1us(@JvmField inline var x: Ushort) : Vec1t<Ushort> {
 
     override fun toString(): String = "($x)"
 }
+

@@ -119,8 +119,8 @@ class Vec1d(@JvmField inline var x: Double) : Vec1t<Double>, ToDoubleBuffer {
         return doubles
     }
 
-    override fun to(buf: DoubleBuffer, offset: Int): DoubleBuffer {
-        buf[offset] = x
+    override fun to(buf: DoubleBuffer, index: Int): DoubleBuffer {
+        buf[index] = x
         return buf
     }
 
@@ -304,8 +304,6 @@ class Vec1d(@JvmField inline var x: Double) : Vec1t<Double>, ToDoubleBuffer {
 
     override fun size() = size
 
-    override fun elementCount() = length
-
     override fun equals(other: Any?) = other is Vec1d && this[0] == other[0]
     fun equal(b: Vec1d, epsilon: Double = glm.ε): Boolean = abs(x - b.x) <= epsilon
     fun notEqual(b: Vec1d, epsilon: Double = glm.ε): Boolean = !equal(b, epsilon)
@@ -330,6 +328,7 @@ class Vec1d(@JvmField inline var x: Double) : Vec1t<Double>, ToDoubleBuffer {
     }
 
     override inline operator fun component1() = x
-    
+
     override fun toString(): String = "($x)"
 }
+

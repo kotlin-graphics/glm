@@ -1,6 +1,7 @@
 package glm_.vec1
 
 import glm_.L
+import glm_.ToLongBuffer
 import glm_.getLong
 import glm_.putLong
 import glm_.vec1.operators.opVec1l
@@ -14,11 +15,10 @@ import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4l
 import glm_.vec4.Vec4t
 import kool.*
-import org.lwjgl.system.MemoryStack
 import java.nio.*
 import kotlin.math.abs
 
-class Vec1l(@JvmField inline var x: Long) : Vec1t<Long> {
+class Vec1l(@JvmField inline var x: Long) : Vec1t<Long>, ToLongBuffer {
 
     // -- Implicit basic constructors --
 
@@ -118,10 +118,7 @@ class Vec1l(@JvmField inline var x: Long) : Vec1t<Long> {
         return longs
     }
 
-    infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(length), 0)
-    fun toLongBuffer(): LongBuffer = to(LongBuffer(length), 0)
-    infix fun to(buf: LongBuffer): LongBuffer = to(buf, buf.pos)
-    fun to(buf: LongBuffer, index: Int): LongBuffer {
+   override fun to(buf: LongBuffer, index: Int): LongBuffer {
         buf[index] = x
         return buf
     }
@@ -169,3 +166,4 @@ class Vec1l(@JvmField inline var x: Long) : Vec1t<Long> {
 
     override fun toString(): String = "($x)"
 }
+

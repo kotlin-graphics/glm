@@ -3,8 +3,8 @@ package glm_
 import glm_.mat3x3.Mat3
 import glm_.mat3x3.operators.times
 import glm_.vec3.Vec3
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 /**
  * Created by GBarbieri on 11.11.2016.

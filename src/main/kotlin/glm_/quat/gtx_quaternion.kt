@@ -12,7 +12,8 @@ import glm_.mat3x3.Mat3
 import glm_.mat4x4.Mat4
 import glm_.vec3.Vec3
 import glm_.vec4.Vec4
-import kotlin.math.*
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 /// @ref gtx_quaternion
 /// @file glm/gtx/quaternion.hpp

@@ -9,9 +9,9 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4
 import glm_.vec4.Vec4d
+import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import io.kotest.core.spec.style.StringSpec
 import kool.BYTES
 
 class test_ext_vectorIEC559 : StringSpec() {

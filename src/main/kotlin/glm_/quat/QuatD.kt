@@ -7,7 +7,10 @@ import glm_.vec3.Vec3
 import glm_.vec3.Vec3d
 import glm_.vec4.Vec4d
 import glm_.vec4.Vec4t
-import kool.*
+import kool.BYTES
+import kool.Ptr
+import kool.get
+import kool.set
 import java.io.PrintStream
 import kotlin.math.abs
 import kotlin.math.sqrt
@@ -226,3 +229,4 @@ class QuatD(w: Double, x: Double, y: Double, z: Double) : QuatT<Double>(w, x, y,
     fun anyNotEqual(q: QuatD, epsilon: Double = glm.ε): Boolean =
             x - q.x >= epsilon || y - q.y >= epsilon || z - q.z >= epsilon || w - q.w >= epsilon
 }
+

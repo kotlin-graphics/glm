@@ -1,8 +1,8 @@
 package glm_
 
 import glm_.vec3.Vec3
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class testClosestPointToLines : StringSpec() {
 

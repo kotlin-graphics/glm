@@ -4,18 +4,17 @@ import glm_.*
 import glm_.vec1.operators.opVec1ul
 import glm_.vec2.Vec2bool
 import glm_.vec2.Vec2t
-import glm_.vec2.Vec2ub
 import glm_.vec2.Vec2ul
 import glm_.vec3.Vec3bool
 import glm_.vec3.Vec3t
-import glm_.vec3.Vec3ub
 import glm_.vec3.Vec3ul
 import glm_.vec4.Vec4bool
 import glm_.vec4.Vec4t
-import glm_.vec4.Vec4ub
 import glm_.vec4.Vec4ul
-import kool.*
-import org.lwjgl.system.MemoryStack
+import kool.Ptr
+import kool.get
+import kool.pos
+import kool.set
 import unsigned.Ulong
 import java.io.PrintStream
 import java.lang.Math.abs
@@ -25,7 +24,7 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec1ul(@JvmField inline var x: Ulong) : Vec1t<Ulong> {
+class Vec1ul(@JvmField inline var x: Ulong) : Vec1t<Ulong>, ToLongBuffer {
 
     // -- Implicit basic constructors --
 
@@ -134,11 +133,7 @@ class Vec1ul(@JvmField inline var x: Ulong) : Vec1t<Ulong> {
         return buf
     }
 
-    fun toLongBufferStack(): LongBuffer = to(MemoryStack.stackGet().mallocLong(length), 0)
-    infix fun toLongBuffer(stack: MemoryStack): LongBuffer = to(stack.mallocLong(length), 0)
-    fun toLongBuffer(): LongBuffer = to(LongBuffer(length), 0)
-    infix fun to(buf: LongBuffer): LongBuffer = to(buf, buf.pos)
-    fun to(buf: LongBuffer, index: Int): LongBuffer {
+   override fun to(buf: LongBuffer, index: Int): LongBuffer {
         buf[index] = x.v
         return buf
     }
@@ -503,3 +498,4 @@ class Vec1ul(@JvmField inline var x: Ulong) : Vec1t<Ulong> {
 
     override fun toString(): String = "($x)"
 }
+
