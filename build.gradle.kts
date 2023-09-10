@@ -16,9 +16,9 @@ repositories {
 }
 
 dependencies {
-    api("kotlin.graphics:unsigned:3.3.32")
-    api("kotlin.graphics:kool:0.9.77")
-    api("org.lwjgl:lwjgl-jemalloc:3.3.2")
+    compileOnly("kotlin.graphics:unsigned:3.3.32")
+    compileOnly("kotlin.graphics:kool:0.9.77")
+    compileOnly("org.lwjgl:lwjgl-jemalloc:3.3.2")
 
 
     testImplementation("io.kotest:kotest-runner-junit5:5.6.2")
