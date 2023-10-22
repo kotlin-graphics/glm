@@ -144,14 +144,14 @@ interface ext_matrixTransform {
      */
     fun translate(m: Mat4d, vX: Double, vY: Double, vZ: Double, res: Mat4d): Mat4d {
         if (res !== m) res put m
-        val x = m[0].x * vX + m[1].x * vY + m[2].x * vZ + m[3].x
-        val y = m[0].y * vX + m[1].y * vY + m[2].y * vZ + m[3].y
-        val z = m[0].z * vX + m[1].z * vY + m[2].z * vZ + m[3].z
-        val w = m[0].w * vX + m[1].w * vY + m[2].w * vZ + m[3].w
-        res[3].x = x
-        res[3].y = y
-        res[3].z = z
-        res[3].w = w
+        val x = m[0,0] * vX + m[1, 0] * vY + m[2, 0] * vZ + m[3, 0]
+        val y = m[0, 1] * vX + m[1, 1] * vY + m[2, 1] * vZ + m[3, 1]
+        val z = m[0, 2] * vX + m[1, 2] * vY + m[2, 2] * vZ + m[3, 2]
+        val w = m[0, 3] * vX + m[1, 3] * vY + m[2, 3] * vZ + m[3, 3]
+        res[3, 0] = x
+        res[3, 1] = y
+        res[3, 2] = z
+        res[3, 3] = w
         return res
     }
 
@@ -267,40 +267,42 @@ interface ext_matrixTransform {
         val rotate21 = tempZ * aY - s * aX
         val rotate22 = c + tempZ * aZ
 
-        val res0x = m[0].x * rotate00 + m[1].x * rotate01 + m[2].x * rotate02
-        val res0y = m[0].y * rotate00 + m[1].y * rotate01 + m[2].y * rotate02
-        val res0z = m[0].z * rotate00 + m[1].z * rotate01 + m[2].z * rotate02
-        val res0w = m[0].w * rotate00 + m[1].w * rotate01 + m[2].w * rotate02
+        val res0x = m[0, 0] * rotate00 + m[1, 0] * rotate01 + m[2, 0] * rotate02
+        val res0y = m[0, 1] * rotate00 + m[1, 1] * rotate01 + m[2, 1] * rotate02
+        val res0z = m[0, 2] * rotate00 + m[1, 2] * rotate01 + m[2, 2] * rotate02
+        val res0w = m[0, 3] * rotate00 + m[1, 3] * rotate01 + m[2, 3] * rotate02
 
-        val res1x = m[0].x * rotate10 + m[1].x * rotate11 + m[2].x * rotate12
-        val res1y = m[0].y * rotate10 + m[1].y * rotate11 + m[2].y * rotate12
-        val res1z = m[0].z * rotate10 + m[1].z * rotate11 + m[2].z * rotate12
-        val res1w = m[0].w * rotate10 + m[1].w * rotate11 + m[2].w * rotate12
+        val res1x = m[0, 0] * rotate10 + m[1, 0] * rotate11 + m[2, 0] * rotate12
+        val res1y = m[0, 1] * rotate10 + m[1, 1] * rotate11 + m[2, 1] * rotate12
+        val res1z = m[0, 2] * rotate10 + m[1, 2] * rotate11 + m[2, 2] * rotate12
+        val res1w = m[0, 3] * rotate10 + m[1, 3] * rotate11 + m[2, 3] * rotate12
 
-        val res2x = m[0].x * rotate20 + m[1].x * rotate21 + m[2].x * rotate22
-        val res2y = m[0].y * rotate20 + m[1].y * rotate21 + m[2].y * rotate22
-        val res2z = m[0].z * rotate20 + m[1].z * rotate21 + m[2].z * rotate22
-        val res2w = m[0].w * rotate20 + m[1].w * rotate21 + m[2].w * rotate22
+        val res2x = m[0, 0] * rotate20 + m[1, 0] * rotate21 + m[2, 0] * rotate22
+        val res2y = m[0, 1] * rotate20 + m[1, 1] * rotate21 + m[2, 1] * rotate22
+        val res2z = m[0, 2] * rotate20 + m[1, 2] * rotate21 + m[2, 2] * rotate22
+        val res2w = m[0, 3] * rotate20 + m[1, 3] * rotate21 + m[2, 3] * rotate22
 
-        res[0].x = res0x
-        res[0].y = res0y
-        res[0].z = res0z
-        res[0].w = res0w
+        res[0, 0] = res0x
+        res[0, 1] = res0y
+        res[0, 2] = res0z
+        res[0, 3] = res0w
 
-        res[1].x = res1x
-        res[1].y = res1y
-        res[1].z = res1z
-        res[1].w = res1w
+        res[1, 0] = res1x
+        res[1, 1] = res1y
+        res[1, 2] = res1z
+        res[1, 3] = res1w
 
-        res[2].x = res2x
-        res[2].y = res2y
-        res[2].z = res2z
-        res[2].w = res2w
+        res[2, 0] = res2x
+        res[2, 1] = res2y
+        res[2, 2] = res2z
+        res[2, 3] = res2w
 
-        res[3].x = m[3].x
-        res[3].y = m[3].y
-        res[3].z = m[3].z
-        res[3].w = m[3].w
+        if(res !== m) {
+            res[3, 0] = m[3, 0]
+            res[3, 1] = m[3, 1]
+            res[3, 2] = m[3, 2]
+            res[3, 3] = m[3, 3]
+        }
 
         return res
     }
@@ -426,9 +428,11 @@ interface ext_matrixTransform {
         res[0, 0] = nm00
         res[0, 1] = nm01
         res[0, 2] = nm02
-        res[1, 0] = mat[1, 0]
-        res[1, 1] = mat[1, 1]
-        res[1, 2] = mat[1, 2]
+        if(res !== mat) {
+            res[1, 0] = mat[1, 0]
+            res[1, 1] = mat[1, 1]
+            res[1, 2] = mat[1, 2]
+        }
 
         return res
     }
@@ -469,9 +473,11 @@ interface ext_matrixTransform {
         res[0, 0] = nm00
         res[0, 1] = nm01
         res[0, 2] = nm02
-        res[2, 0] = mat[2, 0]
-        res[2, 1] = mat[2, 1]
-        res[2, 2] = mat[2, 2]
+        if(res !== mat) {
+            res[2, 0] = mat[2, 0]
+            res[2, 1] = mat[2, 1]
+            res[2, 2] = mat[2, 2]
+        }
 
         return res
     }
@@ -553,14 +559,16 @@ interface ext_matrixTransform {
         res[1, 1] = nm11
         res[1, 2] = nm12
         res[1, 3] = nm13
-        res[0, 0] = mat[0, 0]
-        res[0, 1] = mat[0, 1]
-        res[0, 2] = mat[0, 2]
-        res[0, 3] = mat[0, 3]
-        res[3, 0] = mat[3, 0]
-        res[3, 1] = mat[3, 1]
-        res[3, 2] = mat[3, 2]
-        res[3, 3] = mat[3, 3]
+        if(res !== mat) {
+            res[0, 0] = mat[0, 0]
+            res[0, 1] = mat[0, 1]
+            res[0, 2] = mat[0, 2]
+            res[0, 3] = mat[0, 3]
+            res[3, 0] = mat[3, 0]
+            res[3, 1] = mat[3, 1]
+            res[3, 2] = mat[3, 2]
+            res[3, 3] = mat[3, 3]
+        }
         return res
     }
 
@@ -603,14 +611,16 @@ interface ext_matrixTransform {
         res[0, 1] = nm01
         res[0, 2] = nm02
         res[0, 3] = nm03
-        res[1, 0] = mat[1, 0]
-        res[1, 1] = mat[1, 1]
-        res[1, 2] = mat[1, 2]
-        res[1, 3] = mat[1, 3]
-        res[3, 0] = mat[3, 0]
-        res[3, 1] = mat[3, 1]
-        res[3, 2] = mat[3, 2]
-        res[3, 3] = mat[3, 3]
+        if(res !== mat) {
+            res[1, 0] = mat[1, 0]
+            res[1, 1] = mat[1, 1]
+            res[1, 2] = mat[1, 2]
+            res[1, 3] = mat[1, 3]
+            res[3, 0] = mat[3, 0]
+            res[3, 1] = mat[3, 1]
+            res[3, 2] = mat[3, 2]
+            res[3, 3] = mat[3, 3]
+        }
         return res
     }
 
@@ -652,14 +662,16 @@ interface ext_matrixTransform {
         res[0, 1] = nm01
         res[0, 2] = nm02
         res[0, 3] = nm03
-        res[2, 0] = mat[2, 0]
-        res[2, 1] = mat[2, 1]
-        res[2, 2] = mat[2, 2]
-        res[2, 3] = mat[2, 3]
-        res[3, 0] = mat[3, 0]
-        res[3, 1] = mat[3, 1]
-        res[3, 2] = mat[3, 2]
-        res[3, 3] = mat[3, 3]
+        if(res !== mat) {
+            res[2, 0] = mat[2, 0]
+            res[2, 1] = mat[2, 1]
+            res[2, 2] = mat[2, 2]
+            res[2, 3] = mat[2, 3]
+            res[3, 0] = mat[3, 0]
+            res[3, 1] = mat[3, 1]
+            res[3, 2] = mat[3, 2]
+            res[3, 3] = mat[3, 3]
+        }
         return res
     }
 
@@ -705,10 +717,12 @@ interface ext_matrixTransform {
         res[1, 2] = nm02 * m_sinZ + nm12 * cosZ
         res[1, 3] = nm03 * m_sinZ + nm13 * cosZ
         // copy last column from 'this'
-        res[3, 0] = mat[3, 0]
-        res[3, 1] = mat[3, 1]
-        res[3, 2] = mat[3, 2]
-        res[3, 3] = mat[3, 3]
+        if(res !== mat) {
+            res[3, 0] = mat[3, 0]
+            res[3, 1] = mat[3, 1]
+            res[3, 2] = mat[3, 2]
+            res[3, 3] = mat[3, 3]
+        }
         return res
     }
 
@@ -763,40 +777,40 @@ interface ext_matrixTransform {
         val rotate21 = tempZ * aY - s * aX
         val rotate22 = c + tempZ * aZ
 
-        val res0x = m[0].x * rotate00 + m[1].x * rotate01 + m[2].x * rotate02
-        val res0y = m[0].y * rotate00 + m[1].y * rotate01 + m[2].y * rotate02
-        val res0z = m[0].z * rotate00 + m[1].z * rotate01 + m[2].z * rotate02
-        val res0w = m[0].w * rotate00 + m[1].w * rotate01 + m[2].w * rotate02
+        val res0x = m[0, 0] * rotate00 + m[1, 0] * rotate01 + m[2, 0] * rotate02
+        val res0y = m[0, 1] * rotate00 + m[1, 1] * rotate01 + m[2, 1] * rotate02
+        val res0z = m[0, 2] * rotate00 + m[1, 2] * rotate01 + m[2, 2] * rotate02
+        val res0w = m[0, 3] * rotate00 + m[1, 3] * rotate01 + m[2, 3] * rotate02
 
-        val res1x = m[0].x * rotate10 + m[1].x * rotate11 + m[2].x * rotate12
-        val res1y = m[0].y * rotate10 + m[1].y * rotate11 + m[2].y * rotate12
-        val res1z = m[0].z * rotate10 + m[1].z * rotate11 + m[2].z * rotate12
-        val res1w = m[0].w * rotate10 + m[1].w * rotate11 + m[2].w * rotate12
+        val res1x = m[0, 0] * rotate10 + m[1, 0] * rotate11 + m[2, 0] * rotate12
+        val res1y = m[0, 1] * rotate10 + m[1, 1] * rotate11 + m[2, 1] * rotate12
+        val res1z = m[0, 2] * rotate10 + m[1, 2] * rotate11 + m[2, 2] * rotate12
+        val res1w = m[0, 3] * rotate10 + m[1, 3] * rotate11 + m[2, 3] * rotate12
 
-        val res2x = m[0].x * rotate20 + m[1].x * rotate21 + m[2].x * rotate22
-        val res2y = m[0].y * rotate20 + m[1].y * rotate21 + m[2].y * rotate22
-        val res2z = m[0].z * rotate20 + m[1].z * rotate21 + m[2].z * rotate22
-        val res2w = m[0].w * rotate20 + m[1].w * rotate21 + m[2].w * rotate22
+        val res2x = m[0, 0] * rotate20 + m[1, 0] * rotate21 + m[2, 0] * rotate22
+        val res2y = m[0, 1] * rotate20 + m[1, 1] * rotate21 + m[2, 1] * rotate22
+        val res2z = m[0, 2] * rotate20 + m[1, 2] * rotate21 + m[2, 2] * rotate22
+        val res2w = m[0, 3] * rotate20 + m[1, 3] * rotate21 + m[2, 3] * rotate22
 
-        res[0].x = res0x
-        res[0].y = res0y
-        res[0].z = res0z
-        res[0].w = res0w
+        res[0, 0] = res0x
+        res[0, 1] = res0y
+        res[0, 2] = res0z
+        res[0, 3] = res0w
 
-        res[1].x = res1x
-        res[1].y = res1y
-        res[1].z = res1z
-        res[1].w = res1w
+        res[1, 0] = res1x
+        res[1, 1] = res1y
+        res[1, 2] = res1z
+        res[1, 3] = res1w
 
-        res[2].x = res2x
-        res[2].y = res2y
-        res[2].z = res2z
-        res[2].w = res2w
+        res[2, 0] = res2x
+        res[2, 1] = res2y
+        res[2, 2] = res2z
+        res[2, 3] = res2w
 
-        res[3].x = m[3].x
-        res[3].y = m[3].y
-        res[3].z = m[3].z
-        res[3].w = m[3].w
+        res[3, 0] = m[3, 0]
+        res[3, 1] = m[3, 1]
+        res[3, 2] = m[3, 2]
+        res[3, 3] = m[3, 3]
 
         return res
     }
@@ -922,9 +936,11 @@ interface ext_matrixTransform {
         res[0, 0] = nm00
         res[0, 1] = nm01
         res[0, 2] = nm02
-        res[1, 0] = mat[1, 0]
-        res[1, 1] = mat[1, 1]
-        res[1, 2] = mat[1, 2]
+        if(res !== mat) {
+            res[1, 0] = mat[1, 0]
+            res[1, 1] = mat[1, 1]
+            res[1, 2] = mat[1, 2]
+        }
 
         return res
     }
@@ -965,9 +981,11 @@ interface ext_matrixTransform {
         res[0, 0] = nm00
         res[0, 1] = nm01
         res[0, 2] = nm02
-        res[2, 0] = mat[2, 0]
-        res[2, 1] = mat[2, 1]
-        res[2, 2] = mat[2, 2]
+        if(res !== mat) {
+            res[2, 0] = mat[2, 0]
+            res[2, 1] = mat[2, 1]
+            res[2, 2] = mat[2, 2]
+        }
 
         return res
     }
@@ -1036,14 +1054,16 @@ interface ext_matrixTransform {
         res[1, 1] = nm11
         res[1, 2] = nm12
         res[1, 3] = nm13
-        res[0, 0] = mat[0, 0]
-        res[0, 1] = mat[0, 1]
-        res[0, 2] = mat[0, 2]
-        res[0, 3] = mat[0, 3]
-        res[3, 0] = mat[3, 0]
-        res[3, 1] = mat[3, 1]
-        res[3, 2] = mat[3, 2]
-        res[3, 3] = mat[3, 3]
+        if(res !== mat) {
+            res[0, 0] = mat[0, 0]
+            res[0, 1] = mat[0, 1]
+            res[0, 2] = mat[0, 2]
+            res[0, 3] = mat[0, 3]
+            res[3, 0] = mat[3, 0]
+            res[3, 1] = mat[3, 1]
+            res[3, 2] = mat[3, 2]
+            res[3, 3] = mat[3, 3]
+        }
         return res
     }
 
@@ -1073,14 +1093,16 @@ interface ext_matrixTransform {
         res[0, 1] = nm01
         res[0, 2] = nm02
         res[0, 3] = nm03
-        res[1, 0] = mat[1, 0]
-        res[1, 1] = mat[1, 1]
-        res[1, 2] = mat[1, 2]
-        res[1, 3] = mat[1, 3]
-        res[3, 0] = mat[3, 0]
-        res[3, 1] = mat[3, 1]
-        res[3, 2] = mat[3, 2]
-        res[3, 3] = mat[3, 3]
+        if(res !== mat) {
+            res[1, 0] = mat[1, 0]
+            res[1, 1] = mat[1, 1]
+            res[1, 2] = mat[1, 2]
+            res[1, 3] = mat[1, 3]
+            res[3, 0] = mat[3, 0]
+            res[3, 1] = mat[3, 1]
+            res[3, 2] = mat[3, 2]
+            res[3, 3] = mat[3, 3]
+        }
         return res
     }
 
@@ -1109,14 +1131,16 @@ interface ext_matrixTransform {
         res[0, 1] = nm01
         res[0, 2] = nm02
         res[0, 3] = nm03
-        res[2, 0] = mat[2, 0]
-        res[2, 1] = mat[2, 1]
-        res[2, 2] = mat[2, 2]
-        res[2, 3] = mat[2, 3]
-        res[3, 0] = mat[3, 0]
-        res[3, 1] = mat[3, 1]
-        res[3, 2] = mat[3, 2]
-        res[3, 3] = mat[3, 3]
+        if(res !== mat) {
+            res[2, 0] = mat[2, 0]
+            res[2, 1] = mat[2, 1]
+            res[2, 2] = mat[2, 2]
+            res[2, 3] = mat[2, 3]
+            res[3, 0] = mat[3, 0]
+            res[3, 1] = mat[3, 1]
+            res[3, 2] = mat[3, 2]
+            res[3, 3] = mat[3, 3]
+        }
         return res
     }
 
@@ -1162,10 +1186,12 @@ interface ext_matrixTransform {
         res[1, 2] = nm02 * m_sinZ + nm12 * cosZ
         res[1, 3] = nm03 * m_sinZ + nm13 * cosZ
         // copy last column from 'this'
-        res[3, 0] = mat[3, 0]
-        res[3, 1] = mat[3, 1]
-        res[3, 2] = mat[3, 2]
-        res[3, 3] = mat[3, 3]
+        if(res !== mat) {
+            res[3, 0] = mat[3, 0]
+            res[3, 1] = mat[3, 1]
+            res[3, 2] = mat[3, 2]
+            res[3, 3] = mat[3, 3]
+        }
         return res
     }
 
