@@ -55,7 +55,7 @@ dependencies {
 #### maven central
 ```kotlin
 dependencies {
-    implementation("io.github.kotlin-graphics:glm:0.9.9.1-11")
+    implementation("io.github.kotlin-graphics:glm:0.9.9.1-12")
 }
 ```
 
