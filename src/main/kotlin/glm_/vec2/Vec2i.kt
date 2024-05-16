@@ -252,6 +252,7 @@ class Vec2i(@JvmField var ofs: Int, @JvmField var array: IntArray) : Vec2t<Int>,
 
 
     infix operator fun times(b: Int) = times(Vec2i(), this, b, b)
+    infix operator fun times(b: Float) = times(Vec2i(), this, b, b)
     infix operator fun times(b: Vec2i) = times(Vec2i(), this, b.x, b.y)
 
     @JvmOverloads
@@ -350,6 +351,7 @@ class Vec2i(@JvmField var ofs: Int, @JvmField var array: IntArray) : Vec2t<Int>,
 
     infix operator fun times(b: Number) = times(Vec2i(), this, b.i, b.i)
     infix operator fun times(b: Vec2t<out Number>) = times(Vec2i(), this, b._x.i, b._y.i)
+    infix operator fun times(b: Vec2) = times(Vec2i(), this, b.x, b.y)
 
     @JvmOverloads
     fun times(bX: Number, bY: Number, res: Vec2i = Vec2i()) = times(res, this, bX.i, bY.i)
