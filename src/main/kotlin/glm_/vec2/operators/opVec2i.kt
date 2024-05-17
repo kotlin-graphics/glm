@@ -37,6 +37,12 @@ interface opVec2i {
         return res
     }
 
+    fun times(res: Vec2i, a: Vec2i, bX: Float, bY: Float): Vec2i {
+        res.x = (a.x * bX).toInt()
+        res.y = (a.y * bY).toInt()
+        return res
+    }
+
     fun div(res: Vec2i, a: Vec2i, bX: Int, bY: Int): Vec2i {
         res.x = a.x / bX
         res.y = a.y / bY
