@@ -17,6 +17,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set env
+        run: echo "MAVEN_REPOSITORY=CENTRAL" >> $GITHUB_ENV
+
       - uses: actions/setup-java@v3
         with:
           distribution: zulu
