@@ -104,7 +104,7 @@ configure<PublishingExtension> {
                 password = project.properties["NEXUS_PASSWORD"].toString()
             }
 
-            url = uri("https://s01.oss.sonatype.org/content/repositories/releases/")
+            url = uri("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
         }
     }
 }
