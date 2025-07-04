@@ -22,7 +22,7 @@ import kotlin.math.abs
  * Created by elect on 07/10/16.
  */
 
-class Vec1ub(@JvmField inline var x: Ubyte) : Vec1t<Ubyte> {
+class Vec1ub(var x: Ubyte) : Vec1t<Ubyte> {
 
     // -- Implicit basic constructors --
 

@@ -19,7 +19,7 @@ import kotlin.math.abs
  * Created by GBarbieri on 28.04.2017.
  */
 
-class Vec1(@JvmField inline var x: Float) : Vec1t<Float>, ToFloatBuffer {
+class Vec1(var x: Float) : Vec1t<Float>, ToFloatBuffer {
 
     // -- Implicit basic constructors --
 

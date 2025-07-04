@@ -19,7 +19,7 @@ import kool.pos
 import java.nio.*
 import kotlin.math.abs
 
-class Vec1b(@JvmField inline var x: Byte) : Vec1t<Byte> {
+class Vec1b(var x: Byte) : Vec1t<Byte> {
 
     // -- Implicit basic constructors --
 

@@ -19,7 +19,7 @@ import kotlin.math.abs
  * Created by GBarbieri on 28.04.2017.
  */
 
-class Vec1d(@JvmField inline var x: Double) : Vec1t<Double>, ToDoubleBuffer {
+class Vec1d(var x: Double) : Vec1t<Double>, ToDoubleBuffer {
 
     // -- Implicit basic constructors --
 

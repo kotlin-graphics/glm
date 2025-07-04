@@ -21,7 +21,7 @@ import kotlin.math.abs
  * Created by elect on 08/10/16.
  */
 
-class Vec1ui(@JvmField inline var x: Uint) : Vec1t<Uint>, ToIntBuffer {
+class Vec1ui(var x: Uint) : Vec1t<Uint>, ToIntBuffer {
 
     // -- Implicit basic constructors --
 

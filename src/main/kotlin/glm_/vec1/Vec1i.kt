@@ -22,7 +22,7 @@ import kotlin.math.abs
  * Created by GBarbieri on 04.04.2017.
  */
 
-class Vec1i(@JvmField inline var x: Int) : Vec1t<Int> , ToIntBuffer {
+class Vec1i(var x: Int) : Vec1t<Int> , ToIntBuffer {
 
     // -- Implicit basic constructors --
 

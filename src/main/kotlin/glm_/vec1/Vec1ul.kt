@@ -24,7 +24,7 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec1ul(@JvmField inline var x: Ulong) : Vec1t<Ulong>, ToLongBuffer {
+class Vec1ul(var x: Ulong) : Vec1t<Ulong>, ToLongBuffer {
 
     // -- Implicit basic constructors --
 

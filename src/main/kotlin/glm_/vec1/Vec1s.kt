@@ -19,7 +19,7 @@ import kotlin.math.abs
  * Created by GBarbieri on 04.04.2017.
  */
 
-class Vec1s(@JvmField inline var x: Short) : Vec1t<Short>, ToShortBuffer {
+class Vec1s(var x: Short) : Vec1t<Short>, ToShortBuffer {
 
     // -- Implicit basic constructors --
 

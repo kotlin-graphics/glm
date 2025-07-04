@@ -18,7 +18,7 @@ import kool.*
 import java.nio.*
 import kotlin.math.abs
 
-class Vec1l(@JvmField inline var x: Long) : Vec1t<Long>, ToLongBuffer {
+class Vec1l(var x: Long) : Vec1t<Long>, ToLongBuffer {
 
     // -- Implicit basic constructors --
 

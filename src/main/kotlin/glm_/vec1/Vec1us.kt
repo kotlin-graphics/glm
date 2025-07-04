@@ -21,7 +21,7 @@ import java.nio.*
  * Created by elect on 08/10/16.
  */
 
-class Vec1us(@JvmField inline var x: Ushort) : Vec1t<Ushort>, ToShortBuffer {
+class Vec1us(var x: Ushort) : Vec1t<Ushort>, ToShortBuffer {
 
     // -- Implicit basic constructors --
 
