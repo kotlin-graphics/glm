@@ -26,8 +26,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly(repository.group, "unsigned", "3.3.32")
-    compileOnly(repository.group, "kool", "0.9.77")
+    compileOnly(repository.group, "kotlin-unsigned", "3.3.32")
+    compileOnly(repository.group, "kool", "0.9.79")
 
     compileOnly("org.lwjgl:lwjgl-jemalloc:3.3.2")
 
@@ -35,8 +35,8 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:5.6.2")
     testImplementation("io.kotest:kotest-assertions-core:5.6.2")
 
-    testImplementation(repository.group, "kool", "0.9.77")
-    testImplementation(repository.group, "unsigned", "3.3.32")
+    testImplementation(repository.group, "kool", "0.9.79")
+    testImplementation(repository.group, "kotlin-unsigned", "3.3.32")
 }
 
 kotlin.jvmToolchain { languageVersion.set(JavaLanguageVersion.of(8)) }
