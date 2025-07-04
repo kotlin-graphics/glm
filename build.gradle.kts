@@ -1,37 +1,47 @@
-import magik.github
-import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
 import java.util.*
+import magik.github
 
 plugins {
-    kotlin("jvm") version embeddedKotlinVersion
+    kotlin("jvm") version "2.2.0"
     id("elect86.magik") version "0.3.2"
     `maven-publish`
     signing
 //    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
+enum class MavenRepository(val group: String) {
+    MARY("kotlin.graphics"),
+    CENTRAL("io.github.kotlin-graphics"),
+    ;
+}
+
+val repository = System.getenv("MAVEN_REPOSITORY")?.takeIf { !it.isBlank() }?.let { MavenRepository.valueOf(it) } ?: MavenRepository.MARY
+
+
 repositories {
     mavenCentral()
-    github("kotlin-graphics/mary")
+    if (repository == MavenRepository.MARY) {
+        github("kotlin-graphics/mary")
+    }
 }
 
 dependencies {
-    compileOnly("kotlin.graphics:unsigned:3.3.32")
-    compileOnly("kotlin.graphics:kool:0.9.77")
+    compileOnly(repository.group, "unsigned", "3.3.32")
+    compileOnly(repository.group, "kool", "0.9.77")
+
     compileOnly("org.lwjgl:lwjgl-jemalloc:3.3.2")
 
 
     testImplementation("io.kotest:kotest-runner-junit5:5.6.2")
     testImplementation("io.kotest:kotest-assertions-core:5.6.2")
 
-    testImplementation("kotlin.graphics:kool:0.9.77")
-    testImplementation("kotlin.graphics:unsigned:3.3.32")
+    testImplementation(repository.group, "kool", "0.9.77")
+    testImplementation(repository.group, "unsigned", "3.3.32")
 }
 
 kotlin.jvmToolchain { languageVersion.set(JavaLanguageVersion.of(8)) }
 
 tasks {
-    withType<KotlinCompile<*>>().all { kotlinOptions { freeCompilerArgs += listOf("-opt-in=kotlin.RequiresOptIn") } }
     test { useJUnitPlatform() }
 }
 
@@ -45,7 +55,7 @@ java {
 configure<PublishingExtension> {
     publications {
         create<MavenPublication>("mavenCentral") {
-            groupId = "io.github.kotlin-graphics"
+            groupId = MavenRepository.CENTRAL.group
             artifactId = "glm"
             from(components["java"])
             versionMapping {
