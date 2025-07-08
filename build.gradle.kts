@@ -1,10 +1,10 @@
-import java.util.*
 import magik.github
+import java.util.*
 
 plugins {
     kotlin("jvm") version "2.2.0"
     id("elect86.magik") version "0.3.2"
-    `maven-publish`
+    id("org.danilopianini.publish-on-central") version "9.0.7"
     signing
 //    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
@@ -15,7 +15,7 @@ enum class MavenRepository(val group: String) {
     ;
 }
 
-val repository = System.getenv("MAVEN_REPOSITORY")?.takeIf { !it.isBlank() }?.let { MavenRepository.valueOf(it) } ?: MavenRepository.MARY
+val repository = System.getenv("MAVEN_REPOSITORY")?.takeIf { it.isNotBlank() }?.let { MavenRepository.valueOf(it) } ?: MavenRepository.MARY
 
 
 repositories {
@@ -51,13 +51,11 @@ java {
     withSourcesJar()
 }
 
-
 configure<PublishingExtension> {
     publications {
-        create<MavenPublication>("mavenCentral") {
+        withType<MavenPublication> {
             groupId = MavenRepository.CENTRAL.group
             artifactId = "glm"
-            from(components["java"])
             versionMapping {
                 usage("java-api") {
                     fromResolutionOf("runtimeClasspath")
@@ -96,23 +94,17 @@ configure<PublishingExtension> {
             }
         }
     }
-    repositories {
-        maven {
-            name = "mavenCentral"
-            credentials {
-                username = project.properties["NEXUS_USERNAME"].toString()
-                password = project.properties["NEXUS_PASSWORD"].toString()
-            }
-
-            url = uri("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
-        }
-    }
 }
 
 signing {
-    val rawKey = project.properties["SIGNING_KEY"]?.toString() ?: return@signing
+    val keyId = project.properties["SIGNING_KEY_ID"]?.toString()
+    val rawKey = project.properties["SIGNING_KEY"]?.toString()
+    if (keyId == null || rawKey == null) {
+        return@signing println("No signing key is set!")
+    }
+
     val key = String(Base64.getDecoder().decode(rawKey)) // \n is not working in environment variables
     val password = project.properties["SIGNING_KEY_PASSWORD"]?.toString() ?: ""
-    useInMemoryPgpKeys(key, password)
-    sign(publishing.publications["mavenCentral"])
+    useInMemoryPgpKeys(keyId, key, password)
+    sign(publishing.publications["OSSRH"])
 }

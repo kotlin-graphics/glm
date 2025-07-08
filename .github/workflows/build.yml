@@ -14,11 +14,18 @@ jobs:
   gradle:
     runs-on: "ubuntu-latest"
     timeout-minutes: 30
+    env:
+      MAVEN_REPOSITORY: "CENTRAL"
+
+      ORG_GRADLE_PROJECT_SIGNING_KEY: ${{ secrets.MAVEN_CENTRAL_SIGNING_KEY }}
+      ORG_GRADLE_PROJECT_SIGNING_KEY_ID: ${{ secret.MAVEN_CENTRAL_SIGNING_KEY_ID }}
+      ORG_GRADLE_PROJECT_SIGNING_KEY_PASSWORD: ""
+
+      MAVEN_CENTRAL_PORTAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+      MAVEN_CENTRAL_PORTAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+
     steps:
       - uses: actions/checkout@v3
-
-      - name: Set env
-        run: echo "MAVEN_REPOSITORY=CENTRAL" >> $GITHUB_ENV
 
       - uses: actions/setup-java@v3
         with:
@@ -53,4 +60,4 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v')
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: publishMavenCentralPublicationToMavenCentralRepository
+          arguments: publishAllPublicationsToProjectLocalRepository signOSSRHPublication zipMavenCentralPortalPublication releaseMavenCentralPortalPublication
