@@ -37,7 +37,7 @@ class Vec3b(@JvmField var ofs: Int, @JvmField var array: ByteArray) : Vec3t<Byte
 
     // -- Implicit basic constructors --
 
-    constructor() : this(0, 0, 0)
+    constructor() : this(0)
     constructor(v: Vec3b) : this(v.x, v.y, v.z)
     constructor(v: Vec2b) : this(v.x, v.y, 0)
 

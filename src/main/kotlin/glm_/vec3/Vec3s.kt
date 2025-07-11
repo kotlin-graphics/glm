@@ -33,7 +33,7 @@ class Vec3s(@JvmField var ofs: Int, @JvmField var array: ShortArray) : Vec3t<Sho
 
     // -- Implicit basic constructors --
 
-    constructor() : this(0, 0, 0)
+    constructor() : this(0)
     constructor(v: Vec3s) : this(v.x, v.y, v.z)
     constructor(v: Vec2s) : this(v.x, v.y, 0)
 

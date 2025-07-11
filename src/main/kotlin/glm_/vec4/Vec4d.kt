@@ -47,7 +47,12 @@ class Vec4d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec4t<Do
     // -- Explicit basic constructors --
 
     constructor(x: Double) : this(x, x, x, x)
+    constructor(x: Int) : this(x.d)
+    constructor(x: Float) : this(x.d)
+
     constructor(x: Double, y: Double, z: Double, w: Double) : this(0, doubleArrayOf(x, y, z, w))
+    constructor(x: Float, y: Float, z: Float, w: Float) : this(0, doubleArrayOf(x.d, y.d, z.d, w.d))
+    constructor(x: Int, y: Int, z: Int, w: Int) : this(0, doubleArrayOf(x.d, y.d, z.d, w.d))
 
     // -- Conversion scalar constructors --
 

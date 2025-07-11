@@ -43,7 +43,6 @@ class Vec2(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec2t<Floa
 
     // -- Conversion constructors --
 
-
     constructor(v: Number) : this(v.f)
     constructor(x: Number, y: Number) : this(x.f, y.f)
     constructor(x: Int, y: Int) : this(x.f, y.f)

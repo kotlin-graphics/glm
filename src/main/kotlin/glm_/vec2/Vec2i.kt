@@ -44,6 +44,7 @@ class Vec2i(@JvmField var ofs: Int, @JvmField var array: IntArray) : Vec2t<Int>,
 
     constructor(v: Number) : this(v.i)
     constructor(x: Number, y: Number) : this(x.i, y.i)
+    constructor(x: Float, y: Float) : this(x.i, y.i)
 
     // Explicit conversions (From section 5.4.1 Conversion and scalar constructors of GLSL 1.30.08 specification)
 

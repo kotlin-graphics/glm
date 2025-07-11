@@ -36,7 +36,7 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
 
     // -- Implicit basic constructors --
 
-    constructor() : this(0, 0, 0)
+    constructor() : this(0)
     constructor(v: Vec3d) : this(v.x, v.y, v.z)
     constructor(v: Vec2d) : this(v.x, v.y, 0.0)
 
@@ -44,6 +44,8 @@ class Vec3d(@JvmField var ofs: Int, @JvmField var array: DoubleArray) : Vec3t<Do
 
     @JvmOverloads
     constructor(x: Double, y: Double = x, z: Double = x) : this(0, doubleArrayOf(x, y, z))
+    constructor(x: Float, y: Float = x, z: Float = x) : this(0, doubleArrayOf(x.d, y.d, z.d))
+    constructor(x: Int, y: Int = x, z: Int = x) : this(0, doubleArrayOf(x.d, y.d, z.d))
 
     // -- Conversion scalar constructors --
 

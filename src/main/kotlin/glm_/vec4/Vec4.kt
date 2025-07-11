@@ -47,7 +47,10 @@ class Vec4(@JvmField var ofs: Int, @JvmField var array: FloatArray) : Vec4t<Floa
     // -- Explicit basic constructors --
 
     constructor(x: Float) : this(x, x, x, x)
+    constructor(x: Int) : this(x.f)
+
     constructor(x: Float, y: Float, z: Float, w: Float) : this(0, floatArrayOf(x, y, z, w))
+    constructor(x: Int, y: Int, z: Int, w: Int) : this(0, floatArrayOf(x.f, y.f, z.f, w.f))
 
     // -- Conversion scalar constructors --
 

@@ -45,6 +45,7 @@ class Vec4i(@JvmField var ofs: Int, @JvmField var array: IntArray) : Vec4t<Int>,
 
     constructor(x: Int) : this(x, x, x, x)
     constructor(x: Int, y: Int, z: Int, w: Int) : this(0, intArrayOf(x, y, z, w))
+    constructor(x: Float, y: Float, z: Float, w: Float) : this(0, intArrayOf(x.i, y.i, z.i, w.i))
 
     // -- Conversion scalar constructors --
 

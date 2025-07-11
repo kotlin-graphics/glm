@@ -45,6 +45,7 @@ class Vec4l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec4t<Long
 
     constructor(x: Long) : this(x, x, x, x)
     constructor(x: Long, y: Long, z: Long, w: Long) : this(0, longArrayOf(x, y, z, w))
+    constructor(x: Int, y: Int, z: Int, w: Int) : this(0, longArrayOf(x.L, y.L, z.L, w.L))
 
     // -- Conversion scalar constructors --
 

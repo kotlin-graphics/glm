@@ -33,7 +33,7 @@ class Vec3l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Long
 
     // -- Implicit basic constructors --
 
-    constructor() : this(0, 0, 0)
+    constructor() : this(0)
     constructor(v: Vec3l) : this(v.x, v.y, v.z)
     constructor(v: Vec2l) : this(v.x, v.y, 0)
 
@@ -41,6 +41,7 @@ class Vec3l(@JvmField var ofs: Int, @JvmField var array: LongArray) : Vec3t<Long
 
     @JvmOverloads
     constructor(x: Long, y: Long = x, z: Long = x) : this(0, longArrayOf(x.L, y.L, z.L))
+    constructor(x: Int, y: Int = x, z: Int = x) : this(0, longArrayOf(x.L, y.L, z.L))
 
     // -- Conversion scalar constructors --
 
